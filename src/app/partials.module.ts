@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { TextComponent } from './components/globals/partials/text/text.component'
+import { TextComponent } from '@partials/text/text.component'
 
 
 @NgModule()
