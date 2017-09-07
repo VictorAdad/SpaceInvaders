@@ -2,10 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MaterialModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule, routingComponents} from './app.routing';
 import { PartialsModule, partialsComponents} from './partials.module';
+
+import { MiservicioService} from "./services/miservicio.service";
 
 @NgModule({
   declarations: [
@@ -18,9 +21,13 @@ import { PartialsModule, partialsComponents} from './partials.module';
     MaterialModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    PartialsModule
+    PartialsModule,
+    HttpModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [
+  MiservicioService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

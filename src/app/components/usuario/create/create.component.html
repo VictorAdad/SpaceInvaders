@@ -1,17 +1,21 @@
 <div class="content-body">
 	<div class="row">
 		<div class="col-md-6">
-			<h2>Crear usuario</h2>
+			<h2>Crear usuario </h2>
 		</div>
 	</div>
 	<div class="content mat-elevation-z8">
 		<div class="row justify-content-md-center">
 			<div class="col-md-10">
 				<form>
-					<text label="Nombres(s)"></text>
-					<text label="Apellido paterno"></text>
-					<text label="Apellido materno"></text>
-					<text label="Nombre de usuario"></text>
+					<text label="id" [(value)]="dato.id"  ></text>  
+					<text label="Nombres(s)" [(value)]="dato.nombre"  ></text>
+					<text label="Apellido paterno" [(value)]="dato.paterno"></text>
+					<text label="Apellido materno" [(value)]="dato.materno"></text>
+					<text label="Nombre de usuario" [(value)]="dato.usuario"></text> 
+					<p>
+				      <button md-button (click)="save(dato)" type="submit">Guardar</button>
+				    </p>
 				</form>
 			</div>
 		</div>

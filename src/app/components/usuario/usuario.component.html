@@ -23,25 +23,25 @@
 		<!-- Position Column -->
 		<ng-container mdColumnDef="position">
 			<md-header-cell *mdHeaderCellDef> No. </md-header-cell>
-			<md-cell *mdCellDef="let element"> {{element.position}} </md-cell>
+			<md-cell *mdCellDef="let element"> {{element.id}} </md-cell>
 		</ng-container>
 
 		<!-- Name Column -->
 		<ng-container mdColumnDef="name">
 			<md-header-cell *mdHeaderCellDef> Name </md-header-cell>
-			<md-cell *mdCellDef="let element"> {{element.name}} </md-cell>
+			<md-cell *mdCellDef="let element"> {{element.nombre}} </md-cell>
 		</ng-container>
 
 		<!-- Weight Column -->
 		<ng-container mdColumnDef="weight">
 			<md-header-cell *mdHeaderCellDef> Weight </md-header-cell>
-			<md-cell *mdCellDef="let element"> {{element.weight}} </md-cell>
+			<md-cell *mdCellDef="let element"> {{element.paterno}} </md-cell>
 		</ng-container>
 
 		<!-- Color Column -->
 		<ng-container mdColumnDef="symbol">
 			<md-header-cell *mdHeaderCellDef> Symbol </md-header-cell>
-			<md-cell *mdCellDef="let element"> {{element.symbol}} </md-cell>
+			<md-cell *mdCellDef="let element"> {{element.materno}} </md-cell>
 		</ng-container>
 
 		<md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>

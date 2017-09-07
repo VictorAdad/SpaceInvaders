@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '../../services/utils/table/table.service';
+import { MiservicioService,MDato } from '../../services/miservicio.service';
+
 
 @Component({
   templateUrl: './usuario.component.html'
@@ -8,11 +10,17 @@ import { TableService} from '../../services/utils/table/table.service';
 export class UsuarioComponent{
 	displayedColumns = ['position', 'name', 'weight', 'symbol'];
 	data = data;
+	_datos: MDato[];
+
 	dataSource: TableService | null;
 	@ViewChild(MdPaginator) paginator: MdPaginator;
 
+	constructor(private servicio: MiservicioService){}
+
 	ngOnInit() {
-    	this.dataSource = new TableService(this.paginator, this.data);
+		this._datos = this.servicio.list();
+    	this.dataSource = new TableService(this.paginator, this._datos);
+
     	console.log('-> Data Source', this.dataSource);
   	}
 }
