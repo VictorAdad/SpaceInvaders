@@ -19,7 +19,11 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+        "styles.css",
+        "./assets/css/bootstrap-grid.css",
+        "./assets/sass/materialize/materialize.scss",
+        "./assets/sass/bootstrap/bootstrap.scss",
+        "./assets/sass/theme.scss"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
