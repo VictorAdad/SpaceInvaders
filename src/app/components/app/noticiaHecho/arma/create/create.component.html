@@ -1,0 +1,86 @@
+		 <!--sm="6" md="4" lg="3"-->
+	 <div class="container">
+		 	<div class="row">
+		 		<div class="col-sm-9 col-md-10 col-lg-10">
+		 			<h1><b>Registrar Arma</b></h1>
+		 		</div>
+		 		<div class="col-sm-3 col-md-2 col-lg-2">
+		 			<a md-raised-button color="warn" routerLink="/armas" >Regresar</a>
+		 		</div>
+		 	</div>
+		 	<br/>
+
+		 	<div>
+		 		<h5>CREAR ARMA</h5>
+		 		<br/>
+
+
+		 		<div class="row">
+		 			<div class="col-sm-6 col-md-4 col-lg-3">
+		 				<selectcomponent 
+		 				placeholder= "Clase de Arma"
+		 				[(options)]   ="clasesArmas"
+                         (valueChange)="valueChange($event)"		 				>
+		 			   </selectcomponent> 
+		 		</div>
+		 		<div  *ngIf="" class="col-sm-6 col-md-4 col-lg-3">
+
+		 			<selectcomponent 
+		 			placeholder= "Tipo de Arma"
+		 			[(options)]="options"	
+		 			>
+		 		    </selectcomponent> 
+		 	    </div>
+		    </div>
+		 <div class="row" *ngIf="isArmaFuego" >
+		 	<div class="col-sm-6 col-md-4 col-lg-3">
+		 		<selectcomponent 
+		 		placeholder= "Subtipo de Arma"
+		 		[(options)]="options">	
+		 	</selectcomponent> 
+		 </div>
+
+		 <div class="col-sm-6 col-md-4 col-lg-3">
+
+		 	<selectcomponent 
+		 	placeholder= "Calibre"
+		 	[(options)]="options">	
+		 </selectcomponent> 
+		</div>
+		<div class="col-sm-6 col-md-4 col-lg-3">
+
+			<selectcomponent 
+			placeholder= "Mecanismo de acción"
+			[(options)]="options">	
+		   </selectcomponent> 
+		</div>
+		<div class="col-sm-6 col-md-4 col-lg-3">
+			<text-area label="Serie">
+			</text-area>  
+		</div>
+		</div>
+
+		<div class="row">
+			<text-area label="Notas" class="full-width"></text-area>  
+		</div>
+
+		</div>
+		<div class="row">
+		<div class="col-sm-6 col-md-8 col-lg-9">
+		</div>
+
+
+			<div class="col-sm-6 col-md-4 col-lg-3">
+
+			<button md-raised-button color="warn"  >
+				Guardar
+			</button>
+			<button md-button>
+				Cancelar
+			</button>
+		    </div>
+
+		</div>
+
+	</div>
+
