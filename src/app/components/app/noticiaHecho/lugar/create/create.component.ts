@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
     templateUrl: './create.component.html'
 })
 
-export class VehiculoCreateComponent{
+export class LugarCreateComponent{
 
 }
