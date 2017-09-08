@@ -5,10 +5,10 @@ import { TableService} from '@utils/table/table.service';
 import { MiservicioService,MDato } from '@services/miservicio.service';
 
 @Component({
-    templateUrl:'./vehiculo.component.html'
+    templateUrl:'./lugar.component.html'
 })
 
-export class VehiculoComponent{
+export class LugarComponent{
 	displayedColumns = ['position', 'name', 'weight', 'symbol'];
 	data = data;
 	_datos: MDato[];
