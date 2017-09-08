@@ -1,4 +1,4 @@
-<md-select placeholder="{{placeholder}}" [(ngModel)]="value" (ngModelChange)="update($event)">
+<md-select placeholder="{{placeholder}}" [(ngModel)]="value" (ngModelChange)="update($event)" class="full-width">
   <md-option *ngFor="let option of options" [value]="option.value">
     {{ option.label }}
   </md-option>
