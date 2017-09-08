@@ -6,6 +6,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   	templateUrl : './date.component.html'
 })
 export class DateComponent{
-	@Input() label : string;
+	@Input() label : string = 'Seleccione una fecha';
 	@Input() value : string;
 }
