@@ -5,7 +5,6 @@ import { UsuarioCreateComponent } from '@components-app/usuario/create/create.co
 import { ArmaComponent } from '@components-app/noticiaHecho/arma/arma.component';
 import { ArmaCreateComponent } from '@components-app/noticiaHecho/arma/create/create.component';
 import { LoginComponent } from '@components-app/login/login.component';
-import { LogoutComponent } from '@components-app/logout/logout.component';
 import { VehiculoComponent } from '@components-app/noticiaHecho/vehiculo/vehiculo.component';
 import { VehiculoCreateComponent } from '@components-app/noticiaHecho/vehiculo/create/create.component';
 import { LugarComponent } from '@components-app/noticiaHecho/lugar/lugar.component';
@@ -14,7 +13,6 @@ import {PersonaFisicaImputadoComponent} from '@components-app/noticiaHecho/perso
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent},
-    { path: 'logout', component: LogoutComponent},
     { path : 'usuarios', component : UsuarioComponent},
     { path : 'usuarios/create', component : UsuarioCreateComponent},
     { path : 'armas', component : ArmaComponent},
@@ -43,8 +41,6 @@ export const routingComponents = [
   LugarComponent,
   LugarCreateComponent,
   LoginComponent,
-  LogoutComponent,
   PersonaFisicaImputadoComponent
-
 ];
 
