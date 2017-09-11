@@ -22,12 +22,18 @@ import 'rxjs/add/operator/map'
 @Injectable()
 export class AuthenticationService {
     public token: string;
-    public isLoggedin: boolean = false;
+    public isLoggedin: boolean;
 
     constructor(private http: Http) {
         // set token if saved in local storage
         var currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.token = currentUser && currentUser.token;
+        if (localStorage.getItem("currentUser") == null) {
+            this.isLoggedin = false;
+        }
+        else {
+             this.isLoggedin = true;
+        }
     }
 
     // login(username: string, password: string): Observable<boolean> {

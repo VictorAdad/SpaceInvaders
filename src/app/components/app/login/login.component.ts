@@ -13,10 +13,13 @@ export class LoginComponent{
 
     constructor(
         private router: Router,
-        private authenticationService: AuthenticationService) { }
+        private authenticationService: AuthenticationService) { 
+
+        if(authenticationService.isLoggedIn)
+            this.router.navigate(['/']);
+    }
 
     login(){
-        console.log('-> loggin()')
         this.loading = true;
         //pidiendo al servicio de autenticación la validez de las credenciales
         this.authenticationService.login(this.usuario, this.pass)

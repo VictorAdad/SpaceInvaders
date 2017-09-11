@@ -16,13 +16,15 @@ export class AppComponent {
 	) {}
 
 	ngOnInit(){
-		console.log('-> Login', this.isLoggedIn());
-		if(!this.isLoggedIn())
-			this.router.navigate(['/']);
+
 	}
 
 	isLoggedIn()
 	{
 		return this.authService.isLoggedIn();
+	}
+
+	logout(){
+		this.authService.logout();
 	}
 }
