@@ -1,0 +1,68 @@
+<div class="content-body">
+    <div class="row">
+        <div class="col-md-10">
+            <h2>Relaciones</h2>
+        </div>
+        <div class="col-md-2">
+            <button class="float-right" md-raised-button routerLink="/vehiculos" color="accent">Regresar</button>
+        </div>
+    </div>
+    <div class="content">
+        <div class="row">
+            <div class="col-md-2">
+                <select2 placeholder="Tipo de relación" [(options)]="tiposRelacion"></select2>
+                <select2 placeholder="Víctima u ofendido"></select2>
+                <select2 placeholder="Clasificación"></select2>
+                <select2 placeholder="Forma de conducta"></select2>
+            </div>
+            <div class="col-md-2">
+                <select2 placeholder="Modalidad"></select2>
+                <select2 placeholder="Lugar"></select2>
+                <select2 placeholder="Forma de acción"></select2>
+                <select2 placeholder="Tipo de desaparición"></select2>
+            </div>
+            <div class="col-md-2">
+                <select2 placeholder="Delito"></select2>
+                <select2 placeholder="Concurso del delito"></select2>
+                <select2 placeholder="Consumación"></select2>
+                <checkbox label="Flagracia"></checkbox>
+            </div>
+            <div class="col-md-2">
+                <select2 placeholder="Forma de comisión"></select2>
+                <select2 placeholder="Clasificación del delito"></select2>
+                <select2 placeholder="Grado de participación"></select2>
+                <checkbox label="Violencia de genero"></checkbox>
+            </div>
+            <div class="col-md-2">
+                <select2 placeholder="Imputado"></select2>
+                <select2 placeholder="Elemento de comisión"></select2>
+                <select2 placeholder="Relación entre acusado y ofendido"></select2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h5>Violencia de genero</h5>
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <select2 placeholder="Víctima de delincuencia organizada"></select2>
+                    </div>
+                    <div class="col-md-3">
+                        <select2 placeholder="Víctima de violencia de genero"></select2>
+                    </div>
+                    <div class="col-md-3">
+                        <select2 placeholder="Víctima de trata"></select2>
+                    </div>
+                    <div class="col-md-3">
+                        <select2 placeholder="Víctima de acoso"></select2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <select2 placeholder="Orden de protección"></select2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

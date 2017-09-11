@@ -10,19 +10,22 @@ import { VehiculoCreateComponent } from '@components-app/noticiaHecho/vehiculo/c
 import { LugarComponent } from '@components-app/noticiaHecho/lugar/lugar.component';
 import { LugarCreateComponent } from '@components-app/noticiaHecho/lugar/create/create.component';
 import {PersonaFisicaImputadoComponent} from '@components-app/noticiaHecho/persona/persona-fisica-imputado.component';
+import { RelacionComponent } from '@components-app/noticiaHecho/relacion/relacion.component';
+import { RelacionCreateComponent } from '@components-app/noticiaHecho/relacion/create/create.component';
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent},
     { path : 'usuarios', component : UsuarioComponent},
     { path : 'usuarios/create', component : UsuarioCreateComponent},
     { path : 'armas', component : ArmaComponent},
-    { path : 'armas/create', component : ArmaCreateComponent},
-    
+    { path : 'armas/create', component : ArmaCreateComponent},   
     { path : 'vehiculos', component :  VehiculoComponent},
     { path : 'vehiculos/create', component : VehiculoCreateComponent },
     { path : 'lugares', component :  LugarComponent},
     { path : 'lugares/create', component : LugarCreateComponent },
-    { path : 'personas/persona-fisica-imputado', component : PersonaFisicaImputadoComponent }
+    { path : 'personas/persona-fisica-imputado', component : PersonaFisicaImputadoComponent },
+    { path : 'relaciones', component : RelacionComponent },
+    { path : 'relaciones/create', component : RelacionCreateComponent }
 ];
 
 @NgModule({
@@ -42,6 +45,7 @@ export const routingComponents = [
   LugarComponent,
   LugarCreateComponent,
   LoginComponent,
-  PersonaFisicaImputadoComponent
+  PersonaFisicaImputadoComponent,
+  RelacionComponent,
+  RelacionCreateComponent
 ];
-
