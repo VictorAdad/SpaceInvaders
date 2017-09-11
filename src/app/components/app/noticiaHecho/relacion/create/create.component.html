@@ -41,7 +41,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <h5>Violencia de genero</h5>
+                <h4>Violencia de genero</h4>
                 <div class="row">
 
                     <div class="col-md-3">
@@ -60,6 +60,50 @@
                 <div class="row">
                     <div class="col-md-3">
                         <select2 placeholder="Orden de protección"></select2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h5>Efectos de violencia</h5>
+                <div class="row">
+                    <div class="col-md-3">
+                        <select2 placeholder="Efecto"></select2>
+                    </div>
+                    <div class="col-md-3">
+                        <select2 placeholder="Detalle"></select2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10"></div>
+                    <div class="col-md-1">
+                        <button class="float-right" md-raised-button color="accent">Agregar</button>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="float-right" md-raised-button color="accent">Limpiar</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="mat-elevation-z8">
+                            <md-table #table [dataSource]="dataSource">
+                                <!-- Efecto Column -->
+                                <ng-container mdColumnDef="efecto">
+                                    <md-header-cell *mdHeaderCellDef> Efecto </md-header-cell>
+                                    <md-cell *mdCellDef="let element"> {{element.efecto}} </md-cell>
+                                </ng-container>
+
+                                <!-- Detalle Column -->
+                                <ng-container mdColumnDef="detalle">
+                                    <md-header-cell *mdHeaderCellDef> Detalle </md-header-cell>
+                                    <md-cell *mdCellDef="let element"> {{element.detalle}} </md-cell>
+                                </ng-container>
+
+                                <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+                                <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+                            </md-table>
+                        </div>
                     </div>
                 </div>
             </div>

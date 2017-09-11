@@ -1,8 +1,25 @@
 import { Component } from '@angular/core';
 import { MOption } from '@partials/select2/select2.component';
+import {DataSource} from '@angular/cdk/collections';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 @Component({
-    templateUrl: './create.component.html'
+    selector: 'relacion-create',
+    templateUrl: './create.component.html',
+    styles:[`
+    .example-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  min-width: 300px;
+}
+
+.mat-table {
+  overflow: auto;
+}
+    
+    `]
 })
 
 export class RelacionCreateComponent {
@@ -14,4 +31,31 @@ export class RelacionCreateComponent {
         { value:'Representante de la víctima', label:'Representante de la víctima' },
         { value:'Tutor de la víctima', label:'Tutor de la víctima' }
     ];
+
+    displayedColumns = ['efecto', 'detalle'];
+    dataSource = new ExampleDataSource();
 }
+
+export interface Element {
+    efecto: string;
+    detalle: string;
+  }
+  
+  const data: Element[] = [
+    {efecto: 'Efecto 1', detalle: 'Detalle 1'},
+  ];
+  
+  /**
+   * Data source to provide what data should be rendered in the table. The observable provided
+   * in connect should emit exactly the data that should be rendered by the table. If the data is
+   * altered, the observable should emit that new set of data on the stream. In our case here,
+   * we return a stream that contains only one set of data that doesn't change.
+   */
+  export class ExampleDataSource extends DataSource<any> {
+    /** Connect function called by the table to retrieve one stream containing the data to render. */
+    connect(): Observable<Element[]> {
+      return Observable.of(data);
+    }
+  
+    disconnect() {}
+  }
