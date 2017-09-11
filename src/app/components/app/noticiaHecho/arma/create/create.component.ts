@@ -27,4 +27,5 @@ export class ArmaCreateComponent{
        this.isArmaFuego=false;
     }
     }
+    
 }

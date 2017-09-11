@@ -33,6 +33,7 @@ export interface Element {
     symbol: string;
   }
   
+  
   const data: Element[] = [
       {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
       {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
