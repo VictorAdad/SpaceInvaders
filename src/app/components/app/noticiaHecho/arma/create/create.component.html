@@ -17,42 +17,42 @@
 
 		 		<div class="row">
 		 			<div class="col-sm-6 col-md-4 col-lg-3">
-		 				<selectcomponent 
+		 				<select2 
 		 				placeholder= "Clase de Arma"
 		 				[(options)]   ="clasesArmas"
                          (valueChange)="valueChange($event)"		 				>
-		 			   </selectcomponent> 
+		 			   </select2> 
 		 		</div>
-		 		<div  *ngIf="" class="col-sm-6 col-md-4 col-lg-3">
+		 		<div  *ngIf="isArmaFuego" class="col-sm-6 col-md-4 col-lg-3">
 
-		 			<selectcomponent 
+		 			<select2 
 		 			placeholder= "Tipo de Arma"
 		 			[(options)]="options"	
 		 			>
-		 		    </selectcomponent> 
+		 		    </select2> 
 		 	    </div>
 		    </div>
 		 <div class="row" *ngIf="isArmaFuego" >
 		 	<div class="col-sm-6 col-md-4 col-lg-3">
-		 		<selectcomponent 
+		 		<select2 
 		 		placeholder= "Subtipo de Arma"
 		 		[(options)]="options">	
-		 	</selectcomponent> 
+		 	</select2> 
 		 </div>
 
 		 <div class="col-sm-6 col-md-4 col-lg-3">
 
-		 	<selectcomponent 
+		 	<select2 
 		 	placeholder= "Calibre"
 		 	[(options)]="options">	
-		 </selectcomponent> 
+		 </select2> 
 		</div>
 		<div class="col-sm-6 col-md-4 col-lg-3">
 
-			<selectcomponent 
+			<select2 
 			placeholder= "Mecanismo de acción"
 			[(options)]="options">	
-		   </selectcomponent> 
+		   </select2> 
 		</div>
 		<div class="col-sm-6 col-md-4 col-lg-3">
 			<text-area label="Serie">

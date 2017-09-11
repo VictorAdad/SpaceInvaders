@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { MOption } from '@partials/select/select.component'
+import { MOption } from '@partials/select2/select2.component'
 @Component({
   selector: 'arma-create',
   templateUrl: 'create.component.html',
@@ -19,6 +19,12 @@ export class ArmaCreateComponent{
     ];
     isArmaFuego:boolean=false;
     valueChange(option){
-console.log(option);
+    if(option=="Arma Blanca"){
+    	console.log(option);
+       this.isArmaFuego=true;
+    }
+    else{
+       this.isArmaFuego=false;
+    }
     }
 }

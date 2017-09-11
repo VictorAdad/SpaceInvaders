@@ -13,7 +13,7 @@ const routes: Routes = [
     { path : 'usuarios', component : UsuarioComponent},
     { path : 'usuarios/create', component : UsuarioCreateComponent},
     { path : 'armas', component : ArmaComponent},
-    { path : 'armas/create', component : ArmaCreateComponent}
+    { path : 'armas/create', component : ArmaCreateComponent},
     { path : 'vehiculos', component :  VehiculoComponent},
     { path : 'vehiculos/create', component : VehiculoCreateComponent },
     { path : 'lugares', component :  LugarComponent},
@@ -30,7 +30,7 @@ export const routingComponents = [
 	UsuarioComponent,
 	UsuarioCreateComponent,
 	ArmaComponent,
-	ArmaCreateComponent
+	ArmaCreateComponent,
   UsuarioCreateComponent,
   VehiculoComponent,
   VehiculoCreateComponent,
