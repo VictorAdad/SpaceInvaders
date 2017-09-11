@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MRadioButton } from '@partials/radiobutton/radiobutton.component'
 
 
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -15,6 +16,16 @@ import { MiservicioService,MDato } from '@services/miservicio.service';
 export class UsuarioCreateComponent implements OnInit{
   titulo: String = "Crear nuevo";
   dato : MDato;
+  datosR: MRadioButton[] = [
+    {
+      "label" : "Radio 1",
+      "value" : "valor"
+    },
+    {
+      "label" : "Radio 2",
+      "value" : "valor2"
+    }
+  ];
 
   constructor(
     private servicio: MiservicioService,

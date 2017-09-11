@@ -8,11 +8,15 @@
 		<div class="row justify-content-md-center">
 			<div class="col-md-10">
 				<form>
-					<text label="id" [(value)]="dato.id"  ></text>  
+					<text label="id" [(value)]="dato.id"  prefix="hola" sufix="mode_edit"></text>  
 					<text label="Nombres(s)" [(value)]="dato.nombre"  ></text>
 					<text label="Apellido paterno" [(value)]="dato.paterno"></text>
 					<text label="Apellido materno" [(value)]="dato.materno"></text>
-					<text label="Nombre de usuario" [(value)]="dato.usuario"></text> 
+					<text label="Nombre de usuario" [(value)]="dato.usuario"></text>
+					<checkbox label="Checkbox"></checkbox>
+					<date></date>
+					<text-area label="Texto"></text-area>
+					<radiobuttongroup [radios]="datosR" [(value)]="dato.nombre"></radiobuttongroup> 
 					<p>
 				      <button md-button (click)="save(dato)" type="submit">Guardar</button>
 				    </p>
