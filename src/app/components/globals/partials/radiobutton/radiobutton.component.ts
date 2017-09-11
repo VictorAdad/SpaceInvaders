@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 
 @Component({
-	selector    : 'radiobuttongroup',
+	selector    : 'radiobutton',
   	templateUrl : './radiobutton.component.html'
 })
 export class RadioButton{
