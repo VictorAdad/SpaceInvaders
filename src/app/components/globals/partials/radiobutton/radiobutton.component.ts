@@ -8,6 +8,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class RadioButtonComponent{
 	@Input() radios: MRadioButton[] = [];
 	@Input() value: any;
+	@Input() class: string;
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>()
 

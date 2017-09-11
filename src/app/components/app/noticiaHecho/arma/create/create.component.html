@@ -1,0 +1,77 @@
+<div class="content-body">
+    <div class="row">
+        <div class="col-md-10">
+            <h2>Registrar vehículo</h2>
+        </div>
+        <div class="col-md-2">
+            <button class="float-right" md-raised-button routerLink="/vehiculos" color="accent">Regresar</button>
+        </div>
+    </div>
+    <div class="content">
+     <div class="row">
+		 	<div class="col-sm-6 col-md-4 col-lg-3">
+		 				<select2 
+		 				placeholder= "Clase de Arma"
+		 				[(options)]   ="clasesArmas"
+                         (valueChange)="valueChange($event)"		 				>
+		 			   </select2> 
+		 		</div>
+		 	<div  *ngIf="isArmaFuego" class="col-sm-6 col-md-4 col-lg-3">
+
+		 			<select2 
+		 			placeholder= "Tipo de Arma"
+		 			[(options)]="options"	
+		 			>
+		 		    </select2> 
+		 	    </div>
+		    </div>
+		 <div class="row" *ngIf="isArmaFuego" >
+		 	<div class="col-sm-6 col-md-4 col-lg-3">
+		 		<select2 
+		 		placeholder= "Subtipo de Arma"
+		 		[(options)]="options">	
+		 	</select2> 
+		 </div>
+
+		 <div class="col-sm-6 col-md-4 col-lg-3">
+
+		 	<select2 
+		 	placeholder= "Calibre"
+		 	[(options)]="options">	
+		 </select2> 
+		</div>
+		<div class="col-sm-6 col-md-4 col-lg-3">
+
+			<select2 
+			placeholder= "Mecanismo de acción"
+			[(options)]="options">	
+		   </select2> 
+		</div>
+		<div class="col-sm-6 col-md-4 col-lg-3">
+			<text label="Serie">
+			</text>  
+		</div>
+		</div>
+
+		<div class="row">
+			<text-area label="Notas" class="full-width"></text-area>  
+		</div>
+
+        <div class="row justify-content-md-end">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+
+			<button md-raised-button color="warn"  >
+				Guardar
+			</button>
+			<button md-button>
+				Cancelar
+			</button>
+		    </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,656 @@
+<div class="content-body">
+    <div class="row">
+        <div class="col-md-10">
+            <h2>Noticias de Hechos</h2>
+        </div>
+        <div class="col-md-2">
+            <button class="float-right" md-raised-button routerLink="/lugares" color="accent">Regresar</button>
+        </div>
+    </div>
+    <div class="content mat-elevation-z8">
+        <div class="row">
+          <div class="col-md-8">
+             <h3>Detalle de Persona</h3>
+          </div>
+           
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+            <h4>Datos generales</h4>
+          </div>
+            
+        </div>
+        <div class="row justify-content-md-center align-items-center" >
+          <div class="col">
+            <div class="row" >
+            <div class="col-md-10">
+              <label class="Naranja">Tipo de persona</label>
+            </div>
+            </div>
+            <div class="row">
+              <div class="col-md-10">
+            <radiobutton class="col-md-3" [radios]="
+                      [
+                      {label:'Física',value:'fisica'},
+                      {label:'Moral',value:'moral'}
+                      ]
+            "></radiobutton>
+            </div></div>
+            <div class="row">
+            <div class="col-md-10">
+              <label class="Naranja">Campo obligatorio</label>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        <div class="row justify-content-md-center align-items-center">
+          <div class="col">
+              <div class="row">
+              <div class="col-md-10">
+                <label class="Naranja">Tipo de Interviniente</label>
+                </div>
+              </div>
+              <div class="row">
+              <div class="col-md-10">
+              <radiobutton class="col-md-3" [radios]="
+                        [
+                        {label:'Apoderado legal',value:'apoderado legal'},
+                        {label:'Defensor público',value:'defensor publico'},
+                        {label:'Representante legal',value:'representante legal'},
+                        {label:'Asesor jurídico privado',value:'asesor juridico privado'},
+                        {label:'Imputado',value:'Imputado'},
+                        {label:'Testigo',value:'Testigo'},
+                        {label:'Asesor jurídico público',value:'Asesor jurídico público'},
+                        {label:'Ofendido',value:'Ofendido'},
+                        {label:'Víctima',value:'Víctima'},
+                        {label:'Defensor privado',value:'Defensor privado'},
+                        {label:'Remitente(policía)',value:'Remitente(policía)'}
+                        ]
+              "></radiobutton>
+              </div>
+              </div>
+              <div class="row">
+              <div class="col-md-10">
+                <label class="Naranja">Campo obligatorio</label>
+                </div>
+              </div>
+            </div>
+        </div>
+        
+        <div class="row  justify-content-md-center align-items-center" >
+            <md-expansion-panel style="width: 95%">
+              <md-expansion-panel-header>
+                <md-panel-title>
+                  <md-icon>perm_identity</md-icon>Datos de identidad
+                </md-panel-title>
+                <md-panel-description>
+                  
+                </md-panel-description>
+              </md-expansion-panel-header>
+              
+              <div class="row">
+                <div class="col-md-3">
+                  <text label="Nombre"></text>
+                </div>
+                <div class="col-md-3">
+                  <text label="Apellido paterno"></text>
+                </div>
+                <div class="col-md-3">
+                  <text label="Apellido materno"></text>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="
+                  [
+                    {label:'Hombre',value:'Hombre'}, 
+                    {label:'Mujer',value:'Mujer'}]" placeholder="Sexo"></select2>
+                </div>
+                <div class="col-md-2">
+                  <text label="Fecha de nacimiento"></text>
+                </div>
+                <div class="col-md-2">
+                  <text label="Edad"></text>
+                </div>
+
+                <div class="col-md-2">
+                  <text label="CURP"></text>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="
+                  [
+                    {label:'Mexicana',value:'Mexicana'}, 
+                    {label:'Otra',value:'Otra'}]" placeholder="Nacionalidad"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="
+                  [
+                    {label:'México',value:'México'}, 
+                    {label:'Otro',value:'Otro'}]" placeholder="País de nacimiento"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="
+                  [
+                    {label:'Aguas Calientes',value:'Aguas Calientes'}, 
+                    {label:'Otro',value:'Otro'}]" placeholder="Estado de nacimiento"></select2>
+                </div>
+
+                <div class="col-md-2">
+                  <select2 [options]="
+                  [
+                    {label:'Conocido',value:'Conocido'}, 
+                    {label:'Otro',value:'Otro'}]" placeholder="Municipio"></select2>
+                </div>
+              </div>
+
+
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="
+                  []" placeholder="Escolaridad"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="
+                  []" placeholder="Ocupación"></select2>
+                </div>
+                <div class="col-md-2">
+                  <text label="Lugar de trabajo"></text>
+                </div>
+
+                <div class="col-md-2">
+                  <text label="Ingresos mensuales"></text>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-2">
+                 <text label='RFC'></text>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="
+                  []" placeholder="Estado civil"></select2>
+                </div>
+                <div class="col-md-2">
+                  <text label="Número de hijos"></text>
+                </div>
+
+                <div class="col-md-2">
+                  <text label="Religión"></text>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-2">
+                 <select2 [options]="
+                  [{value:'Sí',label:'Si'},{value:'No',label:'No'}]" placeholder="Habla Español"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="
+                  []" placeholder="Lengua Índigena"></select2>
+                </div>
+                <div class="col-md-2">
+                   <select2 [options]="
+                  []" placeholder="Grupo étnico"></select2>
+                </div>
+
+                <div class="col-md-2">
+                  <select2 [options]="
+                  []" placeholder="Alfabetismo"></select2>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-2">
+                 <select2 [options]="
+                  []" placeholder="Familia ligüistica"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="
+                  [{value:'Sí',label:'Si'},{value:'No',label:'No'}]" placeholder="Necesita interprete"></select2>
+                </div>
+                <div class="col-md-4">
+                   <text label="Adicciones"></text>
+                </div>
+              </div>
+
+               <div class="row">
+                <div class="col-md-2">
+                 <checkbox label="Detenido"></checkbox> 
+                </div>
+                <div class="col-md-2">
+                  <text label="Fecha de denteción"></text>
+                </div>
+                <div class="col-md-2">
+                   <text label="Hora de denteción"></text>
+                </div>
+
+                <div class="col-md-2">
+                  <select2 [options]="
+                  []" placeholder="Tipo de denteción"></select2>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-2">
+                 <text label="Fecha de declaración"></text> 
+                </div>
+                <div class="col-md-2">
+                   <select2 [options]="
+                  []" placeholder="Tipo de reincidencia"></select2>
+                </div>
+                <div class="col-md-2">
+                    <select2 [options]="
+                  []" placeholder="Cereso"></select2>
+                </div>
+
+              </div>
+              
+            </md-expansion-panel>
+        </div>
+
+        <div class="row  justify-content-md-center align-items-center" >
+          <md-expansion-panel style="width: 95%">
+              <md-expansion-panel-header>
+                <md-panel-title>
+                  <md-icon>fingerprint</md-icon> Datos de identificación
+                </md-panel-title>
+                <md-panel-description>
+                  
+                </md-panel-description>
+              </md-expansion-panel-header>
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Documento de identificación"></select2>
+                </div>
+                <div class="col-md-2">
+                  <text label="Autoridad emisora"></text>
+                </div>
+                <div class="col-md-2">
+                  <text label="Número o folio de documento"></text>
+                </div>
+                <div class="col-md-2">
+                  <text label="alias"></text>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <text label="Otros nombres"></text>
+                </div>
+              </div>
+          </md-expansion-panel>
+        </div>
+
+      <div class="row  justify-content-md-center align-items-center" >
+          <md-expansion-panel style="width: 95%">
+              <md-expansion-panel-header>
+                <md-panel-title>
+                  <md-icon>room</md-icon> Datos de Localización
+                </md-panel-title>
+                <md-panel-description>
+                  
+                </md-panel-description>
+              </md-expansion-panel-header>
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="País"></select2>
+                </div>
+                <div class="col-md-2">
+                   <select2 [options]="[]" placeholder="Estado"></select2>
+                </div>
+                <div class="col-md-2">
+                   <select2 [options]="[]" placeholder="Municipio/Delegación"></select2>
+                </div>
+                <div class="col-md-2"><select2 [options]="[]" placeholder="Colonia/Asentamiento"></select2>
+                </div>
+              </div>
+
+               <div class="row">
+                <div class="col-md-2">
+                 <text label="Localidad"></text> 
+                </div>
+                <div class="col-md-2">
+                  <text label="Calle"></text>
+                </div>
+                <div class="col-md-2">
+                   <text label="No. exterior"></text>
+                </div>
+
+                <div class="col-md-2">
+                  <text label="No. interior"></text>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-2">
+                 <text label="CP"></text> 
+                </div>
+                <div class="col-md-2">
+                  <text label="Tipo de domicilio"></text>
+                </div>
+                <div class="col-md-4">
+                   <text label="Referencias"></text>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-2">
+                 <text label="Tel. particular"></text> 
+                </div>
+                <div class="col-md-2">
+                  <text label="Tel. del trabajo"></text>
+                </div>
+                <div class="col-md-2">
+                   <text label="Extensión"></text>
+                </div>
+                <div class="col-md-2">
+                  <text label="Tel. móvil"></text>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-2">
+                 <text label="Fax"></text> 
+                </div>
+                <div class="col-md-2">
+                  <text label="Otro medio de contacto"></text>
+                </div>
+                <div class="correo">
+                   <text label="Extensión"></text>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-4">
+                   <div class="row">
+                      <label class="Naranja">Tipo de residencia</label>
+                    </div>
+                    <div class="row">
+                    <radiobutton [radios]="
+                              [
+                              {label:'Residencia habitual',value:'Residencia habitual'},
+                              {label:'Domicilio procesal',value:'Domicilio procesal'}
+                              ]
+                    "></radiobutton>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <button class="float-right" md-raised-button color="accent">Agregar</button>
+                </div>
+                
+              </div>
+              
+          </md-expansion-panel>
+        </div>
+
+
+        <div class="row  justify-content-md-center align-items-center" >
+          <md-expansion-panel style="width: 95%">
+              <md-expansion-panel-header>
+                <md-panel-title>
+                 <md-icon>sentiment_neutral</md-icon> Media de filiación
+                </md-panel-title>
+                <md-panel-description>
+                  
+                </md-panel-description>
+              </md-expansion-panel-header>
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Compleción"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Piel"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Cara"></select2>
+                </div>
+              </div>
+              Cabello
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Cantidad"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Color"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Forma"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Calvicie"></select2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Implantación"></select2>
+                </div>
+              </div>
+              Frente
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Altura"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Inclinación"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Ancho"></select2>
+                </div>
+              </div>
+              Cejas
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Dirección"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Implantación"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Forma"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Tamaño"></select2>
+                </div>
+              </div>
+              Ojos
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Color"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Forma"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Tamaño"></select2>
+                </div>
+              </div>
+              Nariz
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Raíz(prof)"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Dorso"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Ancho"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Base"></select2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Altura"></select2>
+                </div>
+              </div>
+              Boca
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Tamaño"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Comisuras"></select2>
+                </div>
+              </div>
+              Labios
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Espesor"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Altura del naso labial"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Prominencia"></select2>
+                </div>
+              </div>
+              Mentón
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Tipo"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Forma"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Inclinación"></select2>
+                </div>
+              </div>
+              Oreja derecha
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Forma"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Hélix original"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Hélix superior"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Hélix posterior"></select2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Hélix adherencia"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Lóbulo contorno"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Lóbulo adherencia"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Lóbulo particular"></select2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Lóbulo dimensión"></select2>
+                </div>
+              </div>
+
+              Oreja izquierda
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Forma"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Hélix original"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Hélix superior"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Hélix posterior"></select2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Hélix adherencia"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Lóbulo contorno"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Lóbulo adherencia"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Lóbulo particular"></select2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Lóbulo dimensión"></select2>
+                </div>
+              </div>
+              Sangre
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Tipo"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Factor RH"></select2>
+                </div>
+              </div>
+              Talla
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Estatura"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Peso"></select2>
+                </div>
+              </div>
+              Señas Particulares
+              <div class="row">
+                <div class="col-md-2">
+                  <checkbox label="Usa anteojos"></checkbox>
+                </div>
+                
+              </div>
+
+              <div class="row">
+                <div class="col-md-8">
+                  <text label="Cicatrices"></text>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8">
+                  <text label="Tatuajes"></text>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8">
+                  <text label="Lunares"></text>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8">
+                  <text label="Prótesis"></text>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8">
+                  <text label="Otras"></text>
+                </div>
+              </div>
+
+          </md-expansion-panel>
+        </div>
+
+        <div class="row justify-content-md-end">
+                    <div class="col-md-2">
+                        <button md-raised-button type="submit" color="accent">Guardar</button>
+                    </div>
+                    <div class="col-md-2">
+                        <button md-button type="submit">Cancelar</button>
+                    </div>
+                </div>
+    </div>
+</div>

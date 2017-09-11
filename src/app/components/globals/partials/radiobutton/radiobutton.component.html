@@ -1,5 +1,8 @@
 <md-radio-group [(ngModel)]="value" (ngModelChange)="update($event)">
 
-  <md-radio-button  *ngFor="let radio of radios" value="{{radio.value}}">{{radio.label}}</md-radio-button>
-  
+<div class="row">
+<div *ngFor="let radio of radios" class="{{class}}">
+	<md-radio-button   value="{{radio.value}}" >{{radio.label}}</md-radio-button>
+</div>
+  </div>
 </md-radio-group>
