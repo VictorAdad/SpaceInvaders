@@ -24,19 +24,19 @@
           <div class="col">
             <div class="row" >
             <div class="col-md-10">
-              <label class="Naranja">Tipo de persona</label>
+              <label class="Naranja">Tipo de persona </label>
             </div>
             </div>
             <div class="row">
               <div class="col-md-10">
-            <radiobutton class="col-md-3" [radios]="
+            <radiobutton class="col-md-3" [(value)]="tipoPersona" [radios]="
                       [
-                      {label:'Física',value:'fisica'},
-                      {label:'Moral',value:'moral'}
+                      {label:'Física',value:'Física'},
+                      {label:'Moral',value:'Moral'}
                       ]
             "></radiobutton>
             </div></div>
-            <div class="row">
+            <div class="row" hidden="true">
             <div class="col-md-10">
               <label class="Naranja">Campo obligatorio</label>
               </div>
@@ -53,12 +53,12 @@
               </div>
               <div class="row">
               <div class="col-md-10">
-              <radiobutton class="col-md-3" [radios]="
+              <radiobutton class="col-md-3" [(value)]="tipoInterviniente" [radios]="
                         [
-                        {label:'Apoderado legal',value:'apoderado legal'},
-                        {label:'Defensor público',value:'defensor publico'},
-                        {label:'Representante legal',value:'representante legal'},
-                        {label:'Asesor jurídico privado',value:'asesor juridico privado'},
+                        {label:'Apoderado legal',value:'Apoderado legal'},
+                        {label:'Defensor público',value:'Defensor publico'},
+                        {label:'Representante legal',value:'Representante legal'},
+                        {label:'Asesor jurídico privado',value:'Asesor juridico privado'},
                         {label:'Imputado',value:'Imputado'},
                         {label:'Testigo',value:'Testigo'},
                         {label:'Asesor jurídico público',value:'Asesor jurídico público'},
@@ -70,15 +70,16 @@
               "></radiobutton>
               </div>
               </div>
-              <div class="row">
+              <div class="row" hidden="true">
               <div class="col-md-10">
                 <label class="Naranja">Campo obligatorio</label>
                 </div>
               </div>
             </div>
         </div>
-        
-        <div class="row  justify-content-md-center align-items-center" >
+        <!-- Datos de identidad-->
+        <div class="row  justify-content-md-center align-items-center"
+         *ngIf="muestraDatos();">
             <md-expansion-panel style="width: 95%">
               <md-expansion-panel-header>
                 <md-panel-title>
@@ -88,6 +89,11 @@
                   
                 </md-panel-description>
               </md-expansion-panel-header>
+              <div class="row" *ngIf="tipoPersona=='Moral'">
+              <div class="col-md-3">
+                  <text label="Razón social"></text>
+                </div>
+              </div>
               
               <div class="row">
                 <div class="col-md-3">
@@ -99,8 +105,6 @@
                 <div class="col-md-3">
                   <text label="Apellido materno"></text>
                 </div>
-              </div>
-              <div class="row">
                 <div class="col-md-2">
                   <select2 [options]="
                   [
@@ -117,9 +121,7 @@
                 <div class="col-md-2">
                   <text label="CURP"></text>
                 </div>
-              </div>
-
-              <div class="row">
+              
                 <div class="col-md-2">
                   <select2 [options]="
                   [
@@ -145,10 +147,7 @@
                     {label:'Conocido',value:'Conocido'}, 
                     {label:'Otro',value:'Otro'}]" placeholder="Municipio"></select2>
                 </div>
-              </div>
-
-
-              <div class="row">
+              
                 <div class="col-md-2">
                   <select2 [options]="
                   []" placeholder="Escolaridad"></select2>
@@ -164,9 +163,7 @@
                 <div class="col-md-2">
                   <text label="Ingresos mensuales"></text>
                 </div>
-              </div>
-
-              <div class="row">
+              
                 <div class="col-md-2">
                  <text label='RFC'></text>
                 </div>
@@ -181,9 +178,7 @@
                 <div class="col-md-2">
                   <text label="Religión"></text>
                 </div>
-              </div>
-
-              <div class="row">
+              
                 <div class="col-md-2">
                  <select2 [options]="
                   [{value:'Sí',label:'Si'},{value:'No',label:'No'}]" placeholder="Habla Español"></select2>
@@ -201,9 +196,7 @@
                   <select2 [options]="
                   []" placeholder="Alfabetismo"></select2>
                 </div>
-              </div>
-
-              <div class="row">
+              
                 <div class="col-md-2">
                  <select2 [options]="
                   []" placeholder="Familia ligüistica"></select2>
@@ -215,9 +208,8 @@
                 <div class="col-md-4">
                    <text label="Adicciones"></text>
                 </div>
-              </div>
-
-               <div class="row">
+                </div>
+                <div class="row" *ngIf="tipoInterviniente=='Imputado'">
                 <div class="col-md-2">
                  <checkbox label="Detenido"></checkbox> 
                 </div>
@@ -232,9 +224,7 @@
                   <select2 [options]="
                   []" placeholder="Tipo de denteción"></select2>
                 </div>
-              </div>
-
-              <div class="row">
+              
                 <div class="col-md-2">
                  <text label="Fecha de declaración"></text> 
                 </div>
@@ -251,8 +241,9 @@
               
             </md-expansion-panel>
         </div>
-
-        <div class="row  justify-content-md-center align-items-center" >
+        <!-- Datos de identificacion -->
+        <div class="row  justify-content-md-center align-items-center" 
+        *ngIf="muestraDatos();">
           <md-expansion-panel style="width: 95%">
               <md-expansion-panel-header>
                 <md-panel-title>
@@ -272,19 +263,19 @@
                 <div class="col-md-2">
                   <text label="Número o folio de documento"></text>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" *ngIf="tipoInterviniente=='Imputado'">
                   <text label="alias"></text>
                 </div>
-              </div>
-              <div class="row">
                 <div class="col-md-2">
                   <text label="Otros nombres"></text>
                 </div>
               </div>
+              
           </md-expansion-panel>
         </div>
-
-      <div class="row  justify-content-md-center align-items-center" >
+        <!-- Datos de localizacion -->
+      <div class="row  justify-content-md-center align-items-center"
+      *ngIf="muestraDatos();" >
           <md-expansion-panel style="width: 95%">
               <md-expansion-panel-header>
                 <md-panel-title>
@@ -364,18 +355,19 @@
               </div>
 
               <div class="row">
-                <div class="col-md-4">
-                   <div class="row">
+                <div class="col-md-2">
+                   
                       <label class="Naranja">Tipo de residencia</label>
                     </div>
                     <div class="row">
-                    <radiobutton [radios]="
+                    <div class="col-md-4">
+                    <radiobutton class="col-md-4" [radios]="
                               [
                               {label:'Residencia habitual',value:'Residencia habitual'},
                               {label:'Domicilio procesal',value:'Domicilio procesal'}
                               ]
                     "></radiobutton>
-                  </div>
+                    </div>
                 </div>
                 <div class="col-md-4">
                   <button class="float-right" md-raised-button color="accent">Agregar</button>
@@ -386,8 +378,9 @@
           </md-expansion-panel>
         </div>
 
-
-        <div class="row  justify-content-md-center align-items-center" >
+        <!-- Media de filiación -->
+        <div class="row  justify-content-md-center align-items-center" 
+        *ngIf="tipoInterviniente=='Imputado'">
           <md-expansion-panel style="width: 95%">
               <md-expansion-panel-header>
                 <md-panel-title>

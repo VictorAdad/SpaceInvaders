@@ -5,5 +5,10 @@ import { Component } from '@angular/core';
   	templateUrl : './persona-fisica-imputado.component.html'
 })
 export class PersonaFisicaImputadoComponent{
+	tipoPersona: string = "tp";
+	tipoInterviniente: string="";
 
+	muestraDatos(){
+		return true;
+	}
 }
