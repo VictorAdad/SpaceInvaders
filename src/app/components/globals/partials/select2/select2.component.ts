@@ -5,7 +5,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 	selector    : 'select2',
   	templateUrl : './select2.component.html'
 })
-export class Select2{
+export class Select2Component{
 	@Input() options: MOption[] = [];
 	@Input() value: any;
 	@Input() placeholder: string;

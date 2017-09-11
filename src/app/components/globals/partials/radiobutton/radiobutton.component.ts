@@ -5,7 +5,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 	selector    : 'radiobutton',
   	templateUrl : './radiobutton.component.html'
 })
-export class RadioButton{
+export class RadioButtonComponent{
 	@Input() radios: MRadioButton[] = [];
 	@Input() value: any;
 

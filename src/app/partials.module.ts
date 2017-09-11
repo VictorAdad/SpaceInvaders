@@ -3,9 +3,9 @@ import { TextComponent } from '@partials/text/text.component';
 import { CheckboxComponent } from '@partials/checkbox/checkbox.component';
 import { DateComponent } from '@partials/date/date.component';
 import { TextareaComponent } from '@partials/textarea/textarea.component';
-import { RadioButton} from '@partials/radiobutton/radiobutton.component';
-import { Select2 } from '@partials/select2/select2.component'
-import { TokenInput } from '@partials/tokeninput/tokeninput.component'
+import { RadioButtonComponent} from '@partials/radiobutton/radiobutton.component';
+import { Select2Component } from '@partials/select2/select2.component'
+
 
 @NgModule()
 export class PartialsModule {}
@@ -15,8 +15,7 @@ export const partialsComponents = [
 	CheckboxComponent,
 	DateComponent,
 	TextareaComponent,
-	RadioButton,
-	Select2,
-	TokenInput
+	RadioButtonComponent,
+	Select2Component
 ];
 
