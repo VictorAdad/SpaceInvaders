@@ -1,29 +1,22 @@
-		 <!--sm="6" md="4" lg="3"-->
-	 <div class="container">
-		 	<div class="row">
-		 		<div class="col-sm-9 col-md-10 col-lg-10">
-		 			<h1><b>Registrar Arma</b></h1>
-		 		</div>
-		 		<div class="col-sm-3 col-md-2 col-lg-2">
-		 			<a md-raised-button color="warn" routerLink="/armas" >Regresar</a>
-		 		</div>
-		 	</div>
-		 	<br/>
-
-		 	<div>
-		 		<h5>CREAR ARMA</h5>
-		 		<br/>
-
-
-		 		<div class="row">
-		 			<div class="col-sm-6 col-md-4 col-lg-3">
+<div class="content-body">
+    <div class="row">
+        <div class="col-md-10">
+            <h2>Registrar vehículo</h2>
+        </div>
+        <div class="col-md-2">
+            <button class="float-right" md-raised-button routerLink="/vehiculos" color="accent">Regresar</button>
+        </div>
+    </div>
+    <div class="content">
+     <div class="row">
+		 	<div class="col-sm-6 col-md-4 col-lg-3">
 		 				<select2 
 		 				placeholder= "Clase de Arma"
 		 				[(options)]   ="clasesArmas"
                          (valueChange)="valueChange($event)"		 				>
 		 			   </select2> 
 		 		</div>
-		 		<div  *ngIf="isArmaFuego" class="col-sm-6 col-md-4 col-lg-3">
+		 	<div  *ngIf="isArmaFuego" class="col-sm-6 col-md-4 col-lg-3">
 
 		 			<select2 
 		 			placeholder= "Tipo de Arma"
@@ -55,8 +48,8 @@
 		   </select2> 
 		</div>
 		<div class="col-sm-6 col-md-4 col-lg-3">
-			<text-area label="Serie">
-			</text-area>  
+			<text label="Serie">
+			</text>  
 		</div>
 		</div>
 
@@ -64,13 +57,8 @@
 			<text-area label="Notas" class="full-width"></text-area>  
 		</div>
 
-		</div>
-		<div class="row">
-		<div class="col-sm-6 col-md-8 col-lg-9">
-		</div>
-
-
-			<div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="row justify-content-md-end">
+            <div class="col-sm-6 col-md-4 col-lg-3">
 
 			<button md-raised-button color="warn"  >
 				Guardar
@@ -79,8 +67,11 @@
 				Cancelar
 			</button>
 		    </div>
+        </div>
+    </div>
+</div>
 
-		</div>
 
-	</div>
+
+
 
