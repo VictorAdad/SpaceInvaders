@@ -5,14 +5,17 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
+import { LoginComponent } from '@components-app/login/login.component';
 import { AppRoutingModule, routingComponents} from './app.routing';
 import { PartialsModule, partialsComponents} from './partials.module';
 
 import { MiservicioService} from "./services/miservicio.service";
+import { AuthenticationService} from "@services/auth/authentication.service";
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
     routingComponents,
     partialsComponents
   ],
@@ -27,7 +30,8 @@ import { MiservicioService} from "./services/miservicio.service";
     FormsModule
   ],
   providers: [
-  MiservicioService
+    MiservicioService,
+    AuthenticationService,
   ],
   bootstrap: [AppComponent]
 })
