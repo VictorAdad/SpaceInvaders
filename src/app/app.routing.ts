@@ -17,6 +17,7 @@ const routes: Routes = [
     { path : 'usuarios/create', component : UsuarioCreateComponent},
     { path : 'armas', component : ArmaComponent},
     { path : 'armas/create', component : ArmaCreateComponent},
+    
     { path : 'vehiculos', component :  VehiculoComponent},
     { path : 'vehiculos/create', component : VehiculoCreateComponent },
     { path : 'lugares', component :  LugarComponent},
