@@ -10,6 +10,7 @@ import { VehiculoComponent } from '@components-app/noticiaHecho/vehiculo/vehicul
 import { VehiculoCreateComponent } from '@components-app/noticiaHecho/vehiculo/create/create.component';
 import { LugarComponent } from '@components-app/noticiaHecho/lugar/lugar.component';
 import { LugarCreateComponent } from '@components-app/noticiaHecho/lugar/create/create.component';
+import {PersonaFisicaImputadoComponent} from '@components-app/noticiaHecho/persona/persona-fisica-imputado.component';
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent},
@@ -21,7 +22,8 @@ const routes: Routes = [
     { path : 'vehiculos', component :  VehiculoComponent},
     { path : 'vehiculos/create', component : VehiculoCreateComponent },
     { path : 'lugares', component :  LugarComponent},
-    { path : 'lugares/create', component : LugarCreateComponent }
+    { path : 'lugares/create', component : LugarCreateComponent },
+    { path : 'personas/persona-fisica-imputado', component : PersonaFisicaImputadoComponent }
 ];
 
 @NgModule({
@@ -41,6 +43,8 @@ export const routingComponents = [
   LugarComponent,
   LugarCreateComponent,
   LoginComponent,
-  LogoutComponent
+  LogoutComponent,
+  PersonaFisicaImputadoComponent
+
 ];
 
