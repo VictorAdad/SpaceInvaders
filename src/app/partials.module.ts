@@ -3,8 +3,8 @@ import { TextComponent } from '@partials/text/text.component';
 import { CheckboxComponent } from '@partials/checkbox/checkbox.component';
 import { DateComponent } from '@partials/date/date.component';
 import { TextareaComponent } from '@partials/textarea/textarea.component';
-import { RadioButton} from '@partials/radiobutton/radiobutton.component';
-import { Select} from '@partials/select/select.component'
+import { RadioButtonComponent} from '@partials/radiobutton/radiobutton.component';
+import { Select2Component } from '@partials/select2/select2.component'
 
 
 @NgModule()
@@ -15,7 +15,7 @@ export const partialsComponents = [
 	CheckboxComponent,
 	DateComponent,
 	TextareaComponent,
-	RadioButton,
-	Select
-	];
+	RadioButtonComponent,
+	Select2Component
+];
 

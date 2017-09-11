@@ -24,7 +24,7 @@
 // @include angular-material-theme($app-theme);
 
 $app-primary: mat-palette($mat-blue-grey);
-$app-accent:  mat-palette($mat-red, A200, A100, A400);
+$app-accent:  mat-palette($mat-red, 900, A200, A100);
 $app-warn:    mat-palette($mat-red, 900);
 $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);	
 @include angular-material-theme($app-theme);
