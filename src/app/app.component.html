@@ -1,6 +1,6 @@
 <md-sidenav-container fullscreen>
     <md-toolbar color="primary" class="mat-drawer-container mat-sidenav-container mat-drawer-transition mat-elevation-z8">
-        <button md-icon-button (click)="sidenav.open()">
+        <button md-icon-button (click)="sidenav.toggle()">
             <md-icon class="md-24">menu</md-icon>
         </button>
         <span>
@@ -11,7 +11,27 @@
 
         <md-icon class="button-menu">account_circle</md-icon>
         <span>  Administardor del sistema</span>
-        <md-icon fxHide="false" fxHide.gt-sm class="clickable">more_vert</md-icon>
+        <button md-icon-button [mdMenuTriggerFor]="menu">
+            <md-icon fxHide="false" fxHide.gt-sm>more_vert</md-icon>
+        </button>
+        <md-menu #menu="mdMenu">
+            <button md-menu-item>
+                <md-icon fxHide="false" fxHide.gt-sm>perm_identity</md-icon>Perfil
+            </button>
+            <button md-menu-item>
+                <md-icon fxHide="false" fxHide.gt-sm>build</md-icon>Configuración
+            </button>
+            <button md-menu-item>
+                <md-icon fxHide="false" fxHide.gt-sm>help_outline</md-icon>Ayuda
+            </button>
+            <md-divider></md-divider>
+            <button md-menu-item>
+                <md-icon fxHide="false" fxHide.gt-sm>autorenew</md-icon>
+            </button>
+            <button md-menu-item>
+                <md-icon fxHide="false" fxHide.gt-sm>highlight_off</md-icon>Logout
+            </button>
+        </md-menu>
     </md-toolbar>
     <md-sidenav #sidenav opened="true" mode="side" class="mat-elevation-z8">
         <md-toolbar color="primary">
@@ -19,9 +39,6 @@
                 <span>Menu</span>
             </h2>
             <span class="spacer"></span>
-            <button md-icon-button (click)="sidenav.close()">
-                <md-icon>close</md-icon>
-            </button>
         </md-toolbar>
         <md-list>
             <md-list-item><a routerLink="/">Home</a></md-list-item>
