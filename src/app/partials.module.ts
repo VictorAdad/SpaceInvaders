@@ -4,7 +4,9 @@ import { CheckboxComponent } from '@partials/checkbox/checkbox.component';
 import { DateComponent } from '@partials/date/date.component';
 import { TextareaComponent } from '@partials/textarea/textarea.component';
 import { RadioButtonComponent} from '@partials/radiobutton/radiobutton.component';
-import { Select2Component } from '@partials/select2/select2.component'
+import { Select2Component } from '@partials/select2/select2.component';
+import { BreadCrumbComponent } from '@partials/breadcrumb/breadcrumb.component';
+
 
 
 @NgModule()
@@ -16,6 +18,7 @@ export const partialsComponents = [
 	DateComponent,
 	TextareaComponent,
 	RadioButtonComponent,
-	Select2Component
+	Select2Component,
+	BreadCrumbComponent
 ];
 
