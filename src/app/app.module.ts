@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { MaterialModule, MdNativeDateModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from '@components-app/login/login.component';
@@ -29,7 +30,8 @@ import { AuthenticationService} from "@services/auth/authentication.service";
     AppRoutingModule,
     PartialsModule,
     HttpModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     MiservicioService,
