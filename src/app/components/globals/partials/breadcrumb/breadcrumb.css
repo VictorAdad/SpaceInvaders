@@ -5,10 +5,14 @@ ul.breadcrumb {
 }
 ul.breadcrumb li {display: inline;}
 ul.breadcrumb li+li:before {
-    padding: 7px;
-    color: black;
-    content: ">";
+    content: '\E5CC';
+    color: rgba(0, 0, 0, 0.70);
+    vertical-align: top;
+    display: inline-block;
+    font-family: 'Material Icons';
+    -webkit-font-smoothing: antialiased;
 }
+
 ul.breadcrumb li a {color: black;}
 
 i{

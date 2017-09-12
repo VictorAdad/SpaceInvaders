@@ -16,20 +16,21 @@ import { RelacionComponent } from '@components-app/noticiaHecho/relacion/relacio
 import { RelacionCreateComponent } from '@components-app/noticiaHecho/relacion/create/create.component';
 
 const routes: Routes = [
-    { path : '', component: HomeComponent},
+    { path : '', redirectTo: 'home', pathMatch: 'full'},
+    { path : '', component: HomeComponent, data : { breadcrumb : 'Noticia de hechos'}},
+    { path : 'noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
     { path : 'login', component: LoginComponent},
     { path : 'usuarios', component : UsuarioComponent},
     { path : 'usuarios/create', component : UsuarioCreateComponent},
-    { path : 'noticia-hecho', component : NoticiaHechoComponent},
     { path : 'armas', component : ArmaComponent},
     { path : 'armas/create', component : ArmaCreateComponent},   
-    { path : 'vehiculos', component :  VehiculoComponent},
-    { path : 'vehiculos/create', component : VehiculoCreateComponent },
     { path : 'lugares', component :  LugarComponent},
     { path : 'lugares/create', component : LugarCreateComponent },
-    { path : 'personas/persona-fisica-imputado', component : PersonaFisicaImputadoComponent },
     { path : 'relaciones', component : RelacionComponent },
-    { path : 'relaciones/create', component : RelacionCreateComponent }
+    { path : 'relaciones/create', component : RelacionCreateComponent },
+    { path : 'vehiculos', component :  VehiculoComponent, data: { breadcrumb: 'Vehiculos'}},
+    { path : 'vehiculos/create', component : VehiculoCreateComponent, data: { breadcrumb: 'Nuevo Vehiculo'}},
+    { path : 'personas/persona-fisica-imputado', component : PersonaFisicaImputadoComponent, data : { breadcrumb : 'Crear Persona'}}
 ];
 
 @NgModule({
@@ -43,15 +44,15 @@ export const routingComponents = [
 	UsuarioCreateComponent,
 	ArmaComponent,
 	ArmaCreateComponent,
-    UsuarioCreateComponent,
-    VehiculoComponent,
-    VehiculoCreateComponent,
-    LugarComponent,
-    LugarCreateComponent,
-    LoginComponent,
-    PersonaFisicaImputadoComponent,
-    RelacionComponent,
-    RelacionCreateComponent,
-    HomeComponent,
-    NoticiaHechoComponent
+  UsuarioCreateComponent,
+  VehiculoComponent,
+  VehiculoCreateComponent,
+  LugarComponent,
+  LugarCreateComponent,
+  LoginComponent,
+  PersonaFisicaImputadoComponent,
+  RelacionComponent,
+  RelacionCreateComponent,
+  HomeComponent,
+  NoticiaHechoComponent
 ];

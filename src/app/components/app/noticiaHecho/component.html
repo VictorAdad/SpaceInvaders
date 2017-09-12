@@ -1,4 +1,12 @@
-<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect vertical-mdl-tabs">
+<breadcrumb #parent>
+    <div class="row">
+        <ng-template ngFor let-route [ngForOf]="parent.breadcrumbs">
+            <a    *ngIf="!route.terminal" class="breadcrumb" href="" [routerLink]="[route.url]">{{ route.displayName }}</a>
+            <span *ngIf="route.terminal"  class="breadcrumb">{{ route.displayName }}</span>
+        </ng-template>
+    </div>
+</breadcrumb>
+<div class="mdl-tabs vertical-mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
     <div class="mdl-grid mdl-grid--no-spacing">
         <div class="mdl-cell mdl-cell--2-col">
             <div class="mdl-tabs__tab-bar">
@@ -47,16 +55,16 @@
                   <delito></delito>
             </div>
             <div class="mdl-tabs__panel" id="tab4-panel">
-                 Content 1
+                 <lugar></lugar>
             </div>
             <div class="mdl-tabs__panel" id="tab5-panel">
-                 Content 2
+                 <arma></arma>
             </div>
             <div class="mdl-tabs__panel" id="tab6-panel">
-                  Content 3
+                  <vehiculo></vehiculo>
             </div>
             <div class="mdl-tabs__panel" id="tab7-panel">
-                 Content 1
+                 <relacion></relacion>
             </div>
             <div class="mdl-tabs__panel" id="tab8-panel">
                  Content 2

@@ -1,0 +1,10 @@
+<form class="">
+  <md-form-field class="full-width">
+    <input type="text" placeholder="{{label}}" aria-label="Number" mdInput [formControl]="myControl" [mdAutocomplete]="auto" >
+    <md-autocomplete #auto="mdAutocomplete" [displayWith]="displayFn.bind(this)">
+      <md-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{ option }}
+      </md-option>
+    </md-autocomplete>
+  </md-form-field>
+</form>
