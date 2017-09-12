@@ -3,9 +3,7 @@
         <h2>Relaciones</h2>
     </div>
     <div class="col-md-6">
-        <button class="float-right" md-fab color="accent" routerLink="/relaciones/create">
-            <md-icon class="md-24" aria-label="Example icon-button with a heart icon">add</md-icon>
-        </button>
+        <button class="float-right" md-raised-button routerLink="/relaciones/create" color="accent">Agregar relación</button>
     </div>
 </div>
 <div class="">
@@ -21,28 +19,25 @@
           The actual rendered columns are set as a property on the row definition" -->
 
         <!-- Position Column -->
-        <ng-container mdColumnDef="position">
-            <md-header-cell *mdHeaderCellDef> No. </md-header-cell>
-            <md-cell *mdCellDef="let element"> {{element.id}} </md-cell>
+        <ng-container mdColumnDef="Tipo">
+            <md-header-cell *mdHeaderCellDef> Tipo de relación </md-header-cell>
+            <md-cell *mdCellDef="let element"> {{element.tipo}} </md-cell>
         </ng-container>
 
         <!-- Name Column -->
-        <ng-container mdColumnDef="name">
-            <md-header-cell *mdHeaderCellDef> Name </md-header-cell>
-            <md-cell *mdCellDef="let element"> {{element.nombre}} </md-cell>
+        <ng-container mdColumnDef="Elementos">
+            <md-header-cell *mdHeaderCellDef> Elementos relacionados </md-header-cell>
+            <md-cell *mdCellDef="let element"> {{element.elementos}} </md-cell>
         </ng-container>
 
         <!-- Weight Column -->
-        <ng-container mdColumnDef="weight">
-            <md-header-cell *mdHeaderCellDef> Weight </md-header-cell>
-            <md-cell *mdCellDef="let element"> {{element.paterno}} </md-cell>
+        <ng-container mdColumnDef="Acciones">
+            <md-header-cell *mdHeaderCellDef> Acciones </md-header-cell>
+                <md-cell *mdCellDef="let element"> 
+                <md-icon class="md-24" aria-label="Eliminar">delete</md-icon>
+               </md-cell>
         </ng-container>
 
-        <!-- Color Column -->
-        <ng-container mdColumnDef="symbol">
-            <md-header-cell *mdHeaderCellDef> Symbol </md-header-cell>
-            <md-cell *mdCellDef="let element"> {{element.materno}} </md-cell>
-        </ng-container>
 
         <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
         <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>

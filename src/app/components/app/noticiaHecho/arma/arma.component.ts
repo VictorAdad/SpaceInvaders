@@ -5,54 +5,40 @@ import { TableService} from '@utils/table/table.service';
 import { MiservicioService,MDato } from '@services/miservicio.service';
 
 @Component({
-    templateUrl:'./arma.component.html'
+    templateUrl:'./arma.component.html',
+    selector:'arma'
 })
 
 export class ArmaComponent{
-	displayedColumns = ['position', 'name', 'weight', 'symbol'];
-	data = data;
-	_datos: MDato[];
+	displayedColumns = ['Arma', 'Tipo', 'Marca', 'Acciones'];
+	data:Arma[];
 
 	dataSource: TableService | null;
 	@ViewChild(MdPaginator) paginator: MdPaginator;
 
-	constructor(private servicio: MiservicioService){}
+	constructor(){}
 
 	ngOnInit() {
-		this._datos = this.servicio.list();
-    	this.dataSource = new TableService(this.paginator, this._datos);
+      this.data=data;
+    	this.dataSource = new TableService(this.paginator, this.data);
 
     	console.log('-> Data Source', this.dataSource);
   	}
 }
 
-export interface Element {
-    name: string;
-    position: number;
-    weight: number;
-    symbol: string;
+export interface Arma {
+    id:number
+    arma: string;
+    tipo: string;
+    marca: string;
   }
   
-  
-  const data: Element[] = [
-      {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-      {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-      {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-      {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-      {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-      {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-      {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-      {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-      {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-      {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-      {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-      {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-      {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-      {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-      {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-      {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-      {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-      {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-      {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-      {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
+
+  const data: Arma[] = [
+      {id:1,arma: 'Arma de Juguete', tipo: '', marca:''},
+      {id:2,arma: 'Arma blanca', tipo: 'ballesta', marca:''},
+      {id:3,arma: 'Arma blanca', tipo: 'cuchillo', marca:''},
+      {id:4,arma: 'Arma de Fuego', tipo: 'Fisil de asalto', marca:'AKM'},
+      {id:5,arma: 'Arma de Fuego', tipo: 'Fisil de asalto', marca:'M-16'},
+      {id:6,arma: 'Arma de Fuego', tipo: 'Pistola', marca:'Karabina'},     
   ];
