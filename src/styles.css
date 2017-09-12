@@ -35,3 +35,7 @@ a{
 .mat-checkbox-layout{
     margin-top: 20px;
 }
+
+md-sidenav {
+    background-color: #CB1717;
+}
