@@ -6,7 +6,7 @@ import { TextareaComponent } from '@partials/textarea/textarea.component';
 import { RadioButtonComponent} from '@partials/radiobutton/radiobutton.component';
 import { Select2Component } from '@partials/select2/select2.component';
 import { BreadCrumbComponent } from '@partials/breadcrumb/breadcrumb.component';
-
+import { TokenInputComponent } from '@partials/tokeninput/tokeninput.component'
 
 
 @NgModule()
@@ -19,6 +19,7 @@ export const partialsComponents = [
 	TextareaComponent,
 	RadioButtonComponent,
 	Select2Component,
-	BreadCrumbComponent
+	BreadCrumbComponent,
+	TokenInputComponent
 ];
 
