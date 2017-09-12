@@ -2,7 +2,7 @@ import { Component, OnInit} from '@angular/core';
 declare var componentHandler: any;
 
 @Component({
-    templateUrl:'./noticia-hecho.component.html',
+    templateUrl:'./component.html',
     styleUrls  : [
         './styles/material.indigo-pink.min.css',
         './styles/tabs.css'

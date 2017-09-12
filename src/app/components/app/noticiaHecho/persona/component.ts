@@ -3,7 +3,7 @@ import { TableService} from '@utils/table/table.service';
 
 @Component({
 	selector : 'persona',
-    templateUrl:'./persona.component.html'
+    templateUrl:'./component.html'
 })
 
 export class PersonaComponent{

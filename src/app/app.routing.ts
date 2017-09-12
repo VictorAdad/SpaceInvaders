@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { UsuarioComponent } from '@components-app/usuario/usuario.component';
 import { UsuarioCreateComponent } from '@components-app/usuario/create/create.component';
 import { HomeComponent } from '@components-app/home/home.component';
-import { NoticiaHechoComponent } from '@components-app/noticiaHecho/noticia-hecho.component';
+import { NoticiaHechoComponent } from '@components-app/noticiaHecho/component';
 import { ArmaComponent } from '@components-app/noticiaHecho/arma/arma.component';
 import { ArmaCreateComponent } from '@components-app/noticiaHecho/arma/create/create.component';
 import { LoginComponent } from '@components-app/login/login.component';
