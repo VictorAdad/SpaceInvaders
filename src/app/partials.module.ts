@@ -18,8 +18,7 @@ export const partialsComponents = [
 	DateComponent,
 	TextareaComponent,
 	RadioButtonComponent,
-	Select2Component,
-	BreadCrumbComponent,
-	TokenInputComponent
+	TokenInputComponent,
+	Select2Component
 ];
 

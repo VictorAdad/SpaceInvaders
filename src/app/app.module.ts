@@ -10,6 +10,7 @@ import { LoginComponent } from '@components-app/login/login.component';
 import { AppRoutingModule, routingComponents} from './app.routing';
 import { PartialsModule, partialsComponents} from './partials.module';
 import { NoticiaHechoModule, noticiaHechoComponents} from '@components-app/noticiaHecho/module';
+import { BreadcrumbModule } from 'angular2-crumbs';
 
 import { MiservicioService} from "./services/miservicio.service";
 import { AuthenticationService} from "@services/auth/authentication.service";
@@ -31,7 +32,9 @@ import { AuthenticationService} from "@services/auth/authentication.service";
     PartialsModule,
     HttpModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserModule,
+    BreadcrumbModule.forRoot()
   ],
   providers: [
     MiservicioService,

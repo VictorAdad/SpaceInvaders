@@ -1,3 +1,11 @@
+<breadcrumb #parent>
+    <div class="row">
+        <ng-template ngFor let-route [ngForOf]="parent.breadcrumbs">
+            <a    *ngIf="!route.terminal" class="breadcrumb" href="" [routerLink]="[route.url]">{{ route.displayName }}</a>
+            <span *ngIf="route.terminal"  class="breadcrumb">{{ route.displayName }}</span>
+        </ng-template>
+    </div>
+</breadcrumb>
 <div class="mdl-tabs vertical-mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
     <div class="mdl-grid mdl-grid--no-spacing">
         <div class="mdl-cell mdl-cell--2-col">

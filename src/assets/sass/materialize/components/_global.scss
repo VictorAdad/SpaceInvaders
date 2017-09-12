@@ -191,8 +191,8 @@ video.responsive-video {
 
 // Breadcrumbs
 .breadcrumb {
-  font-size: 18px;
-  color: rgba(255,255,255, .7);
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.70);
 
   i,
   [class^="mdi-"], [class*="mdi-"],
@@ -204,7 +204,7 @@ video.responsive-video {
 
   &:before {
     content: '\E5CC';
-    color: rgba(255,255,255, .7);
+    color: rgba(0, 0, 0, 0.70);
     vertical-align: top;
     display: inline-block;
     font-family: 'Material Icons';
@@ -220,7 +220,7 @@ video.responsive-video {
   }
 
   &:last-child {
-    color: #fff;
+    color: #000000;
   }
 }
 
