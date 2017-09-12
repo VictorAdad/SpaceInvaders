@@ -4,7 +4,6 @@ declare var componentHandler: any;
 @Component({
     templateUrl:'./component.html',
     styleUrls  : [
-        './styles/material.indigo-pink.min.css',
         './styles/tabs.css'
     ]
 })

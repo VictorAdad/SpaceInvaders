@@ -21,11 +21,12 @@
       "styles": [
         "styles.css",
         "./assets/css/bootstrap-grid.css",
+        "./assets/css/mdl/material.css",
         "./assets/sass/materialize/materialize.scss",
         "./assets/sass/bootstrap/bootstrap.scss",
         "./assets/sass/theme.scss"
       ],
-      "scripts": ["./assets/js/material.min.js"],
+      "scripts": ["./assets/js/material.js"],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
