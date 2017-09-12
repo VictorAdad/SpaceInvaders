@@ -7,19 +7,7 @@ import 'rxjs/add/observable/of';
 @Component({
     selector: 'relacion-create',
     templateUrl: './create.component.html',
-    styles:[`
-    .example-container {
-  display: flex;
-  flex-direction: column;
-  max-height: 500px;
-  min-width: 300px;
-}
-
-.mat-table {
-  overflow: auto;
-}
-    
-    `]
+    styles:[``]
 })
 
 export class RelacionCreateComponent {
@@ -31,6 +19,26 @@ export class RelacionCreateComponent {
         { value:'Representante de la víctima', label:'Representante de la víctima' },
         { value:'Tutor de la víctima', label:'Tutor de la víctima' }
     ];
+
+    isTipoVictimaDelito: boolean = false;
+    isViolenciaGenero: boolean = false;
+
+    valueChangeSelect(option){
+      if(option=='Imputado-Víctima-Delito'){
+        console.log('--> '+option);
+        this.isTipoVictimaDelito = true;
+      }else{
+        this.isTipoVictimaDelito = false;
+      }
+    }
+
+    valueChangeCheckbox(status){
+      if(status){
+        this.isViolenciaGenero = true;
+      }else{
+        this.isViolenciaGenero = false;
+      }
+    }
 
     displayedColumns = ['efecto', 'detalle'];
     dataSource = new ExampleDataSource();
