@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UsuarioComponent } from '@components-app/usuario/usuario.component';
 import { UsuarioCreateComponent } from '@components-app/usuario/create/create.component';
+import { HomeComponent } from '@components-app/home/home.component';
+import { NoticiaHechoComponent } from '@components-app/noticiaHecho/noticia-hecho.component';
 import { ArmaComponent } from '@components-app/noticiaHecho/arma/arma.component';
 import { ArmaCreateComponent } from '@components-app/noticiaHecho/arma/create/create.component';
 import { LoginComponent } from '@components-app/login/login.component';
@@ -14,9 +16,11 @@ import { RelacionComponent } from '@components-app/noticiaHecho/relacion/relacio
 import { RelacionCreateComponent } from '@components-app/noticiaHecho/relacion/create/create.component';
 
 const routes: Routes = [
-    { path: 'login', component: LoginComponent},
+    { path : '', component: HomeComponent},
+    { path : 'login', component: LoginComponent},
     { path : 'usuarios', component : UsuarioComponent},
     { path : 'usuarios/create', component : UsuarioCreateComponent},
+    { path : 'noticia-hecho', component : NoticiaHechoComponent},
     { path : 'armas', component : ArmaComponent},
     { path : 'armas/create', component : ArmaCreateComponent},   
     { path : 'vehiculos', component :  VehiculoComponent},
@@ -39,13 +43,15 @@ export const routingComponents = [
 	UsuarioCreateComponent,
 	ArmaComponent,
 	ArmaCreateComponent,
-  UsuarioCreateComponent,
-  VehiculoComponent,
-  VehiculoCreateComponent,
-  LugarComponent,
-  LugarCreateComponent,
-  LoginComponent,
-  PersonaFisicaImputadoComponent,
-  RelacionComponent,
-  RelacionCreateComponent
+    UsuarioCreateComponent,
+    VehiculoComponent,
+    VehiculoCreateComponent,
+    LugarComponent,
+    LugarCreateComponent,
+    LoginComponent,
+    PersonaFisicaImputadoComponent,
+    RelacionComponent,
+    RelacionCreateComponent,
+    HomeComponent,
+    NoticiaHechoComponent
 ];
