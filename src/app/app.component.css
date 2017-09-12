@@ -1,7 +1,7 @@
-md-sidenav-container {
+md-sidenav-container.mat-drawer-container {
     background-color: white;    
 }
 
-md-sidenav {
+md-sidenav.mat-drawer {
     background-color: #fafafa;
 }
