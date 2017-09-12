@@ -9,39 +9,73 @@
     </div>
     <div class="content">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col">
                 <select2 placeholder="Tipo de relación" [(options)]="tiposRelacion"></select2>
-                <select2 placeholder="Víctima u ofendido"></select2>
-                <select2 placeholder="Clasificación"></select2>
-                <select2 placeholder="Forma de conducta"></select2>
             </div>
-            <div class="col-md-2">
+            <div class="col">
                 <select2 placeholder="Modalidad"></select2>
-                <select2 placeholder="Lugar"></select2>
-                <select2 placeholder="Forma de acción"></select2>
-                <select2 placeholder="Tipo de desaparición"></select2>
             </div>
-            <div class="col-md-2">
+            <div class="col">
                 <select2 placeholder="Delito"></select2>
-                <select2 placeholder="Concurso del delito"></select2>
-                <select2 placeholder="Consumación"></select2>
-                <checkbox label="Flagracia"></checkbox>
             </div>
-            <div class="col-md-2">
+            <div class="col">
                 <select2 placeholder="Forma de comisión"></select2>
-                <select2 placeholder="Clasificación del delito"></select2>
-                <select2 placeholder="Grado de participación"></select2>
-                <checkbox label="Violencia de genero"></checkbox>
             </div>
-            <div class="col-md-2">
+            <div class="col">
                 <select2 placeholder="Imputado"></select2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <select2 placeholder="Víctima u ofendido"></select2>
+            </div>
+            <div class="col">
+                <select2 placeholder="Lugar"></select2>
+            </div>
+            <div class="col">
+                <select2 placeholder="Concurso del delito"></select2>
+            </div>
+            <div class="col">
+                <select2 placeholder="Clasificación del delito"></select2>
+            </div>
+            <div class="col">
                 <select2 placeholder="Elemento de comisión"></select2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <select2 placeholder="Clasificación"></select2>
+            </div>
+            <div class="col">
+                <select2 placeholder="Forma de acción"></select2>
+            </div>
+            <div class="col">
+                <select2 placeholder="Consumación"></select2>
+            </div>
+            <div class="col">
+                <select2 placeholder="Grado de participación"></select2>
+            </div>
+            <div class="col">
                 <select2 placeholder="Relación entre acusado y ofendido"></select2>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <h5>Violencia de genero</h5>
+                    <select2 placeholder="Forma de conducta"></select2>
+            </div>
+            <div class="col">
+                    <select2 placeholder="Tipo de desaparición"></select2>
+            </div>
+            <div class="col">
+                    <checkbox label="Flagracia"></checkbox>
+            </div>
+            <div class="col">
+                    <checkbox label="Violencia de genero"></checkbox>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h4>Violencia de genero</h4>
                 <div class="row">
 
                     <div class="col-md-3">
@@ -64,5 +98,89 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col">
+                <h5>Efectos de violencia</h5>
+                <div class="row">
+                    <div class="col-md-3">
+                        <select2 placeholder="Efecto"></select2>
+                    </div>
+                    <div class="col-md-3">
+                        <select2 placeholder="Detalle"></select2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10"></div>
+                    <div class="col-md-1">
+                        <button class="float-right" md-raised-button color="accent">Agregar</button>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="float-right" md-raised-button color="accent">Limpiar</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="mat-elevation-z8">
+                            <md-table #table [dataSource]="dataSource">
+                                <!-- Efecto Column -->
+                                <ng-container mdColumnDef="efecto">
+                                    <md-header-cell *mdHeaderCellDef> Efecto </md-header-cell>
+                                    <md-cell *mdCellDef="let element"> {{element.efecto}} </md-cell>
+                                </ng-container>
+
+                                <!-- Detalle Column -->
+                                <ng-container mdColumnDef="detalle">
+                                    <md-header-cell *mdHeaderCellDef> Detalle </md-header-cell>
+                                    <md-cell *mdCellDef="let element"> {{element.detalle}} </md-cell>
+                                </ng-container>
+
+                                <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+                                <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+                            </md-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Aquí va Trata de personas -->
+<!--     -->
+        <div class="row">
+             <div class="row">
+               <div class="col">
+                 <h2>Trata de personas</h2>
+               </div>
+             </div>      
+             <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-3">
+                               <select2 placeholder= "País de origen">
+                               </select2> 
+                               <select2 placeholder= "Estado destino">
+                               </select2> 
+                   </div>
+                    <div class="col-sm-12 col-md-6 col-lg-3">
+                               <select2 placeholder= "Estado origen">
+                               </select2> 
+                               <select2 placeholder= "Municipio destino">
+                               </select2> 
+                   </div>
+                    <div class="col-sm-12 col-md-6 col-lg-3">
+                                <select2 placeholder= "Municipio origen">
+                               </select2> 
+                               <select2 placeholder= "Estado destino">
+                               </select2> 
+                   </div>
+                    <div class="col-sm-12 col-md-6 col-lg-3">
+                               <select2 placeholder= "País destino">
+                               </select2> 
+                               <select2 placeholder= "Municipio destino">
+                               </select2> 
+                   </div>
+             </div>
+
+
+
+        <!-- Aquí va Hostigamiento -->
+
+
     </div>
 </div>

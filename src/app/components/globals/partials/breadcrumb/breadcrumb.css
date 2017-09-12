@@ -1,0 +1,17 @@
+ul.breadcrumb {
+    padding: 8px 16px;
+    list-style: none;
+    font-size: 12px;
+}
+ul.breadcrumb li {display: inline;}
+ul.breadcrumb li+li:before {
+    padding: 7px;
+    color: black;
+    content: ">";
+}
+ul.breadcrumb li a {color: black;}
+
+i{
+  margin-right: 10px;
+  color: black;
+}

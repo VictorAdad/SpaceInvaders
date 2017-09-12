@@ -14,6 +14,10 @@ export class CheckboxComponent{
 	update(value) {
 		this.valueChange.emit(value);
 	}
+
+	changeCheck(e){
+		this.valueChange.emit(e.checked);
+	}
 }
 
 
