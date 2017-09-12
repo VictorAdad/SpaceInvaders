@@ -1,11 +1,3 @@
-<breadcrumb #parent>
-  <div class="row">
-      <ng-template ngFor let-route [ngForOf]="parent.breadcrumbs">
-          <a    *ngIf="!route.terminal" class="breadcrumb" href="" [routerLink]="[route.url]">{{ route.displayName }}</a>
-          <span *ngIf="route.terminal"  class="breadcrumb">{{ route.displayName }}</span>
-      </ng-template>
-  </div>
-</breadcrumb>
 <div class="content-body">
     <div class="row">
         <div class="col-md-10">
