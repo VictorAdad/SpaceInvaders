@@ -8,7 +8,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class CheckboxComponent{
 	@Input() label : string;
 	@Input() value : string;
-	@Input() changeFunction: Function;
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>()
 
@@ -17,8 +16,7 @@ export class CheckboxComponent{
 	}
 
 	changeCheck(e){
-		if (this.changeFunction)
-			this.changeFunction(e);
+		this.valueChange.emit(e.checked);
 	}
 }
 
