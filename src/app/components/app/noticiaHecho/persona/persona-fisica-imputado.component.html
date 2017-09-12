@@ -212,28 +212,29 @@
                 </div>
                 <div class="row" *ngIf="tipoInterviniente=='Imputado'">
                 <div class="col-md-2">
-                 <checkbox label="Detenido"></checkbox> 
+                     Detenido-{{detenido}}
+                 <checkbox label="Detenido" [(value)]="detenido" ></checkbox> 
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" *ngIf="detenido">
                   <text label="Fecha de denteción"></text>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" *ngIf="detenido">
                    <text label="Hora de denteción"></text>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-2" *ngIf="detenido">
                   <select2 [options]="
                   []" placeholder="Tipo de denteción"></select2>
                 </div>
               
-                <div class="col-md-2">
+                <div class="col-md-2" *ngIf="detenido">
                  <text label="Fecha de declaración"></text> 
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" *ngIf="detenido">
                    <select2 [options]="
                   []" placeholder="Tipo de reincidencia"></select2>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" *ngIf="detenido">
                     <select2 [options]="
                   []" placeholder="Cereso"></select2>
                 </div>

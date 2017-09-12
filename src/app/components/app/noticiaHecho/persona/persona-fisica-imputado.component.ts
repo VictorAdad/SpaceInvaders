@@ -7,8 +7,15 @@ import { Component } from '@angular/core';
 export class PersonaFisicaImputadoComponent{
 	tipoPersona: string = "tp";
 	tipoInterviniente: string="";
+	detenido: boolean = false;
+
 
 	muestraDatos(){
 		return true;
+	}
+
+	changeDetenido(e){
+		this.detenido=e.checked;
+		console.log(this.detenido);
 	}
 }
