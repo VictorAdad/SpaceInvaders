@@ -32,9 +32,10 @@
 
         <!-- Weight Column -->
         <ng-container mdColumnDef="Acciones">
-            <md-header-cell *mdHeaderCellDef> Acciones </md-header-cell>
-                <md-cell *mdCellDef="let element"> 
-                <md-icon class="md-24" aria-label="Eliminar">delete</md-icon>
+          
+            <md-header-cell *mdHeaderCellDef class="col-sm-4 col-md-1 col-lg-1 d-flex justify-content-center"> Acciones </md-header-cell>
+                <md-cell *mdCellDef="let element"  class="col-sm-4 col-md-1 col-lg-1 d-flex justify-content-center"> 
+                <md-icon class="md-24 center" aria-label="Eliminar">delete</md-icon>
                </md-cell>
         </ng-container>
 
