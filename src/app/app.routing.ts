@@ -11,7 +11,7 @@ import { VehiculoComponent } from '@components-app/noticiaHecho/vehiculo/vehicul
 import { VehiculoCreateComponent } from '@components-app/noticiaHecho/vehiculo/create/create.component';
 import { LugarComponent } from '@components-app/noticiaHecho/lugar/lugar.component';
 import { LugarCreateComponent } from '@components-app/noticiaHecho/lugar/create/create.component';
-import {PersonaFisicaImputadoComponent} from '@components-app/noticiaHecho/persona/persona-fisica-imputado.component';
+import {PersonaFisicaImputadoComponent} from '@components-app/noticiaHecho/persona/create/persona-fisica-imputado.component';
 import { RelacionComponent } from '@components-app/noticiaHecho/relacion/relacion.component';
 import { RelacionCreateComponent } from '@components-app/noticiaHecho/relacion/create/create.component';
 

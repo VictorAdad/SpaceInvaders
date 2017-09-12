@@ -1,4 +1,5 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+declare var componentHandler: any;
 
 @Component({
     templateUrl:'./noticia-hecho.component.html',
@@ -8,6 +9,10 @@ import { Component} from '@angular/core';
     ]
 })
 
-export class NoticiaHechoComponent{
-
+export class NoticiaHechoComponent implements OnInit{
+	ngOnInit(){
+		if (componentHandler) {
+            componentHandler.upgradeAllRegistered();
+        }
+	}
 }

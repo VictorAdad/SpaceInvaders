@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from '@components-app/login/login.component';
 import { AppRoutingModule, routingComponents} from './app.routing';
 import { PartialsModule, partialsComponents} from './partials.module';
+import { NoticiaHechoModule, noticiaHechoComponents} from '@components-app/noticiaHecho/noticia-hecho.module';
 
 import { MiservicioService} from "./services/miservicio.service";
 import { AuthenticationService} from "@services/auth/authentication.service";
@@ -17,7 +18,8 @@ import { AuthenticationService} from "@services/auth/authentication.service";
     AppComponent,
     LoginComponent,
     routingComponents,
-    partialsComponents
+    partialsComponents,
+    noticiaHechoComponents
   ],
   imports: [
     BrowserModule,
