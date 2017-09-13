@@ -3,6 +3,9 @@ import { MOption } from '@partials/select2/select2.component';
 import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Relacion } from '@models/relacion';
+
 
 @Component({
     selector: 'relacion-create',
@@ -19,16 +22,71 @@ export class RelacionCreateComponent {
         { value:'Representante', label:'Representante de la víctima' },
         { value:'Tutor', label:'Tutor de la víctima' }
     ];
-
     isDefensorImputado: boolean = false;
     isImputadoVictimaDelito: boolean = false;
     isAsesorJuridicoVictima: boolean = false;
     isRepresentanteVictima: boolean = false;
     isTutorVictima: boolean = false;
-
+    isViolenciaGenero: boolean = false;
     isAChange: boolean = false;
+    public form  : FormGroup;
+    public model : Relacion;
 
-    valueChangeSelect(option){
+    constructor(private _fbuilder: FormBuilder) { }
+      ngOnInit(){
+      this.model = new Relacion();
+      /*
+   id:number
+    tipo: string;
+    modalidad: string;
+    formaComision: string;
+    imputado:string;
+    lugar:string;
+    consultorDelito:string;
+    clasificacionDelito:string;
+    elementoComision:string;
+    clasificacion:string;
+    formaAccion:string;
+    consumacion:string;
+    gradoParticipacion:string;
+    relacionAcusadoOfendido:string;
+    formaConducta:string;
+    tipoDesaparicion:string;
+    flagrancia:boolean;
+    violenciasGenero:ViolenciaGenero[];
+    tratasPersonas:TrataPersonas[];
+    hostigamietosAcosos:HostigamientoAcoso[];
+      */
+      this.form  = new FormGroup({
+          'tipo'                     : new FormControl(this.model.tipo, [Validators.required,]),
+          'modalidad'                : new FormControl(this.model.modalidad),
+          'formaComision'            : new FormControl(this.model.formaComision),
+          'imputado'                 : new FormControl(this.model.imputado),
+          'lugar'                    : new FormControl(this.model.lugar),
+          'consultorDelito'          : new FormControl(this.model.consultorDelito),
+          'clasificacionDelito'      : new FormControl(this.model.clasificacionDelito),
+          'elementoComision'         : new FormControl(this.model.elementoComision),
+          'clasificacion'            : new FormControl(this.model.clasificacion),
+          'formaAccion'              : new FormControl(this.model.formaAccion),
+          'consumacion'              : new FormControl(this.model.consumacion),
+          'gradoParticipacion'       : new FormControl(this.model.gradoParticipacion),
+          'relacionAcusadoOfendido'  : new FormControl(this.model.relacionAcusadoOfendido),
+          'formaConducta'            : new FormControl(this.model.formaConducta),
+          'tipoDesaparicion'         : new FormControl(this.model.tipoDesaparicion),
+          'flagrancia'               : new FormControl(this.model.flagrancia),
+          'violenciasGenero'         : new FormControl(this.model.violenciasGenero),
+          'tratasPersonas'           : new FormControl(this.model.tratasPersonas),
+          'hostigamietosAcosos'      : new FormControl(this.model.hostigamietosAcosos),
+
+
+        });
+    }
+
+    save(valid : any, model : any):void{
+      console.log('-> Submit', valid, model);
+    }
+
+    changeTipoRelacion(option){
       console.log('--> '+option);
       this.resetValues();
       switch(option){
@@ -63,8 +121,7 @@ export class RelacionCreateComponent {
       this.isTutorVictima = false;
     }
 
-    isViolenciaGenero: boolean = false;
-    valueChangeCheckbox(status){
+    changeViolenciaGenero(status){
       if(status){
         this.isViolenciaGenero = true;
       }else{
