@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Vehiculo } from '@models/vehiculo';
+import { MOption } from '@partials/select2/select2.component';
 
 @Component({
     selector: 'vehiculo-create',
@@ -12,6 +13,12 @@ export class VehiculoCreateComponent implements OnInit {
     public model: Vehiculo;
 
     constructor(private _fbuilder: FormBuilder) { }
+
+    options:MOption[]=[
+        {value:"1", label:"Opcion 1"},
+        {value:"2", label:"Opcion 2"},
+        {value:"3", label:"Opcion 3"}
+        ];
 
     ngOnInit() {
         this.model = new Vehiculo();

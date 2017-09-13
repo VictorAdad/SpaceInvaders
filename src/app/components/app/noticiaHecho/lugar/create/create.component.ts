@@ -1,6 +1,7 @@
 import { Component,OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Lugar } from '@models/lugar';
+import { MOption } from '@partials/select2/select2.component';
 
 @Component({
     selector: 'lugar-create',
@@ -12,6 +13,12 @@ export class LugarCreateComponent implements OnInit{
     public model: Lugar;
 
     constructor(private _fbuilder: FormBuilder) { }
+
+    options:MOption[]=[
+        {value:"1", label:"Opcion 1"},
+        {value:"2", label:"Opcion 2"},
+        {value:"3", label:"Opcion 3"}
+        ];
 
     ngOnInit() {
         this.model = new Lugar();

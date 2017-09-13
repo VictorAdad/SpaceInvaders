@@ -19,7 +19,7 @@
         <form (ngSubmit)="save(form.valid, form.value)" [formGroup]="form">
             <div class="row">
                 <div class="col">
-                    <select2 placeholder="Motivo por el que se registra"></select2>
+                    <select2 placeholder="Motivo por el que se registra" [(options)]="options"></select2>
                 </div>
                 <div class="col">
                     <text label="Vheículo" ([value])="model.vehiculo" name="vehiculo" [group]="form"></text>
@@ -109,10 +109,10 @@
             </div>
             <div class="d-flex justify-content-end">
                 <div class="p-2">
-                    <button md-raised-button type="submit" color="accent" [disabled]="!form.valid">Guardar</button>
+                    <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]">Guardar</button>
                 </div>
                 <div class="p-2">
-                    <button md-button type="submit">Cancelar</button>
+                    <button md-button routerLink="/noticia-hecho">Cancelar</button>
                 </div>
             </div>
         </form>
