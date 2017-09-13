@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
 	selector    : 'radiobutton',
@@ -9,13 +9,15 @@ export class RadioButtonComponent{
 	@Input() radios: MRadioButton[] = [];
 	@Input() value: any;
 	@Input() class: string;
+	@Input() name     : string  = '';
+	@Input() required : boolean = false;
+	@Input() group    : FormGroup = new FormGroup({});
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>()
 
 	//TODO: Falta ver como sincronizar los cambios los radio.
 	update(value) {
 		this.valueChange.emit(value);
-		console.log(value);
 	}
 }
 
