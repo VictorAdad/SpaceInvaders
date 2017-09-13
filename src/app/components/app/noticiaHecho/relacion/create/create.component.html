@@ -1,16 +1,15 @@
-<div class="content-body">
-    <div class="row">
-        <div class="col-md-10">
-            <h2>Relaciones</h2>
-        </div>
-        <div class="col-md-2">
-            <button class="float-right" md-raised-button routerLink="/noticia-hecho" color="accent">Regresar</button>
-        </div>
+<div class="row">
+    <div class="col-md-6">
+        <h2>Registrar Relación</h2>
     </div>
-    <div class="content">
-        <div class="row" *ngIf="!isImputadoVictimaDelito ">
+    <div class="col-md-6">
+        <button class="float-right" md-raised-button routerLink="/" color="accent">Regresar</button>
+    </div>
+    <div class="col-md-12">
+        <form [formGroup]="form">
+           <div class="row" *ngIf="!isImputadoVictimaDelito ">
             <div class="col-md-3">
-                <select2 placeholder="Tipo de relación" [(options)]="tiposRelacion" (valueChange)="valueChangeSelect($event)"></select2>
+                <select2 placeholder="Tipo de relación" name="tipo"[(options)]="tiposRelacion" (valueChange)="changeTipoRelacion($event)" [group]="form"></select2>
             </div>
         </div>
         <div class="row" *ngIf="isImputadoVictimaDelito">
@@ -76,7 +75,7 @@
                 <checkbox label="Flagracia"></checkbox>
             </div>
             <div class="col">
-                <checkbox label="Violencia de genero" (valueChange)="valueChangeCheckbox($event)"></checkbox>
+                <checkbox label="Violencia de genero" (valueChange)="changeViolenciaGenero($event)"></checkbox>
             </div>
         </div>
         <div class="row" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">
@@ -126,7 +125,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <div class="mat-elevation-z8">
+                        <div class="">
                             <md-table #table [dataSource]="dataSource">
                                 <!-- Efecto Column -->
                                 <ng-container mdColumnDef="efecto">
@@ -190,7 +189,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <div class="mat-elevation-z8">
+                        <div class="">
                             <md-table #table [dataSource]="dataSource">
                                 <!-- Efecto Column -->
                                 <ng-container mdColumnDef="efecto">
@@ -252,7 +251,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <div class="mat-elevation-z8">
+                        <div class="">
                             <md-table #table [dataSource]="dataSource">
                                 <!-- Efecto Column -->
                                 <ng-container mdColumnDef="efecto">
@@ -275,5 +274,10 @@
             </div>
         </div>
 
+            <button class="float-right" md-button>Cancelar</button> 
+            <button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]">Guardar</button>
+        </form>
     </div>
 </div>
+
+

@@ -7,6 +7,7 @@
             <button class="float-right" md-raised-button routerLink="/lugares" color="accent">Regresar</button>
         </div>
     </div>
+    <form (ngSubmit)="save(form.valid, form.value)"   [formGroup]="form">
     <div class="content mat-elevation-z8">
         <div class="row">
           <div class="col-md-8">
@@ -28,17 +29,18 @@
             </div>
             </div>
             <div class="row">
-              <div class="col-md-10">
+              <div class="col-md-10"    style="">
             <radiobutton class="col-md-3" [(value)]="tipoPersona" [radios]="
                       [
                       {label:'Física',value:'Física'},
                       {label:'Moral',value:'Moral'}
                       ]
-            "></radiobutton>
+            " name="tipoPersona"  [group]="form" [functionChange]="activaRazonSocial.bind(this)"
+            ></radiobutton>
             </div></div>
-            <div class="row" hidden="true">
+            <div class="row" [ngClass]="{'Etiqueta': tipoPersona=='' }"  *ngIf="tipoPersona==''">
             <div class="col-md-10">
-              <label class="Naranja">Campo obligatorio</label>
+              <label >Campo obligatorio</label>
               </div>
             </div>
           </div>
@@ -67,14 +69,14 @@
                         {label:'Defensor privado',value:'Defensor privado'},
                         {label:'Remitente(policía)',value:'Remitente(policía)'}
                         ]
-              "></radiobutton>
+              " name="tipoInterviniente" [group]="form"></radiobutton>
               </div>
               </div>
-              <div class="row" hidden="true">
-              <div class="col-md-10">
-                <label class="Naranja">Campo obligatorio</label>
-                </div>
+              <div class="row" [ngClass]="{'Etiqueta': tipoInterviniente=='' }"  *ngIf="tipoInterviniente==''">
+            <div class="col-md-10">
+              <label >Campo obligatorio</label>
               </div>
+            </div>
             </div>
         </div>
         <!-- Datos de identidad-->
@@ -91,7 +93,7 @@
               </md-expansion-panel-header>
               <div class="row" *ngIf="tipoPersona=='Moral'">
               <div class="col-md-3">
-                  <text label="Razón social"></text>
+                  <text label="Razón social" name="razonSocial" [group]="form"></text>
                 </div>
               </div>
               
@@ -109,7 +111,7 @@
                   <select2 [options]="
                   [
                     {label:'Hombre',value:'Hombre'}, 
-                    {label:'Mujer',value:'Mujer'}]" placeholder="Sexo"></select2>
+                    {label:'Mujer',value:'Mujer'}]" placeholder="Sexo"  ></select2>
                 </div>
                 <div class="col-md-2">
                   <text label="Fecha de nacimiento"></text>
@@ -172,7 +174,7 @@
                   []" placeholder="Estado civil"></select2>
                 </div>
                 <div class="col-md-2">
-                  <text label="Número de hijos"></text>
+                  <text label="Número de habitualjos"></text>
                 </div>
 
                 <div class="col-md-2">
@@ -640,11 +642,12 @@
 
         <div class="row justify-content-md-end">
                     <div class="col-md-2">
-                        <button md-raised-button type="submit" color="accent">Guardar</button>
+                        <button md-raised-button type="submit" color="accent" [disabled]="!form.valid">Guardar</button>
                     </div>
                     <div class="col-md-2">
                         <button md-button type="submit">Cancelar</button>
                     </div>
                 </div>
     </div>
+  </form>
 </div>
