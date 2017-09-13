@@ -1,5 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+
 
 @Component({
 	selector    : 'select2',
@@ -9,6 +11,9 @@ export class Select2Component{
 	@Input() options: MOption[] = [];
 	@Input() value: any;
 	@Input() placeholder: string;
+	@Input() name     : string  = '';
+	@Input() required : boolean = false;
+	@Input() group    : FormGroup = new FormGroup({});
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>()
 
