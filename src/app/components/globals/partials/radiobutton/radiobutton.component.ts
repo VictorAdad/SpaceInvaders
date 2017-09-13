@@ -12,12 +12,16 @@ export class RadioButtonComponent{
 	@Input() name     : string  = '';
 	@Input() required : boolean = false;
 	@Input() group    : FormGroup = new FormGroup({});
+	@Input() functionChange: Function;
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>()
 
 	//TODO: Falta ver como sincronizar los cambios los radio.
 	update(value) {
 		this.valueChange.emit(value);
+		if(this.functionChange){
+			this.functionChange(value);
+		}
 	}
 }
 
