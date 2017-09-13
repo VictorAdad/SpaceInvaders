@@ -8,70 +8,72 @@
         </div>
     </div>
     <div class="content">
-        <div class="row">
-            <div class="col-md-2">
-                <select2 placeholder="Tipo"></select2>
+        <form (ngSubmit)="save(form.valid, form.value)" [formGroup]="form">
+            <div class="row">
+                <div class="col-md-2">
+                    <select2 placeholder="Tipo" ([value])="model.tipo" name="tipo" [group]="form"></select2>
+                </div>
+                <div class="col-md-2">
+                    <select2 placeholder="Tipo de zona" ([value])="model.tipo_zona" name="tipo_zona" [group]="form"></select2>
+                </div>
+                <div class="col-md-4">
+                    <text label="Calle" ([value])="model.calle" name="calle" [group]="form"></text>
+                </div>
+                <div class="col-md-2">
+                    <text label="Nº exterior"></text>
+                </div>
+                <div class="col-md-2">
+                    <text label="Nº interior"></text>
+                </div>
             </div>
-            <div class="col-md-2">
-                <select2 placeholder="Tipo de zona"></select2>
+            <div class="row">
+                <div class="col-md-12">
+                    <text label="Referencias" ([value])="model.referencias" name="referencias" [group]="form"></text>
+                </div>
             </div>
-            <div class="col-md-4">
-                <text label="Calle"></text>
+            <div class="row">
+                <div class="col-md-3 full-width">
+                    <select2 placeholder="País" ([value])="model.pais" name="pais" [group]="form"></select2>
+                </div>
+                <div class="col-md-3">
+                    <text label="Estado" ([value])="model.estado" name="estado" [group]="form"></text>
+                </div>
+                <div class="col-md-3">
+                    <text label="Municipio/Delegación" ([value])="model.municipio_delegacion" name="municipio_delegacion" [group]="form"></text>
+                </div>
+                <div class="col-md-3">
+                    <text label="Colonia/Asentamiento" ([value])="model.colonia_asentamiento" name="colonia_asentamiento" [group]="form"></text>
+                </div>
             </div>
-            <div class="col-md-2">
-                <text label="Nº exterior"></text>
+            <div class="row">
+                <div class="col-md-3">
+                    <text label="C.P."></text>
+                </div>
+                <div class="col-md-3">
+                    <date label="Fecha"></date>
+                </div>
+                <div class="col-md-3">
+                    <text label="Hora" ([value])="model.hora" name="hora" [group]="form"></text>
+                </div>
+                <div class="col-md-3">
+                    <select2 placeholder="Día"></select2>
+                </div>
             </div>
-            <div class="col-md-2">
-                <text label="Nº interior"></text>
+            <div class="row">
+                <div class="col">
+                    <text label="Descripción del lugar"></text>
+                    <text label="Referencias geográficas"></text>
+                    <text label="Notas"></text>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <text label="Referencias"></text>
+            <div class="d-flex justify-content-end">
+                <div class="p-2">
+                    <button md-raised-button type="submit" color="accent" [disabled]="!form.valid">Guardar</button>
+                </div>
+                <div class="p-2">
+                    <button md-button type="submit">Cancelar</button>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 full-width">
-                <select2 placeholder="País"></select2>
-            </div>
-            <div class="col-md-3">
-                <text label="Estado"></text>
-            </div>
-            <div class="col-md-3">
-                <text label="Municipio/Delegación"></text>
-            </div>
-            <div class="col-md-3">
-                <text label="Colonia/Asentamiento"></text>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <text label="C.P."></text>
-            </div>
-            <div class="col-md-3">
-                <date label="Fecha"></date>
-            </div>
-            <div class="col-md-3">
-                <text label="Hora"></text>
-            </div>
-            <div class="col-md-3">
-                <select2 placeholder="Día"></select2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <text label="Descripción del lugar"></text>
-                <text label="Referencias geográficas"></text>
-                <text label="Notas"></text>
-            </div>
-        </div>
-        <div class="d-flex justify-content-end">
-            <div class="p-2">
-                <button md-raised-button type="submit" color="accent">Guardar</button>
-            </div>
-            <div class="p-2">
-                <button md-button type="submit">Cancelar</button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
