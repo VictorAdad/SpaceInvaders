@@ -11,14 +11,17 @@ import { Breadcrumb, BreadcrumbService } from 'angular2-crumbs';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-	public isAuthenticated: boolean;
+	public isAuthenticated : boolean;
+    public _SIDEBAR        : boolean;
 
 	constructor(
 		public authService: AuthenticationService,
 		private router : Router,
 		private titleService: Title,
 		private breadcrumbService: BreadcrumbService
-	) { }
+	) {
+        this._SIDEBAR = false;
+    }
 
 	ngOnInit(){
         this.breadcrumbService.onBreadcrumbChange.subscribe((crumbs) => {

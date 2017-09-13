@@ -6,10 +6,11 @@
 		<button class="float-right" md-raised-button routerLink="/" color="accent">Regresar</button>
 	</div>
 	<div class="col-md-12">
-		<form>
-			<text label="Título del caso"></text>
-			<text label="Sintesís del caso"></text>
-			<text label="Delito principal"></text>
+		<form (ngSubmit)="save(form.valid, form.value)"   [formGroup]="form">
+			<text label="Título del caso" ([value])="model.titulo"  name="titulo" [group]="form"></text>
+			<text label="Sintesís del caso" ([value])="model.sintesis"  name="sintesis" [group]="form"></text>
+			<text label="Delito principal" ([value])="model.delito"  name="delito" [group]="form"></text>
+			<button class="float-right" md-raised-button color="accent" type="submit" [disabled]="!form.valid">Guardar</button>	
 		</form>
 	</div>
 </div>

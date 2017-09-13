@@ -1,5 +1,7 @@
 <md-form-field class="full-width">
-	<span *ngIf="prefix" mdPrefix>{{ prefix }}&nbsp;</span>
-	<input mdInput placeholder="{{label}}" [(ngModel)]="value" (ngModelChange)="update($event)">
-	<md-icon mdSuffix *ngIf="sufix">{{ sufix }}</md-icon>
+	<div [formGroup]="group">
+		<span *ngIf="prefix" mdPrefix>{{ prefix }}&nbsp;</span>
+		<input mdInput placeholder="{{label}}" [(ngModel)]="value" (ngModelChange)="update($event)" formControlName="{{name}}"  name="{{name}}">
+		<md-icon mdSuffix *ngIf="sufix">{{ sufix }}</md-icon>
+	</div>
 </md-form-field>
