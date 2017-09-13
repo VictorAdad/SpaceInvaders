@@ -1,8 +1,21 @@
-<md-radio-group [(ngModel)]="value" (ngModelChange)="update($event)">
 
-<div class="row">
-<div *ngFor="let radio of radios" class="{{class}}">
-	<md-radio-button   value="{{radio.value}}" >{{radio.label}}</md-radio-button>
+<div  *ngIf="name==''" >
+	<md-radio-group [(ngModel)]="value" (ngModelChange)="update($event)">
+
+	<div class="row">
+	<div *ngFor="let radio of radios" class="{{class}}">
+		<md-radio-button   value="{{radio.value}}" >{{radio.label}}</md-radio-button>
+	</div>
+	  </div>
+	</md-radio-group>
 </div>
-  </div>
-</md-radio-group>
+<div [formGroup]="group"  *ngIf="name!=''" >
+	<md-radio-group [(ngModel)]="value" (ngModelChange)="update($event)" formControlName="{{name}}">
+
+	<div class="row">
+	<div *ngFor="let radio of radios" class="{{class}}">
+		<md-radio-button   value="{{radio.value}}" >{{radio.label}}</md-radio-button>
+	</div>
+	  </div>
+	</md-radio-group>
+</div>

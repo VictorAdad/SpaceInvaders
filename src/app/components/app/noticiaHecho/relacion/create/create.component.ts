@@ -13,25 +13,57 @@ import 'rxjs/add/observable/of';
 export class RelacionCreateComponent {
 
     tiposRelacion:MOption[] = [
-        { value:'Defensor del imputado', label:'Defensor del imputado' },
-        { value:'Imputado-Víctima-Delito', label:'Imputado-Víctima-Delito' },
-        { value:'Asesor jurídico de la víctima', label:'Asesor jurídico de la víctima' },
-        { value:'Representante de la víctima', label:'Representante de la víctima' },
-        { value:'Tutor de la víctima', label:'Tutor de la víctima' }
+        { value:'Defensor', label:'Defensor del imputado' },
+        { value:'Imputado', label:'Imputado-Víctima-Delito' },
+        { value:'Asesor', label:'Asesor jurídico de la víctima' },
+        { value:'Representante', label:'Representante de la víctima' },
+        { value:'Tutor', label:'Tutor de la víctima' }
     ];
 
-    isTipoVictimaDelito: boolean = false;
-    isViolenciaGenero: boolean = false;
+    isDefensorImputado: boolean = false;
+    isImputadoVictimaDelito: boolean = false;
+    isAsesorJuridicoVictima: boolean = false;
+    isRepresentanteVictima: boolean = false;
+    isTutorVictima: boolean = false;
+
+    isAChange: boolean = false;
 
     valueChangeSelect(option){
-      if(option=='Imputado-Víctima-Delito'){
-        console.log('--> '+option);
-        this.isTipoVictimaDelito = true;
-      }else{
-        this.isTipoVictimaDelito = false;
+      console.log('--> '+option);
+      this.resetValues();
+      switch(option){
+        case 'Defensor':{
+          this.isDefensorImputado = true;
+          break;
+        }
+        case 'Imputado':{
+          this.isImputadoVictimaDelito = true;
+          break;
+        }
+        case 'Asesor':{
+          this.isAsesorJuridicoVictima = true;
+          break;
+        }
+        case 'Representante':{
+          this.isRepresentanteVictima = true;
+          break;
+        }
+        case 'Tutor':{
+          this.isTutorVictima = true;
+          break;
+        }
       }
     }
 
+    resetValues(){
+      this.isDefensorImputado = false;
+      this.isImputadoVictimaDelito = false;
+      this.isAsesorJuridicoVictima = false;
+      this.isRepresentanteVictima = false;
+      this.isTutorVictima = false;
+    }
+
+    isViolenciaGenero: boolean = false;
     valueChangeCheckbox(status){
       if(status){
         this.isViolenciaGenero = true;

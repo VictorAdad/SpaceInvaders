@@ -1,3 +1,53 @@
+<div class="row">
+	<div class="col-md-6">
+		<h2>Registrar arma</h2>
+	</div>
+	<div class="col-md-6">
+		<button class="float-right" md-raised-button routerLink="/" color="accent">Regresar</button>
+	</div>
+	<div class="col-md-12">
+		<form (ngSubmit)="save(form.valid, form.value)"   [formGroup]="form">
+		     <div class="row">
+				 	<div class="col-sm-6 col-md-4 col-lg-3">
+				 		<select2 placeholder= "Clase de Arma" name="clase"  [(value)]="model.clase" [(options)]   ="clasesArmas"  (valueChange)="claseChange($event)" [group]="form">
+				 	    </select2> 
+				    </div>
+				 	<div  *ngIf="isArmaFuego" class="col-sm-6 col-md-4 col-lg-3">
+				 		<select2 placeholder= "Tipo de Arma" name="tipo" [(options)]="options" [group]="form">
+				 		</select2> 
+				 	</div>
+			 </div>
+			 <div class="row" *ngIf="isArmaFuego" >
+			 	<div class="col-sm-6 col-md-4 col-lg-3">
+				 		<select2 placeholder= "Subtipo de Arma" name="subtipo" [(options)]="options" [group]="form"></select2> 
+				</div>
+				 <div class="col-sm-6 col-md-4 col-lg-3">
+				 	<select2 placeholder= "Calibre" name="calibre" [(options)]="options" [group]="form">	
+				    </select2> 
+				</div>
+				<div class="col-sm-6 col-md-4 col-lg-3">
+					<select2 placeholder= "Mecanismo de acción" name="mecanismoAccion" [(options)]="options"[group]="form">	
+				    </select2> 
+				</div>
+				<div class="col-sm-6 col-md-4 col-lg-3">
+					<text label="Serie" name="serie" [(value)]="model.serie" [group]="form"></text>  
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12 col-md-12 col-lg-12">
+				<text-area label="Notas" name="notas" ></text-area>  
+				</div>
+			</div>
+
+			<button class="float-right" md-button>Cancelar</button>	
+			<button class="float-right" md-raised-button color="accent" type="submit" [disabled]="!form.valid">Guardar</button>	
+		</form>
+	</div>
+</div>
+
+
+<!--
 <div class="content-body">
     <div class="row">
         <div class="col-md-10">
@@ -8,57 +58,8 @@
         </div>
     </div>
     <div class="content">
-     <div class="row">
-		 	<div class="col-sm-6 col-md-4 col-lg-3">
-		 				<select2 
-		 				placeholder= "Clase de Arma"
-		 				[(options)]   ="clasesArmas"
-                         (valueChange)="valueChange($event)"		 				>
-		 			   </select2> 
-		   </div>
 
-		 	<div  *ngIf="isArmaFuego" class="col-sm-6 col-md-4 col-lg-3">
 
-		 			<select2 
-		 			placeholder= "Tipo de Arma"
-		 			[(options)]="options"	
-		 			>
-		 		    </select2> 
-		 	    </div>
-		    </div>
-		 <div class="row" *ngIf="isArmaFuego" >
-		 	<div class="col-sm-6 col-md-4 col-lg-3">
-		 		<select2 
-		 		placeholder= "Subtipo de Arma"
-		 		[(options)]="options">	
-		 	</select2> 
-		 </div>
-
-		 <div class="col-sm-6 col-md-4 col-lg-3">
-
-		 	<select2 
-		 	placeholder= "Calibre"
-		 	[(options)]="options">	
-		 </select2> 
-		</div>
-		<div class="col-sm-6 col-md-4 col-lg-3">
-
-			<select2 
-			placeholder= "Mecanismo de acción"
-			[(options)]="options">	
-		   </select2> 
-		</div>
-		<div class="col-sm-6 col-md-4 col-lg-3">
-			<text label="Serie">
-			</text>  
-		</div>
-		</div>
-
-		<div class="row">
-			<div class="col-sm-12 col-md-12 col-lg-12">
-			<text-area label="Notas" class="full-width"></text-area>  
-			</div>
-		</div>
 
         <div class="d-flex justify-content-end">
           <div class="p-1"><button md-raised-button color="warn">Guardar</button></div>
@@ -66,6 +67,7 @@
 	    </div>
     </div>
 </div>
+-->
 
 
 
