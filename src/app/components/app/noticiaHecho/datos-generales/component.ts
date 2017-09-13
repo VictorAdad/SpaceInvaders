@@ -15,10 +15,10 @@ export class DatosGeneralesComponent implements OnInit{
 
 	ngOnInit(){
 		this.model = new DatosGenerales();
-		this.form = new FormGroup({
-    		'titulo': new FormControl(this.model.titulo, [Validators.required,]),
-    		'sintesis': new FormControl(this.model.titulo, [Validators.required,]),
-    		'delito': new FormControl(this.model.titulo, [Validators.required,])
+		this.form  = new FormGroup({
+    		'titulo'   : new FormControl(this.model.titulo, [Validators.required,]),
+    		'sintesis' : new FormControl(this.model.titulo, [Validators.required,]),
+    		'delito'   : new FormControl(this.model.titulo, [Validators.required,])
   		});
 	}
 
