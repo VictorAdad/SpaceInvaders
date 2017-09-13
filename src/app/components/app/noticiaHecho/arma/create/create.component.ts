@@ -1,12 +1,16 @@
 import {Component} from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { MOption } from '@partials/select2/select2.component'
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Arma } from '@models/arma';
 @Component({
   selector: 'arma-create',
   templateUrl: 'create.component.html',
 })
 
 export class ArmaCreateComponent{
+
+
   clasesArmas:MOption[]=[
     {value:"Arma Blanca", label:"Arma Fuego"},
     {value:"Macana", label:"Macana"},
@@ -18,7 +22,42 @@ export class ArmaCreateComponent{
     {value:"3", label:"Opcion 3"}
     ];
     isArmaFuego:boolean=false;
-    valueChange(option){
+    public form  : FormGroup;
+    public model : Arma;
+
+  constructor(private _fbuilder: FormBuilder) { }
+    id:number
+    clase: string;
+    tipo: string;
+    subtipo: string;
+    calibre: string;
+    mecanismoAccion:string;
+    serie:string;
+    notas:string;
+  ngOnInit(){
+    this.model = new Arma();
+    this.form  = new FormGroup({
+        'clase'           : new FormControl(this.model.clase, [Validators.required,]),
+        'tipo'            : new FormControl(this.model.tipo),
+        'subtipo'         : new FormControl(this.model.subtipo),
+        'calibre'         : new FormControl(this.model.calibre),
+        'mecanismoAccion' : new FormControl(this.model.mecanismoAccion),
+        'serie'           : new FormControl(this.model.serie),
+        'notas'           : new FormControl(this.model.notas),
+
+      });
+  }
+
+  save(valid : any, model : any):void{
+    console.log('-> Submit', valid, model);
+  }
+
+
+
+  claseChange(option){
+    this.model.clase=option;
+    console.log(this.model.clase);
+
     if(option=="Arma Blanca"){
     	console.log(option);
        this.isArmaFuego=true;
@@ -27,5 +66,5 @@ export class ArmaCreateComponent{
        this.isArmaFuego=false;
     }
     }
-    
+
 }
