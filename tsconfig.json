@@ -19,7 +19,8 @@
       "@partials/*": ["./app/components/globals/partials/*"],
       "@utils/*": ["./app/services/utils/*"],
       "@components-app/*": ["./app/components/app/*"],
-      "@services/*": ["./app/services/*"]
+      "@services/*": ["./app/services/*"],
+      "@models/*": ["./app/models/*"]
     }
   }
 }

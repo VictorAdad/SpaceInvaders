@@ -1,17 +1,25 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter , OnInit} from '@angular/core';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({
 	selector    : 'text',
   	templateUrl : './text.component.html'
 })
-export class TextComponent{
-	@Input() label  : string;
-	@Input() value  : string;
-	@Input() prefix : string;
-	@Input() sufix  : string;
+export class TextComponent implements OnInit{
+	@Input() label    : string;
+	@Input() value    : string;
+	@Input() prefix   : string;
+	@Input() sufix    : string;
+	@Input() name     : string;
+	@Input() required : boolean = false;
+	@Input() group    : FormGroup;
 
-	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>()
+	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
+
+	ngOnInit(){
+		console.log(this);
+	}
 
 	update(value) {
 		this.valueChange.emit(value);
