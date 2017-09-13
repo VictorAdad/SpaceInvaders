@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AuthenticationService } from '@services/auth/authentication.service';
+import { GlobalService } from '@services/global.service';
 import { Breadcrumb, BreadcrumbService } from 'angular2-crumbs';
 
 @Component({
@@ -18,7 +19,8 @@ export class AppComponent {
 		public authService: AuthenticationService,
 		private router : Router,
 		private titleService: Title,
-		private breadcrumbService: BreadcrumbService
+		private breadcrumbService: BreadcrumbService,
+        public globalService : GlobalService
 	) {
         this._SIDEBAR = false;
     }

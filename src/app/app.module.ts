@@ -8,11 +8,13 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from '@components-app/login/login.component';
 import { AppRoutingModule, routingComponents} from './app.routing';
 import { PartialsModule, partialsComponents} from './partials.module';
+import { DirectivesModule, directivesComponents} from './directives.module';
 import { NoticiaHechoModule, noticiaHechoComponents} from '@components-app/noticiaHecho/module';
 import { BreadcrumbModule } from 'angular2-crumbs';
 
 import { MiservicioService} from "./services/miservicio.service";
 import { AuthenticationService} from "@services/auth/authentication.service";
+import { GlobalService } from "@services/global.service";
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { AuthenticationService} from "@services/auth/authentication.service";
     LoginComponent,
     routingComponents,
     partialsComponents,
-    noticiaHechoComponents
+    noticiaHechoComponents,
+    directivesComponents
   ],
   imports: [
     BrowserModule,
@@ -29,6 +32,7 @@ import { AuthenticationService} from "@services/auth/authentication.service";
     BrowserAnimationsModule,
     AppRoutingModule,
     PartialsModule,
+    DirectivesModule,
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
@@ -38,6 +42,7 @@ import { AuthenticationService} from "@services/auth/authentication.service";
   providers: [
     MiservicioService,
     AuthenticationService,
+    GlobalService
   ],
   bootstrap: [AppComponent]
 })

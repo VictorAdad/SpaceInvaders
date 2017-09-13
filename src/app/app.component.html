@@ -50,6 +50,7 @@
             <md-list-item><a routerLink="/relaciones">Relaciones</a></md-list-item>
         </md-list>
     </md-sidenav>
+    <md-progress-bar *ngIf="globalService._LOADER" mode="indeterminate" color="accent"></md-progress-bar>
     <div class="container-fluid" style="padding-top: 16px;">
         <router-outlet></router-outlet>
     </div>
