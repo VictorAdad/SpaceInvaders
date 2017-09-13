@@ -26,15 +26,7 @@ export class ArmaCreateComponent{
     public model : Arma;
 
   constructor(private _fbuilder: FormBuilder) { }
-    id:number
-    clase: string;
-    tipo: string;
-    subtipo: string;
-    calibre: string;
-    mecanismoAccion:string;
-    serie:string;
-    notas:string;
-  ngOnInit(){
+    ngOnInit(){
     this.model = new Arma();
     this.form  = new FormGroup({
         'clase'           : new FormControl(this.model.clase, [Validators.required,]),

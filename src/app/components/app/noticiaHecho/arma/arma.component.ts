@@ -24,14 +24,14 @@ export class ArmaComponent{
 
     	console.log('-> Data Source', this.dataSource);
   	}
-}
-
-export interface Arma {
-    id:number
-    arma: string;
-    tipo: string;
-    marca: string;
   }
+
+  export interface Arma {
+      id:number
+      arma: string;
+      tipo: string;
+      marca: string;
+    }
   
 
   const data: Arma[] = [
