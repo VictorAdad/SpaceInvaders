@@ -18,7 +18,7 @@ export class TextComponent implements OnInit{
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
 
 	ngOnInit(){
-		console.log(this);
+		// console.log(this);
 	}
 
 	update(value) {
