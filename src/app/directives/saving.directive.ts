@@ -19,18 +19,19 @@ export class SavingDirective{
 		this.saveFn.emit();
 		setTimeout(() => {
 			this.prepareSave(false);
+			this.globalService.openSnackBar('Registro guardado con éxito');
 		}, 3000);
 		
 	}
 
-	private getSaveingText(): string{
-		return this.saving ? 'Guardando...' : 'Guardar';
+	private getSaveingText(_saving : boolean): string{
+		return _saving ? 'Guardando...' : 'Guardar';
 	}
 
 	private prepareSave(save : boolean){
 		this.globalService._LOADER = save;
 		this.el.nativeElement.disabled = save;
-		this.el.nativeElement.innnerText = this.getSaveingText();
+		this.el.nativeElement.innerText = this.getSaveingText(save);
 	}
 }
 
