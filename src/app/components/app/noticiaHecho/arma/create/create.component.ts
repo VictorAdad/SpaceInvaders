@@ -48,8 +48,8 @@ export class ArmaCreateComponent{
       });
   }
 
-  save(valid : any, model : any):void{
-    console.log('-> Submit', valid, model);
+  public save(valid : any, model : any):void{
+    console.log('DatosGenerales@save()');
   }
 
 
