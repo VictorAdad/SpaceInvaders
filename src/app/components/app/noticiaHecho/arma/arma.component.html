@@ -18,25 +18,25 @@
             <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
     
-            <!-- Position Column -->
+            <!-- Arma Column -->
             <ng-container mdColumnDef="Arma">
                 <md-header-cell *mdHeaderCellDef> Arma</md-header-cell>
                 <md-cell *mdCellDef="let element"> {{element.arma}} </md-cell>
             </ng-container>
     
-            <!-- Name Column -->
+            <!-- Tipo Column -->
             <ng-container mdColumnDef="Tipo">
                 <md-header-cell *mdHeaderCellDef> Tipo </md-header-cell>
                 <md-cell *mdCellDef="let element"> {{element.tipo}} </md-cell>
             </ng-container>
     
-            <!-- Weight Column -->
+            <!-- Marca Column -->
             <ng-container mdColumnDef="Marca">
                 <md-header-cell *mdHeaderCellDef> Marca y/o Modelo </md-header-cell>
                 <md-cell *mdCellDef="let element"> {{element.marca}} </md-cell>
             </ng-container>
     
-            <!-- Color Column -->
+            <!-- Acciones Column -->
             <ng-container mdColumnDef="Acciones">
                 <md-header-cell *mdHeaderCellDef class="col-sm-4 col-md-1 col-lg-1 d-flex justify-content-center"> Acciones </md-header-cell>
                 <md-cell *mdCellDef="let element"  class="col-sm-4 col-md-1 col-lg-1 d-flex justify-content-center"> 
