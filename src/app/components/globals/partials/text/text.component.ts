@@ -13,7 +13,7 @@ export class TextComponent implements OnInit{
 	@Input() sufix    : string;
 	@Input() name     : string;
 	@Input() required : boolean = false;
-	@Input() group    : FormGroup;
+	@Input() group    : FormGroup = null;
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
 
