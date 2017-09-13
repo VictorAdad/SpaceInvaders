@@ -6,7 +6,7 @@
 		<button class="float-right" md-raised-button routerLink="/" color="accent">Regresar</button>
 	</div>
 	<div class="col-md-12">
-		<form (ngSubmit)="save(form.valid, form.value)"   [formGroup]="form">
+		<form [formGroup]="form">
 		     <div class="row">
 				 	<div class="col-sm-6 col-md-4 col-lg-3">
 				 		<select2 placeholder= "Clase de Arma" name="clase"  [(value)]="model.clase" [(options)]   ="clasesArmas"  (valueChange)="claseChange($event)" [group]="form">
@@ -41,7 +41,7 @@
 			</div>
 
 			<button class="float-right" md-button>Cancelar</button>	
-			<button class="float-right" md-raised-button color="accent" type="submit" [disabled]="!form.valid">Guardar</button>	
+			<button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]">Guardar</button>
 		</form>
 	</div>
 </div>
