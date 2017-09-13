@@ -11,9 +11,9 @@ export class TextComponent implements OnInit{
 	@Input() value    : string;
 	@Input() prefix   : string;
 	@Input() sufix    : string;
-	@Input() name     : string;
+	@Input() name     : string  = '';
 	@Input() required : boolean = false;
-	@Input() group    : FormGroup = null;
+	@Input() group    : FormGroup = new FormGroup({});
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
 
