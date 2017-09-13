@@ -10,7 +10,7 @@
 	</md-radio-group>
 </div>
 <div [formGroup]="group"  *ngIf="name!=''" >
-	<md-radio-group [(ngModel)]="value" (ngModelChange)="update($event)" formControlName="{{name}}">
+	<md-radio-group [(ngModel)]="value" (ngModelChange)="update($event)" formControlName="{{name}}" required="true">
 
 	<div class="row">
 	<div *ngFor="let radio of radios" class="{{class}}">
