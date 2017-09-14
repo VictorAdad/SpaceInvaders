@@ -25,7 +25,7 @@
           <div class="col">
             <div class="row" >
             <div class="col-md-10">
-              <label class="Naranja">Tipo de persona </label>
+              <label class="Naranja">*Tipo de persona </label>
             </div>
             </div>
             <div class="row">
@@ -38,11 +38,6 @@
             " name="tipoPersona"  [group]="form" [functionChange]="activaRazonSocial.bind(this)"
             ></radiobutton>
             </div></div>
-            <div class="row" [ngClass]="{'Etiqueta': tipoPersona=='' }"  *ngIf="tipoPersona==''">
-            <div class="col-md-10">
-              <label >Campo obligatorio</label>
-              </div>
-            </div>
           </div>
           
         </div>
@@ -50,7 +45,7 @@
           <div class="col">
               <div class="row">
               <div class="col-md-10">
-                <label class="Naranja">Tipo de Interviniente</label>
+                <label class="Naranja">*Tipo de Interviniente</label>
                 </div>
               </div>
               <div class="row">
@@ -72,11 +67,6 @@
               " name="tipoInterviniente" [group]="form"></radiobutton>
               </div>
               </div>
-              <div class="row" [ngClass]="{'Etiqueta': tipoInterviniente=='' }"  *ngIf="tipoInterviniente==''">
-            <div class="col-md-10">
-              <label >Campo obligatorio</label>
-              </div>
-            </div>
             </div>
         </div>
         <!-- Datos de identidad-->
@@ -93,7 +83,7 @@
               </md-expansion-panel-header>
               <div class="row" *ngIf="tipoPersona=='Moral'">
               <div class="col-md-3">
-                  <text label="Razón social" name="razonSocial" [group]="form"></text>
+                  <text label="Razón social" name="razonSocial" [group]="form" hintStart="Campo obligatorio"></text>
                 </div>
               </div>
               

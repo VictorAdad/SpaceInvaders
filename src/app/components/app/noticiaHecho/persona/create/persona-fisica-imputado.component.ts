@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 
 @Component({
   	templateUrl : './persona-fisica-imputado.component.html',
-  	styles: ['.Etiqueta { color: #b71c1c; }']
+  	styles: ['']
 })
 export class PersonaFisicaImputadoComponent{
 
@@ -46,6 +46,4 @@ export class PersonaFisicaImputadoComponent{
 	save(valid : any, model : any):void{
 		console.log('-> Submit', valid, model);
 	}
-
-	
 }
