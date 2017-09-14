@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MOption } from '@partials/select2/select2.component';
+import { MOption } from '@partials/form/select2/select2.component';
 import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';

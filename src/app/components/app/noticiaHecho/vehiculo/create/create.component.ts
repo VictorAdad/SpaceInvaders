@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Vehiculo } from '@models/vehiculo';
-import { MOption } from '@partials/select2/select2.component';
+import { MOption } from '@partials/form/select2/select2.component';
 
 @Component({
     selector: 'vehiculo-create',

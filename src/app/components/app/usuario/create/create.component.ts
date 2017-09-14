@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MRadioButton } from '@partials/radiobutton/radiobutton.component'
+import { MRadioButton } from '@partials/form/radiobutton/radiobutton.component'
 
 
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';

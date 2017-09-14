@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { TextComponent } from '@partials/text/text.component';
-import { CheckboxComponent } from '@partials/checkbox/checkbox.component';
-import { DateComponent } from '@partials/date/date.component';
-import { TextareaComponent } from '@partials/textarea/textarea.component';
-import { RadioButtonComponent} from '@partials/radiobutton/radiobutton.component';
-import { Select2Component } from '@partials/select2/select2.component';
+import { TextComponent } from '@partials/form/text/text.component';
+import { CheckboxComponent } from '@partials/form/checkbox/checkbox.component';
+import { DateComponent } from '@partials/form/date/date.component';
+import { TextareaComponent } from '@partials/form/textarea/textarea.component';
+import { RadioButtonComponent} from '@partials/form/radiobutton/radiobutton.component';
+import { Select2Component } from '@partials/form/select2/select2.component';
 import { BreadCrumbComponent } from '@partials/breadcrumb/breadcrumb.component';
-import { TokenInputComponent } from '@partials/tokeninput/tokeninput.component'
+import { TokenInputComponent } from '@partials/form/tokeninput/tokeninput.component'
 
 
 @NgModule()
