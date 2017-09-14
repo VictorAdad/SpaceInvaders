@@ -1,16 +1,18 @@
-<md-form-field class="full-width" *ngIf="name==''">
-		<md-icon mdPrefix *ngIf="prefixIcon">{{ prefixIcon }}</md-icon>
-		<span *ngIf="prefix" mdPrefix>{{ prefix }}&nbsp;</span>
-		<input mdInput placeholder="{{label}}" [(ngModel)]="value" (ngModelChange)="update($event)" name="{{name}}">
-		<md-icon mdSuffix *ngIf="sufix">{{ sufix }}</md-icon>
-		<md-hint align="start" *ngIf="hintStart">{{hintStart}} </md-hint>
-	    <md-hint align="end" *ngIf="hintEnd">{{hintEnd}}</md-hint>
-</md-form-field>
-<md-form-field class="full-width" [formGroup]="group" *ngIf="name!=''">
-		<span *ngIf="prefix" mdPrefix>{{ prefix }}&nbsp;</span>
-		<input mdInput placeholder="{{label}}" [(ngModel)]="value" (ngModelChange)="update($event)" formControlName="{{name}}"  name="{{name}}">
-		<md-icon mdSuffix *ngIf="sufix">{{ sufix }}</md-icon>
+<div class="form-group">
+	<md-form-field class="full-width" *ngIf="name==''">
+			<md-icon mdPrefix *ngIf="prefixIcon">{{ prefixIcon }}</md-icon>
+			<span *ngIf="prefix" mdPrefix>{{ prefix }}&nbsp;</span>
+			<input mdInput placeholder="{{label}}" [(ngModel)]="value" (ngModelChange)="update($event)" name="{{name}}">
+			<md-icon mdSuffix *ngIf="sufix">{{ sufix }}</md-icon>
+			<md-hint align="start" *ngIf="hintStart">{{hintStart}} </md-hint>
+		    <md-hint align="end" *ngIf="hintEnd">{{hintEnd}}</md-hint>
+	</md-form-field>
+	<md-form-field class="full-width" [formGroup]="group" *ngIf="name!=''">
+			<span *ngIf="prefix" mdPrefix>{{ prefix }}&nbsp;</span>
+			<input mdInput placeholder="{{label}}" [(ngModel)]="value" (ngModelChange)="update($event)" formControlName="{{name}}"  name="{{name}}">
+			<md-icon mdSuffix *ngIf="sufix">{{ sufix }}</md-icon>
 
-		<md-hint align="start" *ngIf="hintStart">{{hintStart}} </md-hint>
-	    <md-hint align="end" *ngIf="hintEnd">{{hintEnd}}</md-hint>
-</md-form-field>
+			<md-hint align="start" *ngIf="hintStart">{{hintStart}} </md-hint>
+		    <md-hint align="end" *ngIf="hintEnd">{{hintEnd}}</md-hint>
+	</md-form-field>
+</div>

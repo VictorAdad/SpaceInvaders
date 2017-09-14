@@ -9,6 +9,7 @@
 
 .breadcrumb-item {
   float: left;
+  height: 21px !important;
 
   // The separator between breadcrumbs (by default, a forward-slash: "/")
   + .breadcrumb-item::before {
@@ -34,5 +35,9 @@
 
   &.active {
     color: $breadcrumb-active-color;
+  }
+
+  > .mat-icon{
+    font-size: 20px !important;
   }
 }
