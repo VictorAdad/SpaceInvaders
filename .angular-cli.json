@@ -23,6 +23,7 @@
         "./assets/css/bootstrap-grid.css",
         "./assets/css/mdl/material.css",
         "./assets/sass/materialize/materialize.scss",
+        "./assets/sass/custom-material/custom-material.scss",
         "./assets/sass/bootstrap/bootstrap.scss",
         "./assets/sass/theme.scss"
       ],

@@ -1,4 +1,5 @@
 <md-form-field class="full-width" *ngIf="name==''">
+		<md-icon mdPrefix *ngIf="prefixIcon">{{ prefixIcon }}</md-icon>
 		<span *ngIf="prefix" mdPrefix>{{ prefix }}&nbsp;</span>
 		<input mdInput placeholder="{{label}}" [(ngModel)]="value" (ngModelChange)="update($event)" name="{{name}}">
 		<md-icon mdSuffix *ngIf="sufix">{{ sufix }}</md-icon>

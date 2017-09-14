@@ -9,6 +9,7 @@ import { LoginComponent } from '@components-app/login/login.component';
 import { AppRoutingModule, routingComponents} from './app.routing';
 import { PartialsModule, partialsComponents} from './partials.module';
 import { DirectivesModule, directivesComponents} from './directives.module';
+import { CustomModule, customComponents} from './custom.module';
 import { NoticiaHechoModule, noticiaHechoComponents} from '@components-app/noticiaHecho/module';
 import { BreadcrumbModule } from 'angular2-crumbs';
 
@@ -23,7 +24,8 @@ import { GlobalService } from "@services/global.service";
     routingComponents,
     partialsComponents,
     noticiaHechoComponents,
-    directivesComponents
+    directivesComponents,
+    customComponents
   ],
   imports: [
     BrowserModule,
@@ -33,6 +35,7 @@ import { GlobalService } from "@services/global.service";
     AppRoutingModule,
     PartialsModule,
     DirectivesModule,
+    CustomModule,
     HttpModule,
     FormsModule,
     ReactiveFormsModule,

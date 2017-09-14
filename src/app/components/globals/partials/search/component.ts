@@ -1,12 +1,12 @@
-import { Component, Input, Output, EventEmitter , OnInit} from '@angular/core';
+import { Component, Input, Output, EventEmitter} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({
-	selector    : 'text',
-  	templateUrl : './text.component.html'
+	selector    : 'search',
+  	templateUrl : './component.html'
 })
-export class TextComponent implements OnInit{
+export class SearchComponent {
 	@Input() label    : string;
 	@Input() value    : string;
 	@Input() prefix   : string;
@@ -21,10 +21,6 @@ export class TextComponent implements OnInit{
 
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
-
-	ngOnInit(){
-		// console.log(this);
-	}
 
 	update(value) {
 		this.valueChange.emit(value);
