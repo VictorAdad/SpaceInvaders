@@ -1,7 +1,15 @@
 <div class="content-body">
-    <div class="row">
+    <breadcrumb #parent>
+        <div class="row">
+            <ng-template ngFor let-route [ngForOf]="parent.breadcrumbs">
+                <a    *ngIf="!route.terminal" class="breadcrumb" href="" [routerLink]="[route.url]">{{ route.displayName }}</a>
+                <span *ngIf="route.terminal"  class="breadcrumb">{{ route.displayName }}</span>
+            </ng-template>
+        </div>
+    </breadcrumb>
+    <div class="row space">
         <div class="col-md-10">
-            <h2>Noticias de Hechos</h2>
+            <h3>Detalle de Persona</h3>
         </div>
         <div class="col-md-2">
             <button class="float-right" md-raised-button routerLink="/noticia-hecho" color="accent">Regresar</button>
@@ -9,12 +17,6 @@
     </div>
     <form (ngSubmit)="save(form.valid, form.value)"   [formGroup]="form">
     <div>
-        <div class="row">
-          <div class="col-md-8">
-             <h3>Detalle de Persona</h3>
-          </div>
-           
-        </div>
         <div class="row">
           <div class="col-md-8">
             <h4>Datos generales</h4>
@@ -372,7 +374,7 @@
         </div>
 
         <!-- Media de filiación -->
-        <div class="row  justify-content-md-center align-items-center" 
+        <div class="row  justify-content-md-center align-items-center space" 
         *ngIf="tipoInterviniente=='Imputado'">
           <md-expansion-panel style="width: 95%">
               <md-expansion-panel-header>
@@ -631,13 +633,13 @@
         </div>
 
         <div class="row justify-content-md-end">
-                    <div class="col-md-2">
-                        <button md-raised-button type="submit" color="accent" [disabled]="!form.valid">Guardar</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button md-button type="submit">Cancelar</button>
-                    </div>
-                </div>
+            <div class="col-md-2">
+                <button md-raised-button type="submit" color="accent" [disabled]="!form.valid">Guardar</button>
+            </div>
+            <div class="col-md-2">
+                <button md-button type="submit">Cancelar</button>
+            </div>
+        </div>
     </div>
   </form>
 </div>
