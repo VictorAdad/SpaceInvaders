@@ -6,276 +6,283 @@
         <button class="float-right" md-raised-button routerLink="/noticia-hecho" color="accent">Regresar</button>
     </div>
     <div class="col-md-12">
-        <form [formGroup]="form">
-           <div class="row" *ngIf="!isImputadoVictimaDelito ">
-            <div class="col-md-3">
-                <select2 placeholder="Tipo de relación" name="tipo"[(options)]="tiposRelacion" (valueChange)="changeTipoRelacion($event)" [group]="form"></select2>
-            </div>
-        </div>
-        <div class="row" *ngIf="isImputadoVictimaDelito">
-            <div class="col">
-                <select2 placeholder="Tipo de relación" [(options)]="tiposRelacion" (valueChange)="valueChangeSelect($event)"></select2>
-            </div>
-            
-            <div class="col">
-                <select2 placeholder="Modalidad"></select2>
-            </div>
-            <div class="col">
-                <select2 placeholder="Delito"></select2>
-            </div>
-            <div class="col">
-                <select2 placeholder="Forma de comisión"></select2>
-            </div>
-            <div class="col">
-                <select2 placeholder="Imputado"></select2>
-            </div>
-        </div>
-        <div class="row" *ngIf="isImputadoVictimaDelito">
-            <div class="col">
-                <select2 placeholder="Víctima u ofendido"></select2>
-            </div>
-            <div class="col">
-                <select2 placeholder="Lugar"></select2>
-            </div>
-            <div class="col">
-                <select2 placeholder="Concurso del delito"></select2>
-            </div>
-            <div class="col">
-                <select2 placeholder="Clasificación del delito"></select2>
-            </div>
-            <div class="col">
-                <select2 placeholder="Elemento de comisión"></select2>
-            </div>
-        </div>
-        <div class="row" *ngIf="isImputadoVictimaDelito">
-            <div class="col">
-                <select2 placeholder="Clasificación"></select2>
-            </div>
-            <div class="col">
-                <select2 placeholder="Forma de acción"></select2>
-            </div>
-            <div class="col">
-                <select2 placeholder="Consumación"></select2>
-            </div>
-            <div class="col">
-                <select2 placeholder="Grado de participación"></select2>
-            </div>
-            <div class="col">
-                <select2 placeholder="Relación entre acusado y ofendido"></select2>
-            </div>
-        </div>
-        <div class="row" *ngIf="isImputadoVictimaDelito">
-            <div class="col">
-                <select2 placeholder="Forma de conducta"></select2>
-            </div>
-            <div class="col">
-                <select2 placeholder="Tipo de desaparición"></select2>
-            </div>
-            <div class="col">
-                <checkbox label="Flagracia"></checkbox>
-            </div>
-            <div class="col">
-                <checkbox label="Violencia de genero" (valueChange)="changeViolenciaGenero($event)"></checkbox>
-            </div>
-        </div>
-        <div class="row" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">
-            <div class="col">
-                <h4>Violencia de genero</h4>
-                <div class="row">
+        <form [formGroup]="this.generalForm">
+          <form [formGroup]="this.form">
 
-                    <div class="col-md-3">
-                        <select2 placeholder="Víctima de delincuencia organizada"></select2>
-                    </div>
-                    <div class="col-md-3">
-                        <select2 placeholder="Víctima de violencia de genero"></select2>
-                    </div>
-                    <div class="col-md-3">
-                        <select2 placeholder="Víctima de trata"></select2>
-                    </div>
-                    <div class="col-md-3">
-                        <select2 placeholder="Víctima de acoso"></select2>
-                    </div>
+            <div class="row" >
+                <div class="col">
+                    <select2 placeholder="Tipo de relación" name="tipo" [(options)]="tiposRelacion" (valueChange)="changeTipoRelacion($event)" [group]="form"></select2 >
                 </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <select2 placeholder="Orden de protección"></select2>
-                    </div>
+                
+                <div class="col">
+                    <select2 placeholder="Modalidad" name="modalidad" *ngIf="isImputadoVictimaDelito" [(options)]="options" [group]="form"></select2>
+                </div>
+                <div class="col">
+                    <select2 placeholder="Delito" name="delito" *ngIf="isImputadoVictimaDelito" [(options)]="options" [group]="form" ></select2>
+                </div>
+                <div class="col">
+                    <select2 placeholder="Forma de comisión"  name="formaComision"*ngIf="isImputadoVictimaDelito" [(options)]="options" [group]="form"></select2>
+                </div>
+                <div class="col" >
+                    <select2 placeholder="Imputado" name="imputado"*ngIf="isImputadoVictimaDelito" [(options)]="options" [group]="form"></select2>
                 </div>
             </div>
-        </div>
-        <div class="row" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">
-            <div class="col">
-                <h5>Efectos de violencia</h5>
-                <div class="row">
-                    <div class="col-md-3">
-                        <select2 placeholder="Efecto"></select2>
-                    </div>
-                    <div class="col-md-3">
-                        <select2 placeholder="Detalle"></select2>
-                    </div>
+            <div class="row" *ngIf="isImputadoVictimaDelito">
+                <div class="col">
+                    <select2 placeholder="Víctima u ofendido" name="victimaUOfendido" [(options)]="options" [group]="form"></select2>
                 </div>
-                <div class="row">
-                    <div class="col-md-10"></div>
-                    <div class="col-md-1">
-                        <button class="float-right" md-raised-button color="accent">Agregar</button>
-                    </div>
-                    <div class="col-md-1">
-                        <button class="float-right" md-raised-button color="accent">Limpiar</button>
-                    </div>
+                <div class="col">
+                    <select2 placeholder="Lugar" name="lugar" [(options)]="options" [group]="form"></select2>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="">
-                            <md-table #table [dataSource]="dataSource">
-                                <!-- Efecto Column -->
-                                <ng-container mdColumnDef="efecto">
-                                    <md-header-cell *mdHeaderCellDef> Efecto </md-header-cell>
-                                    <md-cell *mdCellDef="let element"> {{element.efecto}} </md-cell>
-                                </ng-container>
+                <div class="col">
+                    <select2 placeholder="Concurso del delito" name="concursoDelito" [(options)]="options" [group]="form"></select2>
+                </div>
+                <div class="col">
+                    <select2 placeholder="Clasificación del delito" name="clasificacionDelito" [(options)]="options" [group]="form"></select2>
+                </div>
+                <div class="col">
+                    <select2 placeholder="Elemento de comisión" name="elementoComision" [(options)]="options" [group]="form"></select2>
+                </div>
+            </div>
+            <div class="row" *ngIf="isImputadoVictimaDelito">
+                <div class="col">
+                    <select2 placeholder="Clasificación" name="clasificacion" [(options)]="options" [group]="form"></select2>
+                </div>
+                <div class="col">
+                    <select2 placeholder="Forma de acción" name="formaAccion" [(options)]="options" [group]="form"></select2>
+                </div>
+                <div class="col">
+                    <select2 placeholder="Consumación" name="consumacion" [(options)]="options" [group]="form"></select2>
+                </div>
+                <div class="col">
+                    <select2 placeholder="Grado de participación" name="gradoParticipacion" [(options)]="options" [group]="form"></select2>
+                </div>
+                <div class="col">
+                    <select2 placeholder="Relación entre acusado y ofendido" name="relacionAcusadoOfendido" [(options)]="options" [group]="form"></select2>
+                </div>
+            </div>
+            <div class="row" *ngIf="isImputadoVictimaDelito">
+                <div class="col">
+                    <select2 placeholder="Forma de conducta" name="formaConducta" [(options)]="options" [group]="form"></select2>
+                </div>
+                <div class="col">
+                    <select2 placeholder="Tipo de desaparición" name="tipoDesaparicion" [(options)]="options" [group]="form"></select2>
+                </div>
+                <div class="col">
+                    <checkbox label="Flagracia" name="flagrancia"></checkbox>
+                </div>
+                <div class="col">
+                    <checkbox label="Violencia de genero" (valueChange)="changeViolenciaGenero($event)"></checkbox>
+                </div>
+            </div>
+          </form>  
+            <br/>
+            <div class="row" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">
+                <div class="col">
+                    <h4>Violencia de genero</h4>
+                   <form [formGroup]="this.form2">
+                        <div class="row">
 
-                                <!-- Detalle Column -->
-                                <ng-container mdColumnDef="detalle">
-                                    <md-header-cell *mdHeaderCellDef> Detalle </md-header-cell>
-                                    <md-cell *mdCellDef="let element"> {{element.detalle}} </md-cell>
-                                </ng-container>
+                            <div class="col-md-3">
+                                <select2 placeholder="Víctima de delincuencia organizada" name="victimaDelincuenciaOrganizada" [group]="form2" ></select2>
+                            </div>
+                            <div class="col-md-3">
+                                <select2 placeholder="Víctima de violencia de genero" name="victimaViolenciaGenero"  [group]="form2"></select2>
+                            </div>
+                            <div class="col-md-3">
+                                <select2 placeholder="Víctima de trata" name="victimaTrata"  [group]="form2"></select2>
+                            </div>
+                            <div class="col-md-3">
+                                <select2 placeholder="Víctima de acoso" name="victimaAcoso"  [group]="form2"></select2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <select2 placeholder="Orden de protección" name="ordenProteccion"  [group]="form2"></select2>
+                            </div>
+                        </div>
+                   </form>  
 
-                                <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-                                <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
-                            </md-table>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <div class="row" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">
+                <div class="col">
+                    <h5>Efectos de violencia</h5>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <select2 placeholder="Efecto"></select2>
+                        </div>
+                        <div class="col-md-3">
+                            <select2 placeholder="Detalle"></select2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10"></div>
+                        <div class="col-md-1">
+                            <button class="float-right" md-raised-button color="accent">Agregar</button>
+                        </div>
+                        <div class="col-md-1">
+                            <button class="float-right" md-raised-button color="accent">Limpiar</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="">
+                                <md-table #table [dataSource]="dataSource">
+                                    <!-- Efecto Column -->
+                                    <ng-container mdColumnDef="efecto">
+                                        <md-header-cell *mdHeaderCellDef> Efecto </md-header-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.efecto}} </md-cell>
+                                    </ng-container>
+
+                                    <!-- Detalle Column -->
+                                    <ng-container mdColumnDef="detalle">
+                                        <md-header-cell *mdHeaderCellDef> Detalle </md-header-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.detalle}} </md-cell>
+                                    </ng-container>
+
+                                    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+                                    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+                                </md-table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Aquí va Trata de personas -->
-        <!--     -->
-        <div class="row" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">
-            <div class="col">
-                <h5>Trata de personas</h5>
-                <div class="row">
-                    <div class="col-sm-12 col-md-6 col-lg-3">
-                        <select2 placeholder="País de origen">
-                        </select2>
-                        <select2 placeholder="Estado destino">
-                        </select2>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-3">
-                        <select2 placeholder="Estado origen">
-                        </select2>
-                        <select2 placeholder="Municipio destino">
-                        </select2>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-3">
-                        <select2 placeholder="Municipio origen">
-                        </select2>
-                        <select2 placeholder="Estado destino">
-                        </select2>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-3">
-                        <select2 placeholder="País destino">
-                        </select2>
-                        <select2 placeholder="Municipio destino">
-                        </select2>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4 col-md-6 col-lg-10"></div>
-                    <div class="col-sm-4 col-md-3 col-lg-1">
-                        <button class="float-right" md-raised-button color="accent">Agregar</button>
-                    </div>
-                    <div class="col-sm-4 col-md-3 col-lg-1">
-                        <button class="float-right" md-raised-button color="accent">Limpiar</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="">
-                            <md-table #table [dataSource]="dataSource">
-                                <!-- Efecto Column -->
-                                <ng-container mdColumnDef="efecto">
-                                    <md-header-cell *mdHeaderCellDef> Efecto </md-header-cell>
-                                    <md-cell *mdCellDef="let element"> {{element.efecto}} </md-cell>
-                                </ng-container>
+            <br/>
 
-                                <!-- Detalle Column -->
-                                <ng-container mdColumnDef="detalle">
-                                    <md-header-cell *mdHeaderCellDef> Detalle </md-header-cell>
-                                    <md-cell *mdCellDef="let element"> {{element.detalle}} </md-cell>
-                                </ng-container>
+            <!-- Aquí va Trata de personas -->
+            <div class="row" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">
+                <div class="col">
+                    <h5>Trata de personas</h5>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 col-lg-3">
+                            <select2 placeholder="País de origen">
+                            </select2>
+                            <select2 placeholder="Estado destino">
+                            </select2>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-3">
+                            <select2 placeholder="Estado origen">
+                            </select2>
+                            <select2 placeholder="Municipio destino">
+                            </select2>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-3">
+                            <select2 placeholder="Municipio origen">
+                            </select2>
+                            <select2 placeholder="Estado destino">
+                            </select2>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-3">
+                            <select2 placeholder="País destino">
+                            </select2>
+                            <select2 placeholder="Municipio destino">
+                            </select2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 col-md-6 col-lg-10"></div>
+                        <div class="col-sm-4 col-md-3 col-lg-1">
+                            <button class="float-right" md-raised-button color="accent">Agregar</button>
+                        </div>
+                        <div class="col-sm-4 col-md-3 col-lg-1">
+                            <button class="float-right" md-raised-button color="accent">Limpiar</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="">
+                                <md-table #table [dataSource]="dataSource">
+                                    <!-- Efecto Column -->
+                                    <ng-container mdColumnDef="efecto">
+                                        <md-header-cell *mdHeaderCellDef> Efecto </md-header-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.efecto}} </md-cell>
+                                    </ng-container>
 
-                                <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-                                <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
-                            </md-table>
+                                    <!-- Detalle Column -->
+                                    <ng-container mdColumnDef="detalle">
+                                        <md-header-cell *mdHeaderCellDef> Detalle </md-header-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.detalle}} </md-cell>
+                                    </ng-container>
+
+                                    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+                                    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+                                </md-table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">
+            <br/>
+            <div class="row" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">
 
-            <div class="col">
-                <h5>Hostigamiento y/o acoso</h5>
-                <div class="row">
-                    <div class="col">
-                        <select2 placeholder="Modalidad">
-                        </select2>
+                <div class="col">
+                    <h5>Hostigamiento y/o acoso</h5>
+                    <div class="row">
+                        <div class="col">
+                            <select2 placeholder="Modalidad">
+                            </select2>
 
-                    </div>
-                    <div class="col">
-                        <select2 placeholder="Ámbito">
-                        </select2>
+                        </div>
+                        <div class="col">
+                            <select2 placeholder="Ámbito">
+                            </select2>
 
-                    </div>
-                    <div class="col">
-                        <select2 placeholder="Conducta">
-                        </select2>
+                        </div>
+                        <div class="col">
+                            <select2 placeholder="Conducta">
+                            </select2>
 
+                        </div>
+                        <div class="col">
+                            <select2 placeholder="Detalle de conducta">
+                            </select2>
+                        </div>
+                        <div class="col">
+                            <select2 placeholder="Testigo">
+                            </select2>
+                        </div>
                     </div>
-                    <div class="col">
-                        <select2 placeholder="Detalle de conducta">
-                        </select2>
+                    <div class="row">
+                        <div class="col-sm-4 col-md-6 col-lg-10"></div>
+                        <div class="col-sm-4 col-md-3 col-lg-1">
+                            <button class="float-right" md-raised-button color="accent">Agregar</button>
+                        </div>
+                        <div class="col-sm-4 col-md-3 col-lg-1">
+                            <button class="float-right" md-raised-button color="accent">Limpiar</button>
+                        </div>
                     </div>
-                    <div class="col">
-                        <select2 placeholder="Testigo">
-                        </select2>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4 col-md-6 col-lg-10"></div>
-                    <div class="col-sm-4 col-md-3 col-lg-1">
-                        <button class="float-right" md-raised-button color="accent">Agregar</button>
-                    </div>
-                    <div class="col-sm-4 col-md-3 col-lg-1">
-                        <button class="float-right" md-raised-button color="accent">Limpiar</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="">
-                            <md-table #table [dataSource]="dataSource">
-                                <!-- Efecto Column -->
-                                <ng-container mdColumnDef="efecto">
-                                    <md-header-cell *mdHeaderCellDef> Efecto </md-header-cell>
-                                    <md-cell *mdCellDef="let element"> {{element.efecto}} </md-cell>
-                                </ng-container>
+                    <div class="row">
+                        <div class="col">
+                            <div class="">
+                                <md-table #table [dataSource]="dataSource">
+                                    <!-- Efecto Column -->
+                                    <ng-container mdColumnDef="efecto">
+                                        <md-header-cell *mdHeaderCellDef> Efecto </md-header-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.efecto}} </md-cell>
+                                    </ng-container>
 
-                                <!-- Detalle Column -->
-                                <ng-container mdColumnDef="detalle">
-                                    <md-header-cell *mdHeaderCellDef> Detalle </md-header-cell>
-                                    <md-cell *mdCellDef="let element"> {{element.detalle}} </md-cell>
-                                </ng-container>
+                                    <!-- Detalle Column -->
+                                    <ng-container mdColumnDef="detalle">
+                                        <md-header-cell *mdHeaderCellDef> Detalle </md-header-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.detalle}} </md-cell>
+                                    </ng-container>
 
-                                <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-                                <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
-                            </md-table>
+                                    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+                                    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+                                </md-table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <br/>
 
             <button class="float-right" md-button>Cancelar</button> 
-            <button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]">Guardar</button>
+            <button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(generalform.valid, form.value)" [disabled]="!form.valid || [saving]">Guardar</button>
         </form>
     </div>
 </div>

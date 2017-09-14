@@ -4,7 +4,9 @@ import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { Relacion } from '@models/relacion';
+import { Relacion} from '@models/relacion';
+import { ViolenciaGenero} from '@models/violenciaGenero';
+
 
 
 @Component({
@@ -30,57 +32,64 @@ export class RelacionCreateComponent {
     isViolenciaGenero: boolean = false;
     isAChange: boolean = false;
     public form  : FormGroup;
+    public form2  : FormGroup;
+    public generalForm:FormGroup;
     public model : Relacion;
-
+    public violenciaGenero:ViolenciaGenero;
+    options:MOption[]=[
+    {value:"1", label:"Opcion 1"},
+    {value:"2", label:"Opcion 2"},
+    {value:"3", label:"Opcion 3"}
+    ];
     constructor(private _fbuilder: FormBuilder) { }
       ngOnInit(){
       this.model = new Relacion();
-      /*
-   id:number
-    tipo: string;
-    modalidad: string;
-    formaComision: string;
-    imputado:string;
-    lugar:string;
-    consultorDelito:string;
-    clasificacionDelito:string;
-    elementoComision:string;
-    clasificacion:string;
-    formaAccion:string;
-    consumacion:string;
-    gradoParticipacion:string;
-    relacionAcusadoOfendido:string;
-    formaConducta:string;
-    tipoDesaparicion:string;
-    flagrancia:boolean;
-    violenciasGenero:ViolenciaGenero[];
-    tratasPersonas:TrataPersonas[];
-    hostigamietosAcosos:HostigamientoAcoso[];
-      */
+      this.violenciaGenero= new ViolenciaGenero();
+
       this.form  = new FormGroup({
           'tipo'                     : new FormControl(this.model.tipo, [Validators.required,]),
-          'modalidad'                : new FormControl(this.model.modalidad),
-          'formaComision'            : new FormControl(this.model.formaComision),
-          'imputado'                 : new FormControl(this.model.imputado),
-          'lugar'                    : new FormControl(this.model.lugar),
+          'modalidad'                : new FormControl(this.model.modalidad,[Validators.required,]),
+          'delito'                   : new FormControl(this.model.delito,[Validators.required,]),
+          'formaComision'            : new FormControl(this.model.formaComision,[Validators.required,]),
+          'imputado'                 : new FormControl(this.model.imputado,[Validators.required,]),
+          'victimaUOfendido'         : new FormControl(this.model.victimaUOfendido,[Validators.required,]),
+          'lugar'                    : new FormControl(this.model.lugar,[Validators.required,]),
+          'formaAccion'              : new FormControl(this.model.formaAccion,[Validators.required,]),
+          'elementoComision'         : new FormControl(this.model.elementoComision,[Validators.required,]),
           'consultorDelito'          : new FormControl(this.model.consultorDelito),
+          'concursoDelito'           : new FormControl(this.model.concursoDelito),
           'clasificacionDelito'      : new FormControl(this.model.clasificacionDelito),
-          'elementoComision'         : new FormControl(this.model.elementoComision),
           'clasificacion'            : new FormControl(this.model.clasificacion),
-          'formaAccion'              : new FormControl(this.model.formaAccion),
           'consumacion'              : new FormControl(this.model.consumacion),
           'gradoParticipacion'       : new FormControl(this.model.gradoParticipacion),
           'relacionAcusadoOfendido'  : new FormControl(this.model.relacionAcusadoOfendido),
           'formaConducta'            : new FormControl(this.model.formaConducta),
           'tipoDesaparicion'         : new FormControl(this.model.tipoDesaparicion),
           'flagrancia'               : new FormControl(this.model.flagrancia),
-          'violenciasGenero'         : new FormControl(this.model.violenciasGenero),
-          'tratasPersonas'           : new FormControl(this.model.tratasPersonas),
-          'hostigamietosAcosos'      : new FormControl(this.model.hostigamietosAcosos),
+         
+          'violenciaGenero'         : new FormControl(this.model.violenciaGenero),
+          'trataPersonas'           : new FormControl(this.model.trataPersonas),
+          'hostigamietoAcoso'       : new FormControl(this.model.hostigamietoAcoso),
 
 
         });
+      this.form2  = new FormGroup({
+          'tipo': new FormControl(this.model.tipo),
+          'victimaDelincuenciaOrganizada': new FormControl(this.violenciaGenero.victimaDelincuenciaOrganizada),
+          'victimaViolenciaGenero': new FormControl(this.violenciaGenero.victimaViolenciaGenero),
+          'victimaTrata':new FormControl(this.violenciaGenero.victimaTrata),
+          'victimaAcoso':new FormControl(this.violenciaGenero.victimaAcoso),
+          'ordenProteccion':new FormControl(this.violenciaGenero.ordenProteccion),
+          'efecto':new FormControl(this.violenciaGenero.efecto),
+          'detalleEfecto':new FormControl(this.violenciaGenero.detalleEfecto),
+
+        });
+
+      this.generalForm = this._fbuilder.group({
+        itemRows: this._fbuilder.array([this.form,this.form2])
+      });        
     }
+
 
     save(valid : any, model : any):void{
       console.log('-> Submit', valid, model);
