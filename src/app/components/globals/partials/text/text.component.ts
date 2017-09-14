@@ -14,6 +14,9 @@ export class TextComponent implements OnInit{
 	@Input() name     : string  = '';
 	@Input() required : boolean = false;
 	@Input() group    : FormGroup = new FormGroup({});
+	@Input() hintStart: string="";
+	@Input() hintEnd: string="";
+
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
 
