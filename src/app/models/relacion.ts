@@ -1,5 +1,3 @@
-import {ViolenciaGenero} from './violenciaGenero';
-import {TrataPersonas} from './trataPersonas';
 
 export class Relacion {
     id:number
