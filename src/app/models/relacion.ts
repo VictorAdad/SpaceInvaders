@@ -1,6 +1,5 @@
 import {ViolenciaGenero} from './violenciaGenero';
 import {TrataPersonas} from './trataPersonas';
-import {HostigamientoAcoso} from './hostigamientoAcoso';
 
 export class Relacion {
     id:number
