@@ -11,6 +11,7 @@ import { PartialsModule, partialsComponents} from './partials.module';
 import { DirectivesModule, directivesComponents} from './directives.module';
 import { CustomModule, customComponents} from './custom.module';
 import { NoticiaHechoModule, noticiaHechoComponents} from '@components-app/noticiaHecho/module';
+import { SolicitudPreliminarModule, SolicitudPreliminarComponents } from '@components-app/solicitud-preliminar/module';
 import { BreadcrumbModule } from 'angular2-crumbs';
 
 import { MiservicioService} from "./services/miservicio.service";
@@ -25,7 +26,8 @@ import { GlobalService } from "@services/global.service";
     partialsComponents,
     noticiaHechoComponents,
     directivesComponents,
-    customComponents
+    customComponents,
+    SolicitudPreliminarComponents
   ],
   imports: [
     BrowserModule,
@@ -36,11 +38,12 @@ import { GlobalService } from "@services/global.service";
     PartialsModule,
     DirectivesModule,
     CustomModule,
+    SolicitudPreliminarModule,
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
-    BreadcrumbModule.forRoot()
+    BreadcrumbModule.forRoot(),
   ],
   providers: [
     MiservicioService,
