@@ -23,8 +23,18 @@
 // // that you are using.
 // @include angular-material-theme($app-theme);
 
-$app-primary: mat-palette($mat-blue-grey);
-$app-accent:  mat-palette($mat-red, 900, A200, A100);
-$app-warn:    mat-palette($mat-red, 900);
+$app-primary: mat-palette($mat-red, 900);
+$app-accent:  mat-palette($mat-blue-grey, 700);
+$app-warn:    mat-palette($mat-red);
 $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);	
 @include angular-material-theme($app-theme);
+
+body {
+	font-family: Roboto, 'Helvetica Neue', sans-serif;
+
+	* {
+    	-webkit-font-smoothing: antialiased;
+    	-moz-osx-font-smoothing: grayscale;
+  	}
+
+}
