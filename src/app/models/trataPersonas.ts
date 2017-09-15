@@ -4,6 +4,6 @@ export class TrataPersonas {
     estadoOrigen: string;
     municipioOrigen:string;
     paisDestino:string;
-    estadDestino:string;
+    estadoDestino:string;
     municipioDestino:string;
   }

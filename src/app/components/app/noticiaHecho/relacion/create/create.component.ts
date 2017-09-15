@@ -5,7 +5,9 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Relacion} from '@models/relacion';
-import { ViolenciaGenero} from '@models/violenciaGenero';
+import { EfectoViolenciaGenero} from '@models/efectoViolenciaGenero';
+import { TrataPersonas} from '@models/trataPersonas';
+import { HostigamientoAcoso} from '@models/hostigamientoAcoso';
 
 
 
@@ -16,6 +18,16 @@ import { ViolenciaGenero} from '@models/violenciaGenero';
 })
 
 export class RelacionCreateComponent {
+    public relacionForm  : FormGroup;
+    public efectoViolenciaForm  : FormGroup;
+    public trataPersonasForm  : FormGroup;
+    public hostigamientForm  : FormGroup;
+    public generalForm:FormGroup;
+
+    public model : Relacion;
+    public efectoViolenciaGenero:EfectoViolenciaGenero;
+    public trataPersonas:TrataPersonas;
+    public hostigamiento:HostigamientoAcoso;
 
     tiposRelacion:MOption[] = [
         { value:'Defensor', label:'Defensor del imputado' },
@@ -24,6 +36,13 @@ export class RelacionCreateComponent {
         { value:'Representante', label:'Representante de la víctima' },
         { value:'Tutor', label:'Tutor de la víctima' }
     ];
+
+    options:MOption[]=[
+    {value:"1", label:"Opcion 1"},
+    {value:"2", label:"Opcion 2"},
+    {value:"3", label:"Opcion 3"}
+    ];
+
     isDefensorImputado: boolean = false;
     isImputadoVictimaDelito: boolean = false;
     isAsesorJuridicoVictima: boolean = false;
@@ -31,22 +50,16 @@ export class RelacionCreateComponent {
     isTutorVictima: boolean = false;
     isViolenciaGenero: boolean = false;
     isAChange: boolean = false;
-    public form  : FormGroup;
-    public form2  : FormGroup;
-    public generalForm:FormGroup;
-    public model : Relacion;
-    public violenciaGenero:ViolenciaGenero;
-    options:MOption[]=[
-    {value:"1", label:"Opcion 1"},
-    {value:"2", label:"Opcion 2"},
-    {value:"3", label:"Opcion 3"}
-    ];
+
+
     constructor(private _fbuilder: FormBuilder) { }
       ngOnInit(){
       this.model = new Relacion();
-      this.violenciaGenero= new ViolenciaGenero();
+      this.efectoViolenciaGenero= new EfectoViolenciaGenero();
+      this.trataPersonas= new TrataPersonas();
+      this.hostigamiento= new HostigamientoAcoso;
 
-      this.form  = new FormGroup({
+      this.relacionForm  = new FormGroup({
           'tipo'                     : new FormControl(this.model.tipo, [Validators.required,]),
           'modalidad'                : new FormControl(this.model.modalidad,[Validators.required,]),
           'delito'                   : new FormControl(this.model.delito,[Validators.required,]),
@@ -65,28 +78,42 @@ export class RelacionCreateComponent {
           'relacionAcusadoOfendido'  : new FormControl(this.model.relacionAcusadoOfendido),
           'formaConducta'            : new FormControl(this.model.formaConducta),
           'tipoDesaparicion'         : new FormControl(this.model.tipoDesaparicion),
-          'flagrancia'               : new FormControl(this.model.flagrancia),
-         
-          'violenciaGenero'         : new FormControl(this.model.violenciaGenero),
-          'trataPersonas'           : new FormControl(this.model.trataPersonas),
-          'hostigamietoAcoso'       : new FormControl(this.model.hostigamietoAcoso),
-
+          'flagrancia'               : new FormControl(this.model.flagrancia),       
+          'violenciaGenero'          : new FormControl(this.model.violenciaGenero),
+          'tipoViolenciaGenero'      : new FormControl(this.model.tipoViolenciaGenero),
+          'victimaDelincuenciaOrganizada': new FormControl(this.model.victimaDelincuenciaOrganizada),
+          'victimaViolenciaGenero'    : new FormControl(this.model.victimaViolenciaGenero),
+          'victimaTrata'              :new FormControl(this.model.victimaTrata),
+          'victimaAcoso'              :new FormControl(this.model.victimaAcoso),
+          'ordenProteccion'           :new FormControl(this.model.ordenProteccion),
 
         });
-      this.form2  = new FormGroup({
-          'tipo': new FormControl(this.model.tipo),
-          'victimaDelincuenciaOrganizada': new FormControl(this.violenciaGenero.victimaDelincuenciaOrganizada),
-          'victimaViolenciaGenero': new FormControl(this.violenciaGenero.victimaViolenciaGenero),
-          'victimaTrata':new FormControl(this.violenciaGenero.victimaTrata),
-          'victimaAcoso':new FormControl(this.violenciaGenero.victimaAcoso),
-          'ordenProteccion':new FormControl(this.violenciaGenero.ordenProteccion),
-          'efecto':new FormControl(this.violenciaGenero.efecto),
-          'detalleEfecto':new FormControl(this.violenciaGenero.detalleEfecto),
+      this.efectoViolenciaForm  = new FormGroup({
+          'efecto': new FormControl(this.efectoViolenciaGenero.efecto),
+          'detalle': new FormControl(this.efectoViolenciaGenero.detalle),
+          
+        });
+      this.trataPersonasForm  = new FormGroup({
+          'paisOrigen': new FormControl(this.trataPersonas.paisOrigen),
+          'estadoOrigen': new FormControl(this.trataPersonas.estadoOrigen),
+          'municipioOrigen': new FormControl(this.trataPersonas.municipioOrigen),
+          'paisDestino': new FormControl(this.trataPersonas.paisDestino),
+          'estadoDestino': new FormControl(this.trataPersonas.estadoDestino),
+          'municipioDestino': new FormControl(this.trataPersonas.municipioDestino),
 
+        });
+
+      this.hostigamientForm  = new FormGroup({
+          'modalidad': new FormControl(this.hostigamiento.modalidad),
+          'ambito': new FormControl(this.hostigamiento.modalidad),
+          'conducta': new FormControl(this.hostigamiento.conducta),
+          'detalleConducta': new FormControl(this.hostigamiento.detalleConducta),
+          'testigo': new FormControl(this.hostigamiento.testigo),
+          
         });
 
       this.generalForm = this._fbuilder.group({
-        itemRows: this._fbuilder.array([this.form,this.form2])
+        itemRows: this._fbuilder.array([this.relacionForm,this.efectoViolenciaForm,this.trataPersonasForm,this.hostigamientForm])
       });        
     }
 
