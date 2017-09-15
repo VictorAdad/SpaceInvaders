@@ -15,6 +15,8 @@ import {PersonaFisicaImputadoComponent} from '@components-app/noticiaHecho/perso
 import { RelacionComponent } from '@components-app/noticiaHecho/relacion/relacion.component';
 import { RelacionCreateComponent } from '@components-app/noticiaHecho/relacion/create/create.component';
 
+import { AcuerdoGeneralComponent } from '@components-app/solicitud-preliminar/acuerdo-general/component';
+
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
     { path : '', component: HomeComponent, data : { breadcrumb : 'Noticia de hechos'}},
@@ -30,7 +32,9 @@ const routes: Routes = [
     { path : 'relaciones/create', component : RelacionCreateComponent },
     { path : 'vehiculos', component :  VehiculoComponent, data: { breadcrumb: 'Vehiculos'}},
     { path : 'vehiculos/create', component : VehiculoCreateComponent, data: { breadcrumb: 'Nuevo Vehiculo'}},
-    { path : 'personas/persona-fisica-imputado', component : PersonaFisicaImputadoComponent, data : { breadcrumb : 'Crear Persona'}}
+    { path : 'personas/persona-fisica-imputado', component : PersonaFisicaImputadoComponent, data : { breadcrumb : 'Crear Persona'}},
+    //Solicitud Preliminar
+    { path : 'acuerdo-general', component : AcuerdoGeneralComponent, data : { breadcrumb : 'Acuerdo generales'}}
 ];
 
 @NgModule({
@@ -54,5 +58,8 @@ export const routingComponents = [
   RelacionComponent,
   RelacionCreateComponent,
   HomeComponent,
-  NoticiaHechoComponent
+  NoticiaHechoComponent,
+  //Solicitud Preliminar
+  AcuerdoGeneralComponent
+
 ];
