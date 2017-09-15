@@ -1,8 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
-import { MiservicioService,MDato } from '@services/miservicio.service';
 
 @Component({
     templateUrl:'./arma.component.html',

@@ -23,7 +23,14 @@ export class Relacion {
     formaConducta:string;
     tipoDesaparicion:string;
     flagrancia:boolean;
-    violenciaGenero:ViolenciaGenero;
-    trataPersonas:TrataPersonas;
-    hostigamietoAcoso:HostigamientoAcoso;
+    violenciaGenero:boolean;
+    tipoViolenciaGenero: string;
+    victimaDelincuenciaOrganizada: string;
+    victimaViolenciaGenero: string;
+    victimaTrata:string;
+    victimaAcoso:string;
+    ordenProteccion:string;
+    //efecto:EfectoViolenciaGenero;
+  //  trataPersonas:TrataPersonas;
+  //  hostigamietoAcoso:HostigamientoAcoso;
   }

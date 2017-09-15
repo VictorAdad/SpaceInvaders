@@ -7,126 +7,126 @@
     </div>
     <div class="col-md-12">
         <form [formGroup]="this.generalForm">
-          <form [formGroup]="this.form">
+          <form [formGroup]="this.relacionForm">
+                <div class="row" >
+                    <div class="col">
+                        <select2 placeholder="Tipo de relación" name="tipo" [(options)]="tiposRelacion" (valueChange)="changeTipoRelacion($event)" [group]="relacionForm"> </select2 >
+                    </div>
+                    
+                    <div class="col">
+                        <select2 placeholder="Modalidad" name="modalidad" *ngIf="isImputadoVictimaDelito" [(options)]="options" [group]="relacionForm"></select2>
+                    </div>
+                    <div class="col">
+                        <select2 placeholder="Delito" name="delito" *ngIf="isImputadoVictimaDelito" [(options)]="options" [group]="relacionForm" ></select2>
+                    </div>
+                    <div class="col">
+                        <select2 placeholder="Forma de comisión"  name="formaComision"*ngIf="isImputadoVictimaDelito" [(options)]="options" [group]="relacionForm"></select2>
+                    </div>
+                    <div class="col" >
+                        <select2 placeholder="Imputado" name="imputado"*ngIf="isImputadoVictimaDelito" [(options)]="options" [group]="relacionForm"></select2>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isImputadoVictimaDelito">
+                    <div class="col">
+                        <select2 placeholder="Víctima u ofendido" name="victimaUOfendido" [(options)]="options" [group]="relacionForm"></select2>
+                    </div>
+                    <div class="col">
+                        <select2 placeholder="Lugar" name="lugar" [(options)]="options" [group]="relacionForm"></select2>
+                    </div>
+                    <div class="col">
+                        <select2 placeholder="Concurso del delito" name="concursoDelito" [(options)]="options" [group]="relacionForm"></select2>
+                    </div>
+                    <div class="col">
+                        <select2 placeholder="Clasificación del delito" name="clasificacionDelito" [(options)]="options" [group]="relacionForm"></select2>
+                    </div>
+                    <div class="col">
+                        <select2 placeholder="Elemento de comisión" name="elementoComision" [(options)]="options" [group]="relacionForm"></select2>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isImputadoVictimaDelito">
+                    <div class="col">
+                        <select2 placeholder="Clasificación" name="clasificacion" [(options)]="options" [group]="relacionForm"></select2>
+                    </div>
+                    <div class="col">
+                        <select2 placeholder="Forma de acción" name="formaAccion" [(options)]="options" [group]="relacionForm"></select2>
+                    </div>
+                    <div class="col">
+                        <select2 placeholder="Consumación" name="consumacion" [(options)]="options" [group]="relacionForm"></select2>
+                    </div>
+                    <div class="col">
+                        <select2 placeholder="Grado de participación" name="gradoParticipacion" [(options)]="options" [group]="relacionForm"></select2>
+                    </div>
+                    <div class="col">
+                        <select2 placeholder="Relación entre acusado y ofendido" name="relacionAcusadoOfendido" [(options)]="options" [group]="relacionForm"></select2>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isImputadoVictimaDelito">
+                    <div class="col">
+                        <select2 placeholder="Forma de conducta" name="formaConducta" [(options)]="options" [group]="relacionForm"></select2>
+                    </div>
+                    <div class="col">
+                        <select2 placeholder="Tipo de desaparición" name="tipoDesaparicion" [(options)]="options" [group]="relacionForm"></select2>
+                    </div>
+                    <div class="col">
+                        <checkbox label="Flagracia" name="flagrancia"></checkbox>
+                    </div>
+                    <div class="col">
+                        <checkbox label="Violencia de genero" (valueChange)="changeViolenciaGenero($event)"></checkbox>
+                    </div>
+                </div>
+          </form>
 
-            <div class="row" >
-                <div class="col">
-                    <select2 placeholder="Tipo de relación" name="tipo" [(options)]="tiposRelacion" (valueChange)="changeTipoRelacion($event)" [group]="form"></select2 >
-                </div>
-                
-                <div class="col">
-                    <select2 placeholder="Modalidad" name="modalidad" *ngIf="isImputadoVictimaDelito" [(options)]="options" [group]="form"></select2>
-                </div>
-                <div class="col">
-                    <select2 placeholder="Delito" name="delito" *ngIf="isImputadoVictimaDelito" [(options)]="options" [group]="form" ></select2>
-                </div>
-                <div class="col">
-                    <select2 placeholder="Forma de comisión"  name="formaComision"*ngIf="isImputadoVictimaDelito" [(options)]="options" [group]="form"></select2>
-                </div>
-                <div class="col" >
-                    <select2 placeholder="Imputado" name="imputado"*ngIf="isImputadoVictimaDelito" [(options)]="options" [group]="form"></select2>
-                </div>
-            </div>
-            <div class="row" *ngIf="isImputadoVictimaDelito">
-                <div class="col">
-                    <select2 placeholder="Víctima u ofendido" name="victimaUOfendido" [(options)]="options" [group]="form"></select2>
-                </div>
-                <div class="col">
-                    <select2 placeholder="Lugar" name="lugar" [(options)]="options" [group]="form"></select2>
-                </div>
-                <div class="col">
-                    <select2 placeholder="Concurso del delito" name="concursoDelito" [(options)]="options" [group]="form"></select2>
-                </div>
-                <div class="col">
-                    <select2 placeholder="Clasificación del delito" name="clasificacionDelito" [(options)]="options" [group]="form"></select2>
-                </div>
-                <div class="col">
-                    <select2 placeholder="Elemento de comisión" name="elementoComision" [(options)]="options" [group]="form"></select2>
-                </div>
-            </div>
-            <div class="row" *ngIf="isImputadoVictimaDelito">
-                <div class="col">
-                    <select2 placeholder="Clasificación" name="clasificacion" [(options)]="options" [group]="form"></select2>
-                </div>
-                <div class="col">
-                    <select2 placeholder="Forma de acción" name="formaAccion" [(options)]="options" [group]="form"></select2>
-                </div>
-                <div class="col">
-                    <select2 placeholder="Consumación" name="consumacion" [(options)]="options" [group]="form"></select2>
-                </div>
-                <div class="col">
-                    <select2 placeholder="Grado de participación" name="gradoParticipacion" [(options)]="options" [group]="form"></select2>
-                </div>
-                <div class="col">
-                    <select2 placeholder="Relación entre acusado y ofendido" name="relacionAcusadoOfendido" [(options)]="options" [group]="form"></select2>
-                </div>
-            </div>
-            <div class="row" *ngIf="isImputadoVictimaDelito">
-                <div class="col">
-                    <select2 placeholder="Forma de conducta" name="formaConducta" [(options)]="options" [group]="form"></select2>
-                </div>
-                <div class="col">
-                    <select2 placeholder="Tipo de desaparición" name="tipoDesaparicion" [(options)]="options" [group]="form"></select2>
-                </div>
-                <div class="col">
-                    <checkbox label="Flagracia" name="flagrancia"></checkbox>
-                </div>
-                <div class="col">
-                    <checkbox label="Violencia de genero" (valueChange)="changeViolenciaGenero($event)"></checkbox>
-                </div>
-            </div>
-          </form>  
             <br/>
             <div class="row" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">
                 <div class="col">
                     <h4>Violencia de genero</h4>
-                   <form [formGroup]="this.form2">
                         <div class="row">
 
                             <div class="col-md-3">
-                                <select2 placeholder="Víctima de delincuencia organizada" name="victimaDelincuenciaOrganizada" [group]="form2" ></select2>
+                                <select2 placeholder="Víctima de delincuencia organizada" name="victimaDelincuenciaOrganizada" [group]="relacionForm" ></select2>
                             </div>
                             <div class="col-md-3">
-                                <select2 placeholder="Víctima de violencia de genero" name="victimaViolenciaGenero"  [group]="form2"></select2>
+                                <select2 placeholder="Víctima de violencia de genero" name="victimaViolenciaGenero" [group]="relacionForm"></select2>
                             </div>
                             <div class="col-md-3">
-                                <select2 placeholder="Víctima de trata" name="victimaTrata"  [group]="form2"></select2>
+                                <select2 placeholder="Víctima de trata" name="victimaTrata" [group]="relacionForm"></select2>
                             </div>
                             <div class="col-md-3">
-                                <select2 placeholder="Víctima de acoso" name="victimaAcoso"  [group]="form2"></select2>
+                                <select2 placeholder="Víctima de acoso" name="victimaAcoso" [group]="relacionForm"></select2>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <select2 placeholder="Orden de protección" name="ordenProteccion"  [group]="form2"></select2>
+                                <select2 placeholder="Orden de protección" name="ordenProteccion" [group]="relacionForm"></select2>
                             </div>
                         </div>
-                   </form>  
-
                 </div>
             </div>
-            <br/>
-            <br/>
+   
             <div class="row" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">
                 <div class="col">
                     <h5>Efectos de violencia</h5>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <select2 placeholder="Efecto"></select2>
+                    <form [formGroup]="this.efectoViolenciaForm">
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <select2 placeholder="Efecto" name="efecto" [group]="efectoViolenciaForm"></select2>
+                            </div>
+                            <div class="col-md-3">
+                                <select2 placeholder="Detalle" name= "detalle" [group]="efectoViolenciaForm"></select2>
+                            </div>
+
                         </div>
-                        <div class="col-md-3">
-                            <select2 placeholder="Detalle"></select2>
+                       <div class="row">
+                        <div class="col">
+                         <button class="float-right m-1" color="accent" md-raised-button >Limpiar</button> 
+                        <button class="float-right m-1" md-raised-button color="accent" _saving (saveFn)="save(efectoViolenciaForm.valid, efectoViolenciaForm.value)">Guardar</button>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10"></div>
-                        <div class="col-md-1">
-                            <button class="float-right" md-raised-button color="accent">Agregar</button>
+                        
                         </div>
-                        <div class="col-md-1">
-                            <button class="float-right" md-raised-button color="accent">Limpiar</button>
-                        </div>
-                    </div>
+
+                    </form>
+
                     <div class="row">
                         <div class="col">
                             <div class="">
@@ -153,45 +153,41 @@
             </div>
             <br/>
 
-            <!-- Aquí va Trata de personas -->
+            <!--Trata de personas -->
             <div class="row" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">
                 <div class="col">
+                   <form [formGroup]="this.trataPersonasForm">
+
                     <h5>Trata de personas</h5>
                     <div class="row">
-                        <div class="col-sm-12 col-md-6 col-lg-3">
-                            <select2 placeholder="País de origen">
+                        <div class="col-sm-12 col-md-6 col-lg-4">
+                            <select2 placeholder="País de origen" name="paisOrigen" [group]="trataPersonasForm">
                             </select2>
-                            <select2 placeholder="Estado destino">
+                            <select2 placeholder="País destino" [group]="trataPersonasForm">
                             </select2>
+                           
                         </div>
-                        <div class="col-sm-12 col-md-6 col-lg-3">
-                            <select2 placeholder="Estado origen">
+                        <div class="col-sm-12 col-md-6 col-lg-4">
+                            <select2 placeholder="Estado origen" name="estadoOrigen" [group]="trataPersonasForm">
                             </select2>
-                            <select2 placeholder="Municipio destino">
+                             <select2 placeholder="Estado destino" name="estadoDestino" [group]="trataPersonasForm">
                             </select2>
+ 
                         </div>
-                        <div class="col-sm-12 col-md-6 col-lg-3">
-                            <select2 placeholder="Municipio origen">
+                        <div class="col-sm-12 col-md-6 col-lg-4">
+                            <select2 placeholder="Municipio origen" name="municipioOrigen"  [group]="trataPersonasForm">
                             </select2>
-                            <select2 placeholder="Estado destino">
-                            </select2>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-3">
-                            <select2 placeholder="País destino">
-                            </select2>
-                            <select2 placeholder="Municipio destino">
+                           <select2 placeholder="Municipio destino" name="municipioDestino" [group]="trataPersonasForm">
                             </select2>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-4 col-md-6 col-lg-10"></div>
-                        <div class="col-sm-4 col-md-3 col-lg-1">
-                            <button class="float-right" md-raised-button color="accent">Agregar</button>
-                        </div>
-                        <div class="col-sm-4 col-md-3 col-lg-1">
-                            <button class="float-right" md-raised-button color="accent">Limpiar</button>
+                        <div class="col">
+                         <button class="float-right m-1" color="accent" md-raised-button >Limpiar</button> 
+                        <button class="float-right m-1" md-raised-button color="accent" _saving (saveFn)="save(trataPersonasForm.valid, trataPersonasForm.value)">Guardar</button>
                         </div>
                     </div>
+                    </form>
                     <div class="row">
                         <div class="col">
                             <div class="">
@@ -217,44 +213,46 @@
                 </div>
             </div>
             <br/>
+            
+            <!--Hostigamiento y/o acoso -->
             <div class="row" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">
 
                 <div class="col">
                     <h5>Hostigamiento y/o acoso</h5>
-                    <div class="row">
-                        <div class="col">
-                            <select2 placeholder="Modalidad">
-                            </select2>
+                    <form [formGroup]="this.hostigamientForm">
 
-                        </div>
-                        <div class="col">
-                            <select2 placeholder="Ámbito">
-                            </select2>
+                        <div class="row">
+                            <div class="col">
+                                <select2 placeholder="Modalidad" name="modalidad" [group]="hostigamientForm">
+                                </select2>
 
-                        </div>
-                        <div class="col">
-                            <select2 placeholder="Conducta">
-                            </select2>
+                            </div>
+                            <div class="col">
+                                <select2 placeholder="Ámbito" name="ambito"[group]="hostigamientForm">
+                                </select2>
 
+                            </div>
+                            <div class="col">
+                                <select2 placeholder="Conducta" name="conducta" [group]="hostigamientForm">
+                                </select2>
+
+                            </div>
+                            <div class="col">
+                                <select2 placeholder="Detalle de conducta" name="detalleConducta" [group]="hostigamientForm">
+                                </select2>
+                            </div>
+                            <div class="col">
+                                <select2 placeholder="Testigo" name="testigo"[group]="hostigamientForm">
+                                </select2>
+                            </div>
                         </div>
-                        <div class="col">
-                            <select2 placeholder="Detalle de conducta">
-                            </select2>
+                         <div class="row">
+                            <div class="col">
+                             <button class="float-right m-1" color="accent" md-raised-button >Limpiar</button> 
+                            <button class="float-right m-1" md-raised-button color="accent" _saving (saveFn)="save(hostigamientForm.valid, hostigamientForm.value)">Guardar</button>
+                            </div>
                         </div>
-                        <div class="col">
-                            <select2 placeholder="Testigo">
-                            </select2>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 col-md-6 col-lg-10"></div>
-                        <div class="col-sm-4 col-md-3 col-lg-1">
-                            <button class="float-right" md-raised-button color="accent">Agregar</button>
-                        </div>
-                        <div class="col-sm-4 col-md-3 col-lg-1">
-                            <button class="float-right" md-raised-button color="accent">Limpiar</button>
-                        </div>
-                    </div>
+                       </form> 
                     <div class="row">
                         <div class="col">
                             <div class="">
@@ -282,7 +280,7 @@
             <br/>
 
             <button class="float-right" md-button>Cancelar</button> 
-            <button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(generalform.valid, form.value)" [disabled]="!form.valid || [saving]">Guardar</button>
+            <button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(generalForm.valid, generalForm.value)" [disabled]="!generalForm.valid || [saving]">Guardar</button>
         </form>
     </div>
 </div>
