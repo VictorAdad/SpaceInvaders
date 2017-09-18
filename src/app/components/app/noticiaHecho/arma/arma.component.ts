@@ -8,7 +8,7 @@ import { TableService} from '@utils/table/table.service';
 })
 
 export class ArmaComponent{
-	displayedColumns = ['Arma', 'Tipo', 'Marca', 'Acciones'];
+	displayedColumns = ['Arma', 'Tipo', 'Marca', 'Calibre'];
 	data:Arma[];
 
 	dataSource: TableService | null;
@@ -17,7 +17,7 @@ export class ArmaComponent{
 	constructor(){}
 
 	ngOnInit() {
-      this.data=data;
+      this.data = data;
     	this.dataSource = new TableService(this.paginator, this.data);
 
     	console.log('-> Data Source', this.dataSource);
@@ -29,14 +29,15 @@ export class ArmaComponent{
       arma: string;
       tipo: string;
       marca: string;
+      calibre: string;
     }
-  
+
 
   const data: Arma[] = [
-      {id:1,arma: 'Arma de Juguete', tipo: '', marca:''},
-      {id:2,arma: 'Arma blanca', tipo: 'ballesta', marca:''},
-      {id:3,arma: 'Arma blanca', tipo: 'cuchillo', marca:''},
-      {id:4,arma: 'Arma de Fuego', tipo: 'Fisil de asalto', marca:'AKM'},
-      {id:5,arma: 'Arma de Fuego', tipo: 'Fisil de asalto', marca:'M-16'},
-      {id:6,arma: 'Arma de Fuego', tipo: 'Pistola', marca:'Karabina'},     
+      {id:1,arma: 'Arma de Juguete', tipo: '', marca:'', calibre:'24'},
+      {id:2,arma: 'Arma blanca', tipo: 'ballesta', marca:'', calibre:'32'},
+      {id:3,arma: 'Arma blanca', tipo: 'cuchillo', marca:'', calibre:'32'},
+      {id:4,arma: 'Arma de Fuego', tipo: 'Fisil de asalto', marca:'AKM', calibre:'17'},
+      {id:5,arma: 'Arma de Fuego', tipo: 'Fisil de asalto', marca:'M-16', calibre:'32'},
+      {id:6,arma: 'Arma de Fuego', tipo: 'Pistola', marca:'Karabina', calibre:'24'},
   ];

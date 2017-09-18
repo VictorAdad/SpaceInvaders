@@ -10,7 +10,7 @@ import { MiservicioService,MDato } from '@services/miservicio.service';
 })
 
 export class RelacionComponent{
-	displayedColumns = ['Tipo', 'Elementos','Acciones'];
+	displayedColumns = ['Tipo', 'Elementos'];
 	data:Relacion[];
 
 	dataSource: TableService | null;
@@ -30,7 +30,7 @@ export interface Relacion {
     tipo: string;
     elementos: string;
   }
-  
+
   const data: Relacion[] = [
       {id:1,tipo: "Defensor del imputado", elementos: ''},
       {id:2,tipo: "Imputado víctima delito", elementos: ''},
@@ -39,5 +39,5 @@ export interface Relacion {
       {id:5,tipo: "Defensor del imputado", elementos: ''},
       {id:6,tipo: "Representante  víctima", elementos: ''},
       {id:7,tipo: "Asesor jurídico de la victima", elementos: ''},
-  
+
   ];

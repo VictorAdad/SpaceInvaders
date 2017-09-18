@@ -17,14 +17,8 @@
 
 	<!-- Weight Column -->
 	<ng-container mdColumnDef="weight">
-		<md-header-cell *mdHeaderCellDef> Predeterminado </md-header-cell>
-		<md-cell *mdCellDef="let element"> {{element.paterno}} </md-cell>
-	</ng-container>
-
-	<!-- Color Column -->
-	<ng-container mdColumnDef="symbol">
-		<md-header-cell *mdHeaderCellDef> Acciones </md-header-cell>
-		<md-cell *mdCellDef="let element"> {{element.materno}} </md-cell>
+		<md-header-cell *mdHeaderCellDef> Principal </md-header-cell>
+		<md-cell *mdCellDef="let element"> {{element.principal}} </md-cell>
 	</ng-container>
 
 	<md-header-row *mdHeaderRowDef="_columns"></md-header-row>
