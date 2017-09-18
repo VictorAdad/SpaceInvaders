@@ -14,6 +14,9 @@ import { LugarCreateComponent } from '@components-app/noticiaHecho/lugar/create/
 import { PersonaFisicaImputadoComponent } from '@components-app/noticiaHecho/persona/create/persona-fisica-imputado.component';
 import { RelacionComponent } from '@components-app/noticiaHecho/relacion/relacion.component';
 import { RelacionCreateComponent } from '@components-app/noticiaHecho/relacion/create/create.component';
+//Documentos
+import { DocumentoComponent } from '@components-app/noticiaHecho/documento/documento.component';
+import { DocumentoCreateComponent } from '@components-app/noticiaHecho/documento/create/create.component';
 //Solicitud Preliminar
 import { AcuerdoGeneralComponent } from '@components-app/solicitud-preliminar/acuerdo-general/component';
 import { AcuerdoGeneralCreateComponent } from '@components-app/solicitud-preliminar/acuerdo-general/create/component';
@@ -40,6 +43,8 @@ const routes: Routes = [
     { path : 'vehiculos', component :  VehiculoComponent, data: { breadcrumb: 'Vehiculos'}},
     { path : 'vehiculos/create', component : VehiculoCreateComponent, data: { breadcrumb: 'Nuevo Vehiculo'}},
     { path : 'personas/persona-fisica-imputado', component : PersonaFisicaImputadoComponent, data : { breadcrumb : 'Crear Persona'}},
+    { path : 'documentos', component : DocumentoComponent },
+    { path : 'documentos/create', component : DocumentoCreateComponent },
     //Solicitud Preliminar
     { path : 'acuerdo-general', component : AcuerdoGeneralComponent, data : { breadcrumb : 'Solicitudes de acuerdo general'}},
     { path : 'acuerdo-general/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Acuerdos generales'}},
@@ -73,6 +78,8 @@ export const routingComponents = [
   RelacionCreateComponent,
   HomeComponent,
   NoticiaHechoComponent,
+  DocumentoComponent,
+  DocumentoCreateComponent,
   //Solicitud Preliminar
   AcuerdoGeneralComponent,
   AcuerdoGeneralCreateComponent,

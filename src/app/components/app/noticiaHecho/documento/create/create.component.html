@@ -1,0 +1,152 @@
+<h2 md-dialog-title>Adjuntar documento</h2>
+<md-dialog-content>
+    <div class="container h-100">
+        <div class="row" *ngIf="uploader.queue.length == 0">
+            <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader"
+                class="my-drop-zone">
+                <div class="row h-100 justify-content-center align-items-center margin-text">
+
+                    <h5>asdsacsd</h5>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-text">
+            <table class="table" *ngIf="uploader.queue.length != 0">
+                <thead>
+                    <tr>
+                        <th width="50%">Nombre del archivo</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{item?.file?.name}}</td>
+                    </tr>
+                    <tr>
+                        <td><button md-raised-button>Upload</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="col-md-8">
+                <div *ngFor="let item of uploader.queue">
+                    {{item?.file?.name}}
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button md-raised-button>Upload</button>
+            </div>
+        </div>
+        <div class="row" *ngIf="isUploading">
+            <div class="col">
+                Progreso:
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</md-dialog-content>
+<md-dialog-actions>
+    <button md-button md-dialog-close>Cerrar</button>
+    <!-- Can optionally provide a result for the closing dialog. -->
+    <button md-button [md-dialog-close]="true">Yes</button>
+</md-dialog-actions>
+
+<!--<div class="content-body">
+    <div class="row">
+        <div class="col-md-10">
+            <h3>Adjuntar documento</h3>
+        </div>
+    </div>
+    <div class="container h-100">
+        <div class="row" *ngIf="uploader.queue.length == 0">
+            <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader"
+                class="my-drop-zone">
+                <div class="row h-100 justify-content-center align-items-center">
+                    <h5>Arrastre sus documentos en esta área</h5>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="uploader.queue.length != 0">
+            <div class="col">
+                <span *ngFor="let item of uploader.queue">
+                    {{item?.file?.name}}
+                </span>
+            </div>
+        </div>
+        <div class="row" *ngIf="isUploading">
+            <div class="col">
+                Progreso:
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="row">
+        <div class="col" style="margin-bottom: 40px; margin-top: 10px">
+
+            <h5>Documentos en cola</h5>
+            <p>Total: {{ uploader?.queue?.length }}</p>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="50%">Nombre</th>
+                        <th>Tamaño</th>
+                        <th>Progreso</th>
+                        <th>Status</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of uploader.queue">
+                        <td><strong>{{ item?.file?.name }}</strong></td>
+                        <td nowrap>{{ item?.ffile?.size/1024/1024 | number:'.2' }} MB</td>
+                        <td>
+                            <div class="progress" style="margin-bottom: 0;">
+                                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <span *ngIf="item.isSuccess"><md-icon>done</md-icon></span>
+                            <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                            <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                        </td>
+                        <td nowrap>
+                            <button type="button" class="btn btn-success btn-xs" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                                               <span class="glyphicon glyphicon-upload"></span> Subir
+                                           </button>
+                            <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading">
+                                               <span class="glyphicon glyphicon-ban-circle"></span> Cancelar
+                                           </button>
+                            <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
+                                               <span class="glyphicon glyphicon-trash"></span> Eliminar
+                                           </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div>
+                <div>
+                    Progreso:
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                    </div>
+                </div>
+                <br>
+                <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                                       <span class="glyphicon glyphicon-upload"></span> Subir todo
+                                   </button>
+                <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                                       <span class="glyphicon glyphicon-ban-circle"></span> Cancelar todo
+                                   </button>
+                <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                                       <span class="glyphicon glyphicon-trash"></span> Eliminar todo
+                                   </button>
+            </div>
+
+        </div>
+    </div>-->
+<!--</div>-->
