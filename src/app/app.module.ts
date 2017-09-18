@@ -12,7 +12,6 @@ import { DirectivesModule, directivesComponents} from './directives.module';
 import { CustomModule, customComponents} from './custom.module';
 import { NoticiaHechoModule, noticiaHechoComponents} from '@components-app/noticiaHecho/module';
 import { SolicitudPreliminarModule, SolicitudPreliminarComponents } from '@components-app/solicitud-preliminar/module';
-import {BreadcrumbModule } from 'angular2-crumbs';
 
 import { MiservicioService} from "./services/miservicio.service";
 import { AuthenticationService} from "@services/auth/authentication.service";
@@ -41,9 +40,7 @@ import { GlobalService } from "@services/global.service";
     SolicitudPreliminarModule,
     HttpModule,
     FormsModule,
-    ReactiveFormsModule,
-    BrowserModule,
-    BreadcrumbModule.forRoot(),
+    ReactiveFormsModule
   ],
   providers: [
     MiservicioService,
