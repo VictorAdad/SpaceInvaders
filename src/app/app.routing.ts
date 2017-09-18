@@ -11,11 +11,12 @@ import { VehiculoComponent } from '@components-app/noticiaHecho/vehiculo/vehicul
 import { VehiculoCreateComponent } from '@components-app/noticiaHecho/vehiculo/create/create.component';
 import { LugarComponent } from '@components-app/noticiaHecho/lugar/lugar.component';
 import { LugarCreateComponent } from '@components-app/noticiaHecho/lugar/create/create.component';
-import {PersonaFisicaImputadoComponent} from '@components-app/noticiaHecho/persona/create/persona-fisica-imputado.component';
+import { PersonaFisicaImputadoComponent } from '@components-app/noticiaHecho/persona/create/persona-fisica-imputado.component';
 import { RelacionComponent } from '@components-app/noticiaHecho/relacion/relacion.component';
 import { RelacionCreateComponent } from '@components-app/noticiaHecho/relacion/create/create.component';
-
+//Solicitud Preliminar
 import { AcuerdoGeneralComponent } from '@components-app/solicitud-preliminar/acuerdo-general/component';
+import { AcuerdoGeneralCreateComponent } from '@components-app/solicitud-preliminar/acuerdo-general/create/component';
 
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
@@ -34,7 +35,8 @@ const routes: Routes = [
     { path : 'vehiculos/create', component : VehiculoCreateComponent, data: { breadcrumb: 'Nuevo Vehiculo'}},
     { path : 'personas/persona-fisica-imputado', component : PersonaFisicaImputadoComponent, data : { breadcrumb : 'Crear Persona'}},
     //Solicitud Preliminar
-    { path : 'acuerdo-general', component : AcuerdoGeneralComponent, data : { breadcrumb : 'Acuerdo generales'}}
+    { path : 'acuerdo-general', component : AcuerdoGeneralComponent, data : { breadcrumb : 'Solicitudes de acuerdo general'}},
+    { path : 'acuerdo-general/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Solicitudes de acuerdo general'}}
 ];
 
 @NgModule({
@@ -60,6 +62,6 @@ export const routingComponents = [
   HomeComponent,
   NoticiaHechoComponent,
   //Solicitud Preliminar
-  AcuerdoGeneralComponent
-
+  AcuerdoGeneralComponent,
+  AcuerdoGeneralCreateComponent
 ];

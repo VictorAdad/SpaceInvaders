@@ -1,18 +1,41 @@
 <div class="row space">
-    <div class="col-md-6">
-        <h2>Acuerdos generales</h2>
-    </div>
-    <div class="col-md-6">
-        <button class="float-right" md-raised-button routerLink="/" color="accent">Regresar</button>
+    <div class="col-md-12">
+        <h3>Fundamento legal</h3>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        <div class="col-md-12">
-        <md-tab-group>
-            <md-tab label="Solicitud"><solicitud-acuerdo-general></solicitud-acuerdo-general></md-tab>
-            <md-tab label="Documentos"><documento-acuerdo-general></documento-acuerdo-general></md-tab>
-        </md-tab-group>
-    </div>
+        <form>
+            <div class="row">
+                <div class="col">
+                    <text label="Fundamento legal"></text>
+                </div>
+                <div class="col">
+                    <text label="Contenido del acuerdo"></text>
+                </div>
+                <div class="col">
+                    <text label="Con la finalidad de"></text>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <text label="Plazo en el que debe ser complementado"></text>
+                </div>
+                <div class="col">
+                    <text label="Apercibimientos"></text>
+                </div>
+                <div class="col">
+                    <text label="Señalar que se solicita"></text>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <text-area label="Observaciones/Incidencias"></text-area>
+                </div>
+            </div>
+            <div class="row space"></div>
+            <button class="float-right" md-button routerLink="/acuerdo-general">Cancelar</button> 
+            <button class="float-right" md-raised-button color="accent">Guardar</button>
+        </form>
     </div>
 </div>
