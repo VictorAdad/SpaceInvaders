@@ -32,7 +32,7 @@ const routes: Routes = [
     { path : 'usuarios', component : UsuarioComponent},
     { path : 'usuarios/create', component : UsuarioCreateComponent},
     { path : 'armas', component : ArmaComponent},
-    { path : 'armas/create', component : ArmaCreateComponent},   
+    { path : 'armas/create', component : ArmaCreateComponent},
     { path : 'lugares', component :  LugarComponent},
     { path : 'lugares/create', component : LugarCreateComponent },
     { path : 'relaciones', component : RelacionComponent },
