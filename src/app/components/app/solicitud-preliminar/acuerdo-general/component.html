@@ -6,20 +6,27 @@
         <button class="float-right" md-raised-button routerLink="/" color="accent">Regresar</button>
     </div>
 </div>
-<div class="row space justify-content-end">
-    <div class="col-md-auto">
-        <search></search>
+<div class="row">
+    <div class="col-md-6">
+        <md-paginator #paginator
+            [length]="data.length"
+            [pageIndex]="0"
+            [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 25, 100]"
+            class="float-left">
+        </md-paginator>
     </div>
-    <div class="col-md-auto">
-        <button md-raised-button color="accent" routerLink="/acuerdo-general/create">Agregar solicitud</button>
+    <div class="col-md-6">
+        <div class="row space justify-content-end">
+            <div class="col-md-auto">
+                <search></search>
+            </div>
+            <div class="col-md-auto">
+                <button md-raised-button color="accent" routerLink="/acuerdo-general/create">Agregar solicitud</button>
+            </div>
+        </div>
     </div>
 </div>
-<md-paginator #paginator
-    [length]="data.length"
-    [pageIndex]="0"
-    [pageSize]="10"
-    [pageSizeOptions]="[5, 10, 25, 100]">
-  </md-paginator>
 <md-table #table [dataSource]="dataSource">
     <ng-container mdColumnDef="fundamento">
         <md-header-cell *mdHeaderCellDef> Fundamento legal</md-header-cell>
