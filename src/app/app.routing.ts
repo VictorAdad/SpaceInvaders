@@ -19,6 +19,8 @@ import { AcuerdoGeneralComponent } from '@components-app/solicitud-preliminar/ac
 import { AcuerdoGeneralCreateComponent } from '@components-app/solicitud-preliminar/acuerdo-general/create/component';
 import { InspeccionComponent } from '@components-app/solicitud-preliminar/inspeccion/component';
 import { InspeccionCreateComponent } from '@components-app/solicitud-preliminar/inspeccion/create/component';
+import { PoliciaComponent } from '@components-app/solicitud-preliminar/policia/component';
+import { PoliciaCreateComponent } from '@components-app/solicitud-preliminar/policia/create/component'
 
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
@@ -40,7 +42,9 @@ const routes: Routes = [
     { path : 'acuerdo-general', component : AcuerdoGeneralComponent, data : { breadcrumb : 'Solicitudes de acuerdo general'}},
     { path : 'acuerdo-general/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Acuerdos generales'}},
     { path : 'inspeccion', component : InspeccionComponent, data : { breadcrumb : 'Solicitudes de inspección'}},
-    { path : 'inspeccion/create', component : InspeccionCreateComponent, data : { breadcrumb : 'Inspecciones'}}
+    { path : 'inspeccion/create', component : InspeccionCreateComponent, data : { breadcrumb : 'Inspecciones'}},
+    { path : 'policia', component : PoliciaComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
+    { path : 'policia/create', component : PoliciaCreateComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}}
 ];
 
 @NgModule({
@@ -69,5 +73,7 @@ export const routingComponents = [
   AcuerdoGeneralComponent,
   AcuerdoGeneralCreateComponent,
   InspeccionComponent,
-  InspeccionCreateComponent
+  InspeccionCreateComponent,
+  PoliciaComponent,
+  PoliciaCreateComponent
 ];
