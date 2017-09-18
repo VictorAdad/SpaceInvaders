@@ -130,7 +130,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="">
-                                <md-table #table [dataSource]="dataSource">
+                              <md-table #table [dataSource]="efectoDataSource">
                                     <!-- Efecto Column -->
                                     <ng-container mdColumnDef="efecto">
                                         <md-header-cell *mdHeaderCellDef> Efecto </md-header-cell>
@@ -143,8 +143,8 @@
                                         <md-cell *mdCellDef="let element"> {{element.detalle}} </md-cell>
                                     </ng-container>
 
-                                    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-                                    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+                                    <md-header-row *mdHeaderRowDef="efectoDisplayedColumns"></md-header-row>
+                                    <md-row *mdRowDef="let row; columns: efectoDisplayedColumns;"></md-row>
                                 </md-table>
                             </div>
                         </div>
@@ -191,21 +191,47 @@
                     <div class="row">
                         <div class="col">
                             <div class="">
-                                <md-table #table [dataSource]="dataSource">
+                                <md-table #table [dataSource]="trataDataSource">
                                     <!-- Efecto Column -->
-                                    <ng-container mdColumnDef="efecto">
-                                        <md-header-cell *mdHeaderCellDef> Efecto </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.efecto}} </md-cell>
+                                    <ng-container mdColumnDef="País de origen">
+                                        <md-header-cell *mdHeaderCellDef> País de origen </md-header-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.paisOrigen}} </md-cell>
                                     </ng-container>
 
                                     <!-- Detalle Column -->
-                                    <ng-container mdColumnDef="detalle">
-                                        <md-header-cell *mdHeaderCellDef> Detalle </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.detalle}} </md-cell>
+                                    <ng-container mdColumnDef="Estado de origen">
+                                        <md-header-cell *mdHeaderCellDef> Estado de origen </md-header-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.estadoOrigen}} </md-cell>
+                                    </ng-container>
+                                    <ng-container mdColumnDef="Municipio de origen">
+                                        <md-header-cell *mdHeaderCellDef> Municipio de origen </md-header-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.estadoOrigen}} </md-cell>
+                                    </ng-container>
+                                    <ng-container mdColumnDef="País destino">
+                                        <md-header-cell *mdHeaderCellDef> País destino </md-header-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.estadoOrigen}} </md-cell>
+                                    </ng-container>
+                                    <ng-container mdColumnDef="Estado destino">
+                                        <md-header-cell *mdHeaderCellDef> Estado destino </md-header-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.estadoOrigen}} </md-cell>
+                                    </ng-container>
+                                    <ng-container mdColumnDef="Municipio destino">
+                                        <md-header-cell *mdHeaderCellDef> Municipio destino </md-header-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.estadoOrigen}} </md-cell>
                                     </ng-container>
 
-                                    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-                                    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+                                    <ng-container mdColumnDef="Tipo de trata">
+                                        <md-header-cell *mdHeaderCellDef> Tipo de trata </md-header-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.estadoOrigen}} </md-cell>
+                                    </ng-container>
+                                    <ng-container mdColumnDef="Transportación">
+                                        <md-header-cell *mdHeaderCellDef> Transportación </md-header-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.estadoOrigen}} 
+                                        </md-cell>
+                                    </ng-container>
+
+                            <md-header-row *mdHeaderRowDef="trataDisplayedColumns"></md-header-row>
+                                    <md-row *mdRowDef="let row; columns: trataDisplayedColumns;"></md-row>
                                 </md-table>
                             </div>
                         </div>
@@ -256,21 +282,32 @@
                     <div class="row">
                         <div class="col">
                             <div class="">
-                                <md-table #table [dataSource]="dataSource">
+                                <md-table #table [dataSource]="hostigamientoDataSource">
                                     <!-- Efecto Column -->
-                                    <ng-container mdColumnDef="efecto">
-                                        <md-header-cell *mdHeaderCellDef> Efecto </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.efecto}} </md-cell>
+                                    <ng-container mdColumnDef="Modalidad">
+                                        <md-header-cell *mdHeaderCellDef> Modalidad </md-header-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.modalidad}} </md-cell>
                                     </ng-container>
+                                    <ng-container mdColumnDef="Ámbito">
+                                        <md-header-cell *mdHeaderCellDef> Ámbito </md-header-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.ambito}} </md-cell>
+                                    </ng-container>
+                                    <ng-container mdColumnDef="Conducta">
+                                        <md-header-cell *mdHeaderCellDef> Conducta </md-header-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.conducta}} </md-cell>
+                                    </ng-container>  
 
-                                    <!-- Detalle Column -->
-                                    <ng-container mdColumnDef="detalle">
+                                    <ng-container mdColumnDef="Detalle">
                                         <md-header-cell *mdHeaderCellDef> Detalle </md-header-cell>
                                         <md-cell *mdCellDef="let element"> {{element.detalle}} </md-cell>
                                     </ng-container>
+                                    <ng-container mdColumnDef="Testigo">
+                                        <md-header-cell *mdHeaderCellDef> Testigo </md-header-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.testigo}} </md-cell>
+                                    </ng-container> 
 
-                                    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-                                    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+                                    <md-header-row *mdHeaderRowDef="hostigamientoDisplayedColumns"></md-header-row>
+                                    <md-row *mdRowDef="let row; columns: hostigamientoDisplayedColumns;"></md-row>
                                 </md-table>
                             </div>
                         </div>

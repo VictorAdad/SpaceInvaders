@@ -26,6 +26,8 @@ import { PoliciaComponent } from '@components-app/solicitud-preliminar/policia/c
 import { PoliciaCreateComponent } from '@components-app/solicitud-preliminar/policia/create/component'
 import { PeritoComponent } from '@components-app/solicitud-preliminar/perito/component';
 import { PeritoCreateComponent } from '@components-app/solicitud-preliminar/perito/create/component';
+//Determinación
+import { AcuerdoInicioComponent } from '@components-app/determinacion/acuerdo-inicio/component';
 
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
@@ -53,7 +55,9 @@ const routes: Routes = [
     { path : 'policia', component : PoliciaComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
     { path : 'policia/create', component : PoliciaCreateComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
     { path : 'perito', component : PeritoComponent, data : { breadcrumb : 'Solicitudes preliminares a peritos'}},
-    { path : 'perito/create', component : PeritoCreateComponent, data : { breadcrumb : 'Solicitudes de servicios periciales'}}
+    { path : 'perito/create', component : PeritoCreateComponent, data : { breadcrumb : 'Solicitudes de servicios periciales'}},
+    //Determinación
+    { path : 'acuerdo-inicio', component : AcuerdoInicioComponent, data : { breadcrumb : 'Acuerdo de inicio'}}
 ];
 
 @NgModule({
@@ -88,5 +92,7 @@ export const routingComponents = [
   PoliciaComponent,
   PoliciaCreateComponent,
   PeritoComponent,
-  PeritoCreateComponent
+  PeritoCreateComponent,
+  //Determinación
+  AcuerdoInicioComponent
 ];
