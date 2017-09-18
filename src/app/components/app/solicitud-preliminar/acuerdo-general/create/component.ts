@@ -34,7 +34,6 @@ export class DocumentoAcuerdoGeneralComponent {
 	dataSource: TableService | null;
 	@ViewChild(MdPaginator) paginator: MdPaginator;
 
-	constructor(){}
 
 	ngOnInit() {
     	this.dataSource = new TableService(this.paginator, this.data);
