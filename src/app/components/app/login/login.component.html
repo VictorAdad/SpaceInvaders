@@ -3,19 +3,26 @@
         <md-list-item>SIGI</md-list-item>
     </span>
 </md-toolbar>
-<div class="container" style="padding-top: 16px; height: 100%">
+<div class="container">
 	<div class="row justify-content-md-center align-items-center" style="height: 75%;">
-		<div class="col-md-7 col">
+		<div class="col-md-8 col">
 			<md-card>
 				<md-card-header>
 					<h1 class="full-width text-center">Inicio de sesión</h1>
 				</md-card-header>
 				<md-card-content>
 					<form (submit)="login()">
-						<text label="Usuario" [(value)]="usuario"></text>
-						<text label="Contraseña" [(value)]="pass"></text>
-						<checkbox label="Recordarme"></checkbox>
-						<button class="full-width btn-lg" md-raised-button color="accent" type="submit">Iniciar sesión</button>
+						<div class="space">
+							<text label="Usuario" [(value)]="usuario"></text>
+							<text label="Contraseña" [(value)]="pass"></text>
+							<checkbox label="Recordarme"></checkbox>
+						</div>
+						<div class="space">
+							<button class="full-width btn-lg" md-raised-button color="accent" type="submit">Iniciar sesión</button>
+						</div>
+						<div class="space text-center">
+							<a href="">¿Olivdaste tu contraseña?</a>
+						</div>
 					</form>
 				</md-card-content>
 				<md-card-actions>
