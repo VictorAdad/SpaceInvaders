@@ -19,24 +19,69 @@ import { AcuerdoGeneralComponent } from '@components-app/solicitud-preliminar/ac
 import { AcuerdoGeneralCreateComponent } from '@components-app/solicitud-preliminar/acuerdo-general/create/component';
 
 const routes: Routes = [
-    { path : '', redirectTo: 'home', pathMatch: 'full'},
-    { path : '', component: HomeComponent, data : { breadcrumb : 'Noticia de hechos'}},
-    { path : 'noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
-    { path : 'login', component: LoginComponent},
-    { path : 'usuarios', component : UsuarioComponent},
-    { path : 'usuarios/create', component : UsuarioCreateComponent},
-    { path : 'armas', component : ArmaComponent},
-    { path : 'armas/create', component : ArmaCreateComponent},   
-    { path : 'lugares', component :  LugarComponent},
-    { path : 'lugares/create', component : LugarCreateComponent },
-    { path : 'relaciones', component : RelacionComponent },
-    { path : 'relaciones/create', component : RelacionCreateComponent },
-    { path : 'vehiculos', component :  VehiculoComponent, data: { breadcrumb: 'Vehiculos'}},
-    { path : 'vehiculos/create', component : VehiculoCreateComponent, data: { breadcrumb: 'Nuevo Vehiculo'}},
-    { path : 'personas/persona-fisica-imputado', component : PersonaFisicaImputadoComponent, data : { breadcrumb : 'Crear Persona'}},
+    { path : '', redirectTo: 'home', pathMatch: 'full' },
+    { path : '', component: HomeComponent, data : { breadcrumb : 'Inicio'} },
+    { path : 'login', component: LoginComponent },
+    { path : 'usuarios', component : UsuarioComponent },
+    { path : 'usuarios/create', component : UsuarioCreateComponent },
+    {
+      path : 'noticia-hecho',
+      component : NoticiaHechoComponent,
+      data : { breadcrumb : 'Noticia de hechos'},
+      children: [{
+        path: "armas",
+        component: ArmaComponent,
+        data: {
+          breadcrumb: "Armas"
+        }
+      }]
+    },
+    {
+      path : 'armas/create',
+      component : ArmaCreateComponent
+    },
+    {
+      path : 'lugares',
+      component :  LugarComponent
+    },
+    {
+      path : 'lugares/create',
+      component : LugarCreateComponent
+    },
+    {
+      path : 'relaciones',
+      component : RelacionComponent
+    },
+    {
+      path : 'relaciones/create',
+      component : RelacionCreateComponent
+    },
+    {
+      path : 'vehiculos',
+      component :  VehiculoComponent,
+      data: { breadcrumb: 'Vehiculos'}
+    },
+    {
+      path : 'vehiculos/create',
+      component : VehiculoCreateComponent,
+      data: { breadcrumb: 'Nuevo Vehiculo'}
+    },
+    {
+      path : 'personas/persona-fisica-imputado',
+      component : PersonaFisicaImputadoComponent,
+      data : { breadcrumb : 'Crear Persona'}
+    },
     //Solicitud Preliminar
-    { path : 'acuerdo-general', component : AcuerdoGeneralComponent, data : { breadcrumb : 'Solicitudes de acuerdo general'}},
-    { path : 'acuerdo-general/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Solicitudes de acuerdo general'}}
+    {
+      path : 'acuerdo-general',
+      component : AcuerdoGeneralComponent,
+      data : { breadcrumb : 'Solicitudes de acuerdo general'}
+    },
+    {
+      path : 'acuerdo-general/create',
+      component : AcuerdoGeneralCreateComponent,
+      data : { breadcrumb : 'Solicitudes de acuerdo general'}
+    }
 ];
 
 @NgModule({
