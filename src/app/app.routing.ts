@@ -21,6 +21,8 @@ import { InspeccionComponent } from '@components-app/solicitud-preliminar/inspec
 import { InspeccionCreateComponent } from '@components-app/solicitud-preliminar/inspeccion/create/component';
 import { PoliciaComponent } from '@components-app/solicitud-preliminar/policia/component';
 import { PoliciaCreateComponent } from '@components-app/solicitud-preliminar/policia/create/component'
+import { PeritoComponent } from '@components-app/solicitud-preliminar/perito/component';
+import { PeritoCreateComponent } from '@components-app/solicitud-preliminar/perito/create/component';
 
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
@@ -44,7 +46,9 @@ const routes: Routes = [
     { path : 'inspeccion', component : InspeccionComponent, data : { breadcrumb : 'Solicitudes de inspección'}},
     { path : 'inspeccion/create', component : InspeccionCreateComponent, data : { breadcrumb : 'Inspecciones'}},
     { path : 'policia', component : PoliciaComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
-    { path : 'policia/create', component : PoliciaCreateComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}}
+    { path : 'policia/create', component : PoliciaCreateComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
+    { path : 'perito', component : PeritoComponent, data : { breadcrumb : 'Solicitudes preliminares a peritos'}},
+    { path : 'perito/create', component : PeritoCreateComponent, data : { breadcrumb : 'Solicitudes de servicios periciales'}}
 ];
 
 @NgModule({
@@ -75,5 +79,7 @@ export const routingComponents = [
   InspeccionComponent,
   InspeccionCreateComponent,
   PoliciaComponent,
-  PoliciaCreateComponent
+  PoliciaCreateComponent,
+  PeritoComponent,
+  PeritoCreateComponent
 ];
