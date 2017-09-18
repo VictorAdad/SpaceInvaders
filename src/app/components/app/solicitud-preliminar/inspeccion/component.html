@@ -1,6 +1,6 @@
 <div class="row space">
     <div class="col-md-6">
-        <h2>Solicitudes de acuerdo general</h2>
+        <h2>Solicitudes de inspección</h2>
     </div>
     <div class="col-md-6">
         <button class="float-right" md-raised-button routerLink="/" color="accent">Regresar</button>
@@ -11,7 +11,7 @@
         <search></search>
     </div>
     <div class="col-md-auto">
-        <button md-raised-button color="accent" routerLink="/acuerdo-general/create">Agregar solicitud</button>
+        <button md-raised-button color="accent" routerLink="/inspeccion/create">Agregar solicitud</button>
     </div>
 </div>
 <md-paginator #paginator
@@ -21,14 +21,14 @@
     [pageSizeOptions]="[5, 10, 25, 100]">
   </md-paginator>
 <md-table #table [dataSource]="dataSource">
-    <ng-container mdColumnDef="fundamento">
-        <md-header-cell *mdHeaderCellDef> Fundamento legal</md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.fundamento}} </md-cell>
+    <ng-container mdColumnDef="fecha">
+        <md-header-cell *mdHeaderCellDef> Fecha</md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.fecha}} </md-cell>
     </ng-container>
 
-    <ng-container mdColumnDef="plazo">
-        <md-header-cell *mdHeaderCellDef> Plazo en el que debe ser cumplido </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.plazo}} </md-cell>
+    <ng-container mdColumnDef="adscripcion">
+        <md-header-cell *mdHeaderCellDef> Adscripción</md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.adscripcion}} </md-cell>
     </ng-container>
 
     <md-header-row *mdHeaderRowDef="columns"></md-header-row>
