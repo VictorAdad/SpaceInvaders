@@ -7,6 +7,6 @@ import { TableService} from '@utils/table/table.service';
 })
 
 export class PersonaComponent{
-	_columns = ['position', 'name', 'weight', 'symbol'];
+	_columns = ['tipo', 'nombre', 'razonSocial', 'alias'];
 
 }

@@ -7,6 +7,6 @@ import { TableService} from '@utils/table/table.service';
 })
 
 export class DelitoComponent{
-	_columns = ['position', 'name', 'weight', 'symbol'];
+	_columns = ['position', 'name', 'weight'];
 
 }

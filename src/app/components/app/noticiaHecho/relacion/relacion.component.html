@@ -30,16 +30,6 @@
             <md-cell *mdCellDef="let element"> {{element.elementos}} </md-cell>
         </ng-container>
 
-        <!-- Weight Column -->
-        <ng-container mdColumnDef="Acciones">
-          
-            <md-header-cell *mdHeaderCellDef class="col-sm-4 col-md-1 col-lg-1 d-flex justify-content-center"> Acciones </md-header-cell>
-                <md-cell *mdCellDef="let element"  class="col-sm-4 col-md-1 col-lg-1 d-flex justify-content-center"> 
-                <md-icon class="md-24 center" aria-label="Eliminar">delete</md-icon>
-               </md-cell>
-        </ng-container>
-
-
         <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
         <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
     </md-table>

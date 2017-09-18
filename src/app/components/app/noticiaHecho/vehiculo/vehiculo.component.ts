@@ -13,7 +13,7 @@ import 'rxjs/add/observable/of';
 })
 
 export class VehiculoComponent{
-	displayedColumns = ['tipo', 'marca', 'color', 'modelo', 'placa', 'acciones'];
+	displayedColumns = ['tipo', 'marca', 'color', 'modelo', 'placa'];
 	data: Vehiculo[];
 
 	dataSource: TableService | null;
@@ -34,7 +34,7 @@ export interface Vehiculo {
     modelo: string;
     placa: string;
   }
-  
+
   const data: Vehiculo[] = [
       { tipo:'Automovil/Camioneta', marca: 'BMW', color: 'Negro', modelo: '1234123', placa: 'XY-1234' }
   ];
@@ -50,6 +50,6 @@ export interface Vehiculo {
     connect(): Observable<Vehiculo[]> {
       return Observable.of(data);
     }
-  
+
     disconnect() {}
   }

@@ -14,12 +14,12 @@ import 'rxjs/add/observable/of';
 })
 
 export class LugarComponent{
-	displayedColumns = ['tipo', 'calle', 'colonia', 'localidad', 'acciones'];
+	displayedColumns = ['tipo', 'calle', 'colonia', 'localidad', 'estado'];
     data: Lugar[];
     //dataSource: TableService | null;
     dataSource = new ExampleDataSource();
     @ViewChild(MdPaginator) paginator: MdPaginator;
-    
+
     ngOnInit(){
         this.data = data;
         this.dataSource = new TableService(this.paginator, this.data);
@@ -33,10 +33,11 @@ export interface Lugar {
     calle: string;
     colonia: string;
     localidad: string;
+    estado: string;
   }
-  
+
   const data: Lugar[] = [
-      {tipo: 'Lugar de hallazgo', calle: 'Roberto Sanchez', colonia: 'centro', localidad:'Roberto Sanchez'}
+      {tipo: 'Lugar de hallazgo', calle: 'Roberto Sanchez', colonia: 'centro', localidad:'Roberto Sanchez', estado: 'Veracruz'}
   ];
 
     /**
@@ -50,6 +51,6 @@ export interface Lugar {
     connect(): Observable<Lugar[]> {
       return Observable.of(data);
     }
-  
+
     disconnect() {}
   }

@@ -31,9 +31,9 @@
             <md-cell *mdCellDef="let element"> {{element.localidad}} </md-cell>
         </ng-container>
 
-        <ng-container mdColumnDef="acciones">
-            <md-header-cell *mdHeaderCellDef> Acción </md-header-cell>
-            <md-cell  *mdCellDef="let element"><md-icon>delete</md-icon></md-cell>
+        <ng-container mdColumnDef="estado">
+            <md-header-cell *mdHeaderCellDef> Estado </md-header-cell>
+            <md-cell  *mdCellDef="let element"> {{element.estado}} </md-cell>
         </ng-container>
 
         <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
