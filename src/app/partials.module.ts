@@ -5,7 +5,6 @@ import { DateComponent } from '@partials/form/date/date.component';
 import { TextareaComponent } from '@partials/form/textarea/textarea.component';
 import { RadioButtonComponent} from '@partials/form/radiobutton/radiobutton.component';
 import { Select2Component } from '@partials/form/select2/select2.component';
-import { BreadCrumbComponent } from '@partials/breadcrumb/breadcrumb.component';
 import { TokenInputComponent } from '@partials/form/tokeninput/tokeninput.component'
 
 
@@ -21,4 +20,3 @@ export const partialsComponents = [
 	TokenInputComponent,
 	Select2Component
 ];
-

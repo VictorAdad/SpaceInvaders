@@ -1,12 +1,4 @@
 <div class="content-body">
-    <breadcrumb #parent>
-        <div class="row">
-            <ng-template ngFor let-route [ngForOf]="parent.breadcrumbs">
-                <a    *ngIf="!route.terminal" class="breadcrumb" href="" [routerLink]="[route.url]">{{ route.displayName }}</a>
-                <span *ngIf="route.terminal"  class="breadcrumb">{{ route.displayName }}</span>
-            </ng-template>
-        </div>
-    </breadcrumb>
     <div class="row space">
         <div class="col-md-10">
             <h3>Detalle de Persona</h3>
@@ -21,7 +13,7 @@
           <div class="col-md-8">
             <h4>Datos generales</h4>
           </div>
-            
+
         </div>
         <div class="row justify-content-md-center align-items-center" >
           <div class="col">
@@ -41,7 +33,7 @@
             ></radiobutton>
             </div></div>
           </div>
-          
+
         </div>
         <div class="row justify-content-md-center align-items-center">
           <div class="col">
@@ -80,7 +72,7 @@
                   <md-icon>perm_identity</md-icon>Datos de identidad
                 </md-panel-title>
                 <md-panel-description>
-                  
+
                 </md-panel-description>
               </md-expansion-panel-header>
               <div class="row" *ngIf="tipoPersona=='Moral'">
@@ -88,7 +80,7 @@
                   <text label="Razón social" name="razonSocial" [group]="form" hintStart="Campo obligatorio"></text>
                 </div>
               </div>
-              
+
               <div class="row">
                 <div class="col-md-3">
                   <text label="Nombre"></text>
@@ -102,7 +94,7 @@
                 <div class="col-md-2">
                   <select2 [options]="
                   [
-                    {label:'Hombre',value:'Hombre'}, 
+                    {label:'Hombre',value:'Hombre'},
                     {label:'Mujer',value:'Mujer'}]" placeholder="Sexo"  ></select2>
                 </div>
                 <div class="col-md-2">
@@ -115,33 +107,33 @@
                 <div class="col-md-2">
                   <text label="CURP"></text>
                 </div>
-              
+
                 <div class="col-md-2">
                   <select2 [options]="
                   [
-                    {label:'Mexicana',value:'Mexicana'}, 
+                    {label:'Mexicana',value:'Mexicana'},
                     {label:'Otra',value:'Otra'}]" placeholder="Nacionalidad"></select2>
                 </div>
                 <div class="col-md-2">
                   <select2 [options]="
                   [
-                    {label:'México',value:'México'}, 
+                    {label:'México',value:'México'},
                     {label:'Otro',value:'Otro'}]" placeholder="País de nacimiento"></select2>
                 </div>
                 <div class="col-md-2">
                   <select2 [options]="
                   [
-                    {label:'Aguas Calientes',value:'Aguas Calientes'}, 
+                    {label:'Aguas Calientes',value:'Aguas Calientes'},
                     {label:'Otro',value:'Otro'}]" placeholder="Estado de nacimiento"></select2>
                 </div>
 
                 <div class="col-md-2">
                   <select2 [options]="
                   [
-                    {label:'Conocido',value:'Conocido'}, 
+                    {label:'Conocido',value:'Conocido'},
                     {label:'Otro',value:'Otro'}]" placeholder="Municipio"></select2>
                 </div>
-              
+
                 <div class="col-md-2">
                   <select2 [options]="
                   []" placeholder="Escolaridad"></select2>
@@ -157,7 +149,7 @@
                 <div class="col-md-2">
                   <text label="Ingresos mensuales"></text>
                 </div>
-              
+
                 <div class="col-md-2">
                  <text label='RFC'></text>
                 </div>
@@ -172,7 +164,7 @@
                 <div class="col-md-2">
                   <text label="Religión"></text>
                 </div>
-              
+
                 <div class="col-md-2">
                  <select2 [options]="
                   [{value:'Sí',label:'Si'},{value:'No',label:'No'}]" placeholder="Habla Español"></select2>
@@ -190,7 +182,7 @@
                   <select2 [options]="
                   []" placeholder="Alfabetismo"></select2>
                 </div>
-              
+
                 <div class="col-md-2">
                  <select2 [options]="
                   []" placeholder="Familia ligüistica"></select2>
@@ -206,7 +198,7 @@
                 <div class="row" *ngIf="tipoInterviniente=='Imputado'">
                 <div class="col-md-2">
                      Detenido-{{detenido}}
-                 <checkbox label="Detenido" [(value)]="detenido" ></checkbox> 
+                 <checkbox label="Detenido" [(value)]="detenido" ></checkbox>
                 </div>
                 <div class="col-md-2" *ngIf="detenido">
                   <text label="Fecha de denteción"></text>
@@ -219,9 +211,9 @@
                   <select2 [options]="
                   []" placeholder="Tipo de denteción"></select2>
                 </div>
-              
+
                 <div class="col-md-2" *ngIf="detenido">
-                 <text label="Fecha de declaración"></text> 
+                 <text label="Fecha de declaración"></text>
                 </div>
                 <div class="col-md-2" *ngIf="detenido">
                    <select2 [options]="
@@ -233,11 +225,11 @@
                 </div>
 
               </div>
-              
+
             </md-expansion-panel>
         </div>
         <!-- Datos de identificacion -->
-        <div class="row  justify-content-md-center align-items-center" 
+        <div class="row  justify-content-md-center align-items-center"
         *ngIf="muestraDatos();">
           <md-expansion-panel style="width: 95%">
               <md-expansion-panel-header>
@@ -245,7 +237,7 @@
                   <md-icon>fingerprint</md-icon> Datos de identificación
                 </md-panel-title>
                 <md-panel-description>
-                  
+
                 </md-panel-description>
               </md-expansion-panel-header>
               <div class="row">
@@ -265,7 +257,7 @@
                   <text label="Otros nombres"></text>
                 </div>
               </div>
-              
+
           </md-expansion-panel>
         </div>
         <!-- Datos de localizacion -->
@@ -277,7 +269,7 @@
                   <md-icon>room</md-icon> Datos de Localización
                 </md-panel-title>
                 <md-panel-description>
-                  
+
                 </md-panel-description>
               </md-expansion-panel-header>
               <div class="row">
@@ -296,7 +288,7 @@
 
                <div class="row">
                 <div class="col-md-2">
-                 <text label="Localidad"></text> 
+                 <text label="Localidad"></text>
                 </div>
                 <div class="col-md-2">
                   <text label="Calle"></text>
@@ -312,7 +304,7 @@
 
               <div class="row">
                 <div class="col-md-2">
-                 <text label="CP"></text> 
+                 <text label="CP"></text>
                 </div>
                 <div class="col-md-2">
                   <text label="Tipo de domicilio"></text>
@@ -324,7 +316,7 @@
 
               <div class="row">
                 <div class="col-md-2">
-                 <text label="Tel. particular"></text> 
+                 <text label="Tel. particular"></text>
                 </div>
                 <div class="col-md-2">
                   <text label="Tel. del trabajo"></text>
@@ -339,7 +331,7 @@
 
               <div class="row">
                 <div class="col-md-2">
-                 <text label="Fax"></text> 
+                 <text label="Fax"></text>
                 </div>
                 <div class="col-md-2">
                   <text label="Otro medio de contacto"></text>
@@ -351,7 +343,7 @@
 
               <div class="row">
                 <div class="col-md-2">
-                   
+
                       <label class="Naranja">Tipo de residencia</label>
                     </div>
                     <div class="row">
@@ -367,14 +359,14 @@
                 <div class="col-md-4">
                   <button class="float-right" md-raised-button color="accent">Agregar</button>
                 </div>
-                
+
               </div>
-              
+
           </md-expansion-panel>
         </div>
 
         <!-- Media de filiación -->
-        <div class="row  justify-content-md-center align-items-center space" 
+        <div class="row  justify-content-md-center align-items-center space"
         *ngIf="tipoInterviniente=='Imputado'">
           <md-expansion-panel style="width: 95%">
               <md-expansion-panel-header>
@@ -382,7 +374,7 @@
                  <md-icon>sentiment_neutral</md-icon> Media de filiación
                 </md-panel-title>
                 <md-panel-description>
-                  
+
                 </md-panel-description>
               </md-expansion-panel-header>
               <div class="row">
@@ -600,7 +592,7 @@
                 <div class="col-md-2">
                   <checkbox label="Usa anteojos"></checkbox>
                 </div>
-                
+
               </div>
 
               <div class="row">
