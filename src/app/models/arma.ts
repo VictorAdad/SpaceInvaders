@@ -7,4 +7,5 @@ export class Arma {
     mecanismoAccion:string;
     serie:string;
     notas:string;
+    matricula:string;
   }

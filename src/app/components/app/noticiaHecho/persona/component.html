@@ -1,9 +1,14 @@
-<div class="row">
-	<div class="col-md-12">
-		<button class="float-right" md-raised-button routerLink="/personas/persona-fisica-imputado" color="accent">Agregar involucrado</button>
+<div class="row space">
+	<div class="col-md-6">
+		<h3>Personas</h3>
+	</div>
+	<div class="col-md-6">
+		<button class="float-right" md-raised-button routerLink="/personas/persona-fisica-imputado" color="accent">Agregar persona</button>
 	</div>
 </div>
-<md-table #table [dataSource]="">
+<md-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+</md-paginator>
+<md-table #table [dataSource]="dataSource">
 	<ng-container mdColumnDef="tipo">
 		<md-header-cell *mdHeaderCellDef> Tipo de interviniente </md-header-cell>
 		<md-cell *mdCellDef="let element"> {{element.tipo}} </md-cell>
@@ -27,6 +32,6 @@
 		<md-cell *mdCellDef="let element"> {{element.paterno}} </md-cell>
 	</ng-container>
 
-	<md-header-row *mdHeaderRowDef="_columns"></md-header-row>
-	<md-row *mdRowDef="let row; columns: _columns;"></md-row>
+	<md-header-row *mdHeaderRowDef="columns"></md-header-row>
+	<md-row *mdRowDef="let row; columns: columns;"></md-row>
 </md-table>

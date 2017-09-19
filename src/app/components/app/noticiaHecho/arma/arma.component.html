@@ -1,48 +1,46 @@
 <div class="row">
-        <div class="col-md-6">
-            <h2>Armas</h2>
-        </div>
-        <div class="col-md-6">
-            <button class="float-right" md-raised-button routerLink="/armas/create" color="accent">Agregar Armas</button>
-        </div>
+    <div class="col-md-6">
+        <h3>Armas</h3>
     </div>
-    <div class="">
-        <md-paginator #paginator
-            [length]="data.length"
-            [pageIndex]="0"
-            [pageSize]="10"
-            [pageSizeOptions]="[5, 10, 25, 100]">
-          </md-paginator>
-        <md-table #table [dataSource]="dataSource">
-
-            <!--- Note that these columns can be defined in any order.
-              The actual rendered columns are set as a property on the row definition" -->
-
-            <!-- Arma Column -->
-            <ng-container mdColumnDef="Arma">
-                <md-header-cell *mdHeaderCellDef> Arma</md-header-cell>
-                <md-cell *mdCellDef="let element"> {{element.arma}} </md-cell>
-            </ng-container>
-
-            <!-- Tipo Column -->
-            <ng-container mdColumnDef="Tipo">
-                <md-header-cell *mdHeaderCellDef> Tipo </md-header-cell>
-                <md-cell *mdCellDef="let element"> {{element.tipo}} </md-cell>
-            </ng-container>
-
-            <!-- Marca Column -->
-            <ng-container mdColumnDef="Marca">
-                <md-header-cell *mdHeaderCellDef> Marca y/o Modelo </md-header-cell>
-                <md-cell *mdCellDef="let element"> {{element.marca}} </md-cell>
-            </ng-container>
-
-            <!-- Calibre Column -->
-            <ng-container mdColumnDef="Calibre">
-                <md-header-cell *mdHeaderCellDef> Calibre </md-header-cell>
-                <md-cell *mdCellDef="let element"> {{element.calibre}} </md-cell>
-            </ng-container>
-
-            <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-            <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
-        </md-table>
+    <div class="col-md-6">
+        <button class="float-right" md-raised-button routerLink="/armas/create" color="accent">Agregar arma</button>
     </div>
+</div>
+<md-paginator #paginator
+    [length]="data.length"
+    [pageIndex]="0"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]">
+  </md-paginator>
+<md-table #table [dataSource]="dataSource">
+
+    <!--- Note that these columns can be defined in any order.
+      The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Arma Column -->
+    <ng-container mdColumnDef="Arma">
+        <md-header-cell *mdHeaderCellDef> Arma</md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.arma}} </md-cell>
+    </ng-container>
+
+    <!-- Tipo Column -->
+    <ng-container mdColumnDef="Tipo">
+        <md-header-cell *mdHeaderCellDef> Tipo </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.tipo}} </md-cell>
+    </ng-container>
+
+    <!-- Marca Column -->
+    <ng-container mdColumnDef="Marca">
+        <md-header-cell *mdHeaderCellDef> Marca y/o Modelo </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.marca}} </md-cell>
+    </ng-container>
+
+    <!-- Calibre Column -->
+    <ng-container mdColumnDef="Calibre">
+        <md-header-cell *mdHeaderCellDef> Calibre </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.calibre}} </md-cell>
+    </ng-container>
+
+    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+</md-table>
