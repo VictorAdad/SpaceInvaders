@@ -30,7 +30,7 @@ export class TitularComponent{
     transferirDialog() {
         this.dialog.open(TransferirComponent, {
             height: 'auto',
-            width: 'auto'
+            width: '500px'
         });
     }
 }
@@ -46,6 +46,6 @@ export class Titular {
 }
 
 const data: Titular[] = [
-    {id:1, operador: "Defensor del imputado",     oficina: '', titular: '', asignacion: '', nic: ''},
-    {id:2, operador: "Imputado víctima delito",   oficina: '', titular: '', asignacion: '', nic: ''},
+    {id:1, operador: "Unidad de servicios",   oficina: 'Centro de atención', titular: 'Roberto Sanchez', asignacion: '06/07/2017', nic: '1234'},
+    {id:2, operador: "Unidad de servicios",   oficina: 'Centro de atención', titular: 'Roberto Sanchez', asignacion: '06/07/2017', nic: '1234'},
 ];

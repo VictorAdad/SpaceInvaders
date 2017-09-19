@@ -1,9 +1,6 @@
 <div class="row">
-    <div class="col-md-6">
-        <h2>Titulares</h2>
-    </div>
     <div class="col-md-12">
-        <button class="float-right" md-raised-button (click)="transferirDialog()" color="accent">Adjuntar documento</button>
+        <h3>Titulares</h3>
     </div>
 </div>
 <div class="">
@@ -38,7 +35,9 @@
 
         <ng-container mdColumnDef="transferir">
             <md-header-cell *mdHeaderCellDef> Transferir </md-header-cell>
-            <md-cell *mdCellDef="let element"> <md-icon class="button-menu">arrow_forward</md-icon></md-cell>
+            <md-cell *mdCellDef="let element">
+                <button class="float-right" md-icon-button (click)="transferirDialog()"><md-icon  class="md-24">arrow_forward</md-icon></button>
+            </md-cell>
         </ng-container>
 
         <md-header-row *mdHeaderRowDef="columns"></md-header-row>
