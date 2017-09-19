@@ -29,22 +29,25 @@ import { PeritoCreateComponent } from '@components-app/solicitud-preliminar/peri
 //Determinación
 import { AcuerdoInicioComponent } from '@components-app/determinacion/acuerdo-inicio/component';
 
+import { RegistroGeneralComponent } from '@components-app/solicitud-preliminar/registro-general/component';
+import { RegistroGeneralCreateComponent } from '@components-app/solicitud-preliminar/registro-general/create/component';
+
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
     { path : '', component: HomeComponent, data : { breadcrumb : 'Noticia de hechos'}},
     { path : 'noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
-    { path : 'login', component: LoginComponent},
-    { path : 'usuarios', component : UsuarioComponent},
-    { path : 'usuarios/create', component : UsuarioCreateComponent},
-    { path : 'armas', component : ArmaComponent},
-    { path : 'armas/create', component : ArmaCreateComponent},
-    { path : 'lugares', component :  LugarComponent},
-    { path : 'lugares/create', component : LugarCreateComponent },
-    { path : 'relaciones', component : RelacionComponent },
-    { path : 'relaciones/create', component : RelacionCreateComponent },
+    { path : 'login', component: LoginComponent,  data : { breadcrumb : 'Login' } },
+    { path : 'usuarios', component : UsuarioComponent, data : { breadcrumb : 'Usuarios' } },
+    { path : 'usuarios/create', component : UsuarioCreateComponent, data : { breadcrumb : 'Crear usuarios', rutas:[{path:'algo',label:"Otra ruta"}, {path:'/papu',label:"Otra ruta2"}] } },
+    { path : 'armas', component : ArmaComponent, data : { breadcrumb : 'Armas' } },
+    { path : 'armas/create', component : ArmaCreateComponent, data : { breadcrumb : 'Nueva arma', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}] } },
+    { path : 'lugares', component :  LugarComponent, data : { breadcrumb : 'Lugares' }},
+    { path : 'lugares/create', component : LugarCreateComponent, data : { breadcrumb : 'Crear lugares', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}] } },
+    { path : 'relaciones', component : RelacionComponent, data : { breadcrumb : 'Relaciones' } },
+    { path : 'relaciones/create', component : RelacionCreateComponent, data : { breadcrumb : 'Nueva relación', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}] } },
     { path : 'vehiculos', component :  VehiculoComponent, data: { breadcrumb: 'Vehiculos'}},
-    { path : 'vehiculos/create', component : VehiculoCreateComponent, data: { breadcrumb: 'Nuevo Vehiculo'}},
-    { path : 'personas/persona-fisica-imputado', component : PersonaFisicaImputadoComponent, data : { breadcrumb : 'Crear Persona'}},
+    { path : 'vehiculos/create', component : VehiculoCreateComponent, data: { breadcrumb: 'Nuevo Vehiculo', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}]}},
+    { path : 'personas/persona-fisica-imputado', component : PersonaFisicaImputadoComponent, data : { breadcrumb : 'Crear Persona', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}] }},
     { path : 'documentos', component : DocumentoComponent },
     { path : 'documentos/create', component : DocumentoCreateComponent },
     //Solicitud Preliminar
@@ -52,6 +55,8 @@ const routes: Routes = [
     { path : 'acuerdo-general/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Acuerdos generales'}},
     { path : 'inspeccion', component : InspeccionComponent, data : { breadcrumb : 'Solicitudes de inspección'}},
     { path : 'inspeccion/create', component : InspeccionCreateComponent, data : { breadcrumb : 'Inspecciones'}},
+    { path : 'registro-general', component : RegistroGeneralComponent, data : { breadcrumb : 'Solicitudes de registro general'}},
+    { path : 'registro-general/create', component : RegistroGeneralCreateComponent, data : { breadcrumb : 'Registro generales'}},
     { path : 'policia', component : PoliciaComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
     { path : 'policia/create', component : PoliciaCreateComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
     { path : 'perito', component : PeritoComponent, data : { breadcrumb : 'Solicitudes preliminares a peritos'}},
@@ -89,6 +94,8 @@ export const routingComponents = [
   AcuerdoGeneralCreateComponent,
   InspeccionComponent,
   InspeccionCreateComponent,
+  RegistroGeneralComponent,
+  RegistroGeneralCreateComponent,  
   PoliciaComponent,
   PoliciaCreateComponent,
   PeritoComponent,
