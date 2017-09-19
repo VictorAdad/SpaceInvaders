@@ -31,7 +31,7 @@ export class BreadcrumbComponent implements OnInit {
   ) {
     this.breadcrumb=new IBreadcrumb();
     this.breadcrumb.childs=[];
-    this.breadcrumb.label="";
+    this.breadcrumb.label="Home";
     this.breadcrumb.url="";
   }
 
@@ -43,12 +43,12 @@ export class BreadcrumbComponent implements OnInit {
    */
   ngOnInit() {
     let url = this.router.url;
-    console.log(this.router);
+    //console.log(this.router);
     this.breadcrumb=this.dataRouting(this.router.url, this.router.config, this.router);
   }
 
   dataRouting(theUrl, config, router){
-    console.log("alla",router.url);
+    //console.log("alla",router.url);
     let url:string;
     url = theUrl.replace('/','');
     let n:number = config.length;
@@ -67,7 +67,7 @@ export class BreadcrumbComponent implements OnInit {
           if (this.router.config[i].data.breadcrumb)
             data.label=this.router.config[i].data.breadcrumb;
         }
-        console.log(data);
+        //console.log(data);
         return data;
       }
     }
