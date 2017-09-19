@@ -8,6 +8,7 @@
 			<text label="Sintesís del caso" ([value])="model.sintesis"  name="sintesis" hintStart="Campo obligatorio" [group]="form"></text>
 			<text label="Delito principal" 	([value])="model.delito"  	name="delito" 	hintStart="Campo obligatorio" [group]="form"></text>
 			<div class="col" [mdTooltip]="!form.valid ? 'No se han llenado los campos requeridos' : ''">
+				<button class="float-right" md-button routerLink="/">Cancelar</button>	
 				<button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]">Guardar</button>
 			</div>
 		</form>
