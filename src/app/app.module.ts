@@ -10,6 +10,7 @@ import { AppRoutingModule, routingComponents} from './app.routing';
 import { PartialsModule, partialsComponents} from './partials.module';
 import { DirectivesModule, directivesComponents} from './directives.module';
 import { CustomModule, customComponents} from './custom.module';
+import { DynamicComponentsModule, dyanamicComponents} from './dynamic-components.module';
 import { NoticiaHechoModule, noticiaHechoComponents} from '@components-app/noticiaHecho/module';
 import { SolicitudPreliminarModule, SolicitudPreliminarComponents } from '@components-app/solicitud-preliminar/module';
 import { FileUploadModule } from 'ng2-file-upload';
@@ -40,6 +41,7 @@ import { GlobalService } from "@services/global.service";
     PartialsModule,
     DirectivesModule,
     CustomModule,
+    NoticiaHechoModule,
     SolicitudPreliminarModule,
     DeterminacionModule,
     HttpModule,
@@ -51,6 +53,9 @@ import { GlobalService } from "@services/global.service";
     MiservicioService,
     AuthenticationService,
     GlobalService
+  ],
+  entryComponents: [
+    dyanamicComponents
   ],
   bootstrap: [AppComponent]
 })
