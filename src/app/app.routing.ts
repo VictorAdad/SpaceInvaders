@@ -14,6 +14,7 @@ import { LugarCreateComponent } from '@components-app/noticiaHecho/lugar/create/
 import { PersonaFisicaImputadoComponent } from '@components-app/noticiaHecho/persona/create/persona-fisica-imputado.component';
 import { RelacionComponent } from '@components-app/noticiaHecho/relacion/relacion.component';
 import { RelacionCreateComponent } from '@components-app/noticiaHecho/relacion/create/create.component';
+import {DelitoCreateComponent } from '@components-app/noticiaHecho/delito/create/create.component';
 //Documentos
 import { DocumentoComponent } from '@components-app/noticiaHecho/documento/documento.component';
 import { DocumentoCreateComponent } from '@components-app/noticiaHecho/documento/create/create.component';
@@ -31,6 +32,8 @@ import { AcuerdoInicioComponent } from '@components-app/determinacion/acuerdo-in
 
 import { RegistroGeneralComponent } from '@components-app/solicitud-preliminar/registro-general/component';
 import { RegistroGeneralCreateComponent } from '@components-app/solicitud-preliminar/registro-general/create/component';
+
+
 
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
@@ -62,7 +65,8 @@ const routes: Routes = [
     { path : 'perito', component : PeritoComponent, data : { breadcrumb : 'Solicitudes preliminares a peritos'}},
     { path : 'perito/create', component : PeritoCreateComponent, data : { breadcrumb : 'Solicitudes de servicios periciales'}},
     //Determinación
-    { path : 'acuerdo-inicio', component : AcuerdoInicioComponent, data : { breadcrumb : 'Acuerdo de inicio'}}
+    { path : 'acuerdo-inicio', component : AcuerdoInicioComponent, data : { breadcrumb : 'Acuerdo de inicio'}},
+    { path : 'delito/create', component : DelitoCreateComponent, data : { breadcrumb : 'Delitos', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}]}}
 ];
 
 @NgModule({
@@ -101,5 +105,6 @@ export const routingComponents = [
   PeritoComponent,
   PeritoCreateComponent,
   //Determinación
-  AcuerdoInicioComponent
+  AcuerdoInicioComponent,
+  DelitoCreateComponent
 ];
