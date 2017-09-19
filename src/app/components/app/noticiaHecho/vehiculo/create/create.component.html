@@ -12,10 +12,10 @@
         <form (ngSubmit)="save(form.valid, form.value)" [formGroup]="form">
             <div class="row">
                 <div class="col">
-                    <select2 placeholder="Motivo por el que se registra" [(options)]="options"></select2>
+                    <select2 placeholder="Motivo por el que se registra" [options]="options"></select2>
                 </div>
                 <div class="col">
-                    <select2 placeholder="Vehículo" [(options)]="options" ([value])="model.vehiculo" [group]="form"></select2>
+                    <select2 placeholder="Vehículo"  name="vehiculo" [options]="options" ([value])="model.vehiculo" [group]="form"></select2>
                 </div>
                 <div class="col">
                     <text label="Nº tarjeta de circulación"></text>
@@ -24,18 +24,20 @@
                     <text label="Nº económico"></text>
                 </div>
                 <div class="col">
-                    <select2 placeholder="Clase" [(options)]="options"></select2>
+                    <select2 placeholder="Clase" [options]="options"></select2>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <select2 placeholder="Marca" [(options)]="options"></select2>
+                    <select2 placeholder="Marca" [options]="options"></select2>
                 </div>
                 <div class="col">
-                    <select2 placeholder="Submarca" [(options)]="options"></select2>
+                    <select2 placeholder="Submarca" [options]="options"></select2>
                 </div>
                 <div class="col">
+                    
                     <select2 placeholder="Color" name="color" [(options)]="options" ([value])="model.color" [group]="form"></select2>
+
                 </div>
                 <div class="col">
                     <text label="Modelo" ([value])="model.modelo" name="modelo" [group]="form"></text>
@@ -63,7 +65,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <select2 placeholder="Aseguradora" name="color" [(options)]="options" ([value])="model.color" [group]="form"></select2>
+                    <select2 placeholder="Aseguradora" [options]="options" ></select2>
                 </div>
                 <div class="col">
                     <text label="Factura"></text>
@@ -83,9 +85,12 @@
                     <text label="Tipo de uso"></text>
                 </div>
                 <div class="col">
-                    <select2 placeholder="Procedencia" [(options)]="options"></select2>
+                    <select2 placeholder="Procedencia" [options]="
+                  [
+                    {label:'Procedencia nacional',value:'procedenciaNacional'},
+                    {label:'Procedencia extranjera',value:'procedenciaExtranjera'}]" [(value)]="model.procedencia"></select2>
                 </div>
-                <div class="col" *ngIf="procedenciaExtrnajera">
+                <div class="col" *ngIf="model.procedencia=='procedenciaExtranjera'">
                     <text label="Pedimento de importación"></text>
                 </div>
                 <div class="col">
