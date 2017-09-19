@@ -13,3 +13,15 @@ html, body {
 .margin-text{
     margin: 10px;
 }
+
+input[type="file"] {
+    opacity: 0.0; position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height:100%;
+  }
+
+table{
+    width: 500px;
+}
+
+table td:nth-child(2), th:nth-child(2){
+    text-align: right;
+}
