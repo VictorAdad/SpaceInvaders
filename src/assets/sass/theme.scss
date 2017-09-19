@@ -39,6 +39,10 @@ body {
 
 }
 
+button:focus{
+	outline: none !important;
+}
+
 .mat-tab-body-content{
 	padding: 20px;
 }
