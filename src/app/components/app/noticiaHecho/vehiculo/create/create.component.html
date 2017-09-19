@@ -15,7 +15,7 @@
                     <select2 placeholder="Motivo por el que se registra" [(options)]="options"></select2>
                 </div>
                 <div class="col">
-                    <text label="Vheículo" ([value])="model.vehiculo" name="vehiculo" [group]="form"></text>
+                    <select2 placeholder="Vehículo" [(options)]="options" ([value])="model.vehiculo" [group]="form"></select2>
                 </div>
                 <div class="col">
                     <text label="Nº tarjeta de circulación"></text>
@@ -24,18 +24,18 @@
                     <text label="Nº económico"></text>
                 </div>
                 <div class="col">
-                    <text label="Clase"></text>
+                    <select2 placeholder="Clase" [(options)]="options"></select2>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <text label="Marca" ([value])="model.marca" name="marca" [group]="form"></text>
+                    <select2 placeholder="Marca" [(options)]="options"></select2>
                 </div>
                 <div class="col">
-                    <text label="Submarca"></text>
+                    <select2 placeholder="Submarca" [(options)]="options"></select2>
                 </div>
                 <div class="col">
-                    <text label="Color" ([value])="model.color" name="color" [group]="form"></text>
+                    <select2 placeholder="Color" name="color" [(options)]="options" ([value])="model.color" [group]="form"></select2>
                 </div>
                 <div class="col">
                     <text label="Modelo" ([value])="model.modelo" name="modelo" [group]="form"></text>
@@ -63,7 +63,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <text label="Aseguradora"></text>
+                    <select2 placeholder="Aseguradora" name="color" [(options)]="options" ([value])="model.color" [group]="form"></select2>
                 </div>
                 <div class="col">
                     <text label="Factura"></text>
@@ -83,9 +83,9 @@
                     <text label="Tipo de uso"></text>
                 </div>
                 <div class="col">
-                    <text label="Procedencia"></text>
+                    <select2 placeholder="Procedencia" [(options)]="options"></select2>
                 </div>
-                <div class="col">
+                <div class="col" *ngIf="procedenciaExtrnajera">
                     <text label="Pedimento de importación"></text>
                 </div>
                 <div class="col">
@@ -98,6 +98,11 @@
             <div class="row">
                 <div class="col-md-4">
                     <text label="Señas particulares"></text>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <text-area label="Notas"></text-area>
                 </div>
             </div>
             <div class="d-flex justify-content-end">
