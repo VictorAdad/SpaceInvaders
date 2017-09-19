@@ -19,7 +19,7 @@ input[type="file"] {
   }
 
 table{
-    width: 500px;
+    width: 100%;
 }
 
 table td:nth-child(2), th:nth-child(2){

@@ -18,6 +18,7 @@ export class TextComponent implements OnInit{
 	@Input() group    : FormGroup = new FormGroup({});
 	@Input() hintStart: string="";
 	@Input() hintEnd: string="";
+	@Input() functionChange: Function;
 
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
@@ -28,6 +29,9 @@ export class TextComponent implements OnInit{
 
 	update(value) {
 		this.valueChange.emit(value);
+		if(this.functionChange){
+			this.functionChange(value);
+		}
 	}
 }
 
