@@ -94,9 +94,8 @@ export const routingComponents = [
   AcuerdoGeneralCreateComponent,
   InspeccionComponent,
   InspeccionCreateComponent,
-
   RegistroGeneralComponent,
-  RegistroGeneralCreateComponent  
+  RegistroGeneralCreateComponent,  
   PoliciaComponent,
   PoliciaCreateComponent,
   PeritoComponent,
