@@ -1,0 +1,37 @@
+<div class="row space">
+    <div class="col-md-6">
+        <h2>Solicitudes de Requerimiento de información</h2>
+    </div>
+    <div class="col-md-6">
+        <button class="float-right" md-raised-button routerLink="/" color="accent">Regresar</button>
+    </div>
+</div>
+<div class="row space justify-content-end">
+    <div class="col-md-auto">
+        <search></search>
+    </div>
+    <div class="col-md-auto">
+        <button md-raised-button color="accent" routerLink="/requerimiento-informacion/create">Agregar solicitud</button>
+    </div>
+</div>
+<md-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+</md-paginator>
+<md-table #table [dataSource]="dataSource">
+    <ng-container mdColumnDef="numeroOficio">
+        <md-header-cell *mdHeaderCellDef> Número de oficio </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.numeroOficio}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="fechaRequerimiento">
+        <md-header-cell *mdHeaderCellDef> Fecha de requerimiento </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.fechaRequerimiento}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="nombreAutoridad">
+        <md-header-cell *mdHeaderCellDef> Nombre de la autoridad requerida </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.nombreAutoridad}} </md-cell>
+    </ng-container>
+
+    <md-header-row *mdHeaderRowDef="columns"></md-header-row>
+    <md-row *mdRowDef="let row; columns: columns;"></md-row>
+</md-table>

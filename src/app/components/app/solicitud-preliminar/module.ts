@@ -5,6 +5,8 @@ import { SolicitudInspeccionComponent, DocumentoInspeccionComponent } from './in
 import { SolicitudRegistroGeneralComponent, DocumentoRegistroGeneralComponent } from './registro-general/create/component';
 import { SolicitudPoliciaComponent, DocumentoPoliciaComponent } from './policia/create/component';
 import { SolicitudPeritoComponent, DocumentoPeritoComponent } from './perito/create/component';
+import { SolicitudRequerimientoInformacionComponent } from './requerimiento-informacion/create/component';
+import { DocumentoRequerimientoInformacionComponent } from './requerimiento-informacion/create/component';
 
 
 @NgModule()
@@ -21,5 +23,7 @@ export const SolicitudPreliminarComponents = [
     SolicitudPoliciaComponent,
     DocumentoPoliciaComponent,
     SolicitudPeritoComponent,
-    DocumentoPeritoComponent
+    DocumentoPeritoComponent,
+    SolicitudRequerimientoInformacionComponent,
+    DocumentoRequerimientoInformacionComponent
 ];
