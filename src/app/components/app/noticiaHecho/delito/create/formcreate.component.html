@@ -1,0 +1,69 @@
+<md-dialog-content>
+    <div class=""  >
+        <div class="row breadcrumd">
+            <div class="col-md-6">
+                <select2 placeholder="" 
+                [options]="
+                  [
+                    {label:'Nominación práctica de Delitos PGJEM 2015',value:'npdp2'},
+                    {label:'Otro',value:'Otro'}]"
+                ></select2>
+            </div>
+            <div class="col-md-6">
+                <text sufix="search"  [functionChange]="buscar.bind(this)"></text>
+            </div>
+        </div>
+    </div>
+    {{textSearch}}
+    <div class="row">
+        <div class="col-md-6" >
+            <div class="cuadro" style="height: 200px; overflow: scroll; ">
+             <md-table #table [dataSource]="dataSource">
+
+                <ng-container mdColumnDef="resultado">
+                  <md-header-cell *mdHeaderCellDef> Resultados </md-header-cell>
+                  <md-cell *mdCellDef="let element"> 
+                    <div>
+                        {{element.clave}} - {{element.descripcion}} 
+                    </div>
+                    <div class="float-right">
+                        <md-icon (click)="agregar(element)">add</md-icon>
+                    </div>
+                   
+              </md-cell>
+                </ng-container>
+
+                <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+                <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+
+            </md-table>   
+            </div>    
+        </div>
+        <div class="col-md-6" >
+            <div class="cuadro" style="height: 200px; overflow: scroll; ">
+            <md-table #table [dataSource]="dataSourceaddList">
+
+                <ng-container mdColumnDef="resultado">
+                  <md-header-cell *mdHeaderCellDef> Fundamentación </md-header-cell>
+                  <md-cell *mdCellDef="let element"> 
+                    <div>
+                        {{element.clave}} - {{element.descripcion}} 
+                    </div>
+              </md-cell>
+                </ng-container>
+
+                <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+                <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+
+            </md-table>
+            </div>
+        </div>
+    </div>
+</md-dialog-content>
+<md-dialog-actions class="d-flex justify-content-end">
+    
+        <button md-raised-button md-dialog-close color="accent">Guardar</button>
+    
+        <button md-button md-dialog-close>Cerrar</button>
+
+</md-dialog-actions>
