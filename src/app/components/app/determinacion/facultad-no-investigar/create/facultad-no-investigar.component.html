@@ -1,0 +1,37 @@
+<form [formGroup]="form">
+
+    <div class="row">
+	    <div class="col-md-4 col-sm-12 col-lg-4">
+	    	<text label="Síntesis de los hechos" name="sintesisHechos" [(value)]="model.sintesisHechos" [group]="form"></text>  
+	    </div>
+	    <div class="col-md-4 col-sm-12 col-lg-4">
+	    	<text label="Datos de prueba" name="datosPrueba" [(value)]="model.datosPrueba" [group]="form"></text> 
+	    </div>
+	    <div class="col-md-4 col-sm-12 col-lg-4">
+	    	<text label="Motivos por los que se abstuvo de investigar" name="motivos" [(value)]="model.motivos" [group]="form"></text> 
+	    </div>
+    </div>
+    <div class="row">
+
+	    <div class="col-md-8 col-sm-12 col-lg-8">
+	    	<text label="En su caso, medio alternativo de solución de conflictos adoptado" name="medioAlternativo" [(value)]="model.medioAlternativo" [group]="form"></text> 
+	    </div>
+	    <div class="col-md-4 col-sm-12 col-lg-4">
+	    	<text label="A quién se remite la determinación" name="remitente" [(value)]="model.remitente" [group]="form"></text> 
+	    </div>
+	</div> 
+	<div class="row">
+ 
+	    <div class="col-md-4 col-sm-12 col-lg-4">
+	    	<text label="Nombre de superior jerárquico" name="superiorJerarquico" [(value)]="model.superiorJerarquico" [group]="form"></text> 
+	    </div>
+	    <div class="col-md-4 col-sm-12 col-lg-4">
+	    	<text label="Observaciones/Incidencias" name="observaciones" [(value)]="model.observaciones" [group]="form"></text> 
+	    </div>
+	</div>
+
+
+	<div class="row space"></div>
+  	<button class="float-right" md-button>Cancelar</button>	
+	<button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid">Guardar</button>
+</form>

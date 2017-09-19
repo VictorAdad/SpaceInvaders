@@ -33,6 +33,9 @@ import { RequerimientoInformacionCreateComponent } from '@components-app/solicit
 import { AcuerdoInicioComponent } from '@components-app/determinacion/acuerdo-inicio/component';
 import { AcuerdosRadicacionComponent } from '@components-app/determinacion/acuerdo-radicacion/acuerdos-radicacion.component';
 import { AcuerdoRadicacionCreateComponent } from '@components-app/determinacion/acuerdo-radicacion/create/create.component';
+import { FacultadesNoInvestigarComponent } from '@components-app/determinacion/facultad-no-investigar/facultades-no-investigar.component';
+import { FacultadNoInvestigarCreateComponent } from '@components-app/determinacion/facultad-no-investigar/create/create.component';
+
 
 import { RegistroGeneralComponent } from '@components-app/solicitud-preliminar/registro-general/component';
 import { RegistroGeneralCreateComponent } from '@components-app/solicitud-preliminar/registro-general/create/component';
@@ -74,6 +77,8 @@ const routes: Routes = [
     { path : 'acuerdo-inicio', component : AcuerdoInicioComponent, data : { breadcrumb : 'Acuerdo de inicio'}},
     { path : 'acuerdo-radicacion', component : AcuerdosRadicacionComponent, data : { breadcrumb : 'Acuerdos de radicación'}},
     { path : 'acuerdo-radicacion/create', component : AcuerdoRadicacionCreateComponent, data : { breadcrumb : 'Acuerdo de radicación'}},
+    { path : 'facultad-no-investigar', component : FacultadesNoInvestigarComponent, data : { breadcrumb : 'Facultad de no investigar'}},
+    { path : 'facultad-no-investigar/create', component : FacultadNoInvestigarCreateComponent, data : { breadcrumb : 'Facultad de no investigar'}},
 
     { path : 'delito/create', component : DelitoCreateComponent, data : { breadcrumb : 'Delitos', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}]}}
 

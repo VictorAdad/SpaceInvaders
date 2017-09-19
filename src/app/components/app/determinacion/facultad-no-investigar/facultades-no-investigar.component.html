@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="col-md-6">
+        <h2>Facultad no Investigar</h2>
+    </div>
+    <div class="col-md-6">
+        <button class="float-right" md-raised-button routerLink="create" color="accent">Agregar determinación</button>
+    </div>
+</div>
+<div class="row space"></div>
+<div class="row space"></div>
+<div class="row space"></div>
+
+<div class="row">
+    <div class="col">
+        <search class="float-right col-md-6 col-sm-12 col-lg-6 "></search>
+    </div>
+</div>
+<br/>
+
+<div class="">
+    <md-paginator #paginator
+        [length]="data.length"
+        [pageIndex]="0"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 100]">
+    </md-paginator>
+    <md-table #table [dataSource]="dataSource">
+
+        <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column    displayedColumns = ['Remitente','Motivos','Creado por' 'Fecha'];
+-->
+        <ng-container mdColumnDef="Remitente">
+            <md-header-cell *mdHeaderCellDef>A quien se remite la determinación </md-header-cell>
+            <md-cell *mdCellDef="let element"> {{element.remitente}} </md-cell>
+        </ng-container>
+
+        <ng-container mdColumnDef="Motivos">
+            <md-header-cell *mdHeaderCellDef> Motivos por los que se abstuvo de investigar</md-header-cell>
+            <md-cell *mdCellDef="let element"> {{element.fechaCreacion}} </md-cell>
+        </ng-container>
+
+        <ng-container mdColumnDef="Creado por">
+            <md-header-cell *mdHeaderCellDef> Creado por</md-header-cell>
+            <md-cell *mdCellDef="let element"> {{element.creadoPor}} </md-cell>
+        </ng-container>
+
+        <ng-container mdColumnDef="Fecha">
+            <md-header-cell *mdHeaderCellDef> Fecha de creación</md-header-cell>
+            <md-cell *mdCellDef="let element"> {{element.fechaCreacion}} </md-cell>
+        </ng-container>
+
+        <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+        <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+    </md-table>
+
+</div>
