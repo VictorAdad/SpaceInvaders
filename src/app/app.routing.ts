@@ -14,11 +14,20 @@ import { LugarCreateComponent } from '@components-app/noticiaHecho/lugar/create/
 import { PersonaFisicaImputadoComponent } from '@components-app/noticiaHecho/persona/create/persona-fisica-imputado.component';
 import { RelacionComponent } from '@components-app/noticiaHecho/relacion/relacion.component';
 import { RelacionCreateComponent } from '@components-app/noticiaHecho/relacion/create/create.component';
+//Documentos
+import { DocumentoComponent } from '@components-app/noticiaHecho/documento/documento.component';
+import { DocumentoCreateComponent } from '@components-app/noticiaHecho/documento/create/create.component';
 //Solicitud Preliminar
 import { AcuerdoGeneralComponent } from '@components-app/solicitud-preliminar/acuerdo-general/component';
 import { AcuerdoGeneralCreateComponent } from '@components-app/solicitud-preliminar/acuerdo-general/create/component';
 import { InspeccionComponent } from '@components-app/solicitud-preliminar/inspeccion/component';
 import { InspeccionCreateComponent } from '@components-app/solicitud-preliminar/inspeccion/create/component';
+import { PoliciaComponent } from '@components-app/solicitud-preliminar/policia/component';
+import { PoliciaCreateComponent } from '@components-app/solicitud-preliminar/policia/create/component'
+import { PeritoComponent } from '@components-app/solicitud-preliminar/perito/component';
+import { PeritoCreateComponent } from '@components-app/solicitud-preliminar/perito/create/component';
+//Determinación
+import { AcuerdoInicioComponent } from '@components-app/determinacion/acuerdo-inicio/component';
 
 import { RegistroGeneralComponent } from '@components-app/solicitud-preliminar/registro-general/component';
 import { RegistroGeneralCreateComponent } from '@components-app/solicitud-preliminar/registro-general/create/component';
@@ -31,7 +40,7 @@ const routes: Routes = [
     { path : 'usuarios', component : UsuarioComponent},
     { path : 'usuarios/create', component : UsuarioCreateComponent},
     { path : 'armas', component : ArmaComponent},
-    { path : 'armas/create', component : ArmaCreateComponent},   
+    { path : 'armas/create', component : ArmaCreateComponent},
     { path : 'lugares', component :  LugarComponent},
     { path : 'lugares/create', component : LugarCreateComponent },
     { path : 'relaciones', component : RelacionComponent },
@@ -39,14 +48,21 @@ const routes: Routes = [
     { path : 'vehiculos', component :  VehiculoComponent, data: { breadcrumb: 'Vehiculos'}},
     { path : 'vehiculos/create', component : VehiculoCreateComponent, data: { breadcrumb: 'Nuevo Vehiculo'}},
     { path : 'personas/persona-fisica-imputado', component : PersonaFisicaImputadoComponent, data : { breadcrumb : 'Crear Persona'}},
+    { path : 'documentos', component : DocumentoComponent },
+    { path : 'documentos/create', component : DocumentoCreateComponent },
     //Solicitud Preliminar
     { path : 'acuerdo-general', component : AcuerdoGeneralComponent, data : { breadcrumb : 'Solicitudes de acuerdo general'}},
     { path : 'acuerdo-general/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Acuerdos generales'}},
     { path : 'inspeccion', component : InspeccionComponent, data : { breadcrumb : 'Solicitudes de inspección'}},
     { path : 'inspeccion/create', component : InspeccionCreateComponent, data : { breadcrumb : 'Inspecciones'}},
-
     { path : 'registro-general', component : RegistroGeneralComponent, data : { breadcrumb : 'Solicitudes de registro general'}},
     { path : 'registro-general/create', component : RegistroGeneralCreateComponent, data : { breadcrumb : 'Registro generales'}}
+    { path : 'policia', component : PoliciaComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
+    { path : 'policia/create', component : PoliciaCreateComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
+    { path : 'perito', component : PeritoComponent, data : { breadcrumb : 'Solicitudes preliminares a peritos'}},
+    { path : 'perito/create', component : PeritoCreateComponent, data : { breadcrumb : 'Solicitudes de servicios periciales'}},
+    //Determinación
+    { path : 'acuerdo-inicio', component : AcuerdoInicioComponent, data : { breadcrumb : 'Acuerdo de inicio'}}
 ];
 
 @NgModule({
@@ -71,6 +87,8 @@ export const routingComponents = [
   RelacionCreateComponent,
   HomeComponent,
   NoticiaHechoComponent,
+  DocumentoComponent,
+  DocumentoCreateComponent,
   //Solicitud Preliminar
   AcuerdoGeneralComponent,
   AcuerdoGeneralCreateComponent,
@@ -79,4 +97,10 @@ export const routingComponents = [
 
   RegistroGeneralComponent,
   RegistroGeneralCreateComponent  
+  PoliciaComponent,
+  PoliciaCreateComponent,
+  PeritoComponent,
+  PeritoCreateComponent,
+  //Determinación
+  AcuerdoInicioComponent
 ];

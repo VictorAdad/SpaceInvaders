@@ -29,6 +29,7 @@ export class RelacionCreateComponent {
     public trataPersonas:TrataPersonas;
     public hostigamiento:HostigamientoAcoso;
 
+
     tiposRelacion:MOption[] = [
         { value:'Defensor', label:'Defensor del imputado' },
         { value:'Imputado', label:'Imputado-Víctima-Delito' },
@@ -50,6 +51,23 @@ export class RelacionCreateComponent {
     isTutorVictima: boolean = false;
     isViolenciaGenero: boolean = false;
     isAChange: boolean = false;
+    
+
+    efectoData: EfectoViolenciaGenero[] = [
+    {id:1,efecto: 'Efecto 1', detalle: 'Detalle 1'},
+    {id:1,efecto: 'Efecto 2', detalle: 'Detalle 2'},
+    ]
+    efectoDisplayedColumns = ['efecto', 'detalle'];
+    efectoDataSource = new ExampleDataSource(this.efectoData);
+
+    trataData: TrataPersonas[] = []
+    trataDisplayedColumns = ['País de origen', 'Estado de origen','Municipio de origen','País destino','Estado destino','Municipio destino', 'Tipo de trata','Transportación'];
+    trataDataSource = new ExampleDataSource(this.trataData);
+    
+    hostigamientoData: HostigamientoAcoso[] = []
+    hostigamientoDisplayedColumns = ['Modalidad', 'Ámbito','Conducta','Detalle','Testigo'];
+    hostigamientoDataSource = new ExampleDataSource(this.hostigamientoData);
+
 
 
     constructor(private _fbuilder: FormBuilder) { }
@@ -165,18 +183,11 @@ export class RelacionCreateComponent {
       }
     }
 
-    displayedColumns = ['efecto', 'detalle'];
-    dataSource = new ExampleDataSource();
 }
 
-export interface Element {
-    efecto: string;
-    detalle: string;
-  }
+
   
-  const data: Element[] = [
-    {efecto: 'Efecto 1', detalle: 'Detalle 1'},
-  ];
+
   
   /**
    * Data source to provide what data should be rendered in the table. The observable provided
@@ -186,8 +197,10 @@ export interface Element {
    */
   export class ExampleDataSource extends DataSource<any> {
     /** Connect function called by the table to retrieve one stream containing the data to render. */
-    connect(): Observable<Element[]> {
-      return Observable.of(data);
+    constructor(private data:any[]){super()}
+
+    connect(): Observable<any[]> {
+      return Observable.of(this.data);
     }
   
     disconnect() {}

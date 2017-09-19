@@ -1,0 +1,36 @@
+<div class="row space">
+    <div class="col-md-6">
+        <h2>Solicitudes preliminares de Policía Ministerial</h2>
+    </div>
+    <div class="col-md-6">
+        <button class="float-right" md-raised-button routerLink="/" color="accent">Regresar</button>
+    </div>
+</div>
+<div class="row space justify-content-end">
+    <div class="col-md-auto">
+        <search></search>
+    </div>
+    <div class="col-md-auto">
+        <button md-raised-button color="accent" routerLink="/policia/create">Agregar solicitud</button>
+    </div>
+</div>
+<md-paginator #paginator
+    [length]="data.length"
+    [pageIndex]="0"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]">
+  </md-paginator>
+<md-table #table [dataSource]="dataSource">
+    <ng-container mdColumnDef="oficio">
+        <md-header-cell *mdHeaderCellDef> Número de oficio</md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.oficio}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="comisario">
+        <md-header-cell *mdHeaderCellDef> Nombre del comisario de la policía de investigación</md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.comisario}} </md-cell>
+    </ng-container>
+
+    <md-header-row *mdHeaderRowDef="columns"></md-header-row>
+    <md-row *mdRowDef="let row; columns: columns;"></md-row>
+</md-table>

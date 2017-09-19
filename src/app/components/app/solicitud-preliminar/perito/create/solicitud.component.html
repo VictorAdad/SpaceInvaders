@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-md-12">
+        <form>
+            <select2 [options]="
+                [
+                     {label:'Periciales',value:'Periciales'}, 
+                     {label:'Psicofísico',value:'Psicofísico'}
+                ]" 
+                placeholder="Tipo de solicitud"
+                (valueChange)="tipoChange($event)"   >
+            </select2>
+            <div *ngIf="tipo==='Periciales'">
+                <h4>Narración de los hechos denunciados</h4>
+                <text-area label="Hechos narrados (hechos denunciados)"></text-area>
+                <text-area label="Hechos narrados que se denuncian"></text-area>
+                <h4>Oficio solicitud de servicios periciales</h4>
+                <text label="Número de oficio"></text>
+                <text label="Nombre del director de del instituto de servicios periciales"></text>
+                <text label="Se solicita al pertio en materia de"></text>
+                <text label="Finalidad del requerimiento"></text>
+                <text label="Plazo en días para cumplir el informe"></text>
+                <text label="Apercibimiento o medidas de apremio"></text>
+                <text-area label="Observaciones/incidencias"></text-area>
+            </div>
+            <div *ngIf="tipo==='Psicofísico'">
+                <h4>Éxamen psicofísico</h4>
+                <text label="Número de oficio"></text>
+                <text label="Nombre del médico legista"></text>
+                <text label="A quien se realizará el éxamen"></text>
+                <select2 placeholder="Se solicita éxamen"></select2>
+                <text-area label="Apercibimiento o medidas de apremio"></text-area>
+                <text-area label="Observaciones/incidencias"></text-area>
+            </div>
+            <div class="row space"></div>
+            <button class="float-right" md-button routerLink="/inspeccion">Cancelar</button> 
+            <button class="float-right" md-raised-button color="accent">Guardar</button>
+        </form>
+    </div>
+</div>

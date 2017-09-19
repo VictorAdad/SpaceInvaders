@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MaterialModule, MdNativeDateModule} from '@angular/material';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
@@ -12,7 +12,8 @@ import { DirectivesModule, directivesComponents} from './directives.module';
 import { CustomModule, customComponents} from './custom.module';
 import { NoticiaHechoModule, noticiaHechoComponents} from '@components-app/noticiaHecho/module';
 import { SolicitudPreliminarModule, SolicitudPreliminarComponents } from '@components-app/solicitud-preliminar/module';
-import {BreadcrumbModule } from 'angular2-crumbs';
+import { FileUploadModule } from 'ng2-file-upload';
+import { DeterminacionModule, DeterminacionComponents } from '@components-app/determinacion/module';
 
 import { MiservicioService} from "./services/miservicio.service";
 import { AuthenticationService} from "@services/auth/authentication.service";
@@ -27,7 +28,8 @@ import { GlobalService } from "@services/global.service";
     noticiaHechoComponents,
     directivesComponents,
     customComponents,
-    SolicitudPreliminarComponents
+    SolicitudPreliminarComponents,
+    DeterminacionComponents
   ],
   imports: [
     BrowserModule,
@@ -39,11 +41,11 @@ import { GlobalService } from "@services/global.service";
     DirectivesModule,
     CustomModule,
     SolicitudPreliminarModule,
+    DeterminacionModule,
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserModule,
-    BreadcrumbModule.forRoot(),
+    FileUploadModule
   ],
   providers: [
     MiservicioService,
