@@ -27,6 +27,8 @@ import { PoliciaComponent } from '@components-app/solicitud-preliminar/policia/c
 import { PoliciaCreateComponent } from '@components-app/solicitud-preliminar/policia/create/component'
 import { PeritoComponent } from '@components-app/solicitud-preliminar/perito/component';
 import { PeritoCreateComponent } from '@components-app/solicitud-preliminar/perito/create/component';
+import { RequerimientoInformacionComponent } from '@components-app/solicitud-preliminar/requerimiento-informacion/component';
+import { RequerimientoInformacionCreateComponent } from '@components-app/solicitud-preliminar/requerimiento-informacion/create/component';
 //Determinación
 import { AcuerdoInicioComponent } from '@components-app/determinacion/acuerdo-inicio/component';
 
@@ -64,6 +66,8 @@ const routes: Routes = [
     { path : 'policia/create', component : PoliciaCreateComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
     { path : 'perito', component : PeritoComponent, data : { breadcrumb : 'Solicitudes preliminares a peritos'}},
     { path : 'perito/create', component : PeritoCreateComponent, data : { breadcrumb : 'Solicitudes de servicios periciales'}},
+    { path : 'requerimiento-informacion', component : RequerimientoInformacionComponent, data : { breadcrumb : 'Solicitudes de requerimiento de información' } },
+    { path : 'requerimiento-informacion/create', component : RequerimientoInformacionCreateComponent, data : { breadcrumb : 'Requerimiento de información' } },
     //Determinación
     { path : 'acuerdo-inicio', component : AcuerdoInicioComponent, data : { breadcrumb : 'Acuerdo de inicio'}},
     { path : 'delito/create', component : DelitoCreateComponent, data : { breadcrumb : 'Delitos', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}]}}
@@ -104,6 +108,8 @@ export const routingComponents = [
   PoliciaCreateComponent,
   PeritoComponent,
   PeritoCreateComponent,
+  RequerimientoInformacionComponent,
+  RequerimientoInformacionCreateComponent,
   //Determinación
   AcuerdoInicioComponent,
   DelitoCreateComponent
