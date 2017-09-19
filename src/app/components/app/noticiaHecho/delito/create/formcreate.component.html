@@ -17,7 +17,7 @@
     {{textSearch}}
     <div class="row">
         <div class="col-md-6" >
-            <div class="cuadro" style="height: 200px; overflow: scroll; ">
+            <div class="cuadro" style="height: 300px; overflow: scroll; ">
              <md-table #table [dataSource]="dataSource">
 
                 <ng-container mdColumnDef="resultado">
@@ -27,7 +27,9 @@
                         {{element.clave}} - {{element.descripcion}} 
                     </div>
                     <div class="float-right">
-                        <md-icon (click)="agregar(element)">add</md-icon>
+                        <button md-icon-button (click)="agregar(element)">
+                            <md-icon >add</md-icon>
+                        </button>
                     </div>
                    
               </md-cell>
@@ -40,7 +42,7 @@
             </div>    
         </div>
         <div class="col-md-6" >
-            <div class="cuadro" style="height: 200px; overflow: scroll; ">
+            <div class="cuadro" style="height: 300px; overflow: scroll; ">
             <md-table #table [dataSource]="dataSourceaddList">
 
                 <ng-container mdColumnDef="resultado">

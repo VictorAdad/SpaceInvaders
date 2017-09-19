@@ -26,7 +26,7 @@ export class DelitoCreateComponent{
   openDialog() {
         this.dialog.open(FormCreateDelitoComponent, {
             height: 'auto',
-            width: '900px',
+            width: 'auto',
             data: {
               lista: this.listaDelitos
             }

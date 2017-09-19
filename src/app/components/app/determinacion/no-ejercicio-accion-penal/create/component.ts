@@ -5,25 +5,25 @@ import { TableService} from '@utils/table/table.service';
 @Component({
     templateUrl:'./component.html',
 })
-export class RequerimientoInformacionCreateComponent {
+export class NoEjercicioAccionPenalCreateComponent {
 
 }
 
 @Component({
-	selector: 'solicitud-requerimiento',
-    templateUrl:'./solicitud.component.html',
+	selector: 'determinacion-accion-penal',
+    templateUrl:'./determinacion.component.html',
 })
-export class SolicitudRequerimientoInformacionComponent {
+export class DeterminacionNoEjercicioAccionPenalComponent {
 	
 }
 
 @Component({
-	selector: 'documento-requerimiento',
+	selector: 'documento-accion-penal',
     templateUrl:'./documento.component.html',
 })
-export class DocumentoRequerimientoInformacionComponent {
+export class DocumentoNoEjercicioAccionPenalComponent {
 	displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
-	data: DocumentoRequerimientoInformacion[] = [
+	data: DocumentoNoEjercicioAccionPenal[] = [
 		{id : 1, nombre: 'Entrevista.pdf',  	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
 		{id : 2, nombre: 'Nota.pdf',        	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
 		{id : 3, nombre: 'Fase.png',        	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
@@ -40,7 +40,7 @@ export class DocumentoRequerimientoInformacionComponent {
   	}
 }
 
-export interface DocumentoRequerimientoInformacion {
+export interface DocumentoNoEjercicioAccionPenal {
 	id:number
 	nombre: string;
 	procedimiento: string;
