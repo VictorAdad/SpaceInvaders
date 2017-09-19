@@ -20,6 +20,9 @@ import { AcuerdoGeneralCreateComponent } from '@components-app/solicitud-prelimi
 import { InspeccionComponent } from '@components-app/solicitud-preliminar/inspeccion/component';
 import { InspeccionCreateComponent } from '@components-app/solicitud-preliminar/inspeccion/create/component';
 
+import { RegistroGeneralComponent } from '@components-app/solicitud-preliminar/registro-general/component';
+import { RegistroGeneralCreateComponent } from '@components-app/solicitud-preliminar/registro-general/create/component';
+
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
     { path : '', component: HomeComponent, data : { breadcrumb : 'Noticia de hechos'}},
@@ -40,7 +43,10 @@ const routes: Routes = [
     { path : 'acuerdo-general', component : AcuerdoGeneralComponent, data : { breadcrumb : 'Solicitudes de acuerdo general'}},
     { path : 'acuerdo-general/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Acuerdos generales'}},
     { path : 'inspeccion', component : InspeccionComponent, data : { breadcrumb : 'Solicitudes de inspección'}},
-    { path : 'inspeccion/create', component : InspeccionCreateComponent, data : { breadcrumb : 'Inspecciones'}}
+    { path : 'inspeccion/create', component : InspeccionCreateComponent, data : { breadcrumb : 'Inspecciones'}},
+
+    { path : 'registro-general', component : RegistroGeneralComponent, data : { breadcrumb : 'Solicitudes de registro general'}},
+    { path : 'registro-general/create', component : RegistroGeneralCreateComponent, data : { breadcrumb : 'Registro generales'}}
 ];
 
 @NgModule({
@@ -69,5 +75,8 @@ export const routingComponents = [
   AcuerdoGeneralComponent,
   AcuerdoGeneralCreateComponent,
   InspeccionComponent,
-  InspeccionCreateComponent
+  InspeccionCreateComponent,
+
+  RegistroGeneralComponent,
+  RegistroGeneralCreateComponent  
 ];
