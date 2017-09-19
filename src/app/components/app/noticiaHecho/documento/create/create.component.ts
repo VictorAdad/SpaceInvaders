@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FileUploader } from 'ng2-file-upload';
+import { FileUploader, FileDropDirective, FileSelectDirective } from 'ng2-file-upload';
 import { MdDialogRef } from '@angular/material';
 
 @Component({

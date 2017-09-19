@@ -1,40 +1,38 @@
-<h2 md-dialog-title>Adjuntar documento</h2>
+<h2 md-dialog-title>Carga de documentos</h2>
 <md-dialog-content>
     <div class="container h-100">
         <div class="row" *ngIf="uploader.queue.length == 0">
-            <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader"
+            <div ng2FileSelect ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader"
                 class="my-drop-zone">
                 <div class="row h-100 justify-content-center align-items-center margin-text">
-
-                    <h5>asdsacsd</h5>
+                    <h5>Arrastre sus documentos o de click en esta área</h5>
                 </div>
             </div>
+            <input type="file" ng2FileSelect [uploader]="uploader" />
         </div>
         <div class="row margin-text">
             <table class="table" *ngIf="uploader.queue.length != 0">
                 <thead>
                     <tr>
                         <th width="50%">Nombre del archivo</th>
-                        <th>Action</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr *ngFor="let item of uploader.queue">
                         <td>{{item?.file?.name}}</td>
-                    </tr>
-                    <tr>
-                        <td><button md-raised-button>Upload</button></td>
+                        <td><button md-icon-button mdTooltip="Eliminar" (click)="uploader.clearQueue()"><md-icon>clear</md-icon></button></td>
                     </tr>
                 </tbody>
             </table>
-            <div class="col-md-8">
+            <!--<div class="col-md-8">
                 <div *ngFor="let item of uploader.queue">
                     {{item?.file?.name}}
                 </div>
             </div>
             <div class="col-md-2">
                 <button md-raised-button>Upload</button>
-            </div>
+            </div>-->
         </div>
         <div class="row" *ngIf="isUploading">
             <div class="col">
@@ -46,10 +44,13 @@
         </div>
     </div>
 </md-dialog-content>
-<md-dialog-actions>
-    <button md-button md-dialog-close>Cerrar</button>
-    <!-- Can optionally provide a result for the closing dialog. -->
-    <button md-button [md-dialog-close]="true">Yes</button>
+<md-dialog-actions class="d-flex justify-content-end">
+    <div class="p-2">
+        <button md-raised-button md-dialog-close color="primary">Guardar</button>
+    </div>
+    <div class="p-2">
+        <button md-button md-dialog-close>Cerrar</button>
+    </div>
 </md-dialog-actions>
 
 <!--<div class="content-body">
