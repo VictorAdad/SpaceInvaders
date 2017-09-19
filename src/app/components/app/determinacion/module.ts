@@ -4,6 +4,7 @@ import { AcuerdosRadicacionComponent} from './acuerdo-radicacion/acuerdos-radica
 import { AcuerdoRadicacionCreateComponent,AcuerdoRadicacionComponent,DocumentoAcuerdoRadicacionComponent} from './acuerdo-radicacion/create/create.component';
   
 import { DeterminacionArchivoTemporalComponent, DocumentoArchivoTemporalComponent } from './archivo-temporal/create/component';
+import { DeterminacionNoEjercicioAccionPenalComponent, DocumentoNoEjercicioAccionPenalComponent } from './no-ejercicio-accion-penal/create/component';
 
 @NgModule()
 export class DeterminacionModule { }
@@ -16,5 +17,7 @@ export const DeterminacionComponents = [
     AcuerdoRadicacionComponent,
     DocumentoAcuerdoRadicacionComponent,
     DeterminacionArchivoTemporalComponent,
-    DocumentoArchivoTemporalComponent
+    DocumentoArchivoTemporalComponent,
+    DeterminacionNoEjercicioAccionPenalComponent,
+    DocumentoNoEjercicioAccionPenalComponent
 ];
