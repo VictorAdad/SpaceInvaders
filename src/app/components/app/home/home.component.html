@@ -1,12 +1,12 @@
-<breadcrumb></breadcrumb>
+<breadcrumb></breadcrumb>   
 <div class="row justify-content-md-center">
     <div class="col-md-10">
         <div class="row space">
             <div class="col-sm-6">
-                <h2>Noticias de hecho</h2>
+                <h2>Mis casos</h2>
             </div>
             <div class="col-sm-6">
-                <button class="float-right" md-raised-button color="accent" routerLink="/noticia-hecho">Nueva noticia de hecho</button>
+                <button class="float-right" md-raised-button color="accent" routerLink="/noticia-hecho">Nuevo caso</button>
             </div>
         </div>
         <div class="row">
@@ -20,7 +20,8 @@
                 <h4 md-line>{{folder.name}}</h4>
                 <h4 class="text-muted" md-line md-subheade>{{folder.titulo}}</h4>
                 <h4 class="text-muted" md-line md-subheade>{{folder.descripcion}}</h4>
-                <p md-line> {{folder.updated | date}} </p>
+                <!-- <p md-line> Creado el {{folder.updated | date | amDateFormat: 'DD-MM-YYYY'}} por Administrador del sistema </p> -->
+                <p md-line>{{folder.updated}} </p>  
                 <md-divider></md-divider>
             </md-list-item>
         </md-list>

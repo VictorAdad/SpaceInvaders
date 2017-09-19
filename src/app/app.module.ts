@@ -15,6 +15,7 @@ import { NoticiaHechoModule, noticiaHechoComponents} from '@components-app/notic
 import { SolicitudPreliminarModule, SolicitudPreliminarComponents } from '@components-app/solicitud-preliminar/module';
 import { FileUploadModule } from 'ng2-file-upload';
 import { DeterminacionModule, DeterminacionComponents } from '@components-app/determinacion/module';
+import { MomentModule } from 'angular2-moment';
 
 import { MiservicioService} from "./services/miservicio.service";
 import { AuthenticationService} from "@services/auth/authentication.service";
@@ -47,7 +48,8 @@ import { GlobalService } from "@services/global.service";
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
-    FileUploadModule
+    FileUploadModule,
+    MomentModule
   ],
   providers: [
     MiservicioService,
