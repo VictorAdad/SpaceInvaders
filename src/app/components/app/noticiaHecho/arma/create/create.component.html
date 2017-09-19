@@ -1,24 +1,24 @@
 <breadcrumb></breadcrumb>
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-6 space">
 		<h2>Registrar arma</h2>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-6 space">
 		<button class="float-right" md-raised-button routerLink="/noticia-hecho" color="accent">Regresar</button>
 	</div>
 	<div class="col-md-12">
 		<form [formGroup]="form">
-		     <div class="row">
-				 	<div class="col-sm-6 col-md-4 col-lg-3">
-				 		<select2 placeholder= "Clase de Arma" name="clase"  [(value)]="model.clase" [(options)]   ="clasesArmas"  (valueChange)="claseChange($event)" [group]="form">
-				 	    </select2> 
-				    </div>
-				 	<div  *ngIf="isArmaFuego" class="col-sm-6 col-md-4 col-lg-3">
-				 		<select2 placeholder= "Tipo de Arma" name="tipo" [(options)]="options" [group]="form">
-				 		</select2> 
-				 	</div>
-			 </div>
-			 <div class="row" *ngIf="isArmaFuego" >
+			<div class="row">
+				<div class="col-sm-6 col-md-4 col-lg-3">
+					<select2 placeholder= "Clase de Arma" name="clase"  [(value)]="model.clase" [(options)]   ="clasesArmas"  (valueChange)="claseChange($event)" [group]="form">
+				    </select2> 
+				</div>
+				<div  *ngIf="isArmaFuego || isArmaBlanca" class="col-sm-6 col-md-4 col-lg-3">
+					<select2 placeholder= "Tipo de Arma" name="tipo" [(options)]="options" [group]="form">
+					</select2> 
+				</div>
+			</div>
+			<div class="row" *ngIf="isArmaFuego" >
 			 	<div class="col-sm-6 col-md-4 col-lg-3">
 				 		<select2 placeholder= "Subtipo de Arma" name="subtipo" [(options)]="options" [group]="form"></select2> 
 				</div>
@@ -33,9 +33,12 @@
 				<div class="col-sm-6 col-md-4 col-lg-3">
 					<text label="Serie" name="serie" [(value)]="model.serie" [group]="form"></text>  
 				</div>
+				<div class="col-sm-6 col-md-4 col-lg-3">
+					<text label="Matrícula" name="matricula" [(value)]="model.matricula" [group]="form"></text>  
+				</div>
 			</div>
 
-			<div class="row">
+			<div class="row space">
 				<div class="col-sm-12 col-md-12 col-lg-12">
 				<text-area label="Notas" name="notas" ></text-area>  
 				</div>
@@ -46,30 +49,6 @@
 		</form>
 	</div>
 </div>
-
-
-<!--
-<div class="content-body">
-    <div class="row">
-        <div class="col-md-10">
-            <h2>Registrar arma</h2>
-        </div>
-        <div class="col-md-2">
-            <button class="float-right" md-raised-button routerLink="/noticia-hecho" color="accent">Regresar</button>
-        </div>
-    </div>
-    <div class="content">
-
-
-
-        <div class="d-flex justify-content-end">
-          <div class="p-1"><button md-raised-button color="warn">Guardar</button></div>
-		  <div class="p-1"><button md-button>Cancelar</button></div>
-	    </div>
-    </div>
-</div>
--->
-
 
 
 
