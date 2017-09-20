@@ -1,16 +1,17 @@
+<div class="form-group">
+	<div *ngIf="name==''" >
+		<md-select placeholder="{{placeholder}}" [(ngModel)]="value" (ngModelChange)="update($event)" class="full-width" >
+		  <md-option *ngFor="let option of options" [value]="option.value">
+		    {{ option.label }}
+		  </md-option>
+		</md-select>
+	</div>
 
-<div div *ngIf="name==''" >
-<md-select placeholder="{{placeholder}}" [(ngModel)]="value" (ngModelChange)="update($event)" class="full-width" >
-  <md-option *ngFor="let option of options" [value]="option.value">
-    {{ option.label }}
-  </md-option>
-</md-select>
-</div>
-
-<div [formGroup]="group"  div *ngIf="name!=''">
-<md-select placeholder="{{placeholder}}" [(ngModel)]="value" (ngModelChange)="update($event)" class="full-width" formControlName="{{name}}">
-  <md-option *ngFor="let option of options" [value]="option.value">
-    {{ option.label }}
-  </md-option>
-</md-select>
+	<div [formGroup]="group"  *ngIf="name!=''">
+		<md-select placeholder="{{placeholder}}" [(ngModel)]="value" (ngModelChange)="update($event)" class="full-width" formControlName="{{name}}">
+		  <md-option *ngFor="let option of options" [value]="option.value">
+		    {{ option.label }}
+		  </md-option>
+		</md-select>
+	</div>
 </div>

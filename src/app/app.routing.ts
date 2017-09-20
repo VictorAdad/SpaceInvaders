@@ -29,6 +29,8 @@ import { PeritoComponent } from '@components-app/solicitud-preliminar/perito/com
 import { PeritoCreateComponent } from '@components-app/solicitud-preliminar/perito/create/component';
 import { RequerimientoInformacionComponent } from '@components-app/solicitud-preliminar/requerimiento-informacion/component';
 import { RequerimientoInformacionCreateComponent } from '@components-app/solicitud-preliminar/requerimiento-informacion/create/component';
+import { RegistroGeneralComponent } from '@components-app/solicitud-preliminar/registro-general/component';
+import { RegistroGeneralCreateComponent } from '@components-app/solicitud-preliminar/registro-general/create/component';
 //Determinación
 import { AcuerdoInicioComponent } from '@components-app/determinacion/acuerdo-inicio/component';
 import { AcuerdosRadicacionComponent } from '@components-app/determinacion/acuerdo-radicacion/acuerdos-radicacion.component';
@@ -40,8 +42,8 @@ import { ArchivoTemporalCreateComponent } from '@components-app/determinacion/ar
 import { NoEjercicioAccionPenalComponent } from '@components-app/determinacion/no-ejercicio-accion-penal/component';
 import { NoEjercicioAccionPenalCreateComponent } from '@components-app/determinacion/no-ejercicio-accion-penal/create/component';
 
-import { RegistroGeneralComponent } from '@components-app/solicitud-preliminar/registro-general/component';
-import { RegistroGeneralCreateComponent } from '@components-app/solicitud-preliminar/registro-general/create/component';
+//Notificaciones
+import { NotificacionesComponent } from '@components-app/notificaciones/notificaciones.component';
 
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
@@ -61,6 +63,9 @@ const routes: Routes = [
     { path : 'personas/persona-fisica-imputado', component : PersonaFisicaImputadoComponent, data : { breadcrumb : 'Crear Persona', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}] }},
     { path : 'documentos', component : DocumentoComponent },
     { path : 'documentos/create', component : DocumentoCreateComponent },
+
+    { path : 'notificaciones', component : NotificacionesComponent, data : { breadcrumb : 'Notificaciones' }},
+
     //Solicitud Preliminar
     { path : 'acuerdo-general', component : AcuerdoGeneralComponent, data : { breadcrumb : 'Solicitudes de acuerdo general'}},
     { path : 'acuerdo-general/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Acuerdos generales'}},
@@ -133,5 +138,8 @@ export const routingComponents = [
   ArchivoTemporalComponent,
   ArchivoTemporalCreateComponent,
   NoEjercicioAccionPenalComponent,
-  NoEjercicioAccionPenalCreateComponent
+  NoEjercicioAccionPenalCreateComponent,
+
+  //Notificaciones
+  NotificacionesComponent,
 ];

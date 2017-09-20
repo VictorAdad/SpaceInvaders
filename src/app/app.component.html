@@ -7,10 +7,33 @@
             <md-list-item routerLink="/">SIGI</md-list-item>
         </span>
         <span class="spacer"></span>
-        <md-icon class="button-menu">notifications</md-icon>
+        
+        <button md-icon-button [mdMenuTriggerFor]="notify">
+            <md-icon class="button-menu">notifications</md-icon>
+        </button>
+        <md-menu #notify="mdMenu">
+            <button md-menu-item>
+                <md-icon fxHide="false" fxHide.gt-sm>perm_identity</md-icon>
+                <div> 
+                    <label>Robo a casa habitación</label>
+                    <label>Por: Sergio Alejandro Hernández</label> 
+                    <label>Hace 2 horas</label>
+                </div>
+                <div>
+                    <md-icon class="button-menu">notifications</md-icon>   
+                </div>
+            </button>
+            <button md-menu-item>
+                <md-icon fxHide="false" fxHide.gt-sm>perm_identity</md-icon>Hola1
+            </button>
+            <button md-menu-item>
+                <md-icon fxHide="false" fxHide.gt-sm>perm_identity</md-icon>Hola2
+            </button>
+        </md-menu>
+
 
         <md-icon class="button-menu">account_circle</md-icon>
-        <span>  Administardor del sistema</span>
+        <span>  Administrador del sistema</span>
         <button md-icon-button [mdMenuTriggerFor]="menu">
             <md-icon fxHide="false" fxHide.gt-sm>more_vert</md-icon>
         </button>

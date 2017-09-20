@@ -20,6 +20,8 @@ import { MomentModule } from 'angular2-moment';
 import { MiservicioService} from "./services/miservicio.service";
 import { AuthenticationService} from "@services/auth/authentication.service";
 import { GlobalService } from "@services/global.service";
+import { OnLineService } from "@services/onLine.service";
+
 
 @NgModule({
   declarations: [
@@ -54,7 +56,8 @@ import { GlobalService } from "@services/global.service";
   providers: [
     MiservicioService,
     AuthenticationService,
-    GlobalService
+    GlobalService,
+    OnLineService
   ],
   entryComponents: [
     dyanamicComponents
