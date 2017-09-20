@@ -1,0 +1,47 @@
+<breadcrumb></breadcrumb>    
+<div class="row space">
+    <div class="col-md-6">
+        <h3>Notificaciones</h3>
+    </div>
+    <div class="col-md-6">
+        <button class="float-right" md-raised-button routerLink="/" color="accent">Regresar</button>
+    </div>
+</div>
+<div class="row space">
+    <div class="col-md-12">    
+        <search class="float-right"></search>    
+    </div>
+</div>
+<md-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></md-paginator>
+<md-table #table [dataSource]="dataSource">
+
+    <ng-container mdColumnDef="Fecha y Hora">
+        <md-header-cell *mdHeaderCellDef> Fecha y Hora </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.fecha}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="Titulo del caso">
+        <md-header-cell *mdHeaderCellDef> Titulo del caso </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.titulo}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="NIC">
+        <md-header-cell *mdHeaderCellDef> NIC </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.nic}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="NUC">
+        <md-header-cell *mdHeaderCellDef> NUC </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.nuc}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="Asignado por">
+        <md-header-cell *mdHeaderCellDef> Asignado por </md-header-cell>
+        <md-cell  *mdCellDef="let element"> {{element.asignado}} </md-cell>
+    </ng-container>
+
+    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+</md-table>
+
+
