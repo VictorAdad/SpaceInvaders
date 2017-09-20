@@ -30,7 +30,7 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 @include angular-material-theme($app-theme);
 
 body {
-	font-family: Roboto, 'Helvetica Neue', sans-serif;
+	font-family: Roboto, Roboto Bold, 'Helvetica Neue', sans-serif;
 
 	* {
     	-webkit-font-smoothing: antialiased;
@@ -41,6 +41,11 @@ body {
 
 button:focus{
 	outline: none !important;
+}
+
+strong,
+.font-weight-bold{
+	-webkit-font-smoothing: auto !important;
 }
 
 .mat-tab-body-content{

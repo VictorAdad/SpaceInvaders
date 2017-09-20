@@ -45,6 +45,9 @@ import { NoEjercicioAccionPenalCreateComponent } from '@components-app/determina
 //Notificaciones
 import { NotificacionesComponent } from '@components-app/notificaciones/notificaciones.component';
 
+//Detalle del Caso
+import { DetalleCasoComponent } from '@components-app/detalle-caso/component';
+
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
     { path : '', component: HomeComponent, data : { breadcrumb : 'Noticia de hechos'}},
@@ -93,6 +96,9 @@ const routes: Routes = [
 
     { path : 'no-ejercicio-accion-penal', component : NoEjercicioAccionPenalComponent, data : { breadcrumb : 'No ejercicio de la acción penal' } },
     { path : 'no-ejercicio-accion-penal/create', component : NoEjercicioAccionPenalCreateComponent, data : { breadcrumb : 'No ejercicio de la acción penal' } },
+
+    //Detalle del Caso
+    { path : 'detalle', component : DetalleCasoComponent, data : { breadcrumb : 'Detalle del caso' } },    
 ];
 
 @NgModule({
@@ -142,4 +148,7 @@ export const routingComponents = [
 
   //Notificaciones
   NotificacionesComponent,
+
+  //Detalle del Caso
+  DetalleCasoComponent,
 ];

@@ -20,8 +20,15 @@
                 <h4 md-line>{{folder.name}}</h4>
                 <h4 class="text-muted" md-line md-subheade>{{folder.titulo}}</h4>
                 <h4 class="text-muted" md-line md-subheade>{{folder.descripcion}}</h4>
-                <!-- <p md-line> Creado el {{folder.updated | date | amDateFormat: 'DD-MM-YYYY'}} por Administrador del sistema </p> -->
-                <p md-line>{{folder.updated}} </p>  
+                <p md-line>{{folder.updated}}</p>
+                <button md-icon-button [mdMenuTriggerFor]="menuCaso">
+                    <md-icon>more_horiz</md-icon>
+                </button>
+                <md-menu #menuCaso="mdMenu">
+                    <button md-menu-item routerLink="/detalle">
+                        <md-icon fxHide="false" fxHide.gt-sm>remove_red_eye</md-icon>Ver
+                    </button>
+                </md-menu>
                 <md-divider></md-divider>
             </md-list-item>
         </md-list>
