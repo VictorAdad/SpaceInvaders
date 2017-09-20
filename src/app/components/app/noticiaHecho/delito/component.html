@@ -1,22 +1,26 @@
-<div class="row">
-	<div class="col-md-12">
+<div class="row space">
+	<div class="col-md-6">
+		<h3>Delitos</h3>
+	</div>
+	<div class="col-md-6">
 		<button class="float-right" md-raised-button routerLink="/delito/create" color="accent">Agregar delito</button>
 	</div>
 </div>
-<md-table #table [dataSource]="">
-	<ng-container mdColumnDef="position">
+<md-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></md-paginator>
+<md-table #table [dataSource]="dataSource">
+	<ng-container mdColumnDef="nombre">
 		<md-header-cell *mdHeaderCellDef> Nombre </md-header-cell>
-		<md-cell *mdCellDef="let element"> {{element.id}} </md-cell>
-	</ng-container>
-
-	<!-- Name Column -->
-	<ng-container mdColumnDef="name">
-		<md-header-cell *mdHeaderCellDef> Redacción </md-header-cell>
 		<md-cell *mdCellDef="let element"> {{element.nombre}} </md-cell>
 	</ng-container>
 
+	<!-- Name Column -->
+	<ng-container mdColumnDef="redaccion">
+		<md-header-cell *mdHeaderCellDef> Redacción </md-header-cell>
+		<md-cell *mdCellDef="let element"> {{element.redaccion}} </md-cell>
+	</ng-container>
+
 	<!-- Weight Column -->
-	<ng-container mdColumnDef="weight">
+	<ng-container mdColumnDef="principal">
 		<md-header-cell *mdHeaderCellDef> Principal </md-header-cell>
 		<md-cell *mdCellDef="let element"> {{element.principal}} </md-cell>
 	</ng-container>
