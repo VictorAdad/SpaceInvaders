@@ -48,6 +48,11 @@ import { NotificacionesComponent } from '@components-app/notificaciones/notifica
 //Detalle del Caso
 import { DetalleCasoComponent } from '@components-app/detalle-caso/component';
 
+//Entrevistas
+import { EntrevistaComponent } from '@components-app/entrevista/component';
+import { EntrevistaCreateComponent } from '@components-app/entrevista/create/component';
+
+
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
     { path : '', component: HomeComponent, data : { breadcrumb : 'Noticia de hechos'}},
@@ -99,6 +104,10 @@ const routes: Routes = [
 
     //Detalle del Caso
     { path : 'detalle', component : DetalleCasoComponent, data : { breadcrumb : 'Detalle del caso' } },    
+
+    //Entrevista
+    { path : 'entrevista', component : EntrevistaComponent, data : { breadcrumb : 'Entrevistas' } },
+    { path : 'entrevista/create', component : EntrevistaCreateComponent, data : { breadcrumb : 'Entrevistas' } }
 ];
 
 @NgModule({
@@ -151,4 +160,8 @@ export const routingComponents = [
 
   //Detalle del Caso
   DetalleCasoComponent,
+
+  //Entrevista
+  EntrevistaComponent,
+  EntrevistaCreateComponent
 ];

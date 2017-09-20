@@ -16,6 +16,7 @@ import { SolicitudPreliminarModule, SolicitudPreliminarComponents } from '@compo
 import { FileUploadModule } from 'ng2-file-upload';
 import { DeterminacionModule, DeterminacionComponents } from '@components-app/determinacion/module';
 import { MomentModule } from 'angular2-moment';
+import { EntrevistaModule, EntrevistaComponents } from '@components-app/entrevista/module';
 
 import { MiservicioService} from "./services/miservicio.service";
 import { AuthenticationService} from "@services/auth/authentication.service";
@@ -33,7 +34,8 @@ import { OnLineService } from "@services/onLine.service";
     directivesComponents,
     customComponents,
     SolicitudPreliminarComponents,
-    DeterminacionComponents
+    DeterminacionComponents,
+    EntrevistaComponents
   ],
   imports: [
     BrowserModule,
@@ -51,7 +53,8 @@ import { OnLineService } from "@services/onLine.service";
     FormsModule,
     ReactiveFormsModule,
     FileUploadModule,
-    MomentModule
+    MomentModule,
+    EntrevistaModule
   ],
   providers: [
     MiservicioService,

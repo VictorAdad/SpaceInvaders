@@ -1,0 +1,43 @@
+<breadcrumb></breadcrumb>
+<div class="row space">
+    <div class="col-md-6">
+        <h2>Entrevistas</h2>
+    </div>
+    <div class="col-md-6">
+        <button class="float-right" md-raised-button routerLink="/" color="accent">Regresar</button>
+    </div>
+</div>
+<div class="row space justify-content-end">
+    <div class="col-md-auto">
+        <search></search>
+    </div>
+    <div class="col-md-auto">
+        <button md-raised-button color="accent" routerLink="/entrevista/create">Agregar entrevista</button>
+    </div>
+</div>
+<md-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+</md-paginator>
+<md-table #table [dataSource]="dataSource">
+    <ng-container mdColumnDef="entrevistado">
+        <md-header-cell *mdHeaderCellDef> Entrevistado </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.entrevistado}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="calidadEntrevistado">
+        <md-header-cell *mdHeaderCellDef> Calidad entrevistado </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.calidadEntrevistado}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="creadoPor">
+        <md-header-cell *mdHeaderCellDef> Creado por </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.creadoPor}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="fechaCreacion">
+        <md-header-cell *mdHeaderCellDef> Fecha de creación </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.fechaCreacion}} </md-cell>
+    </ng-container>
+
+    <md-header-row *mdHeaderRowDef="columns"></md-header-row>
+    <md-row *mdRowDef="let row; columns: columns;"></md-row>
+</md-table>
