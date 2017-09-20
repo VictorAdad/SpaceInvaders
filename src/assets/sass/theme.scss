@@ -50,12 +50,24 @@ button:focus{
 	padding-top: 7px;
 }
 
-.mat-select-trigger {
+.form-group .mat-select-trigger {
     font-size: 14px;
    	min-width: 0 !important;
+
+   	.mat-select-arrow {
+		position: absolute;
+		right:0;
+		top: 10px;
+	    width: 0;
+	    height: 0;
+	    border-left: 5px solid transparent;
+	    border-right: 5px solid transparent;
+	    border-top: 5px solid;
+	    margin: 0 4px;
+	}
 }
 
-.mat-select-placeholder{
+.form-group .mat-select-placeholder{
 	// width: inherit !important;
     position: absolute !important;
     left: 0 !important;
@@ -68,18 +80,6 @@ button:focus{
     text-overflow: ellipsis;
     overflow: hidden;
 
-}
-
-.mat-select-arrow {
-	position: absolute;
-	right:0;
-	top: 10px;
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid;
-    margin: 0 4px;
 }
 
 @import "theme/tabs";
