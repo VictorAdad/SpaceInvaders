@@ -40,7 +40,7 @@ import { OnLineService } from "@services/onLine.service";
 
     PredenunciaComponent, 
     DocumentoPredenunciaComponent, 
-    PredenunciaCreateComponent
+    PredenunciaCreateComponent,
 
     EntrevistaComponents
   ],
