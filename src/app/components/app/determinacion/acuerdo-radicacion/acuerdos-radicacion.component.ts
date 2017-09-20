@@ -17,7 +17,7 @@ export class AcuerdosRadicacionComponent{
 	dataSource: TableService | null;
 	@ViewChild(MdPaginator) paginator: MdPaginator;
 
-	constructor(private servicio: MiservicioService){}
+	constructor(){}
 
 	ngOnInit() {
       this.data=data;
