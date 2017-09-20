@@ -1,0 +1,186 @@
+<breadcrumb></breadcrumb>
+<div class="row">
+    <div class="col-md-12">
+        <form>
+            <div class="">
+                <div class="row justify-content-start">
+                    <div class="col-md-3">
+                        <text label="Nombre de la autoridad que realiza la entrevista"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Lugar donde se realiza la entrevista"></text>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <h4>Datos del entrevistado</h4>
+                <div class="row">
+                    <div class="col-md-3">
+                        <text label="Nombre del entrevistado"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <select2 placeholder="Sexo" [options]="
+                        [
+                          {label:'Hombre',value:'hombre'},
+                          {label:'Mujer',value:'mujer'}]"></select2>
+                    </div>
+                    <div class="col-md-3">
+                        <date label="Fecha de nacimiento"></date>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Edad"></text>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <text label="Nacionalidad"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Originario de"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="En su caso, estado migratorio"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <select2 placeholder="Calidad"></select2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <text label="Tipo de identificación"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Emisor de la identificación"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Nº de la identificación"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="CURP"></text>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <text label="RFC"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <select2 placeholder="¿Sabe leer y escribir?"></select2>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Grado de escolaridad"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Ocupación"></text>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <text label="Lugar de ocupación o negocios"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Estado civil"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Salario semanal"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Relación del entrevistado con alguna de las partes"></text>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <h4>Domicilio para oír y recibir todo tipo de notificaciones</h4>
+                <div class="row">
+                    <div class="col-md-3">
+                        <text label="Calle"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Nº Exterior"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Nº Interior"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <select2 placeholder="Colonia"></select2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <text label="CP"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Municipio"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Estado"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <select2 placeholder="Nº telefónico particular"></select2>
+                    </div>
+                </div>
+                <div class="row justify-content-start">
+                    <div class="col-md-3">
+                        <text label="Nº telefónico celular"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Correo electrónico"></text>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <h4>Datos de la entrevista</h4>
+                <div class="row">
+                    <div class="col-md-4">
+                        <select2 placeholder="¿Cuenta con representante legal?"></select2>
+                    </div>
+                    <div class="col-md-4">
+                        <text label="En su caso, nombre del representante legal"></text>
+                    </div>
+                    <div class="col-md-4">
+                        <text label="¿Se utilizó medio tecnológico para el registro de la entrevista?"></text>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <text label="Medio tecnológico"></text>
+                    </div>
+                    <div class="col-md-4">
+                        <select2 label="¿Se utilizó medio técnico para el registro de la entrevista"></select2>
+                    </div>
+                    <div class="col-md-4">
+                        <text label="Medio técnico utilizado"></text>
+                    </div>
+                </div>
+                <div class="row justify-content-start">
+                    <div class="col-md-3">
+                        <text label="Nº telefónico celular"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Correo electrónico"></text>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <h4>Naracción de los hechos</h4>
+                <div class="row">
+                    <div class="col">
+                        <text-area label="Narración de los hechos"></text-area>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <text-area label="Observaciones/Incidencias"></text-area>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <div class="p-2">
+                    <button md-raised-button color="accent">Guardar</button>
+                </div>
+                <div class="p-2">
+                    <button md-button routerLink="/archivo-temporal">Cancelar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
