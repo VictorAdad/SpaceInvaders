@@ -36,4 +36,13 @@
 
 .vertical-mdl-tabs.mdl-tabs .mdl-tabs__tab {
     text-align: left;
+
+    .mat-icon{
+        position: absolute;
+        top: 20px;
+    }
+
+    label{
+        padding-left: 28px;
+    }
 }
