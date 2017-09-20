@@ -4,6 +4,8 @@ import { Title } from '@angular/platform-browser';
 import { AuthenticationService } from '@services/auth/authentication.service';
 import { GlobalService } from '@services/global.service';
 
+import { OnLineService } from "@services/onLine.service";
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -18,7 +20,8 @@ export class AppComponent {
 		public authService: AuthenticationService,
 		private router : Router,
 		private titleService: Title,
-    public globalService : GlobalService
+    public globalService : GlobalService,
+    private servicio: OnLineService
 	) {
         this._SIDEBAR = false;
     }
