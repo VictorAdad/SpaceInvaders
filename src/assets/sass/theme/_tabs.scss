@@ -18,12 +18,11 @@
     box-sizing: border-box;
     letter-spacing: 2px;
     align-items: center;
-    padding-left: 20px !important;
-    padding-right: 20px !important; 
+    padding: 0 10px  0 !important; 
 }
 
 .vertical-mdl-tabs.mdl-tabs.is-upgraded a.mdl-tabs__tab.is-active {
-    border-right: 2px solid #ED462F;
+    border-right: 2px solid map-get($app-primary, "900");
 }
 .vertical-mdl-tabs.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active:after {
     content: inherit;
@@ -31,7 +30,7 @@
 }
 
 .vertical-mdl-tabs.mdl-tabs.is-upgraded .mdl-tabs__panel.is-active, .mdl-tabs__panel {
-    padding: 0 30px;
+    padding: 0 !important;
 }
 
 .vertical-mdl-tabs.mdl-tabs .mdl-tabs__tab {
