@@ -1,0 +1,195 @@
+<!-- Fromulario para usuario 1-->
+
+	<form [formGroup]="form1">
+	    <div class="row">
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    	<text label="Calidad del usuario" name="calidadUsuario" [(value)]="model.calidadUsuario" [group]="form1"></text>  
+		    </div>
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    	<text label="Número telefónico del que se está llamando" name="numeroTelefono" [(value)]="model.numeroTelefono" [group]="form1"></text> 
+		    </div>
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    	<text label="Tipo de línea telefónica" name="tipoLineaTelefonica" [(value)]="model.tipoLineaTelefonica" [group]="form1"></text> 
+		    </div>
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    	<text label="Lugar de donde se llama" name="lugarLlamada" [(value)]="model.lugarLlamada" [group]="form1"></text> 
+		    </div>
+	    </div>
+	    <div class="row">
+
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    	<text label="Hechos narrados que se denuncian" name="hechosNarrados" [(value)]="model.hechosNarrados" [group]="form1"></text> 
+		    </div>
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    	<text label="En base a los hechos se le comunica al usuario" name="usuario" [(value)]="model.usuario" [group]="form1"></text> 
+		    </div>
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    	<text label="Hora de conclusión de la llamada" name="horaConlcusionLlamada" [(value)]="model.horaConlcusionLlamada" [group]="form1"></text> 
+		    </div>
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    	<text label="Duración de la llamada" name="usuario" [(value)]="model.duracionLlamada" [group]="form1"></text> 
+		    </div>
+		</div> 
+		<div class="row">
+		    <div class="col-md-4 col-sm-12 col-lg-4">
+		    	<text label="Nombre del servidor público que registra" name="nombreServidorPublico" [(value)]="model.nombreServidorPublico" [group]="form1"></text> 
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="col-md-12 col-sm-12 col-lg-12">
+		    	<text-area label="Observaciones/Incidencias" name="observaciones" [(value)]="model.observaciones" ></text-area> 
+		    </div>
+		</div>
+
+
+		<div class="row space"></div>
+	  	<button class="float-right" md-button>Cancelar</button>	
+		<button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(form1.valid, form1.value)" [disabled]="!form1.valid">Guardar</button>
+    </form>
+<div class="row space"></div>
+<div class="row space"></div>
+
+<!-- Fromulario para usuario 2
+
+	//Oficio de asignación de asesor jurídico
+
+    // Oficio Ayuda atencion victima
+    oficio:string;
+    nombreAutoridadDirigeOficio:string;
+    necesidadesCubrir:string;
+    ubicacionUnidadInmediataVictima:string;
+	cargoAutoridadVictima:string;
+	-->
+<form [formGroup]="form2">
+
+    <div class="row space"> <h2>Constancia de lectura de derechos a la víctima u ofendido</h2></div>
+    <div class="row">
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="Número de folio" name="numeroFolio" [(value)]="model.numeroFolio" [group]="form2"></text>  
+	    </div>
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="¿Habla español?" name="hablaEspanol" [(value)]="model.hablaEspanol" [group]="form2"></text> 
+	    </div>
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="En caso negativo, especificar idioma o lengua" name="idioma" [(value)]="model.idioma" [group]="form2"></text> 
+	    </div>
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="Nombre del interprete" name="nombreInterprete" [(value)]="model.nombreInterprete" [group]="form2"></text> 
+	    </div>
+    </div>
+    <div class="row">
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="¿Comprendió la víctima u ofendido sus derechos?" name="comprendioDerechos" [(value)]="model.comprendioDerechos" [group]="form2"></text> 
+	    </div>
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="¿Se le proporcionó copia de los derechos?" name="copiaDerechos" [(value)]="model.copiaDerechos" [group]="form2"></text> 
+	    </div>   
+	</div>
+	
+	<div class="row space"> <h2>Oficio de asignación de asesor jurídico</h2></div>
+
+	<div class="row">
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="Nombre de la autoridad a quien se dirige el oficio" name="autoridadOficioAsignacion" [(value)]="model.autoridadOficioAsignacion" [group]="form2"></text> 
+	    </div>
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="¿Denuncia o querella?" name="denunciaQuerella" [(value)]="model.denunciaQuerella" [group]="form2"></text> 
+	    </div>
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="Ubicación de la unidad inmediata" name="ubicacionUnidadInmediata" [(value)]="model.ubicacionUnidadInmediata" [group]="form2"></text> 
+	    </div>
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="¿Víctima, ofendido o querellante?" name="victimaOfendidoQuerellante" [(value)]="model.victimaOfendidoQuerellante" [group]="form2"></text> 
+	    </div>
+
+	</div>
+
+	<div class="row">
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="Cargo o adscripción de la autoridad a quien se dirige el oficio" name="cargoAutoridadOficioAsignacion" [(value)]="model.cargoAutoridadOficioAsignacion" [group]="form2"></text> 
+	    </div>
+	</div>
+
+
+
+	<div class="row space"> <h2>Registro presencial</h2></div>
+	<div class="row">
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="Calidad de la persona" name="calidadPersona" [(value)]="model.calidadPersona" [group]="form2"></text> 
+	    </div>
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="Tipo de persona" name="tipoPersona" [(value)]="model.tipoPersona" [group]="form2"></text> 
+	    </div>
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="Lugar en donde ocurrieron los hechos" name="lugarHechos" [(value)]="model.lugarHechos" [group]="form2"></text> 
+	    </div>
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="Hechos narrados (hechos denunciados)" name="hechosNarrados" [(value)]="model.hechosNarrados" [group]="form2"></text> 
+	    </div>
+	</div>
+	<div class="row">
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="Conclusión en base a los hecos denunciados" name="conclusionHechos" [(value)]="model.conclusionHechos" [group]="form2"></text> 
+	    </div>
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="¿Se canaliza a otra área o institución?" name="canalizaOtraArea" [(value)]="model.canalizaOtraArea" [group]="form2"></text> 
+	    </div>
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="En su caso, institución a que se canaliza" name="institucionCanalizacion" [(value)]="model.lugarHechos" [group]="form2"></text> 
+	    </div>
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="¿Motivo del por qué se canaliza a esa institución?" name="motivocanalizacion" [(value)]="model.motivocanalizacion" [group]="form2"></text> 
+	    </div>
+	</div>
+	<div class="row">
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="Fecha en la que se canaliza" name="fechaCanalizacion" [(value)]="model.fechaCanalizacion" [group]="form2"></text> 
+	    </div>
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="Hora en la que se canaliza" name="horaCanalizacion" [(value)]="model.horaCanalizacion" [group]="form2"></text> 
+	    </div>
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="Si lo sabe, nombre de quien causó el hecho" name="personaCausohecho" [(value)]="model.personaCausohecho" [group]="form2"></text> 
+	    </div>
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="Si lo sabe, dimicilio de quien casuó el hecho" name="domicilioQuienCauso" [(value)]="model.domicilioQuienCauso" [group]="form2"></text> 
+	    </div>
+	</div>
+
+	<div class="row">
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="Nombre de persona que llevó a cabo el registro" name="personaRegistro" [(value)]="model.personaRegistro" [group]="form2"></text> 
+	    </div>
+	</div>
+<div class="row space"> <h2>Oficio para ayuda y atención a víctima</h2></div>
+
+	<div class="row">
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="Oficio" name="oficio" [(value)]="model.oficio" [group]="form2"></text> 
+	    </div>
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="Nombre de la autoridad a quien se dirige el oficio" name="nombreAutoridadDirigeOficio" [(value)]="model.nombreAutoridadDirigeOficio" [group]="form2"></text> 
+	    </div>
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="Necesidades se ayudarán a cubrir" name="necesidadesCubrir" [(value)]="model.necesidadesCubrir" [group]="form2"></text> 
+	    </div>
+	    <div class="col-md-3 col-sm-12 col-lg-3">
+	    	<text label="Ubicación de la unidad inmediata" name="ubicacionUnidadInmediataVictima" [(value)]="model.ubicacionUnidadInmediataVictima" [group]="form2"></text> 
+	    </div>
+
+	</div>
+	<div class="row">
+	    <div class="col-md-4 col-sm-12 col-lg-4">
+	    	<text label="Cargo o adscripción de la autoridad a quien se dirige el oficio" name="cargoAutoridadVictima" [(value)]="model.cargoAutoridadVictima" [group]="form2"></text> 
+	    </div>
+	</div>
+	<div class="row">
+	    <div class="col-md-12 col-sm-12 col-lg-12">
+	    	<text-area label="Observaciones/Incidencias" name="observaciones" [(value)]="model.observaciones" ></text-area> 
+	    </div>
+	</div>
+
+	<div class="row space"></div>
+  	<button class="float-right" md-button>Cancelar</button>	
+	<button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(form2.valid, form2.value)" [disabled]="!form2.valid">Guardar</button>
+</form>

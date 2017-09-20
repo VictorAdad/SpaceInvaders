@@ -1,0 +1,39 @@
+<div class="row space justify-content-end">
+	<div class="col-md-auto">
+		<select2 placeholder= "Formatos"></select2>
+	</div>
+	<div class="col-md-auto">
+        <div class="form-group">
+            <button md-raised-button color="accent" >Adjuntar</button>
+        </div>
+	</div>
+</div>
+<md-paginator #paginator
+    [length]="data.length"
+    [pageIndex]="0"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]">
+  </md-paginator>
+<md-table #table [dataSource]="dataSource">
+    <ng-container mdColumnDef="accion">
+        <md-header-cell *mdHeaderCellDef></md-header-cell>
+        <md-cell *mdCellDef="let element"> <md-checkbox></md-checkbox> </md-cell>
+    </ng-container>
+    <ng-container mdColumnDef="nombre">
+        <md-header-cell *mdHeaderCellDef> Nombre</md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.nombre}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="procedimiento">
+        <md-header-cell *mdHeaderCellDef> Procedimiento </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.procedimiento}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="fechaCreacion">
+        <md-header-cell *mdHeaderCellDef> Fecha de creación </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.fechaCreacion}} </md-cell>
+    </ng-container>
+
+    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+</md-table>

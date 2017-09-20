@@ -41,6 +41,9 @@ import { ArchivoTemporalComponent } from '@components-app/determinacion/archivo-
 import { ArchivoTemporalCreateComponent } from '@components-app/determinacion/archivo-temporal/create/component';
 import { NoEjercicioAccionPenalComponent } from '@components-app/determinacion/no-ejercicio-accion-penal/component';
 import { NoEjercicioAccionPenalCreateComponent } from '@components-app/determinacion/no-ejercicio-accion-penal/create/component';
+// Predenuncia
+import { PredenunciaCreateComponent} from '@components-app/predenuncia/create/create.component';
+
 
 //Notificaciones
 import { NotificacionesComponent } from '@components-app/notificaciones/notificaciones.component';
@@ -88,6 +91,9 @@ const routes: Routes = [
     { path : 'acuerdo-radicacion/create', component : AcuerdoRadicacionCreateComponent, data : { breadcrumb : 'Acuerdo de radicación'}},
     { path : 'facultad-no-investigar', component : FacultadesNoInvestigarComponent, data : { breadcrumb : 'Facultad de no investigar'}},
     { path : 'facultad-no-investigar/create', component : FacultadNoInvestigarCreateComponent, data : { breadcrumb : 'Facultad de no investigar'}},
+
+    // Pre-denuncia
+    { path : 'predenuncia/create', component : PredenunciaCreateComponent, data : { breadcrumb : 'Pre denuncia'}},
 
     { path : 'delito/create', component : DelitoCreateComponent, data : { breadcrumb : 'Delitos', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}]}},
 

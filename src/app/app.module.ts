@@ -13,6 +13,8 @@ import { CustomModule, customComponents} from './custom.module';
 import { DynamicComponentsModule, dyanamicComponents} from './dynamic-components.module';
 import { NoticiaHechoModule, noticiaHechoComponents} from '@components-app/noticiaHecho/module';
 import { SolicitudPreliminarModule, SolicitudPreliminarComponents } from '@components-app/solicitud-preliminar/module';
+import { PredenunciaComponent, DocumentoPredenunciaComponent, PredenunciaCreateComponent,} from '@components-app/predenuncia/create/create.component';
+
 import { FileUploadModule } from 'ng2-file-upload';
 import { DeterminacionModule, DeterminacionComponents } from '@components-app/determinacion/module';
 import { MomentModule } from 'angular2-moment';
@@ -33,7 +35,10 @@ import { OnLineService } from "@services/onLine.service";
     directivesComponents,
     customComponents,
     SolicitudPreliminarComponents,
-    DeterminacionComponents
+    DeterminacionComponents,
+    PredenunciaComponent, 
+    DocumentoPredenunciaComponent, 
+    PredenunciaCreateComponent
   ],
   imports: [
     BrowserModule,
