@@ -40,8 +40,7 @@
 		    	<text-area label="Observaciones/Incidencias" name="observaciones" [(value)]="model.observaciones" ></text-area> 
 		    </div>
 		</div>
-
-
+		
 		<div class="row space"></div>
 	  	<button class="float-right" md-button>Cancelar</button>	
 		<button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(form1.valid, form1.value)" [disabled]="!form1.valid">Guardar</button>
@@ -49,17 +48,7 @@
 <div class="row space"></div>
 <div class="row space"></div>
 
-<!-- Fromulario para usuario 2
-
-	//Oficio de asignación de asesor jurídico
-
-    // Oficio Ayuda atencion victima
-    oficio:string;
-    nombreAutoridadDirigeOficio:string;
-    necesidadesCubrir:string;
-    ubicacionUnidadInmediataVictima:string;
-	cargoAutoridadVictima:string;
-	-->
+<!-- Fromulario para usuario 2 -->
 <form *ngIf="!isUserX" [formGroup]="form2">
 
     <div class="row space"> <h2>Constancia de lectura de derechos a la víctima u ofendido</h2></div>
@@ -87,7 +76,6 @@
 	</div>
 	
 	<div class="row space"> <h2>Oficio de asignación de asesor jurídico</h2></div>
-
 	<div class="row">
 	    <div class="col-md-3 col-sm-12 col-lg-3">
 	    	<text label="Nombre de la autoridad a quien se dirige el oficio" name="autoridadOficioAsignacion" [(value)]="model.autoridadOficioAsignacion" [group]="form2"></text> 
@@ -101,16 +89,12 @@
 	    <div class="col-md-3 col-sm-12 col-lg-3">
 	    	<text label="¿Víctima, ofendido o querellante?" name="victimaOfendidoQuerellante" [(value)]="model.victimaOfendidoQuerellante" [group]="form2"></text> 
 	    </div>
-
 	</div>
-
 	<div class="row">
 	    <div class="col-md-3 col-sm-12 col-lg-3">
 	    	<text label="Cargo o adscripción de la autoridad a quien se dirige el oficio" name="cargoAutoridadOficioAsignacion" [(value)]="model.cargoAutoridadOficioAsignacion" [group]="form2"></text> 
 	    </div>
 	</div>
-
-
 
 	<div class="row space"> <h2>Registro presencial</h2></div>
 	<div class="row">
@@ -155,14 +139,13 @@
 	    	<text label="Si lo sabe, dimicilio de quien casuó el hecho" name="domicilioQuienCauso" [(value)]="model.domicilioQuienCauso" [group]="form2"></text> 
 	    </div>
 	</div>
-
 	<div class="row">
 	    <div class="col-md-3 col-sm-12 col-lg-3">
 	    	<text label="Nombre de persona que llevó a cabo el registro" name="personaRegistro" [(value)]="model.personaRegistro" [group]="form2"></text> 
 	    </div>
 	</div>
-<div class="row space"> <h2>Oficio para ayuda y atención a víctima</h2></div>
 
+    <div class="row space"> <h2>Oficio para ayuda y atención a víctima</h2></div>
 	<div class="row">
 	    <div class="col-md-3 col-sm-12 col-lg-3">
 	    	<text label="Oficio" name="oficio" [(value)]="model.oficio" [group]="form2"></text> 
@@ -176,7 +159,6 @@
 	    <div class="col-md-3 col-sm-12 col-lg-3">
 	    	<text label="Ubicación de la unidad inmediata" name="ubicacionUnidadInmediataVictima" [(value)]="model.ubicacionUnidadInmediataVictima" [group]="form2"></text> 
 	    </div>
-
 	</div>
 	<div class="row">
 	    <div class="col-md-4 col-sm-12 col-lg-4">
@@ -192,4 +174,5 @@
 	<div class="row space"></div>
   	<button class="float-right" md-button>Cancelar</button>	
 	<button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(form2.valid, form2.value)" [disabled]="!form2.valid">Guardar</button>
+
 </form>
