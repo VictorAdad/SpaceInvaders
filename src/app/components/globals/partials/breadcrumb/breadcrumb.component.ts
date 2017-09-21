@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Router, Params, NavigationEnd} from "@angular/router";
+import { Router, Params, NavigationEnd, ActivatedRoute} from "@angular/router";
 import "rxjs/add/operator/filter";
 
 class IBreadcrumb {
@@ -27,7 +27,8 @@ export class BreadcrumbComponent implements OnInit {
    * @constructor
    */
   constructor(
-    private router: Router
+    private router: Router,
+    private activeRoute: ActivatedRoute
   ) {
     this.breadcrumb=new IBreadcrumb();
     this.breadcrumb.childs=[];
@@ -43,36 +44,34 @@ export class BreadcrumbComponent implements OnInit {
    */
   ngOnInit() {
     let url = this.router.url;
-    //console.log(this.router);
+    console.log(this.router);
     this.breadcrumb=this.dataRouting(this.router.url, this.router.config, this.router);
+    console.log('-> Breadcrumb ', this.breadcrumb);
   }
 
   dataRouting(theUrl, config, router){
-    //console.log("alla",router.url);
     let url:string;
     url = theUrl.replace('/','');
     let n:number = config.length;
-    for (let i = 0; i < n; ++i) {
-      if (this.router.config[i].path==url){
-        let data:IBreadcrumb;
-        data=new IBreadcrumb();
-        data.childs=[];
-        data.label="Home"
-        data.url=this.router.url;
 
-        if (this.router.config[i].data){
-          if(this.router.config[i].data.rutas){
-           data.childs=this.router.config[i].data.rutas;
-          }
-          if (this.router.config[i].data.breadcrumb)
-            data.label=this.router.config[i].data.breadcrumb;
+    let breadcrumb:IBreadcrumb;
+    breadcrumb=new IBreadcrumb();
+    breadcrumb.childs=[];
+    breadcrumb.label="Home"
+    breadcrumb.url=this.activeRoute.url.toString();
+
+    this.activeRoute.data.subscribe(data => {
+        console.log('-> Data Route', data);
+        if (data){
+            if(data.rutas){
+                breadcrumb.childs=data.rutas;
+            }
+            if (data.breadcrumb)
+                breadcrumb.label=data.breadcrumb;
         }
-        //console.log(data);
-        return data;
-      }
-    }
+    });
+    return breadcrumb;
 
-    return null;
 
   }
   
