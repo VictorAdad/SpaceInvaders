@@ -1,6 +1,5 @@
-<breadcrumb></breadcrumb>
 <div class="row space justify-content-end">
-	<div class="col-md-auto">
+	<div class="col-md-2">
 		<select2 placeholder= "Formatos"></select2>
 	</div>
 	<div class="col-md-auto">
@@ -10,6 +9,12 @@
 		<button md-raised-button color="accent" >Compartir</button>
 	</div>
 </div>
+<md-paginator #paginator
+    [length]="data.length"
+    [pageIndex]="0"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]">
+</md-paginator>
 <md-table #table [dataSource]="dataSource">
     <ng-container mdColumnDef="nombre">
         <md-header-cell *mdHeaderCellDef> Nombre</md-header-cell>
@@ -29,9 +34,3 @@
     <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
     <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
 </md-table>
-<md-paginator #paginator
-    [length]="data.length"
-    [pageIndex]="0"
-    [pageSize]="10"
-    [pageSizeOptions]="[5, 10, 25, 100]">
-</md-paginator>
