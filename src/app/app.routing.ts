@@ -59,8 +59,9 @@ import { EntrevistaCreateComponent } from '@components-app/entrevista/create/com
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
     { path : '', component: HomeComponent, data : { breadcrumb : 'Noticia de hechos'}},
-    { path : 'noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
     { path : 'login', component: LoginComponent,  data : { breadcrumb : 'Login' } },
+    { path : 'noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
+    { path : 'noticia-hecho/:id', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
     { path : 'usuarios', component : UsuarioComponent, data : { breadcrumb : 'Usuarios' } },
     { path : 'usuarios/create', component : UsuarioCreateComponent, data : { breadcrumb : 'Crear usuarios', rutas:[{path:'algo',label:"Otra ruta"}, {path:'/papu',label:"Otra ruta2"}] } },
     { path : 'armas', component : ArmaComponent, data : { breadcrumb : 'Armas' } },
