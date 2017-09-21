@@ -1,1 +1,28 @@
-@import '~@angular/material/theming';
+.titulo{
+	background: #CF455D;
+	text-align: center !important;
+	color: #FFF;
+	height: 50px;
+
+	h4{
+		height: 100%;
+		line-height: 50px;
+	}
+}
+
+.not{
+	padding-top: 5px;
+	font-size: 8px !important;
+	line-height: normal;
+}
+
+.pad{
+	width: 20 ;
+	text-align: center;
+	padding: 0;
+}
+
+
+
+
+
