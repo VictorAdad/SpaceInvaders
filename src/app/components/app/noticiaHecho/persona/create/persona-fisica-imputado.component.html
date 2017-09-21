@@ -25,7 +25,7 @@
             </div>
             <div class="row">
               <div class="col-md-10"    style="">
-            <radiobutton class="col-md-3" [(value)]="tipoPersona" [radios]="
+            <radiobutton class="col-md-3" [(value)]="persona.tipoPersona" [radios]="
                       [
                       {label:'Física',value:'Física'},
                       {label:'Moral',value:'Moral'}
@@ -45,7 +45,7 @@
               </div>
               <div class="row">
               <div class="col-md-10">
-              <radiobutton class="col-md-3" [(value)]="tipoInterviniente" [radios]="
+              <radiobutton class="col-md-3" [(value)]="persona.tipoInterviniente" [radios]="
                         [
                         {label:'Apoderado legal',value:'Apoderado legal'},
                         {label:'Defensor público',value:'Defensor publico'},
@@ -76,153 +76,154 @@
 
                 </md-panel-description>
               </md-expansion-panel-header>
-              <div class="row" *ngIf="tipoPersona=='Moral'">
+              <div class="row" *ngIf="persona.tipoPersona=='Moral'">
               <div class="col-md-3">
-                  <text label="Razón social" name="razonSocial" [group]="form" hintStart="Campo obligatorio"></text>
+                  <text label="Razón social" name="razonSocial" [group]="form" hintStart="Campo obligatorio" [(value)]="persona.razonSocial"></text>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-3">
-                  <text label="Nombre"></text>
+                  <text label="Nombre" [(value)]="persona.nombre" ></text>
                 </div>
                 <div class="col-md-3">
-                  <text label="Apellido paterno"></text>
+                  <text label="Apellido paterno" [(value)]="persona.paterno" ></text>
                 </div>
                 <div class="col-md-3">
-                  <text label="Apellido materno"></text>
+                  <text label="Apellido materno" [(value)]="persona.materno" ></text>
                 </div>
                 <div class="col-md-2">
                   <select2 [options]="
                   [
                     {label:'Hombre',value:'Hombre'},
-                    {label:'Mujer',value:'Mujer'}]" placeholder="Sexo"  ></select2>
+                    {label:'Mujer',value:'Mujer'}]" placeholder="Sexo" [(value)]="persona.sexo" ></select2>
                 </div>
                 <div class="col-md-2">
-                  <text label="Fecha de nacimiento"></text>
+                  <date label="Fecha de nacimiento" [(value)]="persona.fechaNacimiento" ></date>
                 </div>
                 <div class="col-md-2">
-                  <text label="Edad"></text>
+                  <text label="Edad" [(value)]="persona.edad"></text>
                 </div>
 
                 <div class="col-md-2">
-                  <text label="CURP"></text>
+                  <text label="CURP" [(value)]="persona.curp" ></text>
                 </div>
 
                 <div class="col-md-2">
                   <select2 [options]="
                   [
                     {label:'Mexicana',value:'Mexicana'},
-                    {label:'Otra',value:'Otra'}]" placeholder="Nacionalidad"></select2>
+                    {label:'Otra',value:'Otra'}]" placeholder="Nacionalidad" [(value)]="persona.nacionalidad"></select2>
                 </div>
                 <div class="col-md-2">
                   <select2 [options]="
                   [
                     {label:'México',value:'México'},
-                    {label:'Otro',value:'Otro'}]" placeholder="País de nacimiento"></select2>
+                    {label:'Otro',value:'Otro'}]" placeholder="País de nacimiento" [(value)]="persona.paisNacimiento" ></select2>
                 </div>
                 <div class="col-md-2">
                   <select2 [options]="
                   [
                     {label:'Aguas Calientes',value:'Aguas Calientes'},
-                    {label:'Otro',value:'Otro'}]" placeholder="Estado de nacimiento"></select2>
+                    {label:'Otro',value:'Otro'}]" placeholder="Estado de nacimiento" [(value)]="persona.estadoNacimiento" ></select2>
                 </div>
 
                 <div class="col-md-2">
                   <select2 [options]="
                   [
                     {label:'Conocido',value:'Conocido'},
-                    {label:'Otro',value:'Otro'}]" placeholder="Municipio"></select2>
+                    {label:'Otro',value:'Otro'}]" placeholder="Municipio"
+                    [(value)]="persona.municipio" ></select2>
                 </div>
 
                 <div class="col-md-2">
                   <select2 [options]="
-                  []" placeholder="Escolaridad"></select2>
+                  []" placeholder="Escolaridad" [(value)]="persona.escolaridad" ></select2>
                 </div>
                 <div class="col-md-2">
                   <select2 [options]="
-                  []" placeholder="Ocupación"></select2>
+                  []" placeholder="Ocupación" [(value)]="persona.ocupacion" ></select2>
                 </div>
                 <div class="col-md-2">
-                  <text label="Lugar de trabajo"></text>
-                </div>
-
-                <div class="col-md-2">
-                  <text label="Ingresos mensuales"></text>
+                  <text label="Lugar de trabajo" [(value)]="persona.lugarDeTrabajo" ></text>
                 </div>
 
                 <div class="col-md-2">
-                 <text label='RFC'></text>
+                  <text label="Ingresos mensuales" [(value)]="persona.ingresosMensuales" ></text>
+                </div>
+
+                <div class="col-md-2">
+                 <text label='RFC' [(value)]="persona.rfc" ></text>
                 </div>
                 <div class="col-md-2">
                   <select2 [options]="
-                  []" placeholder="Estado civil"></select2>
+                  [ {label:'Solter@',value:'soltero'}, {label:'Casad@',value:'casado'},  {label:'Divorsiad@',value:'divorsiado'}, {label:'Viud@',value:'viudo'}]" placeholder="Estado civil" [(value)]="persona.estadoCivil" ></select2>
                 </div>
                 <div class="col-md-2">
-                  <text label="Número de habitualjos"></text>
+                  <text label="Número de hijos" [(value)]="persona.numeroHijos"></text>
                 </div>
 
                 <div class="col-md-2">
-                  <text label="Religión"></text>
+                  <text label="Religión" [(value)]="persona.religion"></text>
                 </div>
 
                 <div class="col-md-2">
                  <select2 [options]="
-                  [{value:'Sí',label:'Si'},{value:'No',label:'No'}]" placeholder="Habla Español"></select2>
+                  [{value:true,label:'Si'},{value:false,label:'No'}]" placeholder="Habla Español" [(value)]="persona.hablaEspaniol"></select2>
                 </div>
                 <div class="col-md-2">
                   <select2 [options]="
-                  []" placeholder="Lengua Índigena"></select2>
+                  []" placeholder="Lengua Índigena" [(value)]="persona.lenguaIndigena"></select2>
                 </div>
                 <div class="col-md-2">
                    <select2 [options]="
-                  []" placeholder="Grupo étnico"></select2>
+                  []" placeholder="Grupo étnico" [(value)]="persona.grupoEtnico"></select2>
                 </div>
 
                 <div class="col-md-2">
                   <select2 [options]="
-                  []" placeholder="Alfabetismo"></select2>
+                  []" placeholder="Alfabetismo" [(value)]="persona.alfabetismo"></select2>
                 </div>
 
                 <div class="col-md-2">
                  <select2 [options]="
-                  []" placeholder="Familia ligüistica"></select2>
+                  []" placeholder="Familia ligüistica" [(value)]="persona.familiaLinguistica"></select2>
                 </div>
                 <div class="col-md-2">
                   <select2 [options]="
-                  [{value:'Sí',label:'Si'},{value:'No',label:'No'}]" placeholder="Necesita interprete"></select2>
+                  [{value:true,label:'Si'},{value:false,label:'No'}]" placeholder="Necesita interprete" [(value)]="persona.necesitaInterprete"></select2>
                 </div>
                 <div class="col-md-4">
                    <text label="Adicciones"></text>
                 </div>
                 </div>
-                <div class="row" *ngIf="tipoInterviniente=='Imputado'">
+                <div class="row" *ngIf="persona.tipoInterviniente=='Imputado'">
                 <div class="col-md-2">
                      Detenido-{{detenido}}
-                 <checkbox label="Detenido" [(value)]="detenido" ></checkbox>
+                 <checkbox label="Detenido" [(value)]="persona.detenido" ></checkbox>
                 </div>
-                <div class="col-md-2" *ngIf="detenido">
-                  <text label="Fecha de denteción"></text>
+                <div class="col-md-2" *ngIf="persona.detenido">
+                  <date label="Fecha de denteción" [(value)]="persona.fechaDetencion"></date>
                 </div>
-                <div class="col-md-2" *ngIf="detenido">
-                   <text label="Hora de denteción"></text>
+                <div class="col-md-2" *ngIf="persona.detenido">
+                   <text label="Hora de denteción" [(value)]="persona.horaDetencion"></text>
                 </div>
 
-                <div class="col-md-2" *ngIf="detenido">
+                <div class="col-md-2" *ngIf="persona.detenido">
                   <select2 [options]="
-                  []" placeholder="Tipo de denteción"></select2>
+                  []" placeholder="Tipo de denteción" [(value)]="persona.tipoDetencion"></select2>
                 </div>
 
-                <div class="col-md-2" *ngIf="detenido">
-                 <text label="Fecha de declaración"></text>
+                <div class="col-md-2" *ngIf="persona.detenido">
+                 <date label="Fecha de declaración" [(value)]="persona.fechaDeclaracion"></date>
                 </div>
-                <div class="col-md-2" *ngIf="detenido">
+                <div class="col-md-2" *ngIf="persona.detenido">
                    <select2 [options]="
-                  []" placeholder="Tipo de reincidencia"></select2>
+                  []" placeholder="Tipo de reincidencia" [(value)]="persona.tipoResidencia"></select2>
                 </div>
-                <div class="col-md-2" *ngIf="detenido">
+                <div class="col-md-2" *ngIf="persona.detenido">
                     <select2 [options]="
-                  []" placeholder="Cereso"></select2>
+                  []" placeholder="Cereso" [(value)]="persona.cereso"></select2>
                 </div>
 
               </div>
@@ -243,19 +244,19 @@
               </md-expansion-panel-header>
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Documento de identificación"></select2>
+                  <select2 [options]="[]" placeholder="Documento de identificación" [(value)]="persona.documentoDeIdentificacion"></select2>
                 </div>
                 <div class="col-md-2">
-                  <text label="Autoridad emisora"></text>
+                  <text label="Autoridad emisora" [(value)]="persona.autoridadEmisora"></text>
                 </div>
                 <div class="col-md-2">
-                  <text label="Número o folio de documento"></text>
+                  <text label="Número o folio de documento" [(value)]="persona.numeroOFoliodeDocumento"></text>
                 </div>
-                <div class="col-md-2" *ngIf="tipoInterviniente=='Imputado'">
-                  <text label="alias"></text>
+                <div class="col-md-2" *ngIf="persona.tipoInterviniente=='Imputado'">
+                  <text label="alias" [(value)]="persona.alias"></text>
                 </div>
                 <div class="col-md-2">
-                  <text label="Otros nombres"></text>
+                  <text label="Otros nombres" [(value)]="persona.otrosNombres"></text>
                 </div>
               </div>
 
@@ -275,70 +276,70 @@
               </md-expansion-panel-header>
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="País"></select2>
+                  <select2 [options]="[]" placeholder="País" [(value)]="persona.pais"></select2>
                 </div>
                 <div class="col-md-2">
-                   <select2 [options]="[]" placeholder="Estado"></select2>
+                   <select2 [options]="[]" placeholder="Estado" [(value)]="persona.estado"></select2>
                 </div>
                 <div class="col-md-2">
-                   <select2 [options]="[]" placeholder="Municipio/Delegación"></select2>
+                   <select2 [options]="[]" placeholder="Municipio/Delegación" [(value)]="persona.municipioODelegacion"></select2>
                 </div>
-                <div class="col-md-2"><select2 [options]="[]" placeholder="Colonia/Asentamiento"></select2>
+                <div class="col-md-2"><select2 [options]="[]" placeholder="Colonia/Asentamiento" [(value)]="persona.coloniaOAsentamiento"></select2>
                 </div>
               </div>
 
                <div class="row">
                 <div class="col-md-2">
-                 <text label="Localidad"></text>
+                 <text label="Localidad" [(value)]="persona.localidad"></text>
                 </div>
                 <div class="col-md-2">
-                  <text label="Calle"></text>
+                  <text label="Calle" [(value)]="persona.calle"></text>
                 </div>
                 <div class="col-md-2">
-                   <text label="No. exterior"></text>
+                   <text label="No. exterior" [(value)]="persona.noExterior"></text>
                 </div>
 
                 <div class="col-md-2">
-                  <text label="No. interior"></text>
+                  <text label="No. interior" [(value)]="persona.noInterior"></text>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-2">
-                 <text label="CP"></text>
+                 <text label="CP" [(value)]="persona.cp"></text>
                 </div>
                 <div class="col-md-2">
-                  <text label="Tipo de domicilio"></text>
+                  <text label="Tipo de domicilio" [(value)]="persona.tipoDomicilio"></text>
                 </div>
                 <div class="col-md-4">
-                   <text label="Referencias"></text>
+                   <text label="Referencias" [(value)]="persona.referencias"></text>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-2">
-                 <text label="Tel. particular"></text>
+                 <text label="Tel. particular" [(value)]="persona.telParticular"></text>
                 </div>
                 <div class="col-md-2">
-                  <text label="Tel. del trabajo"></text>
+                  <text label="Tel. del trabajo" [(value)]="persona.telTrabajo"></text>
                 </div>
                 <div class="col-md-2">
-                   <text label="Extensión"></text>
+                   <text label="Extensión" [(value)]="persona.extTelTrabajo"></text>
                 </div>
                 <div class="col-md-2">
-                  <text label="Tel. móvil"></text>
+                  <text label="Tel. móvil" [(value)]="persona.telMovil" ></text>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-2">
-                 <text label="Fax"></text>
+                 <text label="Fax" [(value)]="persona.fax"></text>
                 </div>
                 <div class="col-md-2">
-                  <text label="Otro medio de contacto"></text>
+                  <text label="Otro medio de contacto" [(value)]="persona.otroMedioContacto"></text>
                 </div>
                 <div class="correo">
-                   <text label="Extensión"></text>
+                   <text label="Extensión"  [(value)]="persona.extOtroMedioContacto"></text>
                 </div>
               </div>
 
@@ -354,7 +355,7 @@
                               {label:'Residencia habitual',value:'Residencia habitual'},
                               {label:'Domicilio procesal',value:'Domicilio procesal'}
                               ]
-                    "></radiobutton>
+                    " [(value)]="persona.tipoResidencia"></radiobutton>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -368,7 +369,7 @@
 
         <!-- Media de filiación -->
         <div class="row  justify-content-md-center align-items-center space"
-        *ngIf="tipoInterviniente=='Imputado'">
+        *ngIf="persona.tipoInterviniente=='Imputado'">
           <md-expansion-panel style="width: 95%">
               <md-expansion-panel-header>
                 <md-panel-title>
@@ -380,245 +381,245 @@
               </md-expansion-panel-header>
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Compleción"></select2>
+                  <select2 [options]="[]" placeholder="Compleción" [(value)]="persona.complexion">></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Piel"></select2>
+                  <select2 [options]="[]" placeholder="Piel" [(value)]="persona.piel">></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Cara"></select2>
+                  <select2 [options]="[]" placeholder="Cara" [(value)]="persona.cara">></select2>
                 </div>
               </div>
               Cabello
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Cantidad"></select2>
+                  <select2 [options]="[]" placeholder="Cantidad" [(value)]="persona.cabelloCantidad"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Color"></select2>
+                  <select2 [options]="[]" placeholder="Color" [(value)]="persona.cabelloColor"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Forma"></select2>
+                  <select2 [options]="[]" placeholder="Forma" [(value)]="persona.cabelloForma"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Calvicie"></select2>
+                  <select2 [options]="[]" placeholder="Calvicie" [(value)]="persona.cabelloCalvicie"></select2>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Implantación"></select2>
+                  <select2 [options]="[]" placeholder="Implantación" [(value)]="persona.cabelloImplantacion"></select2>
                 </div>
               </div>
               Frente
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Altura"></select2>
+                  <select2 [options]="[]" placeholder="Altura" [(value)]="persona.frenteAltura"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Inclinación"></select2>
+                  <select2 [options]="[]" placeholder="Inclinación" [(value)]="persona.frenteInclinacion"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Ancho"></select2>
+                  <select2 [options]="[]" placeholder="Ancho" [(value)]="persona.frenteAncho"></select2>
                 </div>
               </div>
               Cejas
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Dirección"></select2>
+                  <select2 [options]="[]" placeholder="Dirección" [(value)]="persona.cejasDireccion"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Implantación"></select2>
+                  <select2 [options]="[]" placeholder="Implantación" [(value)]="persona.cejasImplantacion"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Forma"></select2>
+                  <select2 [options]="[]" placeholder="Forma" [(value)]="persona.cejasFormas"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Tamaño"></select2>
+                  <select2 [options]="[]" placeholder="Tamaño" [(value)]="persona.cejasTamanio"></select2>
                 </div>
               </div>
               Ojos
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Color"></select2>
+                  <select2 [options]="[]" placeholder="Color" [(value)]="persona.ojosColor"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Forma"></select2>
+                  <select2 [options]="[]" placeholder="Forma" [(value)]="persona.ojosForma"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Tamaño"></select2>
+                  <select2 [options]="[]" placeholder="Tamaño" [(value)]="persona.ojosTamanio"></select2>
                 </div>
               </div>
               Nariz
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Raíz(prof)"></select2>
+                  <select2 [options]="[]" placeholder="Raíz(prof)" [(value)]="persona.narizRaiz"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Dorso"></select2>
+                  <select2 [options]="[]" placeholder="Dorso" [(value)]="persona.narizDorso"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Ancho"></select2>
+                  <select2 [options]="[]" placeholder="Ancho" [(value)]="persona.narizAncho"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Base"></select2>
+                  <select2 [options]="[]" placeholder="Base" [(value)]="persona.narizBase"></select2>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Altura"></select2>
+                  <select2 [options]="[]" placeholder="Altura" [(value)]="persona.narizAltura"></select2>
                 </div>
               </div>
               Boca
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Tamaño"></select2>
+                  <select2 [options]="[]" placeholder="Tamaño" [(value)]="persona.bocaTamanio"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Comisuras"></select2>
+                  <select2 [options]="[]" placeholder="Comisuras" [(value)]="persona.bocaComisura"></select2>
                 </div>
               </div>
               Labios
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Espesor"></select2>
+                  <select2 [options]="[]" placeholder="Espesor" [(value)]="persona.labiosEspesor"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Altura del naso labial"></select2>
+                  <select2 [options]="[]" placeholder="Altura del naso labial" [(value)]="persona.labiosAlturaNasoLabial"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Prominencia"></select2>
+                  <select2 [options]="[]" placeholder="Prominencia"[(value)]="persona.labiosProminencia" ></select2>
                 </div>
               </div>
               Mentón
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Tipo"></select2>
+                  <select2 [options]="[]" placeholder="Tipo" [(value)]="persona.mentonTipo"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Forma"></select2>
+                  <select2 [options]="[]" placeholder="Forma" [(value)]="persona.mentonForma"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Inclinación"></select2>
+                  <select2 [options]="[]" placeholder="Inclinación" [(value)]="persona.mentonInclinacion"></select2>
                 </div>
               </div>
               Oreja derecha
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Forma"></select2>
+                  <select2 [options]="[]" placeholder="Forma" [(value)]="persona.orejaDerechaForma"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Hélix original"></select2>
+                  <select2 [options]="[]" placeholder="Hélix original" [(value)]="persona.orejaDerechaHelixOriginal"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Hélix superior"></select2>
+                  <select2 [options]="[]" placeholder="Hélix superior" [(value)]="persona.orejaDerechaHelixSuperior"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Hélix posterior"></select2>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Hélix adherencia"></select2>
-                </div>
-                <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Lóbulo contorno"></select2>
-                </div>
-                <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Lóbulo adherencia"></select2>
-                </div>
-                <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Lóbulo particular"></select2>
+                  <select2 [options]="[]" placeholder="Hélix posterior" [(value)]="persona.orejaDerechaHelixPosterior"></select2>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Lóbulo dimensión"></select2>
+                  <select2 [options]="[]" placeholder="Hélix adherencia" [(value)]="persona.orejaDerechaHelixAdherencia"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Lóbulo contorno" [(value)]="persona.orejaDerechaLobuloContorno"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Lóbulo adherencia" [(value)]="persona.orejaDerechaLobuloAdherencia"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Lóbulo particular" [(value)]="persona.orejaDerechaLobuloParticular"></select2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Lóbulo dimensión" [(value)]="persona.orejaDerechaLobuloDimension"></select2>
                 </div>
               </div>
 
               Oreja izquierda
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Forma"></select2>
+                  <select2 [options]="[]" placeholder="Forma" [(value)]="persona.orejaIzquierdaForma"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Hélix original"></select2>
+                  <select2 [options]="[]" placeholder="Hélix original" [(value)]="persona.orejaIzquierdaHelixOriginal"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Hélix superior"></select2>
+                  <select2 [options]="[]" placeholder="Hélix superior" [(value)]="persona.orejaIzquierdaHelixSuperior"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Hélix posterior"></select2>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Hélix adherencia"></select2>
-                </div>
-                <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Lóbulo contorno"></select2>
-                </div>
-                <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Lóbulo adherencia"></select2>
-                </div>
-                <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Lóbulo particular"></select2>
+                  <select2 [options]="[]" placeholder="Hélix posterior" [(value)]="persona.orejaIzquierdaHelixPosterior"></select2>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Lóbulo dimensión"></select2>
+                  <select2 [options]="[]" placeholder="Hélix adherencia" [(value)]="persona.orejaIzquierdaHelixAdherencia"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Lóbulo contorno" [(value)]="persona.orejaIzquierdaLobuloContorno"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Lóbulo adherencia" [(value)]="persona.orejaIzquierdaLobuloAdherencia"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Lóbulo particular" [(value)]="persona.orejaIzquierdaLobuloParticular"></select2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="[]" placeholder="Lóbulo dimensión" [(value)]="persona.orejaIzquierdaLobuloDimension"></select2>
                 </div>
               </div>
               Sangre
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Tipo"></select2>
+                  <select2 [options]="[]" placeholder="Tipo" [(value)]="persona.sangreTipo" ></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Factor RH"></select2>
+                  <select2 [options]="[]" placeholder="Factor RH" [(value)]="persona.sangreFactorRh"></select2>
                 </div>
               </div>
               Talla
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Estatura"></select2>
+                  <select2 [options]="[]" placeholder="Estatura" [(value)]="persona.tallaEstatura"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Peso"></select2>
+                  <select2 [options]="[]" placeholder="Peso" [(value)]="persona.tallaPeso"></select2>
                 </div>
               </div>
               Señas Particulares
               <div class="row">
                 <div class="col-md-2">
-                  <checkbox label="Usa anteojos"></checkbox>
+                  <checkbox label="Usa anteojos" [(value)]="persona.usaAnteojos"></checkbox>
                 </div>
 
               </div>
 
               <div class="row">
                 <div class="col-md-8">
-                  <text label="Cicatrices"></text>
+                  <text label="Cicatrices" [(value)]="persona.cicatrises"></text>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-8">
-                  <text label="Tatuajes"></text>
+                  <text label="Tatuajes" [(value)]="persona.tatuajes"></text>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-8">
-                  <text label="Lunares"></text>
+                  <text label="Lunares" [(value)]="persona.lunares"></text>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-8">
-                  <text label="Prótesis"></text>
+                  <text label="Prótesis" [(value)]="persona.protesis"></text>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-8">
-                  <text label="Otras"></text>
+                  <text label="Otras" [(value)]="persona.otras"></text>
                 </div>
               </div>
 

@@ -58,7 +58,7 @@ export class CIndexedDB {
                         list.onsuccess=function(){
                             var datos=list.result;
                             console.log(datos);
-                            resolve(list);
+                            resolve(datos);
                         }
                     }
                     else{
