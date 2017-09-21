@@ -21,6 +21,7 @@ export class PredenunciaComponent {
 	public form1  : FormGroup;
     public form2  : FormGroup;
     public model : Predenuncia;
+    public isUserX: boolean=false;// cambiar aquí la lógica del usuario
 
 
     constructor(private _fbuilder: FormBuilder) { }
@@ -76,6 +77,8 @@ export class PredenunciaComponent {
             'ubicacionUnidadInmediataVictima':  new FormControl(this.model.victimaOfendidoQuerellante),
             'cargoAutoridadVictima'          :  new FormControl(this.model.victimaOfendidoQuerellante),
           });
+
+            this.isUserX=true;
 
     }
 

@@ -1,6 +1,6 @@
 <!-- Fromulario para usuario 1-->
 
-	<form [formGroup]="form1">
+<form *ngIf="isUserX" [formGroup]="form1">
 	    <div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text label="Calidad del usuario" name="calidadUsuario" [(value)]="model.calidadUsuario" [group]="form1"></text>  
@@ -45,7 +45,7 @@
 		<div class="row space"></div>
 	  	<button class="float-right" md-button>Cancelar</button>	
 		<button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(form1.valid, form1.value)" [disabled]="!form1.valid">Guardar</button>
-    </form>
+</form>
 <div class="row space"></div>
 <div class="row space"></div>
 
@@ -60,7 +60,7 @@
     ubicacionUnidadInmediataVictima:string;
 	cargoAutoridadVictima:string;
 	-->
-<form [formGroup]="form2">
+<form *ngIf="!isUserX" [formGroup]="form2">
 
     <div class="row space"> <h2>Constancia de lectura de derechos a la víctima u ofendido</h2></div>
     <div class="row">
