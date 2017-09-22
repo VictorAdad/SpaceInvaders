@@ -22,22 +22,9 @@ export class HomeComponent implements OnInit {
             for(let object in list){
                 let caso = new Caso();
                 Object.assign(caso, list[object]);
+                console.log('-> Caso', caso.created);
                 this.casos.push(caso);
             }
         });
     }
-    fecha (){
-           let meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-
-           var date = new Date ('12/02/1993');
-
-           var dia = date.getDay();
-           var mes = date.getMonth();
-           var year = date.getFullYear();
-
-           var user = 'Administrador del sistema'; //Necesita recibir el usuario 
-
-           var x = 'Creado el '+ dia + ' de ' + meses[mes] + ' de ' + year + ' por el ' + user;
-           return x;  
-      }
 }

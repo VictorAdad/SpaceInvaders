@@ -109,7 +109,7 @@ const routes: Routes = [
     { path : 'no-ejercicio-accion-penal/create', component : NoEjercicioAccionPenalCreateComponent, data : { breadcrumb : 'No ejercicio de la acción penal' } },
 
     //Detalle del Caso
-    { path : 'detalle', component : DetalleCasoComponent, data : { breadcrumb : 'Detalle del caso' } },    
+    { path : 'caso/:id/detalle', component : DetalleCasoComponent, data : { breadcrumb : 'Detalle del caso' } },    
 
     //Entrevista
     { path : 'entrevista', component : EntrevistaComponent, data : { breadcrumb : 'Entrevistas' } },

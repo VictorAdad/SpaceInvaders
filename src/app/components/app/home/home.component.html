@@ -19,13 +19,13 @@
                 <md-icon md-list-icon>folder</md-icon>
                 <h4 md-line>{{caso.name}}</h4>
                 <h4 class="text-muted" md-line md-subheade>{{caso.titulo}}</h4>
-                <h4 class="text-muted" md-line md-subheade>{{caso.descripcion}}</h4>
-                <p md-line>{{caso.updated}}</p>
+                <h4 class="text-muted" md-line md-subheade>{{caso.sintesis}}</h4>
+                <p md-line>{{caso.formatFecha}}</p>
                 <button md-icon-button [mdMenuTriggerFor]="menuCaso">
                     <md-icon>more_horiz</md-icon>
                 </button>
                 <md-menu #menuCaso="mdMenu">
-                    <button md-menu-item routerLink="/detalle/{{caso.id}}">
+                    <button md-menu-item routerLink="/caso/{{caso.id}}/detalle">
                         <md-icon fxHide="false" fxHide.gt-sm>remove_red_eye</md-icon>Ver
                     </button>
                 </md-menu>
