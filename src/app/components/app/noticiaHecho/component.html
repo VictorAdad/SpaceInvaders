@@ -15,7 +15,7 @@
                     <md-icon class="d-inline">class</md-icon>
                     <label class="d-xs-none d-sm-none d-md-inline">Datos generales</label>
                 </a>
-                <div *ngIf="hasId()">
+                <div [class]="hasId() ? '' : 'hidden' ">
                     <a href="#tab2-panel" class="mdl-tabs__tab disabled">
                         <md-icon>assignment_ind</md-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Personas</label>
@@ -55,7 +55,7 @@
             <div class="mdl-tabs__panel is-active" id="tab1-panel">
                  <datos-generales></datos-generales>
             </div>
-            <div *ngIf="hasId()">
+            <div [class]="hasId() ? '' : 'hidden' ">
                 <div class="mdl-tabs__panel" id="tab2-panel">
                      <persona></persona>
                 </div>
