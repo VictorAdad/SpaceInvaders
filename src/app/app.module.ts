@@ -25,6 +25,7 @@ import { AuthenticationService} from "@services/auth/authentication.service";
 import { GlobalService } from "@services/global.service";
 import { OnLineService } from "@services/onLine.service";
 import { CIndexedDB } from '@services/indexedDB';
+import { JasperoConfirmationsModule } from '@jaspero/ng2-confirmations';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { CIndexedDB } from '@services/indexedDB';
     ReactiveFormsModule,
     FileUploadModule,
     MomentModule,
-    EntrevistaModule
+    EntrevistaModule,
+    JasperoConfirmationsModule
   ],
   providers: [
     MiservicioService,

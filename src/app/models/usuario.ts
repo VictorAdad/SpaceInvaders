@@ -15,4 +15,5 @@ export class Usuario {
     cargo:string;
     permiso:string;
     inhabilitado:boolean;
+    accionCarpeta:string;
   }

@@ -3,6 +3,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { MOption } from '@partials/form/select2/select2.component'
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Usuario } from '@models/usuario';
+import { ConfirmationService } from '@jaspero/ng2-confirmations';
+import { ResolveEmit,ConfirmSettings} from '@utils/alert/alert.service';
 
 @Component({
   selector: 'arma-create',
@@ -14,7 +16,14 @@ export class UsuarioCreateComponent{
     public form  : FormGroup;
     public model : Usuario;
     public titulo: string;
-    private sub: any;
+    public sub: any;
+    public settings:ConfirmSettings={
+    overlayClickToClose: false, // Default: true
+    showCloseButton: true, // Default: true
+    confirmText: "Continuar", // Default: 'Yes'
+    declineText: "Cancelar",
+
+    }; 
 
     public sexos : MOption[]=[ 
         {value:"Masculino", label:"Masculino"},
@@ -35,15 +44,20 @@ export class UsuarioCreateComponent{
         {value:"Permiso 2", label:"Permiso 2"},
         {value:"Permiso 3", label:"Permiso 3"}
        ];
+    public accionesCarpeta: MOption[]=[ 
+        {value:"Asignarlas a otro usuario", label:"Asignarlas a otro usuario"},
+        {value:"Dejarlo en la agencia", label:"Dejarlo en la agencia"},
+        {value:"No realizar ninguna acción", label:"No realizar ninguna acción"}
+       ];
     public isEditForm:boolean;
-    constructor(private _fbuilder: FormBuilder,private route: ActivatedRoute) { }
+    constructor(private _fbuilder: FormBuilder,private route: ActivatedRoute,private _confirmation: ConfirmationService) { }
     ngOnInit(){
         this.model = new Usuario();
         this.form  = new FormGroup({
-            'usuario'            : new FormControl(this.model.usuario, [Validators.required,]),
-            'nombre'             : new FormControl(this.model.nombre, [Validators.required,]),
-            'apellidoPaterno'    : new FormControl(this.model.apellidoPaterno, [Validators.required,]),
-            'apellidoMaterno'    : new FormControl(this.model.apellidoMaterno, [Validators.required,]),
+            'usuario'            : new FormControl(this.model.usuario),
+            'nombre'             : new FormControl(this.model.nombre),
+            'apellidoPaterno'    : new FormControl(this.model.apellidoPaterno),
+            'apellidoMaterno'    : new FormControl(this.model.apellidoMaterno),
             'numeroContacto'     : new FormControl(this.model.numeroContacto),
             'sexo'               : new FormControl(this.model.sexo),
             'distrito'           : new FormControl(this.model.distrito),
@@ -53,14 +67,17 @@ export class UsuarioCreateComponent{
             'email'              : new FormControl(this.model.email),
             'numeroGafete'       : new FormControl(this.model.numeroGafete),
             'cargo'              : new FormControl(this.model.cargo),
-            'permiso'            : new FormControl(this.model.permiso, [Validators.required,]),
+            'permiso'            : new FormControl(this.model.permiso),
+            'accionCarpeta'      : new FormControl(this.model.accionCarpeta),
             'inhabilitado'       : new FormControl(this.model.inhabilitado) });
+
      let id; 
       this.sub = this.route.params.subscribe(params => {
       id = +params['id'];
       this.isEditForm= id ? true:false ;
       this.titulo = this.isEditForm ? 'Editar usuario' : 'Crear usuario';
-
+      let control = this.form.get('usuario')
+      this.isEditForm ?  control.disable(): control.enable();
       });
       // traer el id desde el servicio
       console.log('-> ID: ', id);
@@ -68,10 +85,14 @@ export class UsuarioCreateComponent{
     }
 
     public save(valid : any, model : any):void{
-        console.log('Usuario@save()');
+         console.log(this._confirmation);
+         let resolved=this._confirmation.create('','¿Estás seguro de continuar con el registro de este usuario?',this.settings)
+         .subscribe((ans: ResolveEmit) => ans.resolved?console.log('Usuario@save()'):console.log('cancel'));
     }
     public edit(valid : any, model : any):void{
-        console.log('Usuario@edit()');
+         let resolved=this._confirmation.create('','¿Estás seguro guardar los cambios de este usuario?',this.settings)
+         .subscribe((ans: ResolveEmit) => ans.resolved?console.log('Usuario@edit()'):console.log('cancel'));
+
     }
 
 
