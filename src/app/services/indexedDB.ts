@@ -11,20 +11,81 @@ export class CIndexedDB {
             console.log("Creando tablas para la BD");
             var indexedDB = window.indexedDB ;
             var open = indexedDB.open(this.nameDB, 1);
+            var obj=this;
+            var newDB=false;
             open.onupgradeneeded = () => {
                 console.log(" -> Inciando conexión a la BD");
                 var db    = open.result;
                 db.createObjectStore("casos", {keyPath: "id"})
                 db.createObjectStore("personas", {keyPath: "id"});
-                console.log(" -> Se crearon las tablas");
+                db.createObjectStore("delitos", {keyPath: "id"});
+                let catDel= db.createObjectStore("catalogoDelitos", {keyPath: "id"});
+                catDel.createIndex("indiceCatalogoDelito", "clasificacionId");
+                db.createObjectStore("clasificacionDelitos", {keyPath: "id"});
+                let r_catDel_del=db.createObjectStore("catalogoDelitos_delitos", {keyPath: "id"});
+                r_catDel_del.createIndex("indiceCatalogoDelito_delitos", "delitoId");
                 this.init = true;
+                console.log(" -> Se crearon las tablas");
                 localStorage.setItem('initDB', 'true');
+                newDB=true;
             };
+            open.onsuccess=function(){
+                if (newDB)
+                    obj.inicialiazaCatalogos();
+            }
         }else{
             console.log("La BD ya se encuentra inicializada ;)");
             this.init = true;
             localStorage.setItem('initDB', 'true');
         }
+    }
+
+    inicialiazaCatalogos(){
+        console.log("-> Inicializando carga de los catalogos");
+
+        var obj= this;
+        var indexedDB = window.indexedDB ;
+        var open = indexedDB.open(obj.nameDB, 1);
+        open.onsuccess = function() {
+            var db    = open.result;
+            
+            //inicializacion 
+            var tx    = db.transaction(["clasificacionDelitos","catalogoDelitos"], "readwrite");
+            var tabla = tx.objectStore("clasificacionDelitos");
+            var arrClaDel=[
+                {id:1, clasificacion: "Clasificacion 1"},
+                {id:2, clasificacion: "Clasificacion 2"},
+                {id:3, clasificacion: "Clasificacion 3"}
+            ];
+            obj.nextItem(0,arrClaDel,tabla);
+
+            var tabla = tx.objectStore("catalogoDelitos");
+            var arrCatalogoDelitos=[
+                {id:1, clasificacionId: 1, clave: "CVE. 1.1", descripcion:"Robo A"},
+                {id:2, clasificacionId: 1, clave: "CVE. 1.2", descripcion:"Robo B"},
+                {id:3, clasificacionId: 1, clave: "CVE. 1.3", descripcion:"Robo C"},
+                {id:4, clasificacionId: 2, clave: "CVE. 2.1", descripcion:"Robo D"},
+                {id:5, clasificacionId: 3, clave: "CVE. 3.1", descripcion:"Robo E"},
+                {id:6, clasificacionId: 3, clave: "CVE. 3.2", descripcion:"Robo F"},
+            ];
+            obj.nextItem(0,arrCatalogoDelitos,tabla);
+
+            //cerramos todas las conexiones
+            tx.oncomplete = function() {
+                db.close();
+                console.log("-> Finalizado carga de los catalogos");
+            }
+            
+
+        }  
+    }
+
+    nextItem(i,arr, store){
+        var obj=this;
+        if (i<arr.length) {
+            store.put(arr[i])
+            this.nextItem(i+1,arr,store);
+        } 
     }
 
     action(_table: string, _tipo:string, _data:any = null){
