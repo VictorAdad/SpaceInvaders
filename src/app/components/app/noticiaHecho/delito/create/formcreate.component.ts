@@ -3,6 +3,7 @@ import { MdDialogRef,MD_DIALOG_DATA } from '@angular/material';
 import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
     templateUrl: './formcreate.component.html',
@@ -27,65 +28,78 @@ export class FormCreateDelitoComponent {
 
     optionLista=[];
     addList=[];
+    listaBuscar=[];
     textSearch:string;
+    tabla:CIndexedDB;
+    listaDeSeleccionados=[];
+    clasificacion:number;
     constructor(
+        private _tabla: CIndexedDB,
         @Inject(MD_DIALOG_DATA) private data: {lista:any},
         public dialogRef: MdDialogRef<FormCreateDelitoComponent>
-        ){}
+        ){
+        this.tabla=_tabla;
+    }
 
     ngOnInit(){
         this.addList=this.data.lista;
-        this.dataSourceaddList=new ExampleDataSource(this.addList);
+        this.dataSourceaddList=new ExampleDataSource([]);
+        this.tabla.list("clasificacionDelitos").then(
+            lista=>{
+                for (let item in lista) {
+                    this.listaBuscar.push({
+                        label:lista[item].clasificacion, 
+                        value:lista[item].id});
+                }
+            });
     }
 
     displayedColumns = ['resultado'];
     dataSource = new ExampleDataSource(this.optionLista);
-    dataSourceaddList=new ExampleDataSource(this.addList);
+    dataSourceaddList=new ExampleDataSource([]);
     dataList=[
-                {
-                    clave:"Cve.266:266",
-                    descripcion:"Robo cometido cuando se aprovecha la falta de vigilancia o confunción ocasionada porun siniestro o un desorden."
-                },
-                {
-                    clave:"Cve.275:275",
-                    descripcion:"Robo en interior de vehículo automotor o recaiga sobre uno o más parte  que lo conforman  y se ejecuta con violencia."
-                },
-                {
-                    clave:"Cve.280:280",
-                    descripcion:"Robo en interior de vehículo automotor o recaiga sobre uno o más parte  que lo conforman  y se ejecuta con violencia."
-                },
-                {
-                    clave:"Cve.300:300",
-                    descripcion:"Robo en interior de vehículo automotor o recaiga sobre uno o más parte  que lo conforman  y se ejecuta con violencia."
-                },
-                {
-                    clave:"Cve.301:301",
-                    descripcion:"Robo en interior de vehículo automotor o recaiga sobre uno o más parte  que lo conforman  y se ejecuta con violencia."
-                },
-                {
-                    clave:"Cve.310:310",
-                    descripcion:"Robo en interior de vehículo automotor o recaiga sobre uno o más parte  que lo conforman  y se ejecuta con violencia."
-                }
+                
             ];
 
     buscar(value){
         this.optionLista=[];
-        if (value.length>0){
-            let n = this.dataList.length;
-            for(let i=0; i<n; i++){
-                if (this.dataList[i].clave.search(value)>-1 || this.dataList[i].descripcion.search(value)>-1){
-                    this.optionLista.push(this.dataList[i]);
+        console.log("Clasificacion",this.clasificacion);
+        if (this.clasificacion){
+            this.tabla.get("catalogoDelitos",IDBKeyRange.only(this.clasificacion),"indiceCatalogoDelito").then(
+            lista=>{
+                for (let item in lista) {
+                    if (lista[item].descripcion.indexOf(value)>-1 || lista[item].clave.indexOf(value)>-1){
+                        this.optionLista.push(lista[item]);
+                    }
                 }
-            }
+                this.dataSource = new ExampleDataSource(this.optionLista);
+            });
+
         }
+        
+        // if (value.length>0){
+        //     let n = this.dataList.length;
+        //     for(let i=0; i<n; i++){
+        //         if (this.dataList[i].clave.search(value)>-1 || this.dataList[i].descripcion.search(value)>-1){
+        //             this.optionLista.push(this.dataList[i]);
+        //         }
+        //     }
+        // }
             
-        this.dataSource = new ExampleDataSource(this.optionLista);
+        // this.dataSource = new ExampleDataSource(this.optionLista);
         
     }
 
     agregar(e){
-        this.addList.push(e);
-        this.dataSourceaddList=new ExampleDataSource(this.addList);
+        this.listaDeSeleccionados=[];
+        this.listaDeSeleccionados.push(e);
+        this.dataSourceaddList=new ExampleDataSource(this.listaDeSeleccionados);
+    }
+
+    guardar(){
+        if (this.listaDeSeleccionados.length>0){
+            this.addList.push(this.listaDeSeleccionados[0]);
+        }
     }
 }
 

@@ -21,6 +21,8 @@ export class CIndexedDB {
                 db.createObjectStore("delitos", {keyPath: "id"});
                 let catDel= db.createObjectStore("catalogoDelitos", {keyPath: "id"});
                 catDel.createIndex("indiceCatalogoDelito", "clasificacionId");
+                catDel.createIndex("indiceCatalogoDelitoAll", ["clasificacionId","clave","descripcion"]);
+                
                 db.createObjectStore("clasificacionDelitos", {keyPath: "id"});
                 let r_catDel_del=db.createObjectStore("catalogoDelitos_delitos", {keyPath: "id"});
                 r_catDel_del.createIndex("indiceCatalogoDelito_delitos", "delitoId");
@@ -88,7 +90,7 @@ export class CIndexedDB {
         } 
     }
 
-    action(_table: string, _tipo:string, _data:any = null){
+    action(_table: string, _tipo:string, _data:any = null, _index:string=""){
         var obj= this;
         var promesa = new Promise( 
             function(resolve,reject){
@@ -107,14 +109,36 @@ export class CIndexedDB {
                             store.put(json);
                             resolve(json);
                         }else if(_tipo=="get"){
-                            console.log("ok");
-                            var requets=store.get(_data);
-                            requets.onsuccess=function(){
-                                resolve(requets.result);
+                            if (_index==""){
+                                var requets=store.get(_data);
+                                requets.onsuccess=function(){
+                                    resolve(requets.result);
+                                }
+                                requets.onerror = function() {
+                                    resolve(null);
+                                }
+                            }else{
+                                var index = store.index(_index);
+                                //data tiene que ser un objeto del tipo IDBKeyRange
+                                var requets=index.openCursor(_data);
+                                //var requets=index.get();
+                                var resultado=[];
+                                requets.onsuccess=function(e){
+                                    console.log("#",e);
+                                    var cursor = e.target.result;
+                                    if(cursor) {
+                                        resultado.push(cursor.value);
+                                        cursor.continue();
+                                    } else {
+                                      resolve(resultado);
+                                    }
+                                    
+                                }
+                                requets.onerror = function() {
+                                    resolve(null);
+                                }
                             }
-                            requets.onerror = function() {
-                                resolve(null);
-                            }
+                            
                         }
                         else if(_tipo=="update"){
                             store.put(json);
@@ -170,8 +194,8 @@ export class CIndexedDB {
         return this.action(_table, "list");
     }
     //es 
-    get(_table:string, _key:any){
-        return this.action(_table, "get", _key);
+    get(_table:string, _key:any, _index:string=""){
+        return this.action(_table, "get", _key,_index);
     }
 
 }
