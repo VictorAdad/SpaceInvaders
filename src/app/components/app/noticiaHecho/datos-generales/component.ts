@@ -1,11 +1,11 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Caso } from '@models/caso';
 import { GlobalComponent } from '@components-app/global.component';
 import { LoaderComponent } from '@partials/loader/component';
 import { MdDialog } from '@angular/material';
 import { CIndexedDB } from '@services/indexedDB';
-import {Router} from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
     selector : 'datos-generales',
@@ -13,25 +13,53 @@ import {Router} from '@angular/router';
 })
 export class DatosGeneralesComponent implements OnInit{
     public form    : FormGroup;
-    public model   : Caso;
+    public id      : number = null;
     private db     : CIndexedDB;
     private router : Router;
+    private activeRoute : ActivatedRoute;
+    @Input()
+    public model   : Caso;
 
     public constructor(
         private _fbuilder: FormBuilder,
         _db: CIndexedDB,
-        _router: Router
+        _router: Router,
+        _activeRoute: ActivatedRoute
     ) { 
         this.db = _db;
         this.router = _router;
+        this.activeRoute = _activeRoute;
     }
 
     ngOnInit(){
-        this.model = new Caso();
-        this.form  = new FormGroup({
-            'titulo'   : new FormControl(this.model.titulo, [Validators.required]),
-            'sintesis' : new FormControl(this.model.sintesis, [Validators.required]),
-            'delito'   : new FormControl(this.model.delito, [Validators.required])
+        if(this.model == null){
+            this.model = new Caso();
+            this.form  = new FormGroup({
+                'titulo'   : new FormControl(this.model.titulo,   [Validators.required]),
+                'sintesis' : new FormControl(this.model.sintesis, [Validators.required]),
+                'delito'   : new FormControl(this.model.delito,   [Validators.required])
+            });
+        }else{
+            var json = JSON.stringify(this.modelo);
+            this.form  = new FormGroup({
+                'titulo'   : new FormControl(this.model.titulo),
+                'sintesis' : new FormControl(this.model.sintesis),
+                'delito'   : new FormControl(this.model.delito)
+            });
+            console.log('model', this.model.titulo);
+            this.form.setValue({
+                'titulo' : this.model.titulo,
+                'sintesis' : this.model.sintesis,
+                'delito' : this.model.delito
+            },{ emitEvent: true});
+            console.log('-> Form', this.form);
+            console.log('-> Form', this.form.value);
+            console.log('-> Form', this.form);
+        }
+
+        this.activeRoute.params.subscribe(params => {
+            if(params['id'])
+                this.id = +params['id'];
         });
     }
 
@@ -39,8 +67,12 @@ export class DatosGeneralesComponent implements OnInit{
         console.log('-> Caso@save()', _model);
         _model.created = new Date();
         this.db.add('casos', _model).then(object => {
-            this.router.navigate(['/noticia-hecho', object['id']]);
+            this.router.navigate(['/caso/'+object['id']+'/noticia-hecho' ]);
         });
+    }
+
+    public validForm(): string{
+        return !this.form.valid ? 'No se han llenado los campos requeridos' : ''
     }
 
 }

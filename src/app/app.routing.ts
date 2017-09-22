@@ -61,7 +61,7 @@ const routes: Routes = [
     { path : '', component: HomeComponent, data : { breadcrumb : 'Noticia de hechos'}},
     { path : 'login', component: LoginComponent,  data : { breadcrumb : 'Login' } },
     { path : 'noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
-    { path : 'noticia-hecho/:id', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
+    { path : 'caso/:id/noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
     { path : 'usuarios', component : UsuariosComponent, data : { breadcrumb : 'Usuarios' } },
     { path : 'usuarios/create', component : UsuarioCreateComponent, data : { breadcrumb : 'Crear usuario', rutas:[{path:'/usuarios',label:"Usuarios"}] } },
     { path : 'usuarios/edit/:id',component : UsuarioCreateComponent,data : { breadcrumb : 'Editar usuario', rutas:[{path:'/usuarios',label:"Usuarios"}] } },

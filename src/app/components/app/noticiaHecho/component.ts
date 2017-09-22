@@ -1,5 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CIndexedDB } from '@services/indexedDB';
+import { Caso } from '@models/caso'
 declare var componentHandler: any;
 
 @Component({
@@ -11,10 +13,14 @@ declare var componentHandler: any;
 
 export class NoticiaHechoComponent implements OnInit{
 
-	id: number = null;
+	public id: number = null;
+	public caso: Caso = new Caso();
+	private db: CIndexedDB;
 	private sub: any;
 
-	constructor(private route: ActivatedRoute) {}
+	constructor(private route: ActivatedRoute, private _db: CIndexedDB) {
+		this.db = _db;
+	}
 
 	ngOnInit(){
 		if (componentHandler) {
@@ -26,7 +32,9 @@ export class NoticiaHechoComponent implements OnInit{
 				this.id = +params['id'];
 	    });
 
-	    console.log('-> ID: ', this.id);
+	    this.db.get("casos", this.id).then(object => {
+	    	this.caso = Object.assign(this.caso, object);;
+	    });
 	}
 
 	hasId(): boolean{
