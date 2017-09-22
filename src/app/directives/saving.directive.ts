@@ -17,11 +17,8 @@ export class SavingDirective{
 		console.log('SavingDirective@save()');
 		this.prepareSave(true);
 		this.saveFn.emit();
-		setTimeout(() => {
-			this.prepareSave(false);
-			this.globalService.openSnackBar('Registro guardado con éxito');
-		}, 3000);
-		
+		this.prepareSave(false);
+		this.globalService.openSnackBar('Registro guardado con éxito');
 	}
 
 	private getSaveingText(_saving : boolean): string{

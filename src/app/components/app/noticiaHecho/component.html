@@ -15,68 +15,72 @@
                     <md-icon class="d-inline">class</md-icon>
                     <label class="d-xs-none d-sm-none d-md-inline">Datos generales</label>
                 </a>
-                <a href="#tab2-panel" class="mdl-tabs__tab disabled">
-                    <md-icon>assignment_ind</md-icon>
-                    <label class="d-xs-none d-sm-none d-md-inline">Personas</label>
-                </a>
-                <a href="#tab3-panel" class="mdl-tabs__tab">
-                    <md-icon>gavel</md-icon>
-                    <label class="d-xs-none d-sm-none d-md-inline">Delitos</label>
-                </a>
-                <a href="#tab4-panel" class="mdl-tabs__tab">
-                    <md-icon>room</md-icon>
-                    <label class="d-xs-none d-sm-none d-md-inline">Lugares</label>
-                </a>
-                <a href="#tab5-panel" class="mdl-tabs__tab">
-                    <md-icon>room</md-icon>
-                    <label class="d-xs-none d-sm-none d-md-inline">Armas</label>
-                </a>
-                <a href="#tab6-panel" class="mdl-tabs__tab">
-                    <md-icon>directions_car</md-icon>
-                    <label class="d-xs-none d-sm-none d-md-inline">Vehículos</label>
-                </a>
-                <a href="#tab7-panel" class="mdl-tabs__tab">
-                    <md-icon>compare_arrows</md-icon>
-                    <label class="d-xs-none d-sm-none d-md-inline">Relaciones</label>
-                </a>
-                <a href="#tab8-panel" class="mdl-tabs__tab">
-                    <md-icon>description</md-icon>
-                    <label class="d-xs-none d-sm-none d-md-inline">Titulares</label>
-                </a>
-                <a href="#tab9-panel" class="mdl-tabs__tab">
-                    <md-icon>insert_drive_file</md-icon>
-                    <label class="d-xs-none d-sm-none d-md-inline">Documentos</label>
-                </a>
+                <div *ngIf="hasId()">
+                    <a href="#tab2-panel" class="mdl-tabs__tab disabled">
+                        <md-icon>assignment_ind</md-icon>
+                        <label class="d-xs-none d-sm-none d-md-inline">Personas</label>
+                    </a>
+                    <a href="#tab3-panel" class="mdl-tabs__tab">
+                        <md-icon>gavel</md-icon>
+                        <label class="d-xs-none d-sm-none d-md-inline">Delitos</label>
+                    </a>
+                    <a href="#tab4-panel" class="mdl-tabs__tab">
+                        <md-icon>room</md-icon>
+                        <label class="d-xs-none d-sm-none d-md-inline">Lugares</label>
+                    </a>
+                    <a href="#tab5-panel" class="mdl-tabs__tab">
+                        <md-icon>room</md-icon>
+                        <label class="d-xs-none d-sm-none d-md-inline">Armas</label>
+                    </a>
+                    <a href="#tab6-panel" class="mdl-tabs__tab">
+                        <md-icon>directions_car</md-icon>
+                        <label class="d-xs-none d-sm-none d-md-inline">Vehículos</label>
+                    </a>
+                    <a href="#tab7-panel" class="mdl-tabs__tab">
+                        <md-icon>compare_arrows</md-icon>
+                        <label class="d-xs-none d-sm-none d-md-inline">Relaciones</label>
+                    </a>
+                    <a href="#tab8-panel" class="mdl-tabs__tab">
+                        <md-icon>description</md-icon>
+                        <label class="d-xs-none d-sm-none d-md-inline">Titulares</label>
+                    </a>
+                    <a href="#tab9-panel" class="mdl-tabs__tab">
+                        <md-icon>insert_drive_file</md-icon>
+                        <label class="d-xs-none d-sm-none d-md-inline">Documentos</label>
+                    </a>
+                </div>
             </div>
         </div>
        <div class="col-md-9 col-sm-10">
             <div class="mdl-tabs__panel is-active" id="tab1-panel">
                  <datos-generales></datos-generales>
             </div>
-            <div class="mdl-tabs__panel" id="tab2-panel">
-                 <persona></persona>
+            <div *ngIf="hasId()">
+                <div class="mdl-tabs__panel" id="tab2-panel">
+                     <persona></persona>
+                </div>
+                <div class="mdl-tabs__panel" id="tab3-panel">
+                      <delito></delito>
+                </div>
+                <div class="mdl-tabs__panel" id="tab4-panel">
+                     <lugar></lugar>
+                </div>
+                <div class="mdl-tabs__panel" id="tab5-panel">
+                     <arma></arma>
+                </div>
+                <div class="mdl-tabs__panel" id="tab6-panel">
+                      <vehiculo></vehiculo>
+                </div>
+                <div class="mdl-tabs__panel" id="tab7-panel">
+                     <relacion></relacion>
+                </div>
+                <div class="mdl-tabs__panel" id="tab8-panel">
+                     <titular></titular>
+                </div>
+                <div class="mdl-tabs__panel" id="tab9-panel">
+                    <documento></documento>
+               </div>
             </div>
-            <div class="mdl-tabs__panel" id="tab3-panel">
-                  <delito></delito>
-            </div>
-            <div class="mdl-tabs__panel" id="tab4-panel">
-                 <lugar></lugar>
-            </div>
-            <div class="mdl-tabs__panel" id="tab5-panel">
-                 <arma></arma>
-            </div>
-            <div class="mdl-tabs__panel" id="tab6-panel">
-                  <vehiculo></vehiculo>
-            </div>
-            <div class="mdl-tabs__panel" id="tab7-panel">
-                 <relacion></relacion>
-            </div>
-            <div class="mdl-tabs__panel" id="tab8-panel">
-                 <titular></titular>
-            </div>
-            <div class="mdl-tabs__panel" id="tab9-panel">
-                <documento></documento>
-           </div>
         </div>
     </div>
 </div>

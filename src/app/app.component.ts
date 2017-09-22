@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AuthenticationService } from '@services/auth/authentication.service';
 import { GlobalService } from '@services/global.service';
@@ -20,20 +20,27 @@ export class AppComponent {
 		public authService: AuthenticationService,
 		private router : Router,
 		private titleService: Title,
-    public globalService : GlobalService,
-    private servicio: OnLineService
+    	public globalService : GlobalService,
+    	private servicio: OnLineService,
+    	private activeRoute: ActivatedRoute
 	) {
         this._SIDEBAR = false;
     }
 
 	ngOnInit(){
+		this.titleService.setTitle(this.createTitle());
 	}
 
-    private titlesToString(titles) {
-        return titles.reduce((prev, curr) => {
-            return `${curr.displayName} - ${prev}`;
-        }, "");
+    private createTitle() {
+        const title = 'SIGI';
+        let routeTitle = '';
+        this.activeRoute.data.subscribe(data => {
+            if (data.breadcrumb)
+                routeTitle = data.breadcrumb;
+	    });
+        return `${routeTitle} ${title}`;
     }
+
 	isLoggedIn()
 	{
 		return this.authService.isLoggedIn();

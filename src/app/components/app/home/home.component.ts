@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute }    from '@angular/router';
+import { CIndexedDB } from '@services/indexedDB';
+import { Caso } from '@models/caso';
 
 @Component({
     templateUrl: './home.component.html',
@@ -7,50 +9,22 @@ import { ActivatedRoute }    from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-    folders = [
-    {
-      name    : 'NIC: CAI/AIN/00/UAI/268/00126/17/08   NUC: CAI/AIN/00/UAI/268/00126/17/08',
-      titulo  : 'Título de la noticia de hechos',
-      descripcion: 'Esta es una breve y muy corta descripción', 
-      updated:   this.fecha()
-    },
-    {
-      name: 'NIC: CAI/AIN/00/UAI/268/00126/17/08   NUC: CAI/AIN/00/UAI/268/00126/17/08',
-      titulo  : 'Título de la noticia de hechos',
-      descripcion: 'Esta es una breve y muy corta descripción',
-      updated:   this.fecha()
-    },
-    {
-      name: 'NIC: CAI/AIN/00/UAI/268/00126/17/08   NUC: CAI/AIN/00/UAI/268/00126/17/08',
-      titulo  : 'Título de la noticia de hechos',
-      descripcion: 'Esta es una breve y muy corta descripción',
-      updated:   this.fecha()
-    },
-    {
-      name    : 'NIC: CAI/AIN/00/UAI/268/00126/17/08   NUC: CAI/AIN/00/UAI/268/00126/17/08',
-      titulo  : 'Título de la noticia de hechos',
-      descripcion: 'Esta es una breve y muy corta descripción',
-      updated:   this.fecha()
-    },
-    {
-      name: 'NIC: CAI/AIN/00/UAI/268/00126/17/08   NUC: CAI/AIN/00/UAI/268/00126/17/08',
-      titulo  : 'Título de la noticia de hechos',
-      descripcion: 'Esta es una breve y muy corta descripción',
-      updated:   this.fecha()
-    },
-    {
-      name: 'NIC: CAI/AIN/00/UAI/268/00126/17/08   NUC: CAI/AIN/00/UAI/268/00126/17/08',
-      titulo  : 'Título de la noticia de hechos',
-      descripcion: 'Esta es una breve y muy corta descripción',
-      updated:   this.fecha()
-    }
-    ];
+    private db: CIndexedDB;
+    casos: Caso[] = [];
     
 
-    constructor(private route: ActivatedRoute) { }
+    constructor(private route: ActivatedRoute, private _db: CIndexedDB) {
+        this.db = _db;
+    }
 
     ngOnInit(){
-        console.log('-> Route', this.route);
+        this.db.list('casos').then(list => {
+            for(let object in list){
+                let caso = new Caso();
+                Object.assign(caso, list[object]);
+                this.casos.push(caso);
+            }
+        });
     }
     fecha (){
            let meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];

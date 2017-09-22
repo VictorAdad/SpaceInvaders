@@ -44,9 +44,9 @@ export class BreadcrumbComponent implements OnInit {
    */
   ngOnInit() {
     let url = this.router.url;
-    console.log(this.router);
+    // console.log(this.activeRoute);
     this.breadcrumb=this.dataRouting(this.router.url, this.router.config, this.router);
-    console.log('-> Breadcrumb ', this.breadcrumb);
+    // console.log('-> Breadcrumb ', this.breadcrumb);
   }
 
   dataRouting(theUrl, config, router){

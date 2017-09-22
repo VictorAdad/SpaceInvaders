@@ -1,4 +1,5 @@
 export class Caso {
+	id       : number;
     titulo   : string;
     sintesis : string;
     delito   : string;

@@ -4,17 +4,26 @@ import { Caso } from '@models/caso';
 import { GlobalComponent } from '@components-app/global.component';
 import { LoaderComponent } from '@partials/loader/component';
 import { MdDialog } from '@angular/material';
+import { CIndexedDB } from '@services/indexedDB';
+import {Router} from '@angular/router';
 
 @Component({
     selector : 'datos-generales',
     templateUrl:'./component.html'
 })
 export class DatosGeneralesComponent implements OnInit{
-    public form       : FormGroup;
-    public model      : Caso;
+    public form    : FormGroup;
+    public model   : Caso;
+    private db     : CIndexedDB;
+    private router : Router;
 
-    public constructor(private _fbuilder: FormBuilder) { 
-        
+    public constructor(
+        private _fbuilder: FormBuilder,
+        _db: CIndexedDB,
+        _router: Router
+    ) { 
+        this.db = _db;
+        this.router = _router;
     }
 
     ngOnInit(){
@@ -26,48 +35,12 @@ export class DatosGeneralesComponent implements OnInit{
         });
     }
 
-    public save(valid : any, model : any):void{
-        // This works on all devices/browsers, and uses IndexedDBShim as a final fallback 
-        var indexedDB = window.indexedDB ;
-
-        // Open (or create) the database
-        //por una estraña razon no funciona los nombres si la M antes
-        var open = indexedDB.open("MEvomatik", 1);
-
-        // Create the schema
-        open.onupgradeneeded = function() {
-            var db = open.result;
-            var store = db.createObjectStore("MCasos", {keyPath: "id"});
-            var index = store.createIndex("Index", ["titulo", "delito"]);
-        };
-
-        open.onsuccess = function() {
-            // Start a new transaction
-            var db = open.result;
-            var tx = db.transaction("MCasos", "readwrite");
-            var store = tx.objectStore("MCasos");
-            var index = store.index("Index");
-
-            // Add some data
-            let json = model;
-            json.id = Date.now();
-
-            //add or update
-            store.put(json);
-
-            var list=store.getAll();
-            list.onsuccess=function(){
-                var datos=list.result;
-                console.log(datos);
-            }
-            
-            
-            // Close the db when the transaction is done
-            tx.oncomplete = function() {
-                db.close();
-            };
-        }
-        console.log('DatosGenerales@save()');
+    public save(_valid : any, _model : any):void{
+        console.log('-> Caso@save()', _model);
+        _model.created = new Date();
+        this.db.add('casos', _model).then(object => {
+            this.router.navigate(['/noticia-hecho', object['id']]);
+        });
     }
 
 }

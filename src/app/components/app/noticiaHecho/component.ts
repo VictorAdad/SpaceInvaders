@@ -28,4 +28,14 @@ export class NoticiaHechoComponent implements OnInit{
 
 	    console.log('-> ID: ', this.id);
 	}
+
+	hasId(): boolean{
+		let hasId = false
+		this.sub = this.route.params.subscribe(params => {
+	    	if(params['id'])
+				hasId = true;
+	    });
+
+	    return hasId;
+	}
 }

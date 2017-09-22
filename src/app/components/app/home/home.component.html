@@ -15,17 +15,17 @@
             </div>
         </div>
         <md-list>
-            <md-list-item *ngFor="let folder of folders">
+            <md-list-item *ngFor="let caso of casos">
                 <md-icon md-list-icon>folder</md-icon>
-                <h4 md-line>{{folder.name}}</h4>
-                <h4 class="text-muted" md-line md-subheade>{{folder.titulo}}</h4>
-                <h4 class="text-muted" md-line md-subheade>{{folder.descripcion}}</h4>
-                <p md-line>{{folder.updated}}</p>
+                <h4 md-line>{{caso.name}}</h4>
+                <h4 class="text-muted" md-line md-subheade>{{caso.titulo}}</h4>
+                <h4 class="text-muted" md-line md-subheade>{{caso.descripcion}}</h4>
+                <p md-line>{{caso.updated}}</p>
                 <button md-icon-button [mdMenuTriggerFor]="menuCaso">
                     <md-icon>more_horiz</md-icon>
                 </button>
                 <md-menu #menuCaso="mdMenu">
-                    <button md-menu-item routerLink="/detalle">
+                    <button md-menu-item routerLink="/detalle/{{caso.id}}">
                         <md-icon fxHide="false" fxHide.gt-sm>remove_red_eye</md-icon>Ver
                     </button>
                 </md-menu>
