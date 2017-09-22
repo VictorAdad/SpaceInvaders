@@ -1,28 +1,76 @@
 <breadcrumb></breadcrumb>
-<div class="content-body">
-	<div class="row">
-		<div class="col-md-6">
-			<h2>Crear usuario </h2>
-		</div>
+<div class="row">
+	<div class="col-md-6 space">
+		<h2>{{titulo}}</h2>
 	</div>
-	<div class="">
-		<div class="row justify-content-md-center">
-			<div class="col-md-10">
-				<form>
-					<text label="id" [(value)]="dato.id"  prefix="hola" sufix="mode_edit"></text>  
-					<text label="Nombres(s)" [(value)]="dato.nombre"  ></text>
-					<text label="Apellido paterno" [(value)]="dato.paterno"></text>
-					<text label="Apellido materno" [(value)]="dato.materno"></text>
-					<text label="Nombre de usuario" [(value)]="dato.usuario"></text>
-					<checkbox label="Checkbox"></checkbox>
-					<date></date>
-					<text-area label="Texto"></text-area>
-					<radiobutton [radios]="datosR" [(value)]="dato.nombre"></radiobutton> 
-					<p>
-				      <button md-button (click)="save(dato)" type="submit">Guardar</button>
-				    </p>
-				</form>
-			</div>
-		</div>
+	<div class="col-md-6 space">
+		<button class="float-right" md-raised-button routerLink="/noticia-hecho" color="accent">Regresar</button>
+	</div>
+	<div class="col-md-12">
+		<form [formGroup]="form">
+			    <div class="row">
+				    <div class="col-md-4 col-sm-12 col-lg-4">
+				    <!--[disabled]= "isEditForm"-->
+				    	<text label="Nombre de usuario" name="usuario" [(value)]="model.usuario" [group]="form" ></text>  
+				    </div>
+				    <div class="col-md-4 col-sm-12 col-lg-4">
+				    	<text label="Nombre(s)" name="nombre" [(value)]="model.nombre" [group]="form"></text>  
+				    </div>
+				    <div class="col-md-4 col-sm-12 col-lg-4">
+				    	<text label="Apellido paterno" name="apellidoPaterno" [(value)]="model.apellidoPaterno" [group]="form"></text>  
+				    </div>
+			    </div>
+
+			    <div class="row">
+				    <div class="col-md-4 col-sm-12 col-lg-4">
+				    	<text label="Apellido materno" name="apellidoMaterno" [(value)]="model.apellidoMaterno" [group]="form"></text>  
+				    </div>
+				    <div class="col-md-4 col-sm-12 col-lg-4">
+				    	<text label="Número de contacto" name="numeroContacto" [(value)]="model.numeroContacto" [group]="form"></text>  
+				    </div>
+				    <div class="col-md-4 col-sm-12 col-lg-4">
+				    	<select2 placeholder= "Sexo" name="sexo"  [(value)]="model.sexo" [(options)] ="sexos"  [group]="form"></select2> 
+				    </div>
+			    </div>	
+			    <div class="row">
+				    <div class="col-md-4 col-sm-12 col-lg-4">
+				    	<text label="Distrito al que pertenece" name="distrito" [(value)]="model.distrito" [group]="form"></text>  
+				    </div>
+				    <div class="col-md-4 col-sm-12 col-lg-4">
+				    	<text label="Fiscalía a la que pertenece" name="fiscalia" [(value)]="model.fiscalia" [group]="form"></text>  
+				    </div>
+				    <div class="col-md-4 col-sm-12 col-lg-4">
+				    	<select2 placeholder= "Agencia de adscripción" name="agenciaAdscripcion"  [(value)]="model.agenciaAdscipcion" [(options)] ="sexos"  [group]="form"></select2> 
+				    </div>
+			    </div>	
+			    <div class="row">
+				    <div class="col-md-4 col-sm-12 col-lg-4">
+				    	<text label="Turno" name="turno" [(value)]="model.turno" [group]="form"></text>  
+				    </div>
+				    <div class="col-md-4 col-sm-12 col-lg-4">
+				    	<text label="Correo electrónico" name="email" [(value)]="model.email" [group]="form"></text>  
+				    </div>
+				    <div class="col-md-4 col-sm-12 col-lg-4">
+				    	<text label="Número de gafete" name="numeroGafete" [(value)]="model.numeroGafete" [group]="form"></text>  
+				    </div>
+			    </div>	
+			    <div class="row ">
+				    <div class="col-md-4 col-sm-12 col-lg-4">
+				    	<select2 placeholder= "Cargo" name="cargo"  [(value)]="model.cargo" [(options)] ="cargos"  [group]="form"></select2> 
+				    </div>
+
+				    <div class="col-md-2 col-sm-6 col-lg-2 m-3">
+				       <label>Permisos a otorgar </label>
+				        <radiobutton label="Permisos a otorgar"[(value)]="permiso" [radios]="permisos" name="permiso"  [group]="form" >Permisos a otorgar </radiobutton>
+		  
+				    </div>
+				    <div class="col-md-2 col-sm-6 col-lg-2">
+		                 <checkbox label="Inhabilitado" [(value)]="inhabilitado" ></checkbox>
+				    </div>
+			    </div>
+				<div class="row space"></div>
+			  	<button class="float-right" md-button>Cancelar</button>	
+				<button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid">Guardar</button>
+		</form>
 	</div>
 </div>

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { UsuarioComponent } from '@components-app/usuario/usuario.component';
+import { UsuariosComponent } from '@components-app/usuario/usuarios.component';
 import { UsuarioCreateComponent } from '@components-app/usuario/create/create.component';
 import { HomeComponent } from '@components-app/home/home.component';
 import { NoticiaHechoComponent } from '@components-app/noticiaHecho/component';
@@ -62,8 +62,9 @@ const routes: Routes = [
     { path : 'login', component: LoginComponent,  data : { breadcrumb : 'Login' } },
     { path : 'noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
     { path : 'noticia-hecho/:id', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
-    { path : 'usuarios', component : UsuarioComponent, data : { breadcrumb : 'Usuarios' } },
-    { path : 'usuarios/create', component : UsuarioCreateComponent, data : { breadcrumb : 'Crear usuarios', rutas:[{path:'algo',label:"Otra ruta"}, {path:'/papu',label:"Otra ruta2"}] } },
+    { path : 'usuarios', component : UsuariosComponent, data : { breadcrumb : 'Usuarios' } },
+    { path : 'usuarios/create', component : UsuarioCreateComponent, data : { breadcrumb : 'Crear usuario', rutas:[{path:'/usuarios',label:"Usuarios"}] } },
+    { path : 'usuarios/edit/:id',component : UsuarioCreateComponent,data : { breadcrumb : 'Editar usuario', rutas:[{path:'/usuarios',label:"Usuarios"}] } },
     { path : 'armas', component : ArmaComponent, data : { breadcrumb : 'Armas' } },
     { path : 'armas/create', component : ArmaCreateComponent, data : { breadcrumb : 'Nueva arma', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}] } },
     { path : 'lugares', component :  LugarComponent, data : { breadcrumb : 'Lugares' }},
@@ -122,7 +123,7 @@ const routes: Routes = [
 export class AppRoutingModule {}
 
 export const routingComponents = [
-	UsuarioComponent,
+	UsuariosComponent,
 	UsuarioCreateComponent,
 	ArmaComponent,
 	ArmaCreateComponent,
