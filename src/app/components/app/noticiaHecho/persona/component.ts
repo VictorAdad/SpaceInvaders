@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { CIndexedDB } from '@services/indexedDB';
-import {Persona} from '@models/persona';
+import { Persona } from '@models/persona';
 
 @Component({
     selector : 'persona',
@@ -16,13 +16,14 @@ export class PersonaComponent implements OnInit{
     tabla: CIndexedDB;
     @ViewChild(MdPaginator) paginator: MdPaginator;
 
-    constructor(){}
+    constructor(private _tabla: CIndexedDB){
+        this.tabla = _tabla;
+    }
 
     ngOnInit(){
         //Nota: si marca error es por que ya existe la base de datos y no se le puede agregar una nueva tabla
         //para solucionarlo borra la base evomatik
-        this.tabla=new CIndexedDB("Evomatik","PersonaDelito"); 
-        this.tabla.list().then(lista=>{
+        this.tabla.list("personas").then(lista => {
             this.dataSource = new TableService(this.paginator, lista);
         });
         this.dataSource = new TableService(this.paginator, data);

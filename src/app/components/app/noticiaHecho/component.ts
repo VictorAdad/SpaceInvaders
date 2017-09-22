@@ -11,7 +11,7 @@ declare var componentHandler: any;
 
 export class NoticiaHechoComponent implements OnInit{
 
-	id: number;
+	id: number = null;
 	private sub: any;
 
 	constructor(private route: ActivatedRoute) {}
@@ -22,7 +22,8 @@ export class NoticiaHechoComponent implements OnInit{
         }
 
 	    this.sub = this.route.params.subscribe(params => {
-			this.id = +params['id'];
+	    	if(params['id'])
+				this.id = +params['id'];
 	    });
 
 	    console.log('-> ID: ', this.id);

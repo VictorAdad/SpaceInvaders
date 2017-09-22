@@ -20,20 +20,22 @@ export class PersonaFisicaImputadoComponent{
 	detenido: boolean = false;
 	tabla: CIndexedDB;
 
+	constructor(
+		private _fbuilder: FormBuilder,
+		private router:Router,
+		private _tabla: CIndexedDB) {
+		this.tabla = _tabla;
+	}
 
 	muestraDatos(){
 		return true;
 	}
-
-
 
 	changeDetenido(e){
 		this.detenido=e.checked;
 		this.persona.detenido=e.checked;
 		console.log(this.detenido);
 	}
-
-	constructor(private _fbuilder: FormBuilder, private router:Router) { }
 
 	ngOnInit(){
 		this.form  = new FormGroup({
@@ -46,8 +48,6 @@ export class PersonaFisicaImputadoComponent{
   		this.persona.tipoPersona="";
   		this.persona.tipoInterviniente="";
   		this.persona.detenido=false;
-  		this.tabla=new CIndexedDB("Evomatik","PersonaDelito"); 
-  			
 	}
 
 	activaRazonSocial(value){
@@ -58,7 +58,7 @@ export class PersonaFisicaImputadoComponent{
 	}
 
 	save(valid : any, model : any):void{
-		this.tabla.add(this.persona).then(
+		this.tabla.add('persona', this.persona).then(
 			p => {
 				console.log('-> Persona Guardada',p);
 				this.router.navigate(['/noticia-hecho']);

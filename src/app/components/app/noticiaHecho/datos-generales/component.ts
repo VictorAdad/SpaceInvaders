@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { DatosGenerales } from '@models/datosGenerales';
+import { Caso } from '@models/caso';
 import { GlobalComponent } from '@components-app/global.component';
 import { LoaderComponent } from '@partials/loader/component';
 import { MdDialog } from '@angular/material';
@@ -11,14 +11,14 @@ import { MdDialog } from '@angular/material';
 })
 export class DatosGeneralesComponent implements OnInit{
     public form       : FormGroup;
-    public model      : DatosGenerales;
+    public model      : Caso;
 
     public constructor(private _fbuilder: FormBuilder) { 
         
     }
 
     ngOnInit(){
-        this.model = new DatosGenerales();
+        this.model = new Caso();
         this.form  = new FormGroup({
             'titulo'   : new FormControl(this.model.titulo, [Validators.required]),
             'sintesis' : new FormControl(this.model.sintesis, [Validators.required]),

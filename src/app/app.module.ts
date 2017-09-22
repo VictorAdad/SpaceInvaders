@@ -24,6 +24,7 @@ import { MiservicioService} from "./services/miservicio.service";
 import { AuthenticationService} from "@services/auth/authentication.service";
 import { GlobalService } from "@services/global.service";
 import { OnLineService } from "@services/onLine.service";
+import { CIndexedDB } from '@services/indexedDB';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { OnLineService } from "@services/onLine.service";
     MiservicioService,
     AuthenticationService,
     GlobalService,
-    OnLineService
+    OnLineService,
+    CIndexedDB
   ],
   entryComponents: [
     dyanamicComponents
