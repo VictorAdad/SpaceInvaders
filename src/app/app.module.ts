@@ -43,6 +43,7 @@ import {MdCardModule} from '@angular/material';
 import {MdTabsModule} from '@angular/material';
 import {MdButtonModule} from '@angular/material';
 import {MdInputModule} from '@angular/material';
+import {MatCheckboxModule} from '@angular/material';
 
 
 @NgModule({
@@ -83,6 +84,7 @@ import {MdInputModule} from '@angular/material';
     MdTabsModule,
     MdButtonModule,
     MdInputModule,
+    MatCheckboxModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     PartialsModule,
