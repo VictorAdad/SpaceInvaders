@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MaterialModule, MdNativeDateModule} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -27,6 +26,24 @@ import { OnLineService } from "@services/onLine.service";
 import { CIndexedDB } from '@services/indexedDB';
 import { JasperoConfirmationsModule } from '@jaspero/ng2-confirmations';
 
+import { MdNativeDateModule, MdIconModule} from '@angular/material';
+import {MdMenuModule} from '@angular/material';
+import {MdPaginatorModule} from '@angular/material';
+import {MdTableModule} from '@angular/material';
+import {MdExpansionModule} from '@angular/material';
+import {MdDatepickerModule} from '@angular/material';
+import {MdRadioModule} from '@angular/material';
+import {MdAutocompleteModule} from '@angular/material';
+import {MdSelectModule} from '@angular/material';
+import {MdTooltipModule} from '@angular/material';
+import {MdSnackBarModule} from '@angular/material';
+import {MdToolbarModule} from '@angular/material';
+import {MdListModule} from '@angular/material';
+import {MdCardModule} from '@angular/material';
+import {MdTabsModule} from '@angular/material';
+import {MdButtonModule} from '@angular/material';
+import {MdInputModule} from '@angular/material';
+
 
 @NgModule({
   declarations: [
@@ -48,8 +65,24 @@ import { JasperoConfirmationsModule } from '@jaspero/ng2-confirmations';
   ],
   imports: [
     BrowserModule,
-    MaterialModule,
     MdNativeDateModule,
+    MdIconModule,
+    MdMenuModule,
+    MdPaginatorModule,
+    MdTableModule,
+    MdExpansionModule,
+    MdDatepickerModule,
+    MdRadioModule,
+    MdAutocompleteModule,
+    MdSelectModule,
+    MdTooltipModule,
+    MdSnackBarModule,
+    MdToolbarModule,
+    MdListModule,
+    MdCardModule,
+    MdTabsModule,
+    MdButtonModule,
+    MdInputModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     PartialsModule,
