@@ -100,6 +100,11 @@ export class FormCreateDelitoComponent {
         if (this.listaDeSeleccionados.length>0){
             this.addList.push(this.listaDeSeleccionados[0]);
         }
+        this.dialogRef.close();
+    }
+
+    cerrar(){
+        this.dialogRef.close();
     }
 }
 
