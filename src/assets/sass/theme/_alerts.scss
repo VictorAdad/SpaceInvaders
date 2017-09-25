@@ -1,14 +1,18 @@
 
-.jaspero__dialog-actions[_ngcontent-c15] button.primary[_ngcontent-c15] {
+.jaspero__dialog-actions button.primary {
 	background-color: #b71c1c !important;
 	color:#FFF !important;
 }
-.jaspero__dialog[_ngcontent-c15]{
+.jaspero__dialog{
 	width: 40% !important;
 	height: 30% !important;
 	max-width: 50%!important;
 }
-.jaspero__dialog-content[_ngcontent-c15]{
-	justify-content: space-around !important;
-	padding: 24px 24px 24px;
+.jaspero__dialog-content{
+	line-height: normal;
+	padding: 36px 78px 24px !important;
+}
+
+.jaspero__dialog-title{
+	padding-left: 144px !important;
 }
