@@ -23,7 +23,7 @@ export class SavingDirective{
 
 	@HostListener('click') save() {
 		console.log('SavingDirective@save()');
-		this._confirmation.create('','¿Estás seguro de guardar la información?',this.settings)
+		this._confirmation.create('Advertencia','¿Estás seguro de guardar la información?',this.settings)
          .subscribe(
          	(ans: ResolveEmit) => {
          		// console.log(ans);
