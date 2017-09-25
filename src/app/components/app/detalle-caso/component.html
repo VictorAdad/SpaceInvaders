@@ -2,93 +2,104 @@
 <div class="row space">
     <div class="col-md-12">
         <md-card>
-            <!--<md-card-header>
-                <md-card-title>
-                    <h2>Resumen de datos generales</h2>
-                </md-card-title>
-            </md-card-header>-->
-            <div class="d-flex">
-                <div>
-                    <h2>Resumen de datos generales</h2>
-                </div>
-            </div>
-            <div class="row space"></div>
-            <md-card-content>
-                <div class="row">
-                    <div class="col-md-6">
-                        <strong>Información general</strong>
-                        <p>Título de la noticia</p>
-                        <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus placerat dapibus consequat. Pellentesque
-                            et finibus sapien, ac posuere nulla.</p>
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex">
+                        <div>
+                            <h2>Resumen de datos generales</h2>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <strong>Involucrados</strong>
-                        <md-list>
-                            <md-list-item>Nombre Paterno Materno</md-list-item>
-                            <md-list-item>Nombre Paterno Materno</md-list-item>
-                            <md-list-item>Nombre Paterno Materno</md-list-item>
-                        </md-list>
-                    </div>
-                    <div class="col-md-2">
-                        <strong>Delito</strong>
-                        <md-list>
-                            <md-list-item>Delito</md-list-item>
-                            <md-list-item>Delito</md-list-item>
-                            <md-list-item>Delito</md-list-item>
-                        </md-list>
-                    </div>
-                </div>
-                <md-divider></md-divider>
-                <div class="row space"></div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <md-card>
-                            <md-card-content>
-                                <p class="font-weight-bold">Noticia de hechos</p>
-                                <p>Detalle de la noticia de hechos</p>
-                                <button md-button routerLink="/policia">Ver ahora</button>
-                            </md-card-content>
-                        </md-card>
-                    </div>
-                    <div class="col-md-4">
-                        <md-card>
-                            <md-card-content>
-                                <div class="d-flex flex-wrap align-items-center">
-                                    <div class="col-8">
-                                        <div class="row">
-                                            <p class="font-weight-bold">Predenuncia</p>
+                    <div class="row space"></div>
+                    <md-card-content>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <strong>Información general</strong>
+                                <p>Título de la noticia</p>
+                                <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus placerat dapibus consequat.
+                                    Pellentesque et finibus sapien, ac posuere nulla.</p>
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Involucrados</strong>
+                                <md-list>
+                                    <md-list-item>Nombre Paterno Materno</md-list-item>
+                                    <md-list-item>Nombre Paterno Materno</md-list-item>
+                                    <md-list-item>Nombre Paterno Materno</md-list-item>
+                                </md-list>
+                            </div>
+                            <div class="col-md-2">
+                                <strong>Delito</strong>
+                                <md-list>
+                                    <md-list-item>Delito</md-list-item>
+                                    <md-list-item>Delito</md-list-item>
+                                    <md-list-item>Delito</md-list-item>
+                                </md-list>
+                            </div>
+                        </div>
+                        <md-divider></md-divider>
+                        <div class="row space"></div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <md-card class="h-100">
+                                    <md-card-content>
+                                        <div class="d-flex flex-wrap align-items-center">
+                                            <div class="col-lg-8">
+                                                <div class="row">
+                                                    <p class="font-weight-bold">Noticia de hechos</p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>Detalle de la noticia de hechos</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="row text-center">
+                                                    <div class="col">
+                                                        <img src="./assets/images/Acuerdos/acuerdo.svg">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="row">
-                                            <p>Detalle de la pre denuncia</p>
+                                            <button md-button routerLink="/noticia-hecho/{{id}}">Ver ahora</button>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div class="col-md-4">
+                                <md-card class="h-100">
+                                    <md-card-content>
+                                        <div class="d-flex flex-wrap align-items-center">
+                                            <div class="col-lg-8">
+                                                <div class="row">
+                                                    <p class="font-weight-bold">Predenuncia</p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>Detalle de la pre denuncia</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="row text-center">
+                                                    <div class="col">
+                                                        <img src="./assets/images/Acuerdos/acuerdo.svg">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <button md-button routerLink="/perito">Ver ahora</button>
                                         </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="row text-center">
-                                            <div class="col">
-                                                <img src="./assets/images/Acuerdos/acuerdo.svg">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </md-card-content>
-                        </md-card>
-                    </div>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                        </div>
+                    </md-card-content>
                 </div>
-            </md-card-content>
+            </div>
         </md-card>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
         <md-card>
-            <!--<md-card-header>
-                <md-card-title>
-                    <h2>Detalle pre denuncia</h2>
-                </md-card-title>
-            </md-card-header>-->
             <div class="d-flex justify-content-between">
                 <div>
                     <h2>Detalle pre denuncia</h2>
@@ -118,26 +129,23 @@
 
                 <md-divider></md-divider>
                 <div class="row space"></div>
-                <div class="row space">
+                <div class="row">
                     <div class="col-md-12 space">
                         <h4>Solicitudes preliminares</h4>
                     </div>
                     <div class="col-md-4">
-                        <md-card>
+                        <md-card class="h-100">
                             <md-card-content>
                                 <div class="d-flex flex-wrap align-items-center">
-                                    <div class="col-8">
+                                    <div class="col-lg-8">
                                         <div class="row">
                                             <p class="font-weight-bold">Solicitudes a periciales</p>
                                         </div>
                                         <div class="row">
                                             <p>Recepción y resolución de solicitudes de peritaje</p>
                                         </div>
-                                        <div class="row">
-                                            <button md-button routerLink="/perito">Ver ahora</button>
-                                        </div>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-lg-4">
                                         <div class="row text-center">
                                             <div class="col">
                                                 <img src="./assets/images/Solicitudes-preliminares/detective.svg">
@@ -145,25 +153,25 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <button md-button routerLink="/perito">Ver ahora</button>
+                                </div>
                             </md-card-content>
                         </md-card>
                     </div>
                     <div class="col-md-4">
-                        <md-card>
+                        <md-card class="h-100">
                             <md-card-content>
                                 <div class="d-flex flex-wrap align-items-center">
-                                    <div class="col-8">
+                                    <div class="col-lg-8">
                                         <div class="row">
                                             <p class="font-weight-bold">Solicitudes a policía ministerial</p>
                                         </div>
                                         <div class="row">
                                             <p>Recepción y resolución de solicitudes de policía</p>
                                         </div>
-                                        <div class="row">
-                                            <button md-button routerLink="/perito">Ver ahora</button>
-                                        </div>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-lg-4">
                                         <div class="row text-center">
                                             <div class="col">
                                                 <img src="./assets/images/Solicitudes-preliminares/policeCap.svg">
@@ -171,25 +179,25 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <button md-button routerLink="/perito">Ver ahora</button>
+                                </div>
                             </md-card-content>
                         </md-card>
                     </div>
                     <div class="col-md-4">
-                        <md-card>
+                        <md-card class="h-100">
                             <md-card-content>
                                 <div class="d-flex flex-wrap align-items-center">
-                                    <div class="col-8">
+                                    <div class="col-lg-8">
                                         <div class="row">
                                             <p class="font-weight-bold">Acuerdo general</p>
                                         </div>
                                         <div class="row">
                                             <p>Resolución de solicitudes de acuerdos generales</p>
                                         </div>
-                                        <div class="row">
-                                            <button md-button routerLink="/acuerdo-general">Ver ahora</button>
-                                        </div>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-lg-4">
                                         <div class="row text-center">
                                             <div class="col">
                                                 <img src="./assets/images/Solicitudes-preliminares/contratos.svg">
@@ -197,27 +205,28 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <button md-button routerLink="/acuerdo-general">Ver ahora</button>
+                                </div>
                             </md-card-content>
                         </md-card>
                     </div>
                 </div>
-                <div class="row space">
+                <div class="row space"></div>
+                <div class="row">
                     <div class="col-md-4">
-                        <md-card>
+                        <md-card class="h-100">
                             <md-card-content>
                                 <div class="d-flex flex-wrap align-items-center">
-                                    <div class="col-8">
+                                    <div class="col-lg-8">
                                         <div class="row">
                                             <p class="font-weight-bold">Registro general</p>
                                         </div>
                                         <div class="row">
                                             <p>Recepción y resolución de solicitudes de registro</p>
                                         </div>
-                                        <div class="row">
-                                            <button md-button routerLink="">Ver ahora</button>
-                                        </div>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-lg-4">
                                         <div class="row text-center">
                                             <div class="col">
                                                 <img src="./assets/images/Solicitudes-preliminares/letter.svg">
@@ -225,25 +234,25 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <button md-button routerLink="">Ver ahora</button>
+                                </div>
                             </md-card-content>
                         </md-card>
                     </div>
                     <div class="col-md-4">
-                        <md-card>
+                        <md-card class="h-100">
                             <md-card-content>
                                 <div class="d-flex flex-wrap align-items-center">
-                                    <div class="col-8">
+                                    <div class="col-lg-8">
                                         <div class="row">
                                             <p class="font-weight-bold">Inspecciones</p>
                                         </div>
                                         <div class="row">
                                             <p>Recepción y resolución de inspección</p>
                                         </div>
-                                        <div class="row">
-                                            <button md-button routerLink="">Ver ahora</button>
-                                        </div>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-lg-4">
                                         <div class="row text-center">
                                             <div class="col">
                                                 <img src="./assets/images/Solicitudes-preliminares/fingerprint.svg">
@@ -251,31 +260,34 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <button md-button routerLink="">Ver ahora</button>
+                                </div>
                             </md-card-content>
                         </md-card>
                     </div>
                     <div class="col-md-4">
-                        <md-card>
+                        <md-card class="h-100">
                             <md-card-content>
                                 <div class="d-flex flex-wrap align-items-center">
-                                    <div class="col-8">
+                                    <div class="col-lg-8">
                                         <div class="row">
-                                            <p class="font-weight-bold">IRequerimiento de información</p>
+                                            <p class="font-weight-bold">Requerimiento de información</p>
                                         </div>
                                         <div class="row">
                                             <p>Resolución de solicitudes de requerimiento de información</p>
                                         </div>
-                                        <div class="row">
-                                            <button md-button routerLink="">Ver ahora</button>
-                                        </div>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-lg-4">
                                         <div class="row text-center">
                                             <div class="col">
                                                 <img src="./assets/images/Solicitudes-preliminares/evidence.svg">
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
+                                    <button md-button routerLink="">Ver ahora</button>
                                 </div>
                             </md-card-content>
                         </md-card>
@@ -287,20 +299,54 @@
                         <h4>Acuerdos</h4>
                     </div>
                     <div class="col-md-4">
-                        <md-card>
+                        <md-card class="h-100">
                             <md-card-content>
-                                <p class="font-weight-bold">Acuerdo de inicio</p>
-                                <p>Registro de acuerdo</p>
-                                <button md-button routerLink="">Ver ahora</button>
+                                <div class="d-flex flex-wrap align-items-center">
+                                    <div class="col-lg-8">
+                                        <div class="row">
+                                            <p class="font-weight-bold">Acuerdo de inicio</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Registro de acuerdo</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="row text-center">
+                                            <div class="col">
+                                                <img src="./assets/images/Acuerdos/acuerdo.svg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <button md-button routerLink="">Ver ahora</button>
+                                </div>
                             </md-card-content>
                         </md-card>
                     </div>
                     <div class="col-md-4">
-                        <md-card>
+                        <md-card class="h-100">
                             <md-card-content>
-                                <p class="font-weight-bold">Acuerdo de radicación</p>
-                                <p>Registro de acuerdo de radicación</p>
-                                <button md-button routerLink="">Ver ahora</button>
+                                <div class="d-flex flex-wrap align-items-center">
+                                    <div class="col-lg-8">
+                                        <div class="row">
+                                            <p class="font-weight-bold">Acuerdo de radicación</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Registro de acuerdo de radicación</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="row text-center">
+                                            <div class="col">
+                                                <img src="./assets/images/Acuerdos/acuerdoRadicacion.svg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <button md-button routerLink="">Ver ahora</button>
+                                </div>
                             </md-card-content>
                         </md-card>
                     </div>
@@ -311,11 +357,28 @@
                         <h4>Entrevistas</h4>
                     </div>
                     <div class="col-md-4">
-                        <md-card>
+                        <md-card class="h-100">
                             <md-card-content>
-                                <p class="font-weight-bold">Entrevistas</p>
-                                <p>Entrevistas de todos los involucrados</p>
-                                <button md-button routerLink="">Ver ahora</button>
+                                <div class="d-flex flex-wrap align-items-center">
+                                    <div class="col-lg-8">
+                                        <div class="row">
+                                            <p class="font-weight-bold">Entrevistas</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Entrevistas de todos los involucrados</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="row text-center">
+                                            <div class="col">
+                                                <img src="./assets/images/witness.svg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <button md-button routerLink="">Ver ahora</button>
+                                </div>
                             </md-card-content>
                         </md-card>
                     </div>
@@ -326,37 +389,91 @@
                         <h4>Conclusiones</h4>
                     </div>
                     <div class="col-md-4">
-                        <md-card>
+                        <md-card class="h-100">
                             <md-card-content>
-                                <p class="font-weight-bold">Archivo temporal</p>
-                                <p>Enviar al archivo temporal</p>
-                                <button md-button routerLink="">Ver ahora</button>
+                                <div class="d-flex flex-wrap align-items-center">
+                                    <div class="col-lg-8">
+                                        <div class="row">
+                                            <p class="font-weight-bold">Archivo temporal</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Enviar al archivo temporal</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="row text-center">
+                                            <div class="col">
+                                                <img src="./assets/images/Conclusiones/folder.svg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <button md-button routerLink="">Ver ahora</button>
+                                </div>
                             </md-card-content>
                         </md-card>
                     </div>
                     <div class="col-md-4">
-                        <md-card>
+                        <md-card class="h-100">
                             <md-card-content>
-                                <p class="font-weight-bold">No ejercicio de la Acción Penal</p>
-                                <p>No existe ejercicio de la acción penal</p>
-                                <button md-button routerLink="">Ver ahora</button>
+                                <div class="d-flex flex-wrap align-items-center">
+                                    <div class="col-lg-8">
+                                        <div class="row">
+                                            <p class="font-weight-bold">No ejercicio de la Acción Penal</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>No existe ejercicio de la acción penal</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="row text-center">
+                                            <div class="col">
+                                                <img src="./assets/images/Conclusiones/lawyer.svg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <button md-button routerLink="">Ver ahora</button>
+                                </div>
                             </md-card-content>
                         </md-card>
                     </div>
                     <div class="col-md-4">
-                        <md-card>
+                        <md-card class="h-100">
                             <md-card-content>
-                                <p class="font-weight-bold">Facultad de No Investigar</p>
+                                <!--<p class="font-weight-bold">Facultad de No Investigar</p>
                                 <p>No hay facultad de investigación</p>
-                                <button md-button routerLink="">Ver ahora</button>
+                                <button md-button routerLink="">Ver ahora</button>-->
+                                <div class="d-flex flex-wrap align-items-center">
+                                    <div class="col-lg-8">
+                                        <div class="row">
+                                            <p class="font-weight-bold">Facultad de No Investigar</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>No hay facultad de investigación</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="row text-center">
+                                            <div class="col">
+                                                <img src="./assets/images/Conclusiones/quill.svg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <button md-button routerLink="">Ver ahora</button>
+                                </div>
                             </md-card-content>
                         </md-card>
                     </div>
                 </div>
-                </md-card-content>
-                <md-card-footer>
+            </md-card-content>
+            <md-card-footer>
 
-                </md-card-footer>
+            </md-card-footer>
         </md-card>
     </div>
 </div>

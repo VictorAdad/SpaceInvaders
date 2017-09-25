@@ -3,16 +3,22 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 
+
+import {Delito} from '@models/delito';
+
 @Component({
 	selector : 'delito',
     templateUrl:'./component.html'
 })
 
 export class DelitoComponent{
-	_columns = ['nombre', 'redaccion', 'principal'];
-	data: Delito[];
+	_columns = ['nombre', 
+        // 'redaccion', 
+        'principal'];
+	data=[];
 	dataSource: TableService | null;
     @ViewChild(MdPaginator) paginator: MdPaginator;
+    
 
     constructor(){}
 
@@ -21,16 +27,18 @@ export class DelitoComponent{
         this.dataSource = new TableService(this.paginator, this.data);
     }
 
+    swap(e){
+        e.principal=!e.principal;
+        console.log(e);
+    }
+
 }
 
-export class Delito {
-    nombre    : string;
-    redaccion : string;
-    principal : string;
- }
 
- const data: Delito[] = [
-	{nombre: 'Marco Guzman', redaccion: 'lorem', principal:'x'}
+
+ const data = [
+	{nombre: 'Marco Guzman', redaccion: 'lorem', principal:true},
+    {nombre: 'Marco Guzman', redaccion: 'lorem', principal:false}
 ];
 
 

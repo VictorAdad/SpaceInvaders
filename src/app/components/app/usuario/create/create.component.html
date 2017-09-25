@@ -59,7 +59,7 @@
 				    	<select2 placeholder= "Cargo" name="cargo"  [(value)]="model.cargo" [(options)] ="cargos"  [group]="form"></select2> 
 				    </div>
 
-				    <div class="col-md-2 col-sm-6 col-lg-2 m-3">
+				    <div class="col-md-2 col-sm-6 col-lg-2 m-2">
 				       <label>Permisos a otorgar </label>
 				        <radiobutton label="Permisos a otorgar"[(value)]="permiso" [radios]="permisos" name="permiso"  [group]="form" >Permisos a otorgar </radiobutton>
 		  
@@ -68,9 +68,16 @@
 		                 <checkbox label="Inhabilitado" [(value)]="inhabilitado" ></checkbox>
 				    </div>
 			    </div>
-				<div class="row space"></div>
+				<div class="row space">
+					<div class="col-md-2 col-sm-6 col-lg-2 m-2">
+				       <label>Acciones sobre las carpetas </label>
+				        <radiobutton label="Permisos a otorgar"[(value)]="permiso" [radios]="accionesCarpeta" name="accionesCarpetas"  [group]="form" ></radiobutton>
+		  
+				    </div>
+				</div>
 			  	<button class="float-right" md-button>Cancelar</button>	
 				<button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid">Guardar</button>
 		</form>
 	</div>
 </div>
+<jaspero-confirmations ></jaspero-confirmations>

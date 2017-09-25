@@ -19,12 +19,12 @@ export class UsuariosComponent{
 	constructor(){}
 
 	ngOnInit() {
-      this.data = [
-    {id:1,usuario:"Usuario",nombre: "Nombre Usuario",apellidoPaterno: "Apellido de Usuario",
-    apellidoMaterno:"Apellido Materno de usuario",numeroContacto:"Data",sexo:"Data",distrito:"Data",
-    fiscalia:"Data",agenciaAdscripcion:"Data",turno:"Data",email:"Data",numeroGafete:"Data",cargo:"Data",permiso:"Data",inhabilitado:false
-    }
-   ];
+   //    this.data = [
+   //  {id:1,usuario:"Usuario",nombre: "Nombre Usuario",apellidoPaterno: "Apellido de Usuario",
+   //  apellidoMaterno:"Apellido Materno de usuario",numeroContacto:"Data",sexo:"Data",distrito:"Data",
+   //  fiscalia:"Data",agenciaAdscripcion:"Data",turno:"Data",email:"Data",numeroGafete:"Data",cargo:"Data",permiso:"Data",inhabilitado:false
+   //  }
+   // ];
     	this.dataSource = new TableService(this.paginator, this.data);
 
     	console.log('-> Data Source', this.dataSource);
