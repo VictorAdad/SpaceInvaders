@@ -32,9 +32,9 @@ export class NoticiaHechoComponent implements OnInit{
 				this.id = +params['id'];
 	    });
 
-	    this.db.get("casos", this.id).then(object => {
-	    	this.caso = Object.assign(this.caso, object);
-	    });
+	    // this.db.get("casos", this.id).then(object => {
+	    // 	this.caso = Object.assign(this.caso, object);
+	    // });
 	}
 
 	hasId(): boolean{
