@@ -1,4 +1,4 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Caso } from '@models/caso';
 import { GlobalComponent } from '@components-app/global.component';
@@ -32,35 +32,49 @@ export class DatosGeneralesComponent implements OnInit{
     }
 
     ngOnInit(){
-        if(this.model == null){
-            this.model = new Caso();
+        // if(this.model == null){
+            // this.model = new Caso();
             this.form  = new FormGroup({
-                'titulo'   : new FormControl(this.model.titulo,   [Validators.required]),
-                'sintesis' : new FormControl(this.model.sintesis, [Validators.required]),
-                'delito'   : new FormControl(this.model.delito,   [Validators.required])
+                'titulo'   : new FormControl('', [Validators.required]),
+                'sintesis' : new FormControl('', [Validators.required]),
+                'delito'   : new FormControl('', [Validators.required])
             });
-        }else{
-            var json = JSON.stringify(this.modelo);
-            this.form  = new FormGroup({
-                'titulo'   : new FormControl(this.model.titulo),
-                'sintesis' : new FormControl(this.model.sintesis),
-                'delito'   : new FormControl(this.model.delito)
+            this.activeRoute.params.subscribe(params => {
+                if(params['id']){
+                    this.id = +params['id'];
+                    console.log('GET ID: ', this.id );
+                    this.db.get("casos", this.id).then(object => {
+                        this.model =  object as Caso;
+                        this.form.patchValue({
+                            'titulo' : this.model.titulo,
+                            'sintesis' : this.model.sintesis,
+                            'delito' : this.model.delito
+                        });
+                    });
+                }
             });
-            console.log('model', this.model.titulo);
-            this.form.setValue({
-                'titulo' : this.model.titulo,
-                'sintesis' : this.model.sintesis,
-                'delito' : this.model.delito
-            },{ emitEvent: true});
-            console.log('-> Form', this.form);
-            console.log('-> Form', this.form.value);
-            console.log('-> Form', this.form);
-        }
+            
+            
+        // }else{
 
-        this.activeRoute.params.subscribe(params => {
-            if(params['id'])
-                this.id = +params['id'];
-        });
+            // console.log('Json Caso: ', this.model['titulo']);
+        //     this.form  = new FormGroup({
+        //         'titulo'   : new FormControl(this.model.titulo),
+        //         'sintesis' : new FormControl(this.model.sintesis),
+        //         'delito'   : new FormControl(this.model.delito)
+        //     });
+        //     console.log('model', this.model.titulo);
+            // this.form.patchValue({
+            //     'titulo' : this.model.titulo,
+            //     'sintesis' : this.model.sintesis,
+            //     'delito' : this.model.delito
+            // },{ emitEvent: true});
+        //     console.log('-> Form', this.form);
+        //     console.log('-> Form', this.form.value);
+        //     console.log('-> Form', this.form);
+        // }
+
+        
     }
 
     public save(_valid : any, _model : any):void{
