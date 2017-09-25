@@ -1,33 +1,44 @@
 <div class="row space">
-	<div class="col-md-6">
-		<h3>Delitos</h3>
-	</div>
-	<div class="col-md-6">
-		<button class="float-right" md-raised-button routerLink="/delito/create" color="accent">Agregar delito</button>
-	</div>
+    <div class="col-md-6">
+        <h3>Delitos</h3>
+    </div>
+    <div class="col-md-6">
+        <button class="float-right" md-raised-button routerLink="/delito/create" color="accent">Agregar delito</button>
+    </div>
 </div>
 <md-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></md-paginator>
 <md-table #table [dataSource]="dataSource">
-	<ng-container mdColumnDef="nombre">
-		<md-header-cell *mdHeaderCellDef> Nombre </md-header-cell>
-		<md-cell *mdCellDef="let element"> {{element.nombre}} </md-cell>
-	</ng-container>
+    <ng-container mdColumnDef="nombre">
+        <md-header-cell *mdHeaderCellDef> Nombre </md-header-cell>
+        <md-cell *mdCellDef="let element">
+        <md-expansion-panel>
+          <md-expansion-panel-header>
+            <script type="text/javascript">console.log("item",element);</script> 
+            <md-panel-title *ngIf="element.delitos">
+              {{element.delitos[0].clave}}-{{element.delitos[0].descripcion}}
+            </md-panel-title>
 
-	<!-- Name Column -->
-	<!-- <ng-container mdColumnDef="redaccion">
-		<md-header-cell *mdHeaderCellDef> Redacción </md-header-cell>
-		<md-cell *mdCellDef="let element"> {{element.redaccion}} </md-cell>
-	</ng-container> -->
+          </md-expansion-panel-header>
+          <div *ngIf="element.delitos">
+                <div *ngFor="let item of element.delitos;">
+                    {{item.clave}}-{{item.descripcion}}
+                </div>
+          </div>
+          
+        </md-expansion-panel>
 
-	<!-- Weight Column -->
-	<ng-container mdColumnDef="principal">
-		<md-header-cell *mdHeaderCellDef> Principal </md-header-cell>
-		<md-cell *mdCellDef="let element"> 
-			<md-icon *ngIf="element.principal==true" style="color: gold;" (click)="swap(element)">star</md-icon>
-			<md-icon  *ngIf="element.principal==false" style="color: gold;" (click)="swap(element)" >star_border</md-icon>
-		</md-cell>
-	</ng-container>
+        </md-cell>
+    </ng-container>
 
-	<md-header-row *mdHeaderRowDef="_columns"></md-header-row>
-	<md-row *mdRowDef="let row; columns: _columns;"></md-row>
+
+    <ng-container mdColumnDef="principal">
+        <md-header-cell *mdHeaderCellDef> Principal </md-header-cell>
+        <md-cell *mdCellDef="let element" style="text-align: center;"> 
+            <md-icon *ngIf="element.principal==true" style="color: gold;" (click)="swap(element)">star</md-icon>
+            <md-icon  *ngIf="element.principal==false" style="color: gold;" (click)="swap(element)" >star_border</md-icon>
+        </md-cell>
+    </ng-container>
+
+    <md-header-row *mdHeaderRowDef="_columns"></md-header-row>
+    <md-row *mdRowDef="let row; columns: _columns;"></md-row>
 </md-table>
