@@ -1,5 +1,5 @@
 <md-sidenav-container  *ngIf="authService.isLoggedin" fullscreen>
-    <md-toolbar color="primary" class="mat-drawer-container mat-sidenav-container mat-drawer-transition mat-elevation-z8">
+    <md-toolbar style="" color="primary" class="mat-drawer-container mat-sidenav-container mat-drawer-transition mat-elevation-z8">
         <button md-icon-button (click)="sidenav.toggle()" *ngIf="_SIDEBAR">
             <md-icon class="md-24">menu</md-icon>
         </button>
@@ -149,7 +149,7 @@
         </md-list>
     </md-sidenav>
     <md-progress-bar *ngIf="globalService._LOADER" mode="indeterminate" color="accent"></md-progress-bar>
-    <div class="container-fluid" style="padding-top: 16px;">
+    <div class="container-fluid inner-sidenav-content" style="padding-top: 16px;">
         <router-outlet></router-outlet>
     </div>
 </md-sidenav-container>

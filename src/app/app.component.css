@@ -5,3 +5,12 @@ md-sidenav-container.mat-drawer-container {
 md-sidenav.mat-drawer {
     background-color: #fafafa;
 }
+
+.inner-sidenav-content {
+    overflow: auto;
+    position: absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    top:64px;
+  }
