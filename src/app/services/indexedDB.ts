@@ -124,7 +124,7 @@ export class CIndexedDB {
                                 //var requets=index.get();
                                 var resultado=[];
                                 requets.onsuccess=function(e){
-                                    console.log("#",e);
+                                    //console.log("#",e);
                                     var cursor = e.target.result;
                                     if(cursor) {
                                         resultado.push(cursor.value);
@@ -155,7 +155,7 @@ export class CIndexedDB {
                             var list=store.getAll();
                             list.onsuccess=function(){
                                 var datos=list.result;
-                                console.log(datos);
+                                //console.log(datos);
                                 resolve(datos);
                             }
                         }
@@ -176,6 +176,43 @@ export class CIndexedDB {
             }
 
         );
+        return promesa;
+    }
+    /*
+        TablaA -> tablaInermedia <- TablaB
+        data: es un filtro de la tablaIntermedia con alguna llave de la TablaA.
+        
+        en una relacion muchos a muchos,
+        donde ya se filtro la informacion de la tabla intermedia(es data)
+        se quiere un array con la lista de elementos de la tabla que se relaciona
+        donde solo se tiene la llave foranea key la cual se relaciona con la tabla con el idTabla.
+
+        regresa el arreglo de elementos de tabla que cumplen con la condicion anteior.
+
+        esto sirve para los paginadores
+     */
+    relationship(data:any[], key:string, tabla:string, idTabla:string){
+        var obj= this;
+        var promesa = new Promise(function(resolve,reject){
+            obj.list(tabla).then(
+                list=>{
+                    var lista=list as any[];
+                    var resultado=[];
+                    for (var i = 0; i < data.length; ++i) {
+                        for (var k = 0; k < lista.length; ++k) {
+                            if( (data[i])[key]==(lista[k])[idTabla]){
+                                (data[i])[tabla]=lista[k];
+                                resultado.push(lista[k]);
+                                break;
+                            }
+                        }
+                    }
+                    resolve(resultado);
+            }).catch(e=>{
+                reject(e);
+            });
+
+        });
         return promesa;
     }
     //data tienen que ser un json
