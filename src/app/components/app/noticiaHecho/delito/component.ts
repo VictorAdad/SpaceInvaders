@@ -33,7 +33,7 @@ export class DelitoComponent{
                 let delitos:Delito[];
                 delitos=lista as Delito[];
                 for (let delito of delitos) {
-                    this.db.get("catalogoDelitos_delitos",delito.id,"indiceCatalogoDelito_delitos").then(
+                    this.db.get("catalogoDelitos_delitos",delito.id,"indiceCatalogoDelitos_delitos").then(
                         tt=>{
                             this.db.relationship(tt as any[], "catalogoDelitosId","catalogoDelitos","id")
                                 .then(datos=>{
@@ -46,6 +46,14 @@ export class DelitoComponent{
                 }
         });
     	this.data = data;
+
+        this.db.manyToManyAll(
+            "delitos","id",
+            "catalogoDelitos_delitos","delitosId","catalogoDelitosId",
+            "catalogoDelitos","id"
+            ).then(lista=>{
+                console.log("manyTomany",lista);
+            });
         
     }
 
