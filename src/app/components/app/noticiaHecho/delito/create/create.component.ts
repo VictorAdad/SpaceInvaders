@@ -21,6 +21,7 @@ export class DelitoCreateComponent{
 
     listaDelitos=[];
     tabla:CIndexedDB;
+    
 
     constructor(public dialog: MdDialog, private _tabla: CIndexedDB, private router:Router) { 
         this.tabla=_tabla;
@@ -40,8 +41,11 @@ export class DelitoCreateComponent{
 
     guardar(){
         if (this.listaDelitos.length>0){
+            //primero creamos un delito en la tabla de delitos
             this.tabla.add("delitos",{principal:false}).then(
                 t=>{
+                    //para cada elemento de la lista listaDelitos
+                    //lo agregamos en la tabla intermedia catalogoDelitos_delitos
                     let delito:Delito;
                     delito = t as Delito;
                     for (var i = 0; i < this.listaDelitos.length; ++i) {
@@ -50,10 +54,7 @@ export class DelitoCreateComponent{
                                 delitoId: delito.id, 
                                 catalogoDelitosId:this.listaDelitos[i].id
                             })
-                        .then(
-                            d=>{
-                                console.log("relacion", d);
-                            });
+                        .then(d=>{});
                     }
                     this.listaDelitos=[];
                 
