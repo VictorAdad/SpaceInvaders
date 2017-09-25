@@ -25,7 +25,7 @@ export class CIndexedDB {
                 
                 db.createObjectStore("clasificacionDelitos", {keyPath: "id"});
                 let r_catDel_del=db.createObjectStore("catalogoDelitos_delitos", {keyPath: "id"});
-                r_catDel_del.createIndex("indiceCatalogoDelito_delitos", "delitoId");
+                r_catDel_del.createIndex("indiceCatalogoDelitos_delitos", "delitoId");
                 this.init = true;
                 console.log(" -> Se crearon las tablas");
                 localStorage.setItem('initDB', 'true');
@@ -214,6 +214,44 @@ export class CIndexedDB {
 
         });
         return promesa;
+    }
+    /*
+        funcion que lista los elementos de una relacion de muchos a muchos
+        nota: tiene que existir el indice de la tabla de relacion que busque por la keyRelacionFuerte
+     */
+    manyToManyAll(tablaFuerte:string, keyFuerte:string, 
+        tablaDeRelacion:string, keyRelacionFuerte:string, keyRelacionDevil:string,
+        tablaDevil:string, keyDevil:string){
+        var obj=this;
+        var promesa= new Promise((resolve,reject)=>{
+            //notacion camello del indice
+            var indice="indice"+tablaDeRelacion[0].toUpperCase();
+            for (var i = 1; i < tablaDeRelacion.length; ++i)
+                indice=indice+tablaDeRelacion[i];
+            console.log("@indice",indice);
+
+            obj.list(tablaFuerte).then(datosFuertes => {
+                var listaFuerte = datosFuertes as any[];
+                var k=0;
+                for (var item of listaFuerte) {
+                    //obtenemos el primer filtrado
+                    obj.get(tablaDeRelacion,item[keyFuerte],indice).then(datosRelcion=>{
+                
+                        obj.relationship(datosRelcion as any[], keyRelacionDevil,tablaDevil,keyDevil)
+                            .then(datosDeviles=>{
+                                item[tablaDevil]=datosDeviles;
+                                k++;
+                                if(k==listaFuerte.length){
+                                    resolve(listaFuerte);
+                                }
+                            });
+                
+                    });
+                }
+            });
+        });
+        return promesa;
+        
     }
     //data tienen que ser un json
     add(_table:string, _datos:any){
