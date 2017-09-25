@@ -1,13 +1,13 @@
 export class Caso {
-	id       : number;
-    titulo   : string;
-    sintesis : string;
-    delito   : string;
-    nic      : string;
-    nuc      : string;
-    created  : Date = new Date();
-    name     : string = `NIC: ${this.nic || ''}  -  NUC: ${this.nuc || ''}`;
-    formatFecha : string = this.fecha(this.created);
+    public id       : number;
+    public titulo   : string;
+    public sintesis : string;
+    public delito   : string;
+    public nic      : string;
+    public nuc      : string;
+    public created  : Date = new Date();
+    public name     : string = `NIC: ${this.nic || ''}  -  NUC: ${this.nuc || ''}`;
+    public formatFecha : string = this.fecha(this.created);
 
     fecha (_date: Date){
        let meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
