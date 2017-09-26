@@ -85,7 +85,7 @@ export class DatosGeneralesComponent implements OnInit{
     public save(_valid : any, _model : any):void{
         if(this.onLine.onLine){
             this.post(_model).subscribe((response) => {
-                console.log('Caso guardado en la BD', response);
+                // console.log('Caso guardado en la BD', response);
                 this.router.navigate(['/caso/'+response['id']+'/noticia-hecho' ]);
             });
         }else{
@@ -107,14 +107,13 @@ export class DatosGeneralesComponent implements OnInit{
 
     public edit(_valid : any, _model : any):void{
         console.log('-> Caso@edit()', _model);
-        _model.created = new Date();
-        this.db.add('casos', _model).then(object => {
-            
-        });
-    }
+        if(this.onLine.onLine){
+            this.put(this.id, _model).subscribe((response) => {
+                console.log('-> Registro acutualizado', response);
+            });
+        }else{
 
-    public validForm(): string{
-        return !this.form.valid ? 'No se han llenado los campos requeridos' : ''
+        }
     }
 
     public hasId(): boolean{
@@ -134,6 +133,11 @@ export class DatosGeneralesComponent implements OnInit{
 
     private find(_id: number): Observable<Caso>{
         return this.http.get(_config.api.host+'/v1/base/casos/'+_id)
+            .map((response: Response) => response.json());
+    }
+
+    private put(_id:number, _model: Caso): Observable<Caso>{
+        return this.http.put(_config.api.host+'/v1/base/casos/'+_id, _model)
             .map((response: Response) => response.json());
     }
 
