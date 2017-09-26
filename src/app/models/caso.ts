@@ -23,4 +23,16 @@ export class Caso {
        var x = 'Creado el '+ dia + ' de ' + meses[mes] + ' de ' + year + ' por el ' + user;
        return x;  
     }
+
+
+    public personas:any[];
+    public delitos:any[];
+    public lugares:any[];
+    public armas:any[];
+    public vehiculos:any[];
+    public relaciones:any[];
+    public titulares:any[];
+    public documentos:any[];
+    
+
 }

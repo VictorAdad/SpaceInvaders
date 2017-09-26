@@ -3,7 +3,7 @@
         <h3>Delitos</h3>
     </div>
     <div class="col-md-6">
-        <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/delito/create" color="accent">Agregar delito</button>
+        <button class="float-right" md-raised-button routerLink="/caso/{{id}}/delito/create" color="accent">Agregar delito</button>
     </div>
 </div>
 <md-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></md-paginator>

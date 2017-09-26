@@ -1,9 +1,13 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 // import { Component} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+
+import { Router, ActivatedRoute } from '@angular/router';
+
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { CIndexedDB } from '@services/indexedDB';
+
+import {Caso} from '@models/caso' 
 
 
 import {Delito} from '@models/delito';
@@ -22,55 +26,58 @@ export class DelitoComponent{
     db:CIndexedDB;
     @ViewChild(MdPaginator) paginator: MdPaginator;
 
-    public casoId: number = null;
-    
+    activeRoute:ActivatedRoute;
+    id:number;
 
-    constructor(private _tabla: CIndexedDB, private route: ActivatedRoute){
+    caso:Caso;
+
+    constructor(private _tabla: CIndexedDB, _activeRoute: ActivatedRoute){
+
         this.db=_tabla;
+        this.activeRoute = _activeRoute;
     }
 
     ngOnInit(){
         var superDatos=[];
-        this.db.list("delitos").then(
-            lista=>{
-                let delitos:Delito[];
-                delitos=lista as Delito[];
-                for (let delito of delitos) {
-                    this.db.get("catalogoDelitos_delitos",delito.id,"indiceCatalogoDelitos_delitos").then(
-                        tt=>{
-                            this.db.relationship(tt as any[], "catalogoDelitosId","catalogoDelitos","id")
-                                .then(datos=>{
-                                    if ((datos as any[]).length){
-                                        delito["delitos"]=datos;
-                                        this.dataSource = new TableService(this.paginator, delitos);
-                                    }
-                                });
+        this.activeRoute.params.subscribe(params => {
+            this.id = parseInt(params['id']);
+            if (!isNaN(this.id)){
+                this.db.get("casos",this.id).then(
+                    casoR=>{
+                        this.caso=casoR as Caso;
+                        this.dataSource = new TableService(this.paginator, casoR["delitos"]);
+                        console.log("->caso", casoR);
                     });
-                }
+            }    
+            
+                
+            
         });
+        // this.db.list("delitos").then(
+        //     lista=>{
+        //         let delitos:Delito[];
+        //         delitos=lista as Delito[];
+        //         for (let delito of delitos) {
+        //             this.db.get("catalogoDelitos_delitos",delito.id,"indiceCatalogoDelitos_delitos").then(
+        //                 tt=>{
+        //                     this.db.relationship(tt as any[], "catalogoDelitosId","catalogoDelitos","id")
+        //                         .then(datos=>{
+        //                             if ((datos as any[]).length){
+        //                                 delito["delitos"]=datos;
+        //                                 this.dataSource = new TableService(this.paginator, delitos);
+        //                             }
+        //                         });
+        //             });
+        //         }
+        // });
+
     	this.data = data;
 
-        this.db.manyToManyAll(
-            "delitos","id",
-            "catalogoDelitos_delitos","delitosId","catalogoDelitosId",
-            "catalogoDelitos","id"
-            ).then(lista=>{
-                console.log("manyTomany",lista);
-            });
-            
-        this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
-        });
     }
 
     swap(e){
         e.principal=!e.principal;
-        var dato={
-            id:e.id,
-            principal:e.principal
-        };
-        this.db.update("delitos",dato);
+        this.db.update("casos",this.caso);
     }
 
 }

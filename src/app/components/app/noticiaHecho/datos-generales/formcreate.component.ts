@@ -46,12 +46,13 @@ export class FormCreateDelitoCasoComponent {
     ngOnInit(){
         this.addList=this.data.lista;
         this.dataSourceaddList=new ExampleDataSource([]);
-        this.tabla.list("clasificacionDelitos").then(
+        this.tabla.get("catalagos","clasificacionDelitos").then(
             lista=>{
-                for (let item in lista) {
+                let lista2=lista["arreglo"] as any[];
+                for (let item in lista2) {
                     this.listaBuscar.push({
-                        label:lista[item].clasificacion, 
-                        value:lista[item].id});
+                        label:(lista2[item])["clasificacion"], 
+                        value:(lista2[item])["id"]});
                 }
             });
     }
@@ -67,11 +68,14 @@ export class FormCreateDelitoCasoComponent {
         this.optionLista=[];
         console.log("Clasificacion",this.clasificacion);
         if (this.clasificacion){
-            this.tabla.get("catalogoDelitos",IDBKeyRange.only(this.clasificacion),"indiceCatalogoDelito").then(
+            this.tabla.get("catalagos","delitos").then(
             lista=>{
-                for (let item in lista) {
-                    if (lista[item].descripcion.indexOf(value)>-1 || lista[item].clave.indexOf(value)>-1){
-                        this.optionLista.push(lista[item]);
+                console.log("lista",lista);
+                let lista2 = (lista["arreglo"] as any[]);
+
+                for (let item in lista2 ) {
+                    if ( (lista2[item])["descripcion"].indexOf(value)>-1 || (lista2[item])["clave"].indexOf(value)>-1){
+                        this.optionLista.push(lista2[item]);
                     }
                 }
                 this.dataSource = new ExampleDataSource(this.optionLista);

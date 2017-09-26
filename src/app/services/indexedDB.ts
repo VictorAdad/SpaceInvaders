@@ -18,20 +18,31 @@ export class CIndexedDB {
                 var db    = open.result;
                 db.createObjectStore("casos", {keyPath: "id"})
                 db.createObjectStore("personas", {keyPath: "id"});
-                db.createObjectStore("delitos", {keyPath: "id"});
-                let catDel= db.createObjectStore("catalogoDelitos", {keyPath: "id"});
-                catDel.createIndex("indiceCatalogoDelito", "clasificacionId");
-                catDel.createIndex("indiceCatalogoDelitoAll", ["clasificacionId","clave","descripcion"]);
+                db.createObjectStore("documentos", {keyPath: "id"});
+                db.createObjectStore("catalagos",{keyPath:"id"});
+                //db.createObjectStore("delitos", {keyPath: "id"});
+                // let catDel= db.createObjectStore("catalogoDelitos", {keyPath: "id"});
+                // catDel.createIndex("indiceCatalogoDelito", "clasificacionId");
+                // catDel.createIndex("indiceCatalogoDelitoAll", ["clasificacionId","clave","descripcion"]);
                 
-                db.createObjectStore("clasificacionDelitos", {keyPath: "id"});
-                let r_catDel_del=db.createObjectStore("catalogoDelitos_delitos", {keyPath: "id"});
-                r_catDel_del.createIndex("indiceCatalogoDelitos_delitos", "delitoId");
+                // db.createObjectStore("clasificacionDelitos", {keyPath: "id"});
+                // let r_catDel_del=db.createObjectStore("catalogoDelitos_delitos", {keyPath: "id"});
+                // r_catDel_del.createIndex("indiceCatalogoDelitos_delitos", "delitoId");
+
+                /*
+                    A qui se guardaran los datos a sincronizar, cada vez que se restablesca la conexion
+                    se buscara en esta tabla.
+                    id, url: servicio, data: request, parametros
+                 */
+                db.createObjectStore("sincronizar", {keyPath: "id"});
+
                 this.init = true;
                 console.log(" -> Se crearon las tablas");
                 localStorage.setItem('initDB', 'true');
                 newDB=true;
             };
             open.onsuccess=function(){
+                console.log("@@@@@@@@Aqui estoy");
                 if (newDB)
                     obj.inicialiazaCatalogos();
             }
@@ -52,16 +63,17 @@ export class CIndexedDB {
             var db    = open.result;
             
             //inicializacion 
-            var tx    = db.transaction(["clasificacionDelitos","catalogoDelitos"], "readwrite");
-            var tabla = tx.objectStore("clasificacionDelitos");
+            // var tx    = db.transaction(["clasificacionDelitos","catalogoDelitos"], "readwrite");
+            // var tabla = tx.objectStore("clasificacionDelitos");
             var arrClaDel=[
                 {id:1, clasificacion: "Clasificacion 1"},
                 {id:2, clasificacion: "Clasificacion 2"},
                 {id:3, clasificacion: "Clasificacion 3"}
             ];
-            obj.nextItem(0,arrClaDel,tabla);
+            obj.update("catalagos",{id:"clasificacionDelitos", arreglo:arrClaDel});
+            // obj.nextItem(0,arrClaDel,tabla);
 
-            var tabla = tx.objectStore("catalogoDelitos");
+            // var tabla = tx.objectStore("catalogoDelitos");
             var arrCatalogoDelitos=[
                 {id:1, clasificacionId: 1, clave: "CVE. 1.1", descripcion:"Robo A"},
                 {id:2, clasificacionId: 1, clave: "CVE. 1.2", descripcion:"Robo B"},
@@ -70,13 +82,14 @@ export class CIndexedDB {
                 {id:5, clasificacionId: 3, clave: "CVE. 3.1", descripcion:"Robo E"},
                 {id:6, clasificacionId: 3, clave: "CVE. 3.2", descripcion:"Robo F"},
             ];
-            obj.nextItem(0,arrCatalogoDelitos,tabla);
+            obj.update("catalagos",{id:"delitos", arreglo:arrCatalogoDelitos});
+            //obj.nextItem(0,arrCatalogoDelitos,tabla);
 
             //cerramos todas las conexiones
-            tx.oncomplete = function() {
-                db.close();
-                console.log("-> Finalizado carga de los catalogos");
-            }
+            // tx.oncomplete = function() {
+            //     db.close();
+            //     console.log("-> Finalizado carga de los catalogos");
+            // }
             
 
         }  

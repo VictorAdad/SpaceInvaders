@@ -44,14 +44,17 @@ export class DatosGeneralesComponent implements OnInit{
             if(this.hasId){
                 this.id = +params['id'];
                 console.log('GET ID: ', this.id );
-                this.db.get("casos", this.id).then(object => {
-                    this.model =  object as Caso;
-                    this.form.patchValue({
-                        'titulo'   : this.model.titulo,
-                        'sintesis' : this.model.sintesis,
-                        'delito'   : this.model.delito
+                if (!isNaN(this.id)){
+                    this.db.get("casos", this.id).then(object => {
+                        this.model =  object as Caso;
+                        this.form.patchValue({
+                            'titulo'   : this.model.titulo,
+                            'sintesis' : this.model.sintesis,
+                            'delito'   : this.model.delito
+                        });
                     });
-                });
+                }
+                
             }
         });    
     }
@@ -71,6 +74,14 @@ export class DatosGeneralesComponent implements OnInit{
     }
 
     public save(_valid : any, _model : any):void{
+        _model.personas=[];
+        _model.delitos=[];
+        _model.lugares=[];
+        _model.vehiculos=[];
+        _model.armas=[];
+        _model.documentos=[];
+        _model.titulares=[];
+        _model.relaciones=[];
         console.log('-> Caso@save()', _model);
         _model.created = new Date();
         this.db.add('casos', _model).then(object => {
