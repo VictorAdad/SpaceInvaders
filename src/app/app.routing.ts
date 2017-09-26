@@ -68,7 +68,7 @@ const routes: Routes = [
     { path : 'armas', component : ArmaComponent, data : { breadcrumb : 'Armas' } },
     { path : 'armas/create', component : ArmaCreateComponent, data : { breadcrumb : 'Nueva arma', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}] } },
     { path : 'lugares', component :  LugarComponent, data : { breadcrumb : 'Lugares' }},
-    { path : 'lugares/create', component : LugarCreateComponent, data : { breadcrumb : 'Crear lugares', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}] } },
+    { path : 'caso/:id/lugares/create', component : LugarCreateComponent, data : { breadcrumb : 'Crear lugares', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}] } },
     { path : 'relaciones', component : RelacionComponent, data : { breadcrumb : 'Relaciones' } },
     { path : 'relaciones/create', component : RelacionCreateComponent, data : { breadcrumb : 'Nueva relación', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}] } },
     { path : 'vehiculos', component :  VehiculoComponent, data: { breadcrumb: 'Vehiculos'}},

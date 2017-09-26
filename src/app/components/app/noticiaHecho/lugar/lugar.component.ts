@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-
+import { ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { MiservicioService,MDato } from '@services/miservicio.service';
@@ -14,16 +14,24 @@ import 'rxjs/add/observable/of';
 })
 
 export class LugarComponent{
+
+    public casoId: number = null;
 	displayedColumns = ['tipo', 'calle', 'colonia', 'localidad', 'estado'];
     data: Lugar[];
     //dataSource: TableService | null;
     dataSource = new ExampleDataSource();
     @ViewChild(MdPaginator) paginator: MdPaginator;
 
+    constructor(private route: ActivatedRoute){}
+
     ngOnInit(){
         this.data = data;
         this.dataSource = new TableService(this.paginator, this.data);
         console.log('-> Data Source', this.dataSource);
+        this.route.params.subscribe(params => {
+            if(params['id'])
+                this.casoId = +params['id'];
+        });
     }
 
 }

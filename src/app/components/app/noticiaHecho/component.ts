@@ -17,6 +17,7 @@ export class NoticiaHechoComponent implements OnInit{
 	public caso: Caso = new Caso();
 	private db: CIndexedDB;
 	private sub: any;
+	public returnRoute: string = '/';
 
 	constructor(private route: ActivatedRoute, private _db: CIndexedDB) {
 		this.db = _db;
@@ -27,9 +28,11 @@ export class NoticiaHechoComponent implements OnInit{
             componentHandler.upgradeAllRegistered();
         }
 
-	    this.sub = this.route.params.subscribe(params => {
+	    this.route.params.subscribe(params => {
 	    	if(params['id'])
 				this.id = +params['id'];
+
+			this.getReturnRoute();
 	    });
 
 	    // this.db.get("casos", this.id).then(object => {
@@ -37,7 +40,7 @@ export class NoticiaHechoComponent implements OnInit{
 	    // });
 	}
 
-	hasId(): boolean{
+	public hasId(): boolean{
 		let hasId = false
 		this.sub = this.route.params.subscribe(params => {
 	    	if(params['id'])
@@ -45,5 +48,13 @@ export class NoticiaHechoComponent implements OnInit{
 	    });
 
 	    return hasId;
+	}
+
+	public getReturnRoute(): string{
+		if(this.hasId){
+			this.returnRoute = `/caso/${this.id}/detalle`;
+		}
+
+		return this.returnRoute;
 	}
 }
