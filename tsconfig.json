@@ -20,7 +20,8 @@
       "@utils/*": ["./app/services/utils/*"],
       "@components-app/*": ["./app/components/app/*"],
       "@services/*": ["./app/services/*"],
-      "@models/*": ["./app/models/*"]
+      "@models/*": ["./app/models/*"],
+      "@app/*": ["./app/*"]
     }
   }
 }
