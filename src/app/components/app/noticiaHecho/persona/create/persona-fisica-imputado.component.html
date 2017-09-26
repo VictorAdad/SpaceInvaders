@@ -10,7 +10,7 @@
             <h3>Detalle de Persona</h3>
         </div>
         <div class="col-md-2">
-            <button class="float-right" md-raised-button routerLink="/noticia-hecho" color="accent">Regresar</button>
+            <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/noticia-hecho" color="accent">Regresar</button>
         </div>
     </div>
     <form (ngSubmit)="save(form.valid, form.value)"   [formGroup]="form">
@@ -638,7 +638,7 @@
                 <button md-raised-button type="submit" color="accent" [disabled]="!form.valid">Guardar</button>
             </div>
             <div class="col-md-auto">
-                <button md-button type="submit" routerLink="/noticia-hecho">Cancelar</button>
+                <button md-button type="submit" routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>
             </div>
         </div>
     </div>

@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MdPaginator } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 import { TableService} from '@utils/table/table.service';
 
 @Component({
@@ -8,17 +9,25 @@ import { TableService} from '@utils/table/table.service';
 })
 
 export class ArmaComponent{
+
+  public casoId: number = null;
+
 	displayedColumns = ['Arma', 'Tipo', 'Marca', 'Calibre'];
 	data:Arma[];
 
 	dataSource: TableService | null;
 	@ViewChild(MdPaginator) paginator: MdPaginator;
 
-	constructor(){}
+	constructor(private route: ActivatedRoute){}
 
 	ngOnInit() {
       this.data = data;
     	this.dataSource = new TableService(this.paginator, this.data);
+
+      this.route.params.subscribe(params => {
+            if(params['id'])
+                this.casoId = +params['id'];
+      });
 
     	console.log('-> Data Source', this.dataSource);
   	}

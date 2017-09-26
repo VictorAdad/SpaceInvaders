@@ -3,6 +3,8 @@ import { Component, ViewChild } from '@angular/core';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 
+import { ActivatedRoute } from '@angular/router';
+
 import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -13,15 +15,25 @@ import 'rxjs/add/observable/of';
 })
 
 export class VehiculoComponent{
+
+  public casoId: number = null;
+
 	displayedColumns = ['tipo', 'marca', 'color', 'modelo', 'placa'];
 	data: Vehiculo[];
 
 	dataSource: TableService | null;
 	@ViewChild(MdPaginator) paginator: MdPaginator;
 
+  constructor(private route: ActivatedRoute) { }
+
 	ngOnInit() {
 		this.data = data;
     	this.dataSource = new TableService(this.paginator, this.data);
+
+        this.route.params.subscribe(params => {
+                if(params['id'])
+                    this.casoId = +params['id'];
+        });  
 
     	console.log('-> Data Source', this.dataSource);
   	}

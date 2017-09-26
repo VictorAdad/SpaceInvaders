@@ -10,7 +10,7 @@
             <h2>Registrar vehículo</h2>
         </div>
         <div class="col-md-2">
-            <button class="float-right" md-raised-button routerLink="/noticia-hecho" color="accent">Regresar</button>
+            <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/noticia-hecho" color="accent">Regresar</button>
         </div>
     </div>
     <form (ngSubmit)="save(form.valid, form.value)" [formGroup]="form">
@@ -128,7 +128,7 @@
                 <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]">Guardar</button>
             </div>
             <div class="p-2">
-                <button md-button routerLink="/noticia-hecho">Cancelar</button>
+                <button md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>
             </div>
         </div>
     </form>

@@ -1,5 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { MdPaginator } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 import { TableService} from '@utils/table/table.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { Persona } from '@models/persona';
@@ -10,13 +11,16 @@ import { Persona } from '@models/persona';
 })
 
 export class PersonaComponent implements OnInit{
+
+    public casoId: number = null;
+
     columns = ['tipo', 'nombre', 'razonSocial', 'alias'];
     data=[];
     dataSource: TableService | null;
     tabla: CIndexedDB;
     @ViewChild(MdPaginator) paginator: MdPaginator;
 
-    constructor(private _tabla: CIndexedDB){
+    constructor(private _tabla: CIndexedDB, private route: ActivatedRoute){
         this.tabla = _tabla;
     }
 
@@ -27,7 +31,14 @@ export class PersonaComponent implements OnInit{
             this.dataSource = new TableService(this.paginator, lista);
         });
         this.dataSource = new TableService(this.paginator, data);
+
+        this.route.params.subscribe(params => {
+                if(params['id'])
+                    this.casoId = +params['id'];
+        });
+        
     }
+
 
 }
 
