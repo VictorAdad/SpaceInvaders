@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Vehiculo } from '@models/vehiculo';
 import { MOption } from '@partials/form/select2/select2.component';
 
@@ -12,7 +13,9 @@ export class VehiculoCreateComponent implements OnInit {
     public form: FormGroup;
     public model: Vehiculo;
 
-    constructor(private _fbuilder: FormBuilder) { }
+    public casoId: number = null;
+
+    constructor(private _fbuilder: FormBuilder, private route: ActivatedRoute) { }
 
     options:MOption[]=[
         {value:"1", label:"Opcion 1"},
@@ -49,6 +52,11 @@ export class VehiculoCreateComponent implements OnInit {
             //'lleva_carga': new FormControl(this.model.lleva_carga, [Validators.required,]),
             //'alterado': new FormControl(this.model.alterado, [Validators.required,]),
             //'señas_particulares': new FormControl(this.model.señas_particulares, [Validators.required,])
+        });
+
+        this.route.params.subscribe(params => {
+            if(params['id'])
+                this.casoId = +params['id'];
         });
     }
 

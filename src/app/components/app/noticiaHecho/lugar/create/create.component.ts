@@ -1,5 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Lugar } from '@models/lugar';
 import { MOption } from '@partials/form/select2/select2.component';
 
@@ -12,7 +13,9 @@ export class LugarCreateComponent implements OnInit{
     public form: FormGroup;
     public model: Lugar;
 
-    constructor(private _fbuilder: FormBuilder) { }
+    public casoId: number = null;
+
+    constructor(private _fbuilder: FormBuilder, private route: ActivatedRoute) { }
 
     options:MOption[]=[
         {value:"1", label:"Opcion 1"},
@@ -33,6 +36,11 @@ export class LugarCreateComponent implements OnInit{
             'colonia_asentamiento': new FormControl(this.model.colonia_asentamiento, [Validators.required,]),
             //'fecha': new FormControl(this.model.fecha, [Validators.required,]),
             'hora': new FormControl(this.model.hora, [Validators.required,])
+        });
+
+        this.route.params.subscribe(params => {
+            if(params['id'])
+                this.casoId = +params['id'];
         });
     }
 

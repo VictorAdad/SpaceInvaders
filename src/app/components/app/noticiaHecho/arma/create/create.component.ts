@@ -10,6 +10,7 @@ import { Arma } from '@models/arma';
 
 export class ArmaCreateComponent{
 
+    public casoId: number = null;
 
     clasesArmas:MOption[]=[
         {value:"Arma blanca", label:"Arma blanca"},
@@ -27,7 +28,7 @@ export class ArmaCreateComponent{
     public form  : FormGroup;
     public model : Arma;
 
-    constructor(private _fbuilder: FormBuilder) { }
+    constructor(private _fbuilder: FormBuilder, private route: ActivatedRoute) { }
     ngOnInit(){
         this.model = new Arma();
         this.form  = new FormGroup({
@@ -40,6 +41,11 @@ export class ArmaCreateComponent{
             'notas'           : new FormControl(this.model.notas),
             'matricula'       : new FormControl(this.model.matricula),
           });
+
+        this.route.params.subscribe(params => {
+            if(params['id'])
+                this.casoId = +params['id'];
+        });
     }
 
     public save(valid : any, model : any):void{

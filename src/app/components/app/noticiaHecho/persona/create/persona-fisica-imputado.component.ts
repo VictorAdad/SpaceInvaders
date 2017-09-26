@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { CIndexedDB } from '@services/indexedDB';
 import {Persona} from '@models/persona';
 import {Router} from '@angular/router';
@@ -11,6 +12,7 @@ import {Router} from '@angular/router';
 export class PersonaFisicaImputadoComponent{
 
 	public form  : FormGroup;
+	public casoId: number = null;
 
 
 	persona:Persona;
@@ -23,7 +25,8 @@ export class PersonaFisicaImputadoComponent{
 	constructor(
 		private _fbuilder: FormBuilder,
 		private router:Router,
-		private _tabla: CIndexedDB) {
+		private _tabla: CIndexedDB,
+		private route: ActivatedRoute) {
 		this.tabla = _tabla;
 	}
 
@@ -48,6 +51,11 @@ export class PersonaFisicaImputadoComponent{
   		this.persona.tipoPersona="";
   		this.persona.tipoInterviniente="";
   		this.persona.detenido=false;
+
+  		this.route.params.subscribe(params => {
+            if(params['id'])
+                this.casoId = +params['id'];
+        });
 	}
 
 	activaRazonSocial(value){

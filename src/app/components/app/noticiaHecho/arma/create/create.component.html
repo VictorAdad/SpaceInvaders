@@ -9,7 +9,7 @@
 		<h2>Registrar arma</h2>
 	</div>
 	<div class="col-md-6 space">
-		<button class="float-right" md-raised-button routerLink="/noticia-hecho" color="accent">Regresar</button>
+		<button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/noticia-hecho" color="accent">Regresar</button>
 	</div>
 	<div class="col-md-12">
 		<form [formGroup]="form">
@@ -49,7 +49,7 @@
 				</div>
 			</div>
 
-			<button class="float-right" md-button routerLink="/noticia-hecho">Cancelar</button>	
+			<button class="float-right" md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>	
 			<button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]">Guardar</button>
 		</form>
 	</div>

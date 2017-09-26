@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MOption } from '@partials/form/select2/select2.component';
 import {DataSource} from '@angular/cdk/collections';
+import { ActivatedRoute } from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
@@ -29,6 +30,7 @@ export class RelacionCreateComponent {
     public trataPersonas:TrataPersonas;
     public hostigamiento:HostigamientoAcoso;
 
+    public casoId: number = null;
 
     tiposRelacion:MOption[] = [
         { value:'Defensor', label:'Defensor del imputado' },
@@ -70,7 +72,7 @@ export class RelacionCreateComponent {
 
 
 
-    constructor(private _fbuilder: FormBuilder) { }
+    constructor(private _fbuilder: FormBuilder, private route: ActivatedRoute) { }
       ngOnInit(){
       this.model = new Relacion();
       this.efectoViolenciaGenero= new EfectoViolenciaGenero();
@@ -132,7 +134,12 @@ export class RelacionCreateComponent {
 
       this.generalForm = this._fbuilder.group({
         itemRows: this._fbuilder.array([this.relacionForm,this.efectoViolenciaForm,this.trataPersonasForm,this.hostigamientForm])
-      });        
+      }); 
+
+      this.route.params.subscribe(params => {
+            if(params['id'])
+                this.casoId = +params['id'];
+      });       
     }
 
 

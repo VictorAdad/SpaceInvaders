@@ -1,5 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 // import { Component} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { CIndexedDB } from '@services/indexedDB';
@@ -20,9 +21,11 @@ export class DelitoComponent{
 	dataSource: TableService | null;
     db:CIndexedDB;
     @ViewChild(MdPaginator) paginator: MdPaginator;
+
+    public casoId: number = null;
     
 
-    constructor(private _tabla: CIndexedDB){
+    constructor(private _tabla: CIndexedDB, private route: ActivatedRoute){
         this.db=_tabla;
     }
 
@@ -54,7 +57,11 @@ export class DelitoComponent{
             ).then(lista=>{
                 console.log("manyTomany",lista);
             });
-        
+            
+        this.route.params.subscribe(params => {
+            if(params['id'])
+                this.casoId = +params['id'];
+        });
     }
 
     swap(e){
