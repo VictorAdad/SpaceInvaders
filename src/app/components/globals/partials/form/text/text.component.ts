@@ -18,6 +18,7 @@ export class TextComponent implements OnInit{
 	@Input() group    : FormGroup = new FormGroup({});
 	@Input() hintStart: string="";
 	@Input() hintEnd: string="";
+	@Input() readonly: string="";
 	@Input() functionChange: Function;
 
 

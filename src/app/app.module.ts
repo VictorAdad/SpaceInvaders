@@ -55,6 +55,7 @@ import {MatCheckboxModule} from '@angular/material';
     noticiaHechoComponents,
     directivesComponents,
     customComponents,
+    dyanamicComponents,
     SolicitudPreliminarComponents,
     DeterminacionComponents,
 
