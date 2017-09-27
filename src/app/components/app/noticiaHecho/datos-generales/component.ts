@@ -8,9 +8,7 @@ import { GlobalComponent } from '@components-app/global.component';
 import { CIndexedDB } from '@services/indexedDB';
 import { FormCreateDelitoCasoComponent } from "./formcreate.component";
 import { OnLineService } from '@services/onLine.service';
-import { Observable } from 'rxjs';
-import { _config} from '@app/app.config';
-import 'rxjs/add/operator/map'
+import { HttpService } from '@services/http.service';
 
 @Component({
     selector : 'datos-generales',
@@ -33,7 +31,7 @@ export class DatosGeneralesComponent implements OnInit{
         _router: Router,
         _activeRoute: ActivatedRoute,
         _onLine: OnLineService,
-        private http: Http
+        private http: HttpService
     ) { 
         this.db = _db;
         this.router = _router;
@@ -53,7 +51,7 @@ export class DatosGeneralesComponent implements OnInit{
                 this.id = +params['id'];
                 if (!isNaN(this.id)){
                     if(this.onLine.onLine){
-                        this.find(this.id).subscribe((response) => {
+                        this.http.get('/v1/base/casos/'+this.id).subscribe((response) => {
                             this.form.patchValue(response);
                         });
                     }else{
@@ -84,8 +82,7 @@ export class DatosGeneralesComponent implements OnInit{
 
     public save(_valid : any, _model : any):void{
         if(this.onLine.onLine){
-            this.post(_model).subscribe((response) => {
-                // console.log('Caso guardado en la BD', response);
+            this.http.post('/v1/base/casos', _model).subscribe((response) => {
                 this.router.navigate(['/caso/'+response['id']+'/noticia-hecho' ]);
             });
         }else{
@@ -108,7 +105,7 @@ export class DatosGeneralesComponent implements OnInit{
     public edit(_valid : any, _model : any):void{
         console.log('-> Caso@edit()', _model);
         if(this.onLine.onLine){
-            this.put(this.id, _model).subscribe((response) => {
+            this.http.put('/v1/base/casos/'+this.id, _model).subscribe((response) => {
                 console.log('-> Registro acutualizado', response);
             });
         }else{
@@ -124,21 +121,6 @@ export class DatosGeneralesComponent implements OnInit{
         });
 
         return hasId;
-    }
-
-    private post(_model: Caso): Observable<Caso>{
-        return this.http.post(_config.api.host+'/v1/base/casos', _model)
-            .map((response: Response) => response.json());
-    }
-
-    private find(_id: number): Observable<Caso>{
-        return this.http.get(_config.api.host+'/v1/base/casos/'+_id)
-            .map((response: Response) => response.json());
-    }
-
-    private put(_id:number, _model: Caso): Observable<Caso>{
-        return this.http.put(_config.api.host+'/v1/base/casos/'+_id, _model)
-            .map((response: Response) => response.json());
     }
 
 }

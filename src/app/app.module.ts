@@ -24,6 +24,7 @@ import { AuthenticationService} from "@services/auth/authentication.service";
 import { GlobalService } from "@services/global.service";
 import { OnLineService } from "@services/onLine.service";
 import { CIndexedDB } from '@services/indexedDB';
+import { HttpService } from '@services/http.service';
 import { JasperoConfirmationsModule } from '@jaspero/ng2-confirmations';
 
 import { MdNativeDateModule, MdIconModule} from '@angular/material';
@@ -107,7 +108,8 @@ import {MatCheckboxModule} from '@angular/material';
     AuthenticationService,
     GlobalService,
     OnLineService,
-    CIndexedDB
+    CIndexedDB,
+    HttpService
   ],
   entryComponents: [
     dyanamicComponents

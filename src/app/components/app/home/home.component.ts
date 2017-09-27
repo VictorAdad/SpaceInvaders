@@ -1,12 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute }    from '@angular/router';
-import { Http, Response } from '@angular/http';
 import { CIndexedDB } from '@services/indexedDB';
 import { OnLineService } from '@services/onLine.service';
+import { HttpService } from '@services/http.service';
 import { Caso } from '@models/caso';
-import { Observable } from 'rxjs';
-import { _config} from '@app/app.config';
-import 'rxjs/add/operator/map'
 
 @Component({
     templateUrl: './home.component.html',
@@ -16,7 +13,7 @@ export class HomeComponent implements OnInit {
 
     private db: CIndexedDB;
     private onLine: OnLineService;
-    private http: Http;
+    private http: HttpService;
     casos: Caso[] = [];
     
 
@@ -24,7 +21,7 @@ export class HomeComponent implements OnInit {
         private route: ActivatedRoute,
         private _db: CIndexedDB,
         private _onLine: OnLineService,
-        private _http: Http
+        private _http: HttpService
         ) {
         this.db     = _db;
         this.onLine = _onLine;
@@ -33,8 +30,8 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(){
         if(this.onLine.onLine){
-            this.list().subscribe((response) => {
-                this.casos = response;
+            this.http.get('/v1/base/casos').subscribe((response) => {
+                this.casos = response as Caso[];
             });
         }else{
             this.db.list('casos').then(list => {
@@ -46,10 +43,5 @@ export class HomeComponent implements OnInit {
                 }
             });
         }
-    }
-
-    private list(): Observable<Caso[]>{
-        return this.http.get(_config.api.host+'/v1/base/casos')
-            .map((response: Response) => response.json());
     }
 }
