@@ -48,9 +48,14 @@
 				<text-area label="Notas" name="notas" ></text-area>  
 				</div>
 			</div>
-
-			<button class="float-right" md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>	
-			<button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]">Guardar</button>
+			<div class="row justify-content-end">
+				<div class="col-sm-auto" [mdTooltip]="!form.valid ? 'No se han llenado los campos requeridos' : ''">
+					<button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]">Guardar</button>
+				</div>
+				<div class="col-sm-auto">
+					<button class="float-right" md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>	
+				</div>
+			</div>
 		</form>
 	</div>
 </div>

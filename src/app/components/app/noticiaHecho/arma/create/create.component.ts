@@ -1,13 +1,16 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { MOption } from '@partials/form/select2/select2.component'
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Arma } from '@models/arma';
+import { OnLineService} from '@services/onLine.service';
+import { HttpService} from '@services/http.service';
+import { _config} from '@app/app.config';
+
 @Component({
   selector: 'arma-create',
   templateUrl: 'create.component.html',
 })
-
 export class ArmaCreateComponent{
 
     public casoId: number = null;
@@ -28,7 +31,14 @@ export class ArmaCreateComponent{
     public form  : FormGroup;
     public model : Arma;
 
-    constructor(private _fbuilder: FormBuilder, private route: ActivatedRoute) { }
+    constructor(
+        private _fbuilder: FormBuilder,
+        private route: ActivatedRoute,
+        private onLine: OnLineService,
+        private http: HttpService,
+        private router: Router
+        ) { }
+
     ngOnInit(){
         this.model = new Arma();
         this.form  = new FormGroup({
@@ -48,8 +58,20 @@ export class ArmaCreateComponent{
         });
     }
 
-    public save(valid : any, model : any):void{
-        console.log('DatosGenerales@save()');
+    public save(valid : any, _model : any):void{
+        if(this.onLine.onLine){
+            Object.assign(this.model, _model);
+            this.model.caso.id = this.casoId;
+            this.model.caso.created = null;
+            this.http.post('/v1/base/armas', this.model).subscribe(
+                (response) => {
+                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                },
+                (error) => {
+                    console.error('Error', error);
+                }
+            );
+        }
     }
 
 
