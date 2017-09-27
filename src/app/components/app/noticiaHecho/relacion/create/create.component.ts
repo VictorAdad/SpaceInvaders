@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { MOption } from '@partials/form/select2/select2.component';
-import {DataSource} from '@angular/cdk/collections';
-import { ActivatedRoute } from '@angular/router';
-import {Observable} from 'rxjs/Observable';
+import { DataSource} from '@angular/cdk/collections';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Relacion} from '@models/relacion';
 import { EfectoViolenciaGenero} from '@models/efectoViolenciaGenero';
 import { TrataPersonas} from '@models/trataPersonas';
 import { HostigamientoAcoso} from '@models/hostigamientoAcoso';
+import { OnLineService} from '@services/onLine.service';
+import { HttpService} from '@services/http.service';
 
 
 
@@ -72,8 +74,15 @@ export class RelacionCreateComponent {
 
 
 
-    constructor(private _fbuilder: FormBuilder, private route: ActivatedRoute) { }
-      ngOnInit(){
+    constructor(
+        private _fbuilder: FormBuilder,
+        private route: ActivatedRoute,
+        private onLine: OnLineService,
+        private http: HttpService,
+        private router: Router
+        ) { }
+
+    ngOnInit(){
       this.model = new Relacion();
       this.efectoViolenciaGenero= new EfectoViolenciaGenero();
       this.trataPersonas= new TrataPersonas();
@@ -143,8 +152,16 @@ export class RelacionCreateComponent {
     }
 
 
-    save(valid : any, model : any):void{
-      console.log('-> Submit', valid, model);
+    save(_valid : any, _model : any):void{
+        if(this.onLine.onLine){
+            Object.assign(this.model, _model);
+            this.model.caso.id = this.casoId;
+            this.model.caso.created = null;
+            this.http.post('/v1/base/relaciones', this.model).subscribe(
+                (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
+                (error) => console.error('Error', error)
+            );
+        }
     }
 
     changeTipoRelacion(option){
@@ -188,6 +205,17 @@ export class RelacionCreateComponent {
       }else{
         this.isViolenciaGenero = false;
       }
+    }
+
+    public validateForm(formGroup: FormGroup) {
+        Object.keys(formGroup.controls).forEach(field => {
+            const control = formGroup.get(field);         
+            if (control instanceof FormControl) {         
+                control.markAsTouched({ onlySelf: true });
+            } else if (control instanceof FormGroup) {
+                this.validateForm(control);           
+            }
+        });
     }
 
 }

@@ -320,10 +320,14 @@
                     </div>
                 </div>
             </div>
-            <br/>
-
-            <button class="float-right" md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button> 
-            <button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(generalForm.valid, generalForm.value)" [disabled]="!generalForm.valid || [saving]">Guardar</button>
+            <div class="row justify-content-end space">
+                <div class="col-sm-auto" [mdTooltip]="!relacionForm.valid ? 'No se han llenado los campos requeridos' : ''" mdTooltipPosition="above" (mouseenter)="validateForm(relacionForm)">
+                    <button md-raised-button color="accent" _saving (saveFn)="save(relacionForm.valid, relacionForm.value)" [disabled]="!relacionForm.valid || [saving]">Guardar</button>
+                </div>
+                <div class="col-sm-auto">
+                    <button md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>
+                </div>
+            </div>
         </form>
     </div>
 </div>
