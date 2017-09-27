@@ -60,12 +60,15 @@ const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
     { path : '', component: HomeComponent, data : { breadcrumb : 'Noticia de hechos'}},
     { path : 'login', component: LoginComponent,  data : { breadcrumb : 'Login' } },
-    { path : 'noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
-    { path : 'caso/:id/noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
     { path : 'usuarios', component : UsuariosComponent, data : { breadcrumb : 'Usuarios' } },
     { path : 'usuarios/create', component : UsuarioCreateComponent, data : { breadcrumb : 'Crear usuario', rutas:[{path:'/usuarios',label:"Usuarios"}] } },
     { path : 'usuarios/edit/:id',component : UsuarioCreateComponent,data : { breadcrumb : 'Editar usuario', rutas:[{path:'/usuarios',label:"Usuarios"}] } },
+
+    //Noticia de Hecho
+    { path : 'noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
+    { path : 'caso/:id/noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
     { path : 'armas', component : ArmaComponent, data : { breadcrumb : 'Armas' } },
+    { path : 'caso/:id/armas/create', component : ArmaCreateComponent, data : { breadcrumb : 'Nueva arma', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}] } },
     { path : 'caso/:id/armas/create', component : ArmaCreateComponent, data : { breadcrumb : 'Nueva arma', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}] } },
     { path : 'lugares', component :  LugarComponent, data : { breadcrumb : 'Lugares' }},
     { path : 'caso/:id/lugares/create', component : LugarCreateComponent, data : { breadcrumb : 'Crear lugares', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}] } },
