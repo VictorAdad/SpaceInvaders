@@ -7,6 +7,10 @@ import { TableService} from '@utils/table/table.service';
 })
 export class TransferirComponent{
     constructor(public dialogRef: MdDialogRef<TransferirComponent>){}
+
+    close(){
+        this.dialogRef.close();
+    }
 }
 
 @Component({
@@ -33,6 +37,7 @@ export class TitularComponent{
             width: '500px'
         });
     }
+
 }
 
 
