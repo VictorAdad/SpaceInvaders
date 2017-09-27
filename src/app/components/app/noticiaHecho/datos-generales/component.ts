@@ -86,6 +86,18 @@ export class DatosGeneralesComponent implements OnInit{
                 this.router.navigate(['/caso/'+response['id']+'/noticia-hecho' ]);
             });
         }else{
+            let dato={
+                url:_config.api.host+'/v1/base/casos',
+                body:{
+                    titulo:_model.titulo,
+                    sintesis:_model.sintesis,
+                    delito:_model.delito
+                },
+                options:[],
+                tipo:"post",
+                pendiente:true
+            }
+            this.db.add("sincronizar",dato).then(p=>{}); 
             _model.personas=[];
             _model.delitos=[];
             _model.lugares=[];
