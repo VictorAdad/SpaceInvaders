@@ -32,7 +32,13 @@ export class CIndexedDB {
                 /*
                     A qui se guardaran los datos a sincronizar, cada vez que se restablesca la conexion
                     se buscara en esta tabla.
-                    id, url: servicio, data: request, parametros
+                    los campo son:
+                        id, 
+                        url:, 
+                        body:, 
+                        parametros,
+                        newId: es el id del objecto que se acaba de sincronizar,solo existe si ya se sincronizo
+                        dependeDe: este campo existe solo cuando depende de otra sincronizacion, este campo indica el id de la tabla sincronizacion del cual depende esta sincronizacion y utilizara el newId para hacer las peticiones al servidor
                  */
                 db.createObjectStore("sincronizar", {keyPath: "id"});
 
@@ -42,7 +48,6 @@ export class CIndexedDB {
                 newDB=true;
             };
             open.onsuccess=function(){
-                console.log("@@@@@@@@Aqui estoy");
                 if (newDB)
                     obj.inicialiazaCatalogos();
             }
@@ -180,7 +185,7 @@ export class CIndexedDB {
                         
                         tx.oncomplete = function() {
                             db.close();
-                            console.log("-> cierra la conexion");
+                            //console.log("-> cierra la conexion");
                         };
                     }
                 }else{
