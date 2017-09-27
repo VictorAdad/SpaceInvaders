@@ -18,9 +18,10 @@ export class DocumentoCreateComponent {
    
     public fileOverBase(e:any):void {
       this.hasBaseDropZoneOver = e;
-      //this.uploader.uploadAll();
-      //this.dialogRef.close();
-      //this.check();
+    }
+
+    close(){
+        this.dialogRef.close();
     }
 
     uploadFiles(){
