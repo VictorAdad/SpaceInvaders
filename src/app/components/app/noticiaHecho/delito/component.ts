@@ -6,7 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { CIndexedDB } from '@services/indexedDB';
-
+import { OnLineService } from '@services/onLine.service';
 import {Caso} from '@models/caso' 
 
 
@@ -30,23 +30,23 @@ export class DelitoComponent{
     id:number;
 
     caso:Caso;
-
-    constructor(private _tabla: CIndexedDB, _activeRoute: ActivatedRoute){
+    private onLine : OnLineService;
+    constructor(private _tabla: CIndexedDB, _activeRoute: ActivatedRoute, _onLine: OnLineService){
 
         this.db=_tabla;
         this.activeRoute = _activeRoute;
+        this.onLine= _onLine;
     }
 
     ngOnInit(){
         var superDatos=[];
         this.activeRoute.params.subscribe(params => {
             this.id = parseInt(params['id']);
-            if (!isNaN(this.id)){
+            if (!isNaN(this.id) && !this.onLine.onLine ){
                 this.db.get("casos",this.id).then(
                     casoR=>{
                         this.caso=casoR as Caso;
                         this.dataSource = new TableService(this.paginator, casoR["delitos"]);
-                        console.log("->caso", casoR);
                     });
             }    
             
