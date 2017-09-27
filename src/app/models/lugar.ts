@@ -1,3 +1,5 @@
+import { Caso } from '@models/caso';
+
 export class Lugar{
     tipo: string;
     tipo_zona: string;
@@ -18,4 +20,5 @@ export class Lugar{
     notas: string;
     latitud: string;
     longitud: string;
+    caso: Caso = new Caso();
 }

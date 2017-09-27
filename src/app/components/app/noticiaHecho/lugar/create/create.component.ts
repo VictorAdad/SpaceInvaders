@@ -1,7 +1,9 @@
 import { Component,OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { Lugar } from '@models/lugar';
+import { OnLineService} from '@services/onLine.service';
+import { HttpService} from '@services/http.service';
 import { MOption } from '@partials/form/select2/select2.component';
 
 @Component({
@@ -15,7 +17,13 @@ export class LugarCreateComponent implements OnInit{
 
     public casoId: number = null;
 
-    constructor(private _fbuilder: FormBuilder, private route: ActivatedRoute) { }
+    constructor(
+        private _fbuilder: FormBuilder,
+        private route: ActivatedRoute,
+        private onLine: OnLineService,
+        private http: HttpService,
+        private router: Router
+        ) { }
 
     options:MOption[]=[
         {value:"1", label:"Opcion 1"},
@@ -26,14 +34,15 @@ export class LugarCreateComponent implements OnInit{
     ngOnInit() {
         this.model = new Lugar();
         this.form = new FormGroup({
+            'caso.id': new FormControl(),
             'tipo': new FormControl(this.model.tipo, [Validators.required,]),
-            'tipo_zona': new FormControl(this.model.tipo_zona, [Validators.required,]),
+            'tipoZona': new FormControl(this.model.tipo_zona, [Validators.required,]),
             'calle': new FormControl(this.model.calle, [Validators.required,]),
             'referencias': new FormControl(this.model.referencias, [Validators.required,]),
             'pais': new FormControl(this.model.pais, [Validators.required,]),
             'estado': new FormControl(this.model.estado, [Validators.required,]),
-            'municipio_delegacion': new FormControl(this.model.municipio_delegacion, [Validators.required,]),
-            'colonia_asentamiento': new FormControl(this.model.colonia_asentamiento, [Validators.required,]),
+            'municipio': new FormControl(this.model.municipio_delegacion, [Validators.required,]),
+            'colonia': new FormControl(this.model.colonia_asentamiento, [Validators.required,]),
             //'fecha': new FormControl(this.model.fecha, [Validators.required,]),
             'hora': new FormControl(this.model.hora, [Validators.required,])
         });
@@ -44,7 +53,19 @@ export class LugarCreateComponent implements OnInit{
         });
     }
 
-    save(valid : any, model : any):void{
-		console.log('-> Submit', valid, model);
-	}
+    public save(_valid : any, _model : any):void{
+        Object.assign(this.model, _model);
+        this.model.caso.id = this.casoId;
+        this.model.caso.created = null;
+        if(this.onLine.onLine){
+            this.http.post('/v1/base/lugares', this.model).subscribe(
+                (response) => {
+                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                },
+                (error) => {
+                    console.error('Error', error);
+                }
+            );
+        }
+    }
 }

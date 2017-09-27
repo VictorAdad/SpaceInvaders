@@ -14,16 +14,17 @@
         </div>
     </div>
     <div class="content">
-        <form (ngSubmit)="save(form.valid, form.value)" [formGroup]="form">
+        <form [formGroup]="form">
+            <!-- <input type="hidden" *ngIf="casoId != null"formControlName="caso.id" value="{{ casoId }}"> -->
             <div class="row">
                 <div class="col-md-2">
-                    <select2 placeholder="Tipo" [(options)]="options" ([value])="model.tipo" name="tipo" [group]="form"></select2>
+                    <select2 placeholder="Tipo" [(options)]="options" name="tipo" [group]="form"></select2>
                 </div>
                 <div class="col-md-2">
-                    <select2 placeholder="Tipo de zona" [(options)]="options" ([value])="model.tipo_zona" name="tipo_zona" [group]="form"></select2>
+                    <select2 placeholder="Tipo de zona" [(options)]="options" name="tipoZona" [group]="form"></select2>
                 </div>
                 <div class="col-md-4">
-                    <text label="Calle" ([value])="model.calle" name="calle" [group]="form"></text>
+                    <text label="Calle" name="calle" [group]="form"></text>
                 </div>
                 <div class="col-md-2">
                     <text label="Nº exterior"></text>
@@ -34,21 +35,21 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <text label="Referencias" ([value])="model.referencias" name="referencias" [group]="form"></text>
+                    <text label="Referencias" name="referencias" [group]="form"></text>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-3 full-width">
-                    <select2 placeholder="País" [(options)]="options" ([value])="model.pais" name="pais" [group]="form"></select2>
+                    <select2 placeholder="País" [(options)]="options" name="pais" [group]="form"></select2>
                 </div>
                 <div class="col-md-3">
-                    <text label="Estado" ([value])="model.estado" name="estado" [group]="form"></text>
+                    <text label="Estado" name="estado" [group]="form"></text>
                 </div>
                 <div class="col-md-3">
-                    <text label="Municipio/Delegación" ([value])="model.municipio_delegacion" name="municipio_delegacion" [group]="form"></text>
+                    <text label="Municipio/Delegación" name="municipio" [group]="form"></text>
                 </div>
                 <div class="col-md-3">
-                    <text label="Colonia/Asentamiento" ([value])="model.colonia_asentamiento" name="colonia_asentamiento" [group]="form"></text>
+                    <text label="Colonia/Asentamiento" name="colonia" [group]="form"></text>
                 </div>
             </div>
             <div class="row">
@@ -59,7 +60,7 @@
                     <date label="Fecha"></date>
                 </div>
                 <div class="col-md-3">
-                    <text label="Hora" ([value])="model.hora" name="hora" [group]="form"></text>
+                    <text label="Hora" name="hora" [group]="form"></text>
                 </div>
                 <div class="col-md-3">
                     <select2 placeholder="Día"></select2>
@@ -72,11 +73,11 @@
                     <text label="Notas"></text>
                 </div>
             </div>
-            <div class="d-flex justify-content-end">
-                <div class="p-2">
+            <div class="row justify-content-end">
+                <div class="col-sm-auto" [mdTooltip]="!form.valid ? 'No se han llenado los campos requeridos' : ''">
                     <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]">Guardar</button>
                 </div>
-                <div class="p-2">
+                <div class="col-sm-auto">
                     <button md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>
                 </div>
             </div>
