@@ -5,6 +5,8 @@ import { Lugar } from '@models/lugar';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { MOption } from '@partials/form/select2/select2.component';
+import { _config} from '@app/app.config';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
     selector: 'lugar-create',
@@ -22,7 +24,8 @@ export class LugarCreateComponent implements OnInit{
         private route: ActivatedRoute,
         private onLine: OnLineService,
         private http: HttpService,
-        private router: Router
+        private router: Router,
+        private db:CIndexedDB
         ) { }
 
     options:MOption[]=[
@@ -66,6 +69,17 @@ export class LugarCreateComponent implements OnInit{
                     console.error('Error', error);
                 }
             );
+        }else{
+            let dato={
+                url:_config.api.host+'/v1/base/lugares',
+                body:this.model,
+                options:[],
+                tipo:"post",
+                pendiente:true
+            }
+            this.db.add("sincronizar",dato).then(p=>{
+                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+            }); 
         }
     }
 }
