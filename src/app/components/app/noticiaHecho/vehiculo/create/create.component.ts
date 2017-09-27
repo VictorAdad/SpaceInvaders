@@ -70,7 +70,7 @@ export class VehiculoCreateComponent implements OnInit {
         });
     }
 
-    save(valid : any, _model : any):void{
+    public save(valid : any, _model : any):void{
         if(this.onLine.onLine){
             Object.assign(this.model, _model);
             this.model.caso.id = this.casoId;
@@ -81,4 +81,15 @@ export class VehiculoCreateComponent implements OnInit {
             );
         }
 	}
+
+    public validateForm(formGroup: FormGroup) {
+        Object.keys(formGroup.controls).forEach(field => {
+            const control = formGroup.get(field);         
+            if (control instanceof FormControl) {         
+                control.markAsTouched({ onlySelf: true });
+            } else if (control instanceof FormGroup) {
+                this.validateForm(control);           
+            }
+        });
+    }
 }
