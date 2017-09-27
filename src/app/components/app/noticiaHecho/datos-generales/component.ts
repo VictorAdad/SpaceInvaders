@@ -9,6 +9,7 @@ import { CIndexedDB } from '@services/indexedDB';
 import { FormCreateDelitoCasoComponent } from "./formcreate.component";
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
+import { _config} from '@app/app.config';
 
 @Component({
     selector : 'datos-generales',
@@ -87,7 +88,7 @@ export class DatosGeneralesComponent implements OnInit{
             });
         }else{
             let dato={
-                url:'/v1/base/casos',
+                url:_config.api.host+'/v1/base/casos',
                 body:{
                     titulo:_model.titulo,
                     sintesis:_model.sintesis,
