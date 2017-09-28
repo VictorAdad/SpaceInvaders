@@ -5,15 +5,17 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { Arma } from '@models/arma';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
+import { NoticiaHechoGlobal } from '../../global';
 import { _config} from '@app/app.config';
 
 @Component({
   selector: 'arma-create',
   templateUrl: 'create.component.html',
 })
-export class ArmaCreateComponent{
+export class ArmaCreateComponent extends NoticiaHechoGlobal{
 
     public casoId: number = null;
+    public id: number = null;
 
     clasesArmas:MOption[]=[
         {value:"Arma blanca", label:"Arma blanca"},
@@ -37,7 +39,9 @@ export class ArmaCreateComponent{
         private onLine: OnLineService,
         private http: HttpService,
         private router: Router
-        ) { }
+        ) {
+        super();
+    }
 
     ngOnInit(){
         this.model = new Arma();
@@ -53,8 +57,14 @@ export class ArmaCreateComponent{
           });
 
         this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
+            if(params['casoId'])
+                this.casoId = +params['casoId'];
+            if(params['id']){
+                this.id = +params['id'];
+                this.http.get('/v1/base/armas/'+this.id).subscribe(response =>{
+                    this.fillForm(response);
+                });
+            }
         });
     }
 
@@ -72,6 +82,19 @@ export class ArmaCreateComponent{
                 }
             );
         }
+    }
+
+    public edit(_valid : any, _model : any):void{
+        console.log('-> Caso@edit()', _model);
+        if(this.onLine.onLine){
+            this.http.put('/v1/base/armas/'+this.id, _model).subscribe((response) => {
+                console.log('-> Registro acutualizado', response);
+            });
+        }
+    }
+
+    public fillForm(data){
+        this.form.patchValue(data);
     }
 
 
