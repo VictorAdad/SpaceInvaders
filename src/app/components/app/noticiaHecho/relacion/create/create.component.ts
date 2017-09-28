@@ -12,7 +12,7 @@ import { HostigamientoAcoso} from '@models/hostigamientoAcoso';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { NoticiaHechoGlobal } from '../../global';
-
+import { CIndexedDB } from '@services/indexedDB';
 
 
 @Component({
@@ -81,7 +81,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         private route: ActivatedRoute,
         private onLine: OnLineService,
         private http: HttpService,
-        private router: Router
+        private router: Router,
+        private db:CIndexedDB
         ) {
         super();
     }
@@ -171,6 +172,20 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
                 (error) => console.error('Error', error)
             );
+        }else{
+            Object.assign(this.model, _model);
+            this.model.caso.id = this.casoId;
+            this.model.caso.created = null;
+            let dato={
+                url:'/v1/base/relaciones',
+                body:this.model,
+                options:[],
+                tipo:"post",
+                pendiente:true
+            }
+            this.db.add("sincronizar",dato).then(p=>{
+                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+            }); 
         }
     }
 
@@ -180,6 +195,17 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             this.http.put('/v1/base/relaciones/'+this.id, _model).subscribe((response) => {
                 console.log('-> Registro acutualizado', response);
             });
+        }else{
+            let dato={
+                url:'/v1/base/relaciones/'+this.id,
+                body:_model,
+                options:[],
+                tipo:"update",
+                pendiente:true
+            }
+            this.db.add("sincronizar",dato).then(p=>{
+                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+            }); 
         }
     }
 
