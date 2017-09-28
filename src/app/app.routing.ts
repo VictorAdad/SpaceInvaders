@@ -132,13 +132,13 @@ const routes: Routes = [
     { path : 'catalogo-armas', component : CatalogoArmasComponent, data : { breadcrumb : 'Catálogo de Armas', rutas:[{path:'/catalogos',label:"Catálogos"}]  } },
     { path : 'tipo-arma', component : TipoArmaComponent, data : { breadcrumb : 'Tipo de arma', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"}] } },
     { path : 'tipo-arma/create', component : CreateArmaComponent, data : { breadcrumb : 'Agregar Tipo de Arma', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Tipo de arma"}] }  },
-    { path : 'tipo-arma/edit/:id', component : CreateArmaComponent, data : { breadcrumb : 'Editar Tipo de Arma', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Editor Tipo de arma"}] }  },
+    { path : 'tipo-arma/:id/edit', component : CreateArmaComponent, data : { breadcrumb : 'Editar Tipo de Arma', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Editor Tipo de arma"}] }  },
     { path : 'calibre-arma', component : CalibreArmaComponent, data : { breadcrumb : 'Calibre de Armas', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"}] } },
     { path : 'calibre-arma/create', component : CreateArmaComponent, data : { breadcrumb : 'Agregar Calibre', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Calibre de Armas"}] }  },
-    { path : 'calibre-arma/edit/:id', component : CreateArmaComponent, data : { breadcrumb : 'Editar Calibre', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Calibre de Armas"}] }  },
+    { path : 'calibre-arma/:id/edit', component : CreateArmaComponent, data : { breadcrumb : 'Editar Calibre', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Calibre de Armas"}] }  },
     { path : 'mecanismo-accion', component : MecanismoAccionComponent, data : { breadcrumb : 'Mecanismo de Acción', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"}] } },
     { path : 'mecanismo-accion/create', component : CreateArmaComponent, data : { breadcrumb : 'Agregar Mecanismo', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/mecanismo-accion',label:"Mecanismo de Acción"}] }  },
-    { path : 'mecanismo-accion/edit/:id', component : CreateArmaComponent, data : { breadcrumb : 'Editar Mecanismo', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Calibre de Armas"}] }  },
+    { path : 'mecanismo-accion/:id/edit', component : CreateArmaComponent, data : { breadcrumb : 'Editar Mecanismo', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Calibre de Armas"}] }  },
 ];
 
 @NgModule({

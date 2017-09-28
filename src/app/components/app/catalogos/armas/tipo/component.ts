@@ -24,7 +24,7 @@ export class TipoArmaComponent {
     setClickedRow(row) {
         this.selectedRow = row.id;
         //console.log(row.nombre);
-        this.router.navigate(['/tipo-arma/edit', row.id]);
+        this.router.navigate(['/tipo-arma/'+row.id+'/edit']);
     }
 
 	ngOnInit() {
