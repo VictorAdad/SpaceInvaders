@@ -23,8 +23,8 @@ export class TipoArmaComponent {
     
     setClickedRow(row) {
         this.selectedRow = row.id;
-        console.log(row.nombre);
-        this.router.navigate(['/tipo-arma/edit', row.nombre]);
+        //console.log(row.nombre);
+        this.router.navigate(['/tipo-arma/edit', row.id]);
     }
 
 	ngOnInit() {
@@ -50,4 +50,4 @@ export class ExampleDataSource extends DataSource<any> {
     }
   
     disconnect() {}
-  }
+}

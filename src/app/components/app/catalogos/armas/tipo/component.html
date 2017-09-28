@@ -11,7 +11,7 @@
 <div class="row space"></div>
 <div class="row">
     <div class="col">
-        <button class="float-right" md-raised-button routerLink="/tipo-arma/create" color="accent">Agregar tipo de arma</button>
+        <button class="float-right" md-raised-button [routerLink]="['create']" color="accent">Agregar tipo de arma</button>
     </div>
 </div>
 <md-table #table [dataSource]="dataSource">

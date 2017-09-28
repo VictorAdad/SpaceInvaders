@@ -24,7 +24,8 @@ export class CalibreArmaComponent {
     
     setClickedRow(row) {
         this.selectedRow = row.id;
-        console.log(row.calibre);
+        //console.log(row.calibre);
+        this.router.navigate(['/calibre-arma/edit', row.id]);
     }
 
 	ngOnInit() {

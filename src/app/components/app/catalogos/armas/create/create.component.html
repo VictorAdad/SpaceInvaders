@@ -2,9 +2,13 @@
 <div class="content-body">
     <div class="row">
         <div class="col-md-10">
-            <h2 *ngIf="tipo">Agregar Tipo de Arma</h2>
-            <h2 *ngIf="calibre">Agregar Calibre</h2>
-            <h2 *ngIf="mecanismo">Agregar Mecanismo</h2>
+            <h2 *ngIf="tipo && isCreate">Agregar Tipo de Arma</h2>
+            <h2 *ngIf="calibre && isCreate">Agregar Calibre</h2>
+            <h2 *ngIf="mecanismo && isCreate">Agregar Mecanismo</h2>
+
+            <h2 *ngIf="tipo && isEdit">Editar Tipo de Arma</h2>
+            <h2 *ngIf="calibre && isEdit">Editar Calibre</h2>
+            <h2 *ngIf="mecanismo && isEdit">Editar Mecanismo</h2>
         </div>
         <div class="col-md-2">
             <button class="float-right" md-raised-button (click)="return()" color="accent">Regresar</button>
@@ -12,21 +16,36 @@
     </div>
     <div class="content">
         <form (ngSubmit)="save(form.valid, form.value)" [formGroup]="form">
-            <div class="row" *ngIf="tipo">
+            <div class="row" *ngIf="tipo && isCreate">
                 <div class="col-md-6">
                     <text label="Nombre del arma" ([value])="model.nombreArma" name="nombreArma" [group]="form"></text>
                 </div>
             </div>
+            <div class="row" *ngIf="tipo && isEdit">
+                <div class="col-md-6">
+                    <text label="Nombre del arma" ([value])="model.nombreArma" name="nombreArma" [group]="form" value="{{text}}"></text>
+                </div>
+            </div>
 
-            <div class="row" *ngIf="calibre">
+            <div class="row" *ngIf="calibre && isCreate">
                 <div class="col-md-6">
                     <text label="Calibre del arma" ([value])="model.calibre" name="calibre" [group]="form"></text>
                 </div>
             </div>
+            <div class="row" *ngIf="calibre && isEdit">
+                <div class="col-md-6">
+                    <text label="Calibre del arma" ([value])="model.calibre" name="calibre" [group]="form" value="{{text}}"></text>
+                </div>
+            </div>
 
-            <div class="row" *ngIf="mecanismo">
+            <div class="row" *ngIf="mecanismo && isCreate">
                 <div class="col-md-6">
                     <text label="Mecanismo de acción" ([value])="model.mecanismoAccion" name="mecanismoAccion" [group]="form"></text>
+                </div>
+            </div>
+            <div class="row" *ngIf="mecanismo && isEdit">
+                <div class="col-md-6">
+                    <text label="Mecanismo de acción" ([value])="model.mecanismoAccion" name="mecanismoAccion" [group]="form" value="{{text}}"></text>
                 </div>
             </div>
 

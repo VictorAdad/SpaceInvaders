@@ -23,7 +23,6 @@ export class CatalogoArmasComponent {
     
     setClickedRow(row) {
         this.selectedRow = row.id;
-        console.log(row.id);
         switch(row.id){
             case 1:{
                 this.router.navigate(['/tipo-arma']);
