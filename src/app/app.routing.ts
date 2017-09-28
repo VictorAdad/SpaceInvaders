@@ -55,6 +55,13 @@ import { DetalleCasoComponent } from '@components-app/detalle-caso/component';
 import { EntrevistaComponent } from '@components-app/entrevista/component';
 import { EntrevistaCreateComponent } from '@components-app/entrevista/create/component';
 
+//Catalogos
+import { CatalogosComponent } from '@components-app/catalogos/catalogos.component';
+import { CatalogoArmasComponent } from '@components-app/catalogos/armas/component';
+import { TipoArmaComponent } from '@components-app/catalogos/armas/tipo/component';
+import { CalibreArmaComponent } from '@components-app/catalogos/armas/calibre/component';
+import { CreateArmaComponent } from '@components-app/catalogos/armas/create/create.component';
+import { MecanismoAccionComponent } from '@components-app/catalogos/armas/mecanismo/component';
 
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
@@ -116,7 +123,18 @@ const routes: Routes = [
 
     //Entrevista
     { path : 'entrevista', component : EntrevistaComponent, data : { breadcrumb : 'Entrevistas' } },
-    { path : 'entrevista/create', component : EntrevistaCreateComponent, data : { breadcrumb : 'Entrevistas' } }
+    { path : 'entrevista/create', component : EntrevistaCreateComponent, data : { breadcrumb : 'Entrevistas' } },
+
+    //Catalogos
+    { path : 'catalogos', component : CatalogosComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogo-armas', component : CatalogoArmasComponent, data : { breadcrumb : 'Catálogo de Armas', rutas:[{path:'/catalogos',label:"Catálogos"}]  } },
+    { path : 'tipo-arma', component : TipoArmaComponent, data : { breadcrumb : 'Tipo de arma', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"}] } },
+    { path : 'tipo-arma/create', component : CreateArmaComponent, data : { breadcrumb : 'Agregar Tipo de Arma', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Tipo de arma"}] }  },
+    { path : 'tipo-arma/edit/:nombre', component : CreateArmaComponent, data : { breadcrumb : 'Editar Tipo de Arma', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Editor Tipo de arma"}] }  },
+    { path : 'calibre-arma', component : CalibreArmaComponent, data : { breadcrumb : 'Calibre de Armas', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"}] } },
+    { path : 'calibre-arma/create', component : CreateArmaComponent, data : { breadcrumb : 'Agregar Calibre', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Calibre de Armas"}] }  },
+    { path : 'mecanismo-accion', component : MecanismoAccionComponent, data : { breadcrumb : 'Mecanismo de Acción', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"}] } },
+    { path : 'mecanismo-accion/create', component : CreateArmaComponent, data : { breadcrumb : 'Agregar Mecanismo', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/mecanismo-accion',label:"Mecanismo de Acción"}] }  },
 ];
 
 @NgModule({
@@ -172,5 +190,13 @@ export const routingComponents = [
 
   //Entrevista
   EntrevistaComponent,
-  EntrevistaCreateComponent
+  EntrevistaCreateComponent,
+
+  //Catalogos
+  CatalogosComponent,
+  CatalogoArmasComponent,
+  TipoArmaComponent,
+  CreateArmaComponent,
+  CalibreArmaComponent,
+  MecanismoAccionComponent
 ];
