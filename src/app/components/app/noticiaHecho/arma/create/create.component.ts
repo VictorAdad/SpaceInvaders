@@ -7,6 +7,7 @@ import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { NoticiaHechoGlobal } from '../../global';
 import { _config} from '@app/app.config';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
   selector: 'arma-create',
@@ -38,7 +39,8 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         private route: ActivatedRoute,
         private onLine: OnLineService,
         private http: HttpService,
-        private router: Router
+        private router: Router,
+        private db:CIndexedDB
         ) {
         super();
     }
@@ -81,6 +83,17 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                     console.error('Error', error);
                 }
             );
+        }else{
+            let dato={
+                url:'/v1/base/armas',
+                body:this.model,
+                options:[],
+                tipo:"post",
+                pendiente:true
+            }
+            this.db.add("sincronizar",dato).then(p=>{
+                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+            }); 
         }
     }
 
@@ -90,6 +103,17 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
             this.http.put('/v1/base/armas/'+this.id, _model).subscribe((response) => {
                 console.log('-> Registro acutualizado', response);
             });
+        }else{
+            let dato={
+                url:'/v1/base/armas/'+this.id,
+                body:this.model,
+                options:[],
+                tipo:"update",
+                pendiente:true
+            }
+            this.db.add("sincronizar",dato).then(p=>{
+                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+            }); 
         }
     }
 
