@@ -6,17 +6,19 @@ import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { MOption } from '@partials/form/select2/select2.component';
+import { NoticiaHechoGlobal } from '../../global';
 
 @Component({
     selector: 'vehiculo-create',
     templateUrl: './create.component.html'
 })
 
-export class VehiculoCreateComponent implements OnInit {
+export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnInit {
     public form: FormGroup;
     public model: Vehiculo;
 
     public casoId: number = null;
+    public id: number = null;
 
     constructor(
         private _fbuilder: FormBuilder,
@@ -25,7 +27,9 @@ export class VehiculoCreateComponent implements OnInit {
         private http: HttpService,
         private router: Router,
         private db:CIndexedDB
-        ) { }
+        ) {
+        super();
+    }
 
     options:MOption[]=[
         {value:"1", label:"Opcion 1"},
@@ -65,8 +69,14 @@ export class VehiculoCreateComponent implements OnInit {
         });
 
         this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
+            if(params['casoId'])
+                this.casoId = +params['casoId'];
+            if(params['id']){
+                this.id = +params['id'];
+                this.http.get('/v1/base/vehiculos/'+this.id).subscribe(response =>{
+                    this.fillForm(response);
+                });
+            }
         });
     }
 
@@ -82,14 +92,17 @@ export class VehiculoCreateComponent implements OnInit {
         }
 	}
 
-    public validateForm(formGroup: FormGroup) {
-        Object.keys(formGroup.controls).forEach(field => {
-            const control = formGroup.get(field);         
-            if (control instanceof FormControl) {         
-                control.markAsTouched({ onlySelf: true });
-            } else if (control instanceof FormGroup) {
-                this.validateForm(control);           
-            }
-        });
+    public edit(_valid : any, _model : any):void{
+        console.log('-> Vechiulo@edit()', _model);
+        if(this.onLine.onLine){
+            this.http.put('/v1/base/vehiculos/'+this.id, _model).subscribe((response) => {
+                console.log('-> Registro acutualizado', response);
+            });
+        }
     }
+
+    public fillForm(_data){
+        this.form.patchValue(_data);
+    }
+
 }

@@ -11,6 +11,7 @@ import { TrataPersonas} from '@models/trataPersonas';
 import { HostigamientoAcoso} from '@models/hostigamientoAcoso';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
+import { NoticiaHechoGlobal } from '../../global';
 
 
 
@@ -20,7 +21,7 @@ import { HttpService} from '@services/http.service';
     styles:[``]
 })
 
-export class RelacionCreateComponent {
+export class RelacionCreateComponent extends NoticiaHechoGlobal{
     public relacionForm  : FormGroup;
     public efectoViolenciaForm  : FormGroup;
     public trataPersonasForm  : FormGroup;
@@ -33,6 +34,7 @@ export class RelacionCreateComponent {
     public hostigamiento:HostigamientoAcoso;
 
     public casoId: number = null;
+    public id: number = null;
 
     tiposRelacion:MOption[] = [
         { value:'Defensor', label:'Defensor del imputado' },
@@ -80,7 +82,9 @@ export class RelacionCreateComponent {
         private onLine: OnLineService,
         private http: HttpService,
         private router: Router
-        ) { }
+        ) {
+        super();
+    }
 
     ngOnInit(){
       this.model = new Relacion();
@@ -146,9 +150,15 @@ export class RelacionCreateComponent {
       }); 
 
       this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
-      });       
+            if(params['casoId'])
+                this.casoId = +params['casoId'];
+            if(params['id']){
+                this.id = +params['id'];
+                this.http.get('/v1/base/relaciones/'+this.id).subscribe(response =>{
+                    this.fillForm(response);
+                });
+            }
+        });      
     }
 
 
@@ -162,6 +172,19 @@ export class RelacionCreateComponent {
                 (error) => console.error('Error', error)
             );
         }
+    }
+
+    public edit(_valid : any, _model : any):void{
+        console.log('-> Relacion@edit()', _model);
+        if(this.onLine.onLine){
+            this.http.put('/v1/base/relaciones/'+this.id, _model).subscribe((response) => {
+                console.log('-> Registro acutualizado', response);
+            });
+        }
+    }
+
+    public fillForm(_data){
+        this.relacionForm.patchValue(_data);
     }
 
     changeTipoRelacion(option){
@@ -207,16 +230,6 @@ export class RelacionCreateComponent {
       }
     }
 
-    public validateForm(formGroup: FormGroup) {
-        Object.keys(formGroup.controls).forEach(field => {
-            const control = formGroup.get(field);         
-            if (control instanceof FormControl) {         
-                control.markAsTouched({ onlySelf: true });
-            } else if (control instanceof FormGroup) {
-                this.validateForm(control);           
-            }
-        });
-    }
 
 }
 

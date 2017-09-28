@@ -85,7 +85,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
     }
 
     public edit(_valid : any, _model : any):void{
-        console.log('-> Caso@edit()', _model);
+        console.log('-> Arma@edit()', _model);
         if(this.onLine.onLine){
             this.http.put('/v1/base/armas/'+this.id, _model).subscribe((response) => {
                 console.log('-> Registro acutualizado', response);

@@ -321,8 +321,9 @@
                 </div>
             </div>
             <div class="row justify-content-end space">
-                <div class="col-sm-auto" [mdTooltip]="!relacionForm.valid ? 'No se han llenado los campos requeridos' : ''" mdTooltipPosition="above" (mouseenter)="validateForm(relacionForm)">
-                    <button md-raised-button color="accent" _saving (saveFn)="save(relacionForm.valid, relacionForm.value)" [disabled]="!relacionForm.valid || [saving]">Guardar</button>
+                <div class="col-sm-auto" [mdTooltip]="validateMsg(relacionForm)" (mouseenter)="validateForm(relacionForm)" mdTooltipPosition="above">
+                    <button md-raised-button color="accent" _saving (saveFn)="edit(relacionForm.valid, relacionForm.value)" [disabled]="!relacionForm.valid || [saving]" *ngIf="id != null">Editar</button>    
+                    <button md-raised-button color="accent" _saving (saveFn)="save(relacionForm.valid, relacionForm.value)" [disabled]="!relacionForm.valid || [saving]" *ngIf="id == null">Guardar</button>
                 </div>
                 <div class="col-sm-auto">
                     <button md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>
