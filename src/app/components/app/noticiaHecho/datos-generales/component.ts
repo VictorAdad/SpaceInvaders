@@ -134,7 +134,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                 pendiente:true
             }
             this.db.add("sincronizar",dato).then(p=>{
-                this.router.navigate(['/caso/'+this.id+'/noticia-hecho' ]);
+                console.log('-> Registro acutualizado');
             }); 
         }
     }

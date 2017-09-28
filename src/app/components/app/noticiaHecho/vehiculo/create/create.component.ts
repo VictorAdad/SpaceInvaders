@@ -122,7 +122,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                 pendiente:true
             }
             this.db.add("sincronizar",dato).then(p=>{
-                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                console.log('-> Registro acutualizado');
             }); 
         }
     }
