@@ -5,7 +5,6 @@ import { Lugar } from '@models/lugar';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { MOption } from '@partials/form/select2/select2.component';
-import { _config} from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { NoticiaHechoGlobal } from '../../global';
 import * as moment from 'moment'
@@ -83,7 +82,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             );
         }else{
             let dato={
-                url:_config.api.host+'/v1/base/lugares',
+                url:'/v1/base/lugares',
                 body:this.model,
                 options:[],
                 tipo:"post",

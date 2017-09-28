@@ -13,7 +13,8 @@
 
         <ng-container mdColumnDef="nombre">
             <md-header-cell *mdHeaderCellDef> Nombre </md-header-cell>
-            <md-cell *mdCellDef="let element"> {{element.nombre}} </md-cell>
+            <md-cell *mdCellDef="let element"> 
+                <span  (click)="download(element.idBlob,element.nombre,element.type)">{{element.nombre}}</span> </md-cell>
         </ng-container>
 
         <ng-container mdColumnDef="procedimiento">
