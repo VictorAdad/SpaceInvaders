@@ -6,7 +6,7 @@
             <div ng2FileSelect ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader"
                 class="my-drop-zone container4">
                 <h5>Arrastre sus documentos o de click en esta área</h5>
-                <input type="file" ng2FileSelect [uploader]="uploader"/>
+                <input type="file" ng2FileSelect [uploader]="uploader" (change)="fileEvent($event)" />
             </div>
         </div>
         <div class="row margin-text">
@@ -20,7 +20,7 @@
                 <tbody>
                     <tr *ngFor="let item of uploader.queue">
                         <td>{{item?.file?.name}}</td>
-                        <td><button md-icon-button mdTooltip="Eliminar" (click)="uploader.clearQueue()"><md-icon>clear</md-icon></button></td>
+                        <td><button md-icon-button mdTooltip="Eliminar" (click)="item.remove()"><md-icon>clear</md-icon></button></td>
                     </tr>
                 </tbody>
             </table>
@@ -37,7 +37,7 @@
 </md-dialog-content>
 <md-dialog-actions class="d-flex justify-content-end">
     <div class="p-2">
-        <button md-raised-button md-dialog-close color="accent">Guardar</button>
+        <button md-raised-button md-dialog-close color="accent" (click)="guardar()">Guardar</button>
     </div>
     <div class="p-2">
         <button md-button (click)="close()">Cerrar</button>
