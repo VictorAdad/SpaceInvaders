@@ -90,7 +90,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
             });
         }else{
             let dato={
-                url:_config.api.host+'/v1/base/casos',
+                url:'/v1/base/casos',
                 body:{
                     titulo:_model.titulo,
                     sintesis:_model.sintesis,
