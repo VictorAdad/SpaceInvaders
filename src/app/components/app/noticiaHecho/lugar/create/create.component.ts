@@ -7,6 +7,7 @@ import { HttpService} from '@services/http.service';
 import { MOption } from '@partials/form/select2/select2.component';
 import { _config} from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
+import { NoticiaHechoGlobal } from '../../global';
 import * as moment from 'moment'
 
 @Component({
@@ -14,11 +15,12 @@ import * as moment from 'moment'
     templateUrl: './create.component.html'
 })
 
-export class LugarCreateComponent implements OnInit{
+export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
     public form: FormGroup;
     public model: Lugar;
 
     public casoId: number = null;
+    public id: number = null;
 
     constructor(
         private _fbuilder: FormBuilder,
@@ -27,7 +29,9 @@ export class LugarCreateComponent implements OnInit{
         private http: HttpService,
         private router: Router,
         private db:CIndexedDB
-        ) { }
+        ) {
+        super();
+    }
 
     options:MOption[]=[
         {value:"1", label:"Opcion 1"},
@@ -52,8 +56,14 @@ export class LugarCreateComponent implements OnInit{
         });
 
         this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
+            if(params['casoId'])
+                this.casoId = +params['casoId'];
+            if(params['id']){
+                this.id = +params['id'];
+                this.http.get('/v1/base/lugares/'+this.id).subscribe(response =>{
+                    this.fillForm(response);
+                });
+            }
         });
     }
 
@@ -85,15 +95,20 @@ export class LugarCreateComponent implements OnInit{
         }
     }
 
-
-    public validateForm(formGroup: FormGroup) {
-        Object.keys(formGroup.controls).forEach(field => {
-            const control = formGroup.get(field);         
-            if (control instanceof FormControl) {         
-                control.markAsTouched({ onlySelf: true });
-            } else if (control instanceof FormGroup) {
-                this.validateForm(control);           
-            }
-        });
+    public edit(_valid : any, _model : any):void{
+        console.log('-> Lugar@edit()', _model);
+        Object.assign(this.model, _model);
+        this.model.fecha = moment(this.model.fecha).format('YYYY-MM-DD');
+        if(this.onLine.onLine){
+            this.http.put('/v1/base/lugares/'+this.id, _model).subscribe((response) => {
+                console.log('-> Registro acutualizado', response);
+            });
+        }
     }
+
+    public fillForm(_data){
+        _data.fecha = new Date(_data.fecha);
+        this.form.patchValue(_data);
+    }
+
 }

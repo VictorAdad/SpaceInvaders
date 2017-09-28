@@ -93,8 +93,8 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         }
     }
 
-    public fillForm(data){
-        this.form.patchValue(data);
+    public fillForm(_data){
+        this.form.patchValue(_data);
     }
 
 
