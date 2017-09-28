@@ -45,31 +45,18 @@ export class DelitoComponent{
             if (!isNaN(this.id) && !this.onLine.onLine ){
                 this.db.get("casos",this.id).then(
                     casoR=>{
-                        this.caso=casoR as Caso;
-                        this.dataSource = new TableService(this.paginator, casoR["delitos"]);
+                        if (casoR){
+                            this.caso=casoR as Caso;
+                            if(casoR["delitos"])
+                                this.dataSource = new TableService(this.paginator, casoR["delitos"]);    
+                        }
                     });
             }    
             
                 
             
         });
-        // this.db.list("delitos").then(
-        //     lista=>{
-        //         let delitos:Delito[];
-        //         delitos=lista as Delito[];
-        //         for (let delito of delitos) {
-        //             this.db.get("catalogoDelitos_delitos",delito.id,"indiceCatalogoDelitos_delitos").then(
-        //                 tt=>{
-        //                     this.db.relationship(tt as any[], "catalogoDelitosId","catalogoDelitos","id")
-        //                         .then(datos=>{
-        //                             if ((datos as any[]).length){
-        //                                 delito["delitos"]=datos;
-        //                                 this.dataSource = new TableService(this.paginator, delitos);
-        //                             }
-        //                         });
-        //             });
-        //         }
-        // });
+        
 
     	this.data = data;
 
