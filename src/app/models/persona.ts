@@ -1,3 +1,5 @@
+import { Caso } from '@models/caso';
+
 export class Persona {
     id          : number;
     tipoPersona : string;
@@ -121,4 +123,5 @@ export class Persona {
     lunares:string;
     protesis:string;
     otros:string;
+    caso: Caso = new Caso();
 }
