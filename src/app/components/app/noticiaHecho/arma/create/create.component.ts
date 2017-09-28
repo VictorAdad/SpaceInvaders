@@ -1,16 +1,22 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { MOption } from '@partials/form/select2/select2.component'
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Arma } from '@models/arma';
+import { OnLineService} from '@services/onLine.service';
+import { HttpService} from '@services/http.service';
+import { NoticiaHechoGlobal } from '../../global';
+import { _config} from '@app/app.config';
+import { CIndexedDB } from '@services/indexedDB';
+
 @Component({
   selector: 'arma-create',
   templateUrl: 'create.component.html',
 })
-
-export class ArmaCreateComponent{
+export class ArmaCreateComponent extends NoticiaHechoGlobal{
 
     public casoId: number = null;
+    public id: number = null;
 
     clasesArmas:MOption[]=[
         {value:"Arma blanca", label:"Arma blanca"},
@@ -28,7 +34,17 @@ export class ArmaCreateComponent{
     public form  : FormGroup;
     public model : Arma;
 
-    constructor(private _fbuilder: FormBuilder, private route: ActivatedRoute) { }
+    constructor(
+        private _fbuilder: FormBuilder,
+        private route: ActivatedRoute,
+        private onLine: OnLineService,
+        private http: HttpService,
+        private router: Router,
+        private db:CIndexedDB
+        ) {
+        super();
+    }
+
     ngOnInit(){
         this.model = new Arma();
         this.form  = new FormGroup({
@@ -43,13 +59,66 @@ export class ArmaCreateComponent{
           });
 
         this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
+            if(params['casoId'])
+                this.casoId = +params['casoId'];
+            if(params['id']){
+                this.id = +params['id'];
+                this.http.get('/v1/base/armas/'+this.id).subscribe(response =>{
+                    this.fillForm(response);
+                });
+            }
         });
     }
 
-    public save(valid : any, model : any):void{
-        console.log('DatosGenerales@save()');
+    public save(valid : any, _model : any):void{
+        if(this.onLine.onLine){
+            Object.assign(this.model, _model);
+            this.model.caso.id = this.casoId;
+            this.model.caso.created = null;
+            this.http.post('/v1/base/armas', this.model).subscribe(
+                (response) => {
+                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                },
+                (error) => {
+                    console.error('Error', error);
+                }
+            );
+        }else{
+            let dato={
+                url:'/v1/base/armas',
+                body:this.model,
+                options:[],
+                tipo:"post",
+                pendiente:true
+            }
+            this.db.add("sincronizar",dato).then(p=>{
+                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+            }); 
+        }
+    }
+
+    public edit(_valid : any, _model : any):void{
+        console.log('-> Arma@edit()', _model);
+        if(this.onLine.onLine){
+            this.http.put('/v1/base/armas/'+this.id, _model).subscribe((response) => {
+                console.log('-> Registro acutualizado', response);
+            });
+        }else{
+            let dato={
+                url:'/v1/base/armas/'+this.id,
+                body:this.model,
+                options:[],
+                tipo:"update",
+                pendiente:true
+            }
+            this.db.add("sincronizar",dato).then(p=>{
+                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+            }); 
+        }
+    }
+
+    public fillForm(_data){
+        this.form.patchValue(_data);
     }
 
 

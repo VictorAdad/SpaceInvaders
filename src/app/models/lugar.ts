@@ -1,3 +1,5 @@
+import { Caso } from '@models/caso';
+
 export class Lugar{
     tipo: string;
     tipo_zona: string;
@@ -10,7 +12,7 @@ export class Lugar{
     municipio_delegacion: string;
     colonia_asentamiento: string;
     cp: string;
-    fecha: string;
+    fecha: any;
     hora: Date;
     dia: string;
     descripcion_lugar: string;
@@ -18,4 +20,5 @@ export class Lugar{
     notas: string;
     latitud: string;
     longitud: string;
+    caso: Caso = new Caso();
 }

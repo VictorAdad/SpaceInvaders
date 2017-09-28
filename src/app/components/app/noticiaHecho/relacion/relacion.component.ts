@@ -2,7 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
-import { MiservicioService,MDato } from '@services/miservicio.service';
+import { OnLineService} from '@services/onLine.service';
+import { HttpService} from '@services/http.service';
+import { Relacion } from '@models/relacion'
 
 @Component({
     templateUrl:'./relacion.component.html',
@@ -11,41 +13,27 @@ import { MiservicioService,MDato } from '@services/miservicio.service';
 
 export class RelacionComponent{
   
-  public casoId: number = null;
-
-	displayedColumns = ['Tipo', 'Elementos'];
-	data:Relacion[];
-
-	dataSource: TableService | null;
+    public casoId: number   = null;
+	public displayedColumns = ['Tipo', 'Elementos'];
+	public data:Relacion[]  = [];
+	public dataSource: TableService | null;
 	@ViewChild(MdPaginator) paginator: MdPaginator;
 
-	constructor(private servicio: MiservicioService, private route: ActivatedRoute){}
+	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService){}
 
 	ngOnInit() {
-      this.data=data;
-    	this.dataSource = new TableService(this.paginator, this.data);
     	console.log('-> Data Source', this.dataSource);
 
-      this.route.params.subscribe(params => {
+        this.route.params.subscribe(params => {
             if(params['id'])
                 this.casoId = +params['id'];
         });
+
+        if(this.onLine.onLine){
+            this.http.get('/v1/base/casos/'+this.casoId+'/relaciones').subscribe((response) => {
+                this.data = response as Relacion[];
+                this.dataSource = new TableService(this.paginator, this.data);
+            });
+        }
   	}
 }
-
-export interface Relacion {
-    id:number;
-    tipo: string;
-    elementos: string;
-  }
-
-  const data: Relacion[] = [
-      {id:1,tipo: "Defensor del imputado", elementos: ''},
-      {id:2,tipo: "Imputado víctima delito", elementos: ''},
-      {id:3,tipo: "Asesor jurídico de la victima", elementos: ''},
-      {id:4,tipo: "Imputado víctima delito", elementos: ''},
-      {id:5,tipo: "Defensor del imputado", elementos: ''},
-      {id:6,tipo: "Representante  víctima", elementos: ''},
-      {id:7,tipo: "Asesor jurídico de la victima", elementos: ''},
-
-  ];

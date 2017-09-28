@@ -1,8 +1,10 @@
+import { Caso } from '@models/caso';
+
 export class Vehiculo {
-    motivo: string;
+    motivoRegistro: string;
     vehiculo: string;
-    n_tarjeta: string;
-    n_economico: string;
+    tarjetaCirculacion: string;
+    economico: string;
     clase: string;
     marca: string;
     submarca: string;
@@ -12,17 +14,18 @@ export class Vehiculo {
     placas: string;
     placas_adicionales: string;
     rfv: string;
-    n_serie: string;
-    n_motor: string;
+    serie: string;
+    motor: string;
     aseguradora: string;
     factura: string;
     datos_tomados_de: string;
     n_poliza: string;
     valor_estimado: string;
-    tipo_uso: string;
+    tipoUso: string;
     procedencia: string;
     pedimento_de_importacion: string;
     lleva_carga: boolean;
     alterado: boolean;
     señas_particulares: string;
+    caso: Caso = new Caso();
 }

@@ -1,0 +1,9 @@
+.active{
+    background-color:#D1D1D1 !important;
+    color: white;
+}
+
+md-row:hover{
+    cursor: pointer;
+    background-color:#F1F1F1;
+}

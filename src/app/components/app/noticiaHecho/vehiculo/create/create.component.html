@@ -13,13 +13,13 @@
             <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/noticia-hecho" color="accent">Regresar</button>
         </div>
     </div>
-    <form (ngSubmit)="save(form.valid, form.value)" [formGroup]="form">
+    <form [formGroup]="form">
         <div class="row">
             <div class="col-md-3">
-                <select2 placeholder="Motivo por el que se registra" [options]="options"></select2>
+                <select2 placeholder="Motivo por el que se registra" [options]="options" name="motivoRegistro" [group]="form"></select2>
             </div>
             <div class="col-md-3">
-                <select2 placeholder="Vehículo"  name="vehiculo" [options]="options" ([value])="model.vehiculo" [group]="form"></select2>
+                <select2 placeholder="Vehículo"  name="vehiculo" [options]="options" [group]="form"></select2>
             </div>
             <div class="col-md-3">
                 <text label="Nº tarjeta de circulación"></text>
@@ -33,24 +33,24 @@
                 <select2 placeholder="Clase" [options]="options"></select2>
             </div>
             <div class="col-md-3">
-                <select2 placeholder="Marca" [options]="options"></select2>
+                <select2 placeholder="Marca" [options]="options" name="marca" [group]="form"></select2>
             </div>
             <div class="col-md-3">
                 <select2 placeholder="Submarca" [options]="options"></select2>
             </div>
             <div class="col-md-3">
-                <select2 placeholder="Color" name="color" [(options)]="options" ([value])="model.color" [group]="form"></select2>
+                <select2 placeholder="Color" name="color" [(options)]="options" [group]="form"></select2>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3">
-                <text label="Modelo" ([value])="model.modelo" name="modelo" [group]="form"></text>
+                <text label="Modelo" name="modelo" [group]="form"></text>
             </div>
             <div class="col-md-3">
                 <text label="Estado de origen de las placas"></text>
             </div>
             <div class="col-md-3">
-                <text label="Placas" ([value])="model.placas" name="placas" [group]="form"></text>
+                <text label="Placas" name="placas" [group]="form"></text>
             </div>
             <div class="col-md-3">
                 <text label="Placas adicionales"></text>
@@ -61,10 +61,10 @@
                 <text label="Registro federal del vehículo (RFV)"></text>
             </div>
             <div class="col-md-3">
-                <text label="Nº serie (VIN)" ([value])="model.n_serie" name="n_serie" [group]="form"></text>
+                <text label="Nº serie (VIN)" name="serie" [group]="form"></text>
             </div>
             <div class="col-md-3">
-                <text label="Nº motor" ([value])="model.n_motor" name="n_motor" [group]="form"></text>
+                <text label="Nº motor" name="motor" [group]="form"></text>
             </div>
         
             <div class="col-md-3">
@@ -93,9 +93,13 @@
                     </div>
                     <div class="col">
                         <select2 placeholder="Procedencia" [options]="
-                      [
+                        [
                         {label:'Procedencia nacional',value:'procedenciaNacional'},
-                        {label:'Procedencia extranjera',value:'procedenciaExtranjera'}]" [(value)]="model.procedencia"></select2>
+                        {label:'Procedencia extranjera',value:'procedenciaExtranjera'}]"
+                        [(value)]="model.procedencia"
+                        name="tipoUso"
+                        [group]="form"
+                        ></select2>
                     </div>
                     <div class="col" *ngIf="model.procedencia=='procedenciaExtranjera'">
                         <text label="Pedimento de importación"></text>
@@ -123,11 +127,12 @@
                 <text-area label="Notas"></text-area>
             </div>
         </div>
-        <div class="d-flex justify-content-end">
-            <div class="p-2">
-                <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]">Guardar</button>
+        <div class="row justify-content-end space">
+            <div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" mdTooltipPosition="above">
+                <button md-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id != null">Editar</button>    
+                <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id == null">Guardar</button>
             </div>
-            <div class="p-2">
+            <div class="col-sm-auto">
                 <button md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>
             </div>
         </div>

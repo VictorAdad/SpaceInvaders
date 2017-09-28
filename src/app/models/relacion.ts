@@ -1,3 +1,5 @@
+import { Caso } from '@models/caso';
+
 
 export class Relacion {
     id:number
@@ -30,4 +32,5 @@ export class Relacion {
     //efecto:EfectoViolenciaGenero;
   //  trataPersonas:TrataPersonas;
   //  hostigamietoAcoso:HostigamientoAcoso;
-  }
+    caso: Caso = new Caso();
+}

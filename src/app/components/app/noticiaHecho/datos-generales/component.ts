@@ -9,12 +9,14 @@ import { CIndexedDB } from '@services/indexedDB';
 import { FormCreateDelitoCasoComponent } from "./formcreate.component";
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
+import { NoticiaHechoGlobal } from '../global';
+import { _config} from '@app/app.config';
 
 @Component({
     selector : 'datos-generales',
     templateUrl:'./component.html'
 })
-export class DatosGeneralesComponent implements OnInit{
+export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnInit{
     public form    : FormGroup;
     public id      : number = null;
     private db     : CIndexedDB;
@@ -33,6 +35,7 @@ export class DatosGeneralesComponent implements OnInit{
         _onLine: OnLineService,
         private http: HttpService
     ) { 
+        super();
         this.db = _db;
         this.router = _router;
         this.activeRoute = _activeRoute;

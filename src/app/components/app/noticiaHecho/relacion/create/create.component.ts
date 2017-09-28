@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
 import { MOption } from '@partials/form/select2/select2.component';
-import {DataSource} from '@angular/cdk/collections';
-import { ActivatedRoute } from '@angular/router';
-import {Observable} from 'rxjs/Observable';
+import { DataSource} from '@angular/cdk/collections';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Relacion} from '@models/relacion';
 import { EfectoViolenciaGenero} from '@models/efectoViolenciaGenero';
 import { TrataPersonas} from '@models/trataPersonas';
 import { HostigamientoAcoso} from '@models/hostigamientoAcoso';
+import { OnLineService} from '@services/onLine.service';
+import { HttpService} from '@services/http.service';
+import { NoticiaHechoGlobal } from '../../global';
 
 
 
@@ -18,7 +21,7 @@ import { HostigamientoAcoso} from '@models/hostigamientoAcoso';
     styles:[``]
 })
 
-export class RelacionCreateComponent {
+export class RelacionCreateComponent extends NoticiaHechoGlobal{
     public relacionForm  : FormGroup;
     public efectoViolenciaForm  : FormGroup;
     public trataPersonasForm  : FormGroup;
@@ -31,6 +34,7 @@ export class RelacionCreateComponent {
     public hostigamiento:HostigamientoAcoso;
 
     public casoId: number = null;
+    public id: number = null;
 
     tiposRelacion:MOption[] = [
         { value:'Defensor', label:'Defensor del imputado' },
@@ -72,8 +76,17 @@ export class RelacionCreateComponent {
 
 
 
-    constructor(private _fbuilder: FormBuilder, private route: ActivatedRoute) { }
-      ngOnInit(){
+    constructor(
+        private _fbuilder: FormBuilder,
+        private route: ActivatedRoute,
+        private onLine: OnLineService,
+        private http: HttpService,
+        private router: Router
+        ) {
+        super();
+    }
+
+    ngOnInit(){
       this.model = new Relacion();
       this.efectoViolenciaGenero= new EfectoViolenciaGenero();
       this.trataPersonas= new TrataPersonas();
@@ -137,14 +150,41 @@ export class RelacionCreateComponent {
       }); 
 
       this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
-      });       
+            if(params['casoId'])
+                this.casoId = +params['casoId'];
+            if(params['id']){
+                this.id = +params['id'];
+                this.http.get('/v1/base/relaciones/'+this.id).subscribe(response =>{
+                    this.fillForm(response);
+                });
+            }
+        });      
     }
 
 
-    save(valid : any, model : any):void{
-      console.log('-> Submit', valid, model);
+    save(_valid : any, _model : any):void{
+        if(this.onLine.onLine){
+            Object.assign(this.model, _model);
+            this.model.caso.id = this.casoId;
+            this.model.caso.created = null;
+            this.http.post('/v1/base/relaciones', this.model).subscribe(
+                (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
+                (error) => console.error('Error', error)
+            );
+        }
+    }
+
+    public edit(_valid : any, _model : any):void{
+        console.log('-> Relacion@edit()', _model);
+        if(this.onLine.onLine){
+            this.http.put('/v1/base/relaciones/'+this.id, _model).subscribe((response) => {
+                console.log('-> Registro acutualizado', response);
+            });
+        }
+    }
+
+    public fillForm(_data){
+        this.relacionForm.patchValue(_data);
     }
 
     changeTipoRelacion(option){
@@ -189,6 +229,7 @@ export class RelacionCreateComponent {
         this.isViolenciaGenero = false;
       }
     }
+
 
 }
 

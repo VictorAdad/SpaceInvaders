@@ -13,6 +13,7 @@ import { DynamicComponentsModule, dyanamicComponents} from './dynamic-components
 import { NoticiaHechoModule, noticiaHechoComponents} from '@components-app/noticiaHecho/module';
 import { SolicitudPreliminarModule, SolicitudPreliminarComponents } from '@components-app/solicitud-preliminar/module';
 import { PredenunciaComponent, DocumentoPredenunciaComponent, PredenunciaCreateComponent,} from '@components-app/predenuncia/create/create.component';
+import { CatalogosModule, catalogosComponents } from '@components-app/catalogos/module';
 
 import { FileUploadModule } from 'ng2-file-upload';
 import { DeterminacionModule, DeterminacionComponents } from '@components-app/determinacion/module';
@@ -45,6 +46,7 @@ import {MdTabsModule} from '@angular/material';
 import {MdButtonModule} from '@angular/material';
 import {MdInputModule} from '@angular/material';
 import {MatCheckboxModule} from '@angular/material';
+// import { MaterialModule} from '@angular/material';
 
 
 @NgModule({
@@ -64,7 +66,9 @@ import {MatCheckboxModule} from '@angular/material';
     DocumentoPredenunciaComponent, 
     PredenunciaCreateComponent,
 
-    EntrevistaComponents
+    EntrevistaComponents,
+
+    catalogosComponents
   ],
   imports: [
     BrowserModule,
@@ -87,6 +91,7 @@ import {MatCheckboxModule} from '@angular/material';
     MdButtonModule,
     MdInputModule,
     MatCheckboxModule,
+    // MaterialModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     PartialsModule,
@@ -101,7 +106,9 @@ import {MatCheckboxModule} from '@angular/material';
     FileUploadModule,
     MomentModule,
     EntrevistaModule,
-    JasperoConfirmationsModule
+    JasperoConfirmationsModule,
+
+    CatalogosModule
   ],
   providers: [
     MiservicioService,
