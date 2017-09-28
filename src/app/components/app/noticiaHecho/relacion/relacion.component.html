@@ -24,6 +24,6 @@
     </ng-container>
 
     <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+    <md-row *mdRowDef="let row; columns: displayedColumns;" routerLink="/caso/{{casoId}}/relaciones/{{row.id}}"></md-row>
 </md-table>
 
