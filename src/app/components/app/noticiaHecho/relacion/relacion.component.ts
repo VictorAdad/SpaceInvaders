@@ -25,15 +25,15 @@ export class RelacionComponent{
     	console.log('-> Data Source', this.dataSource);
 
         this.route.params.subscribe(params => {
-            if(params['id'])
+            if(params['id']){
                 this.casoId = +params['id'];
+                if(this.onLine.onLine){
+                    this.http.get('/v1/base/casos/'+this.casoId+'/relaciones').subscribe((response) => {
+                        this.data = response as Relacion[];
+                        this.dataSource = new TableService(this.paginator, this.data);
+                    });
+                }
+            }
         });
-
-        if(this.onLine.onLine){
-            this.http.get('/v1/base/casos/'+this.casoId+'/relaciones').subscribe((response) => {
-                this.data = response as Relacion[];
-                this.dataSource = new TableService(this.paginator, this.data);
-            });
-        }
   	}
 }

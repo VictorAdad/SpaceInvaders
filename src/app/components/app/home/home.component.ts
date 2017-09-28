@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
     private db: CIndexedDB;
     private onLine: OnLineService;
     private http: HttpService;
-    casos: Caso[] = [];
+    public casos: Caso[] = [];
     
 
     constructor(
@@ -31,7 +31,10 @@ export class HomeComponent implements OnInit {
     ngOnInit(){
         if(this.onLine.onLine){
             this.http.get('/v1/base/casos').subscribe((response) => {
-                this.casos = response as Caso[];
+                response.forEach(object => {
+                    this.casos.push(Object.assign(new Caso(), object));
+                });
+                console.log('Casos: ', this.casos);
             });
         }else{
             this.db.list('casos').then(list => {

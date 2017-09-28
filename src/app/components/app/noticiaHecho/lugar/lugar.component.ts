@@ -25,15 +25,16 @@ export class LugarComponent{
     ngOnInit(){
         console.log('-> Data Source', this.dataSource);
         this.route.params.subscribe(params => {
-            if(params['id'])
+            if(params['id']){
                 this.casoId = +params['id'];
+                if(this.onLine.onLine){
+                this.http.get('/v1/base/casos/'+this.casoId+'/lugares').subscribe((response) => {
+                    this.data = response as Lugar[];
+                    this.dataSource = new TableService(this.paginator, this.data);
+                });
+            }
+            }
         });
-        if(this.onLine.onLine){
-            this.http.get('/v1/base/casos/'+this.casoId+'/lugares').subscribe((response) => {
-                this.data = response as Lugar[];
-                this.dataSource = new TableService(this.paginator, this.data);
-            });
-        }
     }
 
 }

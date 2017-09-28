@@ -2,15 +2,18 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CIndexedDB } from '@services/indexedDB';
-import {Persona} from '@models/persona';
-import {Router} from '@angular/router';
-import {Caso} from '@models/caso'
+import { Persona} from '@models/persona';
+import { Router} from '@angular/router';
+import { Caso} from '@models/caso'
+import { OnLineService} from '@services/onLine.service';
+import { HttpService} from '@services/http.service';
+import { NoticiaHechoGlobal } from '../../global';
 
 @Component({
     templateUrl : './persona-fisica-imputado.component.html',
     styles: ['']
 })
-export class PersonaFisicaImputadoComponent{
+export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
     public form  : FormGroup;
     public casoId: number = null;
@@ -28,7 +31,10 @@ export class PersonaFisicaImputadoComponent{
         private _fbuilder: FormBuilder,
         private router:Router,
         private _tabla: CIndexedDB,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+        private onLine: OnLineService,
+        private http: HttpService) {
+        super();
         this.tabla = _tabla;
     }
 
@@ -47,6 +53,7 @@ export class PersonaFisicaImputadoComponent{
             'tipoPersona'   : new FormControl("", [Validators.required,]),
             'tipoInterviniente': new FormControl("", [Validators.required,]),
             'razonSocial': new FormControl("",[Validators.required,Validators.minLength(4)]),
+            'fechaNacimiento': new FormControl("",[])
         });
         this.form.controls.razonSocial.disable();
         this.persona=new Persona();
@@ -55,14 +62,16 @@ export class PersonaFisicaImputadoComponent{
         this.persona.detenido=false;
 
         this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
-            if (!isNaN(this.casoId)){
-                this.tabla.get("casos",this.casoId).then(
-                    casoR=>{
-                        this.caso=casoR as Caso;
-                    });
-            }    
+            if(params['casoId'])
+                this.casoId = +params['casoId'];
+            if(!this.onLine.onLine){
+                if (!isNaN(this.casoId)){
+                    this.tabla.get("casos",this.casoId).then(
+                        casoR=>{
+                            this.caso=casoR as Caso;
+                        });
+                }
+            }
         });
     }
 
@@ -73,10 +82,19 @@ export class PersonaFisicaImputadoComponent{
             this.form.controls.razonSocial.disable();
     }
 
-    save(valid : any, model : any):void{
+    save(valid : any, _model : any):void{
         
-        this.tabla.add('personas', this.persona).then(
-            p => {
+        if(this.onLine.onLine){
+            Object.assign(this.persona, _model);
+            this.persona.caso.id = this.casoId;
+            this.persona.caso.created = null;
+            this.http.post('/v1/base/personas', this.persona).subscribe(
+                (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
+                (error) => console.error('Error', error)
+            );
+
+        }else{
+            this.tabla.add('personas', this.persona).then( p => {
                 this.caso.personas.push({id:p["id"]});
                 this.tabla.update("casos",this.caso).then(
                     response=>{
@@ -86,7 +104,6 @@ export class PersonaFisicaImputadoComponent{
                 console.log('-> Persona Guardada',p);
                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
             });
-        console.log('-> Submit', valid, model);
-        
+        }
     }
 }

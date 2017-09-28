@@ -6,8 +6,6 @@ import { Observable } from 'rxjs';
 import { Arma } from '@models/arma';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
-import { _config} from '@app/app.config';
-import 'rxjs/add/operator/map'
 
 @Component({
     templateUrl:'./arma.component.html',
@@ -26,14 +24,15 @@ export class ArmaComponent{
 
 	ngOnInit() {
         this.route.params.subscribe(params => {
-            if(params['id'])
+            if(params['id']){
                 this.casoId = +params['id'];
+                if(this.onLine.onLine){
+                    this.http.get('/v1/base/casos/'+this.casoId+'/armas').subscribe((response) => {
+                        this.data = response as Arma[];
+                        this.dataSource = new TableService(this.paginator, this.data);
+                    });
+                }
+            }
         });
-        if(this.onLine.onLine){
-            this.http.get('/v1/base/casos/'+this.casoId+'/armas').subscribe((response) => {
-                this.data = response as Arma[];
-                this.dataSource = new TableService(this.paginator, this.data);
-            });
-        }
   	}
 }  

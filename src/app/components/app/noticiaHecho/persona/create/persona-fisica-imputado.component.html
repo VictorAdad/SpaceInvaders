@@ -6,14 +6,14 @@
 </div>
 <div class="content-body">
     <div class="row space">
-        <div class="col-md-10">
+        <div class="col-sm-8">
             <h3>Detalle de Persona</h3>
         </div>
-        <div class="col-md-2">
+        <div class="col-sm-4">
             <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/noticia-hecho" color="accent">Regresar</button>
         </div>
     </div>
-    <form (ngSubmit)="save(form.valid, form.value)"   [formGroup]="form">
+    <form [formGroup]="form">
     <div>
         <div class="row">
           <div class="col-md-8">
@@ -104,7 +104,7 @@
                     {label:'Mujer',value:'Mujer'}]" placeholder="Sexo" [(value)]="persona.sexo" ></select2>
                 </div>
                 <div class="col-md-2">
-                  <date label="Fecha de nacimiento" [(value)]="persona.fechaNacimiento" ></date>
+                  <date label="Fecha de nacimiento" [(value)]="persona.fechaNacimiento" name="fechaNacimiento" [group]="form"></date>
                 </div>
                 <div class="col-md-2">
                   <text label="Edad" [(value)]="persona.edad"></text>
@@ -633,12 +633,13 @@
         <div class="row space">
           
         </div>
-        <div class="row justify-content-md-end">
-            <div class="col-md-auto">
-                <button md-raised-button type="submit" color="accent" [disabled]="!form.valid">Guardar</button>
+        <div class="row justify-content-end space">
+            <div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" mdTooltipPosition="above">
+                <button md-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id != null">Editar</button>    
+                <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
             </div>
-            <div class="col-md-auto">
-                <button md-button type="submit" routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>
+            <div class="col-sm-auto">
+              <button class="float-right" md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button> 
             </div>
         </div>
     </div>

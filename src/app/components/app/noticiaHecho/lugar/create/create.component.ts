@@ -41,7 +41,6 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
     ngOnInit() {
         this.model = new Lugar();
         this.form = new FormGroup({
-            'caso.id': new FormControl(),
             'tipo': new FormControl(this.model.tipo, [Validators.required,]),
             'tipoZona': new FormControl(this.model.tipo_zona, [Validators.required,]),
             'calle': new FormControl(this.model.calle, [Validators.required,]),
@@ -51,7 +50,14 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             'municipio': new FormControl(this.model.municipio_delegacion, [Validators.required,]),
             'colonia': new FormControl(this.model.colonia_asentamiento, [Validators.required,]),
             'fecha': new FormControl(this.model.fecha, [Validators.required,]),
-            'hora': new FormControl(this.model.hora, [Validators.required,])
+            'hora': new FormControl(this.model.hora, [Validators.required,]),
+            'cp': new FormControl(this.model.notas, []),
+            'dia': new FormControl(this.model.notas, []),
+            'descripcion': new FormControl(this.model.notas, []),
+            'notas': new FormControl(this.model.notas, []),
+            'numExterior': new FormControl(this.model.notas, []),
+            'numInterior': new FormControl(this.model.notas, []),
+            'refeGeograficas': new FormControl(this.model.notas, []),
         });
 
         this.route.params.subscribe(params => {
@@ -102,6 +108,17 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             this.http.put('/v1/base/lugares/'+this.id, _model).subscribe((response) => {
                 console.log('-> Registro acutualizado', response);
             });
+        }else{
+            let dato={
+                url:'/v1/base/lugares/'+this.id,
+                body:_model,
+                options:[],
+                tipo:"update",
+                pendiente:true
+            }
+            this.db.add("sincronizar",dato).then(p=>{
+                console.log('-> Registro acutualizado');
+            }); 
         }
     }
 
