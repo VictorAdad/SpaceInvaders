@@ -5,7 +5,7 @@ import { TableService} from '@utils/table/table.service';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { Lugar } from '@models/lugar';
-
+import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
     selector:'lugar',
@@ -20,7 +20,7 @@ export class LugarComponent{
     public dataSource: TableService | null;
     @ViewChild(MdPaginator) paginator: MdPaginator;
 
-    constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService){}
+    constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
 
     ngOnInit(){
         console.log('-> Data Source', this.dataSource);
@@ -28,11 +28,19 @@ export class LugarComponent{
             if(params['id']){
                 this.casoId = +params['id'];
                 if(this.onLine.onLine){
-                this.http.get('/v1/base/casos/'+this.casoId+'/lugares').subscribe((response) => {
-                    this.data = response as Lugar[];
-                    this.dataSource = new TableService(this.paginator, this.data);
-                });
-            }
+                    this.http.get('/v1/base/casos/'+this.casoId+'/lugares').subscribe((response) => {
+                        this.data = response as Lugar[];
+                        this.dataSource = new TableService(this.paginator, this.data);
+                    });
+                }else{
+                    this.db.get("casos",this.casoId).then(caso=>{
+                        if (caso){
+                            if(caso["lugar"]){
+                                this.dataSource = new TableService(this.paginator, caso["lugar"]);
+                            }
+                        }
+                    });
+                }
             }
         });
     }

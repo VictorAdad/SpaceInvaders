@@ -24,7 +24,7 @@ export class MecanismoAccionComponent {
     setClickedRow(row) {
         this.selectedRow = row.id;
         //console.log(row.nombre);
-        this.router.navigate(['/mecanismo-accion/edit', row.id]);
+        this.router.navigate(['/mecanismo-accion/'+row.id+'/edit']);
     }
 
 	ngOnInit() {
