@@ -35,6 +35,6 @@
 
 
 	<div class="row space"></div>
-  	<button class="float-right" md-button>Cancelar</button>	
+  	<button class="float-right" md-button routerLink="/caso/{{casoId}}/facultad-no-investigar">Cancelar</button>	
 	<button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid">Guardar</button>
 </form>

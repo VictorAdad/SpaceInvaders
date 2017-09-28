@@ -9,15 +9,18 @@
         <h2>Facultad no Investigar</h2>
     </div>
     <div class="col-md-6">
-        <button class="float-right" md-raised-button routerLink="create" color="accent">Agregar determinación</button>
+        <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
     </div>
 </div>
 <div class="row space"></div>
 <div class="row space"></div>
 
-<div class="row">
-    <div class="col">
-        <search class="float-right col-md-6 col-sm-12 col-lg-6 "></search>
+<div class="row space justify-content-end">
+    <div class="col-md-auto">
+        <search></search>
+    </div>    
+    <div class="col-md-auto">
+        <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/facultad-no-investigar/create" color="accent">Agregar determinación</button>
     </div>
 </div>
 <br/>

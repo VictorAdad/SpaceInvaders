@@ -5,7 +5,6 @@ import { Lugar } from '@models/lugar';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { MOption } from '@partials/form/select2/select2.component';
-import { _config} from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { NoticiaHechoGlobal } from '../../global';
 import * as moment from 'moment'
@@ -89,7 +88,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             );
         }else{
             let dato={
-                url:_config.api.host+'/v1/base/lugares',
+                url:'/v1/base/lugares',
                 body:this.model,
                 options:[],
                 tipo:"post",
@@ -109,6 +108,17 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             this.http.put('/v1/base/lugares/'+this.id, _model).subscribe((response) => {
                 console.log('-> Registro acutualizado', response);
             });
+        }else{
+            let dato={
+                url:'/v1/base/lugares/'+this.id,
+                body:_model,
+                options:[],
+                tipo:"update",
+                pendiente:true
+            }
+            this.db.add("sincronizar",dato).then(p=>{
+                console.log('-> Registro acutualizado');
+            }); 
         }
     }
 

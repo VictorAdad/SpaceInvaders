@@ -10,6 +10,7 @@ import 'rxjs/add/observable/of';
 
 import {MdDialog, MD_DIALOG_DATA} from '@angular/material';
 import { DocumentoCreateComponent } from './create/create.component';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
     selector: 'documento',
@@ -17,24 +18,59 @@ import { DocumentoCreateComponent } from './create/create.component';
 })
 
 export class DocumentoComponent{
-    constructor(public dialog: MdDialog){}
+    private db: CIndexedDB 
+    constructor(public dialog: MdDialog,private _db: CIndexedDB){
+      this.db=_db;
+    }
 
     displayedColumns = ['nombre', 'procedimiento', 'fecha'];
     data: Documento[];
     //dataSource: TableService | null;
     dataSource = new ExampleDataSource();
     @ViewChild(MdPaginator) paginator: MdPaginator;
+
+    dataURItoBlob(dataURI, type) {
+        var binary = atob(dataURI);
+        var array = [];
+        for(var i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], {type: type});
+    }
     
     ngOnInit(){
         this.data = data;
         this.dataSource = new TableService(this.paginator, this.data);
         console.log('-> Data Source', this.dataSource);
+        this.cargaArchivos();
+    }
+
+    cargaArchivos(){
+      this.db.list("documentos").then(archivos=>{
+        var lista=archivos as any[];
+        this.dataSource = new TableService(this.paginator, lista);
+      });
+    }
+
+    download(idBlob,name,type){
+      console.log(idBlob,name,type);
+      this.db.get("blobs",idBlob).then(t=>{
+        var b=this.dataURItoBlob(t["blob"].split(',')[1], type );
+        var a = document.createElement('a');
+        a.download = name;
+        a.href=window.URL.createObjectURL( b );;
+        a.click();
+        a.remove();
+      });
     }
 
     openDialog() {
-        this.dialog.open(DocumentoCreateComponent, {
+        var dialog=this.dialog.open(DocumentoCreateComponent, {
             height: 'auto',
             width: 'auto'
+        });
+        dialog.afterClosed().subscribe(() => {
+          this.cargaArchivos();
         });
       }
 }

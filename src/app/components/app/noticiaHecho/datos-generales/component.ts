@@ -59,8 +59,10 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                         });
                     }else{
                         this.db.get("casos", this.id).then(object => {
-                            this.model = object as Caso;
-                            this.form.patchValue(this.model);
+                            if (object){
+                                this.model = object as Caso;
+                                this.form.patchValue(this.model);    
+                            }
                         });
                     }
                 }
@@ -124,7 +126,16 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                 console.log('-> Registro acutualizado', response);
             });
         }else{
-
+            let dato={
+                url:'/v1/base/casos/'+this.id,
+                body:_model,
+                options:[],
+                tipo:"update",
+                pendiente:true
+            }
+            this.db.add("sincronizar",dato).then(p=>{
+                console.log('-> Registro acutualizado');
+            }); 
         }
     }
 

@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 
@@ -6,6 +7,14 @@ import { TableService} from '@utils/table/table.service';
     templateUrl:'./component.html',
 })
 export class NoEjercicioAccionPenalCreateComponent {
+	public casoId: number = null;
+	constructor(private route: ActivatedRoute){}
+	ngOnInit() {
+    	this.route.params.subscribe(params => {
+            if(params['id'])
+                this.casoId = +params['id'];
+        });
+  	}
 
 }
 
@@ -14,7 +23,14 @@ export class NoEjercicioAccionPenalCreateComponent {
     templateUrl:'./determinacion.component.html',
 })
 export class DeterminacionNoEjercicioAccionPenalComponent {
-	
+	public casoId: number = null;
+	constructor(private route: ActivatedRoute){}
+	ngOnInit() {
+    	this.route.params.subscribe(params => {
+            if(params['id'])
+                this.casoId = +params['id'];
+        });
+  	}
 }
 
 @Component({
@@ -22,6 +38,7 @@ export class DeterminacionNoEjercicioAccionPenalComponent {
     templateUrl:'./documento.component.html',
 })
 export class DocumentoNoEjercicioAccionPenalComponent {
+
 	displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
 	data: DocumentoNoEjercicioAccionPenal[] = [
 		{id : 1, nombre: 'Entrevista.pdf',  	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},

@@ -64,13 +64,16 @@ export class FormCreateDelitoComponent {
 
     buscar(value){
         this.optionLista=[];
-        console.log("Clasificacion",this.clasificacion);
+        console.log("Clasificacion",this.clasificacion, "valor", value);
         if (this.clasificacion){
             this.tabla.get("catalagos","delitos").then(
             lista=>{
                 let lista2 = (lista["arreglo"] as any[]);
                 for (let item in lista2) {
-                    if ( (lista2[item])["descripcion"].indexOf(value)>-1 || (lista2[item])["clave"].indexOf(value)>-1){
+                    if (
+                        ((lista2[item])["clasificacionId"]==this.clasificacion) &&
+                        ( (lista2[item])["descripcion"].indexOf(value)>-1 || (lista2[item])["clave"].indexOf(value)>-1 ) 
+                         )  {
                         this.optionLista.push(lista2[item]);
                     }
                 }

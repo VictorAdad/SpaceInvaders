@@ -93,51 +93,52 @@ const routes: Routes = [
     { path : 'notificaciones', component : NotificacionesComponent, data : { breadcrumb : 'Notificaciones' }},
 
     //Solicitud Preliminar
-    { path : 'acuerdo-general', component : AcuerdoGeneralComponent, data : { breadcrumb : 'Solicitudes de acuerdo general'}},
-    { path : 'acuerdo-general/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Acuerdos generales'}},
-    { path : 'inspeccion', component : InspeccionComponent, data : { breadcrumb : 'Solicitudes de inspección'}},
-    { path : 'inspeccion/create', component : InspeccionCreateComponent, data : { breadcrumb : 'Inspecciones'}},
-    { path : 'registro-general', component : RegistroGeneralComponent, data : { breadcrumb : 'Solicitudes de registro general'}},
-    { path : 'registro-general/create', component : RegistroGeneralCreateComponent, data : { breadcrumb : 'Registro generales'}},
-    { path : 'policia', component : PoliciaComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
-    { path : 'policia/create', component : PoliciaCreateComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
-    { path : 'perito', component : PeritoComponent, data : { breadcrumb : 'Solicitudes preliminares a peritos'}},
-    { path : 'perito/create', component : PeritoCreateComponent, data : { breadcrumb : 'Solicitudes de servicios periciales'}},
-    { path : 'requerimiento-informacion', component : RequerimientoInformacionComponent, data : { breadcrumb : 'Solicitudes de requerimiento de información' } },
-    { path : 'requerimiento-informacion/create', component : RequerimientoInformacionCreateComponent, data : { breadcrumb : 'Requerimiento de información' } },
+    { path : 'caso/:id/acuerdo-general', component : AcuerdoGeneralComponent, data : { breadcrumb : 'Solicitudes de acuerdo general'}},
+    { path : 'caso/:id/acuerdo-general/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Acuerdos generales'}},
+    { path : 'caso/:id/inspeccion', component : InspeccionComponent, data : { breadcrumb : 'Solicitudes de inspección'}},
+    { path : 'caso/:id/inspeccion/create', component : InspeccionCreateComponent, data : { breadcrumb : 'Inspecciones'}},
+    { path : 'caso/:id/registro-general', component : RegistroGeneralComponent, data : { breadcrumb : 'Solicitudes de registro general'}},
+    { path : 'caso/:id/registro-general/create', component : RegistroGeneralCreateComponent, data : { breadcrumb : 'Registro generales'}},
+    { path : 'caso/:id/policia', component : PoliciaComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
+    { path : 'caso/:id/policia/create', component : PoliciaCreateComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
+    { path : 'caso/:id/perito', component : PeritoComponent, data : { breadcrumb : 'Solicitudes preliminares a peritos'}},
+    { path : 'caso/:id/perito/create', component : PeritoCreateComponent, data : { breadcrumb : 'Solicitudes de servicios periciales'}},
+    { path : 'caso/:id/requerimiento-informacion', component : RequerimientoInformacionComponent, data : { breadcrumb : 'Solicitudes de requerimiento de información' } },
+    { path : 'caso/:id/requerimiento-informacion/create', component : RequerimientoInformacionCreateComponent, data : { breadcrumb : 'Requerimiento de información' } },
     //Determinación
-    { path : 'acuerdo-inicio', component : AcuerdoInicioComponent, data : { breadcrumb : 'Acuerdo de inicio'}},
+    { path : 'caso/:id/acuerdo-inicio', component : AcuerdoInicioComponent, data : { breadcrumb : 'Acuerdo de inicio'}},
     { path : 'caso/:id/delito/create', component : DelitoCreateComponent, data : { breadcrumb : 'Delitos', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}]}},
-    { path : 'archivo-temporal', component : ArchivoTemporalComponent, data : { breadcrumb : 'Archivo temporal' } },
-    { path : 'archivo-temporal/create', component : ArchivoTemporalCreateComponent, data : { breadcrumb : 'Archivo temporal' } },
-    { path : 'acuerdo-radicacion', component : AcuerdosRadicacionComponent, data : { breadcrumb : 'Acuerdos de radicación'}},
-    { path : 'acuerdo-radicacion/create', component : AcuerdoRadicacionCreateComponent, data : { breadcrumb : 'Acuerdo de radicación'}},
-    { path : 'facultad-no-investigar', component : FacultadesNoInvestigarComponent, data : { breadcrumb : 'Facultad de no investigar'}},
-    { path : 'facultad-no-investigar/create', component : FacultadNoInvestigarCreateComponent, data : { breadcrumb : 'Facultad de no investigar'}},
+    { path : 'caso/:id/archivo-temporal', component : ArchivoTemporalComponent, data : { breadcrumb : 'Archivo temporal' } },
+    { path : 'caso/:id/archivo-temporal/create', component : ArchivoTemporalCreateComponent, data : { breadcrumb : 'Archivo temporal' } },
+    { path : 'caso/:id/acuerdo-radicacion', component : AcuerdosRadicacionComponent, data : { breadcrumb : 'Acuerdos de radicación'}},
+    { path : 'caso/:id/acuerdo-radicacion/create', component : AcuerdoRadicacionCreateComponent, data : { breadcrumb : 'Acuerdo de radicación'}},
+    { path : 'caso/:id/facultad-no-investigar', component : FacultadesNoInvestigarComponent, data : { breadcrumb : 'Facultad de no investigar'}},
+    { path : 'caso/:id/facultad-no-investigar/create', component : FacultadNoInvestigarCreateComponent, data : { breadcrumb : 'Facultad de no investigar'}},
 
     // Pre-denuncia
-    { path : 'predenuncia/create', component : PredenunciaCreateComponent, data : { breadcrumb : 'Pre denuncia'}},
+    { path : 'caso/:id/predenuncia/create', component : PredenunciaCreateComponent, data : { breadcrumb : 'Pre denuncia'}},
 
-    { path : 'no-ejercicio-accion-penal', component : NoEjercicioAccionPenalComponent, data : { breadcrumb : 'No ejercicio de la acción penal' } },
-    { path : 'no-ejercicio-accion-penal/create', component : NoEjercicioAccionPenalCreateComponent, data : { breadcrumb : 'No ejercicio de la acción penal' } },
+    { path : 'caso/:id/no-ejercicio-accion-penal', component : NoEjercicioAccionPenalComponent, data : { breadcrumb : 'No ejercicio de la acción penal' } },
+    { path : 'caso/:id/no-ejercicio-accion-penal/create', component : NoEjercicioAccionPenalCreateComponent, data : { breadcrumb : 'No ejercicio de la acción penal' } },
 
     //Detalle del Caso
     { path : 'caso/:id/detalle', component : DetalleCasoComponent, data : { breadcrumb : 'Detalle del caso' } },    
 
     //Entrevista
-    { path : 'entrevista', component : EntrevistaComponent, data : { breadcrumb : 'Entrevistas' } },
-    { path : 'entrevista/create', component : EntrevistaCreateComponent, data : { breadcrumb : 'Entrevistas' } },
-
+    { path : 'caso/:id/entrevista', component : EntrevistaComponent, data : { breadcrumb : 'Entrevistas' } },
+    { path : 'caso/:id/entrevista/create', component : EntrevistaCreateComponent, data : { breadcrumb : 'Entrevistas' } },
     //Catalogos
     { path : 'catalogos', component : CatalogosComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogo-armas', component : CatalogoArmasComponent, data : { breadcrumb : 'Catálogo de Armas', rutas:[{path:'/catalogos',label:"Catálogos"}]  } },
     { path : 'tipo-arma', component : TipoArmaComponent, data : { breadcrumb : 'Tipo de arma', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"}] } },
     { path : 'tipo-arma/create', component : CreateArmaComponent, data : { breadcrumb : 'Agregar Tipo de Arma', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Tipo de arma"}] }  },
-    { path : 'tipo-arma/edit/:nombre', component : CreateArmaComponent, data : { breadcrumb : 'Editar Tipo de Arma', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Editor Tipo de arma"}] }  },
+    { path : 'tipo-arma/edit/:id', component : CreateArmaComponent, data : { breadcrumb : 'Editar Tipo de Arma', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Editor Tipo de arma"}] }  },
     { path : 'calibre-arma', component : CalibreArmaComponent, data : { breadcrumb : 'Calibre de Armas', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"}] } },
     { path : 'calibre-arma/create', component : CreateArmaComponent, data : { breadcrumb : 'Agregar Calibre', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Calibre de Armas"}] }  },
+    { path : 'calibre-arma/edit/:id', component : CreateArmaComponent, data : { breadcrumb : 'Editar Calibre', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Calibre de Armas"}] }  },
     { path : 'mecanismo-accion', component : MecanismoAccionComponent, data : { breadcrumb : 'Mecanismo de Acción', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"}] } },
     { path : 'mecanismo-accion/create', component : CreateArmaComponent, data : { breadcrumb : 'Agregar Mecanismo', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/mecanismo-accion',label:"Mecanismo de Acción"}] }  },
+    { path : 'mecanismo-accion/edit/:id', component : CreateArmaComponent, data : { breadcrumb : 'Editar Mecanismo', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Calibre de Armas"}] }  },
 ];
 
 @NgModule({

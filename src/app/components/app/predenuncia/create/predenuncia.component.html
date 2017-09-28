@@ -42,7 +42,7 @@
 		</div>
 		
 		<div class="row space"></div>
-	  	<button class="float-right" md-button>Cancelar</button>	
+	  	<button class="float-right" md-button routerLink="/caso/{{casoId}}/detalle">Cancelar</button>	
 		<button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(form1.valid, form1.value)" [disabled]="!form1.valid">Guardar</button>
 </form>
 <div class="row space"></div>
@@ -172,7 +172,7 @@
 	</div>
 
 	<div class="row space"></div>
-  	<button class="float-right" md-button>Cancelar</button>	
+  	<button class="float-right" md-button routerLink="/caso/{{casoId}}/detalle">Cancelar</button>	
 	<button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(form2.valid, form2.value)" [disabled]="!form2.valid">Guardar</button>
 
 </form>

@@ -9,7 +9,7 @@
         <h2>Entrevistas</h2>
     </div>
     <div class="col-md-6">
-        <button class="float-right" md-raised-button routerLink="/" color="accent">Regresar</button>
+        <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
     </div>
 </div>
 <div class="row space justify-content-end">
@@ -17,7 +17,7 @@
         <search></search>
     </div>
     <div class="col-md-auto">
-        <button md-raised-button color="accent" routerLink="/entrevista/create">Agregar entrevista</button>
+        <button md-raised-button color="accent" routerLink="/caso/{{casoId}}/entrevista/create">Agregar entrevista</button>
     </div>
 </div>
 <md-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
