@@ -27,10 +27,10 @@
                     <text label="Calle" name="calle" [group]="form"></text>
                 </div>
                 <div class="col-md-2">
-                    <text label="Nº exterior"></text>
+                    <text label="Nº exterior" name="numExterior" [group]="form"></text>
                 </div>
                 <div class="col-md-2">
-                    <text label="Nº interior"></text>
+                    <text label="Nº interior" name="numInterior" [group]="form"></text>
                 </div>
             </div>
             <div class="row">
@@ -54,7 +54,7 @@
             </div>
             <div class="row">
                 <div class="col-md-3">
-                    <text label="C.P."></text>
+                    <text label="C.P." name="cp" [group]="form"></text>
                 </div>
                 <div class="col-md-3">
                     <date label="Fecha" name="fecha" [group]="form"></date>
@@ -63,14 +63,14 @@
                     <text label="Hora" name="hora" [group]="form"></text>
                 </div>
                 <div class="col-md-3">
-                    <select2 placeholder="Día"></select2>
+                    <select2 placeholder="Día" name="dia" [group]="form"></select2>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <text label="Descripción del lugar"></text>
-                    <text label="Referencias geográficas"></text>
-                    <text label="Notas"></text>
+                    <text label="Descripción del lugar" name="descripcion" [group]="form"></text>
+                    <text label="Referencias geográficas" name="refeGeograficas" [group]="form"></text>
+                    <text label="Notas" name="notas" [group]="form"></text>
                 </div>
             </div>
             <div class="row justify-content-end">

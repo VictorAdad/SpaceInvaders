@@ -6,8 +6,6 @@ import { Observable } from 'rxjs';
 import { Arma } from '@models/arma';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
-import { _config} from '@app/app.config';
-import 'rxjs/add/operator/map'
 
 @Component({
     templateUrl:'./arma.component.html',
