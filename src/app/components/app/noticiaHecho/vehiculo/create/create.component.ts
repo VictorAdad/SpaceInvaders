@@ -116,7 +116,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         }else{
             let dato={
                 url:'/v1/base/vehiculos/'+this.id,
-                body:this.model,
+                body:_model,
                 options:[],
                 tipo:"update",
                 pendiente:true
