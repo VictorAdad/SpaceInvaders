@@ -59,8 +59,10 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                         });
                     }else{
                         this.db.get("casos", this.id).then(object => {
-                            this.model = object as Caso;
-                            this.form.patchValue(this.model);
+                            if (object){
+                                this.model = object as Caso;
+                                this.form.patchValue(this.model);    
+                            }
                         });
                     }
                 }
