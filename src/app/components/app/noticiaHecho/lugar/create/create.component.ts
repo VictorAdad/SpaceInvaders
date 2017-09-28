@@ -102,6 +102,17 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             this.http.put('/v1/base/lugares/'+this.id, _model).subscribe((response) => {
                 console.log('-> Registro acutualizado', response);
             });
+        }else{
+            let dato={
+                url:'/v1/base/lugares/'+this.id,
+                body:this.model,
+                options:[],
+                tipo:"update",
+                pendiente:true
+            }
+            this.db.add("sincronizar",dato).then(p=>{
+                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+            }); 
         }
     }
 
