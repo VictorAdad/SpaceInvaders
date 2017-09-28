@@ -95,7 +95,17 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 pendiente:true
             }
             this.db.add("sincronizar",dato).then(p=>{
-                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                this.db.get("casos",this.casoId).then(caso=>{
+                    if (caso){
+                        if(!caso["lugar"]){
+                            caso["lugar"]=[];
+                        }
+                        caso["lugar"].push(this.model);
+                        this.db.update("casos",caso).then(t=>{
+                            this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                        });
+                    }
+                });
             }); 
         }
     }
