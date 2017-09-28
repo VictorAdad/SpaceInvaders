@@ -23,15 +23,15 @@ export class VehiculoComponent{
 
 	ngOnInit() {
         this.route.params.subscribe(params => {
-                if(params['id'])
-                    this.casoId = +params['id'];
+            if(params['id']){
+                this.casoId = +params['id'];
+                if(this.onLine.onLine){
+                    this.http.get('/v1/base/casos/'+this.casoId+'/vehiculos').subscribe((response) => {
+                        this.data = response as Vehiculo[];
+                        this.dataSource = new TableService(this.paginator, this.data);
+                    });
+                }                
+            }
         });  
-
-    	if(this.onLine.onLine){
-            this.http.get('/v1/base/casos/'+this.casoId+'/vehiculos').subscribe((response) => {
-                this.data = response as Vehiculo[];
-                this.dataSource = new TableService(this.paginator, this.data);
-            });
-        }
   	}
 }

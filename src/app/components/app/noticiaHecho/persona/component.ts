@@ -32,21 +32,22 @@ export class PersonaComponent implements OnInit{
 
     ngOnInit(){
         this.route.params.subscribe(params => {
-            if(params['id'])
+            if(params['id']){
                 this.casoId = +params['id'];
-        });
-        if(this.onLine.onLine){
-            this.http.get('/v1/base/casos/'+this.casoId+'/personas').subscribe((response) => {
-                this.data = response as Persona[];
-                this.dataSource = new TableService(this.paginator, this.data);
-            });
-        }else{
-            //Nota: si marca error es por que ya existe la base de datos y no se le puede agregar una nueva tabla
-            //para solucionarlo borra la base evomatik
-            this.tabla.list("personas").then(lista => {
-                this.dataSource = new TableService(this.paginator, lista);
-            });
-        }    
+                if(this.onLine.onLine){
+                    this.http.get('/v1/base/casos/'+this.casoId+'/personas').subscribe((response) => {
+                        this.data = response as Persona[];
+                        this.dataSource = new TableService(this.paginator, this.data);
+                    });
+                }else{
+                    //Nota: si marca error es por que ya existe la base de datos y no se le puede agregar una nueva tabla
+                    //para solucionarlo borra la base evomatik
+                    this.tabla.list("personas").then(lista => {
+                        this.dataSource = new TableService(this.paginator, lista);
+                    });
+                } 
+            }
+        });   
     }
 
 

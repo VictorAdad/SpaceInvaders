@@ -24,14 +24,15 @@ export class ArmaComponent{
 
 	ngOnInit() {
         this.route.params.subscribe(params => {
-            if(params['id'])
+            if(params['id']){
                 this.casoId = +params['id'];
+                if(this.onLine.onLine){
+                    this.http.get('/v1/base/casos/'+this.casoId+'/armas').subscribe((response) => {
+                        this.data = response as Arma[];
+                        this.dataSource = new TableService(this.paginator, this.data);
+                    });
+                }
+            }
         });
-        if(this.onLine.onLine){
-            this.http.get('/v1/base/casos/'+this.casoId+'/armas').subscribe((response) => {
-                this.data = response as Arma[];
-                this.dataSource = new TableService(this.paginator, this.data);
-            });
-        }
   	}
 }  
