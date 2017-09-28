@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { FacultadNoInvestigar } from '@models/facultadNoInvestigar';
@@ -10,6 +11,14 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
     templateUrl:'./create.component.html',
 })
 export class FacultadNoInvestigarCreateComponent {
+    public casoId: number = null;
+    constructor(private route: ActivatedRoute){}
+    ngOnInit() {
+        this.route.params.subscribe(params => {
+            if(params['id'])
+                this.casoId = +params['id'];
+        });
+      }
 
 }
 
@@ -20,8 +29,9 @@ export class FacultadNoInvestigarCreateComponent {
 export class FacultadNoInvestigarComponent {
 	public form  : FormGroup;
     public model : FacultadNoInvestigar;
+    public casoId: number = null;
 
-    constructor(private _fbuilder: FormBuilder) { }
+    constructor(private _fbuilder: FormBuilder, private route: ActivatedRoute) { }
     ngOnInit(){
         this.model = new FacultadNoInvestigar();
         this.form  = new FormGroup({
@@ -34,6 +44,10 @@ export class FacultadNoInvestigarComponent {
             'observaciones':  new FormControl(this.model.observaciones),
 
           });
+        this.route.params.subscribe(params => {
+            if(params['id'])
+                this.casoId = +params['id'];
+        });
     }
 
     public save(valid : any, model : any):void{
@@ -50,6 +64,7 @@ export class FacultadNoInvestigarComponent {
 })
 
 export class DocumentoFacultadNoInvestigarComponent {
+
 	displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
 	data: DocumentoFacultadNoInvestigar[] = [
 		{id: 1, nombre: 'Entrevista.pdf',    	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
@@ -65,6 +80,7 @@ export class DocumentoFacultadNoInvestigarComponent {
 
 	ngOnInit() {
     	this.dataSource = new TableService(this.paginator, this.data);
+
   	}
 }
 

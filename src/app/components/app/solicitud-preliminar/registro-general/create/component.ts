@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 
@@ -7,6 +8,15 @@ import { TableService} from '@utils/table/table.service';
 })
 export class RegistroGeneralCreateComponent {
 
+	public casoId: number = null;
+	constructor(private route: ActivatedRoute){}
+	ngOnInit(){
+    	this.route.params.subscribe(params => {
+            if(params['id'])
+                this.casoId = +params['id'];
+        });
+  	}
+
 }
 
 @Component({
@@ -14,6 +24,15 @@ export class RegistroGeneralCreateComponent {
     templateUrl:'./solicitud.component.html',
 })
 export class SolicitudRegistroGeneralComponent {
+
+	public casoId: number = null;
+	constructor(private route: ActivatedRoute){}
+	ngOnInit(){
+    	this.route.params.subscribe(params => {
+            if(params['id'])
+                this.casoId = +params['id'];
+        });
+  	}
 	
 }
 
@@ -34,8 +53,7 @@ export class DocumentoRegistroGeneralComponent {
 	dataSource: TableService | null;
 	@ViewChild(MdPaginator) paginator: MdPaginator;
 
-
-	ngOnInit() {
+	ngOnInit(){
     	this.dataSource = new TableService(this.paginator, this.data);
   	}
 }

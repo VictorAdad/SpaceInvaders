@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FacultadNoInvestigar } from '@models/facultadNoInvestigar';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
@@ -9,18 +10,26 @@ import { TableService} from '@utils/table/table.service';
 })
 
 export class FacultadesNoInvestigarComponent{
+
+  public casoId: number = null;
+
 	displayedColumns = ['Remitente','Motivos','Creado por', 'Fecha'];
 	data:FacultadNoInvestigar[];
 
 	dataSource: TableService | null;
 	@ViewChild(MdPaginator) paginator: MdPaginator;
 
-	constructor(){}
+	constructor(private route: ActivatedRoute){}
 
 	ngOnInit() {
       this.data=data;
     	this.dataSource = new TableService(this.paginator, this.data);
     	console.log('-> Data Source', this.dataSource);
+
+      this.route.params.subscribe(params => {
+            if(params['id'])
+                this.casoId = +params['id'];
+        });
   	}
 }
 

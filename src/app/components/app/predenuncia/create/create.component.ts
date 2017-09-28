@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { Predenuncia } from '@models/predenuncia';
@@ -10,6 +11,16 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
     templateUrl:'./create.component.html',
 })
 export class PredenunciaCreateComponent {
+    public casoId: number = null;
+
+    constructor(private route: ActivatedRoute){}
+
+    ngOnInit(){
+        this.route.params.subscribe(params => {
+            if(params['id'])
+                this.casoId = +params['id'];
+        });
+    }
 
 }
 
@@ -22,10 +33,15 @@ export class PredenunciaComponent {
     public form2  : FormGroup;
     public model : Predenuncia;
     public isUserX: boolean=false;// cambiar aquí la lógica del usuario
+    public casoId: number = null;
 
 
-    constructor(private _fbuilder: FormBuilder) { }
+    constructor(private _fbuilder: FormBuilder, private route: ActivatedRoute) { }
     ngOnInit(){
+        this.route.params.subscribe(params => {
+            if(params['id'])
+                this.casoId = +params['id'];
+        });
         this.model = new Predenuncia();
         this.form1  = new FormGroup({
             'calidadUsuario'        :  new FormControl(this.model.calidadUsuario),

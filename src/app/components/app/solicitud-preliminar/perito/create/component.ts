@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 
@@ -7,6 +8,17 @@ import { TableService} from '@utils/table/table.service';
 })
 export class PeritoCreateComponent {
 
+	public casoId: number = null;
+
+	constructor(private route: ActivatedRoute){}
+
+	ngOnInit() {
+		this.route.params.subscribe(params => {
+	            if(params['id'])
+	                this.casoId = +params['id'];
+	    });
+	}
+
 }
 
 @Component({
@@ -14,6 +26,17 @@ export class PeritoCreateComponent {
     templateUrl:'./solicitud.component.html',
 })
 export class SolicitudPeritoComponent {
+
+	public casoId: number = null;
+
+	constructor(private route: ActivatedRoute){}
+
+	ngOnInit() {
+		this.route.params.subscribe(params => {
+	            if(params['id'])
+	                this.casoId = +params['id'];
+	    });
+	}
 	
 	tipo :String = '';
 
@@ -28,6 +51,7 @@ export class SolicitudPeritoComponent {
     templateUrl:'./documento.component.html',
 })
 export class DocumentoPeritoComponent {
+
 	columns = ['nombre', 'procedimiento', 'fechaCreacion'];
 	data: DocumentoPerito[] = [
 		{id : 1, nombre: 'Entrevista.pdf',  	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
@@ -39,7 +63,6 @@ export class DocumentoPeritoComponent {
 
 	dataSource: TableService | null;
 	@ViewChild(MdPaginator) paginator: MdPaginator;
-
 
 	ngOnInit() {
     	this.dataSource = new TableService(this.paginator, this.data);

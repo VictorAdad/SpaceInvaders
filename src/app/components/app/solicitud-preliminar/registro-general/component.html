@@ -6,10 +6,10 @@
 </div>
 <div class="row space">
     <div class="col-md-6">
-        <h2>Solicitudes de acuerdo general</h2>
+        <h2>Solicitudes de registro general</h2>
     </div>
     <div class="col-md-6">
-        <button class="float-right" md-raised-button routerLink="/" color="accent">Regresar</button>
+        <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
     </div>
 </div>
 <div class="row space justify-content-end">
@@ -17,7 +17,7 @@
         <search></search>
     </div>
     <div class="col-md-auto">
-        <button md-raised-button color="accent" routerLink="/registro-general/create">Agregar solicitud</button>
+        <button md-raised-button color="accent" routerLink="/caso/{{casoId}}/registro-general/create">Agregar solicitud</button>
     </div>
 </div>
 <md-paginator #paginator
