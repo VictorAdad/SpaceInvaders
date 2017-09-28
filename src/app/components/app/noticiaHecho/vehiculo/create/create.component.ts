@@ -89,6 +89,21 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                 (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
                 (error) => console.error('Error', error)
             );
+        }else{
+            Object.assign(this.model, _model);
+            this.model.caso.id = this.casoId;
+            this.model.caso.created = null;
+            let dato={
+                url:'/v1/base/vehiculos',
+                body:this.model,
+                options:[],
+                tipo:"post",
+                pendiente:true
+            }
+            this.db.add("sincronizar",dato).then(p=>{
+                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+            }); 
+
         }
 	}
 
@@ -98,6 +113,17 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             this.http.put('/v1/base/vehiculos/'+this.id, _model).subscribe((response) => {
                 console.log('-> Registro acutualizado', response);
             });
+        }else{
+            let dato={
+                url:'/v1/base/vehiculos/'+this.id,
+                body:this.model,
+                options:[],
+                tipo:"update",
+                pendiente:true
+            }
+            this.db.add("sincronizar",dato).then(p=>{
+                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+            }); 
         }
     }
 
