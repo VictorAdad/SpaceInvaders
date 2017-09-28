@@ -57,7 +57,7 @@
                     <text label="C.P."></text>
                 </div>
                 <div class="col-md-3">
-                    <date label="Fecha"></date>
+                    <date label="Fecha" name="fecha" [group]="form"></date>
                 </div>
                 <div class="col-md-3">
                     <text label="Hora" name="hora" [group]="form"></text>
@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div class="row justify-content-end">
-                <div class="col-sm-auto" [mdTooltip]="!form.valid ? 'No se han llenado los campos requeridos' : ''">
+                <div class="col-sm-auto" [mdTooltip]="!form.valid ? 'No se han llenado los campos requeridos' : ''" (mouseenter)="validateForm(form)">
                     <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]">Guardar</button>
                 </div>
                 <div class="col-sm-auto">

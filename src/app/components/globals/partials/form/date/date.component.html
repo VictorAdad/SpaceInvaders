@@ -1,5 +1,12 @@
-<md-form-field class="full-width">
-	<input mdInput [mdDatepicker]="picker" placeholder="{{label}}">
-	<md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
-	<md-datepicker touchUi="true" #picker></md-datepicker>
-</md-form-field>
+<div class="form-group">
+	<md-form-field class="full-width" [formGroup]="group">
+		<input
+			mdInput
+			[mdDatepicker]="picker"
+			formControlName="{{name}}"  
+			name="{{name}}"
+			placeholder="{{label}}">
+		<md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+		<md-datepicker touchUi="true" #picker></md-datepicker>
+	</md-form-field>
+</div>	

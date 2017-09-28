@@ -46,7 +46,7 @@ export class LugarCreateComponent implements OnInit{
             'estado': new FormControl(this.model.estado, [Validators.required,]),
             'municipio': new FormControl(this.model.municipio_delegacion, [Validators.required,]),
             'colonia': new FormControl(this.model.colonia_asentamiento, [Validators.required,]),
-            //'fecha': new FormControl(this.model.fecha, [Validators.required,]),
+            'fecha': new FormControl(this.model.fecha, [Validators.required,]),
             'hora': new FormControl(this.model.hora, [Validators.required,])
         });
 
@@ -81,5 +81,17 @@ export class LugarCreateComponent implements OnInit{
                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
             }); 
         }
+    }
+
+
+    public validateForm(formGroup: FormGroup) {
+        Object.keys(formGroup.controls).forEach(field => {
+            const control = formGroup.get(field);         
+            if (control instanceof FormControl) {         
+                control.markAsTouched({ onlySelf: true });
+            } else if (control instanceof FormGroup) {
+                this.validateForm(control);           
+            }
+        });
     }
 }
