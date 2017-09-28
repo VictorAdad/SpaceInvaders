@@ -14,8 +14,8 @@
                 <search></search>
             </div>
         </div>
-        <md-list>
-            <md-list-item *ngFor="let caso of casos">
+        <md-list *ngIf="dataSource != null">
+            <md-list-item *ngFor="let caso of dataSource.data">
                 <md-icon md-list-icon>folder</md-icon>
                 <h4 md-line>{{caso.name}}</h4>
                 <h4 class="text-muted" md-line md-subheade>{{caso.titulo}}</h4>
@@ -32,5 +32,12 @@
                 <md-divider></md-divider>
             </md-list-item>
         </md-list>
+        <md-paginator #paginator
+            [length]="dataSource ? dataSource.data.length : 0"
+            [pageIndex]="0"
+            [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 25, 100]"
+            (page)="page($event)">
+        </md-paginator>
     </div>
 </div>

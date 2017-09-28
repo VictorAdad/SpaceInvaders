@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import { MdPaginator } from '@angular/material';
 import { ActivatedRoute }    from '@angular/router';
 import { CIndexedDB } from '@services/indexedDB';
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
+import { TableService } from '@utils/table/table.service';
 import { Caso } from '@models/caso';
 
 @Component({
@@ -15,6 +17,9 @@ export class HomeComponent implements OnInit {
     private onLine: OnLineService;
     private http: HttpService;
     public casos: Caso[] = [];
+    public dataSource: TableService;
+    @ViewChild(MdPaginator) 
+    paginator: MdPaginator;
     
 
     constructor(
@@ -33,8 +38,8 @@ export class HomeComponent implements OnInit {
             this.http.get('/v1/base/casos').subscribe((response) => {
                 response.forEach(object => {
                     this.casos.push(Object.assign(new Caso(), object));
+                    this.dataSource = new TableService(this.paginator, this.casos);
                 });
-                console.log('Casos: ', this.casos);
             });
         }else{
             this.db.list('casos').then(list => {
@@ -44,6 +49,19 @@ export class HomeComponent implements OnInit {
                     console.log('-> Caso', caso.created);
                     this.casos.push(caso);
                 }
+            });
+        }
+    }
+
+    public page(_e){
+        if(this.onLine.onLine){
+            this.http.get('/v1/base/casos?p='+_e.pageIndex+'&tr='+_e.pageSize).subscribe((response) => {
+                this.casos = [];
+                response.forEach(object => {
+                    this.casos.push(Object.assign(new Caso(), object));
+                    this.dataSource = new TableService(this.paginator, this.casos);
+                });
+                console.log('Casos: ', this.casos);
             });
         }
     }
