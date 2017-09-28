@@ -105,7 +105,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         }else{
             let dato={
                 url:'/v1/base/lugares/'+this.id,
-                body:this.model,
+                body:_model,
                 options:[],
                 tipo:"update",
                 pendiente:true
