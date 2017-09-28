@@ -12,7 +12,7 @@ export class Lugar{
     municipio_delegacion: string;
     colonia_asentamiento: string;
     cp: string;
-    fecha: string;
+    fecha: any;
     hora: Date;
     dia: string;
     descripcion_lugar: string;

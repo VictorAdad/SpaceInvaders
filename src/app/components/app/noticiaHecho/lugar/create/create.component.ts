@@ -7,6 +7,7 @@ import { HttpService} from '@services/http.service';
 import { MOption } from '@partials/form/select2/select2.component';
 import { _config} from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
+import * as moment from 'moment'
 
 @Component({
     selector: 'lugar-create',
@@ -60,6 +61,7 @@ export class LugarCreateComponent implements OnInit{
         Object.assign(this.model, _model);
         this.model.caso.id = this.casoId;
         this.model.caso.created = null;
+        this.model.fecha = moment(this.model.fecha).format('YYYY-MM-DD');
         if(this.onLine.onLine){
             this.http.post('/v1/base/lugares', this.model).subscribe(
                 (response) => {
