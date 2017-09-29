@@ -48,6 +48,7 @@ export class HomeComponent implements OnInit {
                     Object.assign(caso, list[object]);
                     console.log('-> Caso', caso.created);
                     this.casos.push(caso);
+                    this.dataSource = new TableService(this.paginator, this.casos);
                 }
             });
         }
