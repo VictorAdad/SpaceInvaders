@@ -184,7 +184,17 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 pendiente:true
             }
             this.db.add("sincronizar",dato).then(p=>{
-                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+              this.db.get("casos",this.casoId).then(caso=>{
+                    if (caso){
+                        if(!caso["relacion"]){
+                            caso["relacion"]=[];
+                        }
+                        caso["relacion"].push(this.model);
+                        this.db.update("casos",caso).then(t=>{
+                            this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                        });
+                    }
+                });
             }); 
         }
     }
