@@ -100,22 +100,18 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                 },
                 options:[],
                 tipo:"post",
-                pendiente:true
+                pendiente:true,
+                newId:0
             }
-            this.db.add("sincronizar",dato).then(p=>{}); 
-            _model.personas=[];
-            _model.delitos=[];
-            _model.lugares=[];
-            _model.vehiculos=[];
-            _model.armas=[];
-            _model.documentos=[];
-            _model.titulares=[];
-            _model.relaciones=[];
-            console.log('-> Caso@save()', _model);
             _model.created = new Date();
             this.db.add('casos', _model).then(object => {
-                this.router.navigate(['/caso/'+object['id']+'/noticia-hecho' ]);
+                dato["temId"]=object["id"];
+                this.db.add("sincronizar",dato).then(p=>{
+                    this.router.navigate(['/caso/'+object['id']+'/noticia-hecho' ]);
+                });
             });
+            
+            
         }
     }
 
