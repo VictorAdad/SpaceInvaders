@@ -1,7 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
+import { OnLineService} from '@services/onLine.service';
+import { HttpService} from '@services/http.service';
 import { Predenuncia } from '@models/predenuncia';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -36,16 +38,24 @@ export class PredenunciaComponent {
     public casoId: number = null;
 
 
-    constructor(private _fbuilder: FormBuilder, private route: ActivatedRoute) { }
+    constructor(
+        private _fbuilder: FormBuilder,
+        private onLine: OnLineService,
+        private http: HttpService,
+        private router: Router, 
+        private route: ActivatedRoute) { }
+
     ngOnInit(){
         this.route.params.subscribe(params => {
             if(params['id'])
                 this.casoId = +params['id'];
         });
         this.model = new Predenuncia();
-        this.form1  = new FormGroup({
+
+        if (this.isUserX) {
+            this.form1  = new FormGroup({
             'calidadUsuario'        :  new FormControl(this.model.calidadUsuario),
-            'numeroTelefono'	    :  new FormControl(this.model.numeroTelefono),
+            'numeroTelefono'        :  new FormControl(this.model.numeroTelefono),
             'tipoLineaTelefonica'   :  new FormControl(this.model.tipoLineaTelefonica),
             'lugarLlamada'          :  new FormControl(this.model.lugarLlamada),
             'hechosNarrados'        :  new FormControl(this.model.hechosNarrados),
@@ -56,8 +66,8 @@ export class PredenunciaComponent {
             'observaciones'         :  new FormControl(this.model.observaciones),
 
           });
-
-            this.form2  = new FormGroup({
+        } else {
+            this.form1  = new FormGroup({
             //Constancia de lectura de Derechos
             'numeroFolio'                    :  new FormControl(this.model.numeroFolio),
             'hablaEspanol'                   :  new FormControl(this.model.hablaEspanol),
@@ -94,15 +104,25 @@ export class PredenunciaComponent {
             'cargoAutoridadVictima'          :  new FormControl(this.model.victimaOfendidoQuerellante),
           });
 
-            this.isUserX=true;
+        }
 
     }
 
-    public save(valid : any, model : any):void{
-        console.log('Predenuncia@save()');
+    public save(valid : any, _model : any):void{
+        if(this.onLine.onLine){
+            Object.assign(this.model, _model);
+            this.model.caso.id = this.casoId;
+            this.model.caso.created = null;
+            this.http.post('/v1/base/predenuncias', this.model).subscribe(
+                (response) => {
+                    this.router.navigate(['/caso/'+this.casoId+'/detalle' ]);
+                },
+                (error) => {
+                    console.error('Error', error);
+                }
+            );
+        }
     }
-
-
 	
 }
 
