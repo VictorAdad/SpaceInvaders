@@ -9,11 +9,11 @@ export class Relacion {
     concursoDelito: string;
     formaComision: string;
     imputado:string;
-    victimaUOfendido:string
+    victima:string
     lugar:string;
     consultorDelito:string;
-    clasificacionDelito:string;
-    elementoComision:string;
+    clasificacionDelitoOrden:string;
+    elementosComision:string;
     clasificacion:string;
     formaAccion:string;
     consumacion:string;
