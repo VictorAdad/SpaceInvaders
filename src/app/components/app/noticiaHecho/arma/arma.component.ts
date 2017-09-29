@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Arma } from '@models/arma';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
     templateUrl:'./arma.component.html',
@@ -20,7 +21,7 @@ export class ArmaComponent{
 	@ViewChild(MdPaginator) 
     paginator: MdPaginator;
 
-	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService){}
+	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
 
 	ngOnInit() {
         this.route.params.subscribe(params => {
@@ -30,6 +31,14 @@ export class ArmaComponent{
                     this.http.get('/v1/base/casos/'+this.casoId+'/armas').subscribe((response) => {
                         this.data = response as Arma[];
                         this.dataSource = new TableService(this.paginator, this.data);
+                    });
+                }else{
+                    this.db.get("casos",this.casoId).then(caso=>{
+                        if (caso){
+                            if(caso["arma"]){
+                                this.dataSource = new TableService(this.paginator, caso["arma"]);
+                            }
+                        }
                     });
                 }
             }

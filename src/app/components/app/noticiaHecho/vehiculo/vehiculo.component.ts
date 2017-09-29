@@ -4,7 +4,8 @@ import { TableService} from '@utils/table/table.service';
 import { ActivatedRoute } from '@angular/router';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
-import { Vehiculo } from '@models/vehiculo'
+import { Vehiculo } from '@models/vehiculo';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
     selector: 'vehiculo',
@@ -19,7 +20,7 @@ export class VehiculoComponent{
 	public dataSource: TableService | null;
 	@ViewChild(MdPaginator) paginator: MdPaginator;
 
-    constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService) { }
+    constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB) { }
 
 	ngOnInit() {
         this.route.params.subscribe(params => {
@@ -29,6 +30,14 @@ export class VehiculoComponent{
                     this.http.get('/v1/base/casos/'+this.casoId+'/vehiculos').subscribe((response) => {
                         this.data = response as Vehiculo[];
                         this.dataSource = new TableService(this.paginator, this.data);
+                    });
+                }else{
+                    this.db.get("casos",this.casoId).then(caso=>{
+                        if (caso){
+                            if(caso["vehiculo"]){
+                                this.dataSource = new TableService(this.paginator, caso["vehiculo"]);
+                            }
+                        }
                     });
                 }                
             }

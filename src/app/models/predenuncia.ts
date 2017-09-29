@@ -1,3 +1,5 @@
+import { Caso } from '@models/caso';
+
 export class Predenuncia{
 	id:number;
 
@@ -47,5 +49,6 @@ export class Predenuncia{
     ubicacionUnidadInmediataVictima:string;
 	cargoAutoridadVictima:string;
 
+	caso: Caso = new Caso();
 	
 }

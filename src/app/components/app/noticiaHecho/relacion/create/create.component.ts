@@ -99,13 +99,13 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
           'delito'                   : new FormControl(this.model.delito,[Validators.required,]),
           'formaComision'            : new FormControl(this.model.formaComision,[Validators.required,]),
           'imputado'                 : new FormControl(this.model.imputado,[Validators.required,]),
-          'victimaUOfendido'         : new FormControl(this.model.victimaUOfendido,[Validators.required,]),
+          'victima'                  : new FormControl(this.model.victima,[Validators.required,]),
           'lugar'                    : new FormControl(this.model.lugar,[Validators.required,]),
           'formaAccion'              : new FormControl(this.model.formaAccion,[Validators.required,]),
-          'elementoComision'         : new FormControl(this.model.elementoComision,[Validators.required,]),
+          'elementosComision'        : new FormControl(this.model.elementosComision,[Validators.required,]),
           'consultorDelito'          : new FormControl(this.model.consultorDelito),
           'concursoDelito'           : new FormControl(this.model.concursoDelito),
-          'clasificacionDelito'      : new FormControl(this.model.clasificacionDelito),
+          'clasificacionDelitoOrden' : new FormControl(this.model.clasificacionDelitoOrden),
           'clasificacion'            : new FormControl(this.model.clasificacion),
           'consumacion'              : new FormControl(this.model.consumacion),
           'gradoParticipacion'       : new FormControl(this.model.gradoParticipacion),
@@ -184,7 +184,17 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 pendiente:true
             }
             this.db.add("sincronizar",dato).then(p=>{
-                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+              this.db.get("casos",this.casoId).then(caso=>{
+                    if (caso){
+                        if(!caso["relacion"]){
+                            caso["relacion"]=[];
+                        }
+                        caso["relacion"].push(this.model);
+                        this.db.update("casos",caso).then(t=>{
+                            this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                        });
+                    }
+                });
             }); 
         }
     }
