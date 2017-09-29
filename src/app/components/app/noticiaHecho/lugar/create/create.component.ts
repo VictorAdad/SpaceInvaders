@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router} from '@angular/router';
 import { Lugar } from '@models/lugar';
@@ -7,7 +7,9 @@ import { HttpService} from '@services/http.service';
 import { MOption } from '@partials/form/select2/select2.component';
 import { CIndexedDB } from '@services/indexedDB';
 import { NoticiaHechoGlobal } from '../../global';
-import * as moment from 'moment'
+import { MapsAPILoader } from '@agm/core';
+import { } from 'googlemaps';
+import * as moment from 'moment';
 
 @Component({
     selector: 'lugar-create',
@@ -17,9 +19,16 @@ import * as moment from 'moment'
 export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
     public form: FormGroup;
     public model: Lugar;
-
+    public lat: number = 19.4968732;
+    public lng: number = -99.7232673;
+    public latMarker: number = 19.4968732;
+    public lngMarker: number = -99.7232673;
     public casoId: number = null;
     public id: number = null;
+    public searchControl: FormControl;
+    public zoom: number = 10;
+    @ViewChild("search")
+    public searchElementRef: ElementRef;
 
     constructor(
         private _fbuilder: FormBuilder,
@@ -27,7 +36,9 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         private onLine: OnLineService,
         private http: HttpService,
         private router: Router,
-        private db:CIndexedDB
+        private db:CIndexedDB,
+        private mapsAPILoader: MapsAPILoader,
+        private ngZone: NgZone
         ) {
         super();
     }
@@ -40,6 +51,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
 
     ngOnInit() {
         this.model = new Lugar();
+        this.searchControl = new FormControl();
+        // this.getLocation();
         this.form = new FormGroup({
             'tipo': new FormControl(this.model.tipo, [Validators.required,]),
             'tipoZona': new FormControl(this.model.tipo_zona, [Validators.required,]),
@@ -70,13 +83,38 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 });
             }
         });
+        this.mapsAPILoader.load().then(() => {
+            let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+                types: ["address"]
+            });
+            autocomplete.addListener("place_changed", () => {
+                this.ngZone.run(() => {    
+                //get the place result
+                let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+                //verify result
+                if (place.geometry === undefined || place.geometry === null) {
+                return;
+                }
+
+                //set latitude, longitude and zoom
+                this.lat = place.geometry.location.lat();
+                this.lng = place.geometry.location.lng();
+                this.latMarker = place.geometry.location.lat();
+                this.lngMarker = place.geometry.location.lng();
+                this.zoom = 17;
+                });
+            });
+        });
     }
 
     public save(_valid : any, _model : any):void{
         Object.assign(this.model, _model);
-        this.model.caso.id = this.casoId;
+        this.model.caso.id      = this.casoId;
         this.model.caso.created = null;
-        this.model.fecha = moment(this.model.fecha).format('YYYY-MM-DD');
+        this.model.latitud      = this.latMarker;
+        this.model.longitud     = this.lngMarker;
+        this.model.fecha        = moment(this.model.fecha).format('YYYY-MM-DD');
         if(this.onLine.onLine){
             this.http.post('/v1/base/lugares', this.model).subscribe(
                 (response) => {
@@ -114,6 +152,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         console.log('-> Lugar@edit()', _model);
         Object.assign(this.model, _model);
         this.model.fecha = moment(this.model.fecha).format('YYYY-MM-DD');
+        this.model.latitud      = this.latMarker;
+        this.model.longitud     = this.lngMarker;
         if(this.onLine.onLine){
             this.http.put('/v1/base/lugares/'+this.id, _model).subscribe((response) => {
                 console.log('-> Registro acutualizado', response);
@@ -134,7 +174,34 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
 
     public fillForm(_data){
         _data.fecha = new Date(_data.fecha);
+        this.zoom   = 17;
+        this.lat    = _data.latitud;
+        this.lng    = _data.longitud;
+        this.latMarker = _data.latitud;
+        this.lngMarker = _data.longitud;
         this.form.patchValue(_data);
+    }
+
+    public getLocation(){
+        console.log(navigator);
+        if (navigator.geolocation) {
+            // var self = this;
+            navigator.geolocation.getCurrentPosition(
+                response => console.log(response), 
+                () => alert("Unable to get GPS Location"), 
+            {
+                enableHighAccuracy : true
+            });
+        }
+        else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    public changeLocation(_e){
+        console.log(_e);
+        this.latMarker = _e.coords.lat;
+        this.lngMarker = _e.coords.lng;
     }
 
 }

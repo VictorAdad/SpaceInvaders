@@ -66,15 +66,31 @@
                     <select2 placeholder="Día" name="dia" [group]="form"></select2>
                 </div>
             </div>
-            <div class="row">
+            <div class="row space">
                 <div class="col">
                     <text label="Descripción del lugar" name="descripcion" [group]="form"></text>
                     <text label="Referencias geográficas" name="refeGeograficas" [group]="form"></text>
                     <text label="Notas" name="notas" [group]="form"></text>
                 </div>
             </div>
+            <div class="row space">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <div class="md-custom-search">
+                            <input type="search" placeholder="Buscar ubicación" #search [formControl]="searchControl">
+                            <md-icon  class="suffix" *ngIf="search.value === ''">search</md-icon>
+                            <md-icon  class="suffix" *ngIf="search.value !== ''" (click)="search.value=''">close</md-icon>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="changeLocation($event)" [zoom]="zoom" style="height: 600px; width: 100%;" >
+                         <agm-marker [latitude]="latMarker" [longitude]="lngMarker"></agm-marker>
+                    </agm-map>
+                </div>
+            </div>
             <div class="row justify-content-end">
-                <div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
+                <div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" mdTooltipPosition="above">
                     <button md-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id != null">Editar</button>    
                     <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id == null">Guardar</button>
                 </div>

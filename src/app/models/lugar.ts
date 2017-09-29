@@ -18,7 +18,7 @@ export class Lugar{
     descripcion_lugar: string;
     referencias_geograficas: string;
     notas: string;
-    latitud: string;
-    longitud: string;
+    latitud: number;
+    longitud: number;
     caso: Caso = new Caso();
 }

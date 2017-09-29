@@ -48,6 +48,8 @@ import {MdInputModule} from '@angular/material';
 import {MatCheckboxModule} from '@angular/material';
 // import { MaterialModule} from '@angular/material';
 
+import { AgmCoreModule } from '@agm/core';
+
 
 @NgModule({
   declarations: [
@@ -108,7 +110,12 @@ import {MatCheckboxModule} from '@angular/material';
     EntrevistaModule,
     JasperoConfirmationsModule,
 
-    CatalogosModule
+    CatalogosModule,
+
+    AgmCoreModule.forRoot({
+        apiKey: 'AIzaSyC3cI1aBJ-gr-305dfFHLMV5yO9Qw_Tl8M',
+        libraries: ["places"]
+    })
   ],
   providers: [
     MiservicioService,
