@@ -5,10 +5,7 @@ import { Caso } from '@models/caso'
 declare var componentHandler: any;
 
 @Component({
-    templateUrl:'./component.html',
-    styleUrls  : [
-        './styles/tabs.css'
-    ]
+    templateUrl:'./component.html'
 })
 
 export class NoticiaHechoComponent implements OnInit{
