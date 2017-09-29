@@ -41,6 +41,7 @@ export class CIndexedDB {
                         dependeDe: este campo existe solo cuando depende de otra sincronizacion, este campo indica el id de la tabla sincronizacion del cual depende esta sincronizacion y utilizara el newId para hacer las peticiones al servidor
                  */
                 db.createObjectStore("sincronizar", {keyPath: "id"});
+                db.createObjectStore("newId", {keyPath: "id"});
                 db.createObjectStore("blobs", {keyPath: "id"});
 
                 this.init = true;
@@ -177,6 +178,12 @@ export class CIndexedDB {
                                 //console.log(datos);
                                 resolve(datos);
                             }
+                        }else if(_tipo=="clear"){
+                            var req = store.clear();
+                            req.onsuccess = function(evt) {
+                                console.log("Tabla "+_table+" limpiada");
+                                resolve(true);
+                            };
                         }
                         else{
                             let error=new Error("operacion no definida");
@@ -291,5 +298,11 @@ export class CIndexedDB {
     get(_table:string, _key:any, _index:string=""){
         return this.action(_table, "get", _key,_index);
     }
+
+    //limpia la tabla
+    clear(_table:string){
+        return this.action(_table, "clear");
+    }
+
 
 }
