@@ -63,9 +63,21 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                 this.casoId = +params['casoId'];
             if(params['id']){
                 this.id = +params['id'];
-                this.http.get('/v1/base/armas/'+this.id).subscribe(response =>{
-                    this.fillForm(response);
-                });
+                if(this.onLine.onLine){
+                    this.http.get('/v1/base/armas/'+this.id).subscribe(response =>{
+                        this.fillForm(response);
+                    });
+                }else{
+                    this.db.get("casos",this.casoId).then(t=>{
+                        let armas=t["arma"] as any[];
+                        for (var i = 0; i < armas.length; ++i) {
+                            if ((armas[i])["id"]==this.id){
+                                this.fillForm(armas[i]);
+                                break;
+                            }
+                        }
+                    });
+                }
             }
         });
     }
@@ -85,14 +97,17 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
             );
         }else{
             Object.assign(this.model, _model);
-            this.model.caso.id = this.casoId;
+            this.model.caso["id"]= this.casoId;
             this.model.caso.created = null;
+            let temId=Date.now()
             let dato={
                 url:'/v1/base/armas',
                 body:this.model,
                 options:[],
                 tipo:"post",
-                pendiente:true
+                pendiente:true,
+                dependeDe:[this.casoId],
+                temId: temId
             }
             this.db.add("sincronizar",dato).then(p=>{
                 this.db.get("casos",this.casoId).then(caso=>{
@@ -100,6 +115,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                         if(!caso["arma"]){
                             caso["arma"]=[];
                         }
+                        this.model["id"]=temId;
                         caso["arma"].push(this.model);
                         this.db.update("casos",caso).then(t=>{
                             this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
@@ -117,14 +133,26 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                 console.log('-> Registro acutualizado', response);
             });
         }else{
+            //this.model.caso["id"]= this.casoId;
             let dato={
                 url:'/v1/base/armas/'+this.id,
-                body:this.model,
+                body:_model,
                 options:[],
                 tipo:"update",
-                pendiente:true
+                pendiente:true,
+                dependeDe:[this.casoId, this.id]
             }
             this.db.add("sincronizar",dato).then(p=>{
+                this.db.get("casos",this.casoId).then(t=>{
+                    let armas=t["arma"] as any[];
+                    for (var i = 0; i < armas.length; ++i) {
+                        if ((armas[i])["id"]==this.id){
+                            armas[i]=this.model;
+                            break;
+                        }
+                    }
+                    console.log("caso",t);
+                });
                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
             }); 
         }
