@@ -1,4 +1,4 @@
-import { Estado } from '@models/caso/estado';
+import { Estado } from '@models/catalogo/estado';
 
 export class Municipio {
 	id: number;

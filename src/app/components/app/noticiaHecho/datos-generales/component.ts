@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MdDialog, MD_DIALOG_DATA} from '@angular/material';
 import { Http, Response } from '@angular/http';
 import { Caso } from '@models/caso';
+import { Delito } from '@models/catalogo/delito';
 import { GlobalComponent } from '@components-app/global.component';
 import { CIndexedDB } from '@services/indexedDB';
 import { FormCreateDelitoCasoComponent } from "./formcreate.component";
@@ -26,6 +27,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
     private onLine : OnLineService;
     @Input()
     public model   : Caso;
+    public delitos : Delito[];
 
     public constructor(
         _dialog: MdDialog,
@@ -80,7 +82,8 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
             }
         });
 
-        const sub = dialog.componentInstance.emitter.subscribe((_list) => {
+        dialog.componentInstance.emitter.subscribe((_list) => {
+            this.delitos.push(_list);
             this.form.patchValue({'delito' : _list.data[0].nombre});
         });
     }

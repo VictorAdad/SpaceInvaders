@@ -1,5 +1,5 @@
 import { Persona } from '@models/persona';
-import { Oreja } from '@models/oreja'
+import { Oreja } from '@models/catalogo/oreja'
 
 export class MediaFiliacion {
 	id: number;

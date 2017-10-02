@@ -1,6 +1,6 @@
 import { Caso } from '@models/caso';
 import { Persona } from '@models/persona';
-import { TipoInterviniente } from '@models/tipoInterviniente';
+import { TipoInterviniente } from '@models/catalogo/tipoInterviniente';
 
 export class PersonaCaso {
 	id: number;

@@ -9,14 +9,10 @@ import { CIndexedDB } from '@services/indexedDB';
 import { OnLineService } from '@services/onLine.service';
 import {Caso} from '@models/caso' 
 
-
-import {Delito} from '@models/delito';
-
 @Component({
 	selector : 'delito',
     templateUrl:'./component.html'
 })
-
 export class DelitoComponent{
 	_columns = ['nombre', 
         // 'redaccion', 
