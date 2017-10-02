@@ -26,8 +26,9 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
     private activeRoute : ActivatedRoute;
     private onLine : OnLineService;
     @Input()
-    public model   : Caso;
-    public delitos : Delito[];
+    public model   : Caso =  new Caso();
+    public delitos : Delito[] = [];
+    public delito: Delito;
 
     public constructor(
         _dialog: MdDialog,
@@ -76,20 +77,19 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
     public openDialog() {
         let dialog =  this.dialog.open(FormCreateDelitoCasoComponent, {
             height: 'auto',
-            width: 'auto',
-            data: {
-              // lista: this.listaDelitos
-            }
+            width: 'auto'
         });
 
-        dialog.componentInstance.emitter.subscribe((_list) => {
-            this.delitos.push(_list);
-            this.form.patchValue({'delito' : _list.data[0].nombre});
+        dialog.componentInstance.emitter.subscribe((_delito) => {
+            this.delito = _delito;
+            this.form.patchValue({'delito' : _delito.nombre});
         });
     }
 
-    public save(_valid : any, _model : any):void{
+    public save(_valid : boolean, _model : any):void{
         if(this.onLine.onLine){
+            Object.assign(_model, this.model);
+            _model.delitoCaso.delito.id =  this.delito.id;
             this.http.post('/v1/base/casos', _model).subscribe((response) => {
                 this.router.navigate(['/caso/'+response['id']+'/noticia-hecho' ]);
             });
@@ -118,11 +118,11 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         }
     }
 
-    public edit(_valid : any, _model : any):void{
+    public edit(_valid : boolean, _model : any):void{
         console.log('-> Caso@edit()', _model);
         if(this.onLine.onLine){
             this.http.put('/v1/base/casos/'+this.id, _model).subscribe((response) => {
-                console.log('-> Registro acutualizado', response);
+                console.log('-> Registro actualizado', response);
             });
         }else{
             let dato={

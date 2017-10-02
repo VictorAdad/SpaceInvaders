@@ -4,6 +4,8 @@ import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { CIndexedDB } from '@services/indexedDB';
+import { HttpService } from '@services/http.service';
+import { Delito } from '@models/catalogo/delito';
 
 @Component({
     templateUrl: './formcreate.component.html',
@@ -33,18 +35,20 @@ export class FormCreateDelitoCasoComponent {
     tabla:CIndexedDB;
     listaDeSeleccionados=[];
     clasificacion:number;
+    searchDelito: string = '';
+    selectedDelito: Delito;
     @Output() emitter = new EventEmitter();
 
     constructor(
         private _tabla: CIndexedDB,
         @Inject(MD_DIALOG_DATA) private data: {lista:any},
-        public dialogRef: MdDialogRef<FormCreateDelitoCasoComponent>
+        public dialogRef: MdDialogRef<FormCreateDelitoCasoComponent>,
+        private http: HttpService
         ){
         this.tabla=_tabla;
     }
 
     ngOnInit(){
-        this.addList=this.data.lista;
         this.dataSourceaddList=new ExampleDataSource([]);
     }
 
@@ -55,34 +59,27 @@ export class FormCreateDelitoCasoComponent {
                 
             ];
 
-    buscar(value){
-        
-        this.tabla.get("catalagos","delitos").then(
-        lista=>{
-            let lista2 = (lista["arreglo"] as any[]);
-            this.optionLista=[];
-            for (let item in lista2 ) {
-                let cad=""+(lista2[item])["nombre"];
-                if ( cad.toUpperCase().indexOf(value.toUpperCase())>-1 ){
-                    this.optionLista.push(lista2[item]);
-                }
-            }
-            this.dataSource = new ExampleDataSource(this.optionLista);
-        });
+    setDelito(value){
+        this.searchDelito = value;
+    }
 
+    buscar(){
         
-        
+        this.http.get('/v1/base/delitos?name='+this.searchDelito).subscribe(response => {
+            console.log('-> done buscar delito', response)
+            this.dataSource = new ExampleDataSource(response);
+        });
     }
 
     agregar(e){
         this.listaDeSeleccionados=[];
         this.listaDeSeleccionados.push(e);
+        this.selectedDelito = e;
         this.dataSourceaddList=new ExampleDataSource(this.listaDeSeleccionados);
     }
 
     fireEvent(){
-        console.log('-> Fire Event', this.dataSourceaddList);
-        this.emitter.emit(this.dataSourceaddList);
+        this.emitter.emit(this.selectedDelito);
         this.dialogRef.close();
     }
 
@@ -106,9 +103,3 @@ export class ExampleDataSource extends DataSource<any> {
 
   disconnect() {}
 }
-
-
-
-
-// const URL = '/api/';
-const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
