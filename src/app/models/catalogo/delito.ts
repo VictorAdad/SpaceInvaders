@@ -1,4 +1,4 @@
-export class CatalogoDelito {
+export class Delito {
 	id: number;
 	nombre: string;
 	activo: boolean;
