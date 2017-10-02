@@ -25,7 +25,7 @@
                     <md-icon>more_horiz</md-icon>
                 </button>
                 <md-menu #menuCaso="mdMenu">
-                    <button md-menu-item routerLink="/caso/{{caso.id}}/detalle">
+                    <button md-menu-item routerLink="/caso/{{caso.id}}/detalle" (click)="guardarCaso(caso)">
                         <md-icon fxHide="false" fxHide.gt-sm>remove_red_eye</md-icon>Ver
                     </button>
                 </md-menu>

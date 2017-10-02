@@ -66,4 +66,15 @@ export class HomeComponent implements OnInit {
             });
         }
     }
+
+    guardarCaso(caso){
+        if(this.onLine.onLine){
+            this.db.clear("casos").then(t=>{
+                this.db.update("casos",caso).then(t=>{
+                    console.log(caso);
+                });
+            });
+        }
+        
+    }
 }
