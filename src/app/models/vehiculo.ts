@@ -2,7 +2,7 @@ import { Caso } from '@models/caso';
 
 export class Vehiculo {
     motivoRegistro: string;
-    vehiculo: string;
+    campoVehiculo: string;
     tarjetaCirculacion: string;
     economico: string;
     clase: string;

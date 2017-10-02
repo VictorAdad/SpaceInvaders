@@ -41,7 +41,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         this.model = new Vehiculo();
         this.form = new FormGroup({
             'motivoRegistro': new FormControl(this.model.motivoRegistro, [Validators.required,]),
-            'vehiculo': new FormControl(this.model.vehiculo, [Validators.required,]),
+            'campoVehiculo': new FormControl(this.model.campoVehiculo, [Validators.required,]),
             //'n_tarjeta': new FormControl(this.model.n_tarjeta, [Validators.required,]),
             //'n_economico': new FormControl(this.model.n_economico, [Validators.required,]),
             //'clase': new FormControl(this.model.clase, [Validators.required,]),
@@ -73,9 +73,22 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                 this.casoId = +params['casoId'];
             if(params['id']){
                 this.id = +params['id'];
-                this.http.get('/v1/base/vehiculos/'+this.id).subscribe(response =>{
-                    this.fillForm(response);
-                });
+                if(this.onLine.onLine){
+                    this.http.get('/v1/base/vehiculos/'+this.id).subscribe(response =>{
+                        this.fillForm(response);
+                    });
+                }else{
+                    this.db.get("casos",this.casoId).then(t=>{
+                        let vehiculos=t["vehiculo"] as any[];
+                        for (var i = 0; i < vehiculos.length; ++i) {
+                            if ((vehiculos[i])["id"]==this.id){
+                                this.fillForm(vehiculos[i]);
+                                break;
+                            }
+                        }
+                    });
+                }
+                
             }
         });
     }
@@ -93,12 +106,15 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             Object.assign(this.model, _model);
             this.model.caso.id = this.casoId;
             this.model.caso.created = null;
+            let temId=Date.now();
             let dato={
                 url:'/v1/base/vehiculos',
                 body:this.model,
                 options:[],
                 tipo:"post",
-                pendiente:true
+                pendiente:true,
+                dependeDe:[this.casoId],
+                temId: temId
             }
             this.db.add("sincronizar",dato).then(p=>{
                 this.db.get("casos",this.casoId).then(caso=>{
@@ -106,6 +122,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                         if(!caso["vehiculo"]){
                             caso["vehiculo"]=[];
                         }
+                        this.model["id"]=temId;
                         caso["vehiculo"].push(this.model);
                         this.db.update("casos",caso).then(t=>{
                             this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
@@ -129,9 +146,20 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                 body:_model,
                 options:[],
                 tipo:"update",
-                pendiente:true
+                pendiente:true,
+                dependeDe:[this.casoId, this.id]
             }
             this.db.add("sincronizar",dato).then(p=>{
+                this.db.get("casos",this.casoId).then(t=>{
+                    let vehiculos=t["vehiculo"] as any[];
+                    for (var i = 0; i < vehiculos.length; ++i) {
+                        if ((vehiculos[i])["id"]==this.id){
+                            vehiculos[i]=_model;
+                            break;
+                        }
+                    }
+                    console.log("caso",t);
+                });
                 console.log('-> Registro acutualizado');
             }); 
         }
