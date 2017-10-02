@@ -510,35 +510,35 @@
               Oreja derecha
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Forma" [(value)]="persona.orejaDerechaForma"></select2>
+                  <select2 [options]="forma" placeholder="Forma" [(value)]="persona.orejaDerechaForma"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Hélix original" [(value)]="persona.orejaDerechaHelixOriginal"></select2>
+                  <select2 [options]="helixOriginal" placeholder="Hélix original" [(value)]="persona.orejaDerechaHelixOriginal"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Hélix superior" [(value)]="persona.orejaDerechaHelixSuperior"></select2>
+                  <select2 [options]="helixSuperior" placeholder="Hélix superior" [(value)]="persona.orejaDerechaHelixSuperior"></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Hélix posterior" [(value)]="persona.orejaDerechaHelixPosterior"></select2>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Hélix adherencia" [(value)]="persona.orejaDerechaHelixAdherencia"></select2>
-                </div>
-                <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Lóbulo contorno" [(value)]="persona.orejaDerechaLobuloContorno"></select2>
-                </div>
-                <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Lóbulo adherencia" [(value)]="persona.orejaDerechaLobuloAdherencia"></select2>
-                </div>
-                <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Lóbulo particular" [(value)]="persona.orejaDerechaLobuloParticular"></select2>
+                  <select2 [options]="helixPosterior" placeholder="Hélix posterior" [(value)]="persona.orejaDerechaHelixPosterior"></select2>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="Lóbulo dimensión" [(value)]="persona.orejaDerechaLobuloDimension"></select2>
+                  <select2 [options]="helixAdherencia" placeholder="Hélix adherencia" [(value)]="persona.orejaDerechaHelixAdherencia"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="lobuloContorno" placeholder="Lóbulo contorno" [(value)]="persona.orejaDerechaLobuloContorno"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="lobuloAdherencia" placeholder="Lóbulo adherencia" [(value)]="persona.orejaDerechaLobuloAdherencia"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="lobuloParticular" placeholder="Lóbulo particular" [(value)]="persona.orejaDerechaLobuloParticular"></select2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="lobuloDimension" placeholder="Lóbulo dimensión" [(value)]="persona.orejaDerechaLobuloDimensional"></select2>
                 </div>
               </div>
 
@@ -636,7 +636,7 @@
         <div class="row justify-content-end space">
             <div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" mdTooltipPosition="above">
                 <button md-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id != null">Editar</button>    
-                <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
+                <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, persona)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
             </div>
             <div class="col-sm-auto">
               <button class="float-right" md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button> 

@@ -99,8 +99,9 @@ export class Persona {
     mentonInclinacion:string;
     orejaDerechaForma:string;
     orejaDerechaHelixOriginal:string;
-    orejaDerechaHelixposterior:string;
+    orejaDerechaHelixPosterior:string;
     orejaDerechaHelixAdherencia:string;
+    orejaDerechaHelixSuperior:string;
     orejaDerechaLobuloContorno:string;
     orejaDerechaLobuloAdherencia:string;
     orejaDerechaLobuloParticular:string;
