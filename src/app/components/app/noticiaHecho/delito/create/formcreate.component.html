@@ -2,12 +2,7 @@
     <div class="content-dialog-lg">
         <div class="">
             <div class="row breadcrumd">
-                <div class="col-md-6">
-                    <select2 placeholder="" 
-                    [options]="listaBuscar"
-                    [(value)]="clasificacion" ></select2>
-                </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <text sufix="search"  [functionChange]="buscar.bind(this)"></text>
                 </div>
             </div>
@@ -22,7 +17,7 @@
                       <md-header-cell *mdHeaderCellDef> Resultados </md-header-cell>
                       <md-cell *mdCellDef="let element"> 
                         <div>
-                            {{element.clave}} - {{element.descripcion}} 
+                            {{element.nombre}} 
                         </div>
                         <div class="float-right">
                             <button md-icon-button (click)="agregar(element)">
@@ -47,7 +42,7 @@
                       <md-header-cell *mdHeaderCellDef> Fundamentación </md-header-cell>
                       <md-cell *mdCellDef="let element"> 
                         <div>
-                            {{element.clave}} - {{element.descripcion}} 
+                            {{element.nombre}} 
                         </div>
                   </md-cell>
                     </ng-container>

@@ -57,32 +57,17 @@ export class DelitoCreateComponent{
 
     guardar(){
         if (this.listaDelitos.length>0){
-            //primero creamos un delito en la tabla de delitos
-            // this.tabla.add("delitos",{principal:false}).then(
-            //     t=>{
-            //         //para cada elemento de la lista listaDelitos
-            //         //lo agregamos en la tabla intermedia catalogoDelitos_delitos
-            //         let delito:Delito;
-            //         delito = t as Delito;
-            //         for (var i = 0; i < this.listaDelitos.length; ++i) {
-            //             this.tabla.add("catalogoDelitos_delitos",
-            //                 {    
-            //                     delitoId: delito.id, 
-            //                     catalogoDelitosId:this.listaDelitos[i].id
-            //                 })
-            //             .then(d=>{});
-            //         }
+            // if (!this.caso["delito"])
+            //     this.caso["delito"]=[];
+            // this.caso["delito"].push({delitos:this.listaDelitos, principal:false});
+            // console.log("-> caso", this.caso);
+            // this.tabla.update("casos", this.caso).then(
+            //     response=>{
+            //         console.log("Seactualizo", response);
             //         this.listaDelitos=[];
-                
-            // });
-            this.caso.delitos.push({delitos:this.listaDelitos, principal:false});
-            console.log("-> caso", this.caso);
-            this.tabla.update("casos", this.caso).then(
-                response=>{
-                    console.log("Seactualizo", response);
-                    this.listaDelitos=[];
-                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
-                });
+            //         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
+            //     });
+            console.log("Se tiene que crear el servicio de delito");
 
             
         }
