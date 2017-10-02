@@ -78,9 +78,22 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 this.casoId = +params['casoId'];
             if(params['id']){
                 this.id = +params['id'];
-                this.http.get('/v1/base/lugares/'+this.id).subscribe(response =>{
-                    this.fillForm(response);
-                });
+                if(this.onLine.onLine){
+                    this.http.get('/v1/base/lugares/'+this.id).subscribe(response =>{
+                        this.fillForm(response);
+                    });
+                }else{
+                  this.db.get("casos",this.casoId).then(t=>{
+                    let lugares=t["lugar"] as any[];
+                    for (var i = 0; i < lugares.length; ++i) {
+                        if ((lugares[i])["id"]==this.id){
+                            this.fillForm(lugares[i]);
+                            break;
+                        }
+                    }
+                   });
+                }
+                
             }
         });
         this.mapsAPILoader.load().then(() => {
