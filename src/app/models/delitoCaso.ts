@@ -1,5 +1,5 @@
-import { Caso } from '@models/caso'
-import { Delito } from '@models/catalogo/delito'
+import { Caso } from '@models/caso';
+import { Delito } from '@models/catalogo/delito';
 
 export class DelitoCaso {
     id: number;
