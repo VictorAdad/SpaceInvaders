@@ -81,7 +81,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         });
 
         const sub = dialog.componentInstance.emitter.subscribe((_list) => {
-            this.form.patchValue({'delito' : _list.data[0].descripcion});
+            this.form.patchValue({'delito' : _list.data[0].nombre});
         });
     }
 
