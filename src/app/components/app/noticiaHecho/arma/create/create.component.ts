@@ -99,7 +99,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
             Object.assign(this.model, _model);
             this.model.caso["id"]= this.casoId;
             this.model.caso.created = null;
-            let temId=Date.now()
+            let temId=Date.now();
             let dato={
                 url:'/v1/base/armas',
                 body:this.model,
@@ -147,13 +147,13 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                     let armas=t["arma"] as any[];
                     for (var i = 0; i < armas.length; ++i) {
                         if ((armas[i])["id"]==this.id){
-                            armas[i]=this.model;
+                            armas[i]=_model;
                             break;
                         }
                     }
                     console.log("caso",t);
                 });
-                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                //this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
             }); 
         }
     }

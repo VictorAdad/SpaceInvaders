@@ -155,9 +155,21 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 this.casoId = +params['casoId'];
             if(params['id']){
                 this.id = +params['id'];
-                this.http.get('/v1/base/relaciones/'+this.id).subscribe(response =>{
-                    this.fillForm(response);
-                });
+                if(this.onLine.onLine){
+                  this.http.get('/v1/base/relaciones/'+this.id).subscribe(response =>{
+                      this.fillForm(response);
+                  });
+                }else{
+                  this.db.get("casos",this.casoId).then(t=>{
+                    let relaciones=t["relacion"] as any[];
+                    for (var i = 0; i < relaciones.length; ++i) {
+                        if ((relaciones[i])["id"]==this.id){
+                            this.fillForm(relaciones[i]);
+                            break;
+                        }
+                    }
+                   });
+                }
             }
         });      
     }
@@ -176,12 +188,14 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             Object.assign(this.model, _model);
             this.model.caso.id = this.casoId;
             this.model.caso.created = null;
+            let temId = Date.now();
             let dato={
                 url:'/v1/base/relaciones',
                 body:this.model,
                 options:[],
                 tipo:"post",
-                pendiente:true
+                pendiente:true,
+                temId: temId
             }
             this.db.add("sincronizar",dato).then(p=>{
               this.db.get("casos",this.casoId).then(caso=>{
@@ -189,6 +203,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                         if(!caso["relacion"]){
                             caso["relacion"]=[];
                         }
+                        this.model["id"]=temId;
                         caso["relacion"].push(this.model);
                         this.db.update("casos",caso).then(t=>{
                             this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
@@ -211,10 +226,20 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 body:_model,
                 options:[],
                 tipo:"update",
-                pendiente:true
+                pendiente:true,
+                dependeDe:[this.casoId, this.id]
             }
             this.db.add("sincronizar",dato).then(p=>{
-                console.log('-> Registro acutualizado');
+                this.db.get("casos",this.casoId).then(t=>{
+                    let relaciones=t["relacion"] as any[];
+                    for (var i = 0; i < relaciones.length; ++i) {
+                        if ((relaciones[i])["id"]==this.id){
+                            relaciones[i]=_model;
+                            break;
+                        }
+                    }
+                    console.log("caso",t);
+                });
             }); 
         }
     }

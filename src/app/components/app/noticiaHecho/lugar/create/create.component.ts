@@ -125,12 +125,15 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 }
             );
         }else{
+            let temId=Date.now();
             let dato={
                 url:'/v1/base/lugares',
                 body:this.model,
                 options:[],
                 tipo:"post",
-                pendiente:true
+                pendiente:true,
+                dependeDe:[this.casoId],
+                temId: temId
             }
             this.db.add("sincronizar",dato).then(p=>{
                 this.db.get("casos",this.casoId).then(caso=>{
@@ -138,6 +141,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                         if(!caso["lugar"]){
                             caso["lugar"]=[];
                         }
+                        this.model["id"]=temId;
                         caso["lugar"].push(this.model);
                         this.db.update("casos",caso).then(t=>{
                             this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
@@ -164,10 +168,20 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 body:_model,
                 options:[],
                 tipo:"update",
-                pendiente:true
+                pendiente:true,
+                dependeDe:[this.casoId, this.id]
             }
             this.db.add("sincronizar",dato).then(p=>{
-                console.log('-> Registro acutualizado');
+                this.db.get("casos",this.casoId).then(t=>{
+                    let lugares=t["lugar"] as any[];
+                    for (var i = 0; i < lugares.length; ++i) {
+                        if ((lugares[i])["id"]==this.id){
+                            lugares[i]=_model;
+                            break;
+                        }
+                    }
+                    console.log("caso",t);
+                });
             }); 
         }
     }
