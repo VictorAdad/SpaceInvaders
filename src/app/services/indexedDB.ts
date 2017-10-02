@@ -69,25 +69,13 @@ export class CIndexedDB {
         open.onsuccess = function() {
             var db    = open.result;
             
-            //inicializacion 
-            // var tx    = db.transaction(["clasificacionDelitos","catalogoDelitos"], "readwrite");
-            // var tabla = tx.objectStore("clasificacionDelitos");
-            var arrClaDel=[
-                {id:1, clasificacion: "Clasificacion 1"},
-                {id:2, clasificacion: "Clasificacion 2"},
-                {id:3, clasificacion: "Clasificacion 3"}
-            ];
-            obj.update("catalagos",{id:"clasificacionDelitos", arreglo:arrClaDel});
-            // obj.nextItem(0,arrClaDel,tabla);
-
-            // var tabla = tx.objectStore("catalogoDelitos");
             var arrCatalogoDelitos=[
-                {id:1, clasificacionId: 1, clave: "CVE. 1.1", descripcion:"Robo A"},
-                {id:2, clasificacionId: 1, clave: "CVE. 1.2", descripcion:"Robo B"},
-                {id:3, clasificacionId: 1, clave: "CVE. 1.3", descripcion:"Robo C"},
-                {id:4, clasificacionId: 2, clave: "CVE. 2.1", descripcion:"Robo D"},
-                {id:5, clasificacionId: 3, clave: "CVE. 3.1", descripcion:"Robo E"},
-                {id:6, clasificacionId: 3, clave: "CVE. 3.2", descripcion:"Robo F"},
+                {id:1, clasificacion: "robo", nombre: "Robo con arma de fuego", activo:true, created:new Date(), created_by:1, updated:new Date(), updated_by:1},
+                {id:2, clasificacion: "robo", nombre: "Robo con arma de fuego y li¡ujo de violencia", activo:true, created:new Date(), created_by:1, updated:new Date(), updated_by:1},
+                {id:3, clasificacion: "extorción", nombre: "Extorción de ...", activo:true, created:new Date(), created_by:1, updated:new Date(), updated_by:1},
+                {id:4, clasificacion: "extorción", nombre: "Extorción de ...", activo:true, created:new Date(), created_by:1, updated:new Date(), updated_by:1},
+                {id:5, clasificacion: "Yolo", nombre: "Delito doloso", activo:true, created:new Date(), created_by:1, updated:new Date(), updated_by:1},
+                {id:6, clasificacion: "Yolo", nombre: "Delito por omisión", activo:true, created:new Date(), created_by:1, updated:new Date(), updated_by:1},
             ];
             obj.update("catalagos",{id:"delitos", arreglo:arrCatalogoDelitos});
             //obj.nextItem(0,arrCatalogoDelitos,tabla);
