@@ -15,7 +15,6 @@ import * as moment from 'moment';
     selector: 'lugar-create',
     templateUrl: './create.component.html'
 })
-
 export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
     public form: FormGroup;
     public model: Lugar;

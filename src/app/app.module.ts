@@ -26,6 +26,8 @@ import { GlobalService } from "@services/global.service";
 import { OnLineService } from "@services/onLine.service";
 import { CIndexedDB } from '@services/indexedDB';
 import { HttpService } from '@services/http.service';
+import { SelectsService } from '@services/selects.service';
+import { NoticiaHechoService } from '@services/noticia-hecho.service';
 import { JasperoConfirmationsModule } from '@jaspero/ng2-confirmations';
 
 import { MdNativeDateModule, MdIconModule} from '@angular/material';
@@ -123,7 +125,9 @@ import { AgmCoreModule } from '@agm/core';
     GlobalService,
     OnLineService,
     CIndexedDB,
-    HttpService
+    HttpService,
+    SelectsService,
+    NoticiaHechoService
   ],
   entryComponents: [
     dyanamicComponents
