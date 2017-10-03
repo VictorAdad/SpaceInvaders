@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
     ngOnInit(){
         if(this.onLine.onLine){
             this.http.get('/v1/base/casos').subscribe((response) => {
-                response.forEach(object => {
+                response.data.forEach(object => {
                     this.casos.push(Object.assign(new Caso(), object));
                     this.dataSource = new TableService(this.paginator, this.casos);
                 });
@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit {
         if(this.onLine.onLine){
             this.http.get('/v1/base/casos?p='+_e.pageIndex+'&tr='+_e.pageSize).subscribe((response) => {
                 this.casos = [];
-                response.forEach(object => {
+                response.data.forEach(object => {
                     this.casos.push(Object.assign(new Caso(), object));
                     this.dataSource = new TableService(this.paginator, this.casos);
                 });
