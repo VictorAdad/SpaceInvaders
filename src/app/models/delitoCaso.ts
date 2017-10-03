@@ -1,6 +1,3 @@
-import { Caso } from '@models/caso';
-import { Delito } from '@models/catalogo/delito';
-
 export class DelitoCaso {
     id: number;
     principal : boolean;
@@ -10,3 +7,18 @@ export class DelitoCaso {
     caso: Caso = new Caso();
     delito: Delito = new Delito();
  }
+
+
+export class Caso {
+    public id       : number;
+    public titulo   : string;
+    public sintesis : string;
+    public delito   : string;
+    public nic      : string;
+    public nuc      : string;
+}
+
+export class Delito {
+	id: number;
+	nombre: string;
+}
