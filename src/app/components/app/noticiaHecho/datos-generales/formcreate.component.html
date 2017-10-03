@@ -65,7 +65,7 @@
 <md-dialog-actions>
     <div class="row justify-content-end">
         <div class="col-sm-auto">
-            <button md-raised-button color="accent" (click)="fireEvent()">Agregar delitos</button>
+            <button md-raised-button color="accent" (click)="fireEvent()" [disabled]="listaDeSeleccionados.length==0" >Agregar delitos</button>
         </div>
         <div class="col-sm-auto">
             <button md-button (click)="cerrar();" >Cerrar</button>
