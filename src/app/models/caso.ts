@@ -1,3 +1,5 @@
+import { DelitoCaso } from '@models/delitoCaso';
+
 export class Caso {
     public id       : number;
     public titulo   : string;
@@ -8,6 +10,7 @@ export class Caso {
     public created  : Date = new Date();
     public name     : string = `NIC: ${this.nic || ''}  -  NUC: ${this.nuc || ''}`;
     public formatFecha : string = this.fecha(this.created);
+    public delitoCaso: DelitoCaso = new DelitoCaso();
 
     fecha (_date: Date){
        let meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
