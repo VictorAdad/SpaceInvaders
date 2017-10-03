@@ -8,6 +8,7 @@ import { TableService} from '@utils/table/table.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { OnLineService } from '@services/onLine.service';
 import {Caso} from '@models/caso' 
+import { HttpService} from '@services/http.service';
 
 @Component({
 	selector : 'delito',
@@ -27,7 +28,7 @@ export class DelitoComponent{
 
     caso:Caso;
     private onLine : OnLineService;
-    constructor(private _tabla: CIndexedDB, _activeRoute: ActivatedRoute, _onLine: OnLineService){
+    constructor(private _tabla: CIndexedDB, _activeRoute: ActivatedRoute, _onLine: OnLineService,private http:HttpService){
 
         this.db=_tabla;
         this.activeRoute = _activeRoute;
@@ -47,6 +48,11 @@ export class DelitoComponent{
                                 this.dataSource = new TableService(this.paginator, casoR["delitos"]);    
                         }
                     });
+            }else{
+                this.http.get('/v1/base/delitos-casos').subscribe((response) => {
+                        console.log("Respuestadelitos",response["data"]);
+                        this.dataSource = new TableService(this.paginator, response["data"]);
+                    });
             }    
             
                 
@@ -60,7 +66,7 @@ export class DelitoComponent{
 
     swap(e){
         e.principal=!e.principal;
-        this.db.update("casos",this.caso);
+        //this.db.update("casos",this.caso);
     }
 
 }
