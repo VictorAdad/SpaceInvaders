@@ -3,7 +3,7 @@ import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { AcuerdoGeneral } from '@models/acuerdoGeneral';
+import { AcuerdoGeneral } from '@models/solicitud-preliminar/acuerdoGeneral';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { SolicitudPreliminarGlobal } from '../../global';
@@ -79,7 +79,6 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
 
             Object.assign(this.model, _model);
             this.model.caso.id = this.casoId;
-            this.model.caso.created=null;
             console.log('-> AcuerdoGeneral@save()', this.model);
             this.http.post('/v1/base/acuerdosgenerales', this.model).subscribe(
 
