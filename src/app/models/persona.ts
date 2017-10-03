@@ -1,4 +1,4 @@
-import { Caso } from '@models/caso';
+import { PersonaCaso } from '@models/personaCaso';
 
 export class Persona {
     id          : number;
@@ -124,5 +124,5 @@ export class Persona {
     lunares:string;
     protesis:string;
     otros:string;
-    caso: Caso = new Caso();
+    personaCaso: PersonaCaso = new PersonaCaso();
 }

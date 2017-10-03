@@ -147,7 +147,8 @@
                 </div>
                 <div class="col-md-2">
                   <select2 [options]="
-                  []" placeholder="Ocupación" [(value)]="persona.ocupacion" ></select2>
+                  [{label:'Conocido',value:'Conocido'},
+                    {label:'Otro',value:'Otro'}]" placeholder="Ocupación" [(value)]="persona.ocupacion" ></select2>
                 </div>
                 <div class="col-md-2">
                   <text label="Lugar de trabajo" [(value)]="persona.lugarDeTrabajo" ></text>

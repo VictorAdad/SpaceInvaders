@@ -96,6 +96,7 @@ export class DelitoCreateComponent{
     guardaLista(i,lista:any[]){
         if (i==lista.length){
             this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
+            return;
         }
         let item=lista[0];
         let data={

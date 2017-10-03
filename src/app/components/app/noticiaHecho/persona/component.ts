@@ -35,7 +35,7 @@ export class PersonaComponent implements OnInit{
             if(params['id']){
                 this.casoId = +params['id'];
                 if(this.onLine.onLine){
-                    this.http.get('/v1/base/casos/'+this.casoId+'/personas').subscribe((response) => {
+                    this.http.get('/v1/base/casos/'+this.casoId+'/personas-casos').subscribe((response) => {
                         this.data = response as Persona[];
                         this.dataSource = new TableService(this.paginator, this.data);
                     });
