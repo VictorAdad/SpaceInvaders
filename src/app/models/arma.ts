@@ -1,5 +1,3 @@
-import { Caso } from '@models/caso';
-
 export class Arma {
     id:number
     clase: string;
@@ -10,5 +8,15 @@ export class Arma {
     serie:string;
     notas:string;
     matricula:string;
+
     caso: Caso = new Caso();
+}
+
+export class Caso {
+    public id       : number;
+    public titulo   : string;
+    public sintesis : string;
+    public delito   : string;
+    public nic      : string;
+    public nuc      : string;
 }

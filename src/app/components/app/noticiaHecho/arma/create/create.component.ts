@@ -86,7 +86,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         if(this.onLine.onLine){
             Object.assign(this.model, _model);
             this.model.caso.id = this.casoId;
-            this.model.caso.created = null;
+            // this.model.caso.created = null;
             this.http.post('/v1/base/armas', this.model).subscribe(
                 (response) => {
                     this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
@@ -98,7 +98,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         }else{
             Object.assign(this.model, _model);
             this.model.caso["id"]= this.casoId;
-            this.model.caso.created = null;
+            // this.model.caso.created = null;
             let temId=Date.now();
             let dato={
                 url:'/v1/base/armas',
