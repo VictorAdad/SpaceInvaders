@@ -73,8 +73,8 @@
                     <text label="Notas" name="notas" [group]="form"></text>
                 </div>
             </div>
-            <div class="row space">
-                <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-6">
                     <div class="form-group">
                         <div class="md-custom-search">
                             <input type="search" placeholder="Buscar ubicación" #search [formControl]="searchControl">
@@ -83,8 +83,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-10">
-                    <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="changeLocation($event)" [zoom]="zoom" style="height: 600px; width: 100%;" >
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="changeLocation($event)" [zoom]="zoom" style="height: 400px; width: 100%;" >
                          <agm-marker [latitude]="latMarker" [longitude]="lngMarker"></agm-marker>
                     </agm-map>
                 </div>

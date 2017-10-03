@@ -3,8 +3,13 @@
         <div class="">
             <div class="row breadcrumd">
                 
-                <div class="col-md-12">
-                    <text sufix="search"  [functionChange]="buscar.bind(this)"></text>
+                <div class="col">
+                    <text label="Buscar delitos" [functionChange]="setDelito.bind(this)"></text>
+                </div>
+                <div class="col-sm-auto">
+                    <button md-fab color="accent" (click)="buscar()">
+                        <md-icon >search</md-icon>
+                    </button>
                 </div>
             </div>
         </div>
@@ -57,10 +62,13 @@
         </div>
     </div>
 </md-dialog-content>
-<md-dialog-actions class="d-flex justify-content-end">
-    
-        <button md-raised-button color="accent" (click)="fireEvent()">Agregar delitos</button>
-    
-        <button md-button (click)="cerrar();" >Cerrar</button>
-
+<md-dialog-actions>
+    <div class="row justify-content-end">
+        <div class="col-sm-auto">
+            <button md-raised-button color="accent" (click)="fireEvent()">Agregar delitos</button>
+        </div>
+        <div class="col-sm-auto">
+            <button md-button (click)="cerrar();" >Cerrar</button>
+        </div>
+    </div>
 </md-dialog-actions>
