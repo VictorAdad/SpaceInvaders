@@ -2,38 +2,45 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
+import { AcuerdoGeneral } from '@models/acuerdoGeneral';
+import { OnLineService} from '@services/onLine.service';
+import { HttpService} from '@services/http.service';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
     templateUrl:'./component.html',
 })
 export class AcuerdoGeneralComponent {
 
-	public casoId: number = null;
 
-	columns = ['fundamento', 'plazo'];
-	dataSource: TableService | null;
-	data: AcuerdoGeneral[] = [
-		{id : 1, fundamento: 'Fundamento A',  	plazo: 'Plazo A'},
-		{id : 2, fundamento: 'Fundamento B',    plazo: 'Plazo B'},
-		{id : 3, fundamento: 'Fundamento C',    plazo: 'Plazo C'},
-		{id : 4, fundamento: 'Fundamento D',  	plazo: 'Plazo D'},
-		{id : 5, fundamento: 'Fundamento F',    plazo: 'Plazo F'},
-	];
-	@ViewChild(MdPaginator) paginator: MdPaginator;
+	public columns = ['fundamento', 'plazo'];
+	public dataSource: TableService | null;
+	public data: AcuerdoGeneral[];
+    public casoId: number = null;
+    public haveCaso: boolean=false;
+	@ViewChild(MdPaginator) 
+    paginator: MdPaginator;
 
-	constructor(private route: ActivatedRoute){}
 
+	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
 	ngOnInit() {
-    	this.dataSource = new TableService(this.paginator, this.data);
-
-    	this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
-        });
+        this.route.params.subscribe(params => {
+            if(params['casoId']){
+            	this.haveCaso=true;
+                this.casoId = +params['casoId'];
+                this.http.get('/v1/base/caso/'+this.casoId+'/acuerdosgenerales').subscribe((response) => {
+                    this.data = response as AcuerdoGeneral[];
+                    this.dataSource = new TableService(this.paginator, this.data);
+                });
+            }
+            else{
+            	 this.http.get('/v1/base/acuerdosgenerales').subscribe((response) => {
+	                 this.data = response.data as AcuerdoGeneral[];
+	                 console.log(this.data)
+	                 this.dataSource = new TableService(this.paginator, this.data);
+	                });
+            }
+        });  
   	}
-}
-export interface AcuerdoGeneral {
-	id:number
-	fundamento: string;
-	plazo: string;
+
 }
