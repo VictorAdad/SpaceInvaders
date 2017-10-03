@@ -95,48 +95,47 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     save(valid : any, _model : any):void{
 
         console.log(_model);
-        this.tabla.get("catalagos","oreja").then(t=>{
-            var lista=t["arreglo"] as any[];
-            var p = _model as Persona;
-            for (var i = 0; i < lista.length; ++i) {
-                var item=lista[i];
-                var c=(item["forma"]==p.orejaDerechaForma)
-                        && (item["helixOriginal"]==p.orejaDerechaHelixOriginal)
-                        && (item["helixAdherencia"]==p.orejaDerechaHelixAdherencia)
-                        && (item["helixPosterior"]==p.orejaDerechaHelixPosterior)
-                        && (item["helixSuperior"]==p.orejaDerechaHelixSuperior)
-                        && (item["lobuloAdherencia"]==p.orejaDerechaLobuloAdherencia)
-                        && (item["lobuloContorno"]==p.orejaDerechaLobuloContorno)
-                        && (item["lobuloParticular"]==p.orejaDerechaLobuloParticular)
-                        && (item["lobuloDimension"]==p.orejaDerechaLobuloDimensional);
+        // this.tabla.get("catalagos","oreja").then(t=>{
+        //     var lista=t["arreglo"] as any[];
+        //     var p = _model as Persona;
+        //     for (var i = 0; i < lista.length; ++i) {
+        //         var item=lista[i];
+        //         var c=(item["forma"]==p.orejaDerechaForma)
+        //                 && (item["helixOriginal"]==p.orejaDerechaHelixOriginal)
+        //                 && (item["helixAdherencia"]==p.orejaDerechaHelixAdherencia)
+        //                 && (item["helixPosterior"]==p.orejaDerechaHelixPosterior)
+        //                 && (item["helixSuperior"]==p.orejaDerechaHelixSuperior)
+        //                 && (item["lobuloAdherencia"]==p.orejaDerechaLobuloAdherencia)
+        //                 && (item["lobuloContorno"]==p.orejaDerechaLobuloContorno)
+        //                 && (item["lobuloParticular"]==p.orejaDerechaLobuloParticular)
+        //                 && (item["lobuloDimension"]==p.orejaDerechaLobuloDimensional);
 
-                if (c){
-                    console.log(item);
-                }
+        //         if (c){
+        //             console.log(item);
+        //         }
 
-            }
-        })
+        //     }
+        // })
         
-        // if(this.onLine.onLine){
-        //     Object.assign(this.persona, _model);
-        //     this.persona.caso.id = this.casoId;
-        //     this.persona.caso.created = null;
-        //     this.http.post('/v1/base/personas', this.persona).subscribe(
-        //         (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
-        //         (error) => console.error('Error', error)
-        //     );
+        if(this.onLine.onLine){
+            Object.assign(this.persona, _model);
+            this.persona.personaCaso.caso.id = this.casoId;
+            this.http.post('/v1/base/personas', this.persona).subscribe(
+                (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
+                (error) => console.error('Error', error)
+            );
 
-        // }else{
-        //     this.tabla.add('personas', this.persona).then( p => {
-        //         this.caso.personas.push({id:p["id"]});
-        //         this.tabla.update("casos",this.caso).then(
-        //             response=>{
-        //                 console.log("Se actualizo registro");
+        }else{
+            this.tabla.add('personas', this.persona).then( p => {
+                this.caso.personas.push({id:p["id"]});
+                this.tabla.update("casos",this.caso).then(
+                    response=>{
+                        console.log("Se actualizo registro");
 
-        //         });
-        //         console.log('-> Persona Guardada',p);
-        //         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
-        //     });
-        // }
+                });
+                console.log('-> Persona Guardada',p);
+                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
+            });
+        }
     }
 }
