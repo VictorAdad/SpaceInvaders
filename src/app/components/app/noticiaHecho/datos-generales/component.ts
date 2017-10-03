@@ -89,6 +89,8 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
     public save(_valid : boolean, _model : any):void{
         if(this.onLine.onLine){
             Object.assign(_model, this.model);
+            console.log('Model', _model);
+            _model.created = null;
             _model.delitoCaso.delito.id =  this.delito.id;
             this.http.post('/v1/base/casos', _model).subscribe((response) => {
                 this.router.navigate(['/caso/'+response['id']+'/noticia-hecho' ]);
