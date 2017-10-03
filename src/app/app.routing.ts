@@ -107,7 +107,8 @@ const routes: Routes = [
     { path : 'caso/:id/requerimiento-informacion/create', component : RequerimientoInformacionCreateComponent, data : { breadcrumb : 'Requerimiento de información' } },
     //Determinación
     { path : 'caso/:id/acuerdo-inicio', component : AcuerdoInicioComponent, data : { breadcrumb : 'Acuerdo de inicio'}},
-    { path : 'caso/:id/delito/create', component : DelitoCreateComponent, data : { breadcrumb : 'Delitos', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}]}},
+    { path : 'caso/:casoId/delito/create', component : DelitoCreateComponent, data : { breadcrumb : 'Delitos', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}]}},
+    { path : 'caso/:casoId/delito/:id', component : DelitoCreateComponent, data : { breadcrumb : 'Delitos', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}]}},
     { path : 'caso/:id/archivo-temporal', component : ArchivoTemporalComponent, data : { breadcrumb : 'Archivo temporal' } },
     { path : 'caso/:id/archivo-temporal/create', component : ArchivoTemporalCreateComponent, data : { breadcrumb : 'Archivo temporal' } },
     { path : 'caso/:id/acuerdo-radicacion', component : AcuerdosRadicacionComponent, data : { breadcrumb : 'Acuerdos de radicación'}},
