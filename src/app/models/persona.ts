@@ -2,21 +2,22 @@ export class Persona {
     id          : number;
     tipoPersona : string;
     //datos identidad
-    razonSocial : string;
-    nombre      : string;
-    materno: string;
-    paterno: string;
-    fechaNacimiento:string;
-    edad:number;
-    curp:string;
-    lugarDeTrabajo:string;
-    ingresosMensuales:number;
-    rfc:string;
-    numeroHijos: number;
+    public razonSocial : string;
+    public nombre      : string;
+    public materno: string;
+    public paterno: string;
+    public fechaNacimiento:string;
+    public edad:number;
+    public curp:string;
+    public lugarDeTrabajo:string;
+    public ingresosMensuales:number;
+    public rfc:string;
+    public numeroHijos: number;
    
     autoridadEmisora:string;
     numeroOFoliodeDocumento:string;
    
+    personaCaso = new PersonaCaso();
     sexo: Sexo = new Sexo();
     caso: Caso = new Caso();
     estadoCivil: EstadoCivil = new EstadoCivil();
@@ -45,6 +46,10 @@ export class Caso {
     public delito   : string;
     public nic      : string;
     public nuc      : string;
+}
+
+export class PersonaCaso {
+    public caso: Caso = new Caso();
 }
 
 export class Sexo {

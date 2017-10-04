@@ -18,13 +18,9 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
     public form  : FormGroup;
     public casoId: number = null;
-
+    public globals: PersonaGlobals;
     persona:Persona;
     caso:Caso;
-
-    tipoPersona: string="";
-    tipoInterviniente: string;
-    detenido: boolean = false;
     tabla: CIndexedDB;
 
     forma=[{label:"Redonda", value:"Redonda"},{label:"Eliptica",value:"Eliptica"}];
@@ -55,23 +51,26 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     changeDetenido(e){
-        this.detenido=e.checked;
-        this.persona.detenido=e.checked;
-        console.log(this.detenido);
+        this.globals.detenido=e.checked;
+        // this.persona.detenido=e.checked;
     }
 
     ngOnInit(){
         this.form  = new FormGroup({
-            'tipoPersona'   : new FormControl("", [Validators.required,]),
+            'tipoPersona'      : new FormControl("", [Validators.required,]),
             'tipoInterviniente': new FormControl("", [Validators.required,]),
-            'razonSocial': new FormControl("",[Validators.required,Validators.minLength(4)]),
-            'fechaNacimiento': new FormControl("",[])
+            'nombre'           : new FormControl("", [Validators.required,]),
+            'paterno'          : new FormControl("", [Validators.required,]),
+            'materno'          : new FormControl("", [Validators.required,]),
+            'razonSocial'      : new FormControl("",[Validators.required,Validators.minLength(4)]),
+            'fechaNacimiento'  : new FormControl("",[]),
         });
         this.form.controls.razonSocial.disable();
+        this.globals = new PersonaGlobals(this.form);
         this.persona=new Persona();
-        this.persona.tipoPersona="";
-        this.persona.tipoInterviniente="";
-        this.persona.detenido=false;
+        // this.persona.tipoPersona="";
+        // this.persona.tipoInterviniente="";
+        // this.persona.detenido=false;
 
         this.route.params.subscribe(params => {
             if(params['casoId'])
@@ -96,7 +95,6 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
     save(valid : any, _model : any):void{
 
-        console.log(_model);
         // this.tabla.get("catalagos","oreja").then(t=>{
         //     var lista=t["arreglo"] as any[];
         //     var p = _model as Persona;
@@ -120,9 +118,10 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         // })
         
         if(this.onLine.onLine){
-            Object.assign(this.persona, _model);
-            this.persona.personaCaso.caso.id = this.casoId;
-            this.http.post('/v1/base/personas', this.persona).subscribe(
+            console.log('_model', _model);
+            Object.assign(_model, this.persona,);
+            _model.personaCaso.caso.id = this.casoId;
+            this.http.post('/v1/base/personas', _model).subscribe(
                 (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
                 (error) => console.error('Error', error)
             );
@@ -149,7 +148,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 export class IdentidadComponent{ 
 
     @Input()
-    tipoPersona: string = '';
+    globals: PersonaGlobals;
     @Input()
     options: any[];
 }
@@ -161,7 +160,7 @@ export class IdentidadComponent{
 export class IdentificacionComponent{ 
 
     @Input()
-    tipoPersona: string = '';
+    globals: PersonaGlobals;
     @Input()
     options: any[];
 }
@@ -171,7 +170,10 @@ export class IdentificacionComponent{
     templateUrl : './localizacion.component.html'
 })
 export class LocalizacionComponent{ 
-
+    @Input()
+    globals: PersonaGlobals;
+    @Input()
+    options: any[];
 }
 
 @Component({
@@ -179,5 +181,22 @@ export class LocalizacionComponent{
     templateUrl : './media-filacion.component.html'
 })
 export class MediaFilacionComponent{ 
+    @Input()
+    globals: PersonaGlobals;
+    @Input()
+    options: any[];
+}
 
+
+export class PersonaGlobals{
+    public form  : FormGroup;
+    public tipoPersona: string="";
+    public tipoInterviniente: string;
+    public detenido: boolean = false;
+
+    constructor(
+        _form: FormGroup
+        ){
+        this.form = _form;
+    }
 }

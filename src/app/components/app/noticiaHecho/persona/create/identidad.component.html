@@ -1,33 +1,35 @@
 <md-expansion-panel>
-  <md-expansion-panel-header>
-    <md-panel-title>
-      <md-icon>perm_identity</md-icon>Datos de identidad
-    </md-panel-title>
-    <md-panel-description>
+    <md-expansion-panel-header>
+        <md-panel-title>
+            <md-icon>perm_identity</md-icon>Datos de identidad
+        </md-panel-title>
+        <md-panel-description>
 
-    </md-panel-description>
-  </md-expansion-panel-header>
-  <div class="row" *ngIf="tipoPersona=='Moral'">
-  <div class="col-md-3">
-      <text label="Razón social" name="razonSocial" [group]="form" hintStart="Campo obligatorio"></text>
+        </md-panel-description>
+    </md-expansion-panel-header>
+    <div class="row" *ngIf="globals.tipoPersona=='Moral'">
+        <div class="col-md-3">
+            <text label="Razón social" name="razonSocial" [group]="globals.form" hintStart="Campo obligatorio"></text>
+        </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-3">
-      <text label="Nombre" ></text>
+    <div class="row">
+        <div class="col">
+            <text label="Nombre"  name="nombre" [group]="globals.form"></text>
+        </div>
+        <div class="col">
+            <text label="Apellido paterno"  name="paterno" [group]="globals.form"></text>
+        </div>
+        <div class="col">
+            <text label="Apellido materno"  name="materno" [group]="globals.form"></text>
+        </div>
     </div>
-    <div class="col-md-3">
-      <text label="Apellido paterno" ></text>
-    </div>
-    <div class="col-md-3">
-      <text label="Apellido materno" ></text>
-    </div>
+    <div class="row">
     <div class="col-md-2">
       <select2 [options]="options.sexo" placeholder="Sexo" ></select2>
     </div>
     <div class="col-md-2">
-      <!-- <date label="Fecha de nacimiento" name="fechaNacimiento" [group]="form"></date> -->
+      <date label="Fecha de nacimiento" name="fechaNacimiento" [group]="globals.form"></date>
     </div>
     <div class="col-md-2">
       <text label="Edad"></text>
@@ -126,35 +128,35 @@
        <text label="Adicciones"></text>
     </div>
     </div>
-    <!-- <div class="row" *ngIf="persona.tipoInterviniente=='Imputado'">
+     <div class="row" *ngIf="globals.tipoInterviniente=='Imputado'">
     <div class="col-md-2">
          Detenido-{{detenido}}
      <checkbox label="Detenido"  ></checkbox>
     </div>
-    <div class="col-md-2" *ngIf="persona.detenido">
+    <div class="col-md-2" *ngIf="globals.detenido">
       <date label="Fecha de denteción" ></date>
     </div>
-    <div class="col-md-2" *ngIf="persona.detenido">
+    <div class="col-md-2" *ngIf="globals.detenido">
        <text label="Hora de denteción" ></text>
     </div>
 
-    <div class="col-md-2" *ngIf="persona.detenido">
+    <div class="col-md-2" *ngIf="globals.detenido">
       <select2 [options]="
       []" placeholder="Tipo de denteción" ></select2>
     </div>
 
-    <div class="col-md-2" *ngIf="persona.detenido">
+    <div class="col-md-2" *ngIf="globals.detenido">
      <date label="Fecha de declaración" ></date>
     </div>
-    <div class="col-md-2" *ngIf="persona.detenido">
+    <div class="col-md-2" *ngIf="globals.detenido">
        <select2 [options]="
       []" placeholder="Tipo de reincidencia" ></select2>
     </div>
-    <div class="col-md-2" *ngIf="persona.detenido">
+    <div class="col-md-2" *ngIf="globals.detenido">
         <select2 [options]="
       []" placeholder="Cereso" ></select2>
     </div> 
 
-  </div>-->
+  </div>
 
 </md-expansion-panel>

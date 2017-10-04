@@ -30,15 +30,17 @@
             </div>
             <div class="row">
               <div class="col-md-10">
-            <radiobutton class="col-md-3" [(value)]="tipoPersona" [radios]="
+            <radiobutton class="col-md-3" 
+                [(value)]="globals.tipoPersona" 
+                [radios]="
                       [
                       {label:'Física',value:'Física'},
                       {label:'Moral',value:'Moral'}
-                      ]
-            " name="tipoPersona"  
-            [group]="form" 
-            [functionChange]="activaRazonSocial.bind(this)"
-            ></radiobutton>
+                ]" 
+                name="tipoPersona"  
+                [group]="globals.form" 
+                [functionChange]="activaRazonSocial.bind(this)">    
+            </radiobutton>
             </div></div>
           </div>
 
@@ -73,11 +75,11 @@
         </div>
         <!-- Datos de identidad-->
         <div class="row  justify-content-md-center align-items-center" *ngIf="muestraDatos();">
-            <identidad [tipoPersona]="tipoPersona" [options]="options" style="width: 95%"></identidad>
+            <identidad [globals]="globals" [options]="options" style="width: 95%"></identidad>
         </div>
         <!-- Datos de identificacion -->
         <div class="row  justify-content-md-center align-items-center" *ngIf="muestraDatos();">
-          <identificacion style="width: 95%" [options]="options"></identificacion>
+          <identificacion [globals]="globals"  [options]="options" style="width: 95%"></identificacion>
         </div>
         <!-- Datos de localizacion -->
         <div class="row  justify-content-md-center align-items-center" *ngIf="muestraDatos();" >
@@ -94,7 +96,7 @@
         <div class="row justify-content-end space">
             <div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" mdTooltipPosition="above">
                 <button md-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id != null">Editar</button>    
-                <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, persona)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
+                <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
             </div>
             <div class="col-sm-auto">
               <button class="float-right" md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button> 

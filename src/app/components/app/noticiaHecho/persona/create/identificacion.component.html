@@ -8,20 +8,20 @@
             </md-panel-description>
     </md-expansion-panel-header>
     <div class="row">
-    <div class="col-md-2">
-      <select2 [options]="[]" placeholder="Documento de identificación"></select2>
-    </div>
-    <div class="col-md-2">
-      <text label="Autoridad emisora"></text>
-    </div>
-    <div class="col-md-2">
-      <text label="Número o folio de documento"></text>
-    </div>
-    <!-- <div class="col-md-2" *ngIf="persona.tipoInterviniente=='Imputado'">
-      <text label="alias">
-    </div> -->
-    <div class="col-md-2">
-      <text label="Otros nombres"></text>
-    </div>
+        <div class="col-md-3">
+            <select2 [options]="[]" placeholder="Documento de identificación"></select2>
+        </div>
+        <div class="col-md-auto">
+            <text label="Autoridad emisora"></text>
+        </div>
+        <div class="col-md-auto">
+            <text label="Número o folio de documento"></text>
+        </div>
+        <div class="col-md-3" *ngIf="globals.tipoInterviniente=='Imputado'">
+            <text label="alias" [group]="globals.form" name="alias"></text>
+        </div>
+        <div class="col-md-auto">
+            <text label="Otros nombres"></text>
+        </div>
     </div>
 </md-expansion-panel>
