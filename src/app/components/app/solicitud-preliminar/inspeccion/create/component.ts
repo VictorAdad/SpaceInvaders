@@ -78,7 +78,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
 
             Object.assign(this.model, _model);
             this.model.caso.id = this.casoId;
-            console.log('-> AcuerdoGeneral@save()', this.model);
+            console.log('-> Inspeccion@save()', this.model);
             this.http.post(this.apiUrl, this.model).subscribe(
 
                 (response) => {
@@ -99,7 +99,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
     }
 
     public edit(_valid : any, _model : any):void{
-        console.log('-> AcuerdoGeneral@edit()', _model);
+        console.log('-> Inspeccion@edit()', _model);
             this.http.put(this.apiUrl+'/'+this.id, _model).subscribe((response) => {
                 console.log('-> Registro acutualizado', response);
             });
