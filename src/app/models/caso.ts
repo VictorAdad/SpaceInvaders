@@ -44,5 +44,11 @@ export class DelitoCaso {
     createdBy: Date;
     updatedBy: Date;
 
+    delito: Delito = new Delito();
+
     //caso: Caso = new Caso();
  }
+
+export class Delito {
+    id: number;
+}
