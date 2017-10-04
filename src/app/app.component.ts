@@ -5,6 +5,7 @@ import { AuthenticationService } from '@services/auth/authentication.service';
 import { GlobalService } from '@services/global.service';
 
 import { OnLineService } from "@services/onLine.service";
+import { SelectsService } from "@services/selects.service";
 
 @Component({
   selector: 'app-root',
@@ -22,9 +23,11 @@ export class AppComponent {
 		private titleService: Title,
     	public globalService : GlobalService,
     	private servicio: OnLineService,
-    	private activeRoute: ActivatedRoute
+    	private activeRoute: ActivatedRoute,
+        private selects: SelectsService
 	) {
         this._SIDEBAR = false;
+        this.selects.getData();
     }
 
 	ngOnInit(){
