@@ -1,4 +1,3 @@
-import { Pais } from '@models/catalogo/pais';
 
 export class Estado {
 	id: number;
@@ -10,4 +9,9 @@ export class Estado {
 	pais: Pais = new Pais();
 	createdBy: number;
 	updatedBy: number;
+}
+
+export class Pais {
+	id: number;
+	nombre: string;
 }

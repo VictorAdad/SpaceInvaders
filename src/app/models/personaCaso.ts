@@ -1,5 +1,4 @@
 import { Persona } from '@models/persona';
-import { TipoInterviniente } from '@models/catalogo/tipoInterviniente';
 
 export class PersonaCaso {
 	id: number;
@@ -16,4 +15,16 @@ export class Caso {
     public delito   : string;
     public nic      : string;
     public nuc      : string;
+}
+
+export class TipoInterviniente {
+    id: number;
+    tipo: string;
+    created: Date;
+    updated: Date;
+
+    createdBy: number;
+    updatedBy: number;
+
+
 }

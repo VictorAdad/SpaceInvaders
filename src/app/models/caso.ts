@@ -1,5 +1,3 @@
-import { DelitoCaso } from '@models/delitoCaso';
-
 export class Caso {
     public id       : number;
     public titulo   : string;
@@ -39,3 +37,12 @@ export class Caso {
     
 
 }
+
+export class DelitoCaso {
+    id: number;
+    principal : boolean;
+    createdBy: Date;
+    updatedBy: Date;
+    
+    caso: Caso = new Caso();
+ }
