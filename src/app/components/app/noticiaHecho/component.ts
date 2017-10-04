@@ -1,6 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CIndexedDB } from '@services/indexedDB';
+import { NoticiaHechoService } from '@services/noticia-hecho.service';
 import { Caso } from '@models/caso'
 declare var componentHandler: any;
 
@@ -16,7 +17,11 @@ export class NoticiaHechoComponent implements OnInit{
 	private sub: any;
 	public returnRoute: string = '/';
 
-	constructor(private route: ActivatedRoute, private _db: CIndexedDB) {
+	constructor(
+		private route: ActivatedRoute,
+		private _db: CIndexedDB,
+		private service: NoticiaHechoService
+		) {
 		this.db = _db;
 	}
 
@@ -26,9 +31,11 @@ export class NoticiaHechoComponent implements OnInit{
         }
 
 	    this.route.params.subscribe(params => {
-	    	if(params['id'])
+	    	if(params['id']){
 				this.id = +params['id'];
-
+				this.service.setId(this.id);
+				this.service.getData();
+			}
 			this.getReturnRoute();
 	    });
 

@@ -5,7 +5,8 @@ import {FormCreateDelitoComponent} from "./formcreate.component"
 import { CIndexedDB } from '@services/indexedDB';
 import {Router} from '@angular/router';
 import {Caso} from '@models/caso';
-
+import { HttpService } from '@services/http.service';
+import { OnLineService} from '@services/onLine.service';
 @Component({
     templateUrl: 'create.component.html',
     styles:[`
@@ -22,25 +23,39 @@ import {Caso} from '@models/caso';
 export class DelitoCreateComponent{
 
     public casoId: number = null;
+    id:number;
     caso:Caso;
 
     listaDelitos=[];
     tabla:CIndexedDB;
     
 
-    constructor(public dialog: MdDialog, private _tabla: CIndexedDB, private router:Router, private route: ActivatedRoute) { 
+    constructor(public dialog: MdDialog, private _tabla: CIndexedDB, private router:Router, private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService) { 
         this.tabla=_tabla;
     }
     ngOnInit(){
         this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
-            if (!isNaN(this.casoId)){
-                this.tabla.get("casos", this.casoId).then(
-                    casoR=>{ 
-                        this.caso=casoR as Caso;
-                        console.log("->casoCargado", this.caso);
+            console.log("params",params);
+            if(params['casoId'])
+                this.casoId = +params['casoId'];
+            if(params['id']){
+                this.id = +params['id'];
+                if(this.onLine.onLine){
+                    this.http.get('/v1/base/delitos-casos/'+this.id).subscribe(response =>{
+                        this.listaDelitos.push(response);
                     });
+                }else{
+                  this.tabla.get("casos",this.casoId).then(t=>{
+                    let delitos=t["delito"] as any[];
+                    for (var i = 0; i < delitos.length; ++i) {
+                        if ((delitos[i])["id"]==this.id){
+                            this.listaDelitos.push(delitos[i]);
+                            break;
+                        }
+                    }
+                   });
+                }
+                
             }
         });
 
@@ -67,10 +82,39 @@ export class DelitoCreateComponent{
             //         this.listaDelitos=[];
             //         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
             //     });
-            console.log("Se tiene que crear el servicio de delito");
+
+            this.guardaLista(0,this.listaDelitos);
+                
+            
+            
+            console.log("Se tiene que crear el servicio de delito", this.listaDelitos);
 
             
         }
+    }
+
+    guardaLista(i,lista:any[]){
+        if (i==lista.length){
+            this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
+            return;
+        }
+        let item=lista[0];
+        let data={
+            caso:{
+                id:this.casoId
+            },
+            delito:{
+                id:item["id"]
+            },
+            principal:false
+        }
+        this.http.post('/v1/base/delitos-casos',data).subscribe(response => {
+            console.log("->",response);
+            this.guardaLista(i+1,this.listaDelitos);
+        },
+        error=>{
+            this.guardaLista(i+1,this.listaDelitos);
+        });
     }
 
 }

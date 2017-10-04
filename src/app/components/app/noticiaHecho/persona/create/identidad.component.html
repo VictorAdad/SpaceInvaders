@@ -1,0 +1,160 @@
+<md-expansion-panel>
+  <md-expansion-panel-header>
+    <md-panel-title>
+      <md-icon>perm_identity</md-icon>Datos de identidad
+    </md-panel-title>
+    <md-panel-description>
+
+    </md-panel-description>
+  </md-expansion-panel-header>
+  <div class="row" *ngIf="tipoPersona=='Moral'">
+  <div class="col-md-3">
+      <text label="Razón social" name="razonSocial" [group]="form" hintStart="Campo obligatorio"></text>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <text label="Nombre" ></text>
+    </div>
+    <div class="col-md-3">
+      <text label="Apellido paterno" ></text>
+    </div>
+    <div class="col-md-3">
+      <text label="Apellido materno" ></text>
+    </div>
+    <div class="col-md-2">
+      <select2 [options]="options.sexo" placeholder="Sexo" ></select2>
+    </div>
+    <div class="col-md-2">
+      <!-- <date label="Fecha de nacimiento" name="fechaNacimiento" [group]="form"></date> -->
+    </div>
+    <div class="col-md-2">
+      <text label="Edad"></text>
+    </div>
+
+    <div class="col-md-2">
+      <text label="CURP" ></text>
+    </div>
+
+    <div class="col-md-2">
+      <select2 [options]="
+      [
+        {label:'Mexicana',value:'Mexicana'},
+        {label:'Otra',value:'Otra'}]" placeholder="Nacionalidad" ></select2>
+    </div>
+    <div class="col-md-2">
+      <select2 [options]="
+      [
+        {label:'México',value:'México'},
+        {label:'Otro',value:'Otro'}]" placeholder="País de nacimiento"  ></select2>
+    </div>
+    <div class="col-md-2">
+      <select2 [options]="
+      [
+        {label:'Aguas Calientes',value:'Aguas Calientes'},
+        {label:'Otro',value:'Otro'}]" placeholder="Estado de nacimiento"  ></select2>
+    </div>
+
+    <div class="col-md-2">
+      <select2 [options]="
+      [
+        {label:'Conocido',value:'Conocido'},
+        {label:'Otro',value:'Otro'}]" placeholder="Municipio"
+         ></select2>
+    </div>
+
+    <div class="col-md-2">
+      <select2 [options]="
+      []" placeholder="Escolaridad"  ></select2>
+    </div>
+    <div class="col-md-2">
+      <select2 [options]="
+      [{label:'Conocido',value:'Conocido'},
+        {label:'Otro',value:'Otro'}]" placeholder="Ocupación"  ></select2>
+    </div>
+    <div class="col-md-2">
+      <text label="Lugar de trabajo"  ></text>
+    </div>
+
+    <div class="col-md-2">
+      <text label="Ingresos mensuales"  ></text>
+    </div>
+
+    <div class="col-md-2">
+     <text label='RFC'  ></text>
+    </div>
+    <div class="col-md-2">
+      <select2 [options]="
+      [ {label:'Solter@',value:'soltero'}, {label:'Casad@',value:'casado'},  {label:'Divorsiad@',value:'divorsiado'}, {label:'Viud@',value:'viudo'}]" placeholder="Estado civil"  ></select2>
+    </div>
+    <div class="col-md-2">
+      <text label="Número de hijos" ></text>
+    </div>
+
+    <div class="col-md-2">
+      <text label="Religión" ></text>
+    </div>
+
+    <div class="col-md-2">
+     <select2 [options]="
+      [{value:true,label:'Si'},{value:false,label:'No'}]" placeholder="Habla Español" ></select2>
+    </div>
+    <div class="col-md-2">
+      <select2 [options]="
+      []" placeholder="Lengua Índigena" ></select2>
+    </div>
+    <div class="col-md-2">
+       <select2 [options]="
+      []" placeholder="Grupo étnico" ></select2>
+    </div>
+
+    <div class="col-md-2">
+      <select2 [options]="
+      []" placeholder="Alfabetismo" ></select2>
+    </div>
+
+    <div class="col-md-2">
+     <select2 [options]="
+      []" placeholder="Familia ligüistica" ></select2>
+    </div>
+    <div class="col-md-2">
+      <select2 [options]="
+      [{value:true,label:'Si'},{value:false,label:'No'}]" placeholder="Necesita interprete" ></select2>
+    </div>
+    <div class="col-md-4">
+       <text label="Adicciones"></text>
+    </div>
+    </div>
+    <!-- <div class="row" *ngIf="persona.tipoInterviniente=='Imputado'">
+    <div class="col-md-2">
+         Detenido-{{detenido}}
+     <checkbox label="Detenido"  ></checkbox>
+    </div>
+    <div class="col-md-2" *ngIf="persona.detenido">
+      <date label="Fecha de denteción" ></date>
+    </div>
+    <div class="col-md-2" *ngIf="persona.detenido">
+       <text label="Hora de denteción" ></text>
+    </div>
+
+    <div class="col-md-2" *ngIf="persona.detenido">
+      <select2 [options]="
+      []" placeholder="Tipo de denteción" ></select2>
+    </div>
+
+    <div class="col-md-2" *ngIf="persona.detenido">
+     <date label="Fecha de declaración" ></date>
+    </div>
+    <div class="col-md-2" *ngIf="persona.detenido">
+       <select2 [options]="
+      []" placeholder="Tipo de reincidencia" ></select2>
+    </div>
+    <div class="col-md-2" *ngIf="persona.detenido">
+        <select2 [options]="
+      []" placeholder="Cereso" ></select2>
+    </div> 
+
+  </div>-->
+
+</md-expansion-panel>

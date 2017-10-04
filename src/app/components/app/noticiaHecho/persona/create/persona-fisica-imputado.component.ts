@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CIndexedDB } from '@services/indexedDB';
@@ -7,6 +7,7 @@ import { Router} from '@angular/router';
 import { Caso} from '@models/caso'
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
+import { SelectsService} from '@services/selects.service';
 import { NoticiaHechoGlobal } from '../../global';
 
 @Component({
@@ -17,7 +18,6 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
     public form  : FormGroup;
     public casoId: number = null;
-
 
     persona:Persona;
     caso:Caso;
@@ -43,7 +43,9 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         private _tabla: CIndexedDB,
         private route: ActivatedRoute,
         private onLine: OnLineService,
-        private http: HttpService) {
+        private http: HttpService,
+        private options: SelectsService
+        ) {
         super();
         this.tabla = _tabla;
     }
@@ -95,48 +97,87 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     save(valid : any, _model : any):void{
 
         console.log(_model);
-        this.tabla.get("catalagos","oreja").then(t=>{
-            var lista=t["arreglo"] as any[];
-            var p = _model as Persona;
-            for (var i = 0; i < lista.length; ++i) {
-                var item=lista[i];
-                var c=(item["forma"]==p.orejaDerechaForma)
-                        && (item["helixOriginal"]==p.orejaDerechaHelixOriginal)
-                        && (item["helixAdherencia"]==p.orejaDerechaHelixAdherencia)
-                        && (item["helixPosterior"]==p.orejaDerechaHelixPosterior)
-                        && (item["helixSuperior"]==p.orejaDerechaHelixSuperior)
-                        && (item["lobuloAdherencia"]==p.orejaDerechaLobuloAdherencia)
-                        && (item["lobuloContorno"]==p.orejaDerechaLobuloContorno)
-                        && (item["lobuloParticular"]==p.orejaDerechaLobuloParticular)
-                        && (item["lobuloDimension"]==p.orejaDerechaLobuloDimensional);
+        // this.tabla.get("catalagos","oreja").then(t=>{
+        //     var lista=t["arreglo"] as any[];
+        //     var p = _model as Persona;
+        //     for (var i = 0; i < lista.length; ++i) {
+        //         var item=lista[i];
+        //         var c=(item["forma"]==p.orejaDerechaForma)
+        //                 && (item["helixOriginal"]==p.orejaDerechaHelixOriginal)
+        //                 && (item["helixAdherencia"]==p.orejaDerechaHelixAdherencia)
+        //                 && (item["helixPosterior"]==p.orejaDerechaHelixPosterior)
+        //                 && (item["helixSuperior"]==p.orejaDerechaHelixSuperior)
+        //                 && (item["lobuloAdherencia"]==p.orejaDerechaLobuloAdherencia)
+        //                 && (item["lobuloContorno"]==p.orejaDerechaLobuloContorno)
+        //                 && (item["lobuloParticular"]==p.orejaDerechaLobuloParticular)
+        //                 && (item["lobuloDimension"]==p.orejaDerechaLobuloDimensional);
 
-                if (c){
-                    console.log(item);
-                }
+        //         if (c){
+        //             console.log(item);
+        //         }
 
-            }
-        })
+        //     }
+        // })
         
-        // if(this.onLine.onLine){
-        //     Object.assign(this.persona, _model);
-        //     this.persona.caso.id = this.casoId;
-        //     this.persona.caso.created = null;
-        //     this.http.post('/v1/base/personas', this.persona).subscribe(
-        //         (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
-        //         (error) => console.error('Error', error)
-        //     );
+        if(this.onLine.onLine){
+            Object.assign(this.persona, _model);
+            this.persona.personaCaso.caso.id = this.casoId;
+            this.http.post('/v1/base/personas', this.persona).subscribe(
+                (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
+                (error) => console.error('Error', error)
+            );
 
-        // }else{
-        //     this.tabla.add('personas', this.persona).then( p => {
-        //         this.caso.personas.push({id:p["id"]});
-        //         this.tabla.update("casos",this.caso).then(
-        //             response=>{
-        //                 console.log("Se actualizo registro");
+        }else{
+            this.tabla.add('personas', this.persona).then( p => {
+                this.caso.personas.push({id:p["id"]});
+                this.tabla.update("casos",this.caso).then(
+                    response=>{
+                        console.log("Se actualizo registro");
 
-        //         });
-        //         console.log('-> Persona Guardada',p);
-        //         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
-        //     });
-        // }
+                });
+                console.log('-> Persona Guardada',p);
+                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
+            });
+        }
     }
+}
+
+@Component({
+    selector: 'identidad',
+    templateUrl : './identidad.component.html'
+})
+export class IdentidadComponent{ 
+
+    @Input()
+    tipoPersona: string = '';
+    @Input()
+    options: any[];
+}
+
+@Component({
+    selector: 'identificacion',
+    templateUrl : './identificacion.component.html'
+})
+export class IdentificacionComponent{ 
+
+    @Input()
+    tipoPersona: string = '';
+    @Input()
+    options: any[];
+}
+
+@Component({
+    selector: 'localizacion',
+    templateUrl : './localizacion.component.html'
+})
+export class LocalizacionComponent{ 
+
+}
+
+@Component({
+    selector: 'media-filacion',
+    templateUrl : './media-filacion.component.html'
+})
+export class MediaFilacionComponent{ 
+
 }

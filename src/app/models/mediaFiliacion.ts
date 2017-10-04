@@ -1,5 +1,4 @@
 import { Persona } from '@models/persona';
-import { Oreja } from '@models/catalogo/oreja'
 
 export class MediaFiliacion {
 	id: number;
@@ -7,4 +6,17 @@ export class MediaFiliacion {
 	personaId: Persona = new Persona();
 	orejaDerecha: Oreja = new Oreja(); 
 	orejaIzquiera:Oreja = new Oreja(); 
+}
+
+export class Oreja {
+	id: number;
+	forma: string;
+	helixOriginal: string;
+	helixSuperior: string; 
+	helixPosterior: string;
+	helixAdherencia: string;
+	lobuloContorno: string;
+	lobuloAdherencia: string;
+	lobuloParticularidad: string;
+	lobuloDimension: string;
 }

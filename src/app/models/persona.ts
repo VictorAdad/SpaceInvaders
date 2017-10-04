@@ -16,7 +16,6 @@ export class Persona {
    
     autoridadEmisora:string;
     numeroOFoliodeDocumento:string;
-
     horaDentencion:string;             // verificar
    
     sexo: Sexo = new Sexo();
@@ -308,8 +307,5 @@ export class Oreja {
     lobuloParticularidad: string;
     lobuloDimension: string;
 }
-
-
-
 
 

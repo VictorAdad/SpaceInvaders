@@ -48,11 +48,11 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
     ngOnInit(){
         this.model = new Arma();
         this.form  = new FormGroup({
-            'clase'           : new FormControl(this.model.clase, [Validators.required,]),
-            'tipo'            : new FormControl(this.model.tipo),
-            'subtipo'         : new FormControl(this.model.subtipo),
-            'calibre'         : new FormControl(this.model.calibre),
-            'mecanismoAccion' : new FormControl(this.model.mecanismoAccion),
+            'clase'           : new FormControl('', [Validators.required,]),
+            'tipo'            : new FormControl(''),
+            'subtipo'         : new FormControl(''),
+            'calibre'         : new FormControl(''),
+            'mecanismoAccion' : new FormControl(''),
             'serie'           : new FormControl(this.model.serie),
             'notas'           : new FormControl(this.model.notas),
             'matricula'       : new FormControl(this.model.matricula),
@@ -86,7 +86,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         if(this.onLine.onLine){
             Object.assign(this.model, _model);
             this.model.caso.id = this.casoId;
-            // this.model.caso.created = null;
+            
             this.http.post('/v1/base/armas', this.model).subscribe(
                 (response) => {
                     this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
@@ -165,7 +165,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
 
 
     claseChange(option){
-        this.model.clase=option;
+        // this.model.clase=option;
 
         if(option=="Arma de fuego"){
         	console.log(option);

@@ -4,6 +4,8 @@ import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { CIndexedDB } from '@services/indexedDB';
+import { HttpService } from '@services/http.service';
+import { Delito } from '@models/catalogo/delito';
 
 @Component({
     templateUrl: './formcreate.component.html',
@@ -33,7 +35,9 @@ export class FormCreateDelitoComponent {
     tabla:CIndexedDB;
     listaDeSeleccionados=[];
     clasificacion:number;
+    searchDelito:string;
     constructor(
+        private http: HttpService,
         private _tabla: CIndexedDB,
         @Inject(MD_DIALOG_DATA) private data: {lista:any},
         public dialogRef: MdDialogRef<FormCreateDelitoComponent>
@@ -53,18 +57,15 @@ export class FormCreateDelitoComponent {
                 
             ];
 
-    buscar(value){
-        this.tabla.get("catalagos","delitos").then(
-        lista=>{
-            let lista2 = (lista["arreglo"] as any[]);
-            this.optionLista=[];
-            for (let item in lista2 ) {
-                let cad=""+(lista2[item])["nombre"];
-                if ( cad.toUpperCase().indexOf(value.toUpperCase())>-1 ){
-                    this.optionLista.push(lista2[item]);
-                }
-            }
-            this.dataSource = new ExampleDataSource(this.optionLista);
+    setDelito(value){
+        this.searchDelito = value;
+    }
+
+    buscar(){
+        
+        this.http.get('/v1/base/delitos/search?name='+this.searchDelito).subscribe(response => {
+            console.log('-> done buscar delito', response);
+            this.dataSource = new ExampleDataSource(response);
         });
     }
 

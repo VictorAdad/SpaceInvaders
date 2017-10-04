@@ -112,7 +112,6 @@ export class PredenunciaComponent {
         if(this.onLine.onLine){
             Object.assign(this.model, _model);
             this.model.caso.id = this.casoId;
-            this.model.caso.created = null;
             this.http.post('/v1/base/predenuncias', this.model).subscribe(
                 (response) => {
                     this.router.navigate(['/caso/'+this.casoId+'/detalle' ]);

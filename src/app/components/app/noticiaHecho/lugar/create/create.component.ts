@@ -15,7 +15,6 @@ import * as moment from 'moment';
     selector: 'lugar-create',
     templateUrl: './create.component.html'
 })
-
 export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
     public form: FormGroup;
     public model: Lugar;
@@ -124,7 +123,6 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
     public save(_valid : any, _model : any):void{
         Object.assign(this.model, _model);
         this.model.caso.id      = this.casoId;
-        this.model.caso.created = null;
         this.model.latitud      = this.latMarker;
         this.model.longitud     = this.lngMarker;
         this.model.fecha        = moment(this.model.fecha).format('YYYY-MM-DD');
