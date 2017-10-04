@@ -15,7 +15,7 @@ export class AcuerdoGeneralComponent {
 
 	public columns = ['fundamento', 'plazo'];
 	public dataSource: TableService | null;
-	public data: AcuerdoGeneral[];
+	public data: AcuerdoGeneral[] = [];
     public casoId: number = null;
     public haveCaso: boolean=false;
 	@ViewChild(MdPaginator) 
@@ -28,8 +28,10 @@ export class AcuerdoGeneralComponent {
             if(params['casoId']){
             	this.haveCaso=true;
                 this.casoId = +params['casoId'];
-                this.http.get('/v1/base/caso/'+this.casoId+'/acuerdosgenerales').subscribe((response) => {
-                    this.data = response as AcuerdoGeneral[];
+                this.http.get('/v1/base/acuerdosgenerales').subscribe((response) => {
+                    console.log('response acuerdo');
+                    console.log(response.data);
+                    this.data = response.data as AcuerdoGeneral[];
                     this.dataSource = new TableService(this.paginator, this.data);
                 });
             }

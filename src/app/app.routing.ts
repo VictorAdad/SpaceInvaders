@@ -97,25 +97,31 @@ const routes: Routes = [
     { path : 'acuerdos-generales/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Acuerdo general'}},    
     { path : 'acuerdos-generales/:id/edit', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Acuerdo general'}},    
     { path : 'caso/:casoId/acuerdo-general', component : AcuerdoGeneralComponent, data : { breadcrumb : 'Solicitudes de acuerdo general'}},
-    { path : 'caso/:casoId/acuerdo-general/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Acuerdos generales'}},    
+    { path : 'caso/:casoId/acuerdo-general/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Acuerdos generales'}},
+    { path : 'caso/:casoId/acuerdo-general/:id/edit', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Acuerdos generales'}},    
     
     { path : 'inspecciones', component : InspeccionComponent, data : { breadcrumb : 'Solicitudes de inspección'}},
     { path : 'inspecciones/create', component : InspeccionCreateComponent, data : { breadcrumb : 'Inspecciones'}},
     { path : 'inspecciones/:id/edit', component : InspeccionCreateComponent, data : { breadcrumb : 'Inspecciones'}},
     { path : 'caso/:casoId/inspeccion', component : InspeccionComponent, data : { breadcrumb : 'Solicitudes de inspección'}},
     { path : 'caso/:casoId/inspeccion/create', component : InspeccionCreateComponent, data : { breadcrumb : 'Inspecciones'}},
+    { path : 'caso/:casoId/inspeccion/:id/edit', component : InspeccionCreateComponent, data : { breadcrumb : 'Inspecciones'}},
    
     { path : 'caso/:casoId/registro-general', component : RegistroGeneralComponent, data : { breadcrumb : 'Solicitudes de registro general'}},
     { path : 'caso/:casoId/registro-general/create', component : RegistroGeneralCreateComponent, data : { breadcrumb : 'Registro generales'}},
+    { path : 'caso/:casoId/registro-general/:id/edit', component : RegistroGeneralCreateComponent, data : { breadcrumb : 'Registro generales'}},
     
     { path : 'caso/:casoId/policia', component : PoliciaComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
     { path : 'caso/:casoId/policia/create', component : PoliciaCreateComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
+    { path : 'caso/:casoId/policia/:id/edit', component : PoliciaCreateComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
     
     { path : 'caso/:casoId/perito', component : PeritoComponent, data : { breadcrumb : 'Solicitudes preliminares a peritos'}},
     { path : 'caso/:casoId/perito/create', component : PeritoCreateComponent, data : { breadcrumb : 'Solicitudes de servicios periciales'}},
+    { path : 'caso/:casoId/perito/:id/edit', component : PeritoCreateComponent, data : { breadcrumb : 'Solicitudes de servicios periciales'}},
     
     { path : 'caso/:casoId/requerimiento-informacion', component : RequerimientoInformacionComponent, data : { breadcrumb : 'Solicitudes de requerimiento de información' } },
     { path : 'caso/:casoId/requerimiento-informacion/create', component : RequerimientoInformacionCreateComponent, data : { breadcrumb : 'Requerimiento de información' } },
+    { path : 'caso/:casoId/requerimiento-informacion/:id/edit', component : RequerimientoInformacionCreateComponent, data : { breadcrumb : 'Requerimiento de información' } },
     //Determinación
     { path : 'caso/:casoId/acuerdo-inicio', component : AcuerdoInicioComponent, data : { breadcrumb : 'Acuerdo de inicio'}},
     { path : 'caso/:casoId/acuerdo-inicio/:id', component : AcuerdoInicioComponent, data : { breadcrumb : 'Acuerdo de inicio'}},

@@ -21,22 +21,22 @@
     </div>
 </div>
 <md-paginator #paginator
-    [length]="data.length"
+    [length]="dataSource ? dataSource.data.length : 0"
     [pageIndex]="0"
     [pageSize]="10"
     [pageSizeOptions]="[5, 10, 25, 100]">
   </md-paginator>
 <md-table #table [dataSource]="dataSource">
     <ng-container mdColumnDef="fundamento">
-        <md-header-cell *mdHeaderCellDef> Fundamento legal</md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.fundamento}} </md-cell>
+        <md-header-cell *mdHeaderCellDef> Nombre de la persona que atiende la llamada telefónica</md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.nombre}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="plazo">
-        <md-header-cell *mdHeaderCellDef> Plazo en el que debe ser cumplido </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.plazo}} </md-cell>
+        <md-header-cell *mdHeaderCellDef> Número telefónico </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.numero}} </md-cell>
     </ng-container>
 
     <md-header-row *mdHeaderRowDef="columns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: columns;"></md-row>
+    <md-row *mdRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/registro-general/{{row.id}}/edit"></md-row>
 </md-table>

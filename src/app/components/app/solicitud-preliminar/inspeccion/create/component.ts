@@ -14,14 +14,15 @@ import { CIndexedDB } from '@services/indexedDB';
     templateUrl:'./component.html',
 })
 export class InspeccionCreateComponent {
-	public casoId: number = null;
+    public casoId: number = null;
 	constructor(private route: ActivatedRoute){}
 
 	ngOnInit() {
     	this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
+            if(params['casoId'])
+                this.casoId = +params['casoId'];
         });
+        console.log('casoID', this.casoId);
   	}
 
 }
@@ -64,8 +65,10 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
         this.route.params.subscribe(params => {
             if(params['casoId'])
                 this.casoId = +params['casoId'];
+                console.log('casoId', this.casoId);
             if(params['id']){
                 this.id = +params['id'];
+                console.log('id', this.id);
                 this.http.get(this.apiUrl+'/'+this.id).subscribe(response =>{
                 	console.log(response.data),
                         this.fillForm(response);
@@ -85,7 +88,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
                     console.log(response);
                     console.log('here')
                   if(this.casoId){
-                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);      
+                    this.router.navigate(['/caso/'+this.casoId+'/inspeccion' ]);      
                   }
                   else {
                     this.router.navigate(['/inspecciones' ]);      
@@ -102,6 +105,9 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
         console.log('-> Inspeccion@edit()', _model);
             this.http.put(this.apiUrl+'/'+this.id, _model).subscribe((response) => {
                 console.log('-> Registro acutualizado', response);
+                if(this.id){
+                    this.router.navigate(['/caso/'+this.casoId+'/inspeccion']);
+                }
             });
      }
 

@@ -21,7 +21,7 @@
     </div>
 </div>
 <md-paginator #paginator
-    [length]="data.length"
+    [length]="dataSource ? dataSource.data.length : 0"
     [pageIndex]="0"
     [pageSize]="10"
     [pageSizeOptions]="[5, 10, 25, 100]">
@@ -34,9 +34,9 @@
 
     <ng-container mdColumnDef="comisario">
         <md-header-cell *mdHeaderCellDef> Nombre del comisario de la policía de investigación</md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.comisario}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.nombreComisario}} </md-cell>
     </ng-container>
 
     <md-header-row *mdHeaderRowDef="columns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: columns;"></md-row>
+    <md-row *mdRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/policia/{{row.id}}/edit"></md-row>
 </md-table>

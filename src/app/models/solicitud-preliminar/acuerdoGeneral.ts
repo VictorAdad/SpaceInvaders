@@ -1,6 +1,6 @@
 export class AcuerdoGeneral {
     id: number;
-    fundamentoLegal: string;
+    fudamentoLegal: string;
     contenidoAcuerdo: string;
     finalidad: string;
     plazo: string;

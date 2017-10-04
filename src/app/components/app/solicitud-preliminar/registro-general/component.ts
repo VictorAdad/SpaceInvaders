@@ -2,38 +2,42 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
+import { RegistroGeneral } from '@models/solicitud-preliminar/registroGeneral';
+import { OnLineService} from '@services/onLine.service';
+import { HttpService} from '@services/http.service';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
     templateUrl:'./component.html',
 })
 export class RegistroGeneralComponent {
-
-	public casoId: number = null;
-
 	columns = ['fundamento', 'plazo'];
-	dataSource: TableService | null;
-	data: RegistroGeneral[] = [
-		{id : 1, fundamento: 'Fundamento A',  	plazo: 'Plazo A'},
-		{id : 2, fundamento: 'Fundamento B',    plazo: 'Plazo B'},
-		{id : 3, fundamento: 'Fundamento C',    plazo: 'Plazo C'},
-		{id : 4, fundamento: 'Fundamento D',  	plazo: 'Plazo D'},
-		{id : 5, fundamento: 'Fundamento F',    plazo: 'Plazo F'},
-	];
-	@ViewChild(MdPaginator) paginator: MdPaginator;
+	public dataSource: TableService | null;
+	public data: RegistroGeneral[];
+    public casoId: number = null;
+    public haveCaso: boolean=false;
+	@ViewChild(MdPaginator) 
+	paginator: MdPaginator;
 
-	constructor(private route: ActivatedRoute){}
+	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
 
 	ngOnInit() {
-    	this.dataSource = new TableService(this.paginator, this.data);
-
     	this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
-        });
+            if(params['casoId']){
+            	this.haveCaso=true;
+                this.casoId = +params['casoId'];
+                this.http.get('/v1/base/registros-generales').subscribe((response) => {
+                    this.data = response.data as RegistroGeneral[];
+                    this.dataSource = new TableService(this.paginator, this.data);
+                });
+            }
+            else{
+            	 this.http.get('/v1/base/registros-generales').subscribe((response) => {
+	                 this.data = response.data as RegistroGeneral[];
+	                 console.log(this.data)
+	                 this.dataSource = new TableService(this.paginator, this.data);
+	                });
+            }
+        }); 
   	}
-}
-export interface RegistroGeneral {
-	id:number
-	fundamento: string;
-	plazo: string;
 }

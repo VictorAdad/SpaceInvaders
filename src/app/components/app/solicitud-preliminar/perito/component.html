@@ -21,7 +21,7 @@
     </div>
 </div>
 <md-paginator #paginator
-    [length]="data.length"
+    [length]="dataSource ? dataSource.data.length : 0"
     [pageIndex]="0"
     [pageSize]="10"
     [pageSizeOptions]="[5, 10, 25, 100]">
@@ -29,14 +29,14 @@
 <md-table #table [dataSource]="dataSource">
     <ng-container mdColumnDef="tipo">
         <md-header-cell *mdHeaderCellDef> Tipo de solicitud</md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.tipo}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.tipoSolicitud}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="oficio">
         <md-header-cell *mdHeaderCellDef> Número de oficio</md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.oficio}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.numeroOficio}} </md-cell>
     </ng-container>
 
     <md-header-row *mdHeaderRowDef="columns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: columns;"></md-row>
+    <md-row *mdRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/perito/{{row.id}}/edit"></md-row>
 </md-table>
