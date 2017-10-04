@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '@services/http.service';
+import { MOption } from '@partials/form/select2/select2.component'
 
 @Injectable()
 export class SelectsService {
 
-    paises = [];
-    estados = [];
-    sexo = [];
-    escolaridad = [];
-    ocupacion = [];
-    estadoCivil = [];
-    idioma=[];
-    grupoEtnico = [];
-    alfabetismo = [];
-    interprete = [];
-    adiccion   = [];
+    public paises: MOption[]      = [];
+    public estados: MOption[]     = [];
+    public sexo: MOption[]        = [];
+    public escolaridad: MOption[] = [];
+    public ocupacion: MOption[]   = [];
+    public estadoCivil: MOption[] = [];
+    public idioma: MOption[]      = [];
+    public grupoEtnico: MOption[] = [];
+    public alfabetismo: MOption[] = [];
+    public interprete: MOption[]  = [];
+    public adiccion: MOption[]    = [];
 
     constructor(
         private http: HttpService
@@ -31,60 +32,77 @@ export class SelectsService {
         this.getGrupoEtnico();
         this.getInterprete();
         this.getAdiccion();
+        // this.getNacionalidad();
     }
 
     public getPaises(){
         this.http.get('/v1/catalogos/pais/options').subscribe((response) => {
-            console.log('getSexo()', response);
+            this.paises = this.constructOptions(response);
         });
     }   
 
     public getSexo(){
         this.http.get('/v1/catalogos/sexo/options').subscribe((response) => {
-            console.log('getSexo()', response);
+            this.sexo = this.constructOptions(response);
         });
     }    
 
     public getEscolaridad(){
         this.http.get('/v1/catalogos/escolaridad/options').subscribe((response) => {
-            console.log('getEscolaridad()', response);
+            this.escolaridad = this.constructOptions(response);
         });
     }
 
     public getOcupacion(){
         this.http.get('/v1/catalogos/ocupacion/options').subscribe((response) => {
-            console.log('getOcupacion()', response);
+            this.ocupacion = this.constructOptions(response);
         });
     }
 
     public getEstadoCivil(){
         this.http.get('/v1/catalogos/estado-civil/options').subscribe((response) => {
-            console.log('getEstadoCivil()', response);
+            this.estadoCivil = this.constructOptions(response);
         });
     }
 
     public getIdioma(){
         this.http.get('/v1/catalogos/idioma/options').subscribe((response) => {
-            console.log('getIdioma()', response);
+            this.idioma = this.constructOptions(response);
         });
     }
 
     public getGrupoEtnico(){
         this.http.get('/v1/catalogos/grupo-etnico/options').subscribe((response) => {
-            console.log('getGrupoEtnico()', response);
+            this.grupoEtnico = this.constructOptions(response);
         });
     }
 
     public getInterprete(){
         this.http.get('/v1/catalogos/interprete/options').subscribe((response) => {
-            console.log('getInterprete()', response);
+            this.interprete = this.constructOptions(response);
         });
     }
 
     public getAdiccion(){
         this.http.get('/v1/catalogos/adiccion/options').subscribe((response) => {
-            console.log('getAdiccion()', response);
+            this.adiccion = this.constructOptions(response);
         });
+    }
+
+    public getNacionalidad(){
+        this.http.get('/v1/catalogos/nacionalidad/options').subscribe((response) => {
+            this.adiccion = this.constructOptions(response);
+        });
+    }
+
+    private constructOptions(_data:any){
+        let options: MOption[] = [];
+
+        for (var key in _data) {
+            options.push({value: key, label: _data[key]});
+        }
+
+        return options;
     }
 
     

@@ -7,6 +7,7 @@ import { Router} from '@angular/router';
 import { Caso} from '@models/caso'
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
+import { SelectsService} from '@services/selects.service';
 import { NoticiaHechoGlobal } from '../../global';
 
 @Component({
@@ -43,7 +44,9 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         private _tabla: CIndexedDB,
         private route: ActivatedRoute,
         private onLine: OnLineService,
-        private http: HttpService) {
+        private http: HttpService,
+        private options: SelectsService
+        ) {
         super();
         this.tabla = _tabla;
     }

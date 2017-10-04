@@ -98,10 +98,7 @@
                   <text label="Apellido materno" [(value)]="persona.materno" ></text>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="
-                  [
-                    {label:'Hombre',value:'Hombre'},
-                    {label:'Mujer',value:'Mujer'}]" placeholder="Sexo" [(value)]="persona.sexo" ></select2>
+                  <select2 [options]="options.sexo" placeholder="Sexo" [(value)]="persona.sexo" ></select2>
                 </div>
                 <div class="col-md-2">
                   <date label="Fecha de nacimiento" [(value)]="persona.fechaNacimiento" name="fechaNacimiento" [group]="form"></date>
