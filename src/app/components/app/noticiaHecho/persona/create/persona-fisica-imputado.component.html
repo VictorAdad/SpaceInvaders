@@ -83,12 +83,12 @@
         </div>
         <!-- Datos de localizacion -->
         <div class="row  justify-content-md-center align-items-center" *ngIf="muestraDatos();" >
-          <localizacion style="width: 95%"></localizacion>
+          <localizacion [globals]="globals"  [options]="options" style="width: 95%"></localizacion>
         </div>
 
         <!-- Media de filiación -->
         <div class="row  justify-content-md-center align-items-center space" *ngIf="tipoInterviniente=='Imputado'">
-            <media-filacion style="width: 95%"></media-filacion>
+            <media-filacion [globals]="globals"  [options]="options" style="width: 95%"></media-filacion>
         </div>
         <div class="row space">
           

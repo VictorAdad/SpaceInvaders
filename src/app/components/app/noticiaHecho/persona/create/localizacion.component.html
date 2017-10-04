@@ -1,100 +1,99 @@
 <md-expansion-panel>
-              <md-expansion-panel-header>
-                <md-panel-title>
-                  <md-icon>room</md-icon> Datos de Localización
-                </md-panel-title>
-                <md-panel-description>
+    <md-expansion-panel-header>
+        <md-panel-title>
+            <md-icon>room</md-icon> Datos de Localización
+        </md-panel-title>
+        <md-panel-description>
 
-                </md-panel-description>
-              </md-expansion-panel-header>
-              <div class="row">
-                <div class="col-md-2">
-                  <select2 [options]="[]" placeholder="País" ></select2>
-                </div>
-                <div class="col-md-2">
-                   <select2 [options]="[]" placeholder="Estado" ></select2>
-                </div>
-                <div class="col-md-2">
-                   <select2 [options]="[]" placeholder="Municipio/Delegación" ></select2>
-                </div>
-                <div class="col-md-2"><select2 [options]="[]" placeholder="Colonia/Asentamiento" ></select2>
-                </div>
-              </div>
+        </md-panel-description>
+    </md-expansion-panel-header>
+    <div class="row">
+        <div class="col-md-3">
+            <select2 [options]="options.pais" placeholder="País" name="localizacionPersona.pais.id" [group]="globals.form"></select2>
+        </div>
+        <div class="col-md-3">
+            <select2 [options]="[]" placeholder="Estado" ></select2>
+        </div>
+        <div class="col-md-3">
+            <select2 [options]="[]" placeholder="Municipio/Delegación" ></select2>
+        </div>
+        <div class="col-md-3">
+            <select2 [options]="[]" placeholder="Colonia/Asentamiento" ></select2>
+        </div>
+    </div>
 
-               <div class="row">
-                <div class="col-md-2">
-                 <text label="Localidad" ></text>
-                </div>
-                <div class="col-md-2">
-                  <text label="Calle" ></text>
-                </div>
-                <div class="col-md-2">
-                   <text label="No. exterior" ></text>
-                </div>
+    <div class="row">
+        <div class="col-md-2">
+            <text label="Localidad" ></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Calle" name="localizacionPersona.noInterior" [group]="globals.form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="No. exterior" name="localizacionPersona.noExterior" [group]="globals.form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="No. interior" name="localizacionPersona.noInterior" [group]="globals.form"></text>
+        </div>
+    </div>
 
-                <div class="col-md-2">
-                  <text label="No. interior" ></text>
-                </div>
-              </div>
+    <div class="row">
+        <div class="col-md-2">
+            <text label="CP" ></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Tipo de domicilio" ></text>
+        </div>
+        <div class="col-md-4">
+            <text label="Referencias" ></text>
+        </div>
+    </div>
 
-              <div class="row">
-                <div class="col-md-2">
-                 <text label="CP" ></text>
-                </div>
-                <div class="col-md-2">
-                  <text label="Tipo de domicilio" ></text>
-                </div>
-                <div class="col-md-4">
-                   <text label="Referencias" ></text>
-                </div>
-              </div>
+    <div class="row">
+        <div class="col-md-2">
+            <text label="Tel. particular" ></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Tel. del trabajo" ></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Extensión" ></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Tel. móvil"  ></text>
+        </div>
+    </div>
 
-              <div class="row">
-                <div class="col-md-2">
-                 <text label="Tel. particular" ></text>
-                </div>
-                <div class="col-md-2">
-                  <text label="Tel. del trabajo" ></text>
-                </div>
-                <div class="col-md-2">
-                   <text label="Extensión" ></text>
-                </div>
-                <div class="col-md-2">
-                  <text label="Tel. móvil"  ></text>
-                </div>
-              </div>
+    <div class="row">
+        <div class="col-md-2">
+            <text label="Fax" ></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Otro medio de contacto" ></text>
+        </div>
+        <div class="correo">
+            <text label="Extensión"  ></text>
+        </div>
+    </div>
 
-              <div class="row">
-                <div class="col-md-2">
-                 <text label="Fax" ></text>
-                </div>
-                <div class="col-md-2">
-                  <text label="Otro medio de contacto" ></text>
-                </div>
-                <div class="correo">
-                   <text label="Extensión"  ></text>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-2">
-
-                      <label class="Naranja">Tipo de residencia</label>
-                    </div>
-                    <div class="row">
-                    <div class="col-md-4">
-                    <radiobutton class="col-md-4" [radios]="
-                              [
-                              {label:'Residencia habitual',value:'Residencia habitual'},
-                              {label:'Domicilio procesal',value:'Domicilio procesal'}
-                              ]
-                    " ></radiobutton>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                  <button class="float-right" md-raised-button color="accent">Agregar</button>
-                </div>
-
-              </div>
+    <div class="row">
+        <div class="col-md-2">
+            <label class="Naranja">Tipo de residencia</label>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+            <radiobutton class="col-md-4" 
+                [radios]="[
+                    {label:'Residencia habitual',value:'Residencia habitual'},
+                    {label:'Domicilio procesal',value:'Domicilio procesal'}
+                ]">
+                    
+            </radiobutton>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <button class="float-right" md-raised-button color="accent">Agregar</button>
+        </div>
+    </div>
 
 </md-expansion-panel>
