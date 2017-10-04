@@ -1,11 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
-import { AcuerdoRadicacion } from '@models/acuerdoRadicacion';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { AcuerdoRadicacion } from '@models/determinacion/acuerdoRadicacion';
+import { OnLineService} from '@services/onLine.service';
+import { HttpService} from '@services/http.service';
+import { DeterminacionGlobal } from '../../global';
+import { _config} from '@app/app.config';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
     templateUrl:'./create.component.html',
@@ -26,25 +29,73 @@ export class AcuerdoRadicacionCreateComponent {
 	selector: 'acuerdo-radicacion',
     templateUrl:'./acuerdo-radicacion.component.html',
 })
-export class AcuerdoRadicacionComponent {
-	public form  : FormGroup;
-    public model : AcuerdoRadicacion;
-    public casoId: number = null;
+export class AcuerdoRadicacionComponent extends DeterminacionGlobal{
 
-    constructor(private _fbuilder: FormBuilder, private route: ActivatedRoute) { }
+    public apiUrl:string="/v1/base/acuerdosradicacion";
+    public casoId: number = null;
+    public id: number = null;
+    public form  : FormGroup;
+    public model : AcuerdoRadicacion;
+    dataSource: TableService | null;
+    @ViewChild(MdPaginator) paginator: MdPaginator;
+
+    constructor(
+        private _fbuilder: FormBuilder,
+        private route: ActivatedRoute,
+        private onLine: OnLineService,
+        private http: HttpService,
+        private router: Router,
+        private db:CIndexedDB
+        ) { super();}
+
+
     ngOnInit(){
         this.model = new AcuerdoRadicacion();
         this.form  = new FormGroup({
-            'observaciones':  new FormControl(this.model.observaciones),
+            'observaciones': new FormControl(this.model.observaciones)
           });
+
         this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
+            if(params['casoId'])
+                this.casoId = +params['casoId'];
+            if(params['id']){
+                this.id = +params['id'];
+                this.http.get(this.apiUrl+'/'+this.id).subscribe(response =>{
+                    console.log(response.data),
+                        this.fillForm(response);
+                    });
+            }
         });
     }
 
-    public save(valid : any, model : any):void{
-        console.log('AcuerdoRadicacion@save()');
+    public save(valid : any, _model : any):void{
+            Object.assign(this.model, _model);
+            this.model.caso.id = this.casoId;
+            console.log('-> AcuerdoRadicacion@save()', this.model);
+            this.http.post(this.apiUrl, this.model).subscribe(
+                (response) => {
+                    console.log(response);
+                  if(this.casoId){
+                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);      
+                  }
+                },
+                (error) => {
+                    console.error('Error', error);
+                }
+            );
+
+    }
+
+    public edit(_valid : any, _model : any):void{
+        console.log('-> AcuerdoRadicacion@edit()', _model);
+            this.http.put(this.apiUrl+'/'+this.id, _model).subscribe((response) => {
+                console.log('-> Registro acutualizado', response);
+            });
+     }
+
+    public fillForm(_data){
+        this.form.patchValue(_data);
+        console.log(_data);
     }
 
 
