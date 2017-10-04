@@ -43,6 +43,6 @@ export class DelitoCaso {
     principal : boolean;
     createdBy: Date;
     updatedBy: Date;
-    
-    caso: Caso = new Caso();
+
+    //caso: Caso = new Caso();
  }
