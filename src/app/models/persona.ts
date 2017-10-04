@@ -16,7 +16,6 @@ export class Persona {
    
     autoridadEmisora:string;
     numeroOFoliodeDocumento:string;
-    horaDentencion:string;             // verificar
    
     sexo: Sexo = new Sexo();
     caso: Caso = new Caso();
