@@ -17,11 +17,12 @@
         <search></search>
     </div>
     <div class="col-md-auto">
-        <button md-raised-button color="accent" routerLink="/caso/{{casoId}}/inspeccion/create">Agregar solicitud</button>
+        <button md-raised-button *ngIf="hasCaso" color="accent" routerLink="/caso/{{casoId}}/inspeccion/create">Agregar solicitud</button>
+        <button md-raised-button *ngIf="!hasCaso" color="accent" routerLink="create">Agregar solicitud</button>
     </div>
 </div>
 <md-paginator #paginator
-    [length]="data.length"
+    [length]="dataSource ? dataSource.data.length : 0"
     [pageIndex]="0"
     [pageSize]="10"
     [pageSizeOptions]="[5, 10, 25, 100]">
@@ -38,5 +39,5 @@
     </ng-container>
 
     <md-header-row *mdHeaderRowDef="columns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: columns;"></md-row>
+    <md-row *mdRowDef="let row; columns: columns;" routerLink="{{row.id}}/edit"></md-row>
 </md-table>

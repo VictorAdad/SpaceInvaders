@@ -2,38 +2,53 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
+import { Inspeccion } from '@models/solicitud-preliminar/inspeccion';
+import { OnLineService} from '@services/onLine.service';
+import { HttpService} from '@services/http.service';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
     templateUrl:'./component.html',
 })
 export class InspeccionComponent {
 
-	public casoId: number = null;
-
+   public apiUrl='/v1/base/inspecciones';
 	columns = ['fecha', 'adscripcion'];
-	dataSource: TableService | null;
-	data: Inspeccion[] = [
-		{id : 1, fecha: 'Fundamento A',  adscripcion: 'Plazo A'},
-		{id : 2, fecha: 'Fundamento B',  adscripcion: 'Plazo B'},
-		{id : 3, fecha: 'Fundamento C',  adscripcion: 'Plazo C'},
-		{id : 4, fecha: 'Fundamento D',  adscripcion: 'Plazo D'},
-		{id : 5, fecha: 'Fundamento F',  adscripcion: 'Plazo F'},
-	];
-	@ViewChild(MdPaginator) paginator: MdPaginator;
+	public dataSource: TableService | null;
+	public data: Inspeccion[];
+    public casoId: number = null;
+    public haveCaso: boolean=false;
+	@ViewChild(MdPaginator) 
+    paginator: MdPaginator;
 
-	constructor(private route: ActivatedRoute){}
 
+	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
 	ngOnInit() {
-    	this.dataSource = new TableService(this.paginator, this.data);
-
-    	this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
-        });
+        this.route.params.subscribe(params => {
+            if(params['casoId']){
+            	this.haveCaso=true;
+                this.casoId = +params['casoId'];
+                this.http.get('/v1/base/caso/'+this.casoId+'/inspeccion').subscribe((response) => {
+                    this.data = response as Inspeccion[];
+                    this.dataSource = new TableService(this.paginator, this.data);
+                });
+            }
+            else{
+            	 this.http.get('/v1/base/inspecciones').subscribe((response) => {
+	                 this.data = response.data as Inspeccion[];
+	                 console.log(this.data)
+	                 this.dataSource = new TableService(this.paginator, this.data);
+	                });
+            }
+        });  
   	}
 }
-export interface Inspeccion {
-	id:number
-	fecha: string;
-	adscripcion: string;
-}
+/*
+Inspeccion {
+    id: number;
+    fecha: string;
+    hora: string;
+    adscripcion: string;
+    descripcion: string;
+*/
+
