@@ -1,5 +1,3 @@
-import { Estado } from '@models/catalogo/estado';
-
 export class Municipio {
 	id: number;
 	nombre: string;
@@ -11,4 +9,9 @@ export class Municipio {
 	createdBy: number;
 	updatedBy: number;
 
+}
+
+export class Estado {
+	id: number;
+	nombre: string;
 }
