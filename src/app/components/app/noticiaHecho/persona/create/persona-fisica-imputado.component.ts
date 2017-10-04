@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CIndexedDB } from '@services/indexedDB';
@@ -18,7 +18,6 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
     public form  : FormGroup;
     public casoId: number = null;
-
 
     persona:Persona;
     caso:Caso;
@@ -141,4 +140,44 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             });
         }
     }
+}
+
+@Component({
+    selector: 'identidad',
+    templateUrl : './identidad.component.html'
+})
+export class IdentidadComponent{ 
+
+    @Input()
+    tipoPersona: string = '';
+    @Input()
+    options: any[];
+}
+
+@Component({
+    selector: 'identificacion',
+    templateUrl : './identificacion.component.html'
+})
+export class IdentificacionComponent{ 
+
+    @Input()
+    tipoPersona: string = '';
+    @Input()
+    options: any[];
+}
+
+@Component({
+    selector: 'localizacion',
+    templateUrl : './localizacion.component.html'
+})
+export class LocalizacionComponent{ 
+
+}
+
+@Component({
+    selector: 'media-filacion',
+    templateUrl : './media-filacion.component.html'
+})
+export class MediaFilacionComponent{ 
+
 }
