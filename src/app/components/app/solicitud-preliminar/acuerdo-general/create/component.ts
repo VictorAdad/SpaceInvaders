@@ -32,7 +32,7 @@ export class AcuerdoGeneralCreateComponent {
     templateUrl:'./solicitud.component.html',
 })
 export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal {
-   
+    public apiUrl:string='/v1/base/acuerdosgenerales';
     public casoId: number = null;
     public id: number = null;
     public form  : FormGroup;
@@ -68,8 +68,8 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
                 this.casoId = +params['casoId'];
             if(params['id']){
                 this.id = +params['id'];
-                this.http.get('/v1/base/acuerdosgenerales/'+this.id).subscribe(response =>{
-                        this.fillForm(response.data);
+                this.http.get(this.apiUrl+'/'+this.id).subscribe(response =>{
+                        this.fillForm(response);
                     });
             }
         });
@@ -80,7 +80,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
             Object.assign(this.model, _model);
             this.model.caso.id = this.casoId;
             console.log('-> AcuerdoGeneral@save()', this.model);
-            this.http.post('/v1/base/acuerdosgenerales', this.model).subscribe(
+            this.http.post(this.apiUrl, this.model).subscribe(
 
                 (response) => {
                     console.log(response);
@@ -101,7 +101,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
 
     public edit(_valid : any, _model : any):void{
         console.log('-> AcuerdoGeneral@edit()', _model);
-            this.http.put('/v1/base/acuerdosgenerales/'+this.id, _model).subscribe((response) => {
+            this.http.put(this.apiUrl+'/'+this.id, _model).subscribe((response) => {
                 console.log('-> Registro acutualizado', response);
             });
      }
