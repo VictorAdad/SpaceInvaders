@@ -155,8 +155,8 @@ export class Adiccion {
 export class LocalizacionPersona {
     public id: number;
     public calle: string;
-    public NoExterior: string;
-    public NoInterior: string;
+    public noExterior: string;
+    public noInterior: string;
     public cp: number;                
     public tipoDomicilio: number;    //tipo de domicilio esta pendiente 
     public referencias: string;
