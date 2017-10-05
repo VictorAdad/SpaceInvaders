@@ -108,13 +108,13 @@
        <text label="Adicciones"></text>
     </div>
     </div>
+
      <div class="row" *ngIf="globals.tipoInterviniente=='Imputado'">
     <div class="col-md-2">
-         Detenido-{{detenido}}
-     <checkbox label="Detenido"  ></checkbox>
+     <checkbox label="Detenido" (valueChange)="changeDetenido($event)" ></checkbox>
     </div>
     <div class="col-md-2" *ngIf="globals.detenido">
-      <date label="Fecha de denteción" ></date>
+      <date label="Fecha de detención" ></date>
     </div>
     <div class="col-md-2" *ngIf="globals.detenido">
        <text label="Hora de detención" ></text>

@@ -54,10 +54,11 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         return true;
     }
 
-    changeDetenido(e){
-        this.globals.detenido=e.checked;
+    changeTipoInterviniente(tipoInterviniente){
+        this.globals.tipoInterviniente=tipoInterviniente;
         // this.persona.detenido=e.checked;
     }
+
 
     ngOnInit(){
         this.form  = this.createForm();
@@ -273,6 +274,10 @@ export class IdentidadComponent{
     changeEstado(id){
         if(id)
         this.options.getMunicipiosByEstado(id);
+    }
+    changeDetenido(checked){
+        this.globals.detenido=checked;
+        // this.persona.detenido=e.checked;
     }
 }
 
