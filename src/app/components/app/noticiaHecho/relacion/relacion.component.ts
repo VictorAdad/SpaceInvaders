@@ -6,6 +6,7 @@ import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { Relacion } from '@models/relacion'
 import { CIndexedDB } from '@services/indexedDB';
+import { NoticiaHechoService } from '@services/noticia-hecho.service';
 
 @Component({
     templateUrl:'./relacion.component.html',
@@ -21,7 +22,12 @@ export class RelacionComponent{
     public pag: number = 0;
 	@ViewChild(MdPaginator) paginator: MdPaginator;
 
-	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
+	constructor(
+        private route: ActivatedRoute,
+        private http: HttpService,
+        private onLine: OnLineService,
+        private db:CIndexedDB,
+        ){}
 
 	ngOnInit() {
     	console.log('-> Data Source', this.dataSource);
@@ -32,7 +38,7 @@ export class RelacionComponent{
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/casos/'+this.casoId+'/relaciones').subscribe((response) => {
                         this.pag = response.totalCount;
-                        this.data = response as Relacion[];
+                        this.data = response.data as Relacion[];
                         this.dataSource = new TableService(this.paginator, this.data);
                     });
                 }else{

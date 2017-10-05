@@ -31,7 +31,7 @@ export class LugarComponent{
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/casos/'+this.casoId+'/lugares').subscribe((response) => {
                         this.pag = response.totalCount;
-                        this.data = response as Lugar[];
+                        this.data = response.data as Lugar[];
                         this.dataSource = new TableService(this.paginator, this.data);
                     });
                 }else{

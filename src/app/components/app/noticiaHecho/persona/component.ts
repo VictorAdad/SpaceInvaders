@@ -55,7 +55,7 @@ export class PersonaComponent implements OnInit{
     public page(url:string){
         this.http.get(url).subscribe((response) => {
             this.pag = response.totalCount;
-            this.data = response as Persona[];
+            this.data = response.data as Persona[];
             this.dataSource = new TableService(this.paginator, this.data);
         });
     }

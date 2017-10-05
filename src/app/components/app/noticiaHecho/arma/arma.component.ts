@@ -51,7 +51,7 @@ export class ArmaComponent{
     public page(url: string){
         this.http.get(url).subscribe((response) => {
             this.pag = response.totalCount;
-            this.data = response as Arma[];
+            this.data = response.data as Arma[];
             this.dataSource = new TableService(this.paginator, this.data);
         });
     }

@@ -30,7 +30,7 @@ export class VehiculoComponent{
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/casos/'+this.casoId+'/vehiculos').subscribe((response) => {
                         this.pag = response.totalCount;
-                        this.data = response as Vehiculo[];
+                        this.data = response.data as Vehiculo[];
                         this.dataSource = new TableService(this.paginator, this.data);
                     });
                 }else{
