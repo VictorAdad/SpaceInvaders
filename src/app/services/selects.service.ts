@@ -98,13 +98,13 @@ export class SelectsService {
     }
 
     public getEstadoByPais(idPais: number){
-        this.http.get('/v1/catalogos/estado/pais'+idPais+'/options').subscribe((response) => {
+        this.http.get('/v1/catalogos/estado/pais/'+idPais+'/options').subscribe((response) => {
             this.estados = this.constructOptions(response);
         });
     }
 
     public getMunicipiosByEstado(idEstado: number){
-        this.http.get('v1/catalogos/municipio/estado/'+idEstado+'/options ').subscribe((response) => {
+        this.http.get('/v1/catalogos/municipio/estado/'+idEstado+'/options').subscribe((response) => {
             this.municipios = this.constructOptions(response);
         });
     }
