@@ -87,6 +87,7 @@ const routes: Routes = [
     { path : 'caso/:casoId/vehiculos/create', component : VehiculoCreateComponent, data: { breadcrumb: 'Nuevo Vehiculo', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}]}},
     { path : 'caso/:casoId/vehiculos/:id', component : VehiculoCreateComponent, data: { breadcrumb: 'Nuevo Vehiculo', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}]}},
     { path : 'caso/:casoId/personas/persona-fisica-imputado', component : PersonaFisicaImputadoComponent, data : { breadcrumb : 'Crear Persona', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}] }},
+    { path : 'caso/:casoId/personas/:id', component : PersonaFisicaImputadoComponent, data : { breadcrumb : 'Crear Persona', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}] }},
     { path : 'documentos', component : DocumentoComponent },
     { path : 'documentos/create', component : DocumentoCreateComponent },
 

@@ -15,6 +15,7 @@ import { HttpService} from '@services/http.service';
 export class PersonaComponent implements OnInit{
 
     public casoId: number = null;
+    public pag: number = 0;
 
     columns = ['tipo', 'nombre', 'razonSocial', 'alias'];
     data: Persona[] = [];
@@ -36,6 +37,7 @@ export class PersonaComponent implements OnInit{
                 this.casoId = +params['id'];
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/casos/'+this.casoId+'/personas-casos').subscribe((response) => {
+                        this.pag = response.totalCount;
                         this.data = response as Persona[];
                         this.dataSource = new TableService(this.paginator, this.data);
                     });
