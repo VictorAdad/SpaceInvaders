@@ -51,11 +51,7 @@ export class DelitoComponent{
                         }
                     });
             }else{
-                this.http.get('/v1/base/delitos-casos').subscribe((response) => {
-                        this.pag = response.totalCount;
-                        console.log("Respuestadelitos",response["data"]);
-                        this.dataSource = new TableService(this.paginator, response["data"]);
-                    });
+                this.page('/v1/base/delitos-casos');
             }    
             
                 
@@ -65,6 +61,21 @@ export class DelitoComponent{
 
     	this.data = data;
 
+    }
+
+    public changePage(_e){
+        this.page('/v1/base/delitos-casos?p='+_e.pageIndex+'&tr='+_e.pageSize);
+    }
+
+    public page(url:string){
+        this.http.get(url).subscribe((response) => {
+            response.data.forEach(object => {
+                this.pag = response.totalCount;
+                console.log("Respuestadelitos",response["data"]);
+                response["data"].push(Object.assign(new Caso(), object));
+                this.dataSource = new TableService(this.paginator, response["data"]);
+            });
+        });
     }
 
     swap(e){

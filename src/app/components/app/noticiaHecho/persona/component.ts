@@ -36,11 +36,7 @@ export class PersonaComponent implements OnInit{
             if(params['id']){
                 this.casoId = +params['id'];
                 if(this.onLine.onLine){
-                    this.http.get('/v1/base/casos/'+this.casoId+'/personas-casos').subscribe((response) => {
-                        this.pag = response.totalCount;
-                        this.data = response as Persona[];
-                        this.dataSource = new TableService(this.paginator, this.data);
-                    });
+                    this.page('/v1/base/casos/'+this.casoId+'/personas-casos');
                 }else{
                     //Nota: si marca error es por que ya existe la base de datos y no se le puede agregar una nueva tabla
                     //para solucionarlo borra la base evomatik
@@ -50,6 +46,18 @@ export class PersonaComponent implements OnInit{
                 } 
             }
         });   
+    }
+
+    public changePage(_e) {
+        this.page('/v1/base/casos/'+this.casoId+'/personas-casos?p='+_e.pageIndex+'&tr='+_e.pageSize)
+    }
+
+    public page(url:string){
+        this.http.get(url).subscribe((response) => {
+            this.pag = response.totalCount;
+            this.data = response as Persona[];
+            this.dataSource = new TableService(this.paginator, this.data);
+        });
     }
 
 

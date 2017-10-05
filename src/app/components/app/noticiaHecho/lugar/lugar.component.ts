@@ -18,6 +18,7 @@ export class LugarComponent{
 	public displayedColumns = ['tipo', 'calle', 'colonia', 'localidad', 'estado'];
     public data: Lugar[] = [];
     public dataSource: TableService | null;
+    public pag: number = 0;
     @ViewChild(MdPaginator) paginator: MdPaginator;
 
     constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
@@ -29,6 +30,7 @@ export class LugarComponent{
                 this.casoId = +params['id'];
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/casos/'+this.casoId+'/lugares').subscribe((response) => {
+                        this.pag = response.totalCount;
                         this.data = response as Lugar[];
                         this.dataSource = new TableService(this.paginator, this.data);
                     });

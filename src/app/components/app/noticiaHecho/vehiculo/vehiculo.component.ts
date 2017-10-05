@@ -18,6 +18,7 @@ export class VehiculoComponent{
 	public displayedColumns = ['tipo', 'marca', 'color', 'modelo', 'placa'];
 	public data: Vehiculo[] = [];
 	public dataSource: TableService | null;
+    public pag: number = 0;
 	@ViewChild(MdPaginator) paginator: MdPaginator;
 
     constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB) { }
@@ -28,6 +29,7 @@ export class VehiculoComponent{
                 this.casoId = +params['id'];
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/casos/'+this.casoId+'/vehiculos').subscribe((response) => {
+                        this.pag = response.totalCount;
                         this.data = response as Vehiculo[];
                         this.dataSource = new TableService(this.paginator, this.data);
                     });

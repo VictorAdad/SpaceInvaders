@@ -36,13 +36,7 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(){
         if(this.onLine.onLine){
-            this.http.get('/v1/base/casos').subscribe((response) => {
-                response.data.forEach(object => {
-                    this.pag = response.totalCount; 
-                    this.casos.push(Object.assign(new Caso(), object));
-                    this.dataSource = new TableService(this.paginator, this.casos);
-                });
-            });
+            this.page('/v1/base/casos');
         }else{
             this.db.list('casos').then(list => {
                 for(let object in list){
@@ -55,18 +49,19 @@ export class HomeComponent implements OnInit {
         }
     }
 
-    public page(_e){
-        if(this.onLine.onLine){
-            this.http.get('/v1/base/casos?p='+_e.pageIndex+'&tr='+_e.pageSize).subscribe((response) => {
-                this.casos = [];
+    public changePage(_e){
+        this.page('/v1/base/casos?p='+_e.pageIndex+'&tr='+_e.pageSize);
+    }
+
+    public page(url: string){
+        this.http.get(url).subscribe((response) => {
+            this.casos = [];
+            response.data.forEach(object => {
                 this.pag = response.totalCount; 
-                response.data.forEach(object => {
-                    this.casos.push(Object.assign(new Caso(), object));
-                    this.dataSource = new TableService(this.paginator, this.casos);
-                });
-                console.log('Casos: ', this.casos);
+                this.casos.push(Object.assign(new Caso(), object));
+                this.dataSource = new TableService(this.paginator, this.casos);
             });
-        }
+        });
     }
 
     guardarCaso(caso){

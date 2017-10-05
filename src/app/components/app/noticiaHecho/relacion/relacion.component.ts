@@ -18,6 +18,7 @@ export class RelacionComponent{
 	public displayedColumns = ['Tipo', 'Elementos'];
 	public data:Relacion[]  = [];
 	public dataSource: TableService | null;
+    public pag: number = 0;
 	@ViewChild(MdPaginator) paginator: MdPaginator;
 
 	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
@@ -30,6 +31,7 @@ export class RelacionComponent{
                 this.casoId = +params['id'];
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/casos/'+this.casoId+'/relaciones').subscribe((response) => {
+                        this.pag = response.totalCount;
                         this.data = response as Relacion[];
                         this.dataSource = new TableService(this.paginator, this.data);
                     });
