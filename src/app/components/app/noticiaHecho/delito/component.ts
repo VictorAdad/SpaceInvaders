@@ -15,6 +15,8 @@ import { HttpService} from '@services/http.service';
     templateUrl:'./component.html'
 })
 export class DelitoComponent{
+    public pag: number = 0;
+
 	_columns = ['nombre', 
         // 'redaccion', 
         'principal'];
@@ -50,6 +52,7 @@ export class DelitoComponent{
                     });
             }else{
                 this.http.get('/v1/base/delitos-casos').subscribe((response) => {
+                        this.pag = response.totalCount;
                         console.log("Respuestadelitos",response["data"]);
                         this.dataSource = new TableService(this.paginator, response["data"]);
                     });

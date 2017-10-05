@@ -5,6 +5,7 @@ import { HttpService } from '@services/http.service';
 export class NoticiaHechoService {
 
     id:number;
+    lugares   = [];
     vehiculos = [];
     armas     = [];
     personas  = [];

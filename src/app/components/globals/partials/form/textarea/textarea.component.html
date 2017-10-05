@@ -1,3 +1,17 @@
-<md-form-field class="full-width">
-	<textarea mdInput placeholder="{{label}}" rows="8" [(ngModel)]="value" (ngModelChange)="update($event)"></textarea>
-</md-form-field>
+<div class="form-group">
+	<md-form-field class="full-width" *ngIf="name==''">
+			<textarea  mdInput rows="8" placeholder="{{label}}" [(ngModel)]="value" (ngModelChange)="update($event)" name="{{name}}">
+			</textarea>
+ 	</md-form-field>
+	<md-form-field class="full-width" [formGroup]="group" *ngIf="name!=''">
+			<textarea
+			    rows="8" 
+				mdInput 
+				placeholder="{{label}}" 
+				[(ngModel)]="value" 
+				(ngModelChange)="update($event)" 
+				formControlName="{{name}}"  
+				name="{{name}}">
+			</textarea>
+	</md-form-field>
+</div>

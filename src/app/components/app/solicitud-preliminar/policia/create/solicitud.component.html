@@ -1,13 +1,22 @@
 <div class="row">
-    <h3>Oficio de solicitud de Policia Ministerial  </h3>
+    <h3>Oficio de solicitud de Policia Ministerial </h3>
     <div class="col-md-12">
         <form>
-            <text label="Número de oficio"></text>
-            <text label="Nombre del comisario de la policía de investigación"></text>
-            <text label="Actuaciones de investigación solicitadas"></text>
+            <text label="Número de oficio" name="oficio" [(value)]="model.oficio" [group]="form"></text>
+            <text label="Nombre del comisario de la policía de investigación" name="nombreComisario" [(value)]="model.nombreComisario"
+                [group]="form"></text>
+            <text label="Actuaciones de investigación solicitadas" name="actuacionesSolicitadas" [(value)]="model.actuacionesSolicitadas"
+                [group]="form"></text>
             <div class="row space"></div>
-            <button class="float-right" md-button routerLink="/caso/{{casoId}}/policia">Cancelar</button> 
-            <button class="float-right" md-raised-button color="accent">Guardar</button>
+            <div class="row justify-content-end">
+                <div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
+                    <button md-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id != null">Editar</button>
+                    <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
+                </div>
+                <div class="col-sm-auto">
+                    <button class="float-right" md-button routerLink="/caso/{{casoId}}/policia">Cancelar</button>
+                </div>
+            </div>
         </form>
     </div>
 </div>

@@ -1,10 +1,11 @@
 export class Perito {
     id: number;
+    tipoSolicitud: string;
     hechosNarrados: string;
     numeroOficio: string;
     nombreDirector: string;
     solicitaPerito: string;
-    finalidadRequermiento: string;
+    finalidadRequerimiento: string;
     plazoDias: string;
     apercibimiento: string;
     observaciones: string;

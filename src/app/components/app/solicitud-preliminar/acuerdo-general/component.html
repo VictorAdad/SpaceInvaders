@@ -1,5 +1,5 @@
 <breadcrumb></breadcrumb>
-<div class="row space">    
+<div class="row space">
     <div class="col-md-12 text-right">
         <small>NIC:CAI/AIN/00/UAI/268/00126/17/08 - NUC: CAI/AIN/00/UAI/268/00126/17/08</small>
     </div>
@@ -9,37 +9,28 @@
         <h2>Solicitudes de acuerdo general</h2>
     </div>
     <div class="col-md-6">
-        <button *ngIf="hasCaso" class="float-right" md-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
-        <button *ngIf="!hasCaso" class="float-right" md-raised-button routerLink="" color="accent">Regresar</button>
-
+        <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-6">
-        <md-paginator #paginator
-            [length]="dataSource ? dataSource.data.length : 0"
-            [pageIndex]="0"
-            [pageSize]="10"
-            [pageSizeOptions]="[5, 10, 25, 100]"
-            class="float-left">
-        </md-paginator>
+<div class="row space justify-content-end">
+    <div class="col-md-auto">
+        <search></search>
     </div>
-    <div class="col-md-6">
-        <div class="row space justify-content-end">
-            <div class="col-md-auto">
-                <search></search>
-            </div>
-            <div class="col-md-auto">
-                <button md-raised-button *ngIf="hasCaso" color="accent" routerLink="/caso/{{casoId}}/acuerdo-general/create">Agregar solicitud</button>
-                <button md-raised-button *ngIf="!hasCaso" color="accent" routerLink="create">Agregar solicitud</button>
-            </div>
-        </div>
+    <div class="col-md-auto">
+        <button md-raised-button *ngIf="hasCaso" color="accent" routerLink="/caso/{{casoId}}/acuerdo-general/create">Agregar solicitud</button>
+        <button md-raised-button *ngIf="!hasCaso" color="accent" routerLink="create">Agregar solicitud</button>
     </div>
 </div>
+<md-paginator #paginator 
+    [length]="dataSource ? dataSource.data.length : 0" 
+    [pageIndex]="0" 
+    [pageSize]="10" 
+    [pageSizeOptions]="[5, 10, 25, 100]">
+</md-paginator>
 <md-table #table [dataSource]="dataSource">
     <ng-container mdColumnDef="fundamento">
         <md-header-cell *mdHeaderCellDef> Fundamento legal</md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.fundamento}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.fudamentoLegal}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="plazo">
@@ -48,5 +39,5 @@
     </ng-container>
 
     <md-header-row *mdHeaderRowDef="columns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/acuerdo-general/{{row.id}}"></md-row>
+    <md-row *mdRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/acuerdo-general/{{row.id}}/edit"></md-row>
 </md-table>

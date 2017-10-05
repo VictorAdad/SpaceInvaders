@@ -28,8 +28,8 @@ export class InspeccionComponent {
             if(params['casoId']){
             	this.haveCaso=true;
                 this.casoId = +params['casoId'];
-                this.http.get('/v1/base/caso/'+this.casoId+'/inspeccion').subscribe((response) => {
-                    this.data = response as Inspeccion[];
+                this.http.get('/v1/base/inspecciones').subscribe((response) => {
+                    this.data = response.data as Inspeccion[];
                     this.dataSource = new TableService(this.paginator, this.data);
                 });
             }

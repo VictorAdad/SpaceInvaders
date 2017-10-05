@@ -20,8 +20,8 @@ export class AcuerdoGeneralCreateComponent {
 
 	ngOnInit() {
     	this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
+            if(params['casoId'])
+                this.casoId = +params['casoId'];
         });
   	}
 
@@ -54,7 +54,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
         this.model = new AcuerdoGeneral();
 
         this.form  = new FormGroup({
-            'fundamentoLegal' : new FormControl(this.model.fundamentoLegal),
+            'fudamentoLegal' : new FormControl(this.model.fudamentoLegal),
             'contenidoAcuerdo': new FormControl(this.model.contenidoAcuerdo),
             'finalidad'       : new FormControl(this.model.finalidad),
             'apercibimientos' : new FormControl(this.model.apercibimientos),
@@ -86,7 +86,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
                     console.log(response);
                     console.log('here')
                   if(this.casoId){
-                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);      
+                    this.router.navigate(['/caso/'+this.casoId+'/acuerdo-general' ]);      
                   }
                   else {
                     this.router.navigate(['/acuerdos-generales' ]);      
@@ -103,6 +103,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
         console.log('-> AcuerdoGeneral@edit()', _model);
             this.http.put(this.apiUrl+'/'+this.id, _model).subscribe((response) => {
                 console.log('-> Registro acutualizado', response);
+                this.router.navigate(['/caso/'+this.casoId+'/acuerdo-general' ]); 
             });
      }
 

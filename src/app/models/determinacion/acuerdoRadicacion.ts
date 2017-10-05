@@ -1,11 +1,8 @@
-export class AcuerdoGeneral {
-    id: number;
-    fudamentoLegal: string;
-    contenidoAcuerdo: string;
-    finalidad: string;
-    plazo: string;
-    apercibimientos: string;
-    solicita: string;
+export class AcuerdoRadicacion {
+    id:number;
+    titulo:string;
+    creadoPor: string;
+    fechaCreacion: string;
     observaciones: string;
     caso: Caso = new Caso();
 }

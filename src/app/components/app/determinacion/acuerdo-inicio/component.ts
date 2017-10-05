@@ -1,7 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { AcuerdoInicio } from '@models/determinacion/acuerdoInicio';
+import { OnLineService} from '@services/onLine.service';
+import { HttpService} from '@services/http.service';
+import { DeterminacionGlobal } from '../global';
+import { _config} from '@app/app.config';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
     templateUrl:'./component.html',
@@ -23,16 +30,84 @@ export class AcuerdoInicioComponent {
 	selector: 'acuerdo-acuerdo-inicio',
     templateUrl:'./acuerdo.component.html',
 })
-export class AcuerdoAcuerdoInicioComponent {
-	public casoId: number = null;
-	constructor(private route: ActivatedRoute){}
+export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal{
+     
+    public apiUrl:string="/v1/base/acuerdosinicio";
+    public casoId: number = null;
+    public id: number = null;
+    public form  : FormGroup;
+    public model : AcuerdoInicio;
+    dataSource: TableService | null;
+    @ViewChild(MdPaginator) paginator: MdPaginator;
 
-	ngOnInit() {
-    	this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
+    constructor(
+        private _fbuilder: FormBuilder,
+        private route: ActivatedRoute,
+        private onLine: OnLineService,
+        private http: HttpService,
+        private router: Router,
+        private db:CIndexedDB
+        ) { super();}
+
+
+    ngOnInit(){
+        this.model = new AcuerdoInicio();
+
+        this.form  = new FormGroup({
+            'presento'       : new FormControl(this.model.presento),
+            'manifesto'      : new FormControl(this.model.manifesto),
+            'sintesisHechos' : new FormControl(this.model.sintesisHechos),
+            'observaciones'  : new FormControl(this.model.observaciones)
+          });
+
+        this.route.params.subscribe(params => {
+            if(params['casoId'])
+                this.casoId = +params['casoId'];
+            if(params['id']){
+                this.id = +params['id'];
+                this.http.get(this.apiUrl+'/'+this.id).subscribe(response =>{
+                	console.log(response.data),
+                        this.fillForm(response);
+                    });
+            }
         });
-  	}
+    }
+
+    public save(valid : any, _model : any):void{
+
+            Object.assign(this.model, _model);
+            this.model.caso.id = this.casoId;
+            console.log('-> AcuerdoInicio@save()', this.model);
+            this.http.post(this.apiUrl, this.model).subscribe(
+
+                (response) => {
+                    console.log(response);
+                    console.log('here')
+                  if(this.casoId){
+                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);      
+                  }
+                  else {
+                    this.router.navigate(['/acuerdos-inicio' ]);      
+                  }
+                },
+                (error) => {
+                    console.error('Error', error);
+                }
+            );
+
+    }
+
+    public edit(_valid : any, _model : any):void{
+        console.log('-> AcuerdoInicio@edit()', _model);
+            this.http.put(this.apiUrl+'/'+this.id, _model).subscribe((response) => {
+                console.log('-> Registro acutualizado', response);
+            });
+     }
+
+    public fillForm(_data){
+        this.form.patchValue(_data);
+        console.log(_data);
+    }
 	
 }
 

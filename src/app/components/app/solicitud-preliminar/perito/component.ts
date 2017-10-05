@@ -2,36 +2,59 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
+import { Perito } from '@models/solicitud-preliminar/perito';
+import { OnLineService} from '@services/onLine.service';
+import { HttpService} from '@services/http.service';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
     templateUrl:'./component.html',
 })
 export class PeritoComponent {
-
-	public casoId: number = null;
+	public data: Perito[];
+    public casoId: number = null;
+    public haveCaso: boolean=false;
 
 	columns = ['tipo', 'oficio'];
 	dataSource: TableService | null;
-	data: Perito[] = [
+	/*data: Perito[] = [
 		{id : 1, tipo: 'Fundamento A',  oficio: 'Plazo A'},
 		{id : 2, tipo: 'Fundamento B',  oficio: 'Plazo B'},
 		{id : 3, tipo: 'Fundamento C',  oficio: 'Plazo C'},
-	];
+	];*/
 	@ViewChild(MdPaginator) paginator: MdPaginator;
 
-	constructor(private route: ActivatedRoute){}
+	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
 
 	ngOnInit() {
-    	this.dataSource = new TableService(this.paginator, this.data);
+    	/*this.dataSource = new TableService(this.paginator, this.data);
 
     	this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
+            if(params['casoId'])
+                this.casoId = +params['casoId'];
+		});*/
+		
+		this.route.params.subscribe(params => {
+            if(params['casoId']){
+            	this.haveCaso=true;
+                this.casoId = +params['casoId'];
+                this.http.get('/v1/base/perito').subscribe((response) => {
+                    this.data = response.data as Perito[];
+                    this.dataSource = new TableService(this.paginator, this.data);
+                });
+            }
+            else{
+            	 this.http.get('/v1/base/perito').subscribe((response) => {
+	                 this.data = response.data as Perito[];
+	                 console.log(this.data)
+	                 this.dataSource = new TableService(this.paginator, this.data);
+	                });
+            }
         });
   	}
 }
-export interface Perito {
+/*export interface Perito {
 	id:number
 	tipo: string;
 	oficio: string;
-}
+}*/

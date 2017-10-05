@@ -39,5 +39,5 @@
     </ng-container>
 
     <md-header-row *mdHeaderRowDef="columns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: columns;" routerLink="{{row.id}}/edit"></md-row>
+    <md-row *mdRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/inspeccion/{{row.id}}/edit"></md-row>
 </md-table>

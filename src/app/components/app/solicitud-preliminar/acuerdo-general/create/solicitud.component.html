@@ -8,7 +8,7 @@
         <form>
             <div class="row">
                 <div class="col">
-                    <text label="Fundamento legal" name="fundamentoLegal" [(value)]="model.fundamentoLegal" [group]="form"></text>
+                    <text label="Fundamento legal" name="fudamentoLegal" [(value)]="model.fudamentoLegal" [group]="form"></text>
                 </div>
                 <div class="col">
                     <text label="Contenido del acuerdo" name="contenidoAcuerdo" [(value)]="model.contenidoAcuerdo" [group]="form"></text>
@@ -30,7 +30,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <text-area label="Observaciones/Incidencias" name="observaciones" [(value)]="model.observaciones" ></text-area>
+                    <text-area label="Observaciones/Incidencias" name="observaciones" [(value)]="model.observaciones"  [group]="form" ></text-area>
                 </div>
             </div>
             <div class="row justify-content-end">
@@ -39,7 +39,7 @@
                     <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
                 </div>
                 <div class="col-sm-auto">
-                    <button class="float-right" md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button> 
+                    <button class="float-right" md-button routerLink="/caso/{{casoId}}/acuerdo-general">Cancelar</button> 
                 </div>
             </div>
         </form>

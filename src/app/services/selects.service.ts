@@ -24,16 +24,16 @@ export class SelectsService {
     }
 
     public getData(){
-        // this.getPaises();
+        this.getPaises();
         this.getSexo();
         this.getEscolaridad();
         this.getOcupacion();
         this.getEstadoCivil();
-        // this.getIdioma();
+        this.getIdioma();
         this.getGrupoEtnico();
         this.getInterprete();
         this.getAdiccion();
-        // this.getNacionalidad();
+        this.getNacionalidad();
     }
 
     public getPaises(){
