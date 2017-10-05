@@ -168,23 +168,23 @@
                     <h5>Trata de personas</h5>
                     <div class="row">
                         <div class="col-sm-12 col-md-6 col-lg-4">
-                            <select2 placeholder="País de origen" name="paisOrigen" [group]="trataPersonasForm">
+                            <select2 placeholder="País de origen" [options]="options.paises" name="paisOrigen" [group]="trataPersonasForm">
                             </select2>
-                            <select2 placeholder="País destino" [group]="trataPersonasForm">
+                            <select2 placeholder="País destino" [options]="options.paises" [group]="trataPersonasForm">
                             </select2>
                            
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-4">
-                            <select2 placeholder="Estado origen" name="estadoOrigen" [group]="trataPersonasForm">
+                            <select2 placeholder="Estado origen" [options]="options.estados" name="estadoOrigen" [group]="trataPersonasForm">
                             </select2>
-                             <select2 placeholder="Estado destino" name="estadoDestino" [group]="trataPersonasForm">
+                             <select2 placeholder="Estado destino" [options]="options.estados" name="estadoDestino" [group]="trataPersonasForm">
                             </select2>
  
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-4">
-                            <select2 placeholder="Municipio origen" name="municipioOrigen"  [group]="trataPersonasForm">
+                            <select2 placeholder="Municipio origen" [options]="options.municipios" name="municipioOrigen"  [group]="trataPersonasForm">
                             </select2>
-                           <select2 placeholder="Municipio destino" name="municipioDestino" [group]="trataPersonasForm">
+                           <select2 placeholder="Municipio destino" [options]="options.municipios" name="municipioDestino" [group]="trataPersonasForm">
                             </select2>
                         </div>
                     </div>

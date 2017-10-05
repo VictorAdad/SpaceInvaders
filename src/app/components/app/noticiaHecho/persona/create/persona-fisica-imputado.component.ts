@@ -18,7 +18,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
     public form  : FormGroup;
     public casoId: number = null;
-    public id: number = 0;
+    public id: number = null;
     public globals: PersonaGlobals;
     persona:Persona;
     caso:Caso;
@@ -57,7 +57,49 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     ngOnInit(){
-        this.form  = new FormGroup({
+        this.form  = this.createForm();
+        this.form.controls.razonSocial.disable();
+        this.globals = new PersonaGlobals(this.form);
+        this.persona=new Persona();
+        // this.persona.tipoPersona="";
+        // this.persona.tipoInterviniente="";
+        // this.persona.detenido=false;
+
+        this.route.params.subscribe(params => {
+            if(params['casoId'])
+                this.casoId = +params['casoId'];
+            if(!this.onLine.onLine){
+                if (!isNaN(this.casoId)){
+                    this.tabla.get("casos",this.casoId).then(
+                        casoR=>{
+                            this.caso=casoR as Caso;
+                        });
+                }
+            }
+            if(params['id']){
+                this.id = +params['id'];
+                if(this.onLine.onLine){
+                    this.http.get('/v1/base/personas/'+this.id).subscribe(response =>{
+                        this.fillForm(response);
+                    });
+                }else{
+                    this._tabla.get("casos",this.casoId).then(t=>{
+                        let armas=t["arma"] as any[];
+                        for (var i = 0; i < armas.length; ++i) {
+                            if ((armas[i])["id"]==this.id){
+                                this.fillForm(armas[i]);
+                                break;
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    public createForm(){
+
+        return new FormGroup({
             'tipoPersona'      : new FormControl("", [Validators.required,]),
             'tipoInterviniente': new FormControl("", [Validators.required,]),
             'nombre'           : new FormControl("", [Validators.required,]),
@@ -102,43 +144,6 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             'grupoEtnico.id': new FormControl("",[]),
             'alfabetismo.id': new FormControl("",[]),
             'adiccion.id': new FormControl("",[]),
-        });
-        this.form.controls.razonSocial.disable();
-        this.globals = new PersonaGlobals(this.form);
-        this.persona=new Persona();
-        // this.persona.tipoPersona="";
-        // this.persona.tipoInterviniente="";
-        // this.persona.detenido=false;
-
-        this.route.params.subscribe(params => {
-            if(params['casoId'])
-                this.casoId = +params['casoId'];
-            if(!this.onLine.onLine){
-                if (!isNaN(this.casoId)){
-                    this.tabla.get("casos",this.casoId).then(
-                        casoR=>{
-                            this.caso=casoR as Caso;
-                        });
-                }
-            }
-            if(params['id']){
-                this.id = +params['id'];
-                if(this.onLine.onLine){
-                    this.http.get('/v1/base/personas/'+this.id).subscribe(response =>{
-                        this.fillForm(response);
-                    });
-                }else{
-                    this._tabla.get("casos",this.casoId).then(t=>{
-                        let armas=t["arma"] as any[];
-                        for (var i = 0; i < armas.length; ++i) {
-                            if ((armas[i])["id"]==this.id){
-                                this.fillForm(armas[i]);
-                                break;
-                            }
-                        }
-                    });
-                }
-            }
         });
     }
 
