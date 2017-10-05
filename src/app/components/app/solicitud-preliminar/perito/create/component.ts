@@ -57,13 +57,17 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 		this.form = new FormGroup({
 			'tipoSolicitud': new FormControl(this.model.tipoSolicitud),
 			'hechosNarrados': new FormControl(this.model.hechosNarrados),
+			'hechosDenunciados': new FormControl(this.model.hechosDenunciados),
 			'numeroOficio': new FormControl(this.model.numeroOficio),
 			'nombreDirector': new FormControl(this.model.nombreDirector),
 			'solicitaPerito': new FormControl(this.model.solicitaPerito),
-			'finalidadRequerimiento': new FormControl(this.model.finalidadRequerimiento),
+			'finalidadRequermiento': new FormControl(this.model.finalidadRequermiento),
 			'plazoDias': new FormControl(this.model.plazoDias),
 			'apercibimiento': new FormControl(this.model.apercibimiento),
-			'observaciones': new FormControl(this.model.observaciones)
+			'observaciones': new FormControl(this.model.observaciones),
+			'nombreMedico': new FormControl(this.model.nombreMedico),
+			'nombreRealizaExamen': new FormControl(this.model.nombreRealizaExamen),
+			'examen': new FormControl(this.model.examen)
 		});
 
 		this.route.params.subscribe(params => {
