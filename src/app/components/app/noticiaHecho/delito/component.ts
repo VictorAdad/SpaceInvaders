@@ -16,10 +16,7 @@ import { HttpService} from '@services/http.service';
 })
 export class DelitoComponent{
     public pag: number = 0;
-
-	_columns = ['nombre', 
-        // 'redaccion', 
-        'principal'];
+	_columns = ['nombre', 'principal'];
 	data=[];
 	dataSource: TableService | null;
     db:CIndexedDB;
@@ -45,13 +42,13 @@ export class DelitoComponent{
                 this.db.get("casos",this.id).then(
                     casoR=>{
                         if (casoR){
-                            this.caso=casoR as Caso;
+                            this.caso = casoR as Caso;
                             if(casoR["delitos"])
                                 this.dataSource = new TableService(this.paginator, casoR["delitos"]);    
                         }
                     });
             }else{
-                this.page('/v1/base/delitos-casos');
+                this.page(`/v1/base/casos/${this.id}/delitos-casos`);
             }    
             
                 
@@ -64,7 +61,7 @@ export class DelitoComponent{
     }
 
     public changePage(_e){
-        this.page('/v1/base/delitos-casos?p='+_e.pageIndex+'&tr='+_e.pageSize);
+        this.page(`/v1/base/casos/${this.id}/delitos-casos?p=${_e.pageIndex}&tr=${_e.pageSize}`);
     }
 
     public page(url:string){

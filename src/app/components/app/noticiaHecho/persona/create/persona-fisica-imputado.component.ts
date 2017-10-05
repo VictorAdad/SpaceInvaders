@@ -58,13 +58,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
     ngOnInit(){
         this.form  = this.createForm();
-        this.form.controls.razonSocial.disable();
         this.globals = new PersonaGlobals(this.form);
-        this.persona=new Persona();
-        // this.persona.tipoPersona="";
-        // this.persona.tipoInterviniente="";
-        // this.persona.detenido=false;
-        console.log('-> Form', this.form);
+        this.globals.form.controls.razonSocial.disable();
         this.route.params.subscribe(params => {
             if(params['casoId'])
                 this.casoId = +params['casoId'];
@@ -314,11 +309,4 @@ export class PersonaGlobals{
         ){
         this.form = _form;
     }
-}
-
-export class PersonaForm {
-    
-    form: FormGroup;
-
-    constructor(){}
 }
