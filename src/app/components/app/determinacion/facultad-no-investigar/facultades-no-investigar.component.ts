@@ -1,40 +1,41 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FacultadNoInvestigar } from '@models/facultadNoInvestigar';
 import { MdPaginator } from '@angular/material';
-import { TableService} from '@utils/table/table.service';
+import { TableService } from '@utils/table/table.service';
+import { FacultadNoInvestigar } from '@models/determinacion/facultad-no-investigar';
+import { OnLineService } from '@services/onLine.service';
+import { HttpService } from '@services/http.service';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
-    templateUrl:'./facultades-no-investigar.component.html',
-    selector:'facultades-no-investigar'
+  templateUrl: './facultades-no-investigar.component.html',
+  selector: 'facultades-no-investigar'
 })
 
-export class FacultadesNoInvestigarComponent{
+export class FacultadesNoInvestigarComponent {
 
+  public apiUrl = '/v1/base/facultad-no-investigar';
+  displayedColumns = ['Remitente', 'Motivos', 'Creado por', 'Fecha'];
+  public dataSource: TableService | null;
+  public data: FacultadNoInvestigar[];
   public casoId: number = null;
+  public haveCaso: boolean = false;
+  @ViewChild(MdPaginator)
+  paginator: MdPaginator;
 
-	displayedColumns = ['Remitente','Motivos','Creado por', 'Fecha'];
-	data:FacultadNoInvestigar[];
+  constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db: CIndexedDB) { }
 
-	dataSource: TableService | null;
-	@ViewChild(MdPaginator) paginator: MdPaginator;
-
-	constructor(private route: ActivatedRoute){}
-
-	ngOnInit() {
-      this.data=data;
-    	this.dataSource = new TableService(this.paginator, this.data);
-    	console.log('-> Data Source', this.dataSource);
-
-      this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      if (params['casoId']) {
+        this.haveCaso = true;
+        this.casoId = +params['casoId'];
+        this.http.get('/v1/base/caso/' + this.casoId + '/facultad-no-investigar').subscribe((response) => {
+          this.data = response as FacultadNoInvestigar[];
+          this.dataSource = new TableService(this.paginator, this.data);
         });
-  	}
+      }
+
+    });
+  }
 }
-
-const data: FacultadNoInvestigar[] = [
-      {id:1,sintesisHechos: "Acuerdo 1",superiorJerarquico:"",remitente:"", medioAlternativo:"",motivos:"Motivos",datosPrueba:"Datos de prueba",creadoPor: 'Usuario1',fechaCreacion:"12/5/2017",observaciones:''},
-
-
-  ];

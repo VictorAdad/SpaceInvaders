@@ -2,33 +2,37 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
+import { ArchivoTemporal } from '@models/determinacion/archivoTemporal';
+import { OnLineService} from '@services/onLine.service';
+import { HttpService} from '@services/http.service';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
     templateUrl:'./component.html',
 })
 export class ArchivoTemporalComponent {
-
-	public casoId: number = null;
-
+	public apiUrl='/v1/base/acuerdosradicacion';
 	columns = ['creadoPor', 'fechaCreacion'];
-	dataSource: TableService | null;
-	data: ArchivoTemporal[] = [
-		{ creadoPor: 'MP Enrique Pedroza', fechaCreacion: '01/09/2017 16:03:34' }
-	];
-	@ViewChild(MdPaginator) paginator: MdPaginator;
+	public dataSource: TableService | null;
+	public data: ArchivoTemporal[];
+	public casoId: number = null;
+	public haveCaso: boolean=false;
+	@ViewChild(MdPaginator) 
+	paginator: MdPaginator;
+ 
+   constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
 
-	constructor(private route: ActivatedRoute){}
+   ngOnInit() {
+	this.route.params.subscribe(params => {
+		if(params['casoId']){
+		  this.haveCaso=true;
+			this.casoId = +params['casoId'];
+			this.http.get('/v1/base/caso/'+this.casoId+'/archivo-temporal').subscribe((response) => {
+				this.data = response as ArchivoTemporal[];
+				this.dataSource = new TableService(this.paginator, this.data);
+			});
+		}
 
-	ngOnInit() {
-    	this.dataSource = new TableService(this.paginator, this.data);
-
-    	this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
-        });
-  	}
+	});  
 }
-export interface ArchivoTemporal {
-	creadoPor: string;
-	fechaCreacion: string;
 }
