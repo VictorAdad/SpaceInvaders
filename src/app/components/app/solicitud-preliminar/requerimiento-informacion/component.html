@@ -30,7 +30,7 @@
 
     <ng-container mdColumnDef="fechaRequerimiento">
         <md-header-cell *mdHeaderCellDef> Fecha de requerimiento </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.fechaRequerimiento | date:'dd-MM-yyyy'}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.fechaRequerimiento | date:'dd/MM/yyyy'}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="nombreAutoridad">
