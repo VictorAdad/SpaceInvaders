@@ -18,6 +18,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
     public form  : FormGroup;
     public casoId: number = null;
+    public id: number = 0;
     public globals: PersonaGlobals;
     persona:Persona;
     caso:Caso;
@@ -64,6 +65,43 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             'materno'          : new FormControl("", [Validators.required,]),
             'razonSocial'      : new FormControl("",[Validators.required,Validators.minLength(4)]),
             'fechaNacimiento'  : new FormControl("",[]),
+            'edad'             : new FormControl("",[]),
+            'curp'             : new FormControl("",[]),
+            'numHijos'         : new FormControl("",[]),
+            'lugarTrabajo'     : new FormControl("",[]),
+            'ingresoMensual'   : new FormControl("",[]),
+            //Localización
+            'localizacionPersona.pais.id': new FormControl("",[]),
+            'localizacionPersona.estado.id': new FormControl("",[]),
+            'localizacionPersona.municipio.id': new FormControl("",[]),
+            'localizacionPersona.localidad.id': new FormControl("",[]),
+            'localizacionPersona.noExterior': new FormControl("",[]),
+            'localizacionPersona.noInterior': new FormControl("",[]),
+            'localizacionPersona.cp': new FormControl("",[]),
+            'localizacionPersona.tipoDomicilio': new FormControl("",[]),
+            'localizacionPersona.referencias': new FormControl("",[]),
+            'localizacionPersona.telParticular': new FormControl("",[]),
+            'localizacionPersona.telTrabajo': new FormControl("",[]),
+            'localizacionPersona.extension': new FormControl("",[]),
+            'localizacionPersona.telMovil': new FormControl("",[]),
+            'localizacionPersona.fax': new FormControl("",[]),
+            'localizacionPersona.otroMedioContacto': new FormControl("",[]),
+            'localizacionPersona.correo': new FormControl("",[]),
+            'localizacionPersona.tipoResidencia': new FormControl("",[]),
+            'localizacionPersona.estadoOtro': new FormControl("",[]),
+            'localizacionPersona.municipioOtro': new FormControl("",[]),
+            'localizacionPersona.coloniaOtro': new FormControl("",[]),
+            'localizacionPersona.localidadOtro': new FormControl("",[]),
+            //Otras Relaciones
+            'sexo.id': new FormControl("",[]),
+            'paisNacimiento.id': new FormControl("",[]),
+            'estadoNacimiento.id': new FormControl("",[]),
+            'municipioNacimiento.id': new FormControl("",[]),
+            'escolaridad.id': new FormControl("",[]),
+            'ocupacion.id': new FormControl("",[]),
+            'grupoEtnico.id': new FormControl("",[]),
+            'alfabetismo.id': new FormControl("",[]),
+            'adiccion.id': new FormControl("",[]),
         });
         this.form.controls.razonSocial.disable();
         this.globals = new PersonaGlobals(this.form);
@@ -81,6 +119,24 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         casoR=>{
                             this.caso=casoR as Caso;
                         });
+                }
+            }
+            if(params['id']){
+                this.id = +params['id'];
+                if(this.onLine.onLine){
+                    this.http.get('/v1/base/personas/'+this.id).subscribe(response =>{
+                        this.fillForm(response);
+                    });
+                }else{
+                    this._tabla.get("casos",this.casoId).then(t=>{
+                        let armas=t["arma"] as any[];
+                        for (var i = 0; i < armas.length; ++i) {
+                            if ((armas[i])["id"]==this.id){
+                                this.fillForm(armas[i]);
+                                break;
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -118,11 +174,10 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         // })
         
         if(this.onLine.onLine){
-            console.log('_model', _model);
             Object.assign(_model, this.persona,);
             _model.personaCaso.caso.id = this.casoId;
             this.http.post('/v1/base/personas', _model).subscribe(
-                (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
+                (response) => //this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
                 (error) => console.error('Error', error)
             );
 
@@ -138,6 +193,11 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
             });
         }
+    }
+
+    public fillForm(_data){
+        _data.fechaNacimiento = new Date(_data.fechaNacimiento);
+        this.form.patchValue(_data);
     }
 }
 

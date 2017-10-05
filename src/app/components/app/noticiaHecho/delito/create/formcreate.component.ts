@@ -63,7 +63,7 @@ export class FormCreateDelitoComponent {
 
     buscar(){
         
-        this.http.get('/v1/base/delitos/search?name='+this.searchDelito).subscribe(response => {
+        this.http.get('/v1/catalogos/delitos/search?name='+this.searchDelito).subscribe(response => {
             console.log('-> done buscar delito', response);
             this.dataSource = new ExampleDataSource(response);
         });
