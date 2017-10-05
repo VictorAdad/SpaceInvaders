@@ -3,6 +3,9 @@ import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@ang
 import { ActivatedRoute } from '@angular/router';
 import { CIndexedDB } from '@services/indexedDB';
 import { Persona} from '@models/persona';
+import { Pais} from '@models/catalogo/pais';
+import { Estado} from '@models/catalogo/estado';
+
 import { Router} from '@angular/router';
 import { Caso} from '@models/caso'
 import { OnLineService} from '@services/onLine.service';
@@ -260,7 +263,17 @@ export class IdentidadComponent{
     @Input()
     globals: PersonaGlobals;
     @Input()
-    options: any[];
+    @Input()
+    options: SelectsService;
+
+    changePais(id){
+      if(id)
+      this.options.getEstadoByPais(id);
+    }  
+    changeEstado(id){
+        if(id)
+        this.options.getMunicipiosByEstado(id);
+    }
 }
 
 @Component({
@@ -272,7 +285,8 @@ export class IdentificacionComponent{
     @Input()
     globals: PersonaGlobals;
     @Input()
-    options: any[];
+    @Input()
+    options: SelectsService;
 }
 
 @Component({
@@ -283,7 +297,17 @@ export class LocalizacionComponent{
     @Input()
     globals: PersonaGlobals;
     @Input()
-    options: any[];
+    options: SelectsService;
+
+    changePais(id){
+      if(id)
+      this.options.getEstadoByPais(id);
+    }  
+    changeEstado(id){
+        if(id)
+        this.options.getMunicipiosByEstado(id);
+    }
+
 }
 
 @Component({

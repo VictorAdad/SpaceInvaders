@@ -43,10 +43,10 @@
       <select2 [options]="options.nacionalidad" placeholder="Nacionalidad" name="id" [group]="globals.form.controls.nacionalidad"></select2>
     </div>
     <div class="col-md-2">
-      <select2 [options]="options.paises" placeholder="País de nacimiento"  name="id" [group]="globals.form.controls.pais"></select2>
+      <select2 [options]="options.paises" placeholder="País de nacimiento"  name="id" [group]="globals.form.controls.pais" (valueChange)="changePais($event)"></select2>
     </div>
     <div class="col-md-2">
-      <select2 [options]="options.estados" placeholder="Estado de nacimiento" name="id" [group]="globals.form.controls.estado" ></select2>
+      <select2 [options]="options.estados" placeholder="Estado de nacimiento" name="id" [group]="globals.form.controls.estado" (valueChange)="changeEstado($event)"></select2>
     </div>
 
     <div class="col-md-2">
