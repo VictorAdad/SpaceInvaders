@@ -99,7 +99,7 @@ export class SelectsService {
 
     public getEstadoByPais(idPais: number){
         this.http.get('/v1/catalogos/estado/pais'+idPais+'/options').subscribe((response) => {
-            this.adiccion = this.constructOptions(response);
+            this.estados = this.constructOptions(response);
         });
     }
 
