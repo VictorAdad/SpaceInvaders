@@ -16,26 +16,8 @@
 <md-table #table [dataSource]="dataSource">
     <ng-container mdColumnDef="nombre">
         <md-header-cell *mdHeaderCellDef> Nombre </md-header-cell>
-        <md-cell *mdCellDef="let element">
-        <md-expansion-panel>
-          <md-expansion-panel-header>
-            <script type="text/javascript">console.log("item",element);</script> 
-            <md-panel-title *ngIf="element.delitos">
-              {{element.delitos[0].clave}}-{{element.delitos[0].descripcion}}
-            </md-panel-title>
-
-          </md-expansion-panel-header>
-          <div *ngIf="element.delitos">
-                <div *ngFor="let item of element.delitos;">
-                    {{item.clave}}-{{item.descripcion}}
-                </div>
-          </div>
-          
-        </md-expansion-panel>
-
-        </md-cell>
+        <md-cell *mdCellDef="let element">{{element.delito.nombre}}</md-cell>
     </ng-container>
-
 
     <ng-container mdColumnDef="principal">
         <md-header-cell *mdHeaderCellDef> Principal </md-header-cell>
