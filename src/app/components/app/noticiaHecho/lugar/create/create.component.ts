@@ -10,6 +10,7 @@ import { NoticiaHechoGlobal } from '../../global';
 import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
 import * as moment from 'moment';
+import { SelectsService} from '@services/selects.service';
 
 @Component({
     selector: 'lugar-create',
@@ -37,7 +38,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         private router: Router,
         private db:CIndexedDB,
         private mapsAPILoader: MapsAPILoader,
-        private ngZone: NgZone
+        private ngZone: NgZone,
+        private optionsServ: SelectsService
         ) {
         super();
     }

@@ -46,34 +46,22 @@
         {label:'Otra',value:'Otra'}]" placeholder="Nacionalidad" ></select2>
     </div>
     <div class="col-md-2">
-      <select2 [options]="
-      [
-        {label:'México',value:'México'},
-        {label:'Otro',value:'Otro'}]" placeholder="País de nacimiento"  ></select2>
+      <select2 [options]="options.paises" placeholder="País de nacimiento"  ></select2>
     </div>
     <div class="col-md-2">
-      <select2 [options]="
-      [
-        {label:'Aguas Calientes',value:'Aguas Calientes'},
-        {label:'Otro',value:'Otro'}]" placeholder="Estado de nacimiento"  ></select2>
+      <select2 [options]="options.estados" placeholder="Estado de nacimiento"  ></select2>
     </div>
 
     <div class="col-md-2">
-      <select2 [options]="
-      [
-        {label:'Conocido',value:'Conocido'},
-        {label:'Otro',value:'Otro'}]" placeholder="Municipio"
+      <select2 [options]="options.municipios" placeholder="Municipio"
          ></select2>
     </div>
 
     <div class="col-md-2">
-      <select2 [options]="
-      []" placeholder="Escolaridad"  ></select2>
+      <select2 [options]="options.escolaridad" placeholder="Escolaridad"  ></select2>
     </div>
     <div class="col-md-2">
-      <select2 [options]="
-      [{label:'Conocido',value:'Conocido'},
-        {label:'Otro',value:'Otro'}]" placeholder="Ocupación"  ></select2>
+      <select2 [options]="options.ocupacion" placeholder="Ocupación"  ></select2>
     </div>
     <div class="col-md-2">
       <text label="Lugar de trabajo"  ></text>
@@ -87,8 +75,7 @@
      <text label='RFC'  ></text>
     </div>
     <div class="col-md-2">
-      <select2 [options]="
-      [ {label:'Solter@',value:'soltero'}, {label:'Casad@',value:'casado'},  {label:'Divorsiad@',value:'divorsiado'}, {label:'Viud@',value:'viudo'}]" placeholder="Estado civil"  ></select2>
+      <select2 [options]="options.estadoCivil" placeholder="Estado civil"  ></select2>
     </div>
     <div class="col-md-2">
       <text label="Número de hijos" ></text>
@@ -107,13 +94,11 @@
       []" placeholder="Lengua Índigena" ></select2>
     </div>
     <div class="col-md-2">
-       <select2 [options]="
-      []" placeholder="Grupo étnico" ></select2>
+       <select2 [options]="options.grupoEtnico" placeholder="Grupo étnico" ></select2>
     </div>
 
     <div class="col-md-2">
-      <select2 [options]="
-      []" placeholder="Alfabetismo" ></select2>
+      <select2 [options]="options.alfabetismo" placeholder="Alfabetismo" ></select2>
     </div>
 
     <div class="col-md-2">
@@ -121,8 +106,7 @@
       []" placeholder="Familia ligüistica" ></select2>
     </div>
     <div class="col-md-2">
-      <select2 [options]="
-      [{value:true,label:'Si'},{value:false,label:'No'}]" placeholder="Necesita interprete" ></select2>
+      <select2 [options]="options.interprete" placeholder="Necesita interprete" ></select2>
     </div>
     <div class="col-md-4">
        <text label="Adicciones"></text>
