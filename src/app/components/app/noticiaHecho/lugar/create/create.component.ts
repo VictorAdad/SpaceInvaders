@@ -17,6 +17,7 @@ import { SelectsService} from '@services/selects.service';
     templateUrl: './create.component.html'
 })
 export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
+
     public form: FormGroup;
     public model: Lugar;
     public lat: number = 19.4968732;
@@ -27,6 +28,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
     public id: number = null;
     public searchControl: FormControl;
     public zoom: number = 10;
+    public isMexico: boolean = false;
     @ViewChild("search")
     public searchElementRef: ElementRef;
 
@@ -53,26 +55,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
     ngOnInit() {
         this.model = new Lugar();
         this.searchControl = new FormControl();
-        // this.getLocation();
-        this.form = new FormGroup({
-            'tipo': new FormControl(this.model.tipo, [Validators.required,]),
-            'tipoZona': new FormControl(this.model.tipo_zona, [Validators.required,]),
-            'calle': new FormControl(this.model.calle, [Validators.required,]),
-            'referencias': new FormControl(this.model.referencias, [Validators.required,]),
-            'pais': new FormControl(this.model.pais, [Validators.required,]),
-            'estado': new FormControl(this.model.estado, [Validators.required,]),
-            'municipio': new FormControl(this.model.municipio_delegacion, [Validators.required,]),
-            'colonia': new FormControl(this.model.colonia_asentamiento, [Validators.required,]),
-            'fecha': new FormControl(this.model.fecha, [Validators.required,]),
-            'hora': new FormControl(this.model.hora, [Validators.required,]),
-            'cp': new FormControl(this.model.notas, []),
-            'dia': new FormControl(this.model.notas, []),
-            'descripcion': new FormControl(this.model.notas, []),
-            'notas': new FormControl(this.model.notas, []),
-            'numExterior': new FormControl(this.model.notas, []),
-            'numInterior': new FormControl(this.model.notas, []),
-            'refeGeograficas': new FormControl(this.model.notas, []),
-        });
+        this.form = this.createForm();
 
         this.route.params.subscribe(params => {
             if(params['casoId'])
@@ -119,6 +102,36 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 this.zoom = 17;
                 });
             });
+        });
+    }
+
+    public createForm(): FormGroup{
+        return new FormGroup({
+            'tipo'            : new FormControl(this.model.tipo, [Validators.required,]),
+            'tipoZona'        : new FormControl(this.model.tipo_zona, [Validators.required,]),
+            'calle'           : new FormControl(this.model.calle, [Validators.required,]),
+            'referencias'     : new FormControl(this.model.referencias, [Validators.required,]),
+            'estadoOtro'      : new FormControl(this.model.estado, [Validators.required,]),
+            'municipioOtro'   : new FormControl(this.model.municipio_delegacion, [Validators.required,]),
+            'coloniaOtro'     : new FormControl(this.model.colonia_asentamiento, [Validators.required,]),
+            'fecha'           : new FormControl(this.model.fecha, [Validators.required,]),
+            'hora'            : new FormControl(this.model.hora, [Validators.required,]),
+            'cp'              : new FormControl(this.model.notas, []),
+            'dia'             : new FormControl(this.model.notas, []),
+            'descripcion'     : new FormControl(this.model.notas, []),
+            'notas'           : new FormControl(this.model.notas, []),
+            'numExterior'     : new FormControl(this.model.notas, []),
+            'numInterior'     : new FormControl(this.model.notas, []),
+            'refeGeograficas' : new FormControl(this.model.notas, []),
+            'pais': new FormGroup({
+                'id': new FormControl("",[Validators.required,]),
+            }),
+            'estado': new FormGroup({
+                'id': new FormControl("",[Validators.required,]),
+            }),
+            'municipio': new FormGroup({
+                'id': new FormControl("",[Validators.required,]),
+            }),
         });
     }
 
@@ -209,26 +222,25 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         this.form.patchValue(_data);
     }
 
-    public getLocation(){
-        console.log(navigator);
-        if (navigator.geolocation) {
-            // var self = this;
-            navigator.geolocation.getCurrentPosition(
-                response => console.log(response), 
-                () => alert("Unable to get GPS Location"), 
-            {
-                enableHighAccuracy : true
-            });
-        }
-        else {
-            alert("Geolocation is not supported by this browser.");
-        }
-    }
-
     public changeLocation(_e){
         console.log(_e);
         this.latMarker = _e.coords.lat;
         this.lngMarker = _e.coords.lng;
+    }
+
+    changePais(id){
+        if(id){
+            if(id === 1){
+                this.isMexico = true;
+                this.optionsServ.getEstadoByPais(id);
+            }else{
+                this.isMexico = false;
+            }
+        }
+    }  
+    changeEstado(id){
+        if(id)
+        this.optionsServ.getMunicipiosByEstado(id);
     }
 
 }

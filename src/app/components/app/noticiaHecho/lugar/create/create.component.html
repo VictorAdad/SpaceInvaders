@@ -40,16 +40,45 @@
             </div>
             <div class="row">
                 <div class="col-md-3 full-width">
-                    <select2 placeholder="País" [options]="optionsServ.paises" name="pais" [group]="form"></select2>
+                    <select2 
+                        placeholder="País"
+                        [options]="optionsServ.paises"
+                        name="id"
+                        [group]="form.controls.pais"
+                        (valueChange)="changePais($event)">
+                                
+                    </select2>
                 </div>
-                <div class="col-md-3">
-                    <text label="Estado" name="estado" [group]="form"></text>
+                <div class="col-md-3" *ngIf="!isMexico">
+                    <text label="Estado" name="estadoOtro" [group]="form"></text>
                 </div>
-                <div class="col-md-3">
-                    <text label="Municipio/Delegación" name="municipio" [group]="form"></text>
+                <div class="col-md-3" *ngIf="!isMexico">
+                    <text label="Municipio/Delegación" name="municipioOtro" [group]="form"></text>
                 </div>
-                <div class="col-md-3">
-                    <text label="Colonia/Asentamiento" name="colonia" [group]="form"></text>
+                <div class="col-md-3" *ngIf="!isMexico">
+                    <text label="Colonia/Asentamiento" name="coloniaOtro" [group]="form"></text>
+                </div>
+                <div class="col-md-3" *ngIf="isMexico">
+                    <select2 
+                        placeholder="Estado"
+                        [options]="optionsServ.estados"
+                        name="id"
+                        [group]="form.controls.estado"
+                        (valueChange)="changeEstado($event)">
+                        
+                    </select2>
+                </div>
+                <div class="col-md-3" *ngIf="isMexico">
+                    <select2
+                         placeholder="Municipio/Delegacion"
+                         [options]="optionsServ.municipios"
+                         name="id"
+                         [group]="form.controls.municipio">
+                            
+                    </select2>
+                </div>
+                <div class="col-md-3" *ngIf="isMexico">
+                    <!-- <select2 placeholder="Colonia" [options]="optionsServ.paises" name="id" [group]="form.controls.colonia"></select2> -->
                 </div>
             </div>
             <div class="row">

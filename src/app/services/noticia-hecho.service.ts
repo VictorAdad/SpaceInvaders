@@ -22,9 +22,9 @@ export class NoticiaHechoService {
 
     public getData(){
         this.getLugares();
-        // this.getVehiculos();
-        // this.getArmas();
-        // this.getPersonas();
+        this.getVehiculos();
+        this.getArmas();
+        this.getPersonas();
     }
 
     public getLugares(){
@@ -46,7 +46,7 @@ export class NoticiaHechoService {
     }
 
     public getPersonas(){
-        this.http.get('/v1/base/personas/casos/'+this.id).subscribe((response) => {
+        this.http.get('/v1/base/personas-caso/casos/'+this.id).subscribe((response) => {
             this.personas = this.constructOptionsPersona(response);
         });
     }
@@ -65,9 +65,9 @@ export class NoticiaHechoService {
     private constructOptionsVehiculo(_data:any){
         let options: MOption[] = [];
 
-        for (var key in _data) {
-            options.push({value: parseInt(key), label: _data[key]});
-        }
+        _data.forEach(object => {
+            options.push({value: object.id, label: object.calle});
+        });
 
         return options;
     }
@@ -75,9 +75,9 @@ export class NoticiaHechoService {
     private constructOptionsArma(_data:any){
         let options: MOption[] = [];
 
-        for (var key in _data) {
-            options.push({value: parseInt(key), label: _data[key]});
-        }
+        _data.forEach(object => {
+            options.push({value: object.id, label: object.calle});
+        });
 
         return options;
     }
@@ -85,9 +85,9 @@ export class NoticiaHechoService {
     private constructOptionsPersona(_data:any){
         let options: MOption[] = [];
 
-        for (var key in _data) {
-            options.push({value: parseInt(key), label: _data[key]});
-        }
+        _data.forEach(object => {
+            options.push({value: object.id, label: object.calle});
+        });
 
         return options;
     }
