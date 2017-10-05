@@ -17,6 +17,7 @@ export class SelectsService {
     public alfabetismo: MOption[] = [];
     public interprete: MOption[]  = [];
     public adiccion: MOption[]    = [];
+    public nacionalidad: MOption[]= [];
 
     constructor(
         private http: HttpService
@@ -92,7 +93,7 @@ export class SelectsService {
 
     public getNacionalidad(){
         this.http.get('/v1/catalogos/nacionalidad/options').subscribe((response) => {
-            this.adiccion = this.constructOptions(response);
+            this.nacionalidad = this.constructOptions(response);
         });
     }
 
