@@ -1,36 +1,38 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
-import { TableService} from '@utils/table/table.service';
+import { TableService } from '@utils/table/table.service';
+import { NoEjercicioAccionPenal } from '@models/determinacion/no-ejercicio-accion-penal';
+import { OnLineService } from '@services/onLine.service';
+import { HttpService } from '@services/http.service';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
-    templateUrl:'./component.html',
+	templateUrl: './component.html',
 })
 export class NoEjercicioAccionPenalComponent {
 
-	public casoId: number = null;
-
 	columns = ['ambito', 'calidadEntrevistado', 'creadoPor', 'fechaCreacion'];
-	dataSource: TableService | null;
-	data: NoEjercicioAccionPenal[] = [
-		{ ambito: 'Competencia', calidadEntrevistado: 'Víctima', creadoPor: 'MP Enrique Pedroza', fechaCreacion: '01/09/2017 16:03:34' }
-	];
-	@ViewChild(MdPaginator) paginator: MdPaginator;
+	public dataSource: TableService | null;
+	public data: NoEjercicioAccionPenal[];
+	public casoId: number = null;
+	public haveCaso: boolean = false;
+	@ViewChild(MdPaginator)
+	paginator: MdPaginator;
 
-	constructor(private route: ActivatedRoute){}
+	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db: CIndexedDB) { }
 
 	ngOnInit() {
-    	this.dataSource = new TableService(this.paginator, this.data);
+		this.route.params.subscribe(params => {
+			if (params['casoId']) {
+				this.haveCaso = true;
+				this.casoId = +params['casoId'];
+				this.http.get('/v1/base/caso/' + this.casoId + '/no-ejercicio-accion-penal').subscribe((response) => {
+					this.data = response as NoEjercicioAccionPenal[];
+					this.dataSource = new TableService(this.paginator, this.data);
+				});
+			}
 
-    	this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
-        });
-  	}
-}
-export interface NoEjercicioAccionPenal {
-	ambito: string;
-	calidadEntrevistado: string;
-	creadoPor: string;
-	fechaCreacion: string;
+		});
+	}
 }
