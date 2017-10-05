@@ -113,7 +113,7 @@ export class SelectsService {
         let options: MOption[] = [];
 
         for (var key in _data) {
-            options.push({value: key, label: _data[key]});
+            options.push({value: parseInt(key), label: _data[key]});
         }
 
         return options;

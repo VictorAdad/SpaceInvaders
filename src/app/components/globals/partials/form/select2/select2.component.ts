@@ -24,6 +24,6 @@ export class Select2Component{
 }
 
 export class MOption{
-	value: string;
-	label: string;
+	value: any;
+	label: any;
 }
