@@ -26,7 +26,7 @@
     </div>
     <div class="row">
     <div class="col-md-2">
-      <select2 [options]="options.sexo" placeholder="Sexo" ></select2>
+      <select2 [options]="options.sexo" placeholder="Sexo" name="id" [group]="globals.form.controls.sexo"></select2>
     </div>
     <div class="col-md-2">
       <date label="Fecha de nacimiento" name="fechaNacimiento" [group]="globals.form"></date>
@@ -40,25 +40,24 @@
     </div>
 
     <div class="col-md-2">
-      <select2 [options]="options.nacionalidad" placeholder="Nacionalidad" ></select2>
+      <select2 [options]="options.nacionalidad" placeholder="Nacionalidad" name="id" [group]="globals.form.controls.nacionalidad"></select2>
     </div>
     <div class="col-md-2">
-      <select2 [options]="options.paises" placeholder="País de nacimiento"  ></select2>
+      <select2 [options]="options.paises" placeholder="País de nacimiento"  name="id" [group]="globals.form.controls.pais"></select2>
     </div>
     <div class="col-md-2">
-      <select2 [options]="options.estados" placeholder="Estado de nacimiento"  ></select2>
-    </div>
-
-    <div class="col-md-2">
-      <select2 [options]="options.municipios" placeholder="Municipio"
-         ></select2>
+      <select2 [options]="options.estados" placeholder="Estado de nacimiento" name="id" [group]="globals.form.controls.estado" ></select2>
     </div>
 
     <div class="col-md-2">
-      <select2 [options]="options.escolaridad" placeholder="Escolaridad"  ></select2>
+      <select2 [options]="options.municipios" placeholder="Municipio" name="id" [group]="globals.form.controls.municipio"></select2>
+    </div>
+
+    <div class="col-md-2">
+      <select2 [options]="options.escolaridad" placeholder="Escolaridad" name="id" [group]="globals.form.controls.escolaridad" ></select2>
     </div>
     <div class="col-md-2">
-      <select2 [options]="options.ocupacion" placeholder="Ocupación"  ></select2>
+      <select2 [options]="options.ocupacion" placeholder="Ocupación"  name="id" [group]="globals.form.controls.ocupacion"></select2>
     </div>
     <div class="col-md-2">
       <text label="Lugar de trabajo"  name="lugarTrabajo" [group]="globals.form"></text>
@@ -72,7 +71,7 @@
      <text label='RFC'  ></text>
     </div>
     <div class="col-md-2">
-      <select2 [options]="options.estadoCivil" placeholder="Estado civil"  ></select2>
+      <select2 [options]="options.estadoCivil" placeholder="Estado civil"  name="id" [group]="globals.form.controls.estadoCivil"></select2>
     </div>
     <div class="col-md-2">
       <text label="Número de hijos" ></text>
@@ -91,7 +90,7 @@
       []" placeholder="Lengua Índigena" ></select2>
     </div>
     <div class="col-md-2">
-       <select2 [options]="options.grupoEtnico" placeholder="Grupo étnico" ></select2>
+       <select2 [options]="options.grupoEtnico" placeholder="Grupo étnico" name="id" [group]="globals.form.controls.grupoEtnico"></select2>
     </div>
 
     <div class="col-md-2">

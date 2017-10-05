@@ -9,7 +9,7 @@
     </md-expansion-panel-header>
     <div class="row">
         <div class="col-md-3">
-            <select2 [options]="options.paises" placeholder="País" name="localizacionPersona.pais.id" [group]="globals.form"></select2>
+            <select2 [options]="options.paises" placeholder="País" name="id" [group]="globals.form.controls.localizacionPersona.controls.pais"></select2>
         </div>
         <div class="col-md-3">
             <select2 [options]="options.estados" placeholder="Estado" ></select2>
@@ -27,13 +27,13 @@
             <text label="Localidad" ></text>
         </div>
         <div class="col-md-2">
-            <text label="Calle" name="localizacionPersona.noInterior" [group]="globals.form"></text>
+            <text label="Calle" name="calle" [group]="globals.form.controls.localizacionPersona"></text>
         </div>
         <div class="col-md-2">
-            <text label="No. exterior" name="localizacionPersona.noExterior" [group]="globals.form"></text>
+            <text label="No. exterior" name="noExterior" [group]="globals.form.controls.localizacionPersona"></text>
         </div>
         <div class="col-md-2">
-            <text label="No. interior" name="localizacionPersona.noInterior" [group]="globals.form"></text>
+            <text label="No. interior" name="noInterior" [group]="globals.form.controls.localizacionPersona"></text>
         </div>
     </div>
 
