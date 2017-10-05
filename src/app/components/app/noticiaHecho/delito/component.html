@@ -21,7 +21,7 @@
 
     <ng-container mdColumnDef="principal">
         <md-header-cell *mdHeaderCellDef> Principal </md-header-cell>
-        <md-cell *mdCellDef="let element" style="text-align: center;"> 
+        <md-cell *mdCellDef="let element" style="text-align: center;">
             <md-icon *ngIf="element.principal==true" style="color: gold;" (click)="swap(element)">star</md-icon>
             <md-icon  *ngIf="element.principal==false" style="color: gold;" (click)="swap(element)" >star_border</md-icon>
         </md-cell>

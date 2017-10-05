@@ -43,10 +43,10 @@
       <select2 [options]="options.nacionalidad" placeholder="Nacionalidad" name="id" [group]="globals.form.controls.nacionalidad"></select2>
     </div>
     <div class="col-md-2">
-      <select2 [options]="options.paises" placeholder="País de nacimiento"  name="id" [group]="globals.form.controls.pais"></select2>
+      <select2 [options]="options.paises" placeholder="País de nacimiento"  name="id" [group]="globals.form.controls.pais" (valueChange)="changePais($event)"></select2>
     </div>
     <div class="col-md-2">
-      <select2 [options]="options.estados" placeholder="Estado de nacimiento" name="id" [group]="globals.form.controls.estado" ></select2>
+      <select2 [options]="options.estados" placeholder="Estado de nacimiento" name="id" [group]="globals.form.controls.estado" (valueChange)="changeEstado($event)"></select2>
     </div>
 
     <div class="col-md-2">
@@ -108,13 +108,13 @@
        <text label="Adicciones"></text>
     </div>
     </div>
+
      <div class="row" *ngIf="globals.tipoInterviniente=='Imputado'">
     <div class="col-md-2">
-         Detenido-{{detenido}}
-     <checkbox label="Detenido"  ></checkbox>
+     <checkbox label="Detenido" (valueChange)="changeDetenido($event)" ></checkbox>
     </div>
     <div class="col-md-2" *ngIf="globals.detenido">
-      <date label="Fecha de denteción" ></date>
+      <date label="Fecha de detención" ></date>
     </div>
     <div class="col-md-2" *ngIf="globals.detenido">
        <text label="Hora de detención" ></text>

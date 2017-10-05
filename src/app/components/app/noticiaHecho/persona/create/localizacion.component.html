@@ -9,10 +9,11 @@
     </md-expansion-panel-header>
     <div class="row">
         <div class="col-md-3">
-            <select2 [options]="options.paises" placeholder="País" name="id" [group]="globals.form.controls.localizacionPersona.controls.pais"></select2>
+            <select2 [options]="options.paises" placeholder="País" name="id" [group]="globals.form.controls.localizacionPersona.controls.pais" 
+            (valueChange)="changePais($event)"></select2>
         </div>
         <div class="col-md-3">
-            <select2 [options]="options.estados" placeholder="Estado" ></select2>
+            <select2 [options]="options.estados" placeholder="Estado" (valueChange)="changeEstado($event)"></select2>
         </div>
         <div class="col-md-3">
             <select2 [options]="options.municipios" placeholder="Municipio/Delegación" ></select2>

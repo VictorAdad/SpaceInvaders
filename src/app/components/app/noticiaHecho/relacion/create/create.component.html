@@ -4,13 +4,15 @@
         <small>NIC:CAI/AIN/00/UAI/268/00126/17/08 - NUC: CAI/AIN/00/UAI/268/00126/17/08</small>
     </div>
 </div>
-<div class="row">
+<div class="row space">
     <div class="col-md-6">
         <h2>Registrar Relación</h2>
     </div>
     <div class="col-md-6">
         <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/noticia-hecho" color="accent">Regresar</button>
     </div>
+</div>
+<div class="row">
     <div class="col-md-12">
         <form [formGroup]="this.generalForm">
           <form [formGroup]="this.relacionForm">
@@ -32,12 +34,36 @@
                         <select2 placeholder="Imputado" name="imputado"*ngIf="isImputadoVictimaDelito" [(options)]="options" [group]="relacionForm"></select2>
                     </div>
                 </div>
+                <div class="row" *ngIf="isAsesorJuridicoVictima">
+                    <div class="col">
+                        <select2 placeholder="Víctima u ofendido" name="victima" [(options)]="options" [group]="relacionForm"></select2>
+                    </div>
+                    <div class="col">
+                        <select2 placeholder="Asesor legal" [(options)]="options"></select2>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isDefensorImputado">
+                    <div class="col">
+                        <select2 placeholder="Víctima u ofendido" name="victima" [(options)]="options" [group]="relacionForm"></select2>
+                    </div>
+                    <div class="col">
+                        <select2 placeholder="Defensor" [(options)]="options"></select2>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isRepresentanteVictima">
+                    <div class="col">
+                        <select2 placeholder="Víctima u ofendido" name="victima" [(options)]="options" [group]="relacionForm"></select2>
+                    </div>
+                    <div class="col">
+                        <select2 placeholder="Representante" [(options)]="options"></select2>
+                    </div>
+                </div>
                 <div class="row" *ngIf="isImputadoVictimaDelito">
                     <div class="col">
                         <select2 placeholder="Víctima u ofendido" name="victima" [(options)]="options" [group]="relacionForm"></select2>
                     </div>
                     <div class="col">
-                        <select2 placeholder="Lugar" name="lugar" [(options)]="options" [group]="relacionForm"></select2>
+                        <select2 placeholder="Lugar" name="lugar" [(options)]="optionsNoticia.lugaresx" [group]="relacionForm"></select2>
                     </div>
                     <div class="col">
                         <select2 placeholder="Concurso del delito" name="concursoDelito" [(options)]="options" [group]="relacionForm"></select2>

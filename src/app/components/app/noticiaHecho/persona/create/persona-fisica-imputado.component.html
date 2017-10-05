@@ -68,7 +68,8 @@
                         {label:'Defensor privado',value:'Defensor privado'},
                         {label:'Remitente(policía)',value:'Remitente(policía)'}
                         ]
-              " name="tipoInterviniente" [group]="form"></radiobutton>
+                        
+              " name="tipoInterviniente" [group]="form" (valueChange)="changeTipoInterviniente($event)"></radiobutton>
               </div>
               </div>
             </div>
