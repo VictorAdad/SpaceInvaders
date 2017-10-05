@@ -6,6 +6,7 @@ import { AcuerdoRadicacion } from '@models/determinacion/acuerdoRadicacion';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { CIndexedDB } from '@services/indexedDB';
+
 @Component({
     templateUrl:'./acuerdos-radicacion.component.html',
     selector:'acuerdos-radicacion'

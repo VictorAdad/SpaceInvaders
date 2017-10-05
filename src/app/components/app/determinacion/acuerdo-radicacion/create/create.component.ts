@@ -18,8 +18,8 @@ export class AcuerdoRadicacionCreateComponent {
 	constructor(private route: ActivatedRoute){}
 	ngOnInit() {
     	this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
+            if(params['casoId'])
+                this.casoId = +params['casoId'];
         });
   	}
 
