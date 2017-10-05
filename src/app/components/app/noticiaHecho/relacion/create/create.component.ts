@@ -12,6 +12,7 @@ import { HostigamientoAcoso} from '@models/hostigamientoAcoso';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { NoticiaHechoGlobal } from '../../global';
+import { NoticiaHechoService } from '@services/noticia-hecho.service';
 import { CIndexedDB } from '@services/indexedDB';
 
 
@@ -40,8 +41,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         { value:'Defensor', label:'Defensor del imputado' },
         { value:'Imputado', label:'Imputado-Víctima-Delito' },
         { value:'Asesor', label:'Asesor jurídico de la víctima' },
-        { value:'Representante', label:'Representante de la víctima' },
-        { value:'Tutor', label:'Tutor de la víctima' }
+        { value:'Representante', label:'Representante de la víctima' }
     ];
 
     options:MOption[]=[
@@ -82,7 +82,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         private onLine: OnLineService,
         private http: HttpService,
         private router: Router,
-        private db:CIndexedDB
+        private db:CIndexedDB,
+        private optionsNoticia: NoticiaHechoService
         ) {
         super();
     }
