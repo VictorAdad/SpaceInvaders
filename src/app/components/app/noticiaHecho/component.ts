@@ -20,7 +20,7 @@ export class NoticiaHechoComponent implements OnInit{
 	constructor(
 		private route: ActivatedRoute,
 		private _db: CIndexedDB,
-		private service: NoticiaHechoService
+		private options: NoticiaHechoService
 		) {
 		this.db = _db;
 	}
@@ -33,8 +33,8 @@ export class NoticiaHechoComponent implements OnInit{
 	    this.route.params.subscribe(params => {
 	    	if(params['id']){
 				this.id = +params['id'];
-				this.service.setId(this.id);
-				this.service.getData();
+				this.options.setId(this.id);
+				this.options.getData();
 			}
 			this.getReturnRoute();
 	    });
