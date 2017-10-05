@@ -3,17 +3,18 @@
         <form>
             <div class="row">
                 <div class="col">
-                    <text-area label="Observaciones/Incidencias"></text-area>
+                    <text-area label="Observaciones/Incidencias" name="observaciones" [(value)]="model.observaciones" [group]="form"></text-area>  
                 </div>
             </div>
-            <div class="d-flex justify-content-end">
-                <div class="p-2">
-                    <button md-raised-button color="accent">Guardar</button>
+            <div class="row justify-content-end" >
+                <div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
+                   <button md-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id != null">Editar</button>    
+                   <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
                 </div>
-                <div class="p-2">
-                    <button md-button routerLink="/caso/{{casoId}}/archivo-temporal">Cancelar</button>
+                <div class="col-sm-auto">
+                   <button class="float-right" md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button> 
                 </div>
-            </div>
+           </div>
         </form>
     </div>
 </div>

@@ -18,6 +18,8 @@ export class ArmaComponent{
 	public displayedColumns = ['Arma', 'Tipo', 'Marca', 'Calibre'];
     public dataSource: TableService;
     public data: Arma[] = [];
+    public pag: number = 0;
+
 	@ViewChild(MdPaginator) 
     paginator: MdPaginator;
 
@@ -28,10 +30,7 @@ export class ArmaComponent{
             if(params['id']){
                 this.casoId = +params['id'];
                 if(this.onLine.onLine){
-                    this.http.get('/v1/base/casos/'+this.casoId+'/armas').subscribe((response) => {
-                        this.data = response as Arma[];
-                        this.dataSource = new TableService(this.paginator, this.data);
-                    });
+                    this.page('/v1/base/casos/'+this.casoId+'/armas');
                 }else{
                     this.db.get("casos",this.casoId).then(caso=>{
                         if (caso){
@@ -44,4 +43,20 @@ export class ArmaComponent{
             }
         });
   	}
+
+    public changePage(_e){
+        this.page('/v1/base/casos/'+this.casoId+'/armas?p='+_e.pageIndex+'&tr='+_e.pageSize);
+    }  
+
+    public page(url: string){
+        this.http.get(url).subscribe((response) => {
+            this.pag = response.totalCount;
+            this.data = response as Arma[];
+            this.dataSource = new TableService(this.paginator, this.data);
+        });
+    }
+
+
+
+
 }  

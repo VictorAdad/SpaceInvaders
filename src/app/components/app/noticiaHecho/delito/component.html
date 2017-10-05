@@ -6,7 +6,13 @@
         <button class="float-right" md-raised-button routerLink="/caso/{{id}}/delito/create" color="accent">Agregar delito</button>
     </div>
 </div>
-<md-paginator #paginator [length]="pag" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></md-paginator>
+<md-paginator #paginator 
+[length]="pag" 
+[pageIndex]="0" 
+[pageSize]="10" 
+[pageSizeOptions]="[5, 10, 25, 100]"
+(page)="changePage($event)">    
+</md-paginator>
 <md-table #table [dataSource]="dataSource">
     <ng-container mdColumnDef="nombre">
         <md-header-cell *mdHeaderCellDef> Nombre </md-header-cell>
