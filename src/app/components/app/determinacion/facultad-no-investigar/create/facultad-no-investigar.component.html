@@ -29,12 +29,16 @@
 	<div class="row">
 
 	    <div class="col-md-12 col-sm-12 col-lg-12">
-	    	<text-area label="Observaciones/Incidencias" name="observaciones" [(value)]="model.observaciones" ></text-area> 
+	    	<text-area label="Observaciones/Incidencias" name="observaciones" [(value)]="model.observaciones" [group]="form"></text-area> 
 	    </div>
 	</div>
-
-
-	<div class="row space"></div>
-  	<button class="float-right" md-button routerLink="/caso/{{casoId}}/facultad-no-investigar">Cancelar</button>	
-	<button class="float-right" md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid">Guardar</button>
+	<div class="row justify-content-end" >
+		<div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
+		   <button md-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id != null">Editar</button>    
+		   <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
+		</div>
+		<div class="col-sm-auto">
+		   <button class="float-right" md-button routerLink="/caso/{{casoId}}/facultad-no-investigar">Cancelar</button> 
+		</div>
+   </div>
 </form>

@@ -1,92 +1,139 @@
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
-import { TableService} from '@utils/table/table.service';
-import { FacultadNoInvestigar } from '@models/facultadNoInvestigar';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import { TableService } from '@utils/table/table.service';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FacultadNoInvestigar } from '@models/determinacion/facultad-no-investigar';
+import { OnLineService } from '@services/onLine.service';
+import { HttpService } from '@services/http.service';
+import { DeterminacionGlobal } from '../../global';
+import { _config } from '@app/app.config';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
-    templateUrl:'./create.component.html',
+    templateUrl: './create.component.html',
 })
 export class FacultadNoInvestigarCreateComponent {
     public casoId: number = null;
-    constructor(private route: ActivatedRoute){}
+    constructor(private route: ActivatedRoute) { }
     ngOnInit() {
         this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
+            if (params['casoId'])
+                this.casoId = +params['casoId'];
         });
-      }
+    }
 
 }
 
 @Component({
-	selector: 'facultad-no-investigar',
-    templateUrl:'./facultad-no-investigar.component.html',
+    selector: 'facultad-no-investigar',
+    templateUrl: './facultad-no-investigar.component.html',
 })
-export class FacultadNoInvestigarComponent {
-	public form  : FormGroup;
-    public model : FacultadNoInvestigar;
+export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
+    public apiUrl: string = "/v1/base/facultad-no-investigar";
     public casoId: number = null;
+    public id: number = null;
+    public form: FormGroup;
+    public model: FacultadNoInvestigar;
+    dataSource: TableService | null;
+    @ViewChild(MdPaginator) paginator: MdPaginator;
 
-    constructor(private _fbuilder: FormBuilder, private route: ActivatedRoute) { }
-    ngOnInit(){
+    constructor(
+        private _fbuilder: FormBuilder,
+        private route: ActivatedRoute,
+        private onLine: OnLineService,
+        private http: HttpService,
+        private router: Router,
+        private db: CIndexedDB
+    ) { super(); }
+
+    ngOnInit() {
         this.model = new FacultadNoInvestigar();
-        this.form  = new FormGroup({
-            'sintesisHechos':  new FormControl(this.model.sintesisHechos),
-            'datosPrueba'	:  new FormControl(this.model.datosPrueba),
-            'motivos':  new FormControl(this.model.motivos),
-            'remitente':  new FormControl(this.model.motivos),
-            'medioAlternativo':  new FormControl(this.model.medioAlternativo),
-            'superiorJerarquico':  new FormControl(this.model.superiorJerarquico),
-            'observaciones':  new FormControl(this.model.observaciones),
+        this.form = new FormGroup({
+            'observaciones': new FormControl(this.model.observaciones),
+            'sintesisHechos': new FormControl(this.model.sintesisHechos),
+            'datosPrueba': new FormControl(this.model.datosPrueba),
+            'motivos': new FormControl(this.model.motivos),
+            'medioAlternativo': new FormControl(this.model.medioAlternativo),
+            'remitente': new FormControl(this.model.remitente),
+            'superiorJerarquico': new FormControl(this.model.superiorJerarquico)
+        });
 
-          });
         this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
+            if (params['casoId'])
+                this.casoId = +params['casoId'];
+            if (params['id']) {
+                this.id = +params['id'];
+                this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
+                    console.log(response.data),
+                        this.fillForm(response);
+                });
+            }
         });
     }
 
-    public save(valid : any, model : any):void{
-        console.log('FacultadNoInvestigar@save()');
+    public save(valid: any, _model: any): void {
+        Object.assign(this.model, _model);
+        this.model.caso.id = this.casoId;
+        console.log('->FacultadNoInvestigar@save()', this.model);
+        this.http.post(this.apiUrl, this.model).subscribe(
+            (response) => {
+                console.log(response);
+                if (this.casoId) {
+                    this.router.navigate(['/caso/' + this.casoId + '/facultad-no-investigar']);
+                }
+            },
+            (error) => {
+                console.error('Error', error);
+            }
+        );
+
     }
 
+    public edit(_valid: any, _model: any): void {
+        console.log('-> FacultadNoInvestigar@edit()', _model);
+        this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
+            console.log('-> Registro acutualizado', response);
+            this.router.navigate(['/caso/' + this.casoId + '/facultad-no-investigar']);
+        });
+    }
 
-	
+    public fillForm(_data) {
+        this.form.patchValue(_data);
+        console.log(_data);
+    }
+
 }
 
 @Component({
-	selector: 'documento-facultad-no-investigar',
-    templateUrl:'./documento-facultad-no-investigar.component.html',
+    selector: 'documento-facultad-no-investigar',
+    templateUrl: './documento-facultad-no-investigar.component.html',
 })
 
 export class DocumentoFacultadNoInvestigarComponent {
 
-	displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
-	data: DocumentoFacultadNoInvestigar[] = [
-		{id: 1, nombre: 'Entrevista.pdf',    	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
-		{id: 2, nombre: 'Nota.pdf',         	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
-		{id: 3, nombre: 'Fase.png',         	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
-		{id: 4, nombre: 'Entrevista1.pdf',  	procedimiento: 'N/A',     	fechaCreacion:'07/09/2017'},
-		{id: 5, nombre: 'Fase1.png',        	procedimiento: 'N/A',     	fechaCreacion:'07/09/2017'},
-	];
+    displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+    data: DocumentoFacultadNoInvestigar[] = [
+        { id: 1, nombre: 'Entrevista.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
+        { id: 2, nombre: 'Nota.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
+        { id: 3, nombre: 'Fase.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
+        { id: 4, nombre: 'Entrevista1.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
+        { id: 5, nombre: 'Fase1.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
+    ];
 
-	dataSource: TableService | null;
-	@ViewChild(MdPaginator) paginator: MdPaginator;
+    dataSource: TableService | null;
+    @ViewChild(MdPaginator) paginator: MdPaginator;
 
 
-	ngOnInit() {
-    	this.dataSource = new TableService(this.paginator, this.data);
+    ngOnInit() {
+        this.dataSource = new TableService(this.paginator, this.data);
 
-  	}
+    }
 }
 
 export class DocumentoFacultadNoInvestigar {
-	id:number
-	nombre: string;
-	procedimiento: string;
-	fechaCreacion: string;
+    id: number
+    nombre: string;
+    procedimiento: string;
+    fechaCreacion: string;
 }
