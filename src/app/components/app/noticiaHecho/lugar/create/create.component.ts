@@ -305,4 +305,10 @@ export class DetalleLugar {
         }
     }
 
+    changeMunicipio(id){
+        console.log("municipio=>",id);
+        if (id)
+            this.optionsServ.getColoniasByMunicipio(id);
+    }
+
 }

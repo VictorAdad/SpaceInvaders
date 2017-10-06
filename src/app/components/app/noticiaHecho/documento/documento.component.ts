@@ -11,6 +11,8 @@ import 'rxjs/add/observable/of';
 import {MdDialog, MD_DIALOG_DATA} from '@angular/material';
 import { DocumentoCreateComponent } from './create/create.component';
 import { CIndexedDB } from '@services/indexedDB';
+import { ActivatedRoute } from '@angular/router';
+import { OnLineService} from '@services/onLine.service';
 
 @Component({
     selector: 'documento',
@@ -19,14 +21,15 @@ import { CIndexedDB } from '@services/indexedDB';
 
 export class DocumentoComponent{
     private db: CIndexedDB 
-    constructor(public dialog: MdDialog,private _db: CIndexedDB){
+    constructor(public dialog: MdDialog,private _db: CIndexedDB, private onLine: OnLineService, private route:ActivatedRoute){
       this.db=_db;
     }
 
     displayedColumns = ['nombre', 'procedimiento', 'fecha'];
     data: Documento[];
-    //dataSource: TableService | null;
-    dataSource = new ExampleDataSource();
+    dataSource: TableService | null;
+    casoId:number;
+
     @ViewChild(MdPaginator) paginator: MdPaginator;
 
     dataURItoBlob(dataURI, type) {
@@ -42,7 +45,16 @@ export class DocumentoComponent{
         this.data = data;
         this.dataSource = new TableService(this.paginator, this.data);
         console.log('-> Data Source', this.dataSource);
-        this.cargaArchivos();
+        this.route.params.subscribe(params => {
+            if(params['id']){
+                this.casoId = +params['id'];
+                if(this.onLine.onLine){
+                    
+                }else{
+                    this.cargaArchivos();
+                }                
+            }
+        });  
     }
 
     cargaArchivos(){
@@ -70,7 +82,7 @@ export class DocumentoComponent{
             width: 'auto'
         });
         dialog.afterClosed().subscribe(() => {
-          this.cargaArchivos();
+            this.cargaArchivos();
         });
       }
 }
@@ -84,18 +96,3 @@ export interface Documento {
   const data: Documento[] = [
       {nombre: 'Entrevista.pdf', procedimiento: '7.3.1 ENTREVISTA', fecha: 'ayer a las 11:30'}
   ];
-
-    /**
-   * Data source to provide what data should be rendered in the table. The observable provided
-   * in connect should emit exactly the data that should be rendered by the table. If the data is
-   * altered, the observable should emit that new set of data on the stream. In our case here,
-   * we return a stream that contains only one set of data that doesn't change.
-   */
-  export class ExampleDataSource extends DataSource<any> {
-    /** Connect function procedimientod by the table to retrieve one stream containing the data to render. */
-    connect(): Observable<Documento[]> {
-      return Observable.of(data);
-    }
-  
-    disconnect() {}
-  }
