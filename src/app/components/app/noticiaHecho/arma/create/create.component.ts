@@ -8,6 +8,7 @@ import { HttpService} from '@services/http.service';
 import { NoticiaHechoGlobal } from '../../global';
 import { _config} from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
+import { ArmaService } from '@services/noticia-hecho/arma.service';
 
 @Component({
   selector: 'arma-create',
@@ -40,7 +41,8 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         private onLine: OnLineService,
         private http: HttpService,
         private router: Router,
-        private db:CIndexedDB
+        private db:CIndexedDB,
+        private armaServ: ArmaService
         ) {
         super();
     }
