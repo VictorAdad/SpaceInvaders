@@ -9,6 +9,9 @@ import {arrCABELLO} from '@models/datos/cabello';
 import {arrLABIO_OJO} from '@models/datos/labioOjo';
 import {arrDETALLE_LUGAR} from '@models/datos/detalleLugar';
 import {arrMARCA_SUBMARCA} from '@models/datos/marcaSubmarca';
+import {arrPROCEDENCIA_ASEGURADORA} from '@models/datos/procedenciaAseguradora';
+import {arrMOTIVO_REGISTRO_COLOR_CLASE} from '@models/datos/motivoColorClase';
+import {arrTIPO_USO_TIPO_VEHICULO} from '@models/datos/tipoUsoTipoVehiculo';
 
 @Injectable()
 export class CIndexedDB {
@@ -99,7 +102,11 @@ export class CIndexedDB {
             obj.update("catalagos",{id:"labio_ojo",arreglo:arrLABIO_OJO.arreglo});
 
             obj.update("catalagos",{id:"detalle_lugar",arreglo:arrDETALLE_LUGAR.arreglo});
+            
             obj.update("catalagos",{id:"marca_submarca",arreglo:arrMARCA_SUBMARCA.arreglo});
+            obj.update("catalagos",{id:"procedencia_aseguradora",arreglo:arrPROCEDENCIA_ASEGURADORA.arreglo});
+            obj.update("catalagos",{id:"motivo_color_clase",arreglo:arrMOTIVO_REGISTRO_COLOR_CLASE.arreglo});
+            obj.update("catalagos",{id:"tipo_uso_tipo_vehiculo",arreglo:arrTIPO_USO_TIPO_VEHICULO.arreglo});
             
             
 
