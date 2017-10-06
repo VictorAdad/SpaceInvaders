@@ -11,6 +11,7 @@ import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
 import * as moment from 'moment';
 import { SelectsService} from '@services/selects.service';
+import { LugarService} from '@services/noticia-hecho/lugar.service';
 
 @Component({
     selector: 'lugar-create',
@@ -29,6 +30,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
     public searchControl: FormControl;
     public zoom: number = 10;
     public isMexico: boolean = false;
+    public detalleLugar = new DetalleLugar();
+    public detalleLugarFinded = [];
     @ViewChild("search")
     public searchElementRef: ElementRef;
 
@@ -41,9 +44,11 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         private db:CIndexedDB,
         private mapsAPILoader: MapsAPILoader,
         private ngZone: NgZone,
-        private optionsServ: SelectsService
+        private optionsServ: SelectsService,
+        private lugarServ: LugarService
         ) {
         super();
+        lugarServ.getData();
     }
 
     options:MOption[]=[
@@ -138,17 +143,23 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             'colonia': new FormGroup({
                 'id': new FormControl("",[Validators.required,]),
             }),
+            'caso': new FormGroup({
+                'id': new FormControl("",[]),
+            }),
         });
     }
 
     public save(_valid : any, _model : any):void{
-        Object.assign(this.model, _model);
-        this.model.caso.id      = this.casoId;
-        this.model.latitud      = this.latMarker;
-        this.model.longitud     = this.lngMarker;
-        this.model.fecha        = moment(this.model.fecha).format('YYYY-MM-DD');
+        _model.caso.id      = this.casoId;
+        _model.latitud      = this.latMarker;
+        _model.longitud     = this.lngMarker;
+        _model.fecha        = moment(_model.fecha).format('YYYY-MM-DD');
+        if(this.detalleLugarFinded.length > 0){
+            _model.detalleLugar.id = this.detalleLugarFinded[0].id;
+        }
+        
         if(this.onLine.onLine){
-            this.http.post('/v1/base/lugares', this.model).subscribe(
+            this.http.post('/v1/base/lugares', _model).subscribe(
                 (response) => {
                     this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
                 },
@@ -160,7 +171,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             let temId=Date.now();
             let dato={
                 url:'/v1/base/lugares',
-                body:this.model,
+                body:_model,
                 options:[],
                 tipo:"post",
                 pendiente:true,
@@ -173,8 +184,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                         if(!caso["lugar"]){
                             caso["lugar"]=[];
                         }
-                        this.model["id"]=temId;
-                        caso["lugar"].push(this.model);
+                        _model["id"]=temId;
+                        caso["lugar"].push(_model);
                         this.db.update("casos",caso).then(t=>{
                             this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
                         });
@@ -256,9 +267,42 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             }
         }
     }  
+
     changeEstado(id){
         if(id)
-        this.optionsServ.getMunicipiosByEstado(id);
+            this.optionsServ.getMunicipiosByEstado(id);
+    }
+
+    changeMunicipio(id){
+        if(id)
+            this.optionsServ.getColoniasByMunicipio(id);
+    }
+
+    findDetalleLugar(_e, _tipo:string){
+        this.detalleLugar.setValue(_e, _tipo)
+        this.detalleLugarFinded = this.lugarServ.detalleLugar.filter(object => {
+            return object.tipoLugar === this.detalleLugar.tipoLugar && object.tipoZona === this.detalleLugar.tipoZona && object.dia === this.detalleLugar.dia
+        });
+    }
+
+}
+
+export class DetalleLugar {
+    
+    public tipoLugar: string;
+    public tipoZona: string;
+    public dia: string;
+
+    public setValue(_value:string, _tipo:string){
+        if(_tipo === 'tipoLugar'){
+            this.tipoLugar = _value;
+        }
+        if(_tipo === 'tipoZona'){
+            this.tipoZona = _value;
+        }
+        if(_tipo === 'dia'){
+            this.dia = _value;
+        }
     }
 
 }
