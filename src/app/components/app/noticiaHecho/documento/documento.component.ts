@@ -25,8 +25,8 @@ export class DocumentoComponent{
 
     displayedColumns = ['nombre', 'procedimiento', 'fecha'];
     data: Documento[];
-    //dataSource: TableService | null;
-    dataSource = new ExampleDataSource();
+    dataSource: TableService | null;
+
     @ViewChild(MdPaginator) paginator: MdPaginator;
 
     dataURItoBlob(dataURI, type) {
@@ -84,18 +84,3 @@ export interface Documento {
   const data: Documento[] = [
       {nombre: 'Entrevista.pdf', procedimiento: '7.3.1 ENTREVISTA', fecha: 'ayer a las 11:30'}
   ];
-
-    /**
-   * Data source to provide what data should be rendered in the table. The observable provided
-   * in connect should emit exactly the data that should be rendered by the table. If the data is
-   * altered, the observable should emit that new set of data on the stream. In our case here,
-   * we return a stream that contains only one set of data that doesn't change.
-   */
-  export class ExampleDataSource extends DataSource<any> {
-    /** Connect function procedimientod by the table to retrieve one stream containing the data to render. */
-    connect(): Observable<Documento[]> {
-      return Observable.of(data);
-    }
-  
-    disconnect() {}
-  }
