@@ -12,6 +12,8 @@ import {arrMARCA_SUBMARCA} from '@models/datos/marcaSubmarca';
 import {arrPROCEDENCIA_ASEGURADORA} from '@models/datos/procedenciaAseguradora';
 import {arrMOTIVO_REGISTRO_COLOR_CLASE} from '@models/datos/motivoColorClase';
 import {arrTIPO_USO_TIPO_VEHICULO} from '@models/datos/tipoUsoTipoVehiculo';
+import {arrCLASE_ARMA} from '@models/datos/claseArma';
+import {arrCALIBRE_MECANISMO} from '@models/datos/calibreMecanismo';
 
 @Injectable()
 export class CIndexedDB {
@@ -108,8 +110,9 @@ export class CIndexedDB {
             obj.update("catalagos",{id:"motivo_color_clase",arreglo:arrMOTIVO_REGISTRO_COLOR_CLASE.arreglo});
             obj.update("catalagos",{id:"tipo_uso_tipo_vehiculo",arreglo:arrTIPO_USO_TIPO_VEHICULO.arreglo});
             
+            obj.update("catalagos",{id:"clase_arma",arreglo:arrCLASE_ARMA.arreglo});
+            obj.update("catalagos",{id:"calibre_mecanismo",arreglo:arrCALIBRE_MECANISMO.arreglo});
             
-
         }  
     }
 
