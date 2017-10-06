@@ -46,7 +46,7 @@ export class NoticiaHechoService {
     }
 
     public getPersonas(){
-        this.http.get('/v1/base/personas-caso/casos/'+this.id).subscribe((response) => {
+        this.http.get('/v1/base/personas-casos/casos/'+this.id).subscribe((response) => {
             this.personas = this.constructOptionsPersona(response);
         });
     }
