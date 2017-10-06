@@ -233,8 +233,20 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             if(id === 1){
                 this.isMexico = true;
                 this.optionsServ.getEstadoByPais(id);
+                this.form.controls.estado.enable();
+                this.form.controls.municipio.enable();
+                // this.form.controls.colonia.enable();
+                this.form.controls.estadoOtro.disable();
+                this.form.controls.municipioOtro.disable();
+                this.form.controls.coloniaOtro.disable();
             }else{
                 this.isMexico = false;
+                this.form.controls.estado.disable();
+                this.form.controls.municipio.disable();
+                this.form.controls.colonia.disable();
+                this.form.controls.estadoOtro.enable();
+                this.form.controls.municipioOtro.enable();
+                this.form.controls.coloniaOtro.enable();
             }
         }
     }  
