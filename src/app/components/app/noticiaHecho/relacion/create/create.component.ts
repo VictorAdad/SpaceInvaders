@@ -152,8 +152,11 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
       }); 
 
       this.route.params.subscribe(params => {
-            if(params['casoId'])
-                this.casoId = +params['casoId'];
+            if(params['casoId']){
+                this.casoId = params['casoId'];
+                this.optionsNoticia.setId(this.casoId);
+                this.optionsNoticia.getData();
+            }
             if(params['id']){
                 this.id = +params['id'];
                 if(this.onLine.onLine){
