@@ -6,6 +6,8 @@ import { Global } from './global';
 @Injectable()
 export class LugarService extends Global{
 
+    public selected       = new Selected();
+    public finded         = [];
     public detalleLugar   = [];
     public tipoLugar      = [];
     public tipoZona       = [];
@@ -30,5 +32,20 @@ export class LugarService extends Global{
             this.dia          = this.getUniques(response, 'dia');
         });
     }
+
+    public find(_e, _tipo:string){
+        this.selected[_tipo] = _e;
+        this.finded = this.detalleLugar.filter(object => {
+            return object.tipoLugar === this.selected.tipoLugar && object.tipoZona === this.selected.tipoZona && object.dia === this.selected.dia
+        });
+    }
     
+}
+
+export class Selected {
+
+    public tipoLugar: string;
+    public tipoZona: string;
+    public dia: string;
+
 }

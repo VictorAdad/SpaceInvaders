@@ -22,7 +22,7 @@
                         [(options)]="lugarServ.tipoLugar"
                         name="tipo"
                         [group]="form"
-                        (valueChange)="findDetalleLugar($event, 'tipoLugar')">
+                        (valueChange)="lugarServ.find($event, 'tipoLugar')">
                         
                     </select2>
                 </div>
@@ -32,7 +32,7 @@
                         [(options)]="lugarServ.tipoZona"
                         name="tipoZona"
                         [group]="form"
-                        (valueChange)="findDetalleLugar($event, 'tipoZona')">    
+                        (valueChange)="lugarServ.find($event, 'tipoZona')">    
                     </select2>
                 </div>
                 <div class="col-md-4">
@@ -110,7 +110,7 @@
                         name="dia"
                         [options]="lugarServ.dia"
                         [group]="form"
-                        (valueChange)="findDetalleLugar($event, 'dia')">    
+                        (valueChange)="lugarServ.find($event, 'dia')">    
                     </select2>
                 </div>
             </div>

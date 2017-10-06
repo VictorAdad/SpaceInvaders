@@ -30,8 +30,6 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
     public searchControl: FormControl;
     public zoom: number = 10;
     public isMexico: boolean = false;
-    public detalleLugar = new DetalleLugar();
-    public detalleLugarFinded = [];
     @ViewChild("search")
     public searchElementRef: ElementRef;
 
@@ -154,8 +152,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         _model.latitud      = this.latMarker;
         _model.longitud     = this.lngMarker;
         _model.fecha        = moment(_model.fecha).format('YYYY-MM-DD');
-        if(this.detalleLugarFinded.length > 0){
-            _model.detalleLugar.id = this.detalleLugarFinded[0].id;
+        if(this.lugarServ.finded.length > 0){
+            _model.detalleLugar.id = this.lugarServ.finded[0].id;
         }
         
         if(this.onLine.onLine){
@@ -278,37 +276,5 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             this.optionsServ.getColoniasByMunicipio(id);
     }
 
-    findDetalleLugar(_e, _tipo:string){
-        this.detalleLugar.setValue(_e, _tipo)
-        this.detalleLugarFinded = this.lugarServ.detalleLugar.filter(object => {
-            return object.tipoLugar === this.detalleLugar.tipoLugar && object.tipoZona === this.detalleLugar.tipoZona && object.dia === this.detalleLugar.dia
-        });
-    }
-
 }
 
-export class DetalleLugar {
-    
-    public tipoLugar: string;
-    public tipoZona: string;
-    public dia: string;
-
-    public setValue(_value:string, _tipo:string){
-        if(_tipo === 'tipoLugar'){
-            this.tipoLugar = _value;
-        }
-        if(_tipo === 'tipoZona'){
-            this.tipoZona = _value;
-        }
-        if(_tipo === 'dia'){
-            this.dia = _value;
-        }
-    }
-
-    changeMunicipio(id){
-        console.log("municipio=>",id);
-        if (id)
-            this.optionsServ.getColoniasByMunicipio(id);
-    }
-
-}
