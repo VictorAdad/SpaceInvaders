@@ -124,7 +124,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             'numInterior'     : new FormControl(this.model.notas, []),
             'refeGeograficas' : new FormControl(this.model.notas, []),
             'detalleLugar' : new FormGroup({
-                'id': new FormControl("",[Validators.required,]),
+                'id': new FormControl("",[]),
             }),
             'pais': new FormGroup({
                 'id': new FormControl("",[Validators.required,]),

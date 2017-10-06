@@ -15,7 +15,6 @@
     </div>
     <div class="content">
         <form [formGroup]="form">
-            <!-- <input type="hidden" *ngIf="casoId != null"formControlName="caso.id" value="{{ casoId }}"> -->
             <div class="row">
                 <div class="col-md-2">
                     <select2 placeholder="Tipo" [(options)]="options" name="tipo" [group]="form"></select2>
@@ -35,7 +34,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <text label="Referencias" name="referencias" [group]="form"></text>
+                    <text-area label="Referencias" name="referencias" [group]="form"></text-area>
                 </div>
             </div>
             <div class="row">
@@ -97,9 +96,9 @@
             </div>
             <div class="row space">
                 <div class="col">
-                    <text label="Descripción del lugar" name="descripcion" [group]="form"></text>
-                    <text label="Referencias geográficas" name="refeGeograficas" [group]="form"></text>
-                    <text label="Notas" name="notas" [group]="form"></text>
+                    <text-area label="Descripción del lugar" name="descripcion" [group]="form"></text-area>
+                    <text-area label="Referencias geográficas" name="refeGeograficas" [group]="form"></text-area>
+                    <text-area label="Notas" name="notas" [group]="form"></text-area>
                 </div>
             </div>
             <div class="row">
