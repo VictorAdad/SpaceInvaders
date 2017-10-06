@@ -17,10 +17,23 @@
         <form [formGroup]="form">
             <div class="row">
                 <div class="col-md-2">
-                    <select2 placeholder="Tipo" [(options)]="options" name="tipo" [group]="form"></select2>
+                    <select2
+                        placeholder="Tipo"
+                        [(options)]="lugarServ.tipoLugar"
+                        name="tipo"
+                        [group]="form"
+                        (valueChange)="lugarServ.find($event, 'tipoLugar')">
+                        
+                    </select2>
                 </div>
                 <div class="col-md-2">
-                    <select2 placeholder="Tipo de zona" [(options)]="options" name="tipoZona" [group]="form"></select2>
+                    <select2
+                        placeholder="Tipo de zona"
+                        [(options)]="lugarServ.tipoZona"
+                        name="tipoZona"
+                        [group]="form"
+                        (valueChange)="lugarServ.find($event, 'tipoZona')">    
+                    </select2>
                 </div>
                 <div class="col-md-4">
                     <text label="Calle" name="calle" [group]="form"></text>
@@ -72,7 +85,8 @@
                          placeholder="Municipio/Delegacion"
                          [options]="optionsServ.municipios"
                          name="id"
-                         [group]="form.controls.municipio">
+                         [group]="form.controls.municipio"
+                         (valueChange)="changeMunicipio($event)">
                             
                     </select2>
                 </div>
@@ -91,7 +105,13 @@
                     <text label="Hora" name="hora" [group]="form"></text>
                 </div>
                 <div class="col-md-3">
-                    <select2 placeholder="Día" name="dia" [group]="form"></select2>
+                    <select2 
+                        placeholder="Día"
+                        name="dia"
+                        [options]="lugarServ.dia"
+                        [group]="form"
+                        (valueChange)="lugarServ.find($event, 'dia')">    
+                    </select2>
                 </div>
             </div>
             <div class="row space">

@@ -98,7 +98,7 @@ export class DelitoCreateComponent{
             this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
             return;
         }
-        let item=lista[0];
+        let item=lista[i];
         let data={
             caso:{
                 id:this.casoId

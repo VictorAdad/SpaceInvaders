@@ -38,11 +38,12 @@ export class DelitoComponent {
 
     ngOnInit() {
         this.activeRoute.params.subscribe(params => {
-            if (params['id'] && this.onLine.onLine) {
-                this.id = parseInt(params['id']);
-                this.page('/v1/base/casos/' + this.id + '/delitos-casos');
-            } else {
-                this.db.get("delitos-casos", this.id).then(
+            if (params['id']) {
+                if (this.onLine.onLine){
+                    this.id = parseInt(params['id']);
+                    this.page('/v1/base/casos/' + this.id + '/delitos-casos');   
+                }else{
+                    this.db.get("casos", this.id).then(
                     casoR => {
                         if (casoR) {
                             this.delitoCaso = casoR as DelitoCaso;
@@ -50,7 +51,8 @@ export class DelitoComponent {
                                 this.dataSource = new TableService(this.paginator, casoR["delitos"]);
                         }
                     });
-            }
+                }    
+            } 
         });
     }
 
