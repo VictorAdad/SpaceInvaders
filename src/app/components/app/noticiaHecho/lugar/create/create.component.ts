@@ -123,6 +123,9 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             'numExterior'     : new FormControl(this.model.notas, []),
             'numInterior'     : new FormControl(this.model.notas, []),
             'refeGeograficas' : new FormControl(this.model.notas, []),
+            'detalleLugar' : new FormGroup({
+                'id': new FormControl("",[Validators.required,]),
+            }),
             'pais': new FormGroup({
                 'id': new FormControl("",[Validators.required,]),
             }),
@@ -130,6 +133,9 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 'id': new FormControl("",[Validators.required,]),
             }),
             'municipio': new FormGroup({
+                'id': new FormControl("",[Validators.required,]),
+            }),
+            'colonia': new FormGroup({
                 'id': new FormControl("",[Validators.required,]),
             }),
         });
@@ -235,7 +241,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 this.optionsServ.getEstadoByPais(id);
                 this.form.controls.estado.enable();
                 this.form.controls.municipio.enable();
-                // this.form.controls.colonia.enable();
+                this.form.controls.colonia.enable();
                 this.form.controls.estadoOtro.disable();
                 this.form.controls.municipioOtro.disable();
                 this.form.controls.coloniaOtro.disable();

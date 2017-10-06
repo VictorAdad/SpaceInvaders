@@ -8,6 +8,7 @@ export class SelectsService {
     public paises: MOption[]      = [];
     public estados: MOption[]     = [];
     public municipios: MOption[]  = [];
+    public colonias: MOption[]  = [];
     public sexo: MOption[]        = [];
     public escolaridad: MOption[] = [];
     public ocupacion: MOption[]   = [];
@@ -106,6 +107,12 @@ export class SelectsService {
     public getMunicipiosByEstado(idEstado: number){
         this.http.get('/v1/catalogos/municipio/estado/'+idEstado+'/options').subscribe((response) => {
             this.municipios = this.constructOptions(response);
+        });
+    }
+
+    public getColoniasByMunicipio(idMunicipio: number){
+        this.http.get('/v1/catalogos/colonia/municipio/'+idMunicipio+'/options').subscribe((response) => {
+            this.colonias = this.constructOptions(response);
         });
     }
 
