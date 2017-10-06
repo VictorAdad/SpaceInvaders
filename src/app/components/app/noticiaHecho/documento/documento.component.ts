@@ -11,6 +11,8 @@ import 'rxjs/add/observable/of';
 import {MdDialog, MD_DIALOG_DATA} from '@angular/material';
 import { DocumentoCreateComponent } from './create/create.component';
 import { CIndexedDB } from '@services/indexedDB';
+import { ActivatedRoute } from '@angular/router';
+import { OnLineService} from '@services/onLine.service';
 
 @Component({
     selector: 'documento',
@@ -19,13 +21,14 @@ import { CIndexedDB } from '@services/indexedDB';
 
 export class DocumentoComponent{
     private db: CIndexedDB 
-    constructor(public dialog: MdDialog,private _db: CIndexedDB){
+    constructor(public dialog: MdDialog,private _db: CIndexedDB, private onLine: OnLineService, private route:ActivatedRoute){
       this.db=_db;
     }
 
     displayedColumns = ['nombre', 'procedimiento', 'fecha'];
     data: Documento[];
     dataSource: TableService | null;
+    casoId:number;
 
     @ViewChild(MdPaginator) paginator: MdPaginator;
 
@@ -42,7 +45,16 @@ export class DocumentoComponent{
         this.data = data;
         this.dataSource = new TableService(this.paginator, this.data);
         console.log('-> Data Source', this.dataSource);
-        this.cargaArchivos();
+        this.route.params.subscribe(params => {
+            if(params['id']){
+                this.casoId = +params['id'];
+                if(this.onLine.onLine){
+                    
+                }else{
+                    this.cargaArchivos();
+                }                
+            }
+        });  
     }
 
     cargaArchivos(){
@@ -70,7 +82,7 @@ export class DocumentoComponent{
             width: 'auto'
         });
         dialog.afterClosed().subscribe(() => {
-          this.cargaArchivos();
+            this.cargaArchivos();
         });
       }
 }
