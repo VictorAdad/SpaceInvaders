@@ -62,7 +62,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
     ngOnInit(){
         this.form  = this.createForm();
-        this.globals = new PersonaGlobals(this.form);
+        this.persona= new Persona();
+        this.globals = new PersonaGlobals(this.form,this.persona);
         this.globals.form.controls.razonSocial.disable();
         this.route.params.subscribe(params => {
             if(params['casoId'])
@@ -292,6 +293,16 @@ export class IdentificacionComponent{
     @Input()
     @Input()
     options: SelectsService;
+    public otrosNombres:string[]=[];
+                                              
+    addOtroNombre(){
+          //this.globals.persona.otrosNombres.unshift(null); 
+          this.otrosNombres.unshift(null); 
+          console.log(this.otrosNombres);
+    }
+       trackByIndex(index: number, obj: any): any {
+    return index;
+   }
 }
 
 @Component({
@@ -332,10 +343,13 @@ export class PersonaGlobals{
     public tipoPersona: string="";
     public tipoInterviniente: string;
     public detenido: boolean = false;
+    public persona:Persona;
 
     constructor(
-        _form: FormGroup
+        _form: FormGroup,
+        _persona:Persona,
         ){
         this.form = _form;
+        this.persona=_persona;
     }
 }
