@@ -17,7 +17,7 @@ export class RelacionComponent{
   
     public casoId: number   = null;
 	public displayedColumns = ['Tipo', 'Elementos'];
-	public data:Relacion[]  = [];
+	public relaciones:Relacion[]  = [];
 	public dataSource: TableService | null;
     public pag: number = 0;
 	@ViewChild(MdPaginator) paginator: MdPaginator;
@@ -38,8 +38,8 @@ export class RelacionComponent{
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/casos/'+this.casoId+'/relaciones').subscribe((response) => {
                         this.pag = response.totalCount;
-                        this.data = response.data as Relacion[];
-                        this.dataSource = new TableService(this.paginator, this.data);
+                        this.relaciones = response.data as Relacion[];
+                        this.dataSource = new TableService(this.paginator, this.relaciones);
                     });
                 }else{
                     this.db.get("casos",this.casoId).then(caso=>{
@@ -53,4 +53,26 @@ export class RelacionComponent{
             }
         });
   	}
+
+    public changePage(_e) {
+        console.log('Page index', _e.pageIndex);
+        console.log('Page size', _e.pageSize);
+        console.log('Id caso', this.casoId);
+        this.relaciones = [];
+        this.page('/v1/base/casos/' + this.casoId + '/relaciones?p=' + _e.pageIndex + '&tr=' + _e.pageSize);
+    }
+
+    public page(url: string) {
+        this.http.get(url).subscribe((response) => {
+            //console.log('Paginator response', response.data);
+            
+            response.data.forEach(object => {
+                this.pag = response.totalCount;
+                //console.log("Respuestadelitos", response["data"]);
+                this.relaciones.push(Object.assign(new Relacion(), object));
+                this.dataSource = new TableService(this.paginator, this.relaciones);
+            });
+            console.log('Datos finales', this.dataSource);
+        });
+    }
 }

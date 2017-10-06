@@ -16,7 +16,7 @@ export class VehiculoComponent{
 
     public casoId: number = null;
 	public displayedColumns = ['tipo', 'marca', 'color', 'modelo', 'placa'];
-	public data: Vehiculo[] = [];
+	public vehiculos: Vehiculo[] = [];
 	public dataSource: TableService | null;
     public pag: number = 0;
 	@ViewChild(MdPaginator) paginator: MdPaginator;
@@ -30,8 +30,8 @@ export class VehiculoComponent{
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/casos/'+this.casoId+'/vehiculos').subscribe((response) => {
                         this.pag = response.totalCount;
-                        this.data = response.data as Vehiculo[];
-                        this.dataSource = new TableService(this.paginator, this.data);
+                        this.vehiculos = response.data as Vehiculo[];
+                        this.dataSource = new TableService(this.paginator, this.vehiculos);
                     });
                 }else{
                     this.db.get("casos",this.casoId).then(caso=>{
@@ -45,4 +45,26 @@ export class VehiculoComponent{
             }
         });  
   	}
+
+    public changePage(_e) {
+        console.log('Page index', _e.pageIndex);
+        console.log('Page size', _e.pageSize);
+        console.log('Id caso', this.casoId);
+        this.vehiculos = [];
+        this.page('/v1/base/casos/' + this.casoId + '/vehiculos?p=' + _e.pageIndex + '&tr=' + _e.pageSize);
+    }
+
+    public page(url: string) {
+        this.http.get(url).subscribe((response) => {
+            //console.log('Paginator response', response.data);
+            
+            response.data.forEach(object => {
+                this.pag = response.totalCount;
+                //console.log("Respuestadelitos", response["data"]);
+                this.vehiculos.push(Object.assign(new Vehiculo(), object));
+                this.dataSource = new TableService(this.paginator, this.vehiculos);
+            });
+            console.log('Datos finales', this.dataSource);
+        });
+    }
 }
