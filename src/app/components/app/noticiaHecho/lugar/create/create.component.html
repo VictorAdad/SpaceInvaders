@@ -72,7 +72,9 @@
                          placeholder="Municipio/Delegacion"
                          [options]="optionsServ.municipios"
                          name="id"
-                         [group]="form.controls.municipio">
+                         [group]="form.controls.municipio"
+
+                         (valueChange)="changeMunicipio($event)">
                             
                     </select2>
                 </div>
