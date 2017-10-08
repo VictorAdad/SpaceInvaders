@@ -16,7 +16,7 @@ export class LugarService extends Global{
     constructor(
         private http: HttpService
         ) {
-        super();
+        super(http);
     }
 
 

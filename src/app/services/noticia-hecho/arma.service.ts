@@ -22,7 +22,7 @@ export class ArmaService extends Global{
     constructor(
         private http: HttpService
         ) {
-        super();
+        super(http);
     }
 
 

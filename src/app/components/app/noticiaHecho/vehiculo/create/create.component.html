@@ -1,5 +1,5 @@
 <breadcrumb></breadcrumb>
-<div class="row space">    
+<div class="row space">
     <div class="col-md-12 text-right">
         <small>NIC:CAI/AIN/00/UAI/268/00126/17/08 - NUC: CAI/AIN/00/UAI/268/00126/17/08</small>
     </div>
@@ -16,10 +16,20 @@
     <form [formGroup]="form">
         <div class="row">
             <div class="col-md-3">
-                <select2 placeholder="Motivo por el que se registra" [options]="options" name="motivoRegistro" [group]="form"></select2>
+                <select2 placeholder="Motivo por el que se registra"
+                    [options]="vehiculoServ.motivoColorClase.motivoRegistro"
+                    name="motivoRegistro"
+                    [group]="form">
+
+                </select2>
             </div>
             <div class="col-md-3">
-                <select2 placeholder="Vehículo"  name="campoVehiculo" [options]="options" [group]="form"></select2>
+                <select2 placeholder="Vehículo"
+                    name="campoVehiculo"
+                    [options]="vehiculoServ.tipoUsoTipoVehiculo.tipoVehiculo"
+                    [group]="form">
+
+                </select2>
             </div>
             <div class="col-md-3">
                 <text label="Nº tarjeta de circulación"></text>
@@ -30,16 +40,32 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                <select2 placeholder="Clase" [options]="options"></select2>
+                <select2 placeholder="Clase"
+                [options]="vehiculoServ.motivoColorClase.clase">
+
+            </select2>
             </div>
             <div class="col-md-3">
-                <select2 placeholder="Marca" [options]="options" name="marca" [group]="form"></select2>
+                <select2 placeholder="Marca"
+                    [options]="vehiculoServ.marcaSubmarca.marca"
+                    name="marca"
+                    [group]="form">
+
+                </select2>
             </div>
             <div class="col-md-3">
-                <select2 placeholder="Submarca" [options]="options"></select2>
+                <select2 placeholder="Submarca"
+                    [options]="vehiculoServ.marcaSubmarca.submarca">
+
+                </select2>
             </div>
             <div class="col-md-3">
-                <select2 placeholder="Color" name="color" [(options)]="options" [group]="form"></select2>
+                <select2 placeholder="Color"
+                    name="color"
+                    [options]="vehiculoServ.motivoColorClase.color"
+                    [group]="form">
+
+                </select2>
             </div>
         </div>
         <div class="row">
@@ -66,9 +92,11 @@
             <div class="col-md-3">
                 <text label="Nº motor" name="motor" [group]="form"></text>
             </div>
-        
+
             <div class="col-md-3">
-                <select2 placeholder="Aseguradora" [options]="options" ></select2>
+                <select2 placeholder="Aseguradora"
+                    [options]="vehiculoServ.procedenciaAseguradora.aseguradora" >
+                </select2>
             </div>
         </div>
         <div class="row">
@@ -76,7 +104,9 @@
                 <text label="Factura"></text>
             </div>
             <div class="col-md-3">
-                <text label="Datos tomados de"></text>
+                <select2 placeholder="Datos tomados de"
+                    [options]="vehiculoServ.tipoUsoTipoVehiculo.datosTomadosDe">
+                </select2>
             </div>
             <div class="col-md-3">
                 <text label="Nº póliza"></text>
@@ -89,17 +119,16 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-6">
-                        <text label="Tipo de uso"></text>
+                        <select2 placeholder="Tipo de uso"
+                            [options]="vehiculoServ.tipoUsoTipoVehiculo.tipoUso">
+                        </select2>
                     </div>
                     <div class="col">
-                        <select2 placeholder="Procedencia" [options]="
-                        [
-                        {label:'Procedencia nacional',value:'procedenciaNacional'},
-                        {label:'Procedencia extranjera',value:'procedenciaExtranjera'}]"
-                        [(value)]="model.procedencia"
-                        name="tipoUso"
-                        [group]="form"
-                        ></select2>
+                        <select2 placeholder="Procedencia"
+                            [options]="vehiculoServ.procedenciaAseguradora.procedencia"
+                            name="tipoUso"
+                            [group]="form">
+                        </select2>
                     </div>
                     <div class="col" *ngIf="model.procedencia=='procedenciaExtranjera'">
                         <text label="Pedimento de importación"></text>

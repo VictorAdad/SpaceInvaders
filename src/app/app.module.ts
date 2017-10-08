@@ -29,6 +29,7 @@ import { HttpService } from '@services/http.service';
 import { SelectsService } from '@services/selects.service';
 import { NoticiaHechoService } from '@services/noticia-hecho.service';
 import { LugarService } from '@services/noticia-hecho/lugar.service';
+import { VehiculoService } from '@services/noticia-hecho/vehiculo/vehiculo.service';
 import { JasperoConfirmationsModule } from '@jaspero/ng2-confirmations';
 
 import { MdNativeDateModule, MdIconModule} from '@angular/material';
@@ -129,7 +130,8 @@ import { AgmCoreModule } from '@agm/core';
     HttpService,
     SelectsService,
     NoticiaHechoService,
-    LugarService
+    LugarService,
+    VehiculoService
   ],
   entryComponents: [
     dyanamicComponents

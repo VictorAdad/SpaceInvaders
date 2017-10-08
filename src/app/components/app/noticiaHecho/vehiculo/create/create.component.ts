@@ -7,6 +7,7 @@ import { HttpService} from '@services/http.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { MOption } from '@partials/form/select2/select2.component';
 import { NoticiaHechoGlobal } from '../../global';
+import { VehiculoService } from '@services/noticia-hecho/vehiculo/vehiculo.service';
 
 @Component({
     selector: 'vehiculo-create',
@@ -26,9 +27,11 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         private onLine: OnLineService,
         private http: HttpService,
         private router: Router,
-        private db:CIndexedDB
+        private db:CIndexedDB,
+        private vehiculoServ: VehiculoService
         ) {
         super();
+        console.log('vehiculoserv', this.vehiculoServ);
     }
 
     options:MOption[]=[
