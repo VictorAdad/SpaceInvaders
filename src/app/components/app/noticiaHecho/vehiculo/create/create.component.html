@@ -32,16 +32,18 @@
                 </select2>
             </div>
             <div class="col-md-3">
-                <text label="Nº tarjeta de circulación"></text>
+                <text label="Nº tarjeta de circulación" name="nTarjeta" [group]="form"></text>
             </div>
             <div class="col-md-3">
-                <text label="Nº económico"></text>
+                <text label="Nº económico" name="nEconomico" [group]="form"></text>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3">
                 <select2 placeholder="Clase"
-                [options]="vehiculoServ.motivoColorClase.clase">
+                name="clase"
+                [options]="vehiculoServ.motivoColorClase.clase"
+                [group]="form">
 
             </select2>
             </div>
@@ -55,7 +57,9 @@
             </div>
             <div class="col-md-3">
                 <select2 placeholder="Submarca"
-                    [options]="vehiculoServ.marcaSubmarca.submarca">
+                    name="submarca"
+                    [options]="vehiculoServ.marcaSubmarca.submarca"
+                    [group]="form">
 
                 </select2>
             </div>
@@ -73,18 +77,23 @@
                 <text label="Modelo" name="modelo" [group]="form"></text>
             </div>
             <div class="col-md-3">
-                <text label="Estado de origen de las placas"></text>
+                <select2 placeholder="Estado de origen de las placas"
+                        [(options)]="optionsServ.estados"
+                        name="id"
+                        [group]="form.controls.estadoOrigenPlacas">
+
+                </select2>
             </div>
             <div class="col-md-3">
                 <text label="Placas" name="placas" [group]="form"></text>
             </div>
             <div class="col-md-3">
-                <text label="Placas adicionales"></text>
+                <text label="Placas adicionales" name="placasAdicionales" [group]="form"></text>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3">
-                <text label="Registro federal del vehículo (RFV)"></text>
+                <text label="Registro federal del vehículo (RFV)" name="rfv" [group]="form"></text>
             </div>
             <div class="col-md-3">
                 <text label="Nº serie (VIN)" name="serie" [group]="form"></text>
@@ -95,24 +104,28 @@
 
             <div class="col-md-3">
                 <select2 placeholder="Aseguradora"
-                    [options]="vehiculoServ.procedenciaAseguradora.aseguradora" >
+                    name="aseguradora"
+                    [options]="vehiculoServ.procedenciaAseguradora.aseguradora" 
+                    [group]="form">
                 </select2>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3">
-                <text label="Factura"></text>
+                <text label="Factura" name="factura" [group]="form"></text>
             </div>
             <div class="col-md-3">
                 <select2 placeholder="Datos tomados de"
-                    [options]="vehiculoServ.tipoUsoTipoVehiculo.datosTomadosDe">
+                    name="datosTomadosDe"
+                    [options]="vehiculoServ.tipoUsoTipoVehiculo.datosTomadosDe"
+                    [group]="form">
                 </select2>
             </div>
             <div class="col-md-3">
-                <text label="Nº póliza"></text>
+                <text label="Nº póliza" name="nPoliza" [group]="form"></text>
             </div>
             <div class="col-md-3">
-                <text label="Valor estimado"></text>
+                <text label="Valor estimado" name="valorEstimado" [group]="form"></text>
             </div>
         </div>
         <div class="row">
@@ -120,40 +133,42 @@
                 <div class="row">
                     <div class="col-md-6">
                         <select2 placeholder="Tipo de uso"
-                            [options]="vehiculoServ.tipoUsoTipoVehiculo.tipoUso">
+                            name="tipoUso"
+                            [options]="vehiculoServ.tipoUsoTipoVehiculo.tipoUso"
+                            [group]="form">
                         </select2>
                     </div>
                     <div class="col">
                         <select2 placeholder="Procedencia"
                             [options]="vehiculoServ.procedenciaAseguradora.procedencia"
-                            name="tipoUso"
+                            name="procedencia"
                             [group]="form">
                         </select2>
                     </div>
                     <div class="col" *ngIf="model.procedencia=='procedenciaExtranjera'">
-                        <text label="Pedimento de importación"></text>
+                        <text label="Pedimento de importación" name="pedimentoDeImportacion" [group]="form">></text>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-6">
-                        <checkbox label="¿Lleva cargar?"></checkbox>
+                        <checkbox label="¿Lleva cargar?" name="llevaCarga" [group]="form"></checkbox>
                     </div>
                     <div class="col-md-6">
-                        <checkbox label="¿Alterado? (Nº serie)"></checkbox>
+                        <checkbox label="¿Alterado? (Nº serie)" name="alterado" [group]="form"></checkbox>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
-                <text label="Señas particulares"></text>
+                <text label="Señas particulares"  name="señasParticulares" [group]="form"></text>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <text-area label="Notas"></text-area>
+                <text-area label="Notas" name="notas" [group]="form"></text-area>
             </div>
         </div>
         <div class="row justify-content-end space">

@@ -1,1 +1,4 @@
-<md-checkbox class="example-margin" [(ngModel)]="value" (change)="changeCheck($event);">{{label}}</md-checkbox>
+<div [formGroup]="group">	
+	<md-checkbox class="example-margin" [(ngModel)]="value" formControlName="{{name}}"  
+	name="{{name}}" (change)="changeCheck($event);">{{label}}</md-checkbox>
+</div>

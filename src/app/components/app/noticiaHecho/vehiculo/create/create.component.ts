@@ -8,6 +8,7 @@ import { CIndexedDB } from '@services/indexedDB';
 import { MOption } from '@partials/form/select2/select2.component';
 import { NoticiaHechoGlobal } from '../../global';
 import { VehiculoService } from '@services/noticia-hecho/vehiculo/vehiculo.service';
+import { SelectsService} from '@services/selects.service';
 
 @Component({
     selector: 'vehiculo-create',
@@ -22,6 +23,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     public id: number = null;
 
     constructor(
+        private optionsServ: SelectsService,
         private _fbuilder: FormBuilder,
         private route: ActivatedRoute,
         private onLine: OnLineService,
@@ -32,6 +34,8 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         ) {
         super();
         console.log('vehiculoserv', this.vehiculoServ);
+
+        optionsServ.getEstadoByPais(1);
     }
 
     options:MOption[]=[
@@ -43,33 +47,55 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     ngOnInit() {
         this.model = new Vehiculo();
         this.form = new FormGroup({
-            'motivoRegistro': new FormControl(this.model.motivoRegistro, [Validators.required,]),
-            'campoVehiculo': new FormControl(this.model.campoVehiculo, [Validators.required,]),
-            //'n_tarjeta': new FormControl(this.model.n_tarjeta, [Validators.required,]),
-            //'n_economico': new FormControl(this.model.n_economico, [Validators.required,]),
-            //'clase': new FormControl(this.model.clase, [Validators.required,]),
-            'marca': new FormControl(this.model.marca, [Validators.required,]),
-            //'submarca': new FormControl(this.model.submarca, [Validators.required,]),
-            'color': new FormControl(this.model.color, [Validators.required,]),
-            'modelo': new FormControl(this.model.modelo, [Validators.required,]),
-            //'estado_origen_placas': new FormControl(this.model.estado_origen_placas, [Validators.required,]),
-            'placas': new FormControl(this.model.placas, [Validators.required,]),
-            //'placas_adicionales': new FormControl(this.model.placas_adicionales, [Validators.required,]),
-            //'rfv': new FormControl(this.model.rfv, [Validators.required,]),
-            'serie': new FormControl(this.model.serie, [Validators.required,]),
-            'motor': new FormControl(this.model.motor, [Validators.required,]),
-            //'aseguradora': new FormControl(this.model.aseguradora, [Validators.required,]),
-            //'factura': new FormControl(this.model.factura, [Validators.required,]),
-            //'datos_tomados_de': new FormControl(this.model.datos_tomados_de, [Validators.required,]),
-            //'n_poliza': new FormControl(this.model.n_poliza, [Validators.required,]),
-            //'valor_estimado': new FormControl(this.model.valor_estimado, [Validators.required,]),
-            'tipoUso': new FormControl(this.model.tipoUso, []),
-            //'procedencia': new FormControl(this.model.procedencia, [Validators.required,]),
-            //'pedimento_de_importacion': new FormControl(this.model.pedimento_de_importacion, [Validators.required,]),
-            //'lleva_carga': new FormControl(this.model.lleva_carga, [Validators.required,]),
-            //'alterado': new FormControl(this.model.alterado, [Validators.required,]),
-            //'señas_particulares': new FormControl(this.model.señas_particulares, [Validators.required,])
+            'motivoRegistro'        : new FormControl("", [Validators.required,]),
+            'campoVehiculo'         : new FormControl("", [Validators.required,]),
+            'nTarjeta'             : new FormControl("", [Validators.required,]),
+            'nEconomico'           : new FormControl("", [Validators.required,]),
+            'clase'                 : new FormControl("", [Validators.required,]),
+            'marca'                 : new FormControl("", [Validators.required,]),
+            'submarca'              : new FormControl("", [Validators.required,]),
+            'color'                 : new FormControl("", [Validators.required,]),
+            'modelo'                : new FormControl("", [Validators.required,]),
+            'placas'                : new FormControl("", [Validators.required,]),
+            'placasAdicionales'    : new FormControl("", [Validators.required,]),
+            'rfv'                   : new FormControl("", [Validators.required,]),
+            'serie'                 : new FormControl("", [Validators.required,]),
+            'motor'                 : new FormControl("", [Validators.required,]),
+            'aseguradora'           : new FormControl("", [Validators.required,]),
+            'factura'               : new FormControl("", [Validators.required,]),
+            'datosTomadosDe'      : new FormControl("", [Validators.required,]),
+            'nPoliza'              : new FormControl("", [Validators.required,]),
+            'valorEstimado'        : new FormControl("", [Validators.required,]),
+            'tipoUso'               : new FormControl("", []),
+            'procedencia'           : new FormControl("", [Validators.required,]),
+            'pedimentoDeImportacion': new FormControl("", [Validators.required,]),
+            'llevaCarga'           : new FormControl("", [Validators.required,]),
+            'alterado'              : new FormControl("", [Validators.required,]),
+            'señasParticulares'    : new FormControl("", [Validators.required,]),
+            'notas'                 : new FormControl("", []),
+
+            'marcaSubmarca'         : new FormGroup({
+                'id' : new FormControl("",[])
+            }),
+            'procedenciaAseguradora': new FormGroup({
+                'id'  : new FormControl("",[])
+            }),
+            'tipoUsoVehiculo'       : new FormGroup({
+                'id'    : new FormControl("",[])
+            }),
+            'caso'                  : new  FormGroup({
+                'id'    : new FormControl("",[])
+            }),
+            'estadoOrigenPlacas'  : new FormGroup({
+                'id'    : new FormControl("",[]),
+            }), 
+            'motivoColorClase'       : new FormGroup({
+                'id': new FormControl("",[]),
+            })  
+
         });
+
+        this.form.controls.pedimentoDeImportacion.disable();
 
         this.route.params.subscribe(params => {
             if(params['casoId'])
@@ -95,6 +121,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             }
         });
     }
+    
 
     public save(valid : any, _model : any):void{
         if(this.onLine.onLine){
