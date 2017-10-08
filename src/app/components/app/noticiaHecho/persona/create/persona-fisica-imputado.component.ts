@@ -11,6 +11,7 @@ import { Caso} from '@models/caso'
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { SelectsService} from '@services/selects.service';
+import { PersonaService} from '@services/noticia-hecho/persona/persona.service';
 import { NoticiaHechoGlobal } from '../../global';
 
 @Component({
@@ -44,7 +45,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         private route: ActivatedRoute,
         private onLine: OnLineService,
         private http: HttpService,
-        private options: SelectsService
+        private options: SelectsService,
+        private personaServ: PersonaService
         ) {
         super();
         this.tabla = _tabla;

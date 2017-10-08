@@ -9,6 +9,7 @@ import { NoticiaHechoGlobal } from '../../global';
 import { _config} from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { ArmaService } from '@services/noticia-hecho/arma/arma.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'arma-create',
@@ -167,14 +168,22 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
     }
 
     public fillForm(_data){
+
+        // Observable.of(this.setClaseArma(_data)).subscribe(response => {
+        //     delete _data.clase;
+        //     this.form.patchValue(_data);
+        //     this.form.patchValue({
+        //         // 'clase': _data.claseArma.claseArama,
+        //         'tipo': _data.claseArma.tipo,
+        //         'subtipo': _data.claseArma.subtipo,
+        //         'calibre': _data.calibreMecanismo.calibre,
+        //         'mecanismo': _data.calibreMecanismo.mecanismo,
+        //     });
+        // })
+    }
+
+    public setClaseArma(_data){
         this.form.patchValue(_data);
-        this.form.patchValue({
-            // 'clase': _data.claseArma.claseArama,
-            'tipo': _data.claseArma.tipo,
-            'subtipo': _data.claseArma.subtipo,
-            'calibre': _data.calibreMecanismo.calibre,
-            'mecanismo': _data.calibreMecanismo.mecanismo,
-        });
     }
 
 
@@ -183,10 +192,6 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
 
         if(option=="Arma de fuego"){
            this.isArmaFuego=true;
-           if(this.id != null){
-                delete this.data.clase
-                this.fillForm(this.data);
-            }
         }
         else{
            this.isArmaFuego=false;

@@ -31,6 +31,7 @@ import { NoticiaHechoService } from '@services/noticia-hecho.service';
 import { LugarService } from '@services/noticia-hecho/lugar.service';
 import { VehiculoService } from '@services/noticia-hecho/vehiculo/vehiculo.service';
 import { ArmaService } from '@services/noticia-hecho/arma/arma.service';
+import { PersonaService } from '@services/noticia-hecho/persona/persona.service';
 import { JasperoConfirmationsModule } from '@jaspero/ng2-confirmations';
 
 import { MdNativeDateModule, MdIconModule} from '@angular/material';
@@ -133,6 +134,7 @@ import { AgmCoreModule } from '@agm/core';
     NoticiaHechoService,
     LugarService,
     VehiculoService,
+    PersonaService,
     ArmaService
   ],
   entryComponents: [
