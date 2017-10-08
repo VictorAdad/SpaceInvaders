@@ -8,7 +8,7 @@ import { HttpService} from '@services/http.service';
 import { NoticiaHechoGlobal } from '../../global';
 import { _config} from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
-import { ArmaService } from '@services/noticia-hecho/arma.service';
+import { ArmaService } from '@services/noticia-hecho/arma/arma.service';
 
 @Component({
   selector: 'arma-create',
