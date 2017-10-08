@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '@services/http.service';
-import { MOption } from '@partials/form/select2/select2.component'
 import { MatrizMarcaSubmarca } from './marca-submarca';
 import { MatrizProcedenciaAseguradora } from './procedencia-aseguradora';
 import { MatrizMotivoColorClase } from './motivo-color-clase';

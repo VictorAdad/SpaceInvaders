@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { MOption } from '@partials/form/select2/select2.component'
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Arma } from '@models/arma';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { NoticiaHechoGlobal } from '../../global';
 import { _config} from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
-import { ArmaService } from '@services/noticia-hecho/arma.service';
+import { ArmaService } from '@services/noticia-hecho/arma/arma.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'arma-create',
@@ -18,6 +19,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
 
     public casoId: number = null;
     public id: number = null;
+    public data: any = null;
 
     clasesArmas:MOption[]=[
         {value:"Arma blanca", label:"Arma blanca"},
@@ -25,18 +27,12 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         {value:"Macana", label:"Macana"},
         {value:"Otra", label:"Otra"}
     ];
-    options:MOption[]=[
-        {value:"1", label:"Opcion 1"},
-        {value:"2", label:"Opcion 2"},
-        {value:"3", label:"Opcion 3"}
-    ];
     isArmaFuego  :boolean=false;
     isArmaBlanca :boolean=false;
     public form  : FormGroup;
     public model : Arma;
 
     constructor(
-        private _fbuilder: FormBuilder,
         private route: ActivatedRoute,
         private onLine: OnLineService,
         private http: HttpService,
@@ -48,16 +44,24 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
     }
 
     ngOnInit(){
-        this.model = new Arma();
         this.form  = new FormGroup({
             'clase'           : new FormControl('', [Validators.required,]),
             'tipo'            : new FormControl(''),
             'subtipo'         : new FormControl(''),
             'calibre'         : new FormControl(''),
             'mecanismoAccion' : new FormControl(''),
-            'serie'           : new FormControl(this.model.serie),
-            'notas'           : new FormControl(this.model.notas),
-            'matricula'       : new FormControl(this.model.matricula),
+            'serie'           : new FormControl(''),
+            'notas'           : new FormControl(''),
+            'matricula'       : new FormControl(''),
+            'caso'            : new FormGroup({
+                'id' : new FormControl(''),
+            }),
+            'claseArma' : new FormGroup({
+                'id' : new FormControl(''),
+            }),
+            'calibreMecanismo' : new FormGroup({
+                'id' : new FormControl(''),
+            }),
           });
 
         this.route.params.subscribe(params => {
@@ -67,6 +71,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                 this.id = +params['id'];
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/armas/'+this.id).subscribe(response =>{
+                        this.data = response;
                         this.fillForm(response);
                     });
                 }else{
@@ -86,10 +91,12 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
 
     public save(valid : any, _model : any):void{
         if(this.onLine.onLine){
-            Object.assign(this.model, _model);
-            this.model.caso.id = this.casoId;
+            console.log('Arma Serv', this.armaServ);
+            _model.caso.id             = this.casoId;
+            _model.claseArma.id        = this.armaServ.claseArma.finded[0].id
+            _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id
             
-            this.http.post('/v1/base/armas', this.model).subscribe(
+            this.http.post('/v1/base/armas', _model).subscribe(
                 (response) => {
                     this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
                 },
@@ -98,13 +105,13 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                 }
             );
         }else{
-            Object.assign(this.model, _model);
-            this.model.caso["id"]= this.casoId;
-            // this.model.caso.created = null;
+            _model.caso.id             = this.casoId;
+            _model.claseArma.id        = this.armaServ.claseArma.finded[0].id
+            _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id
             let temId=Date.now();
             let dato={
                 url:'/v1/base/armas',
-                body:this.model,
+                body:_model,
                 options:[],
                 tipo:"post",
                 pendiente:true,
@@ -118,7 +125,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                             caso["arma"]=[];
                         }
                         this.model["id"]=temId;
-                        caso["arma"].push(this.model);
+                        caso["arma"].push(_model);
                         this.db.update("casos",caso).then(t=>{
                             this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
                         });
@@ -161,16 +168,29 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
     }
 
     public fillForm(_data){
+
+        // Observable.of(this.setClaseArma(_data)).subscribe(response => {
+        //     delete _data.clase;
+        //     this.form.patchValue(_data);
+        //     this.form.patchValue({
+        //         // 'clase': _data.claseArma.claseArama,
+        //         'tipo': _data.claseArma.tipo,
+        //         'subtipo': _data.claseArma.subtipo,
+        //         'calibre': _data.calibreMecanismo.calibre,
+        //         'mecanismo': _data.calibreMecanismo.mecanismo,
+        //     });
+        // })
+    }
+
+    public setClaseArma(_data){
         this.form.patchValue(_data);
     }
 
 
 
     claseChange(option){
-        // this.model.clase=option;
 
         if(option=="Arma de fuego"){
-        	console.log(option);
            this.isArmaFuego=true;
         }
         else{
@@ -183,6 +203,8 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         else{
            this.isArmaBlanca=false;
         }
+        
+        this.armaServ.claseArma.find(option, 'claseArma');
     }
 
     }

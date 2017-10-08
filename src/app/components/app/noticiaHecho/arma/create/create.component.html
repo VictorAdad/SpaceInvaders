@@ -15,31 +15,52 @@
 		<form [formGroup]="form">
 			<div class="row">
 				<div class="col-sm-6 col-md-4 col-lg-3">
-					<select2 placeholder= "Clase de Arma" name="clase"  [(value)]="model.clase" [(options)]   ="clasesArmas"  (valueChange)="claseChange($event)" [group]="form">
+					<select2 placeholder= "Clase de Arma"
+						name="clase"
+						[(options)]="armaServ.claseArma.claseArma"
+						(valueChange)="claseChange($event)"
+						[group]="form">
 				    </select2> 
 				</div>
 				<div  *ngIf="isArmaFuego || isArmaBlanca" class="col-sm-6 col-md-4 col-lg-3">
-					<select2 placeholder= "Tipo de Arma" name="tipo" [(options)]="options" [group]="form">
+					<select2 placeholder= "Tipo de Arma"
+						name="tipo"
+						[(options)]="armaServ.claseArma.tipo"
+						(valueChange)="armaServ.claseArma.find($event, 'tipo')"
+						[group]="form">
 					</select2> 
 				</div>
 			</div>
 			<div class="row" *ngIf="isArmaFuego" >
 			 	<div class="col-sm-6 col-md-4 col-lg-3">
-				 		<select2 placeholder= "Subtipo de Arma" name="subtipo" [(options)]="options" [group]="form"></select2> 
+			 		<select2 placeholder= "Subtipo de Arma"
+			 			name="subtipo"
+		 				[(options)]="armaServ.claseArma.subtipo"
+		 				(valueChange)="armaServ.claseArma.find($event, 'subtipo')"
+		 				[group]="form">
+		 			</select2> 
 				</div>
 				 <div class="col-sm-6 col-md-4 col-lg-3">
-				 	<select2 placeholder= "Calibre" name="calibre" [(options)]="options" [group]="form">	
+				 	<select2 placeholder= "Calibre" 
+				 		name="calibre"
+				 		[(options)]="armaServ.calibreMecanismo.calibre"
+				 		(valueChange)="armaServ.calibreMecanismo.find($event, 'calibre')"
+				 		[group]="form">	
 				    </select2> 
 				</div>
 				<div class="col-sm-6 col-md-4 col-lg-3">
-					<select2 placeholder= "Mecanismo de acción" name="mecanismoAccion" [(options)]="options"[group]="form">	
+					<select2 placeholder= "Mecanismo de acción"
+						name="mecanismoAccion"
+						[(options)]="armaServ.calibreMecanismo.mecanismo"
+						(valueChange)="armaServ.calibreMecanismo.find($event, 'mecanismo')"
+						[group]="form">	
 				    </select2> 
 				</div>
 				<div class="col-sm-6 col-md-4 col-lg-3">
-					<text label="Serie" name="serie" [(value)]="model.serie" [group]="form"></text>  
+					<text label="Serie" name="serie" [group]="form"></text>  
 				</div>
 				<div class="col-sm-6 col-md-4 col-lg-3">
-					<text label="Matrícula" name="matricula" [(value)]="model.matricula" [group]="form"></text>  
+					<text label="Matrícula" name="matricula" [group]="form"></text>  
 				</div>
 			</div>
 

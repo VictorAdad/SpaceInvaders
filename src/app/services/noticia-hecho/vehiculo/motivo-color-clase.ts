@@ -1,7 +1,7 @@
 import { HttpService } from '@services/http.service';
-import { Global } from '../global';
+import { MatrizGlobal } from '../matriz-global';
 
-export class MatrizMotivoColorClase extends Global{
+export class MatrizMotivoColorClase extends MatrizGlobal{
 
     public motivoRegistro = [];
     public clase          = [];

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '@services/http.service';
 import { MOption } from '@partials/form/select2/select2.component'
-import { Global } from './global';
+import { MatrizGlobal } from './matriz-global';
 
 @Injectable()
-export class LugarService extends Global{
+export class LugarService extends MatrizGlobal{
 
     public selected       = new Selected();
     public finded         = [];
