@@ -56,20 +56,20 @@
               <div class="col-md-10">
               <radiobutton class="col-md-3" [(value)]="tipoInterviniente" [radios]="
                         [
-                        {label:'Apoderado legal',value:'Apoderado legal'},
-                        {label:'Defensor público',value:'Defensor publico'},
-                        {label:'Representante legal',value:'Representante legal'},
-                        {label:'Asesor jurídico privado',value:'Asesor juridico privado'},
+                        {label:'Apoderado legal',value:'1'},
+                        {label:'Defensor público',value:'2'},
+                        {label:'Representante legal',value:'3'},
+                        {label:'Asesor jurídico privado',value:'4'},
                         {label:'Imputado',value:'Imputado'},
                         {label:'Testigo',value:'Testigo'},
-                        {label:'Asesor jurídico público',value:'Asesor jurídico público'},
-                        {label:'Ofendido',value:'Ofendido'},
-                        {label:'Víctima',value:'Víctima'},
-                        {label:'Defensor privado',value:'Defensor privado'},
-                        {label:'Remitente(policía)',value:'Remitente(policía)'}
+                        {label:'Asesor jurídico público',value:'5'},
+                        {label:'Ofendido',value:'6'},
+                        {label:'Víctima',value:'7'},
+                        {label:'Defensor privado',value:'8'},
+                        {label:'Remitente(policía)',value:'9'}
                         ]
                         
-              " name="tipoInterviniente" [group]="form" (valueChange)="changeTipoInterviniente($event)"></radiobutton>
+              " name="id" [group]="form.controls.tipoInterviniente" (valueChange)="changeTipoInterviniente($event)"></radiobutton>
               </div>
               </div>
             </div>

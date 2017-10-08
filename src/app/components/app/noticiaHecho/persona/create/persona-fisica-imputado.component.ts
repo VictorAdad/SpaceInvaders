@@ -101,7 +101,9 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
         return new FormGroup({
             'tipoPersona'      : new FormControl("", [Validators.required,]),
-            'tipoInterviniente': new FormControl("", [Validators.required,]),
+            'tipoInterviniente': new FormGroup({
+                'id': new FormControl("", [Validators.required,]),
+            }),
             'nombre'           : new FormControl("", [Validators.required,]),
             'paterno'          : new FormControl("", [Validators.required,]),
             'materno'          : new FormControl("", [Validators.required,]),
