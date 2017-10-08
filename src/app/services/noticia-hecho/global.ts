@@ -13,12 +13,17 @@ export class Global {
 
     public getMatriz(url: string){
         this.superHttp.get(url).subscribe((response) => {
+            this.objects = response;
             for(let attr in this){
                 if(
                     String(attr) !== 'selected'
+                    && String(attr) !== 'finded'
+                    && String(attr) !== 'objects'
                     && String(attr) !== 'getUniques'
                     && String(attr) !== 'getUnique'
-                    && String(attr) !== 'constructor'){
+                    && String(attr) !== 'constructor'
+                    && String(attr) !== 'find'
+                    && String(attr) !== 'validate'){
                     this[String(attr)] = this.getUniques(response, attr);
                 }
             }
