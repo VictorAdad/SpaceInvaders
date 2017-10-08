@@ -16,7 +16,7 @@
 <md-table #table [dataSource]="dataSource">
 	<ng-container mdColumnDef="tipo">
 		<md-header-cell *mdHeaderCellDef> Tipo de interviniente </md-header-cell>
-		<md-cell *mdCellDef="let element"> {{element.tipoInterviniente}} </md-cell>
+		<md-cell *mdCellDef="let element"> {{element.tipoInterviniente.tipo}} </md-cell>
 	</ng-container>
 
 	<!-- Name Column -->
