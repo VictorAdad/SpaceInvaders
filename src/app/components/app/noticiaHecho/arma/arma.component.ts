@@ -34,8 +34,8 @@ export class ArmaComponent{
                 }else{
                     this.db.get("casos",this.casoId).then(caso=>{
                         if (caso){
-                            if(caso["arma"]){
-                                this.dataSource = new TableService(this.paginator, caso["arma"]);
+                            if(caso["armas"]){
+                                this.dataSource = new TableService(this.paginator, caso["armas"] as Arma[]);
                             }
                         }
                     });
@@ -45,7 +45,9 @@ export class ArmaComponent{
   	}
 
     public changePage(_e){
-        this.page('/v1/base/casos/'+this.casoId+'/armas?p='+_e.pageIndex+'&tr='+_e.pageSize);
+        if(this.onLine.onLine){
+            this.page('/v1/base/casos/'+this.casoId+'/armas?p='+_e.pageIndex+'&tr='+_e.pageSize);
+        }
     }  
 
     public page(url: string){
