@@ -1,7 +1,7 @@
 import { HttpService } from '@services/http.service';
-import { Global } from '../global';
+import { MatrizGlobal } from '../matriz-global';
 
-export class MatrizCalibreMecanismo extends Global{
+export class MatrizCalibreMecanismo extends MatrizGlobal{
 
     public mecanismo   = [];
     public calibre     = [];

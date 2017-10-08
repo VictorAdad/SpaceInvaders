@@ -1,7 +1,7 @@
 import { MOption } from '@partials/form/select2/select2.component';
 import { HttpService } from '@services/http.service';
 
-export class Global {
+export class MatrizGlobal {
 
     public selected;
     public finded   = [];
