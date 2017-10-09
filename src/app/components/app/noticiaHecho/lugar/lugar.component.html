@@ -22,17 +22,17 @@
 
     <ng-container mdColumnDef="colonia">
         <md-header-cell *mdHeaderCellDef> Colonia </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.colonia}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.coloniaOtro || element.colonia?.nombre}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="localidad">
         <md-header-cell *mdHeaderCellDef> Localidad </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.localidad}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.municipioOtro || element.municipio?.nombre}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="estado">
         <md-header-cell *mdHeaderCellDef> Estado </md-header-cell>
-        <md-cell  *mdCellDef="let element"> {{element.estado}} </md-cell>
+        <md-cell  *mdCellDef="let element"> {{element.estadoOtro || element.estado?.nombre}} </md-cell>
     </ng-container>
 
     <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
