@@ -76,6 +76,13 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
 
 
+    victimasOptions:MOption[]=[];
+    defensoresOptions:MOption[]=[];
+    asesorOptions:MOption[]=[];
+    imputadoOptions:MOption[]=[];
+    representanteOptions:MOption[]=[];
+
+
     constructor(
         private _fbuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -99,8 +106,12 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
           'modalidad'                : new FormControl(this.model.modalidad,[Validators.required,]),
           'delito'                   : new FormControl(this.model.delito,[Validators.required,]),
           'formaComision'            : new FormControl(this.model.formaComision,[Validators.required,]),
-          'imputado'                 : new FormControl(this.model.imputado,[Validators.required,]),
-          'victima'                  : new FormControl(this.model.victima,[Validators.required,]),
+          'personaCaso'                 : new FormGroup({
+            'id'                     : new FormControl(this.model.imputado,[Validators.required,]),
+            }),
+          'personaCasoRelacionada'   : new FormGroup({
+            'id'                     : new FormControl(this.model.victima,[Validators.required,]),
+            }),
           'lugar'                    : new FormControl(this.model.lugar,[Validators.required,]),
           'formaAccion'              : new FormControl(this.model.formaAccion,[Validators.required,]),
           'elementosComision'        : new FormControl(this.model.elementosComision,[Validators.required,]),
@@ -175,11 +186,40 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                    });
                 }
             }
-        });      
+        });
+
+
+      if(this.onLine.onLine){
+        this.http.get('/v1/base/casos/'+this.casoId+'/personas-casos').subscribe((response) => {
+            response.data.forEach(object => {
+                //victima u ofendido
+                let persona=object["persona"];
+                let tipoInterviniente=object["tipoInterviniente"];
+                if (tipoInterviniente["id"] == 8 ||  tipoInterviniente["id"] == 9){
+                  this.victimasOptions.push({value: object.id,label:persona["nombre"]+" "+persona["paterno"]+" "+persona["materno"]});
+                }
+                //defensor publico o defensor privado
+                if (tipoInterviniente["id"] == 2 ||  tipoInterviniente["id"] == 10){
+                  this.defensoresOptions.push({value: object.id,label:persona["nombre"]+" "+persona["paterno"]+" "+persona["materno"]});
+                }
+                //Asesor juridico publico o Asesor juridico privado
+                if (tipoInterviniente["id"] == 4 ||  tipoInterviniente["id"] == 7){
+                  this.asesorOptions.push({value: object.id,label:persona["nombre"]+" "+persona["paterno"]+" "+persona["materno"]});
+                }
+                //defensor publico o defensor privado
+                if (tipoInterviniente["id"] == 5){
+                  this.imputadoOptions.push({value: object.id,label:persona["nombre"]+" "+persona["paterno"]+" "+persona["materno"]});
+                }
+            });
+
+            console.log(this);
+            
+        });
+      }
     }
 
-
     save(_valid : any, _model : any):void{
+        console.log("Datos a guardar => ",_model);
         if(this.onLine.onLine){
             Object.assign(this.model, _model);
             this.model.caso.id = this.casoId;
@@ -250,28 +290,51 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         this.relacionForm.patchValue(_data);
     }
 
+    activaCamposImputado(opt){
+      if (opt){
+        this.relacionForm.controls.modalidad.enable();
+        this.relacionForm.controls.delito.enable();
+        this.relacionForm.controls.formaComision.enable();
+        this.relacionForm.controls.lugar.enable();
+        this.relacionForm.controls.elementosComision.enable();
+        this.relacionForm.controls.formaAccion.enable();
+      }else{
+        this.relacionForm.controls.modalidad.disable();
+        this.relacionForm.controls.delito.disable();
+        this.relacionForm.controls.formaComision.disable();
+        this.relacionForm.controls.lugar.disable();
+        this.relacionForm.controls.elementosComision.disable();
+        this.relacionForm.controls.formaAccion.disable();
+      }
+    }
+
     changeTipoRelacion(option){
       console.log('--> '+option);
       this.resetValues();
       switch(option){
         case 'Defensor':{
           this.isDefensorImputado = true;
+          this.activaCamposImputado(false);
           break;
         }
         case 'Imputado':{
           this.isImputadoVictimaDelito = true;
+          this.activaCamposImputado(true);
           break;
         }
         case 'Asesor':{
           this.isAsesorJuridicoVictima = true;
+          this.activaCamposImputado(false);
           break;
         }
         case 'Representante':{
           this.isRepresentanteVictima = true;
+          this.activaCamposImputado(false);
           break;
         }
         case 'Tutor':{
           this.isTutorVictima = true;
+          this.activaCamposImputado(false);
           break;
         }
       }

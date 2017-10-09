@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
 	selector    : 'checkbox',
@@ -8,6 +8,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class CheckboxComponent{
 	@Input() label : string;
 	@Input() value : string;
+	@Input() name  : string  = '';
+	@Input() group : FormGroup = new FormGroup({});
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>()
 
