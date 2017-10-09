@@ -15,7 +15,7 @@ export class MatrizLabioOjo extends MatrizGlobal{
         ) {
         super(http);
         this.selected = new LabioOjo();
-        this.getMatriz('/v1/catalogos/media-filacion/labio-ojo');
+        this.getMatriz('/v1/catalogos/media-filiacion/labio-ojo');
     }
 
     public validate(_object: any, _selected: any): boolean{

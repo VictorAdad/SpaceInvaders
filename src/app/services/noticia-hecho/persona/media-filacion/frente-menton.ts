@@ -13,7 +13,7 @@ export class MatrizFrenteMenton extends MatrizGlobal {
 	constructor (private http: HttpService){
 		super(http);
         this.selected = new FrenteMenton();
-        this.getMatriz('/v1/catalogos/media-filacion/FrenteMenton');
+        this.getMatriz('/v1/catalogos/media-filiacion/frente-menton');
 	}
 
 	public validate(_object: any, _selected: any): boolean{

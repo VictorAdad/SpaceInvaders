@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { Router, Params, NavigationEnd, ActivatedRoute} from "@angular/router";
 import "rxjs/add/operator/filter";
 
@@ -22,6 +22,9 @@ export class BreadcrumbComponent implements OnInit {
 
   public breadcrumb: IBreadcrumb;
 
+  @Input()
+  public rutas = [];
+
   /**
    * @class DetailComponent
    * @constructor
@@ -44,9 +47,7 @@ export class BreadcrumbComponent implements OnInit {
    */
   ngOnInit() {
     let url = this.router.url;
-    // console.log(this.activeRoute);
     this.breadcrumb=this.dataRouting(this.router.url, this.router.config, this.router);
-    // console.log('-> Breadcrumb ', this.breadcrumb);
   }
 
   dataRouting(theUrl, config, router){
@@ -63,17 +64,23 @@ export class BreadcrumbComponent implements OnInit {
     this.activeRoute.data.subscribe(data => {
         console.log('-> Data Route', data);
         if (data){
-            if(data.rutas){
-                breadcrumb.childs=data.rutas;
+            if(this.rutas.length === 0){
+              if(data.rutas){
+                  breadcrumb.childs=data.rutas;
+              }
+            }else{
+              breadcrumb.childs = this.rutas;
             }
             if (data.breadcrumb)
                 breadcrumb.label=data.breadcrumb;
         }
     });
+
     return breadcrumb;
 
 
   }
+
   
 
 }

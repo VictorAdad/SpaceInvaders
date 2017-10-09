@@ -14,7 +14,7 @@ export class MatrizCabello extends MatrizGlobal{
         ) {
         super(http);
         this.selected = new Cabello();
-        this.getMatriz('/v1/catalogos/media-filacion/cabello');
+        this.getMatriz('/v1/catalogos/media-filiacion/cabello');
     }
 
     public validate(_object: any, _selected: any): boolean{
