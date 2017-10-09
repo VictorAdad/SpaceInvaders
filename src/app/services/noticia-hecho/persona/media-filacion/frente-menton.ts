@@ -10,7 +10,7 @@ export class MatrizFrenteMenton extends MatrizGlobal {
 	public formaMenton		        = [];
 	public inclinacionMenton		= [];
 
-	constructor (private http:service){
+	constructor (private http: HttpService){
 		super(http);
         this.selected = new FrenteMenton();
         this.getMatriz('/v1/catalogos/media-filacion/FrenteMenton');
@@ -27,12 +27,13 @@ export class MatrizFrenteMenton extends MatrizGlobal {
             )
     }
 
-    export class FrenteMenton {
-    	public alturaFrente: string = '';
-    	public inclinacionFrente: string = '';
-    	public anchoFrente: string = '';
-    	public tipoMenton: string = '';
-    	public formaMenton: string = '';
-    	public inclinacionMenton: string = '';
-    }
+}
+
+export class FrenteMenton {
+        public alturaFrente: string = '';
+        public inclinacionFrente: string = '';
+        public anchoFrente: string = '';
+        public tipoMenton: string = '';
+        public formaMenton: string = '';
+        public inclinacionMenton: string = '';
 }

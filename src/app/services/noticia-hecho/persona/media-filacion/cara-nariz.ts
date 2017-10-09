@@ -10,7 +10,7 @@ export class MatrizCaraNariz extends MatrizGlobal {
 	public baseNariz		= [];
 	public alturaNariz		= [];
 
-	constructor (private http:service){
+	constructor (private http: HttpService){
 		super(http);
         this.selected = new CaraNariz();
         this.getMatriz('/v1/catalogos/media-filacion/CaraNariz');
@@ -27,12 +27,13 @@ export class MatrizCaraNariz extends MatrizGlobal {
         )    
     }
 
-    export class CaraNariz {
-    	public formaCara: string = '';
-    	public raizNariz: string = '';
-    	public dorsoNariz: string = '';
-    	public anchoNariz: string = '';
-    	public baseNariz: string = '';
-    	public alturaNariz: string = '';
-    }
+}
+
+export class CaraNariz {
+        public formaCara: string = '';
+        public raizNariz: string = '';
+        public dorsoNariz: string = '';
+        public anchoNariz: string = '';
+        public baseNariz: string = '';
+        public alturaNariz: string = '';
 }
