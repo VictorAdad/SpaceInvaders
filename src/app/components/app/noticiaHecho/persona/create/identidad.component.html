@@ -40,7 +40,7 @@
     </div>
 
     <div class="col-md-2">
-      <select2 [options]="options.nacionalidad" placeholder="Nacionalidad" name="id" [group]="globals.form.controls.nacionalidad"></select2>
+      <select2 [options]="personaServ.nacionalidadReligion.nacionalidad" placeholder="Nacionalidad" name="id" [group]="globals.form.controls.nacionalidad"></select2>
     </div>
     <div class="col-md-2">
       <select2 [options]="options.paises" placeholder="País de nacimiento"  name="id" [group]="globals.form.controls.pais" (valueChange)="changePais($event)"></select2>
@@ -86,8 +86,7 @@
       [{value:true,label:'Si'},{value:false,label:'No'}]" placeholder="Habla Español" ></select2>
     </div>
     <div class="col-md-2">
-      <select2 [options]="
-      []" placeholder="Lengua Índigena" ></select2>
+      <select2 [options]="personaServ.idiomaIdentificacion.lenguaIndigena" placeholder="Lengua Índigena" ></select2>
     </div>
     <div class="col-md-2">
        <select2 [options]="options.grupoEtnico" placeholder="Grupo étnico" name="id" [group]="globals.form.controls.grupoEtnico"></select2>
@@ -98,8 +97,7 @@
     </div>
 
     <div class="col-md-2">
-     <select2 [options]="
-      []" placeholder="Familia ligüistica" ></select2>
+     <select2 [options]="personaServ.idiomaIdentificacion.familiaLinguistica" placeholder="Familia lingüistica" ></select2>
     </div>
     <div class="col-md-2">
       <select2 [options]="options.interprete" placeholder="Necesita interprete" ></select2>
