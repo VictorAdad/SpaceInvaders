@@ -27,6 +27,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     persona:Persona;
     caso:Caso;
     tabla: CIndexedDB;
+    public breadcrumb = [];
 
     forma=[{label:"Redonda", value:"Redonda"},{label:"Eliptica",value:"Eliptica"}];
     helixOriginal=[{label:"Si", value:"Si"},{label:"No",value:"No"}];
@@ -68,8 +69,10 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         this.globals = new PersonaGlobals(this.form,this.persona);
         this.globals.form.controls.razonSocial.disable();
         this.route.params.subscribe(params => {
-            if(params['casoId'])
+            if(params['casoId']){
                 this.casoId = +params['casoId'];
+                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho`,label:"Detalle noticia de hechos"})
+            }
             if(!this.onLine.onLine){
                 if (!isNaN(this.casoId)){
                     this.tabla.get("casos",this.casoId).then(
@@ -147,6 +150,41 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 'municipioOtro': new FormControl("",[]),
                 'coloniaOtro': new FormControl("",[]),
                 'localidadOtro': new FormControl("",[]),
+            }),
+            'mediaFilacion': new FormGroup({
+                'orejaDerecha': new FormGroup({
+                    'id': new FormControl("",[]),
+                }),
+                'orejaIzquierda': new FormGroup({
+                    'id': new FormControl("",[]),
+                }),
+                'complexionPielSangre': new FormGroup({
+                    'id': new FormControl("",[]),
+                }),
+                'caraNariz': new FormGroup({
+                    'id': new FormControl("",[]),
+                }),
+                'frenteMenton': new FormGroup({
+                    'id': new FormControl("",[]),
+                }),
+                'cejaBoca': new FormGroup({
+                    'id': new FormControl("",[]),
+                }),
+                'cabello': new FormGroup({
+                    'id': new FormControl("",[]),
+                }),
+                'labioOjo': new FormGroup({
+                    'id': new FormControl("",[]),
+                }),
+                'usaAnteojos': new FormControl("",[]),
+                'cicatrices': new FormControl("",[]),
+                'tatuajes': new FormControl("",[]),
+                'lunares': new FormControl("",[]),
+                'disminucionesFisicas': new FormControl("",[]),
+                'protesis': new FormControl("",[]),
+                'otras': new FormControl("",[]),
+                'estatura': new FormControl("",[]),
+                'peso': new FormControl("",[]),
             }),
             'sexo': new FormGroup({
                 'id': new FormControl("",[]),
