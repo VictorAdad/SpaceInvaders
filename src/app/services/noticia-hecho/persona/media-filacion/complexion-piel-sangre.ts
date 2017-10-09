@@ -3,9 +3,10 @@ import { MatrizGlobal } from '../../matriz-global';
 
 export class MatrizComplexionPielSangre extends MatrizGlobal{
 
-    public tipoComplexion = [];
-    public colorPiel      = [];
-    public tipoSangre     = [];
+    public tipoComplexion     = [];
+    public colorPiel          = [];
+    public tipoSangre         = [];
+    public factorRhSangre     = [];
 
     constructor(
         private http: HttpService
@@ -19,7 +20,9 @@ export class MatrizComplexionPielSangre extends MatrizGlobal{
         return (
             _object.tipoComplexion === _selected.tipoComplexion 
             && _object.colorPiel === _selected.colorPiel
-            && _object.tipoSangre === _selected.tipoSangre);
+            && _object.tipoSangre === _selected.tipoSangre
+            && _object.factorRhSangre === _selected.factorRhSangre
+            );
     }
 }
 
@@ -27,4 +30,5 @@ export class ComplexionPielSangre {
     public tipoComplexion: string = '';
     public colorPiel: string = '';
     public tipoSangre: string = '';
+    public factorRhSangre: string = '';
 }
