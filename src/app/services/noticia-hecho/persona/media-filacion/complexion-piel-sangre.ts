@@ -13,7 +13,7 @@ export class MatrizComplexionPielSangre extends MatrizGlobal{
         ) {
         super(http);
         this.selected = new ComplexionPielSangre();
-        this.getMatriz('/v1/catalogos/media-filacion/complexion-piel-sangre');
+        this.getMatriz('/v1/catalogos/media-filiacion/complexion-piel-sangre');
     }
 
     public validate(_object: any, _selected: any): boolean{

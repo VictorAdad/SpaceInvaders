@@ -15,7 +15,7 @@ export class MatrizCejaBoca extends MatrizGlobal{
         ) {
         super(http);
         this.selected = new CejaBoca();
-        this.getMatriz('/v1/catalogos/media-filacion/CejaBoca');
+        this.getMatriz('/v1/catalogos/media-filiacion/ceja-boca');
     }
 
     public validate(_object: any, _selected: any): boolean{

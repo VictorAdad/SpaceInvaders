@@ -18,7 +18,7 @@ export class MatrizOreja extends MatrizGlobal{
         ) {
         super(http);
         this.selected = new Oreja();
-        this.getMatriz('/v1/catalogos/media-filacion/oreja');
+        this.getMatriz('/v1/catalogos/media-filiacion/oreja');
     }
 
     public validate(_object: any, _selected: any): boolean{

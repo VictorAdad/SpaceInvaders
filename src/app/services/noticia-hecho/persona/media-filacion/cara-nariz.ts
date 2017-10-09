@@ -13,7 +13,7 @@ export class MatrizCaraNariz extends MatrizGlobal {
 	constructor (private http: HttpService){
 		super(http);
         this.selected = new CaraNariz();
-        this.getMatriz('/v1/catalogos/media-filacion/CaraNariz');
+        this.getMatriz('/v1/catalogos/media-filiacion/cara-nariz');
 	}
 
 	public validate(_object: any, _selected: any): boolean{
