@@ -20,6 +20,7 @@ export class AcuerdoGeneralComponent {
     public haveCaso: boolean=false;
 	@ViewChild(MdPaginator) 
     paginator: MdPaginator;
+    public breadcrumb = [];
 
 
 	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
@@ -28,6 +29,7 @@ export class AcuerdoGeneralComponent {
             if(params['casoId']){
             	this.haveCaso=true;
                 this.casoId = +params['casoId'];
+                this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
                 this.http.get('/v1/base/acuerdosgenerales').subscribe((response) => {
                     console.log('response acuerdo');
                     console.log(response.data);

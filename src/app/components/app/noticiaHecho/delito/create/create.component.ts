@@ -23,6 +23,8 @@ import { OnLineService} from '@services/onLine.service';
 export class DelitoCreateComponent{
 
     public casoId: number = null;
+    public breadcrumb = [];
+
     id:number;
     caso:Caso;
 
@@ -36,8 +38,11 @@ export class DelitoCreateComponent{
     ngOnInit(){
         this.route.params.subscribe(params => {
             console.log("params",params);
-            if(params['casoId'])
+            if(params['casoId']){
                 this.casoId = +params['casoId'];
+                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho`,label:"Detalle noticia de hechos"})
+
+            }
             if(params['id']){
                 this.id = +params['id'];
                 if(this.onLine.onLine){

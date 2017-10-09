@@ -13,7 +13,7 @@ import { CIndexedDB } from '@services/indexedDB';
 })
 
 export class FacultadesNoInvestigarComponent {
-
+  public breadcrumb = [];
   public apiUrl = '/v1/base/facultad-no-investigar';
   displayedColumns = ['Remitente', 'Motivos', 'Creado por', 'Fecha'];
   public dataSource: TableService | null;
@@ -34,6 +34,7 @@ export class FacultadesNoInvestigarComponent {
           this.data = response as FacultadNoInvestigar[];
           this.dataSource = new TableService(this.paginator, this.data);
         });
+        this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});
       }
 
     });

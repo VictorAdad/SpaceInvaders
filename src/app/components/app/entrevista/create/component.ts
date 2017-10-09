@@ -8,12 +8,16 @@ import { TableService} from '@utils/table/table.service';
 })
 export class EntrevistaCreateComponent {
 	public casoId: number = null;
+	public breadcrumb = [];
 	constructor(private route: ActivatedRoute){}
 
 	ngOnInit() {
     	this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
+            if(params['id']){
+				this.casoId = +params['id'];
+				this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});
+			}
+                
         });
   	}
 

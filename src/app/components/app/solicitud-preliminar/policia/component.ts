@@ -18,6 +18,7 @@ export class PoliciaComponent {
     public haveCaso: boolean=false;
 	@ViewChild(MdPaginator) 
 	paginator: MdPaginator;
+    public breadcrumb = [];
 
 	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
 	ngOnInit() {
@@ -25,6 +26,7 @@ export class PoliciaComponent {
             if(params['casoId']){
             	this.haveCaso=true;
                 this.casoId = +params['casoId'];
+                this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
                 this.http.get('/v1/base/policias').subscribe((response) => {
                     this.data = response.data as SolicitudServicioPolicial[];
                     this.dataSource = new TableService(this.paginator, this.data);

@@ -11,6 +11,7 @@ import { CIndexedDB } from '@services/indexedDB';
     templateUrl:'./component.html',
 })
 export class ArchivoTemporalComponent {
+	public breadcrumb = [];
 	public apiUrl='/v1/base/acuerdosradicacion';
 	columns = ['creadoPor', 'fechaCreacion'];
 	public dataSource: TableService | null;
@@ -31,6 +32,7 @@ export class ArchivoTemporalComponent {
 				this.data = response as ArchivoTemporal[];
 				this.dataSource = new TableService(this.paginator, this.data);
 			});
+			this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});
 		}
 
 	});  

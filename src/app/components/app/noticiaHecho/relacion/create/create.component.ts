@@ -37,6 +37,9 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     public casoId: number = null;
     public id: number = null;
 
+    public breadcrumb = [];
+
+
     tiposRelacion:MOption[] = [
         { value:'Defensor', label:'Defensor del imputado' },
         { value:'Imputado', label:'Imputado-Víctima-Delito' },
@@ -102,36 +105,71 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
       this.hostigamiento= new HostigamientoAcoso;
 
       this.relacionForm  = new FormGroup({
-          'tipo'                     : new FormControl(this.model.tipo, [Validators.required,]),
-          'modalidad'                : new FormControl(this.model.modalidad,[Validators.required,]),
-          'delito'                   : new FormControl(this.model.delito,[Validators.required,]),
-          'formaComision'            : new FormControl(this.model.formaComision,[Validators.required,]),
-          'personaCaso'                 : new FormGroup({
-            'id'                     : new FormControl(this.model.imputado,[Validators.required,]),
+          'tipo'                      : new FormControl(this.model.tipo, [Validators.required,]),
+          'personaCaso'                : new FormGroup({
+            'id'                       : new FormControl(this.model.imputado,[Validators.required,]),
             }),
-          'personaCasoRelacionada'   : new FormGroup({
-            'id'                     : new FormControl(this.model.victima,[Validators.required,]),
+          'personaCasoRelacionada'     : new FormGroup({
+            'id'                       : new FormControl(this.model.victima,[Validators.required,]),
             }),
-          'lugar'                    : new FormControl(this.model.lugar,[Validators.required,]),
-          'formaAccion'              : new FormControl(this.model.formaAccion,[Validators.required,]),
-          'elementosComision'        : new FormControl(this.model.elementosComision,[Validators.required,]),
-          'consultorDelito'          : new FormControl(this.model.consultorDelito),
-          'concursoDelito'           : new FormControl(this.model.concursoDelito),
-          'clasificacionDelitoOrden' : new FormControl(this.model.clasificacionDelitoOrden),
-          'clasificacion'            : new FormControl(this.model.clasificacion),
-          'consumacion'              : new FormControl(this.model.consumacion),
-          'gradoParticipacion'       : new FormControl(this.model.gradoParticipacion),
-          'relacionAcusadoOfendido'  : new FormControl(this.model.relacionAcusadoOfendido),
-          'formaConducta'            : new FormControl(this.model.formaConducta),
-          'tipoDesaparicion'         : new FormControl(this.model.tipoDesaparicion),
-          'flagrancia'               : new FormControl(this.model.flagrancia),       
-          'violenciaGenero'          : new FormControl(this.model.violenciaGenero),
-          'tipoViolenciaGenero'      : new FormControl(this.model.tipoViolenciaGenero),
-          'victimaDelincuenciaOrganizada': new FormControl(this.model.victimaDelincuenciaOrganizada),
-          'victimaViolenciaGenero'    : new FormControl(this.model.victimaViolenciaGenero),
-          'victimaTrata'              :new FormControl(this.model.victimaTrata),
-          'victimaAcoso'              :new FormControl(this.model.victimaAcoso),
-          'ordenProteccion'           :new FormControl(this.model.ordenProteccion),
+          'detalleDelito'              : new FormGroup({
+            'modalidadDelito'              : new FormGroup({               
+              'id': new FormControl(this.model.modalidad,[Validators.required,]),
+            }),
+            'formaComision'            : new FormGroup({               
+              'id': new FormControl(this.model.modalidad,[Validators.required,]),
+            }),
+            'delitoCaso': new FormGroup({               
+              'id': new FormControl(this.model.modalidad,[Validators.required,]),
+            }),
+            'concursoDelito'           : new FormGroup({               
+              'id': new FormControl(this.model.modalidad,[Validators.required,]),
+            }),
+            'clasificacionDelitoOrden' : new FormGroup({               
+              'id': new FormControl(this.model.modalidad,[Validators.required,]),
+            }),
+            'caso': new FormGroup({
+                    'id': new FormControl("",[]),
+                }),
+            'elementosComision'        : new FormGroup({
+                    'id': new FormControl("",[]),
+                }),
+            'clasificacionDelito'      : new FormGroup({
+                    'id': new FormControl("",[]),
+                }),
+            'formaAccion'              : new FormGroup({
+                    'id': new FormControl("",[]),
+                }),
+            'desaparicionConsumada': new FormGroup({
+                    'id': new FormControl("",[]),
+                }),
+            'gradoParticipacion': new FormGroup({
+                    'id': new FormControl("",[]),
+                }),
+            'formaConducta': new FormGroup({
+                    'id': new FormControl("",[]),
+                }),
+            'violenciaGenero'          : new FormControl(this.model.violenciaGenero),
+            'flagrancia'               : new FormControl(this.model.flagrancia),  
+          }),
+          // 'lugar'                    : new FormControl(this.model.lugar,[Validators.required,]),
+          
+          
+          // 'consultorDelito'          : new FormControl(this.model.consultorDelito),
+          
+          
+          
+          // 'relacionAcusadoOfendido'  : new FormControl(this.model.relacionAcusadoOfendido),
+          
+          // 'tipoDesaparicion'         : new FormControl(this.model.tipoDesaparicion),
+               
+          
+          // 'tipoViolenciaGenero'      : new FormControl(this.model.tipoViolenciaGenero),
+          // 'victimaDelincuenciaOrganizada': new FormControl(this.model.victimaDelincuenciaOrganizada),
+          // 'victimaViolenciaGenero'    : new FormControl(this.model.victimaViolenciaGenero),
+          // 'victimaTrata'              :new FormControl(this.model.victimaTrata),
+          // 'victimaAcoso'              :new FormControl(this.model.victimaAcoso),
+          // 'ordenProteccion'           :new FormControl(this.model.ordenProteccion),
 
         });
       this.efectoViolenciaForm  = new FormGroup({
@@ -167,6 +205,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 this.casoId = params['casoId'];
                 this.optionsNoticia.setId(this.casoId);
                 this.optionsNoticia.getData();
+                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho`,label:"Detalle noticia de hechos"})
+
             }
             if(params['id']){
                 this.id = +params['id'];
@@ -292,19 +332,21 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
     activaCamposImputado(opt){
       if (opt){
-        this.relacionForm.controls.modalidad.enable();
-        this.relacionForm.controls.delito.enable();
-        this.relacionForm.controls.formaComision.enable();
-        this.relacionForm.controls.lugar.enable();
-        this.relacionForm.controls.elementosComision.enable();
-        this.relacionForm.controls.formaAccion.enable();
+        // this.relacionForm.controls.modalidad.enable();
+        // this.relacionForm.controls.delito.enable();
+        // this.relacionForm.controls.formaComision.enable();
+        // this.relacionForm.controls.lugar.enable();
+        // this.relacionForm.controls.elementosComision.enable();
+        // this.relacionForm.controls.formaAccion.enable();
+        this.relacionForm.controls.detalleDelito.enable();
       }else{
-        this.relacionForm.controls.modalidad.disable();
-        this.relacionForm.controls.delito.disable();
-        this.relacionForm.controls.formaComision.disable();
-        this.relacionForm.controls.lugar.disable();
-        this.relacionForm.controls.elementosComision.disable();
-        this.relacionForm.controls.formaAccion.disable();
+        // this.relacionForm.controls.modalidad.disable();
+        // this.relacionForm.controls.delito.disable();
+        // this.relacionForm.controls.formaComision.disable();
+        // this.relacionForm.controls.lugar.disable();
+        // this.relacionForm.controls.elementosComision.disable();
+        // this.relacionForm.controls.formaAccion.disable();
+        this.relacionForm.controls.detalleDelito.disable();
       }
     }
 

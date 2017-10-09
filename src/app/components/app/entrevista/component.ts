@@ -7,7 +7,7 @@ import { TableService} from '@utils/table/table.service';
     templateUrl:'./component.html',
 })
 export class EntrevistaComponent {
-
+	public breadcrumb = [];
 	public casoId: number = null;
 
 	columns = [ 'entrevistado', 'calidadEntrevistado','creadoPor', 'fechaCreacion'];
@@ -23,8 +23,10 @@ export class EntrevistaComponent {
     	this.dataSource = new TableService(this.paginator, this.data);
 
     	this.route.params.subscribe(params => {
-            if(params['id'])
-                this.casoId = +params['id'];
+			if(params['id']){
+				this.casoId = +params['id'];
+				this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});
+			}  
         });
   	}
 }
