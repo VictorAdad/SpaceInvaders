@@ -7,6 +7,8 @@ import { MatrizFrenteMenton } from './media-filacion/frente-menton';
 import { MatrizCejaBoca } from './media-filacion/ceja-boca';
 import { MatrizLabioOjo } from './media-filacion/labio-ojo';
 import { MatrizCabello } from './media-filacion/cabello';
+import { MatrizIdiomaIdentificacion } from './idioma-identificacion';
+import { MatrizNacionalidadReligion } from './nacionalidad-religion';
 
 @Injectable()
 export class PersonaService {
@@ -18,6 +20,8 @@ export class PersonaService {
     public cejaBoca: MatrizCejaBoca;
     public labioOjo: MatrizLabioOjo;
     public cabello: MatrizCabello;
+    public nacionalidadReligion: MatrizNacionalidadReligion;
+    public idiomaIdentificacion: MatrizIdiomaIdentificacion;
 
     constructor(
         private http: HttpService
@@ -30,7 +34,8 @@ export class PersonaService {
         this.cejaBoca = new MatrizCejaBoca(http);
         this.labioOjo = new MatrizLabioOjo(http);
         this.cabello = new MatrizCabello(http);
-
+        this.nacionalidadReligion= new MatrizNacionalidadReligion(http);
+        this.idiomaIdentificacion= new MatrizIdiomaIdentificacion(http);
     }
     
 }
