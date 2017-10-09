@@ -21,6 +21,8 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
 
     public casoId: number = null;
     public id: number = null;
+    public breadcrumb = [];
+
 
     constructor(
         private optionsServ: SelectsService,
@@ -98,8 +100,10 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         this.form.controls.pedimentoDeImportacion.disable();
 
         this.route.params.subscribe(params => {
-            if(params['casoId'])
+            if(params['casoId']){
                 this.casoId = +params['casoId'];
+                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho`,label:"Detalle noticia de hechos"})
+             }
             if(params['id']){
                 this.id = +params['id'];
                 if(this.onLine.onLine){

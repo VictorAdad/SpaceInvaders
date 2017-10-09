@@ -32,6 +32,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
     public isMexico: boolean = false;
     @ViewChild("search")
     public searchElementRef: ElementRef;
+    public breadcrumb = [];
+
 
     constructor(
         private _fbuilder: FormBuilder,
@@ -61,8 +63,10 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         this.form = this.createForm();
 
         this.route.params.subscribe(params => {
-            if(params['casoId'])
+            if(params['casoId']){
                 this.casoId = +params['casoId'];
+                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho`,label:"Detalle noticia de hechos"})
+             }
             if(params['id']){
                 this.id = +params['id'];
                 if(this.onLine.onLine){

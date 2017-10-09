@@ -37,6 +37,9 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     public casoId: number = null;
     public id: number = null;
 
+    public breadcrumb = [];
+
+
     tiposRelacion:MOption[] = [
         { value:'Defensor', label:'Defensor del imputado' },
         { value:'Imputado', label:'Imputado-Víctima-Delito' },
@@ -167,6 +170,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 this.casoId = params['casoId'];
                 this.optionsNoticia.setId(this.casoId);
                 this.optionsNoticia.getData();
+                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho`,label:"Detalle noticia de hechos"})
+
             }
             if(params['id']){
                 this.id = +params['id'];
