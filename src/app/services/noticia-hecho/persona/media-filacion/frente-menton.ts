@@ -24,7 +24,7 @@ export class MatrizFrenteMenton extends MatrizGlobal {
             && _object.tipoMenton === _selected.tipoMenton
             && _object.formaMenton === _selected.formaMenton
             && _object.inclinacionMenton === _selected.inclinacionMenton
-            
+            )
     }
 
     export class FrenteMenton {

@@ -24,7 +24,7 @@ export class MatrizCaraNariz extends MatrizGlobal {
             && _object.anchoNariz === _selected.anchoNariz
             && _object.baseNariz === _selected.baseNariz
             && _object.alturaNariz === _selected.alturaNariz
-            
+        )    
     }
 
     export class CaraNariz {
