@@ -22,13 +22,13 @@
                     </div>
                     
                     <div class="col">
-                        <select2 placeholder="Modalidad" name="modalidad" *ngIf="isImputadoVictimaDelito" [(options)]="options" [group]="relacionForm"></select2>
+                        <select2 placeholder="Modalidad" name="id" *ngIf="isImputadoVictimaDelito" [(options)]="options" [group]="relacionForm.controls.detalleDelito.controls.modalidadDelito"></select2>
                     </div>
                     <div class="col">
-                        <select2 placeholder="Delito" name="delito" *ngIf="isImputadoVictimaDelito" [(options)]="options" [group]="relacionForm" ></select2>
+                        <select2 placeholder="Delito" name="id" *ngIf="isImputadoVictimaDelito" [(options)]="options" [group]="relacionForm.controls.detalleDelito.controls.delitoCaso" ></select2>
                     </div>
                     <div class="col">
-                        <select2 placeholder="Forma de comisión"  name="formaComision"*ngIf="isImputadoVictimaDelito" [(options)]="options" [group]="relacionForm"></select2>º
+                        <select2 placeholder="Forma de comisión"  name="id" *ngIf="isImputadoVictimaDelito" [(options)]="options" [group]="relacionForm.controls.detalleDelito.controls.formaComision"></select2>
                     </div>
                     <div class="col" >
                         <select2 placeholder="Imputado" name="id"*ngIf="isImputadoVictimaDelito" [(options)]="imputadoOptions" [group]="relacionForm.controls.personaCasoRelacionada"></select2>
@@ -63,46 +63,46 @@
                         <select2 placeholder="Víctima u ofendido" name="id" [(options)]="victimasOptions" [group]="relacionForm.controls.personaCaso"></select2>
                     </div>
                     <div class="col">
-                        <select2 placeholder="Lugar" name="lugar" [(options)]="optionsNoticia.lugaresx" [group]="relacionForm"></select2>
+                        <select2 placeholder="Lugar" name="" [(options)]="optionsNoticia.lugaresx" [group]=""></select2>
                     </div>
                     <div class="col">
-                        <select2 placeholder="Concurso del delito" name="concursoDelito" [(options)]="options" [group]="relacionForm"></select2>
+                        <select2 placeholder="Concurso del delito" name="id" [(options)]="options" [group]="relacionForm.controls.detalleDelito.controls.concursoDelito"></select2>
                     </div>
                     <div class="col">
-                        <select2 placeholder="Clasificación del delito" name="clasificacionDelitoOrden" [(options)]="options" [group]="relacionForm"></select2>
+                        <select2 placeholder="Clasificación del delito" name="id" [(options)]="options" [group]="relacionForm.controls.detalleDelito.controls.clasificacionDelitoOrden"></select2>
                     </div>
                     <div class="col">
-                        <select2 placeholder="Elemento de comisión" name="elementosComision" [(options)]="options" [group]="relacionForm"></select2>
-                    </div>
-                </div>
-                <div class="row" *ngIf="isImputadoVictimaDelito">
-                    <div class="col">
-                        <select2 placeholder="Clasificación" name="clasificacion" [(options)]="options" [group]="relacionForm"></select2>
-                    </div>
-                    <div class="col">
-                        <select2 placeholder="Forma de acción" name="formaAccion" [(options)]="options" [group]="relacionForm"></select2>
-                    </div>
-                    <div class="col">
-                        <select2 placeholder="Consumación" name="consumacion" [(options)]="options" [group]="relacionForm"></select2>
-                    </div>
-                    <div class="col">
-                        <select2 placeholder="Grado de participación" name="gradoParticipacion" [(options)]="options" [group]="relacionForm"></select2>
-                    </div>
-                    <div class="col">
-                        <select2 placeholder="Relación entre acusado y ofendido" name="relacionAcusadoOfendido" [(options)]="options" [group]="relacionForm"></select2>
+                        <select2 placeholder="Elemento de comisión" name="id" [(options)]="options" [group]="relacionForm.controls.detalleDelito.controls.elementosComision"></select2>
                     </div>
                 </div>
                 <div class="row" *ngIf="isImputadoVictimaDelito">
                     <div class="col">
-                        <select2 placeholder="Forma de conducta" name="formaConducta" [(options)]="options" [group]="relacionForm"></select2>
+                        <select2 placeholder="Clasificación" name="" [(options)]="options" [group]=""></select2>
                     </div>
                     <div class="col">
-                        <select2 placeholder="Tipo de desaparición" name="tipoDesaparicion" [(options)]="options" [group]="relacionForm"></select2>
+                        <select2 placeholder="Forma de acción" name="id" [(options)]="options" [group]="relacionForm.controls.detalleDelito.controls.formaAccion"></select2>
                     </div>
                     <div class="col">
-                        <md-checkbox class="example-margin" name="flagrancia" formControlName="flagrancia">Flagrancia</md-checkbox>
+                        <select2 placeholder="Consumación" name="" [(options)]="options" [group]=""></select2>
                     </div>
                     <div class="col">
+                        <select2 placeholder="Grado de participación" name="id" [(options)]="options" [group]="relacionForm.controls.detalleDelito.controls.gradoParticipacion"></select2>
+                    </div>
+                    <div class="col">
+                        <select2 placeholder="Relación entre acusado y ofendido" name="" [(options)]="options" [group]=""></select2>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isImputadoVictimaDelito">
+                    <div class="col">
+                        <select2 placeholder="Forma de conducta" name="id" [(options)]="options" [group]="relacionForm.controls.detalleDelito.controls.formaConducta"></select2>
+                    </div>
+                    <div class="col">
+                        <select2 placeholder="Tipo de desaparición" name="" [(options)]="options" [group]=""></select2>
+                    </div>
+                    <div class="col" [formGroup]="relacionForm.controls.detalleDelito">
+                        <md-checkbox class="example-margin" name="flagrancia" formControlName="flagrancia" >Flagrancia</md-checkbox>
+                    </div>
+                    <div class="col" [formGroup]="relacionForm.controls.detalleDelito">
                         <md-checkbox class="example-margin" name="violenciaGenero" formControlName="violenciaGenero" (change)="changeViolenciaGenero($event)">Violencia de genero</md-checkbox>
                         <!-- <checkbox label="Violencia de genero" (valueChange)="changeViolenciaGenero($event)"></checkbox> -->
                     </div>

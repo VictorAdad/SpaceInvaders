@@ -25,7 +25,7 @@ export class LugarService extends MatrizGlobal{
     }
 
     public getDetalleLugar(){
-        this.http.get('/v1/catalogos/detalle-lugar').subscribe((response) => {
+        this.http.get('/v1/catalogos/lugar/detalle-lugar').subscribe((response) => {
             this.detalleLugar = response;
             this.tipoLugar    = this.getUniques(response, 'tipoLugar');
             this.tipoZona     = this.getUniques(response, 'tipoZona');
