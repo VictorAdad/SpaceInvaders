@@ -272,6 +272,10 @@ export class IdentidadComponent{
     @Input()
     options: SelectsService;
 
+    constructor(private personaServ: PersonaService){
+        
+    }
+
     changePais(id){
       if(id)
       this.options.getEstadoByPais(id);
@@ -297,6 +301,11 @@ export class IdentificacionComponent{
     @Input()
     @Input()
     options: SelectsService;
+
+    constructor(private personaServ: PersonaService){
+        
+    }
+
     public otrosNombres:string[]=[];
                                               
     addOtroNombre(){
@@ -319,6 +328,10 @@ export class LocalizacionComponent{
     @Input()
     options: SelectsService;
 
+    constructor(private personaServ: PersonaService){
+        
+    }
+
     changePais(id){
       if(id)
       this.options.getEstadoByPais(id);
@@ -339,6 +352,10 @@ export class MediaFilacionComponent{
     globals: PersonaGlobals;
     @Input()
     options: any[];
+
+    constructor(private personaServ: PersonaService){
+
+    }
 }
 
 
