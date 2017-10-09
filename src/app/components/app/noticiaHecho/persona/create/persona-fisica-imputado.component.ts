@@ -58,9 +58,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         return true;
     }
 
-    changeTipoInterviniente(tipoInterviniente){
+    public changeTipoInterviniente(tipoInterviniente){
         this.globals.tipoInterviniente=tipoInterviniente;
-        // this.persona.detenido=e.checked;
     }
 
 
@@ -120,6 +119,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             'numHijos'         : new FormControl("",[]),
             'lugarTrabajo'     : new FormControl("",[]),
             'ingresoMensual'   : new FormControl("",[]),
+            'detenido'         : new FormControl("",[]),
             'localizacionPersona': new FormGroup({
                 'pais': new FormGroup({
                     'id': new FormControl("",[]),
@@ -152,7 +152,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 'coloniaOtro': new FormControl("",[]),
                 'localidadOtro': new FormControl("",[]),
             }),
-            'mediaFilacion': new FormGroup({
+            'mediaFiliacion': new FormGroup({
                 'orejaDerecha': new FormGroup({
                     'id': new FormControl("",[]),
                 }),
@@ -224,7 +224,16 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 'caso': new FormGroup({
                     'id': new FormControl("",[]),
                 }),
+                'tipoInterviniente': new FormGroup({
+                    'id': new FormControl()
+                }),
             }),
+            'aliasNombrePersona' : new FormArray([
+                new FormGroup({
+                    'nombre' : new FormControl(),
+                    'tipo'   : new FormControl()
+                })]
+            ),
         });
     }
 
@@ -361,6 +370,12 @@ export class IdentificacionComponent{
           //this.globals.persona.otrosNombres.unshift(null); 
           this.otrosNombres.unshift(null); 
           console.log(this.otrosNombres);
+
+          let otrosNombres = this.globals.form.get('aliasNombrePersona') as FormArray;
+          otrosNombres.push(new FormGroup({
+                    'nombre' : new FormControl(),
+                    'tipo'   : new FormControl()
+           }))
     }
        trackByIndex(index: number, obj: any): any {
     return index;
@@ -420,7 +435,7 @@ export class MediaFilacionComponent{
 export class PersonaGlobals{
     public form  : FormGroup;
     public tipoPersona: string="";
-    public tipoInterviniente: string;
+    public tipoInterviniente: string = '';
     public detenido: boolean = false;
     public persona:Persona;
 

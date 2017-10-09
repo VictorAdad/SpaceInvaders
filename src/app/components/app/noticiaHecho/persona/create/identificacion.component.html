@@ -20,17 +20,21 @@
         <div class="col-md-3" *ngIf="globals.tipoInterviniente=='Imputado'">
             <text label="alias" ></text>
         </div>
-          <div class="col-md-12">
-            <div  class="row">
-              <div class="col-md-auto">
-                 <button class="float-left" md-raised-button (click)="addOtroNombre()" color="accent" >Agregar otro nombre</button>
-              </div>
-              <div class="col-md-auto" *ngFor="let nombre of otrosNombres;let i=index; trackBy:trackByIndex ">
-                <text label="Otro nombre" [(value)]="otrosNombres[i]"></text>
-              </div>
+        <div class="col-md-12" [formGroup]="globals.form">
+            <div  class="row" formArrayName="aliasNombrePersona" >
+                <div class="col-md-auto">
+                    <button class="float-left" md-raised-button (click)="addOtroNombre()" color="accent" >Agregar otro nombre</button>
+                </div>
+                <div class="col-md-auto" *ngFor="let nombre of otrosNombres;let i=index; trackBy:trackByIndex " [formGroupName]="i">
+                    <!-- <text label="Otro nombre" [(value)]="otrosNombres[i]"></text> -->
+                    <md-form-field class="full-width">
+                        <input mdInput placeholder="Otro nombre"(ngModelChange)="update($event)" formControlName="nombre">
+                    </md-form-field>
+                    <md-form-field class="full-width">
+                        <input mdInput placeholder="Otro nombre"(ngModelChange)="update($event)" formControlName="tipo">
+                    </md-form-field>
+                </div>
             </div>
         </div>
-
-
     </div>
 </md-expansion-panel>

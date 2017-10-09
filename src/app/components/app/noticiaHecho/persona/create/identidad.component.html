@@ -114,34 +114,34 @@
     </div>
     </div>
 
-     <div class="row" *ngIf="globals.tipoInterviniente=='Imputado'">
-    <div class="col-md-2">
-     <checkbox label="Detenido" (valueChange)="changeDetenido($event)" ></checkbox>
-    </div>
-    <div class="col-md-2" *ngIf="globals.detenido">
-      <date label="Fecha de detención" ></date>
-    </div>
-    <div class="col-md-2" *ngIf="globals.detenido">
-       <text label="Hora de detención" ></text>
-    </div>
+    <div class="row" *ngIf="globals.tipoInterviniente==='Imputado'">
+        <div class="col-md-2">
+            <checkbox label="Detenido" name="detenido" [group]="globals.form" (valueChange)="changeDetenido($event)" ></checkbox>
+        </div>
+        <div class="col-md-2" *ngIf="globals.detenido">
+            <date label="Fecha de detención" ></date>
+        </div>
+        <div class="col-md-2" *ngIf="globals.detenido">
+            <text label="Hora de detención" ></text>
+        </div>
 
-    <div class="col-md-2" *ngIf="globals.detenido">
-      <select2 [options]="
-      []" placeholder="Tipo de denteción" ></select2>
-    </div>
+        <div class="col-md-2" *ngIf="globals.detenido">
+            <select2 [options]="
+                []" placeholder="Tipo de denteción" ></select2>
+        </div>
 
-    <div class="col-md-2" *ngIf="globals.detenido">
-     <date label="Fecha de declaración" ></date>
-    </div>
-    <div class="col-md-2" *ngIf="globals.detenido">
-       <select2 [options]="
-      []" placeholder="Tipo de reincidencia" ></select2>
-    </div>
-    <div class="col-md-2" *ngIf="globals.detenido">
-        <select2 [options]="
-      []" placeholder="Cereso" ></select2>
-    </div> 
+        <div class="col-md-2" *ngIf="globals.detenido">
+            <date label="Fecha de declaración" ></date>
+        </div>
+        <div class="col-md-2" *ngIf="globals.detenido">
+            <select2 [options]="
+            []" placeholder="Tipo de reincidencia" ></select2>
+        </div>
+        <div class="col-md-2" *ngIf="globals.detenido">
+            <select2 [options]="
+            []" placeholder="Cereso" ></select2>
+        </div> 
 
-  </div>
+    </div>
 
 </md-expansion-panel>
