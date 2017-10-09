@@ -102,6 +102,7 @@ export class PredenunciaComponent {
             'necesidadesCubrir'              :  new FormControl(this.model.victimaOfendidoQuerellante),
             'ubicacionUnidadInmediataVictima':  new FormControl(this.model.victimaOfendidoQuerellante),
             'cargoAutoridadVictima'          :  new FormControl(this.model.victimaOfendidoQuerellante),
+            'observaciones'         :  new FormControl(this.model.observaciones),
           });
 
         }
