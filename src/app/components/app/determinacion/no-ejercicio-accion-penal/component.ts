@@ -11,7 +11,7 @@ import { CIndexedDB } from '@services/indexedDB';
 	templateUrl: './component.html',
 })
 export class NoEjercicioAccionPenalComponent {
-
+	public breadcrumb = [];
 	columns = ['ambito', 'calidadEntrevistado', 'creadoPor', 'fechaCreacion'];
 	public dataSource: TableService | null;
 	public data: NoEjercicioAccionPenal[];
@@ -31,6 +31,7 @@ export class NoEjercicioAccionPenalComponent {
 					this.data = response as NoEjercicioAccionPenal[];
 					this.dataSource = new TableService(this.paginator, this.data);
 				});
+				this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});
 			}
 
 		});

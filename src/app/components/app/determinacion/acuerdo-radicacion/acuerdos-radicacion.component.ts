@@ -14,6 +14,7 @@ import { CIndexedDB } from '@services/indexedDB';
 
 export class AcuerdosRadicacionComponent{
 
+   public breadcrumb = [];
    public apiUrl='/v1/base/acuerdosradicacion';
    columns = ['Titulo', 'Fecha'];
    public dataSource: TableService | null;
@@ -33,6 +34,7 @@ export class AcuerdosRadicacionComponent{
                     this.data = response as AcuerdoRadicacion[];
                     this.dataSource = new TableService(this.paginator, this.data);
                 });
+                this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});
             }
 
         });  

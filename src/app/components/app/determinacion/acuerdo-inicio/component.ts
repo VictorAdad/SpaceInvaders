@@ -14,13 +14,16 @@ import { CIndexedDB } from '@services/indexedDB';
     templateUrl:'./component.html',
 })
 export class AcuerdoInicioComponent {
-	public casoId: number = null;
+    public casoId: number = null;
+    public breadcrumb = [];
 	constructor(private route: ActivatedRoute){}
 
 	ngOnInit() {
     	this.route.params.subscribe(params => {
-            if(params['casoId'])
+            if(params['casoId']){
                 this.casoId = +params['casoId'];
+                this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});
+            }
         });
   	}
 

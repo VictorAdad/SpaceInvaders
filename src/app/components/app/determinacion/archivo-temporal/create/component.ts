@@ -14,12 +14,15 @@ import { CIndexedDB } from '@services/indexedDB';
 	templateUrl: './component.html',
 })
 export class ArchivoTemporalCreateComponent {
+	public breadcrumb = [];
 	public casoId: number = null;
 	constructor(private route: ActivatedRoute) { }
 	ngOnInit() {
 		this.route.params.subscribe(params => {
-			if (params['casoId'])
+			if (params['casoId']){
 				this.casoId = +params['casoId'];
+				this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});
+			}	
 		});
 	}
 
