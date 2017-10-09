@@ -24,6 +24,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     public casoId: number = null;
     public id: number = null;
     public globals: PersonaGlobals;
+    public isMexico: boolean=false;
     persona:Persona;
     caso:Caso;
     tabla: CIndexedDB;
@@ -309,6 +310,7 @@ export class IdentidadComponent{
     @Input()
     @Input()
     options: SelectsService;
+    isMexico:boolean=false;
 
     constructor(private personaServ: PersonaService){
         
@@ -316,7 +318,16 @@ export class IdentidadComponent{
 
     changePais(id){
       if(id)
-      this.options.getEstadoByPais(id);
+      { this.options.getEstadoByPais(id);
+        this.isMexico=false;
+        for (var i = 0; i < this.options.paises.length; ++i) {
+            var pais=this.options.paises[i]
+            if(pais.value==id && pais.label=="MEXICO"){
+                this.isMexico=true;
+
+            }
+        }   
+      }
     }  
     changeEstado(id){
         if(id)
@@ -365,14 +376,23 @@ export class LocalizacionComponent{
     globals: PersonaGlobals;
     @Input()
     options: SelectsService;
+    isMexico:boolean=false;
 
     constructor(private personaServ: PersonaService){
         
     }
 
     changePais(id){
-      if(id)
+      if(id){
       this.options.getEstadoByPais(id);
+      this.isMexico=false;
+        for (var i = 0; i < this.options.paises.length; ++i) {
+            var pais=this.options.paises[i];
+            if(pais.value==id && pais.label=="MEXICO"){
+                this.isMexico=true;
+            }
+        } 
+       }
     }  
     changeEstado(id){
         if(id)
