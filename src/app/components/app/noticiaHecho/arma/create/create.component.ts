@@ -20,8 +20,6 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
     public casoId: number = null;
     public id: number = null;
     public data: any = null;
-    public breadcrumb = [];
-
 
     clasesArmas:MOption[]=[
         {value:"Arma blanca", label:"Arma blanca"},
@@ -67,10 +65,8 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
           });
 
         this.route.params.subscribe(params => {
-            if(params['casoId']){
+            if(params['casoId'])
                 this.casoId = +params['casoId'];
-                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho`,label:"Detalle noticia de hechos"})
-            }
             if(params['id']){
                 this.id = +params['id'];
                 if(this.onLine.onLine){
