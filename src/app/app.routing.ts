@@ -74,28 +74,22 @@ const routes: Routes = [
     //Noticia de Hecho
     { path : 'noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
     { path : 'caso/:id/noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
-    
     { path : 'armas', component : ArmaComponent, data : { breadcrumb : 'Armas' } },
     { path : 'caso/:casoId/armas/create', component : ArmaCreateComponent, data : { breadcrumb : 'Nueva arma'} },
     { path : 'caso/:casoId/armas/:id', component : ArmaCreateComponent, data : { breadcrumb : 'Nueva arma'} },
-    
     { path : 'lugares', component :  LugarComponent, data : { breadcrumb : 'Lugares' }},
     { path : 'caso/:casoId/lugares/create', component : LugarCreateComponent, data : { breadcrumb : 'Crear lugares'} },
     { path : 'caso/:casoId/lugares/:id', component : LugarCreateComponent, data : { breadcrumb : 'Crear lugares'} },
-
     { path : 'relaciones', component : RelacionComponent, data : { breadcrumb : 'Relaciones' } },
     { path : 'caso/:casoId/relaciones/create', component : RelacionCreateComponent, data : { breadcrumb : 'Nueva relación'} },
     { path : 'caso/:casoId/relaciones/:id', component : RelacionCreateComponent, data : { breadcrumb : 'Nueva relación'} },
-    
     { path : 'vehiculos', component :  VehiculoComponent, data: { breadcrumb: 'Vehiculos'}},
     { path : 'caso/:casoId/vehiculos/create', component : VehiculoCreateComponent, data: { breadcrumb: 'Nuevo Vehiculo'}},
     { path : 'caso/:casoId/vehiculos/:id', component : VehiculoCreateComponent, data: { breadcrumb: 'Nuevo Vehiculo'}},
-
     { path : 'caso/:casoId/personas/persona-fisica-imputado', component : PersonaFisicaImputadoComponent, data : { breadcrumb : 'Crear Persona'}},
     { path : 'caso/:casoId/personas/:id', component : PersonaFisicaImputadoComponent, data : { breadcrumb : 'Crear Persona', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}] }},
     { path : 'documentos', component : DocumentoComponent },
     { path : 'documentos/create', component : DocumentoCreateComponent },
-
     { path : 'notificaciones', component : NotificacionesComponent, data : { breadcrumb : 'Notificaciones' }},
 
     //Solicitud Preliminar

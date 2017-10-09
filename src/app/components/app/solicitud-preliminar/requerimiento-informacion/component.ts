@@ -16,6 +16,7 @@ export class RequerimientoInformacionComponent {
 	public data: RequerimientoInformacion[];
     public casoId: number = null;
     public haveCaso: boolean=false;
+    public breadcrumb = [];
 	@ViewChild(MdPaginator) 
 	paginator: MdPaginator;
 
@@ -26,6 +27,7 @@ export class RequerimientoInformacionComponent {
             if(params['casoId']){
             	this.haveCaso=true;
                 this.casoId = +params['casoId'];
+                this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
                 this.http.get('/v1/base/requerimiento-informacion').subscribe((response) => {
                     this.data = response.data as RequerimientoInformacion[];
                     this.dataSource = new TableService(this.paginator, this.data);

@@ -13,7 +13,9 @@ import { CIndexedDB } from '@services/indexedDB';
 export class PeritoComponent {
 	public data: Perito[];
     public casoId: number = null;
-    public haveCaso: boolean=false;
+    public hasCaso: boolean=false;
+    public breadcrumb = [];
+
 
 	columns = ['tipo', 'oficio'];
 	dataSource: TableService | null;
@@ -36,8 +38,9 @@ export class PeritoComponent {
 		
 		this.route.params.subscribe(params => {
             if(params['casoId']){
-            	this.haveCaso=true;
+            	this.hasCaso=true;
                 this.casoId = +params['casoId'];
+                this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
                 this.http.get('/v1/base/perito').subscribe((response) => {
                     this.data = response.data as Perito[];
                     this.dataSource = new TableService(this.paginator, this.data);

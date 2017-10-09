@@ -14,13 +14,17 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 })
 export class PredenunciaCreateComponent {
     public casoId: number = null;
+    public breadcrumb = [];
+
 
     constructor(private route: ActivatedRoute){}
 
     ngOnInit(){
         this.route.params.subscribe(params => {
-            if(params['id'])
+            if(params['id']){
                 this.casoId = +params['id'];
+                this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
+            }
         });
     }
 
@@ -47,8 +51,9 @@ export class PredenunciaComponent {
 
     ngOnInit(){
         this.route.params.subscribe(params => {
-            if(params['id'])
+            if(params['id']){
                 this.casoId = +params['id'];
+              }
         });
         this.model = new Predenuncia();
 
