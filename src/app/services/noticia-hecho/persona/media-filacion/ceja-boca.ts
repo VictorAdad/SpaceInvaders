@@ -25,7 +25,7 @@ export class MatrizCejaBoca extends MatrizGlobal{
             && _object.formaCeja === _selected.formaCeja
             && _object.tamanioCeja === _selected.tamanioCeja
             && _object.tamanioBoca === _selected.tamanioBoca
-            && _object.comisurasBoca === _selected.comisurasBoca
+            && _object.comisurasBoca === _selected.comisurasBoca);
     }
 }
 
