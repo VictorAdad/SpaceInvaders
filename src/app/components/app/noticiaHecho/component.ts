@@ -15,6 +15,7 @@ export class NoticiaHechoComponent implements OnInit{
 	private db: CIndexedDB;
 	private sub: any;
 	public returnRoute: string = '/';
+	public breadcrumb = [];
 
 	constructor(
 		private route: ActivatedRoute,
@@ -31,6 +32,7 @@ export class NoticiaHechoComponent implements OnInit{
 	    this.route.params.subscribe(params => {
 	    	if(params['id']){
 				this.id = +params['id'];
+				this.breadcrumb.push({path:`/caso/${this.id}/detalle`,label:"Detalle del caso"})
 			}
 			this.getReturnRoute();
 	    });
