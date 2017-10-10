@@ -3,8 +3,8 @@ export class RegistroGeneral {
     //Constancia general
     constancia: string;
     //Constancia de llamada
-    numero: string;
-    nombre: string;
+    noTelefonico: string;
+    atencionLlamada: string;
     observaciones: string;
     caso: Caso = new Caso();
 }

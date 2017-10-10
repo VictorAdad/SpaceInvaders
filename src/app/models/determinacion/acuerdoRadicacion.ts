@@ -5,6 +5,7 @@ export class AcuerdoRadicacion {
     fechaCreacion: string;
     observaciones: string;
     caso: Caso = new Caso();
+    tipo:string="Radicación"
 }
 export class Caso {
     public id       : number;

@@ -41,12 +41,12 @@
 -->
         <ng-container mdColumnDef="Remitente">
             <md-header-cell *mdHeaderCellDef>A quien se remite la determinación </md-header-cell>
-            <md-cell *mdCellDef="let element"> {{element.remitente}} </md-cell>
+            <md-cell *mdCellDef="let element"> {{element.destinatarioDeterminacion}} </md-cell>
         </ng-container>
 
         <ng-container mdColumnDef="Motivos">
             <md-header-cell *mdHeaderCellDef> Motivos por los que se abstuvo de investigar</md-header-cell>
-            <md-cell *mdCellDef="let element"> {{element.fechaCreacion}} </md-cell>
+            <md-cell *mdCellDef="let element"> {{element.motivosAbstuvoInvestigar}} </md-cell>
         </ng-container>
 
         <ng-container mdColumnDef="Creado por">
@@ -56,7 +56,7 @@
 
         <ng-container mdColumnDef="Fecha">
             <md-header-cell *mdHeaderCellDef> Fecha de creación</md-header-cell>
-            <md-cell *mdCellDef="let element"> {{element.fechaCreacion}} </md-cell>
+            <md-cell *mdCellDef="let element"> {{element.created}} </md-cell>
         </ng-container>
 
         <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>

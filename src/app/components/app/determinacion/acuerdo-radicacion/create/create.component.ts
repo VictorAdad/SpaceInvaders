@@ -35,7 +35,7 @@ export class AcuerdoRadicacionCreateComponent {
 })
 export class AcuerdoRadicacionComponent extends DeterminacionGlobal{
 
-    public apiUrl:string="/v1/base/acuerdosradicacion";
+    public apiUrl:string="/v1/base/acuerdos";
     public casoId: number = null;
     public id: number = null;
     public form  : FormGroup;
@@ -80,7 +80,7 @@ export class AcuerdoRadicacionComponent extends DeterminacionGlobal{
                 (response) => {
                     console.log(response);
                   if(this.casoId){
-                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);      
+                    this.router.navigate(['/caso/'+this.casoId+'/acuerdo-radicacion' ]);      
                   }
                 },
                 (error) => {

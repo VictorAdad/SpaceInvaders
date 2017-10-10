@@ -14,7 +14,7 @@ import { CIndexedDB } from '@services/indexedDB';
 
 export class FacultadesNoInvestigarComponent {
   public breadcrumb = [];
-  public apiUrl = '/v1/base/facultad-no-investigar';
+  public apiUrl = '/v1/base/facultades-no-investigar';
   displayedColumns = ['Remitente', 'Motivos', 'Creado por', 'Fecha'];
   public dataSource: TableService | null;
   public data: FacultadNoInvestigar[];
@@ -30,8 +30,8 @@ export class FacultadesNoInvestigarComponent {
       if (params['casoId']) {
         this.haveCaso = true;
         this.casoId = +params['casoId'];
-        this.http.get('/v1/base/caso/' + this.casoId + '/facultad-no-investigar').subscribe((response) => {
-          this.data = response as FacultadNoInvestigar[];
+        this.http.get(this.apiUrl).subscribe((response) => {
+          this.data = response.data as FacultadNoInvestigar[];
           this.dataSource = new TableService(this.paginator, this.data);
         });
         this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});

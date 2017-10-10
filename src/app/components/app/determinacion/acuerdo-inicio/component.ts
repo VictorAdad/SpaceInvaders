@@ -35,7 +35,7 @@ export class AcuerdoInicioComponent {
 })
 export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal{
      
-    public apiUrl:string="/v1/base/acuerdosinicio";
+    public apiUrl:string="/v1/base/acuerdos";
     public casoId: number = null;
     public id: number = null;
     public form  : FormGroup;
@@ -87,7 +87,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal{
                     console.log(response);
                     console.log('here')
                   if(this.casoId){
-                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);      
+                    this.router.navigate(['/caso/'+this.casoId+'/acuerdo-inicio' ]);      
                   }
                   else {
                     this.router.navigate(['/acuerdos-inicio' ]);      

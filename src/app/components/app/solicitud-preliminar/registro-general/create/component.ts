@@ -35,7 +35,7 @@ export class RegistroGeneralCreateComponent {
 })
 export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal {
 
-	public apiUrl: string = "/v1/base/registros-generales";
+	public apiUrl: string = "/v1/base/solicitudes-pre-registros";
 	public casoId: number = null;
 	public id: number = null;
 	public form: FormGroup;
@@ -57,8 +57,8 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 
 		this.form = new FormGroup({
 			'constancia': new FormControl(this.model.constancia),
-			'numero': new FormControl(this.model.numero),
-			'nombre': new FormControl(this.model.nombre),
+			'noTelefonico': new FormControl(this.model.noTelefonico),
+			'atencionLlamada': new FormControl(this.model.atencionLlamada),
 			'observaciones': new FormControl(this.model.observaciones)
 		});
 

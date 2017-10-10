@@ -33,7 +33,7 @@ export class ArchivoTemporalCreateComponent {
 	templateUrl: './determinacion.component.html',
 })
 export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
-	public apiUrl: string = "/v1/base/archivo-temporal";
+	public apiUrl: string = "/v1/base/archivos-temporales";
 	public casoId: number = null;
 	public id: number = null;
 	public form: FormGroup;

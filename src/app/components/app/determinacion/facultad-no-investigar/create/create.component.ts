@@ -35,7 +35,7 @@ export class FacultadNoInvestigarCreateComponent {
     templateUrl: './facultad-no-investigar.component.html',
 })
 export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
-    public apiUrl: string = "/v1/base/facultad-no-investigar";
+    public apiUrl = '/v1/base/facultades-no-investigar';
     public casoId: number = null;
     public id: number = null;
     public form: FormGroup;
@@ -58,9 +58,9 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
             'observaciones': new FormControl(this.model.observaciones),
             'sintesisHechos': new FormControl(this.model.sintesisHechos),
             'datosPrueba': new FormControl(this.model.datosPrueba),
-            'motivos': new FormControl(this.model.motivos),
-            'medioAlternativo': new FormControl(this.model.medioAlternativo),
-            'remitente': new FormControl(this.model.remitente),
+            'motivosAbstuvoInvestigar': new FormControl(this.model.motivosAbstuvoInvestigar),
+            'medioAlternativoSolucion': new FormControl(this.model.medioAlternativoSolucion),
+            'destinatarioDeterminacion': new FormControl(this.model.destinatarioDeterminacion),
             'superiorJerarquico': new FormControl(this.model.superiorJerarquico)
         });
 

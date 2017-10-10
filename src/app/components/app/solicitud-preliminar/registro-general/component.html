@@ -29,12 +29,12 @@
 <md-table #table [dataSource]="dataSource">
     <ng-container mdColumnDef="fundamento">
         <md-header-cell *mdHeaderCellDef> Nombre de la persona que atiende la llamada telefónica</md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.nombre}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.atencionLlamada}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="plazo">
         <md-header-cell *mdHeaderCellDef> Número telefónico </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.numero}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.noTelefonico}} </md-cell>
     </ng-container>
 
     <md-header-row *mdHeaderRowDef="columns"></md-header-row>

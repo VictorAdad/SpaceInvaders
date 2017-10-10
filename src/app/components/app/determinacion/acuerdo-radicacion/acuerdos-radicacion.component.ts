@@ -15,7 +15,7 @@ import { CIndexedDB } from '@services/indexedDB';
 export class AcuerdosRadicacionComponent{
 
    public breadcrumb = [];
-   public apiUrl='/v1/base/acuerdosradicacion';
+   public apiUrl:string="/v1/base/acuerdos";
    columns = ['Titulo', 'Fecha'];
    public dataSource: TableService | null;
    public data: AcuerdoRadicacion[];
@@ -30,8 +30,8 @@ export class AcuerdosRadicacionComponent{
             if(params['casoId']){
               this.haveCaso=true;
                 this.casoId = +params['casoId'];
-                this.http.get('/v1/base/caso/'+this.casoId+'/acuerdoradicacion').subscribe((response) => {
-                    this.data = response as AcuerdoRadicacion[];
+                this.http.get(this.apiUrl).subscribe((response) => {
+                    this.data = response.data as AcuerdoRadicacion[];
                     this.dataSource = new TableService(this.paginator, this.data);
                 });
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});

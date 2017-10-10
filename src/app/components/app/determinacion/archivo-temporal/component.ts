@@ -12,7 +12,7 @@ import { CIndexedDB } from '@services/indexedDB';
 })
 export class ArchivoTemporalComponent {
 	public breadcrumb = [];
-	public apiUrl='/v1/base/acuerdosradicacion';
+	public apiUrl='/v1/base/archivos-temporales';
 	columns = ['creadoPor', 'fechaCreacion'];
 	public dataSource: TableService | null;
 	public data: ArchivoTemporal[];
@@ -28,8 +28,8 @@ export class ArchivoTemporalComponent {
 		if(params['casoId']){
 		  this.haveCaso=true;
 			this.casoId = +params['casoId'];
-			this.http.get('/v1/base/caso/'+this.casoId+'/archivo-temporal').subscribe((response) => {
-				this.data = response as ArchivoTemporal[];
+			this.http.get(this.apiUrl).subscribe((response) => {
+				this.data = response.data as ArchivoTemporal[];
 				this.dataSource = new TableService(this.paginator, this.data);
 			});
 			this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});

@@ -5,7 +5,7 @@ export class AcuerdoInicio {
     sintesisHechos: string;
     observaciones: string;
     caso: Caso= new Caso();
-    
+    tipo:string="Inicio";
   }
   export class Caso {
     public id       : number;
