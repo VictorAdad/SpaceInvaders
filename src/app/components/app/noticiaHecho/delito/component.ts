@@ -41,7 +41,7 @@ export class DelitoComponent {
             if (params['id']) {
                 if (this.onLine.onLine){
                     this.id = parseInt(params['id']);
-                    this.page('/v1/base/casos/' + this.id + '/delitos-casos');   
+                    this.page('/v1/base/delitos-casos/casos/' + this.id + '/page');   
                 }else{
                     this.db.get("casos", this.id).then(
                     casoR => {

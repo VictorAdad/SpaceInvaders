@@ -28,7 +28,7 @@ export class VehiculoComponent{
             if(params['id']){
                 this.casoId = +params['id'];
                 if(this.onLine.onLine){
-                    this.http.get('/v1/base/casos/'+this.casoId+'/vehiculos').subscribe((response) => {
+                    this.http.get('/v1/base/vehiculos/casos/'+this.casoId+'/page').subscribe((response) => {
                         this.pag = response.totalCount;
                         this.vehiculos = response.data as Vehiculo[];
                         this.dataSource = new TableService(this.paginator, this.vehiculos);

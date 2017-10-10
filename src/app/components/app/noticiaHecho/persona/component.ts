@@ -36,7 +36,7 @@ export class PersonaComponent implements OnInit{
             if(params['id']){
                 this.casoId = +params['id'];
                 if(this.onLine.onLine){
-                    this.page('/v1/base/casos/'+this.casoId+'/personas-casos');
+                    this.page('/v1/base/personas-casos/casos/'+this.casoId+'/page');
                 }else{
                     //Nota: si marca error es por que ya existe la base de datos y no se le puede agregar una nueva tabla
                     //para solucionarlo borra la base evomatik

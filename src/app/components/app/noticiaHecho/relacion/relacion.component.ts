@@ -36,7 +36,7 @@ export class RelacionComponent{
             if(params['id']){
                 this.casoId = +params['id'];
                 if(this.onLine.onLine){
-                    this.http.get('/v1/base/casos/'+this.casoId+'/relaciones').subscribe((response) => {
+                    this.http.get('/v1/base/relaciones/casos/'+this.casoId+'/page').subscribe((response) => {
                         this.pag = response.totalCount;
                         this.relaciones = response.data as Relacion[];
                         this.dataSource = new TableService(this.paginator, this.relaciones);

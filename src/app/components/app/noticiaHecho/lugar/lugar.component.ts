@@ -29,7 +29,7 @@ export class LugarComponent{
             if(params['id']){
                 this.casoId = +params['id'];
                 if(this.onLine.onLine){
-                    this.http.get('/v1/base/casos/'+this.casoId+'/lugares').subscribe((response) => {
+                    this.http.get('/v1/base/lugares/casos/'+this.casoId+'/page').subscribe((response) => {
                         this.pag = response.totalCount;
                         this.data = response.data as Lugar[];
                         this.dataSource = new TableService(this.paginator, this.data);

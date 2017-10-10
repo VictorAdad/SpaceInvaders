@@ -30,7 +30,7 @@ export class ArmaComponent{
             if(params['id']){
                 this.casoId = +params['id'];
                 if(this.onLine.onLine){
-                    this.page('/v1/base/casos/'+this.casoId+'/armas');
+                    this.page('/v1/base/armas/casos/'+this.casoId+'/page');
                 }else{
                     this.db.get("casos",this.casoId).then(caso=>{
                         if (caso){
