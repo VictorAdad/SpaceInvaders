@@ -1,20 +1,20 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import {arrCARA_NARIZ} from '@models/datos/cara';
-import {arrOreja} from '@models/datos/oreja';
-import {arrCOMPLEXION_PIEL_SANGRE} from'@models/datos/complexionPielSangre';
-import {arrFRENTE_MENTON} from '@models/datos/frenteMenton';
-import {arrCEJA_BOCA} from '@models/datos/cejaBoca';
-import {arrCABELLO} from '@models/datos/cabello';
-import {arrLABIO_OJO} from '@models/datos/labioOjo';
-import {arrDETALLE_LUGAR} from '@models/datos/detalleLugar';
-import {arrMARCA_SUBMARCA} from '@models/datos/marcaSubmarca';
-import {arrPROCEDENCIA_ASEGURADORA} from '@models/datos/procedenciaAseguradora';
-import {arrMOTIVO_REGISTRO_COLOR_CLASE} from '@models/datos/motivoColorClase';
-import {arrTIPO_USO_TIPO_VEHICULO} from '@models/datos/tipoUsoTipoVehiculo';
-import {arrCLASE_ARMA} from '@models/datos/claseArma';
-import {arrCALIBRE_MECANISMO} from '@models/datos/calibreMecanismo';
-
+import { Injectable }                  from '@angular/core';
+import { Observable }                  from 'rxjs/Observable';
+import {arrCARA_NARIZ}                 from '@models/datos/cara';
+import {arrOreja}                      from '@models/datos/oreja';
+import {arrCOMPLEXION_PIEL_SANGRE}     from'@models/datos/complexionPielSangre';
+import {arrFRENTE_MENTON}              from '@models/datos/frenteMenton';
+import {arrCEJA_BOCA}                  from '@models/datos/cejaBoca';
+import {arrCABELLO}                    from '@models/datos/cabello';
+import {arrLABIO_OJO}                  from '@models/datos/labioOjo';
+import {arrDETALLE_LUGAR}              from '@models/datos/detalleLugar';
+import {arrMARCA_SUBMARCA}             from '@models/datos/marcaSubmarca';
+import {arrPROCEDENCIA_ASEGURADORA}    from '@models/datos/procedenciaAseguradora';
+import {arrMOTIVO_REGISTRO_COLOR_CLASE}from '@models/datos/motivoColorClase';
+import {arrTIPO_USO_TIPO_VEHICULO}     from '@models/datos/tipoUsoTipoVehiculo';
+import {arrCLASE_ARMA}                 from '@models/datos/claseArma';
+import {arrCALIBRE_MECANISMO}          from '@models/datos/calibreMecanismo';
+import {arrDESPARAICION_CONSUMACION}   from '@models/datos/desaparicionConsumacion';
 @Injectable()
 export class CIndexedDB {
     nameDB:string = "SIGI";
@@ -112,6 +112,8 @@ export class CIndexedDB {
             
             obj.update("catalagos",{id:"clase_arma",arreglo:arrCLASE_ARMA.arreglo});
             obj.update("catalagos",{id:"calibre_mecanismo",arreglo:arrCALIBRE_MECANISMO.arreglo});
+
+            obj.update("catalagos",{id:"desaparicion_consumacion",arreglo:arrDESPARAICION_CONSUMACION.arreglo});
             
         }  
     }
@@ -318,5 +320,30 @@ export class CIndexedDB {
         return this.action(_table, "clear");
     }
 
+    //busca en catalogo
+    searchInCatalogo(_catalogo, _item){
+        var obj= this;
+        var promesa = new Promise( 
+            function(resolve,reject){
+                obj.get("catalagos",_catalogo).then(lista=>{
+                    let arreglo=lista["arreglo"] as any[];
+                    let igual;
+                    for (var i = 0; i<arreglo.length; i++) {
+                        igual=true;
+                        for(let key in _item){
+                            igual=igual&&(_item[key]==(arreglo[i])[key]);
+                        }
+                        if (igual){
+                            resolve(arreglo[i]);
+                            break;
+                        }
+                    }
+                    if (!igual)
+                        resolve(null);
+                });
+
+            });
+        return promesa;
+    }
 
 }
