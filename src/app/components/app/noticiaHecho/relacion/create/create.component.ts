@@ -230,7 +230,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
 
       if(this.onLine.onLine){
-        this.http.get('/v1/base/casos/'+this.casoId+'/personas-casos').subscribe((response) => {
+        this.http.get('/v1/base/personas-casos/casos/'+this.casoId+'/page').subscribe((response) => {
             response.data.forEach(object => {
                 //victima u ofendido
                 let persona=object["persona"];
