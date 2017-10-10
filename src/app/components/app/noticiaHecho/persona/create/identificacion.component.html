@@ -17,22 +17,31 @@
         <div class="col-md-auto">
             <text label="Número o folio de documento"></text>
         </div>
-        <div class="col-md-3" *ngIf="globals.tipoInterviniente=='Imputado'">
-            <text label="alias" ></text>
-        </div>
-        <div class="col-md-12" [formGroup]="globals.form">
+    </div>
+    <div class="row">
+        <div class="col-md-5" *ngIf="globals.tipoInterviniente=='Imputado'" [formGroup]="globals.form">
             <div  class="row" formArrayName="aliasNombrePersona" >
                 <div class="col-md-auto">
-                    <button class="float-left" md-raised-button (click)="addOtroNombre()" color="accent" >Agregar otro nombre</button>
+                    <button class="float-left" md-raised-button (click)="addOtroNombre('alias')" color="accent" >Agregar alias</button>
                 </div>
-                <div class="col-md-auto" *ngFor="let nombre of otrosNombres;let i=index; trackBy:trackByIndex " [formGroupName]="i">
-                    <!-- <text label="Otro nombre" [(value)]="otrosNombres[i]"></text> -->
+                <div class="col-md-12" *ngFor="let nombre of alias;let i=index; trackBy:trackByIndex " [formGroupName]="nombres">
                     <md-form-field class="full-width">
-                        <input mdInput placeholder="Otro nombre"(ngModelChange)="update($event)" formControlName="nombre">
+                        <input mdInput placeholder="Alias" formControlName="nombre">
                     </md-form-field>
+                    <input type="" value="Alias" formControlName="tipo">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5" [formGroup]="globals.form">
+            <div  class="row" formArrayName="aliasNombrePersona" >
+                <div class="col-md-auto">
+                    <button class="float-left" md-raised-button (click)="addOtroNombre('otroNombre')" color="accent" >Agregar otro nombre</button>
+                </div>
+                <div class="col-md-12" *ngFor="let nombre of otrosNombres;let i=index; trackBy:trackByIndex " [formGroupName]="nombres">
                     <md-form-field class="full-width">
-                        <input mdInput placeholder="Otro nombre"(ngModelChange)="update($event)" formControlName="tipo">
+                        <input mdInput placeholder="Otro nombre" formControlName="nombre">
                     </md-form-field>
+                    <input type="" value="Otro nombre" formControlName="tipo">
                 </div>
             </div>
         </div>

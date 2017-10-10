@@ -361,25 +361,41 @@ export class IdentificacionComponent{
     options: SelectsService;
 
     constructor(private personaServ: PersonaService){
-        
+
     }
 
     public otrosNombres:string[]=[];
-                                              
-    addOtroNombre(){
-          //this.globals.persona.otrosNombres.unshift(null); 
-          this.otrosNombres.unshift(null); 
-          console.log(this.otrosNombres);
+    public alias:string[]=[];
+    public nombres: number = 0;
 
-          let otrosNombres = this.globals.form.get('aliasNombrePersona') as FormArray;
-          otrosNombres.push(new FormGroup({
-                    'nombre' : new FormControl(),
-                    'tipo'   : new FormControl()
-           }))
+    public addOtroNombre(_tipo: string){
+        this.nombres++;
+        let form = this.nombreForm();
+        if(_tipo === 'otroNombre'){
+            this.otrosNombres.unshift(null);
+            form.patchValue({tipo:'Otro nombre'});
+        }
+        else{
+            this.alias.unshift(null);
+            form.patchValue({tipo:'Alias'});
+        }
+        let otrosNombres = this.globals.form.get('aliasNombrePersona') as FormArray;
+        otrosNombres.push(new FormGroup({
+            'nombre' : new FormControl(),
+            'tipo'   : new FormControl()
+        }))
     }
-       trackByIndex(index: number, obj: any): any {
-    return index;
-   }
+    // trackByIndex(index: number, obj: any): any {
+    // return index;
+    // }
+
+    public nombreForm(){
+        return new FormGroup({
+            'nombre' : new FormControl(),
+            'tipo'   : new FormControl()
+        });
+    }
+
 }
 
 @Component({
