@@ -11,7 +11,7 @@ export class MatrizProcedenciaAseguradora extends MatrizGlobal{
         ) {
         super(http);
         this.selected = new ProcedenciaAseguradora();
-        this.getMatriz('/v1/catalogos/procedencia-aseguradora');
+        this.getMatriz('/v1/catalogos/vehiculo/procedencia-aseguradora');
     }
 
 }

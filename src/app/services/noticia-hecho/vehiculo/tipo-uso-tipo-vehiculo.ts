@@ -12,7 +12,7 @@ export class MatrizTipoUsoTipoVehiculo extends MatrizGlobal{
         ) {
         super(http);
         this.selected = new TipoUsoTipoVehiculo();
-        this.getMatriz('/v1/catalogos/tipo-uso-vehiculo');
+        this.getMatriz('/v1/catalogos/vehiculo/tipo-uso-vehiculo');
     }
 
 }

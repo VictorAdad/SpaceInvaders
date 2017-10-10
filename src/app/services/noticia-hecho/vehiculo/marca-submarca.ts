@@ -11,7 +11,7 @@ export class MatrizMarcaSubmarca extends MatrizGlobal{
         ) {
         super(http);
         this.selected = new MarcaSubmarca();
-        this.getMatriz('/v1/catalogos/marca-submarca');
+        this.getMatriz('/v1/catalogos/vehiculo/marca-submarca');
     }
 
     public validate(_object: any, _selected: any): boolean{
