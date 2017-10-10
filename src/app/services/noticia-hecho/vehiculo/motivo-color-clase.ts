@@ -12,7 +12,7 @@ export class MatrizMotivoColorClase extends MatrizGlobal{
         ) {
         super(http);
         this.selected = new MotivoClaseColor();
-        this.getMatriz('/v1/catalogos/motivo-color-clase');
+        this.getMatriz('/v1/catalogos/vehiculo/motivo-color-clase');
     }
 
     public findClaseArma(_e, _tipo:string){
