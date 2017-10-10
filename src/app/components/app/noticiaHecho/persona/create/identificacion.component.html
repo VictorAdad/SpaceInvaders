@@ -9,17 +9,29 @@
     </md-expansion-panel-header>
     <div class="row">
         <div class="col-md-3">
-            <select2 [options]="[]" placeholder="Documento de identificación"></select2>
+            <select2 placeholder="Documento de identificación"
+                [options]="personaServ.idiomaIdentificacion.familiaLinguistica"
+                name="identificacion"
+                [group]="globals.form">
+                        
+            </select2>
         </div>
         <div class="col-md-auto">
-            <text label="Autoridad emisora"></text>
+            <text label="Autoridad emisora"
+                name="autoridadEmisora"
+                [group]="globals.form">
+                    
+            </text>
         </div>
         <div class="col-md-auto">
-            <text label="Número o folio de documento"></text>
+            <text label="Número o folio de documento"
+                name="folioIdentificacion"
+                [group]="globals.form">        
+            </text>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-5" *ngIf="globals.tipoInterviniente=='Imputado'" [formGroup]="globals.form">
+        <div class="col-md-5" *ngIf="globals.tipoInterviniente=='6'" [formGroup]="globals.form">
             <div  class="row" formArrayName="aliasNombrePersona" >
                 <div class="col-md-auto">
                     <button class="float-left" md-raised-button (click)="addOtroNombre('alias')" color="accent" >Agregar alias</button>
@@ -28,7 +40,7 @@
                     <md-form-field class="full-width">
                         <input mdInput placeholder="Alias" formControlName="nombre">
                     </md-form-field>
-                    <input type="" value="Alias" formControlName="tipo">
+                    <input type="hidden" value="Alias" formControlName="tipo">
                 </div>
             </div>
         </div>
@@ -41,7 +53,7 @@
                     <md-form-field class="full-width">
                         <input mdInput placeholder="Otro nombre" formControlName="nombre">
                     </md-form-field>
-                    <input type="" value="Otro nombre" formControlName="tipo">
+                    <input type="hidden" value="Otro nombre" formControlName="tipo">
                 </div>
             </div>
         </div>

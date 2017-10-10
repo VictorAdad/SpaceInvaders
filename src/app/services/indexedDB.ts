@@ -15,6 +15,8 @@ import {arrTIPO_USO_TIPO_VEHICULO}     from '@models/datos/tipoUsoTipoVehiculo';
 import {arrCLASE_ARMA}                 from '@models/datos/claseArma';
 import {arrCALIBRE_MECANISMO}          from '@models/datos/calibreMecanismo';
 import {arrDESPARAICION_CONSUMACION}   from '@models/datos/desaparicionConsumacion';
+import {arrVIOLENCIA_GENERO}           from '@models/datos/violenciaGenero';
+import {arrEFECTO_DETALLE}             from '@models/datos/efectoDetalle';
 @Injectable()
 export class CIndexedDB {
     nameDB:string = "SIGI";
@@ -33,7 +35,7 @@ export class CIndexedDB {
                 db.createObjectStore("casos", {keyPath: "id"})
                 db.createObjectStore("personas", {keyPath: "id"});
                 db.createObjectStore("documentos", {keyPath: "id"});
-                db.createObjectStore("catalagos",{keyPath:"id"});
+                db.createObjectStore("catalogos",{keyPath:"id"});
                 //db.createObjectStore("delitos", {keyPath: "id"});
                 // let catDel= db.createObjectStore("catalogoDelitos", {keyPath: "id"});
                 // catDel.createIndex("indiceCatalogoDelito", "clasificacionId");
@@ -91,30 +93,31 @@ export class CIndexedDB {
                 {id:5, clasificacion: "Yolo", nombre: "Delito doloso", activo:true, created:new Date(), created_by:1, updated:new Date(), updated_by:1},
                 {id:6, clasificacion: "Yolo", nombre: "Delito por omisión", activo:true, created:new Date(), created_by:1, updated:new Date(), updated_by:1},
             ];
-            obj.update("catalagos",{id:"delitos", arreglo:arrCatalogoDelitos});
+            obj.update("catalogos",{id:"delitos", arreglo:arrCatalogoDelitos});
             //obj.nextItem(0,arrCatalogoDelitos,tabla);
            
 
-            obj.update("catalagos",{id:"oreja", arreglo:arrOreja.arreglo});
-            obj.update("catalagos",{id:"cara_nariz",arreglo:arrCARA_NARIZ.arreglo});
-            obj.update("catalagos",{id:"complexion_piel_sangre",arreglo:arrCOMPLEXION_PIEL_SANGRE.arreglo});
-            obj.update("catalagos",{id:"frente_menton",arreglo:arrFRENTE_MENTON.arreglo});
-            obj.update("catalagos",{id:"ceja_boca",arreglo:arrCEJA_BOCA.arreglo});
-            obj.update("catalagos",{id:"cabello",arreglo:arrCABELLO.arreglo});
-            obj.update("catalagos",{id:"labio_ojo",arreglo:arrLABIO_OJO.arreglo});
+            obj.update("catalogos",{id:"oreja", arreglo:arrOreja.arreglo});
+            obj.update("catalogos",{id:"cara_nariz",arreglo:arrCARA_NARIZ.arreglo});
+            obj.update("catalogos",{id:"complexion_piel_sangre",arreglo:arrCOMPLEXION_PIEL_SANGRE.arreglo});
+            obj.update("catalogos",{id:"frente_menton",arreglo:arrFRENTE_MENTON.arreglo});
+            obj.update("catalogos",{id:"ceja_boca",arreglo:arrCEJA_BOCA.arreglo});
+            obj.update("catalogos",{id:"cabello",arreglo:arrCABELLO.arreglo});
+            obj.update("catalogos",{id:"labio_ojo",arreglo:arrLABIO_OJO.arreglo});
 
-            obj.update("catalagos",{id:"detalle_lugar",arreglo:arrDETALLE_LUGAR.arreglo});
+            obj.update("catalogos",{id:"detalle_lugar",arreglo:arrDETALLE_LUGAR.arreglo});
             
-            obj.update("catalagos",{id:"marca_submarca",arreglo:arrMARCA_SUBMARCA.arreglo});
-            obj.update("catalagos",{id:"procedencia_aseguradora",arreglo:arrPROCEDENCIA_ASEGURADORA.arreglo});
-            obj.update("catalagos",{id:"motivo_color_clase",arreglo:arrMOTIVO_REGISTRO_COLOR_CLASE.arreglo});
-            obj.update("catalagos",{id:"tipo_uso_tipo_vehiculo",arreglo:arrTIPO_USO_TIPO_VEHICULO.arreglo});
+            obj.update("catalogos",{id:"marca_submarca",arreglo:arrMARCA_SUBMARCA.arreglo});
+            obj.update("catalogos",{id:"procedencia_aseguradora",arreglo:arrPROCEDENCIA_ASEGURADORA.arreglo});
+            obj.update("catalogos",{id:"motivo_color_clase",arreglo:arrMOTIVO_REGISTRO_COLOR_CLASE.arreglo});
+            obj.update("catalogos",{id:"tipo_uso_tipo_vehiculo",arreglo:arrTIPO_USO_TIPO_VEHICULO.arreglo});
             
-            obj.update("catalagos",{id:"clase_arma",arreglo:arrCLASE_ARMA.arreglo});
-            obj.update("catalagos",{id:"calibre_mecanismo",arreglo:arrCALIBRE_MECANISMO.arreglo});
+            obj.update("catalogos",{id:"clase_arma",arreglo:arrCLASE_ARMA.arreglo});
+            obj.update("catalogos",{id:"calibre_mecanismo",arreglo:arrCALIBRE_MECANISMO.arreglo});
 
-            obj.update("catalagos",{id:"desaparicion_consumacion",arreglo:arrDESPARAICION_CONSUMACION.arreglo});
-            
+            obj.update("catalogos",{id:"desaparicion_consumacion",arreglo:arrDESPARAICION_CONSUMACION.arreglo});
+            obj.update("catalogos",{id:"violencia_genero",arreglo:arrVIOLENCIA_GENERO.arreglo});
+            obj.update("catalogos",{id:"efecto_detalle",arreglo:arrEFECTO_DETALLE.arreglo});
         }  
     }
 
@@ -325,7 +328,7 @@ export class CIndexedDB {
         var obj= this;
         var promesa = new Promise( 
             function(resolve,reject){
-                obj.get("catalagos",_catalogo).then(lista=>{
+                obj.get("catalogos",_catalogo).then(lista=>{
                     let arreglo=lista["arreglo"] as any[];
                     let igual;
                     for (var i = 0; i<arreglo.length; i++) {

@@ -1,4 +1,4 @@
-<md-expansion-panel>
+<md-expansion-panel [formGroup]="globals.form">
     <md-expansion-panel-header>
         <md-panel-title>
             <md-icon>room</md-icon> Datos de Localización
@@ -7,105 +7,189 @@
 
         </md-panel-description>
     </md-expansion-panel-header>
-    <div class="row">
-        <div class="col-md-3">
-            <select2 [options]="options.paises" placeholder="País" name="id" [group]="globals.form.controls.localizacionPersona.controls.pais" 
-            (valueChange)="changePais($event)"></select2>
-        </div>
-        <div class="col-md-3">
-            <select2 *ngIf="isMexico" [options]="options.estados" placeholder="Estado" (valueChange)="changeEstado($event)"></select2>
-        </div>
-        <div class="col-md-3">
-            <select2 *ngIf="isMexico" [options]="options.municipios" placeholder="Municipio/Delegación" ></select2>
-        </div>
-        <div class="col-md-3">
-            <select2 *ngIf="isMexico" [options]="options.colonias" placeholder="Colonia/Asentamiento" ></select2>
-        </div>
-        <div class="col-md-3">
-          <text *ngIf="!isMexico" label="Estado"></text>
-        </div>
+    <div formArrayName="localizacionPersona">
+        <div *ngFor="let localizacion of localizaciones; let i=index; trackBy:trackByIndex" [formGroupName]="localizacionIndex">
+            <div class="row" >
+                <div class="col-md-3">
+                    <select2 [options]="options.paises"
+                        placeholder="País"
+                        name="id"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex].controls.pais" 
+                        (valueChange)="changePais($event)">
+                    </select2>
+                </div>
+                <div class="col-md-3" *ngIf="isMexico">
+                    <select2 [options]="options.estados"
+                        placeholder="Estado"
+                        name="id"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex].controls.estado"
+                        (valueChange)="changeEstado($event)">
+                    </select2>
+                </div>
+                <div class="col-md-3" *ngIf="isMexico">
+                    <select2 [options]="options.municipios"
+                        placeholder="Municipio/Delegación"
+                        name="id"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex].controls.estado"
+                        (valueChange)="changeMunicipio($event)">
+                    </select2>
+                </div>
+                <div class="col-md-3" *ngIf="isMexico">
+                    <select2 [options]="options.colonias"
+                        placeholder="Colonia/Asentamiento"
+                        name="id"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex].controls.colonia">
+                    </select2>
+                </div>
+                <div class="col-md-3" *ngIf="isMexico">
+                    <select2 [options]="options.localidades"
+                        placeholder="Localidad"
+                        name="id"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex].controls.localidad">
+                    </select2>
+                </div>
+                <div class="col-md-3" *ngIf="!isMexico">
+                    <text label="Estado"
+                        name="estadoOtro"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex]">
+                            
+                    </text>
+                </div>
 
-        <div class="col-md-3">
-          <text *ngIf="!isMexico"  label="Municipio/Delegación"></text>
-        </div>
-        <div class="col-md-3">
-          <text *ngIf="!isMexico"  label="Colonia/Asentamiento"></text>
-        </div>
+                <div class="col-md-3" *ngIf="!isMexico">
+                    <text label="Municipio/Delegación"
+                        name="municipioOtro"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex]">
+                                
+                    </text>
+                </div>
+                <div class="col-md-3" *ngIf="!isMexico">
+                    <text label="Colonia/Asentamiento"
+                        name="coloniaOtro"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex]">
+    
+                    </text>
+                </div>
 
-    </div>
+            </div>
 
-    <div class="row">
-        <div class="col-md-2">
-            <text label="Localidad" ></text>
-        </div>
-        <div class="col-md-2">
-            <text label="Calle" name="calle" [group]="globals.form.controls.localizacionPersona"></text>
-        </div>
-        <div class="col-md-2">
-            <text label="No. exterior" name="noExterior" [group]="globals.form.controls.localizacionPersona"></text>
-        </div>
-        <div class="col-md-2">
-            <text label="No. interior" name="noInterior" [group]="globals.form.controls.localizacionPersona"></text>
-        </div>
-    </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <text label="Localidad"
+                        name="localidadOtro"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex]">
+                    </text>
+                </div>
+                <div class="col-md-2">
+                    <!-- <md-form-field class="full-width">
+                        <input mdInput placeholder="Calle" formControlName="calle">
+                    </md-form-field> -->
+                    <text label="Calle" name="calle" [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex]"></text>
+                </div>
+                <div class="col-md-2">
+                    <text label="No. exterior" name="noExterior" [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex]"></text>
+                </div>
+                <div class="col-md-2">
+                    <text label="No. interior" name="noInterior" [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex]"></text>
+                </div>
+            </div>
 
-    <div class="row">
-        <div class="col-md-2">
-            <text label="CP" ></text>
-        </div>
-        <div class="col-md-2">
-            <text label="Tipo de domicilio" ></text>
-        </div>
-        <div class="col-md-4">
-            <text label="Referencias" ></text>
-        </div>
-    </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <text label="CP"
+                        name="cp"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex]">
+        
+                    </text>
+                </div>
+                <div class="col-md-2">
+                    <text label="Tipo de domicilio"
+                        name="id"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex].controls.tipoDomicilio">
+                    </text>
+                </div>
+                <div class="col-md-4">
+                    <text label="Referencias"
+                        name="referencias"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex]">        
+                    </text>
+                </div>
+            </div>
 
-    <div class="row">
-        <div class="col-md-2">
-            <text label="Tel. particular" ></text>
-        </div>
-        <div class="col-md-2">
-            <text label="Tel. del trabajo" ></text>
-        </div>
-        <div class="col-md-2">
-            <text label="Extensión" ></text>
-        </div>
-        <div class="col-md-2">
-            <text label="Tel. móvil"  ></text>
-        </div>
-    </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <text label="Tel. particular"
+                        name="telParticular"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex]">
+                            
+                    </text>
+                </div>
+                <div class="col-md-2">
+                    <text label="Tel. del trabajo"
+                        name="telTrabajo"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex]">
+                            
+                    </text>
+                </div>
+                <div class="col-md-2">
+                    <text label="Extensión"
+                        name="extension"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex]">
+                            
+                    </text>
+                </div>
+                <div class="col-md-2">
+                    <text label="Tel. móvil"
+                        name="telMovil"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex]">
+                            
+                    </text>
+                </div>
+            </div>
 
-    <div class="row">
-        <div class="col-md-2">
-            <text label="Fax" ></text>
-        </div>
-        <div class="col-md-2">
-            <text label="Otro medio de contacto" ></text>
-        </div>
-        <div class="correo">
-            <text label="Extensión"  ></text>
-        </div>
-    </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <text label="Fax"
+                        name="fax"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex]">
+                            
+                    </text>
+                </div>
+                <div class="col-md-2">
+                    <text label="Otro medio de contacto"
+                        name="otroMedioContacto"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex]">
+                            
+                    </text>
+                </div>
+                <div class="correo">
+                    <text label="Correo"
+                        name="correo"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex]">
+                            
+                    </text>
+                </div>
+            </div>
 
-    <div class="row">
-        <div class="col-md-2">
-            <label class="Naranja">Tipo de residencia</label>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-            <radiobutton class="col-md-4" 
-                [radios]="[
-                    {label:'Residencia habitual',value:'Residencia habitual'},
-                    {label:'Domicilio procesal',value:'Domicilio procesal'}
-                ]">
-                    
-            </radiobutton>
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="Naranja">Tipo de residencia</label>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <radiobutton [radios]="[
+                                {label:'Residencia habitual',value:'Residencia habitual'},
+                                {label:'Domicilio procesal',value:'Domicilio procesal'}]">
+                                
+                        </radiobutton>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <button class="float-right" md-raised-button color="accent">Agregar</button>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button md-raised-button color="accent" (click)="addLocalizacion($event)">Agregar localización</button>
         </div>
     </div>
-
 </md-expansion-panel>

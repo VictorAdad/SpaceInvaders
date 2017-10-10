@@ -61,13 +61,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     isViolenciaGenero: boolean = false;
     isAChange: boolean = false;
     
-
-    efectoData: EfectoViolenciaGenero[] = [
-    {id:1,efecto: 'Efecto 1', detalle: 'Detalle 1'},
-    {id:1,efecto: 'Efecto 2', detalle: 'Detalle 2'},
-    ]
     efectoDisplayedColumns = ['efecto', 'detalle'];
-    efectoDataSource = new ExampleDataSource(this.efectoData);
+    efectoDataSource = new ExampleDataSource([]);
 
     trataData: TrataPersonas[] = []
     trataDisplayedColumns = ['País de origen', 'Estado de origen','Municipio de origen','País destino','Estado destino','Municipio destino', 'Tipo de trata','Transportación'];
@@ -84,6 +79,42 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     asesorOptions:MOption[]=[];
     imputadoOptions:MOption[]=[];
     representanteOptions:MOption[]=[];
+    desaparicionConsumada={
+        consumacion:"",
+        tipoDesaparicion:"",
+        relacionAcusadoOfendido:""
+    };
+    desaparicionConsumadaSeleccionado=null;
+
+    arrconsumacion=[{label:'si',value:'si'},{label:'no',value:'no'},];
+    arrtipoDesaparicion=[{label:'Forzada',value:'Forzada'},{label:'Voluntaria',value:'Voluntaria'},];
+    arrrelacionAcusadoOfendido=[{label:'amigo',value:'amigo'},{label:'familiar',value:'familiar'},{label:'conocido',value:'conocido'},{label:'desconocido',value:'desconocido'},];
+
+    arrdelincuenciaOrganizada=[{label:'SI',value:'SI'},{label:'NO',value:'NO'},];
+    arrviolenciaGenero=[{label:'SI',value:'SI'},{label:'NO',value:'NO'},];
+    arrvictimaTrata=[{label:'SI',value:'SI'},{label:'NO',value:'NO'},];
+    arrvictimaAcoso=[{label:'SI',value:'SI'},{label:'NO',value:'NO'},];
+    arrordenProteccion=[{label:'SI',value:'SI'},{label:'NO',value:'NO'},];
+    arrefecto=[{label:'SI',value:'SI'},{label:'NO',value:'NO'},];
+    arrdetalle=[{label:'SABRA',value:'SABRA'},{label:'NO SABE',value:'NO SABE'},];
+
+    violenciaGenero={
+        delincuenciaOrganizada:null,
+        violenciaGenero:null,
+        victimaTrata:null,
+        victimaAcoso:null,
+        ordenProteccion:null
+    };
+    violenciaGeneroSeleccionado:null;
+
+    efectoDetalle={
+        efecto:null,
+        detalle:null
+    };
+    efectoDetalleSeleccionado:null;
+
+    efectoDetalleArr=[];
+
 
 
     constructor(
@@ -155,15 +186,9 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
           // 'lugar'                    : new FormControl(this.model.lugar,[Validators.required,]),
           
           
-          // 'consultorDelito'          : new FormControl(this.model.consultorDelito),
-          
-          
-          
-          // 'relacionAcusadoOfendido'  : new FormControl(this.model.relacionAcusadoOfendido),
-          
-          // 'tipoDesaparicion'         : new FormControl(this.model.tipoDesaparicion),
-               
-          
+          // 'consumacion'            : new FormControl(this.model.consultorDelito),
+          // 'tipoDesaparicion'       : new FormControl(this.model.relacionAcusadoOfendido),
+          // 'relacionAcusadoOfendido': new FormControl(this.model.tipoDesaparicion),
           // 'tipoViolenciaGenero'      : new FormControl(this.model.tipoViolenciaGenero),
           // 'victimaDelincuenciaOrganizada': new FormControl(this.model.victimaDelincuenciaOrganizada),
           // 'victimaViolenciaGenero'    : new FormControl(this.model.victimaViolenciaGenero),
@@ -173,8 +198,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
         });
       this.efectoViolenciaForm  = new FormGroup({
-          'efecto': new FormControl(this.efectoViolenciaGenero.efecto),
-          'detalle': new FormControl(this.efectoViolenciaGenero.detalle),
+          'efecto': new FormControl(this.efectoViolenciaGenero.efecto,[Validators.required,]),
+          'detalle': new FormControl(this.efectoViolenciaGenero.detalle,[Validators.required,]),
           
         });
       this.trataPersonasForm  = new FormGroup({
@@ -230,7 +255,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
 
       if(this.onLine.onLine){
-        this.http.get('/v1/base/casos/'+this.casoId+'/personas-casos').subscribe((response) => {
+        this.http.get('/v1/base/personas-casos/casos/'+this.casoId+'/page').subscribe((response) => {
             response.data.forEach(object => {
                 //victima u ofendido
                 let persona=object["persona"];
@@ -258,41 +283,53 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
       }
     }
 
+    saveEfectoViolencia(){
+        this.efectoDetalleArr.push(this.efectoDetalleSeleccionado);
+        this.efectoDataSource = new ExampleDataSource(this.efectoDetalleArr);
+        this.efectoDetalleSeleccionado=null;
+        this.efectoViolenciaForm.patchValue({detalle:""});
+        this.efectoViolenciaForm.patchValue({efecto:""});
+        
+    }
+
     save(_valid : any, _model : any):void{
         console.log("Datos a guardar => ",_model);
         if(this.onLine.onLine){
             Object.assign(this.model, _model);
             this.model.caso.id = this.casoId;
-            this.http.post('/v1/base/relaciones', this.model).subscribe(
-                (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
-                (error) => console.error('Error', error)
-            );
+            ((this.model["detalleDelito"])["desaparicionConsumada"])["id"]=this.desaparicionConsumada["id"];
+            console.log(this.model);
+            //this.model.detalleDelito.desaparicionConsumada.id=1;
+            // this.http.post('/v1/base/relaciones', this.model).subscribe(
+            //     (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
+            //     (error) => console.error('Error', error)
+            // );
         }else{
-            Object.assign(this.model, _model);
-            this.model.caso.id = this.casoId;
-            let temId = Date.now();
-            let dato={
-                url:'/v1/base/relaciones',
-                body:this.model,
-                options:[],
-                tipo:"post",
-                pendiente:true,
-                temId: temId
-            }
-            this.db.add("sincronizar",dato).then(p=>{
-              this.db.get("casos",this.casoId).then(caso=>{
-                    if (caso){
-                        if(!caso["relacion"]){
-                            caso["relacion"]=[];
-                        }
-                        this.model["id"]=temId;
-                        caso["relacion"].push(this.model);
-                        this.db.update("casos",caso).then(t=>{
-                            this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
-                        });
-                    }
-                });
-            }); 
+            // Object.assign(this.model, _model);
+            // this.model.caso.id = this.casoId;
+            // let temId = Date.now();
+            // let dato={
+            //     url:'/v1/base/relaciones',
+            //     body:this.model,
+            //     options:[],
+            //     tipo:"post",
+            //     pendiente:true,
+            //     temId: temId
+            // }
+            // this.db.add("sincronizar",dato).then(p=>{
+            //   this.db.get("casos",this.casoId).then(caso=>{
+            //         if (caso){
+            //             if(!caso["relacion"]){
+            //                 caso["relacion"]=[];
+            //             }
+            //             this.model["id"]=temId;
+            //             caso["relacion"].push(this.model);
+            //             this.db.update("casos",caso).then(t=>{
+            //                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+            //             });
+            //         }
+            //     });
+            // }); 
         }
     }
 
@@ -380,6 +417,16 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
           break;
         }
       }
+    }
+
+    set(variable,elemento, value,catalogo){
+      (this[variable])[elemento]=value;
+      let obj=this;
+      this.db.searchInCatalogo(catalogo,this[variable])
+        .then(item=>{
+          obj[variable+"Seleccionado"]=item;
+          //console.log(this[variable+"Seleccionado"]);
+        });
     }
 
     resetValues(){
