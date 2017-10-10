@@ -21,6 +21,7 @@ export class AcuerdoGeneralComponent {
 	@ViewChild(MdPaginator) 
     paginator: MdPaginator;
     public breadcrumb = [];
+    public apiUrl="/v1/base/solicitudes-pre-acuerdos";
 
 
 	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
@@ -30,15 +31,15 @@ export class AcuerdoGeneralComponent {
             	this.haveCaso=true;
                 this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
-                this.http.get('/v1/base/acuerdosgenerales').subscribe((response) => {
+                this.http.get(this.apiUrl).subscribe((response) => {
                     console.log('response acuerdo');
-                    console.log(response.data);
+                    console.log(response);
                     this.data = response.data as AcuerdoGeneral[];
                     this.dataSource = new TableService(this.paginator, this.data);
                 });
             }
             else{
-            	 this.http.get('/v1/base/acuerdosgenerales').subscribe((response) => {
+            	 this.http.get(this.apiUrl).subscribe((response) => {
 	                 this.data = response.data as AcuerdoGeneral[];
 	                 console.log(this.data)
 	                 this.dataSource = new TableService(this.paginator, this.data);

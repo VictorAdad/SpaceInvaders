@@ -38,7 +38,7 @@ export class AcuerdoGeneralCreateComponent {
     templateUrl:'./solicitud.component.html',
 })
 export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal {
-    public apiUrl:string='/v1/base/acuerdosgenerales';
+    public apiUrl="/v1/base/solicitudes-pre-acuerdos";
     public casoId: number = null;
     public id: number = null;
     public form  : FormGroup;
