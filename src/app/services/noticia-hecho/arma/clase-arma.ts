@@ -12,7 +12,7 @@ export class MatrizClaseArma extends MatrizGlobal{
         ) {
         super(http);
         this.selected = new ClaseArma();
-        this.getMatriz('/v1/catalogos/clase-arma');
+        this.getMatriz('/v1/catalogos/arma/clase-arma');
     }
 
     public validate(_object: any, _selected: any): boolean{

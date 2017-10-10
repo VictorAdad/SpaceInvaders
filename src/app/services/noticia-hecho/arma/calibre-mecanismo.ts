@@ -11,7 +11,7 @@ export class MatrizCalibreMecanismo extends MatrizGlobal{
         ) {
         super(http);
         this.selected = new CalibreMecanismo();
-        this.getMatriz('/v1/catalogos/calibre-mecanismo');
+        this.getMatriz('/v1/catalogos/arma/calibre-mecanismo');
     }
 
     public validate(_object: any, _selected: any): boolean{
