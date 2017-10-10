@@ -40,24 +40,24 @@
     </div>
 
     <div class="col-md-2">
-      <select2 [options]="personaServ.nacionalidadReligion.nacionalidad" placeholder="Nacionalidad" name="id" [group]="globals.form.controls.nacionalidad"></select2>
+      <select2 [options]="personaServ.nacionalidadReligion.nacionalidad" placeholder="Nacionalidad" name="nacionalidad" [group]="globals.form"></select2>
     </div>
     <div class="col-md-2">
       <select2 [options]="options.paises" placeholder="País de nacimiento"  name="id" [group]="globals.form.controls.pais" (valueChange)="changePais($event)"></select2>
     </div>
-    <div class="col-md-2">
-      <text *ngIf="!isMexico" label="Estado de nacimiento" name="id" [group]="globals.form.controls.estado" (valueChange)="changeEstado($event)"></text>
+    <div class="col-md-2" *ngIf="!isMexico">
+      <text label="Estado de nacimiento" name="id" [group]="globals.form.controls.estado" (valueChange)="changeEstado($event)"></text>
     </div>
 
-    <div class="col-md-2">
-      <text *ngIf="!isMexico"  label="Municipio" name="id" [group]="globals.form.controls.municipio"></text>
+    <div class="col-md-2" *ngIf="!isMexico">
+      <text  label="Municipio" name="id" [group]="globals.form.controls.municipio"></text>
     </div>
-    <div class="col-md-2">
-      <select2 [options]="options.estados"  *ngIf="isMexico" placeholder="Estado de nacimiento" name="id" [group]="globals.form.controls.estado" (valueChange)="changeEstado($event)"></select2>
+    <div class="col-md-2" *ngIf="isMexico">
+      <select2 [options]="options.estados" placeholder="Estado de nacimiento" name="id" [group]="globals.form.controls.estado" (valueChange)="changeEstado($event)"></select2>
     </div>
 
-    <div class="col-md-2">
-      <select2 [options]="options.municipios" *ngIf="isMexico"  placeholder="Municipio" name="id" [group]="globals.form.controls.municipio"></select2>
+    <div class="col-md-2" *ngIf="isMexico">
+      <select2 [options]="options.municipios" placeholder="Municipio" name="id" [group]="globals.form.controls.municipio"></select2>
     </div>
 
     <div class="col-md-2">
@@ -75,22 +75,21 @@
     </div>
 
     <div class="col-md-2">
-     <text label='RFC'  ></text>
+     <text label='RFC' name="rfc" [group]="globals.form"></text>
     </div>
     <div class="col-md-2">
       <select2 [options]="options.estadoCivil" placeholder="Estado civil"  name="id" [group]="globals.form.controls.estadoCivil"></select2>
     </div>
     <div class="col-md-2">
-      <text label="Número de hijos" ></text>
+      <text label="Número de hijos" name="numHijos" [group]="globals.form"></text>
     </div>
 
     <div class="col-md-2">
-      <text label="Religión" ></text>
+      <select2 [options]="personaServ.nacionalidadReligion.religion" placeholder="Religion" name="religion" [group]="globals.form"></select2>
     </div>
 
     <div class="col-md-2">
-     <select2 [options]="
-      [{value:true,label:'Si'},{value:false,label:'No'}]" placeholder="Habla Español" ></select2>
+        <select2 [options]="personaServ.idiomaIdentificacion.hablaEspaniol" placeholder="Habla español" name="hablaEspaniol" [group]="globals.form"></select2>
     </div>
     <div class="col-md-2">
       <select2 [options]="personaServ.idiomaIdentificacion.lenguaIndigena" placeholder="Lengua Índigena" ></select2>
@@ -107,19 +106,19 @@
      <select2 [options]="personaServ.idiomaIdentificacion.familiaLinguistica" placeholder="Familia lingüistica" ></select2>
     </div>
     <div class="col-md-2">
-      <select2 [options]="options.interprete" placeholder="Necesita interprete" ></select2>
+      <select2 [options]="options.interprete" placeholder="Necesita interprete" name="id" [group]="globals.form.controls.adiccion"></select2>
     </div>
     <div class="col-md-4">
-       <text label="Adicciones"></text>
+       <select2 [options]="options.interprete" placeholder="Adicciones" name="id" [group]="globals.form.controls.interprete"></select2>
     </div>
     </div>
 
-    <div class="row" *ngIf="globals.tipoInterviniente==='Imputado'">
+    <div class="row" *ngIf="globals.tipoInterviniente==='6'">
         <div class="col-md-2">
             <checkbox label="Detenido" name="detenido" [group]="globals.form" (valueChange)="changeDetenido($event)" ></checkbox>
         </div>
         <div class="col-md-2" *ngIf="globals.detenido">
-            <date label="Fecha de detención" ></date>
+            <date label="Fecha de detención" name="fechaDetencion" [group]="globals.form.controls.personaCaso.controls.detalleDetenido"></date>
         </div>
         <div class="col-md-2" *ngIf="globals.detenido">
             <text label="Hora de detención" ></text>
@@ -131,7 +130,7 @@
         </div>
 
         <div class="col-md-2" *ngIf="globals.detenido">
-            <date label="Fecha de declaración" ></date>
+            <date label="Fecha de declaración" name="fechaDeclaracion" [group]="globals.form.controls.personaCaso.controls.detalleDetenido"></date>
         </div>
         <div class="col-md-2" *ngIf="globals.detenido">
             <select2 [options]="

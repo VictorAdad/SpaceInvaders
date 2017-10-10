@@ -68,6 +68,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         this.persona= new Persona();
         this.globals = new PersonaGlobals(this.form,this.persona);
         this.globals.form.controls.razonSocial.disable();
+        this.globals.formLocalizacion = this.formLocalizacion();
         this.route.params.subscribe(params => {
             if(params['casoId']){
                 this.casoId = +params['casoId'];
@@ -100,15 +101,13 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 }
             }
         });
+        console.log('Form', this.globals.form);
     }
 
     public createForm(){
 
         return new FormGroup({
             'tipoPersona'      : new FormControl("", [Validators.required,]),
-            'tipoInterviniente': new FormGroup({
-                'id': new FormControl("", [Validators.required,]),
-            }),
             'nombre'           : new FormControl("", [Validators.required,]),
             'paterno'          : new FormControl("", [Validators.required,]),
             'materno'          : new FormControl("", [Validators.required,]),
@@ -116,42 +115,20 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             'fechaNacimiento'  : new FormControl("",[]),
             'edad'             : new FormControl("",[]),
             'curp'             : new FormControl("",[]),
+            'rfc'              : new FormControl("",[]),
             'numHijos'         : new FormControl("",[]),
             'lugarTrabajo'     : new FormControl("",[]),
             'ingresoMensual'   : new FormControl("",[]),
             'detenido'         : new FormControl("",[]),
-            'localizacionPersona': new FormGroup({
-                'pais': new FormGroup({
-                    'id': new FormControl("",[]),
-                }),
-                'estado': new FormGroup({
-                    'id': new FormControl("",[]),
-                }),
-                'municipio': new FormGroup({
-                    'id': new FormControl("",[]),
-                }),
-                'localidad': new FormGroup({
-                    'id': new FormControl("",[]),
-                }),
-                'calle': new FormControl("",[]),
-                'noExterior': new FormControl("",[]),
-                'noInterior': new FormControl("",[]),
-                'cp': new FormControl("",[]),
-                'tipoDomicilio': new FormControl("",[]),
-                'referencias': new FormControl("",[]),
-                'telParticula': new FormControl("",[]),
-                'telTrabajo': new FormControl("",[]),
-                'extension': new FormControl("",[]),
-                'telMovil': new FormControl("",[]),
-                'fax': new FormControl("",[]),
-                'otroMedioContacto': new FormControl("",[]),
-                'correo': new FormControl("",[]),
-                'tipoResidencia': new FormControl("",[]),
-                'estadoOtro': new FormControl("",[]),
-                'municipioOtro': new FormControl("",[]),
-                'coloniaOtro': new FormControl("",[]),
-                'localidadOtro': new FormControl("",[]),
-            }),
+            'nacionalidad'     : new FormControl(),
+            'religion'         : new FormControl(),
+            'hablaEspaniol'    : new FormControl(),
+            'identificacion'   : new FormControl(),
+            'autoridadEmisora' : new FormControl(),
+            'folioIdentificacion' : new FormControl(),
+            'localizacionPersona': new FormArray([
+                this.formLocalizacion(),
+            ]),
             'mediaFiliacion': new FormGroup({
                 'orejaDerecha': new FormGroup({
                     'id': new FormControl("",[]),
@@ -211,10 +188,10 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             'alfabetismo': new FormGroup({
                 'id': new FormControl("",[]),
             }),
-            'adiccion': new FormGroup({
+            'interprete': new FormGroup({
                 'id': new FormControl("",[]),
             }),
-            'nacionalidad': new FormGroup({
+            'adiccion': new FormGroup({
                 'id': new FormControl("",[]),
             }),
             'estadoCivil': new FormGroup({
@@ -226,6 +203,13 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 }),
                 'tipoInterviniente': new FormGroup({
                     'id': new FormControl()
+                }),
+                'detalleDetenido': new FormGroup({
+                    'fechaDetencion'   : new FormControl(),
+                    'fechaDeclaracion' : new FormControl(),
+                    'tipoDetenido' : new FormGroup({
+                        'id' : new FormControl(),
+                    })
                 }),
             }),
             'aliasNombrePersona' : new FormArray([
@@ -306,6 +290,46 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         console.log('After patch', this.form);
         // this.form.controls.sexo.patachValue(_data.sexo);
     }
+
+    public formLocalizacion(){
+        return new FormGroup({
+            'pais': new FormGroup({
+                'id': new FormControl("",[]),
+            }),
+            'estado': new FormGroup({
+                'id': new FormControl("",[]),
+            }),
+            'municipio': new FormGroup({
+                'id': new FormControl("",[]),
+            }),
+            'colonia': new FormGroup({
+                'id': new FormControl("",[]),
+            }),
+            'localidad': new FormGroup({
+                'id': new FormControl("",[]),
+            }),
+            'tipoDomicilio': new FormGroup({
+                'id': new FormControl("",[]),
+            }),
+            'calle': new FormControl("",[]),
+            'noExterior': new FormControl("",[]),
+            'noInterior': new FormControl("",[]),
+            'cp': new FormControl("",[]),
+            'referencias': new FormControl("",[]),
+            'telParticular': new FormControl("",[]),
+            'telTrabajo': new FormControl("",[]),
+            'extension': new FormControl("",[]),
+            'telMovil': new FormControl("",[]),
+            'fax': new FormControl("",[]),
+            'otroMedioContacto': new FormControl("",[]),
+            'correo': new FormControl("",[]),
+            'tipoResidencia': new FormControl("",[]),
+            'estadoOtro': new FormControl("",[]),
+            'municipioOtro': new FormControl("",[]),
+            'coloniaOtro': new FormControl("",[]),
+            'localidadOtro': new FormControl("",[]),
+        });
+    }
 }
 
 @Component({
@@ -337,14 +361,20 @@ export class IdentidadComponent{
             }
         }   
       }
-    }  
+    } 
+
     changeEstado(id){
         if(id)
-        this.options.getMunicipiosByEstado(id);
+            this.options.getMunicipiosByEstado(id);
     }
+
+    changeMunicipio(id){
+        if(id)
+            this.options.getColoniasByMunicipio(id);
+    }
+
     changeDetenido(checked){
         this.globals.detenido=checked;
-        // this.persona.detenido=e.checked;
     }
 }
 
@@ -357,16 +387,16 @@ export class IdentificacionComponent{
     @Input()
     globals: PersonaGlobals;
     @Input()
-    @Input()
     options: SelectsService;
-
-    constructor(private personaServ: PersonaService){
-
-    }
-
     public otrosNombres:string[]=[];
     public alias:string[]=[];
     public nombres: number = 0;
+
+    constructor(private personaServ: PersonaService){
+        this.otrosNombres.unshift(null);
+        this.alias.unshift(null);
+    }
+
 
     public addOtroNombre(_tipo: string){
         this.nombres++;
@@ -408,9 +438,11 @@ export class LocalizacionComponent{
     @Input()
     options: SelectsService;
     isMexico:boolean=false;
+    public localizaciones: string[] = [];
+    public localizacionIndex: number = 0;
 
     constructor(private personaServ: PersonaService){
-        
+        this.localizaciones.unshift(null);
     }
 
     changePais(id){
@@ -424,10 +456,23 @@ export class LocalizacionComponent{
             }
         } 
        }
-    }  
+    }
+
     changeEstado(id){
         if(id)
         this.options.getMunicipiosByEstado(id);
+    }
+
+    changeMunicipio(id){
+        if(id)
+            this.options.getColoniasByMunicipio(id);
+    }
+
+    addLocalizacion(_e){
+        this.localizaciones.unshift(null);
+
+        let localizaciones = this.globals.form.get('localizacionPersona') as FormArray;
+        localizaciones.push(this.globals.formLocalizacion);
     }
 
 }
@@ -454,6 +499,7 @@ export class PersonaGlobals{
     public tipoInterviniente: string = '';
     public detenido: boolean = false;
     public persona:Persona;
+    public formLocalizacion: FormGroup;
 
     constructor(
         _form: FormGroup,

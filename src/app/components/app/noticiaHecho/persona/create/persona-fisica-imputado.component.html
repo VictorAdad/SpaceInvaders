@@ -54,22 +54,23 @@
               </div>
               <div class="row">
               <div class="col-md-10">
-              <radiobutton class="col-md-3" [(value)]="tipoInterviniente" [radios]="
+              <radiobutton class="col-md-3" [radios]="
                         [
                         {label:'Apoderado legal',value:'1'},
                         {label:'Defensor público',value:'2'},
                         {label:'Representante legal',value:'3'},
                         {label:'Asesor jurídico privado',value:'4'},
-                        {label:'Imputado',value:'Imputado'},
-                        {label:'Testigo',value:'Testigo'},
-                        {label:'Asesor jurídico público',value:'5'},
-                        {label:'Ofendido',value:'6'},
-                        {label:'Víctima',value:'7'},
-                        {label:'Defensor privado',value:'8'},
-                        {label:'Remitente(policía)',value:'9'}
+                        {label:'Imputado',value:'6'},
+                        {label:'Testigo',value:'7'},
+                        {label:'Asesor jurídico público',value:'8'},
+                        {label:'Ofendido',value:'9'},
+                        {label:'Víctima',value:'10'},
+                        {label:'Defensor privado',value:'11'},
+                        {label:'Remitente(policía)',value:'12'}
                         ]
                         
-              " name="id" [group]="form.controls.tipoInterviniente" (valueChange)="changeTipoInterviniente($event)"></radiobutton>
+              " name="id" [group]="form.controls.personaCaso.controls.tipoInterviniente"
+              (valueChange)="changeTipoInterviniente($event)"></radiobutton>
               </div>
               </div>
             </div>
@@ -88,7 +89,7 @@
         </div>
 
         <!-- Media de filiación -->
-        <div class="row  justify-content-md-center align-items-center space" *ngIf="tipoInterviniente=='Imputado'">
+        <div class="row  justify-content-md-center align-items-center space" *ngIf="globals.tipoInterviniente=='6'">
             <media-filacion [globals]="globals"  [options]="options" style="width: 95%"></media-filacion>
         </div>
         <div class="row space">
@@ -97,7 +98,7 @@
         <div class="row justify-content-end space">
             <div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" mdTooltipPosition="above">
                 <button md-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id != null">Editar</button>    
-                <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)"  *ngIf="id == null">Guardar</button>
+                <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
             </div>
             <div class="col-sm-auto">
               <button class="float-right" md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button> 
