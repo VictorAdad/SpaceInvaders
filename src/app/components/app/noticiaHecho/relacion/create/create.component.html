@@ -82,22 +82,25 @@
                     <div class="col">
                         <select2 placeholder="Forma de acción" name="id" [(options)]="options" [group]="relacionForm.controls.detalleDelito.controls.formaAccion"></select2>
                     </div>
+                    <!-- Desaparicion consumacion -->
                     <div class="col">
-                        <select2 placeholder="Consumación" name="" [(options)]="options" [group]=""></select2>
+                        <select2 placeholder="Consumación" name="" [(options)]="arrconsumacion" [group]="" (valueChange)="set('desaparicionConsumada','consumacion',$event,'desaparicion_consumacion')"></select2>
                     </div>
                     <div class="col">
                         <select2 placeholder="Grado de participación" name="id" [(options)]="options" [group]="relacionForm.controls.detalleDelito.controls.gradoParticipacion"></select2>
                     </div>
+                    <!-- Desaparicion consumacion -->
                     <div class="col">
-                        <select2 placeholder="Relación entre acusado y ofendido" name="" [(options)]="options" [group]=""></select2>
+                        <select2 placeholder="Relación entre acusado y ofendido" name="" [(options)]="arrrelacionAcusadoOfendido" [group]="" (valueChange)="set('desaparicionConsumada','relacionAcusadoOfendido',$event,'desaparicion_consumacion')"></select2>
                     </div>
                 </div>
                 <div class="row" *ngIf="isImputadoVictimaDelito">
                     <div class="col">
                         <select2 placeholder="Forma de conducta" name="id" [(options)]="options" [group]="relacionForm.controls.detalleDelito.controls.formaConducta"></select2>
                     </div>
+                    <!-- Desaparicion consumacion -->
                     <div class="col">
-                        <select2 placeholder="Tipo de desaparición" name="" [(options)]="options" [group]=""></select2>
+                        <select2 placeholder="Tipo de desaparición" name="" [(options)]="arrtipoDesaparicion" [group]="" (valueChange)="set('desaparicionConsumada','tipoDesaparicion',$event,'desaparicion_consumacion')"></select2>
                     </div>
                     <div class="col" [formGroup]="relacionForm.controls.detalleDelito">
                         <md-checkbox class="example-margin" name="flagrancia" formControlName="flagrancia" >Flagrancia</md-checkbox>
@@ -116,21 +119,21 @@
                         <div class="row">
 
                             <div class="col-md-3">
-                                <select2 placeholder="Víctima de delincuencia organizada" name="victimaDelincuenciaOrganizada" [group]="relacionForm" ></select2>
+                                <select2 placeholder="Víctima de delincuencia organizada" name="" [group]="" [options]="arrdelincuenciaOrganizada" (valueChange)="set('violenciaGenero','delincuenciaOrganizada',$event,'violencia_genero')"></select2>
                             </div>
                             <div class="col-md-3">
-                                <select2 placeholder="Víctima de violencia de genero" name="victimaViolenciaGenero" [group]="relacionForm"></select2>
+                                <select2 placeholder="Víctima de violencia de genero" name="" [group]="" [options]="arrviolenciaGenero" (valueChange)="set('violenciaGenero','violenciaGenero',$event,'violencia_genero')"></select2>
                             </div>
                             <div class="col-md-3">
-                                <select2 placeholder="Víctima de trata" name="victimaTrata" [group]="relacionForm"></select2>
+                                <select2 placeholder="Víctima de trata" name="" [group]="" [options]="arrvictimaTrata" (valueChange)="set('violenciaGenero','victimaTrata',$event,'violencia_genero')"></select2>
                             </div>
                             <div class="col-md-3">
-                                <select2 placeholder="Víctima de acoso" name="victimaAcoso" [group]="relacionForm"></select2>
+                                <select2 placeholder="Víctima de acoso" name="" [group]="" [options]="arrvictimaAcoso" (valueChange)="set('violenciaGenero','victimaAcoso',$event,'violencia_genero')"></select2>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <select2 placeholder="Orden de protección" name="ordenProteccion" [group]="relacionForm"></select2>
+                                <select2 placeholder="Orden de protección" name="" [group]="" [options]="arrordenProteccion" (valueChange)="set('violenciaGenero','ordenProteccion',$event,'violencia_genero')"></select2>
                             </div>
                         </div>
                 </div>
@@ -143,17 +146,17 @@
                         <div class="row">
 
                             <div class="col-md-3">
-                                <select2 placeholder="Efecto" name="efecto" [group]="efectoViolenciaForm"></select2>
+                                <select2 placeholder="Efecto" name="efecto" [group]="efectoViolenciaForm" [options]="arrefecto" (valueChange)="set('efectoDetalle','efecto',$event,'efecto_detalle')"></select2>
                             </div>
                             <div class="col-md-3">
-                                <select2 placeholder="Detalle" name= "detalle" [group]="efectoViolenciaForm"></select2>
+                                <select2 placeholder="Detalle" name= "detalle" [group]="efectoViolenciaForm" [options]="arrdetalle" (valueChange)="set('efectoDetalle','detalle',$event,'efecto_detalle')"></select2>
                             </div>
 
                         </div>
                        <div class="row">
                         <div class="col">
                          <button class="float-right m-1" color="accent" md-raised-button >Limpiar</button> 
-                        <button class="float-right m-1" md-raised-button color="accent" _saving (saveFn)="save(efectoViolenciaForm.valid, efectoViolenciaForm.value)">Guardar</button>
+                        <button class="float-right m-1" md-raised-button color="accent" _saving (saveFn)="saveEfectoViolencia()" [disabled]="(efectoDetalleSeleccionado==null)">Guardar</button>
                         </div>
                         
                         </div>
