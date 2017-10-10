@@ -44,8 +44,8 @@ export class LugarService extends MatrizGlobal{
 
 export class Selected {
 
-    public tipoLugar: string;
-    public tipoZona: string;
-    public dia: string;
+    public tipoLugar: string=null;
+    public tipoZona: string=null;
+    public dia: string=null;
 
 }

@@ -17,6 +17,6 @@ export class MatrizProcedenciaAseguradora extends MatrizGlobal{
 }
 
 export class ProcedenciaAseguradora {
-    public procedencia: string = '';
-    public aseguradora: string = '';
+    public procedencia: string = null;
+    public aseguradora: string = null;
 }

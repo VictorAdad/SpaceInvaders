@@ -30,10 +30,10 @@ export class MatrizLabioOjo extends MatrizGlobal{
 }
 
 export class LabioOjo {
-    public espesorLabio : string = '';
-    public alturaNasoLabialLabio : string = '';
-    public prominenciaLabio :string = '';
-    public colorOjo : string = '';
-    public formaOjo : string = '';
-    public tamanioOjo : string = '';
+    public espesorLabio : string = null;
+    public alturaNasoLabialLabio : string = null;
+    public prominenciaLabio :string = null;
+    public colorOjo : string = null;
+    public formaOjo : string = null;
+    public tamanioOjo : string = null;
 }

@@ -18,7 +18,7 @@ export class MatrizTipoUsoTipoVehiculo extends MatrizGlobal{
 }
 
 export class TipoUsoTipoVehiculo {
-    public tipoUso: string = '';
-    public datosTomadosDe: string = '';
-    public tipoVehiculo:string = '';
+    public tipoUso: string = null;
+    public datosTomadosDe: string = null;
+    public tipoVehiculo:string = null;
 }

@@ -22,6 +22,6 @@ export class MatrizNacionalidadReligion extends MatrizGlobal{
 }
 
 export class CejaBoca {
-    public nacionalidad    : string = '';
-    public religion        : string = '';
+    public nacionalidad    : string = null;
+    public religion        : string = null;
 }

@@ -20,6 +20,6 @@ export class MatrizMarcaSubmarca extends MatrizGlobal{
 }
 
 export class MarcaSubmarca {
-    public marca: string = '';
-    public submarca: string = '';
+    public marca: string = null;
+    public submarca: string = null;
 }

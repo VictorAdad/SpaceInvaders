@@ -98,7 +98,9 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
             console.log('Arma Serv', this.armaServ);
             _model.caso.id             = this.casoId;
             _model.claseArma.id        = this.armaServ.claseArma.finded[0].id
-            _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id
+            if(this.isArmaFuego){
+                _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id
+            }
             
             this.http.post('/v1/base/armas', _model).subscribe(
                 (response) => {
