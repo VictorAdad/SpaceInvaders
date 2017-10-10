@@ -27,7 +27,7 @@ export class MatrizMotivoColorClase extends MatrizGlobal{
 }
 
 export class MotivoClaseColor {
-    public motivoRegistro: string = '';
-    public clase: string = '';
-    public color: string = '';
+    public motivoRegistro: string = null;
+    public clase: string = null;
+    public color: string = null;
 }

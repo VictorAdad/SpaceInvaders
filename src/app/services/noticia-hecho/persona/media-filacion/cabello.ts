@@ -28,9 +28,9 @@ export class MatrizCabello extends MatrizGlobal{
 }
 
 export class Cabello {
-    public cantidad     : string = '';
-    public color        : string = '';
-    public forma        : string = '';
-    public calvicie     : string = '';
-    public implantacion : string = '';
+    public cantidad     : string = null;
+    public color        : string = null;
+    public forma        : string = null;
+    public calvicie     : string = null;
+    public implantacion : string = null;
 }

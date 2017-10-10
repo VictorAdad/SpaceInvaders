@@ -30,10 +30,10 @@ export class MatrizCaraNariz extends MatrizGlobal {
 }
 
 export class CaraNariz {
-        public formaCara: string = '';
-        public raizNariz: string = '';
-        public dorsoNariz: string = '';
-        public anchoNariz: string = '';
-        public baseNariz: string = '';
-        public alturaNariz: string = '';
+        public formaCara: string = null;
+        public raizNariz: string = null;
+        public dorsoNariz: string = null;
+        public anchoNariz: string = null;
+        public baseNariz: string = null;
+        public alturaNariz: string = null;
 }

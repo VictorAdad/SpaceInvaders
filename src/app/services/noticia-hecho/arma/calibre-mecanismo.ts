@@ -20,6 +20,6 @@ export class MatrizCalibreMecanismo extends MatrizGlobal{
 }
 
 export class CalibreMecanismo {
-    public mecanismo: string = '';
-    public calibre: string = '';
+    public mecanismo: string = null;
+    public calibre: string = null;
 }

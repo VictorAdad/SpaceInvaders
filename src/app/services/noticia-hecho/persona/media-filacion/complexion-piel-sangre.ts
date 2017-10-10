@@ -27,8 +27,8 @@ export class MatrizComplexionPielSangre extends MatrizGlobal{
 }
 
 export class ComplexionPielSangre {
-    public tipoComplexion: string = '';
-    public colorPiel: string = '';
-    public tipoSangre: string = '';
-    public factorRhSangre: string = '';
+    public tipoComplexion: string = null;
+    public colorPiel: string = null;
+    public tipoSangre: string = null;
+    public factorRhSangre: string = null;
 }

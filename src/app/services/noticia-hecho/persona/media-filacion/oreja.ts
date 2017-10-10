@@ -36,13 +36,13 @@ export class MatrizOreja extends MatrizGlobal{
 }
 
 export class Oreja {
-    public forma: string = '';
-    public helixOriginal: string = '';
-    public helixSuperior: string = '';
-    public helixPosterior: string = '';
-    public helixAdherencia: string = '';
-    public lobuloContorno: string = '';
-    public lobuloAdherencia: string = '';
-    public lobuloParticularidad: string = '';
-    public lobuloDimension: string = '';
+    public forma: string = null;
+    public helixOriginal: string = null;
+    public helixSuperior: string = null;
+    public helixPosterior: string = null;
+    public helixAdherencia: string = null;
+    public lobuloContorno: string = null;
+    public lobuloAdherencia: string = null;
+    public lobuloParticularidad: string = null;
+    public lobuloDimension: string = null;
 }

@@ -30,10 +30,10 @@ export class MatrizCejaBoca extends MatrizGlobal{
 }
 
 export class CejaBoca {
-    public direccionCeja: string = '';
-    public implantacionCeja: string = '';
-    public formaCeja: string = '';
-    public tamanioCeja: string = '';
-    public tamanioBoca: string = '';
-    public comisurasBoca: string = '';
+    public direccionCeja: string = null;
+    public implantacionCeja: string = null;
+    public formaCeja: string = null;
+    public tamanioCeja: string = null;
+    public tamanioBoca: string = null;
+    public comisurasBoca: string = null;
 }

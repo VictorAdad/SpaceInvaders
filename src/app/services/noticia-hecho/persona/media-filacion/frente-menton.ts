@@ -30,10 +30,10 @@ export class MatrizFrenteMenton extends MatrizGlobal {
 }
 
 export class FrenteMenton {
-        public alturaFrente: string = '';
-        public inclinacionFrente: string = '';
-        public anchoFrente: string = '';
-        public tipoMenton: string = '';
-        public formaMenton: string = '';
-        public inclinacionMenton: string = '';
+        public alturaFrente: string = null;
+        public inclinacionFrente: string = null;
+        public anchoFrente: string = null;
+        public tipoMenton: string = null;
+        public formaMenton: string = null;
+        public inclinacionMenton: string = null;
 }

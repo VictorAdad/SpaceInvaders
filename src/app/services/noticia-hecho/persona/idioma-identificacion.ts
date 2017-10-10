@@ -26,8 +26,8 @@ export class MatrizIdiomaIdentificacion extends MatrizGlobal{
 }
 
 export class IdiomaIdentificacion{
-    public hablaEspaniol        : string = '';
-    public lenguaIndigena       : string = '';
-    public familiaLinguistica   : string = '';
-    public identificacion       : string = '';
+    public hablaEspaniol        : string = null;
+    public lenguaIndigena       : string = null;
+    public familiaLinguistica   : string = null;
+    public identificacion       : string = null;
 }
