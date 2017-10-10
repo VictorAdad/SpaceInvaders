@@ -1,7 +1,7 @@
 export class Perito {
     id: number;
     //Comunes
-    tipoSolicitud: string;
+    tipo: string;
     numeroOficio: string;
     apercibimiento: string;
     observaciones: string;

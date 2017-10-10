@@ -5,7 +5,8 @@
                 [
                      {label:'Periciales',value:'Periciales'}, 
                      {label:'Psicofísico',value:'Psicofísico'}
-                ]" placeholder="Tipo de solicitud" (valueChange)="tipoChange($event)" [group]="form">
+                ]" placeholder="Tipo de solicitud" (valueChange)="tipoChange($event)" [group]="form"
+                name="tipo">
             </select2>
             <div *ngIf="tipo==='Periciales'">
                 <h4>Narración de los hechos denunciados</h4>

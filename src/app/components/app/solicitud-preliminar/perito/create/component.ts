@@ -17,7 +17,6 @@ export class PeritoCreateComponent {
 
 	public casoId: number = null;
     public breadcrumb = [];
-
 	constructor(private route: ActivatedRoute) { }
 
 	ngOnInit() {
@@ -37,7 +36,7 @@ export class PeritoCreateComponent {
 })
 export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 
-	public apiUrl: string = "/v1/base/perito";
+	public apiUrl: string = "/v1/base/solicitudes-pre-pericial";
 	public casoId: number = null;
 	public id: number = null;
 	public form: FormGroup;
@@ -58,7 +57,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 		this.model = new Perito();
 
 		this.form = new FormGroup({
-			'tipoSolicitud': new FormControl(this.model.tipoSolicitud),
+			'tipo': new FormControl(this.model.tipo),
 			'hechosNarrados': new FormControl(this.model.hechosNarrados),
 			'hechosDenunciados': new FormControl(this.model.hechosDenunciados),
 			'numeroOficio': new FormControl(this.model.numeroOficio),
