@@ -131,9 +131,8 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-md-6">
-                        <select2 placeholder="Tipo de uso"
-                            name="tipoUso"
+                    <div class="col">
+                        <select2 placeholder="Tipo de uso" name="tipoUso"
                             [options]="vehiculoServ.tipoUsoTipoVehiculo.tipoUso"
                             [group]="form">
                         </select2>
@@ -142,10 +141,11 @@
                         <select2 placeholder="Procedencia"
                             [options]="vehiculoServ.procedenciaAseguradora.procedencia"
                             name="procedencia"
-                            [group]="form">
+                            [group]="form"
+                            (valueChange)="change($event)">
                         </select2>
                     </div>
-                    <div class="col" *ngIf="model.procedencia=='procedenciaExtranjera'">
+                    <div class="col" *ngIf="isProcedenciaExtranjera==true">
                         <text label="Pedimento de importación" name="pedimentoDeImportacion" [group]="form">></text>
                     </div>
                 </div>

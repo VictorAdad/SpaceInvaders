@@ -229,7 +229,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     save(valid : any, _model : any):void{
-
+        console.log('-> Form', this.form);
         // this.tabla.get("catalagos","oreja").then(t=>{
         //     var lista=t["arreglo"] as any[];
         //     var p = _model as Persona;
@@ -256,7 +256,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             _model.personaCaso.caso.id = this.casoId;
             console.log('Model', _model);
             this.http.post('/v1/base/personas', _model).subscribe(
-                (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
+                (response) => //this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
                 (error) => console.error('Error', error)
             );
 
@@ -288,46 +288,45 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
           }
         this.form.patchValue(_data);
         console.log('After patch', this.form);
-        // this.form.controls.sexo.patachValue(_data.sexo);
     }
 
     public formLocalizacion(){
         return new FormGroup({
             'pais': new FormGroup({
-                'id': new FormControl("",[]),
+                'id': new FormControl(),
             }),
             'estado': new FormGroup({
-                'id': new FormControl("",[]),
+                'id': new FormControl(),
             }),
             'municipio': new FormGroup({
-                'id': new FormControl("",[]),
+                'id': new FormControl(),
             }),
             'colonia': new FormGroup({
-                'id': new FormControl("",[]),
+                'id': new FormControl(),
             }),
             'localidad': new FormGroup({
-                'id': new FormControl("",[]),
+                'id': new FormControl(),
             }),
             'tipoDomicilio': new FormGroup({
-                'id': new FormControl("",[]),
+                'id': new FormControl(),
             }),
-            'calle': new FormControl("",[]),
-            'noExterior': new FormControl("",[]),
-            'noInterior': new FormControl("",[]),
+            'calle': new FormControl(),
+            'noExterior': new FormControl(),
+            'noInterior': new FormControl(),
             'cp': new FormControl("",[]),
-            'referencias': new FormControl("",[]),
-            'telParticular': new FormControl("",[]),
-            'telTrabajo': new FormControl("",[]),
-            'extension': new FormControl("",[]),
-            'telMovil': new FormControl("",[]),
-            'fax': new FormControl("",[]),
-            'otroMedioContacto': new FormControl("",[]),
+            'referencias': new FormControl(),
+            'telParticular': new FormControl(),
+            'telTrabajo': new FormControl(),
+            'extension': new FormControl(),
+            'telMovil': new FormControl(),
+            'fax': new FormControl(),
+            'otroMedioContacto': new FormControl(),
             'correo': new FormControl("",[]),
-            'tipoResidencia': new FormControl("",[]),
-            'estadoOtro': new FormControl("",[]),
-            'municipioOtro': new FormControl("",[]),
-            'coloniaOtro': new FormControl("",[]),
-            'localidadOtro': new FormControl("",[]),
+            'tipoResidencia': new FormControl(),
+            'estadoOtro': new FormControl(),
+            'municipioOtro': new FormControl(),
+            'coloniaOtro': new FormControl(),
+            'localidadOtro': new FormControl(),
         });
     }
 }
