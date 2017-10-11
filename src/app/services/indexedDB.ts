@@ -17,6 +17,7 @@ import {arrCALIBRE_MECANISMO}          from '@models/datos/calibreMecanismo';
 import {arrDESPARAICION_CONSUMACION}   from '@models/datos/desaparicionConsumacion';
 import {arrVIOLENCIA_GENERO}           from '@models/datos/violenciaGenero';
 import {arrEFECTO_DETALLE}             from '@models/datos/efectoDetalle';
+import {arrTIPO_TRANSPORTACION}        from '@models/datos/tipoTrasportacion';
 @Injectable()
 export class CIndexedDB {
     nameDB:string = "SIGI";
@@ -118,6 +119,7 @@ export class CIndexedDB {
             obj.update("catalogos",{id:"desaparicion_consumacion",arreglo:arrDESPARAICION_CONSUMACION.arreglo});
             obj.update("catalogos",{id:"violencia_genero",arreglo:arrVIOLENCIA_GENERO.arreglo});
             obj.update("catalogos",{id:"efecto_detalle",arreglo:arrEFECTO_DETALLE.arreglo});
+            obj.update("catalogos",{id:"tipo_transportacion",arreglo:arrTIPO_TRANSPORTACION.arreglo});
         }  
     }
 
