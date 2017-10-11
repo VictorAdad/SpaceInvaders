@@ -69,7 +69,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     trataDisplayedColumns = ['País de origen', 'Estado de origen','Municipio de origen','País destino','Estado destino','Municipio destino', 'Tipo de trata','Transportación'];
     trataDataSource = new ExampleDataSource(this.trataData);
     
-    hostigamientoData: HostigamientoAcoso[] = []
+    hostigamientoData= []
     hostigamientoDisplayedColumns = ['Modalidad', 'Ámbito','Conducta','Detalle','Testigo'];
     hostigamientoDataSource = new ExampleDataSource(this.hostigamientoData);
 
@@ -79,6 +79,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     defensoresOptions:MOption[]=[];
     asesorOptions:MOption[]=[];
     imputadoOptions:MOption[]=[];
+    testigoOptions:MOption[]=[];
     representanteOptions:MOption[]=[];
     desaparicionConsumada={
         consumacion:"",
@@ -100,6 +101,10 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     arrdetalle=[{label:'SABRA',value:'SABRA'},{label:'NO SABE',value:'NO SABE'},];
     arrtipo=[{label:'ELECTRICO',value:'ELECTRICO'},{label:'MECANICO',value:'MECANICO'},];
     arrtransportacion=[{label:'BICICLETA',value:'BICICLETA'},{label:'AUTOMOTOR',value:'AUTOMOTOR'},{label:'CAMIONETA',value:'CAMIONETA'},{label:'AVION',value:'AVION'},];
+    arrmodalidad=[{label:'EXPRESS',value:'EXPRESS'},{label:'CON TIEMPO',value:'CON TIEMPO'},];
+    arrambito=[{label:'AMBITO 1',value:'AMBITO 1'},{label:'AMBITO 2',value:'AMBITO 2'},{label:'AMBITO 3',value:'AMBITO 3'},];
+    arrconducta=[{label:'APROPIADA',value:'APROPIADA'},{label:'INAPROPIADA',value:'INAPROPIADA'},];
+    arrdetalleHostigamineto=[{label:'ESTO ES BUENO',value:'ESTO ES BUENO'},{label:'ESTO ES MALO',value:'ESTO ES MALO'},{label:'BLA BLA',value:'BLA BLA'},{label:'JESUS COMPRO UNOS AUDIFONOS DE 2800',value:'JESUS COMPRO UNOS AUDIFONOS DE 2800'},];
     arrEstadosOrigen=[];
     arrMunicipiosOrigen=[];
     arrEstadosDestino=[];
@@ -235,7 +240,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
           'modalidad': new FormControl(this.hostigamiento.modalidad),
           'ambito': new FormControl(this.hostigamiento.modalidad),
           'conducta': new FormControl(this.hostigamiento.conducta),
-          'detalleConducta': new FormControl(this.hostigamiento.detalleConducta),
+          'detalle': new FormControl(this.hostigamiento.detalleConducta),
           'testigo': new FormControl(this.hostigamiento.testigo),
           
         });
@@ -294,6 +299,10 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 if (tipoInterviniente["id"] == 5){
                   this.imputadoOptions.push({value: object.id,label:persona["nombre"]+" "+persona["paterno"]+" "+persona["materno"]});
                 }
+                //testigo
+                if (tipoInterviniente["id"] == 6){
+                  this.testigoOptions.push({value: object.id,label:persona["nombre"]+" "+persona["paterno"]+" "+persona["materno"]});
+                }
             });
 
             console.log(this);
@@ -328,6 +337,19 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         this.arrMunicipiosOrigen=[];
         this.arrEstadosOrigen=[];
         this.arrEstadosDestino=[];
+    }
+
+    saveHostigamiento(val){
+        console.log("->",val);
+        var dat=val;
+        this.db.searchInCatalogo("modalidad_ambito",{modalidad:val["modalidad"],ambito:val["ambito"]}).then(e=>{
+            this.db.searchInCatalogo("conducta_detalle",{conducta:val["conducta"],detalle:val["detalle"]}).then(y=>{
+                this.hostigamientoData.push({modalidad_ambito:e,conducta_detalle:y, testigo:val["testigo"]});
+                //console.log(this.hostigamientoData);
+                this.hostigamientoDataSource = new ExampleDataSource(this.hostigamientoData);
+
+            });
+        });
     }
 
     save(_valid : any, _model : any):void{
