@@ -31,6 +31,7 @@ export class AcuerdosRadicacionComponent{
               this.haveCaso=true;
                 this.casoId = +params['casoId'];
                 this.http.get(this.apiUrl).subscribe((response) => {
+                    console.log(response);
                     this.data = response.data as AcuerdoRadicacion[];
                     this.dataSource = new TableService(this.paginator, this.data);
                 });

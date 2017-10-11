@@ -2,7 +2,7 @@ export class AcuerdoRadicacion {
     id:number;
     titulo:string;
     creadoPor: string;
-    fechaCreacion: string;
+    created: string;
     observaciones: string;
     caso: Caso = new Caso();
     tipo:string="Radicación"

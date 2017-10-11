@@ -28,7 +28,7 @@
 
 <div class="">
     <md-paginator #paginator
-    [length]="dataSource ? dataSource.data.length : 0"
+        [length]="dataSource ? dataSource.data.length : 0"
         [pageIndex]="0"
         [pageSize]="10"
         [pageSizeOptions]="[5, 10, 25, 100]">
@@ -47,11 +47,11 @@
         <!-- Name Column -->
         <ng-container mdColumnDef="Fecha">
             <md-header-cell *mdHeaderCellDef> Fecha de creación</md-header-cell>
-            <md-cell *mdCellDef="let element"> {{element.fechaCreacion}} </md-cell>
+            <md-cell *mdCellDef="let element"> {{element.created | date: 'dd/MM/yyyy'}} </md-cell>
         </ng-container>
 
-        <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-        <md-row *mdRowDef="let row; columns: displayedColumns;" routerLink="{{row.id}}/edit"></md-row>
+        <md-header-row *mdHeaderRowDef="columns"></md-header-row>
+        <md-row *mdRowDef="let row; columns: columns;" routerLink="{{row.id}}/edit"></md-row>
     </md-table>
 
 </div>
