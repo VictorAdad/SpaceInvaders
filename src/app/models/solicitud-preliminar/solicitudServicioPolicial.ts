@@ -1,6 +1,6 @@
 export class SolicitudServicioPolicial {
     id: number;
-    oficio: string;
+    noOficio: string;
     nombreComisario: string;
     actuacionesSolicitadas: string;
     caso: Caso = new Caso();
