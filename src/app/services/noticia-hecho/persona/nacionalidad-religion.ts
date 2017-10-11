@@ -11,7 +11,7 @@ export class MatrizNacionalidadReligion extends MatrizGlobal{
         ) {
         super(http);
         this.selected = new CejaBoca();
-        this.getMatriz('/v1/catalogos/persona/nacionalidad-religion');
+        this.getMatriz('/v1/catalogos/nacionalidad-religion');
     }
 
     public validate(_object: any, _selected: any): boolean{

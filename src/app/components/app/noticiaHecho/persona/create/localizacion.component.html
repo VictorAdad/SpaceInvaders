@@ -103,10 +103,11 @@
                     </text>
                 </div>
                 <div class="col-md-2">
-                    <text label="Tipo de domicilio"
+                    <select2 placeholder="Tipo de domicilio"
+                        [options]="[]"
                         name="id"
                         [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex].controls.tipoDomicilio">
-                    </text>
+                    </select2>
                 </div>
                 <div class="col-md-4">
                     <text label="Referencias"
