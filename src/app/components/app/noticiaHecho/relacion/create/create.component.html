@@ -197,30 +197,39 @@
                     <h5>Trata de personas</h5>
                     <div class="row">
                         <div class="col-sm-12 col-md-6 col-lg-4">
-                            <select2 placeholder="País de origen" [options]="options.paises" name="paisOrigen" [group]="trataPersonasForm">
+                            <select2 placeholder="País de origen" [options]="optionsService.paises" name="paisOrigen" [group]="trataPersonasForm" (valueChange)="changePais($event,'arrEstadosOrigen')">
                             </select2>
-                            <select2 placeholder="País destino" [options]="options.paises" [group]="trataPersonasForm">
+                            <select2 placeholder="País destino" [options]="optionsService.paises" name="paisDestino" [group]="trataPersonasForm" (valueChange)="changePais($event,'arrEstadosDestino')" >
                             </select2>
                            
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-4">
-                            <select2 placeholder="Estado origen" [options]="options.estados" name="estadoOrigen" [group]="trataPersonasForm">
+                            <select2 placeholder="Estado origen" [options]="arrEstadosOrigen" name="estadoOrigen" [group]="trataPersonasForm" (valueChange)="changeEstado($event,'arrMunicipiosOrigen')">
                             </select2>
-                             <select2 placeholder="Estado destino" [options]="options.estados" name="estadoDestino" [group]="trataPersonasForm">
+                             <select2 placeholder="Estado destino" [options]="arrEstadosDestino" name="estadoDestino" [group]="trataPersonasForm" (valueChange)="changeEstado($event,'arrMunicipiosDestino')">
                             </select2>
  
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-4">
-                            <select2 placeholder="Municipio origen" [options]="options.municipios" name="municipioOrigen"  [group]="trataPersonasForm">
+                            <select2 placeholder="Municipio origen" [options]="arrMunicipiosOrigen" name="municipioOrigen"  [group]="trataPersonasForm">
                             </select2>
-                           <select2 placeholder="Municipio destino" [options]="options.municipios" name="municipioDestino" [group]="trataPersonasForm">
+                           <select2 placeholder="Municipio destino" [options]="arrMunicipiosDestino" name="municipioDestino" [group]="trataPersonasForm">
                             </select2>
                         </div>
+                        <div class="col-sm-12 col-md-6 col-lg-4">
+                            <select2 placeholder="Tipo" [options]="arrtipo" name="tipo"  [group]="trataPersonasForm" (valueChange)="set('tipoTransportacion','tipo',$event,'tipo_transportacion')">
+                            </select2>                            
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-4">
+                            <select2 placeholder="Transportación" [options]="arrtransportacion" name="transportacion"  [group]="trataPersonasForm" (valueChange)="set('tipoTransportacion','transportacion',$event,'tipo_transportacion')">
+                            </select2>                           
+                        </div>
+                        
                     </div>
                     <div class="row">
                         <div class="col">
                          <button class="float-right m-1" color="accent" md-raised-button >Limpiar</button> 
-                        <button class="float-right m-1" md-raised-button color="accent" _saving (saveFn)="save(trataPersonasForm.valid, trataPersonasForm.value)">Guardar</button>
+                        <button class="float-right m-1" md-raised-button color="accent" _saving (saveFn)="saveTrataPersona(trataPersonasForm.value)" [disabled]="!trataPersonasForm.valid">Guardar</button>
                         </div>
                     </div>
                     </form>
@@ -241,28 +250,28 @@
                                     </ng-container>
                                     <ng-container mdColumnDef="Municipio de origen">
                                         <md-header-cell *mdHeaderCellDef> Municipio de origen </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.estadoOrigen}} </md-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.municipioOrigen}} </md-cell>
                                     </ng-container>
                                     <ng-container mdColumnDef="País destino">
                                         <md-header-cell *mdHeaderCellDef> País destino </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.estadoOrigen}} </md-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.paisDestino}} </md-cell>
                                     </ng-container>
                                     <ng-container mdColumnDef="Estado destino">
                                         <md-header-cell *mdHeaderCellDef> Estado destino </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.estadoOrigen}} </md-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.estadoDestino}} </md-cell>
                                     </ng-container>
                                     <ng-container mdColumnDef="Municipio destino">
                                         <md-header-cell *mdHeaderCellDef> Municipio destino </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.estadoOrigen}} </md-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.municipioDestino}} </md-cell>
                                     </ng-container>
 
                                     <ng-container mdColumnDef="Tipo de trata">
                                         <md-header-cell *mdHeaderCellDef> Tipo de trata </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.estadoOrigen}} </md-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.tipoTransportacion.tipo}} </md-cell>
                                     </ng-container>
                                     <ng-container mdColumnDef="Transportación">
                                         <md-header-cell *mdHeaderCellDef> Transportación </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.estadoOrigen}} 
+                                        <md-cell *mdCellDef="let element"> {{element.tipoTransportacion.transportacion}} 
                                         </md-cell>
                                     </ng-container>
 
