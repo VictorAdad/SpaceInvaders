@@ -294,33 +294,33 @@
 
                         <div class="row">
                             <div class="col">
-                                <select2 placeholder="Modalidad" name="modalidad" [group]="hostigamientForm">
+                                <select2 placeholder="Modalidad" name="modalidad" [group]="hostigamientForm" [options]="arrmodalidad">
                                 </select2>
 
                             </div>
                             <div class="col">
-                                <select2 placeholder="Ámbito" name="ambito"[group]="hostigamientForm">
+                                <select2 placeholder="Ámbito" name="ambito"[group]="hostigamientForm" [options]="arrambito">
                                 </select2>
 
                             </div>
                             <div class="col">
-                                <select2 placeholder="Conducta" name="conducta" [group]="hostigamientForm">
+                                <select2 placeholder="Conducta" name="conducta" [group]="hostigamientForm" [options]="arrconducta">
                                 </select2>
 
                             </div>
                             <div class="col">
-                                <select2 placeholder="Detalle de conducta" name="detalleConducta" [group]="hostigamientForm">
+                                <select2 placeholder="Detalle de conducta" name="detalle" [group]="hostigamientForm" [options]="arrdetalleHostigamineto">
                                 </select2>
                             </div>
                             <div class="col">
-                                <select2 placeholder="Testigo" name="testigo"[group]="hostigamientForm">
+                                <select2 placeholder="Testigo" name="testigo"[group]="hostigamientForm" [options]="testigoOptions">
                                 </select2>
                             </div>
                         </div>
                          <div class="row">
                             <div class="col">
                              <button class="float-right m-1" color="accent" md-raised-button >Limpiar</button> 
-                            <button class="float-right m-1" md-raised-button color="accent" _saving (saveFn)="save(hostigamientForm.valid, hostigamientForm.value)">Guardar</button>
+                            <button class="float-right m-1" md-raised-button color="accent" _saving (saveFn)="saveHostigamiento(hostigamientForm.value)">Guardar</button>
                             </div>
                         </div>
                        </form> 
@@ -331,20 +331,20 @@
                                     <!-- Efecto Column -->
                                     <ng-container mdColumnDef="Modalidad">
                                         <md-header-cell *mdHeaderCellDef> Modalidad </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.modalidad}} </md-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.modalidad_ambito.modalidad}} </md-cell>
                                     </ng-container>
                                     <ng-container mdColumnDef="Ámbito">
                                         <md-header-cell *mdHeaderCellDef> Ámbito </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.ambito}} </md-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.modalidad_ambito.ambito}} </md-cell>
                                     </ng-container>
                                     <ng-container mdColumnDef="Conducta">
                                         <md-header-cell *mdHeaderCellDef> Conducta </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.conducta}} </md-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.conducta_detalle.conducta}} </md-cell>
                                     </ng-container>  
 
                                     <ng-container mdColumnDef="Detalle">
                                         <md-header-cell *mdHeaderCellDef> Detalle </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.detalle}} </md-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.conducta_detalle.detalle}} </md-cell>
                                     </ng-container>
                                     <ng-container mdColumnDef="Testigo">
                                         <md-header-cell *mdHeaderCellDef> Testigo </md-header-cell>
