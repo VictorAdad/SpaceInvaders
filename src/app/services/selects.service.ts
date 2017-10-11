@@ -5,21 +5,22 @@ import { MOption } from '@partials/form/select2/select2.component'
 @Injectable()
 export class SelectsService {
 
-    public paises: MOption[]      = [];
-    public estados: MOption[]     = [];
-    public municipios: MOption[]  = [];
-    public colonias: MOption[]  = [];
-    public localidad: MOption[]  = [];
-    public sexo: MOption[]        = [];
-    public escolaridad: MOption[] = [];
-    public ocupacion: MOption[]   = [];
-    public estadoCivil: MOption[] = [];
-    public idioma: MOption[]      = [];
-    public grupoEtnico: MOption[] = [];
-    public alfabetismo: MOption[] = [];
-    public interprete: MOption[]  = [];
-    public adiccion: MOption[]    = [];
-    public nacionalidad: MOption[]= [];
+    public paises: MOption[]       = [];
+    public estados: MOption[]      = [];
+    public municipios: MOption[]   = [];
+    public colonias: MOption[]     = [];
+    public localidad: MOption[]    = [];
+    public sexo: MOption[]         = [];
+    public escolaridad: MOption[]  = [];
+    public ocupacion: MOption[]    = [];
+    public estadoCivil: MOption[]  = [];
+    public idioma: MOption[]       = [];
+    public grupoEtnico: MOption[]  = [];
+    public alfabetismo: MOption[]  = [];
+    public interprete: MOption[]   = [];
+    public adiccion: MOption[]     = [];
+    public nacionalidad: MOption[] = [];
+    public tipoDomicilio: MOption[]= [];
 
     constructor(
         private http: HttpService
@@ -37,6 +38,7 @@ export class SelectsService {
         this.getInterprete();
         this.getAdiccion();
         this.getNacionalidad();
+        this.getTipoDomicilio();
     }
 
     public getPaises(){
@@ -96,6 +98,12 @@ export class SelectsService {
     public getNacionalidad(){
         this.http.get('/v1/catalogos/persona/nacionalidad/options').subscribe((response) => {
             this.nacionalidad = this.constructOptions(response);
+        });
+    }
+
+    public getTipoDomicilio(){
+        this.http.get('/v1/catalogos/tipo-domicilio/options').subscribe((response) => {
+            this.tipoDomicilio = this.constructOptions(response);
         });
     }
 

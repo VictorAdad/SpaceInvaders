@@ -62,7 +62,7 @@ export class BreadcrumbComponent implements OnInit {
     breadcrumb.url=this.activeRoute.url.toString();
 
     this.activeRoute.data.subscribe(data => {
-        console.log('-> Data Route', data);
+        // console.log('-> Data Route', data);
         if (data){
             if(this.rutas.length === 0){
               if(data.rutas){
