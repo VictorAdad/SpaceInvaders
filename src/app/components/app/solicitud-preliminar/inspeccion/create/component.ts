@@ -36,7 +36,7 @@ export class InspeccionCreateComponent {
 })
 export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
     
-    public apiUrl:string="/v1/base/inspecciones";
+    public apiUrl:string="/v1/base/solicitudes-pre-inspecciones";
     public casoId: number = null;
     public id: number = null;
     public form  : FormGroup;

@@ -33,7 +33,7 @@ export class NoEjercicioAccionPenalCreateComponent {
 	templateUrl: './determinacion.component.html',
 })
 export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionGlobal {
-	public apiUrl: string = "/v1/base/no-ejercicio-accion-penal";
+	public apiUrl: string = "/v1/base/no-ejercicio-accion";
 	public casoId: number = null;
 	public id: number = null;
 	public form: FormGroup;
