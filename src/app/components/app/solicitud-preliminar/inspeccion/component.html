@@ -30,7 +30,7 @@
 <md-table #table [dataSource]="dataSource">
     <ng-container mdColumnDef="fecha">
         <md-header-cell *mdHeaderCellDef> Fecha</md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.fecha | date: 'dd/MM/yyyy'}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.fechaHoraInspeccion | date: 'dd/MM/yyyy'}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="adscripcion">
