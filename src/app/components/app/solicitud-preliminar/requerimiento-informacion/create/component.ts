@@ -34,7 +34,7 @@ export class RequerimientoInformacionCreateComponent {
     templateUrl:'./solicitud.component.html',
 })
 export class SolicitudRequerimientoInformacionComponent extends SolicitudPreliminarGlobal{
-	public apiUrl: string = "/v1/base/requerimiento-informacion";
+	public apiUrl: string = "/v1/base/solicitudes-pre-info";
 	public casoId: number = null;
 	public id: number = null;
 	public form: FormGroup;
@@ -55,13 +55,13 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 		this.model = new RequerimientoInformacion();
 
 		this.form = new FormGroup({
-			'numeroOficio': new FormControl(this.model.numeroOficio),
-			'fechaRequerimiento': new FormControl(this.model.fechaRequerimiento),
-			'nombreAutoridad': new FormControl(this.model.nombreAutoridad),
-			'cargoTurnoAutoridad': new FormControl(this.model.cargoTurnoAutoridad),
+			'noOficio': new FormControl(this.model.noOficio),
+			'fechaReq': new FormControl(this.model.fechaReq),
+			'autoridadReq': new FormControl(this.model.autoridadReq),
+			'cargoTurnoAdscripcion': new FormControl(this.model.cargoTurnoAdscripcion),
 			'domicilioAutoridad': new FormControl(this.model.domicilioAutoridad),
-			'informacion': new FormControl(this.model.informacion),
-			'plazoMaxino': new FormControl(this.model.plazoMaxino),
+			'infoRequerida': new FormControl(this.model.infoRequerida),
+			'plazoDias': new FormControl(this.model.plazoDias),
 			'apercibimiento': new FormControl(this.model.apercibimiento),
 			'observaciones': new FormControl(this.model.observaciones)
 		});
@@ -113,7 +113,7 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 	}
 
 	public fillForm(_data) {
-		_data.fechaRequerimiento = new Date(_data.fechaRequerimiento);
+		_data.fechaReq = new Date(_data.fechaReq);
 		this.form.patchValue(_data);
 		console.log(_data);
 	}

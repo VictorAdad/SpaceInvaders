@@ -11,7 +11,8 @@ import { CIndexedDB } from '@services/indexedDB';
     templateUrl:'./component.html',
 })
 export class RequerimientoInformacionComponent {
-	columns = ['numeroOficio', 'fechaRequerimiento', 'nombreAutoridad'];
+    columns = ['numeroOficio', 'fechaRequerimiento', 'nombreAutoridad'];
+    public apiUrl: string = "/v1/base/solicitudes-pre-info";
 	public dataSource: TableService | null;
 	public data: RequerimientoInformacion[];
     public casoId: number = null;
@@ -28,13 +29,13 @@ export class RequerimientoInformacionComponent {
             	this.haveCaso=true;
                 this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
-                this.http.get('/v1/base/requerimiento-informacion').subscribe((response) => {
+                this.http.get(this.apiUrl).subscribe((response) => {
                     this.data = response.data as RequerimientoInformacion[];
                     this.dataSource = new TableService(this.paginator, this.data);
                 });
             }
             else{
-            	 this.http.get('/v1/base/requerimiento-informacion').subscribe((response) => {
+            	 this.http.get(this.apiUrl).subscribe((response) => {
 	                 this.data = response.data as RequerimientoInformacion[];
 	                 console.log(this.data)
 	                 this.dataSource = new TableService(this.paginator, this.data);

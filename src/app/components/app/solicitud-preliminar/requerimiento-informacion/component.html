@@ -25,17 +25,17 @@
 <md-table #table [dataSource]="dataSource">
     <ng-container mdColumnDef="numeroOficio">
         <md-header-cell *mdHeaderCellDef> Número de oficio </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.numeroOficio}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.noOficio}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="fechaRequerimiento">
         <md-header-cell *mdHeaderCellDef> Fecha de requerimiento </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.fechaRequerimiento | date:'dd/MM/yyyy'}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.fechaReq | date:'dd/MM/yyyy'}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="nombreAutoridad">
         <md-header-cell *mdHeaderCellDef> Nombre de la autoridad requerida </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.nombreAutoridad}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.autoridadReq }} </md-cell>
     </ng-container>
 
     <md-header-row *mdHeaderRowDef="columns"></md-header-row>
