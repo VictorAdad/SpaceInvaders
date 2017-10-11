@@ -22,6 +22,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     public casoId: number = null;
     public id: number = null;
     public breadcrumb = [];
+    public isProcedenciaExtranjera: boolean =false;
 
 
     constructor(
@@ -125,7 +126,15 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             }
         });
     }
-    
+
+    public change(option){
+        if (option == "cdmx") {
+            this.isProcedenciaExtranjera = true;
+            this.form.controls.pedimentoDeImportacion.enable();
+        }else{
+            this.isProcedenciaExtranjera = false;
+        }
+    }
 
     public save(valid : any, _model : any):void{
         if(this.onLine.onLine){
