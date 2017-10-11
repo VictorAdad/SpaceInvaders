@@ -13,7 +13,7 @@ import { CIndexedDB } from '@services/indexedDB';
 export class NoEjercicioAccionPenalComponent {
 	public apiUrl: string = "/v1/base/no-ejercicio-accion";
 	public breadcrumb = [];
-	columns = ['ambito', 'calidadEntrevistado', 'creadoPor', 'fechaCreacion'];
+	columns = ['ambito', 'creadoPor', 'fechaCreacion'];
 	public dataSource: TableService | null;
 	public data: NoEjercicioAccionPenal[];
 	public casoId: number = null;
