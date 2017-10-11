@@ -136,7 +136,7 @@ const routes: Routes = [
     { path : 'caso/:casoId/acuerdo-radicacion/:id/edit', component : AcuerdoRadicacionCreateComponent, data : { breadcrumb : 'Acuerdo de radicación'}},
     { path : 'caso/:casoId/facultad-no-investigar', component : FacultadesNoInvestigarComponent, data : { breadcrumb : 'Facultad de no investigar'}},
     { path : 'caso/:casoId/facultad-no-investigar/create', component : FacultadNoInvestigarCreateComponent, data : { breadcrumb : 'Facultad de no investigar'}},
-
+    { path : 'caso/:casoId/facultad-no-investigar/:id/edit', component : FacultadNoInvestigarCreateComponent, data : { breadcrumb : 'Facultad de no investigar'}},
     // Pre-denuncia
     { path : 'caso/:id/predenuncia/create', component : PredenunciaCreateComponent, data : { breadcrumb : 'Pre denuncia'}},
 
