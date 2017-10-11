@@ -25,12 +25,12 @@
 <md-table #table [dataSource]="dataSource">
     <ng-container mdColumnDef="creadoPor">
         <md-header-cell *mdHeaderCellDef> Creado por </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.creadoPor}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.createdBy}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="fechaCreacion">
         <md-header-cell *mdHeaderCellDef> Fecha de creación </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.fechaCreacion}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.created | date: 'dd/MM/yyyy'}} </md-cell>
     </ng-container>
 
     <md-header-row *mdHeaderRowDef="columns"></md-header-row>
