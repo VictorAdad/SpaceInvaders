@@ -60,7 +60,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
         this.model = new AcuerdoGeneral();
 
         this.form = new FormGroup({
-            'fudamentoLegal': new FormControl(this.model.fudamentoLegal),
+            'fundamentoLegal': new FormControl(this.model.fundamentoLegal),
             'contenidoAcuerdo': new FormControl(this.model.contenidoAcuerdo),
             'finalidad': new FormControl(this.model.finalidad),
             'apercibimiento': new FormControl(this.model.apercibimiento),
