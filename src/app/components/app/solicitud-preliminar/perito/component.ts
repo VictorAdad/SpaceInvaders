@@ -43,6 +43,7 @@ export class PeritoComponent {
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
                 this.http.get(this.apiUrl).subscribe((response) => {
                     this.data = response.data as Perito[];
+                    console.log(this.data)
                     this.dataSource = new TableService(this.paginator, this.data);
                 });
             }
