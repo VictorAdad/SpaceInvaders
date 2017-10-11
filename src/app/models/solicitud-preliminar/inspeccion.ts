@@ -1,7 +1,6 @@
 export class Inspeccion {
     id: number;
-    fecha: string;
-    hora: string;
+    fechaHoraInspeccion: string;
     adscripcion: string;
     descripcion: string;
     caso: Caso = new Caso();

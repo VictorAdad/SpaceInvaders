@@ -5,8 +5,8 @@ export class AcuerdoGeneral {
     contenidoAcuerdo: string;
     finalidad: string;
     plazo: string;
-    apercibimientos: string;
-    solicita: string;
+    apercibimiento: string;
+    senialar: string;
     observaciones: string;
     caso: Caso = new Caso();
 }

@@ -1,12 +1,12 @@
 export class RequerimientoInformacion {
     id: number;
-    numeroOficio: string;
-    fechaRequerimiento: string;
-    nombreAutoridad: string;
-    cargoTurnoAutoridad: string;
+    noOficio: string;
+    fechaReq: string;
+    autoridadReq: string;
+    cargoTurnoAdscripcion: string;
     domicilioAutoridad: string;
-    informacion: string;
-    plazoMaxino: string;
+    infoRequerida: string;
+    plazoDias: string;
     apercibimiento: string;
     observaciones: string;
     caso: Caso = new Caso();

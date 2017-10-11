@@ -2,20 +2,20 @@ export class Perito {
     id: number;
     //Comunes
     tipo: string;
-    numeroOficio: string;
+    noOficio: string;
     apercibimiento: string;
     observaciones: string;
     //Periciales
     hechosDenunciados: string;  
     hechosNarrados: string;
-    nombreDirector: string;
-    solicitaPerito: string;
-    finalidadRequermiento: string;
+    directorInstituto: string;
+    peritoMateria: string;
+    finalidad: string;
     plazoDias: string;
     //Psicofísico
-    nombreMedico: string;
-    nombreRealizaExamen: string;
-    examen: string;
+    medicoLegista: string;
+    realizadoA: string;
+    tipoExamen: string;
 
     caso: Caso = new Caso();
 }
