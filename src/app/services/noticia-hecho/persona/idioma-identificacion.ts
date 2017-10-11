@@ -13,7 +13,7 @@ export class MatrizIdiomaIdentificacion extends MatrizGlobal{
         ) {
         super(http);
         this.selected = new IdiomaIdentificacion ();
-        this.getMatriz('/v1/catalogos/persona/nacionalidad-religion');
+        this.getMatriz('/v1/catalogos/persona/idioma');
     }
 
     public validate(_object: any, _selected: any): boolean{

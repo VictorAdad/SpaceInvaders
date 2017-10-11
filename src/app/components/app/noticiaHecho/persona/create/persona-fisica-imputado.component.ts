@@ -13,6 +13,7 @@ import { HttpService} from '@services/http.service';
 import { SelectsService} from '@services/selects.service';
 import { PersonaService} from '@services/noticia-hecho/persona/persona.service';
 import { NoticiaHechoGlobal } from '../../global';
+import { Form } from './form';
 
 @Component({
     templateUrl : './persona-fisica-imputado.component.html',
@@ -72,7 +73,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         this.route.params.subscribe(params => {
             if(params['casoId']){
                 this.casoId = +params['casoId'];
-                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho`,label:"Detalle noticia de hechos"})
+                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho`,label:"Detalle noticia de hechos"});
             }
             if(!this.onLine.onLine){
                 if (!isNaN(this.casoId)){
@@ -111,7 +112,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             'nombre'           : new FormControl("", [Validators.required,]),
             'paterno'          : new FormControl("", [Validators.required,]),
             'materno'          : new FormControl("", [Validators.required,]),
-            'razonSocial'      : new FormControl("",[Validators.required,Validators.minLength(4)]),
+            'razonSocial'      : new FormControl("", [Validators.required,Validators.minLength(4)]),
             'fechaNacimiento'  : new FormControl("",[]),
             'edad'             : new FormControl("",[]),
             'curp'             : new FormControl("",[]),
@@ -495,7 +496,8 @@ export class MediaFilacionComponent{
 
 
 export class PersonaGlobals{
-    public form  : FormGroup;
+    public personaForm: Form;
+    public form: FormGroup;
     public tipoPersona: string="";
     public tipoInterviniente: string = '';
     public detenido: boolean = false;
