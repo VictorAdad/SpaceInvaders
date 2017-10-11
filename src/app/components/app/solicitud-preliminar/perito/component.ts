@@ -15,7 +15,7 @@ export class PeritoComponent {
     public casoId: number = null;
     public hasCaso: boolean=false;
     public breadcrumb = [];
-    public apiUrl: string = "/v1/base/solicitudes-pre-pericial";
+    public apiUrl: string = "/v1/base/solicitudes-pre-pericial/casos/{id}/page";
 
 	columns = ['tipo', 'oficio'];
 	dataSource: TableService | null;
@@ -40,6 +40,8 @@ export class PeritoComponent {
             if(params['casoId']){
             	this.hasCaso=true;
                 this.casoId = +params['casoId'];
+                this.apiUrl=this.apiUrl.replace("{id}",String(this.casoId));
+
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
                 this.http.get(this.apiUrl).subscribe((response) => {
                     this.data = response.data as Perito[];

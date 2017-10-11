@@ -12,7 +12,7 @@ import { CIndexedDB } from '@services/indexedDB';
 })
 export class InspeccionComponent {
 
-   public apiUrl='/v1/base/solicitudes-pre-inspecciones';
+    public apiUrl='/v1/base/solicitudes-pre-inspecciones/casos/{id}/page';
 	columns = ['fecha', 'adscripcion'];
 	public dataSource: TableService | null;
 	public data: Inspeccion[];
@@ -28,6 +28,7 @@ export class InspeccionComponent {
             if(params['casoId']){
             	this.haveCaso=true;
                 this.casoId = +params['casoId'];
+                this.apiUrl=this.apiUrl.replace("{id}",String(this.casoId));
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"})
                 this.http.get('/v1/base/solicitudes-pre-inspecciones').subscribe((response) => {
                     this.data = response.data as Inspeccion[];
