@@ -29,12 +29,12 @@
 <md-table #table [dataSource]="dataSource">
     <ng-container mdColumnDef="tipo">
         <md-header-cell *mdHeaderCellDef> Tipo de solicitud</md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.tipoSolicitud}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.tipo}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="oficio">
         <md-header-cell *mdHeaderCellDef> Número de oficio</md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.numeroOficio}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.noOficio}} </md-cell>
     </ng-container>
 
     <md-header-row *mdHeaderRowDef="columns"></md-header-row>

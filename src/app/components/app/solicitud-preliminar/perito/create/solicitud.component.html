@@ -13,21 +13,21 @@
                 <text-area label="Hechos narrados (hechos denunciados)" name="hechosDenunciados" [(value)]="model.hechosDenunciados" [group]="form"></text-area>
                 <text-area label="Hechos narrados que se denuncian" name="hechosNarrados" [(value)]="model.hechosNarrados" [group]="form"></text-area>
                 <h4>Oficio solicitud de servicios periciales</h4>
-                <text label="Número de oficio" name="numeroOficio" [(value)]="model.numeroOficio" [group]="form"></text>
-                <text label="Nombre del director de del instituto de servicios periciales" name="nombreDirector" [(value)]="model.nombreDirector"
+                <text label="Número de oficio" name="noOficio" [(value)]="model.noOficio" [group]="form"></text>
+                <text label="Nombre del director de del instituto de servicios periciales" name="directorInstituto" [(value)]="model.directorInstituto"
                     [group]="form"></text>
-                <text label="Se solicita al pertio en materia de" name="solicitaPerito" [(value)]="model.solicitaPerito" [group]="form"></text>
-                <text label="Finalidad del requerimiento" name="finalidadRequermiento" [(value)]="model.finalidadRequermiento" [group]="form"></text>
+                <text label="Se solicita al pertio en materia de" name="peritoMateria" [(value)]="model.peritoMateria" [group]="form"></text>
+                <text label="Finalidad del requerimiento" name="finalidad" [(value)]="model.finalidad" [group]="form"></text>
                 <text label="Plazo en días para cumplir el informe" name="plazoDias" [(value)]="model.plazoDias" [group]="form"></text>
                 <text label="Apercibimiento o medidas de apremio" name="apercibimiento" [(value)]="model.apercibimiento" [group]="form"></text>
                 <text-area label="Observaciones/incidencias" name="observaciones" [(value)]="model.observaciones" [group]="form"></text-area>
             </div>
             <div *ngIf="tipo==='Psicofísico'">
                 <h4>Éxamen psicofísico</h4>
-                <text label="Número de oficio" name="numeroOficio" [(value)]="model.numeroOficio" [group]="form"></text>
-                <text label="Nombre del médico legista" name="nombreMedico" [(value)]="model.nombreMedico" [group]="form"></text>
-                <text label="A quien se realizará el éxamen" name="nombreRealizaExamen" [(value)]="model.nombreRealizaExamen" [group]="form"></text>
-                <select2 placeholder="Se solicita éxamen" name="examen" [(value)]="model.examen" [group]="form"></select2>
+                <text label="Número de oficio" name="noOficio" [(value)]="model.noOficio" [group]="form"></text>
+                <text label="Nombre del médico legista" name="medicoLegista" [(value)]="model.medicoLegista" [group]="form"></text>
+                <text label="A quien se realizará el éxamen" name="realizadoA" [(value)]="model.realizadoA" [group]="form"></text>
+                <select2 placeholder="Se solicita éxamen" name="tipoExamen" [(value)]="model.tipoExamen" [group]="form"></select2>
                 <text-area label="Apercibimiento o medidas de apremio" name="apercibimiento" [(value)]="model.apercibimiento" [group]="form"></text-area>
                 <text-area label="Observaciones/incidencias" name="observaciones" [(value)]="model.observaciones" [group]="form"></text-area>
             </div>
