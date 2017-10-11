@@ -24,15 +24,11 @@ import { SelectsService} from '@services/selects.service';
 })
 
 export class RelacionCreateComponent extends NoticiaHechoGlobal{
-    public relacionForm  : FormGroup;
-    public efectoViolenciaForm  : FormGroup;
-    public trataPersonasForm  : FormGroup;
-    public hostigamientForm  : FormGroup;
+    public form  : FormGroup;
     public generalForm:FormGroup;
 
     public model : Relacion;
     public efectoViolenciaGenero:EfectoViolenciaGenero;
-    public trataPersonas:TrataPersonas;
     public hostigamiento:HostigamientoAcoso;
 
     public casoId: number = null;
@@ -151,60 +147,65 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     }
 
     ngOnInit(){
-      this.model = new Relacion();
-      this.efectoViolenciaGenero= new EfectoViolenciaGenero();
-      this.trataPersonas= new TrataPersonas();
-      this.hostigamiento= new HostigamientoAcoso;
-      this.optionsService.getData();
+        this.model = new Relacion();
+        this.efectoViolenciaGenero= new EfectoViolenciaGenero();
+        this.hostigamiento= new HostigamientoAcoso;
+        this.optionsService.getData();
 
-      this.relacionForm  = new FormGroup({
-          'tipo'                      : new FormControl(this.model.tipo, [Validators.required,]),
-          'personaCaso'                : new FormGroup({
-            'id'                       : new FormControl(this.model.imputado,[Validators.required,]),
+        this.form  = new FormGroup({
+            'tipo': new FormControl( [Validators.required,]),
+            'personaCaso': new FormGroup({
+                'id': new FormControl([Validators.required,]),
             }),
-          'personaCasoRelacionada'     : new FormGroup({
-            'id'                       : new FormControl(this.model.victima,[Validators.required,]),
+            'personaCasoRelacionada': new FormGroup({
+                'id': new FormControl([Validators.required,]),
             }),
-          'detalleDelito'              : new FormGroup({
-            'modalidadDelito'              : new FormGroup({               
-              'id': new FormControl(this.model.modalidad,[Validators.required,]),
-            }),
-            'formaComision'            : new FormGroup({               
-              'id': new FormControl(this.model.modalidad,[Validators.required,]),
-            }),
-            'delitoCaso': new FormGroup({               
-              'id': new FormControl(this.model.modalidad,[Validators.required,]),
-            }),
-            'concursoDelito'           : new FormGroup({               
-              'id': new FormControl(this.model.modalidad,[Validators.required,]),
-            }),
-            'clasificacionDelitoOrden' : new FormGroup({               
-              'id': new FormControl(this.model.modalidad,[Validators.required,]),
-            }),
-            'caso': new FormGroup({
+            'detalleDelito': new FormGroup({
+                'modalidadDelito': new FormGroup({               
+                    'id': new FormControl([Validators.required,]),
+                }),
+                'formaComision'            : new FormGroup({               
+                    'id': new FormControl([Validators.required,]),
+                }),
+                'delitoCaso': new FormGroup({               
+                    'id': new FormControl([Validators.required,]),
+                }),
+                'concursoDelito'           : new FormGroup({               
+                    'id': new FormControl([Validators.required,]),
+                }),
+                'clasificacionDelitoOrden' : new FormGroup({               
+                    'id': new FormControl([Validators.required,]),
+                }),
+                'caso': new FormGroup({
                     'id': new FormControl("",[]),
                 }),
-            'elementosComision'        : new FormGroup({
+                'elementosComision'        : new FormGroup({
                     'id': new FormControl("",[]),
                 }),
-            'clasificacionDelito'      : new FormGroup({
+                'clasificacionDelito'      : new FormGroup({
                     'id': new FormControl("",[]),
                 }),
-            'formaAccion'              : new FormGroup({
+                'formaAccion'              : new FormGroup({
                     'id': new FormControl("",[]),
                 }),
-            'desaparicionConsumada': new FormGroup({
+                'desaparicionConsumada': new FormGroup({
                     'id': new FormControl("",[]),
                 }),
-            'gradoParticipacion': new FormGroup({
+                'gradoParticipacion': new FormGroup({
                     'id': new FormControl("",[]),
                 }),
-            'formaConducta': new FormGroup({
+                'formaConducta': new FormGroup({
                     'id': new FormControl("",[]),
                 }),
-            'violenciaGenero'          : new FormControl(this.model.violenciaGenero),
-            'flagrancia'               : new FormControl(this.model.flagrancia),  
-          }),
+                'violenciaGenero': new FormGroup({
+                    'id': new FormControl("",[]),
+                }),
+                'violenciaGen'          : new FormControl(),
+                'flagrancia'               : new FormControl(),
+                'hostigamientoAcoso': this.hostigamientoForm(),
+                'trataPersonas': this.trataPersonasForm(),
+                'efectoViolencia': this.efectoViolenciaForm(),  
+            }),
           // 'lugar'                    : new FormControl(this.model.lugar,[Validators.required,]),
           
           
@@ -219,34 +220,9 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
           // 'ordenProteccion'           :new FormControl(this.model.ordenProteccion),
 
         });
-      this.efectoViolenciaForm  = new FormGroup({
-          'efecto': new FormControl(this.efectoViolenciaGenero.efecto,[Validators.required,]),
-          'detalle': new FormControl(this.efectoViolenciaGenero.detalle,[Validators.required,]),
-          
-        });
-      this.trataPersonasForm  = new FormGroup({
-          'paisOrigen': new FormControl(this.trataPersonas.paisOrigen,[Validators.required,]),
-          'estadoOrigen': new FormControl(this.trataPersonas.estadoOrigen,[Validators.required,]),
-          'municipioOrigen': new FormControl(this.trataPersonas.municipioOrigen,[Validators.required,]),
-          'paisDestino': new FormControl(this.trataPersonas.paisDestino,[Validators.required,]),
-          'estadoDestino': new FormControl(this.trataPersonas.estadoDestino,[Validators.required,]),
-          'municipioDestino': new FormControl(this.trataPersonas.municipioDestino,[Validators.required,]),
-          'tipo': new FormControl("",[Validators.required,]),
-          'transportacion': new FormControl("",[Validators.required,]),            
-
-        });
-
-      this.hostigamientForm  = new FormGroup({
-          'modalidad': new FormControl(this.hostigamiento.modalidad),
-          'ambito': new FormControl(this.hostigamiento.modalidad),
-          'conducta': new FormControl(this.hostigamiento.conducta),
-          'detalle': new FormControl(this.hostigamiento.detalleConducta),
-          'testigo': new FormControl(this.hostigamiento.testigo),
-          
-        });
 
       this.generalForm = this._fbuilder.group({
-        itemRows: this._fbuilder.array([this.relacionForm,this.efectoViolenciaForm,this.trataPersonasForm,this.hostigamientForm])
+        // itemRows: this._fbuilder.array([this.relacionForm,this.efectoViolenciaForm,this.trataPersonasForm,this.hostigamientForm])
       }); 
 
       this.route.params.subscribe(params => {
@@ -311,32 +287,90 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
       }
     }
 
+    hostigamientoForm(){
+        return new FormGroup({
+            'modalidadAmbito': new FormGroup({
+                'id': new FormControl(),
+            }),
+            'conductaDetalle': new FormGroup({
+                'id': new FormControl(),
+            }),
+            'testigo': new FormGroup({
+                'id': new FormControl(),
+            }),
+          
+        });
+    }
+
+    trataPersonasForm(){
+        return new FormGroup({
+            'paisOrigen': new FormGroup({ 
+                'id': new FormControl([Validators.required,]),
+             }),
+            'estadoOrigen': new FormGroup({ 
+                'id': new FormControl([Validators.required,]),
+             }),
+            'municipioOrigen': new FormGroup({ 
+                'id': new FormControl([Validators.required,]),
+             }),
+            'paisDestino': new FormGroup({ 
+                'id': new FormControl([Validators.required,]),
+             }),
+            'estadoDestino': new FormGroup({ 
+                'id': new FormControl([Validators.required,]),
+             }),
+            'municipioDestino': new FormGroup({ 
+                'id': new FormControl([Validators.required,]),
+             }),
+            'tipoTransportacion': new FormGroup({ 
+                'id': new FormControl([Validators.required,]),
+             }),
+            'paisOrigenOtro': new FormControl(),
+            'estadoOrigenOtro': new FormControl(),
+            'municipioOrigenOtro': new FormControl(),
+            'paisDestinoOtro': new FormControl(),
+            'estadoDestinoOtro': new FormControl(),
+            'municipioDestinoOtro': new FormControl(),
+        });
+    }
+
+    efectoViolenciaForm(){
+        return new FormGroup({
+            'efectoDetalle': new FormGroup({ 
+                'id': new FormControl([Validators.required,]),
+             }),
+            'detalleDelito': new FormGroup({ 
+                'id': new FormControl([Validators.required,]),
+             }),
+        });
+    }
+
     saveEfectoViolencia(){
-        this.efectoDetalleArr.push(this.efectoDetalleSeleccionado);
-        this.efectoDataSource = new ExampleDataSource(this.efectoDetalleArr);
-        this.efectoDetalleSeleccionado=null;
-        this.efectoViolenciaForm.patchValue({detalle:""});
-        this.efectoViolenciaForm.patchValue({efecto:""});
+        // this.efectoDetalleArr.push(this.efectoDetalleSeleccionado);
+        // this.efectoDataSource = new ExampleDataSource(this.efectoDetalleArr);
+        // this.efectoDetalleSeleccionado=null;
+        // this.efectoViolenciaForm.patchValue({detalle:""});
+        // this.efectoViolenciaForm.patchValue({efecto:""});
     }
 
     saveTrataPersona(val){
-        val["tipoTransportacion"]=this.tipoTransportacionSeleccionado;
-        console.log("->",val);
-        this.trataPersonasArr.push(val);
-        this.trataDataSource = new ExampleDataSource(this.trataPersonasArr);
-        this.tipoTransportacionSeleccionado=null;
-        this.trataPersonasForm.patchValue({paisOrigen:""});
-        this.trataPersonasForm.patchValue({paisDestino:""});
-        this.trataPersonasForm.patchValue({estadoDestino:""});
-        this.trataPersonasForm.patchValue({estadoDestino:""});
-        this.trataPersonasForm.patchValue({municipioDestino:""});
-        this.trataPersonasForm.patchValue({municipioDestino:""});
-        this.trataPersonasForm.patchValue({tipo:""});
-        this.trataPersonasForm.patchValue({transportacion:""});
-        this.arrMunicipiosDestino=[];
-        this.arrMunicipiosOrigen=[];
-        this.arrEstadosOrigen=[];
-        this.arrEstadosDestino=[];
+        // val["tipoTransportacion"]=this.tipoTransportacionSeleccionado;
+        // console.log("->",val);
+        // this.trataPersonasArr.push(val);
+        // this.trataDataSource = new ExampleDataSource(this.trataPersonasArr);
+        // this.tipoTransportacionSeleccionado=null;
+        // this.trataPersonasForm.patchValue({paisOrigen:""});
+        // this.trataPersonasForm.patchValue({paisDestino:""});
+        // this.trataPersonasForm.patchValue({estadoDestino:""});
+        // this.trataPersonasForm.patchValue({estadoDestino:""});
+        // this.trataPersonasForm.patchValue({municipioDestino:""});
+        // this.trataPersonasForm.patchValue({municipioDestino:""});
+        // this.trataPersonasForm.patchValue({tipo:""});
+        // this.trataPersonasForm.patchValue({transportacion:""});
+        // this.arrMunicipiosDestino=[];
+        // this.arrMunicipiosOrigen=[];
+        // this.arrEstadosOrigen=[];
+        // this.arrEstadosDestino=[];
     }
 
     saveHostigamiento(val){
@@ -424,7 +458,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     }
 
     public fillForm(_data){
-        this.relacionForm.patchValue(_data);
+        this.form.patchValue(_data);
     }
 
     activaCamposImputado(opt){
@@ -435,7 +469,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         // this.relacionForm.controls.lugar.enable();
         // this.relacionForm.controls.elementosComision.enable();
         // this.relacionForm.controls.formaAccion.enable();
-        this.relacionForm.controls.detalleDelito.enable();
+        // this.relacionForm.controls.detalleDelito.enable();
       }else{
         // this.relacionForm.controls.modalidad.disable();
         // this.relacionForm.controls.delito.disable();
@@ -443,7 +477,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         // this.relacionForm.controls.lugar.disable();
         // this.relacionForm.controls.elementosComision.disable();
         // this.relacionForm.controls.formaAccion.disable();
-        this.relacionForm.controls.detalleDelito.disable();
+        // this.relacionForm.controls.detalleDelito.disable();
       }
     }
 
