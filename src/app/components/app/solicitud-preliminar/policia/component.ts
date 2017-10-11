@@ -11,7 +11,8 @@ import { CIndexedDB } from '@services/indexedDB';
     templateUrl:'./component.html',
 })
 export class PoliciaComponent {
-	columns = ['oficio', 'comisario'];
+    columns = ['oficio', 'comisario'];
+    public apiUrl = "/v1/base/solicitudes-pre-policias";
 	public dataSource: TableService | null;
 	public data: SolicitudServicioPolicial[];
     public casoId: number = null;
@@ -27,13 +28,13 @@ export class PoliciaComponent {
             	this.haveCaso=true;
                 this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
-                this.http.get('/v1/base/policias').subscribe((response) => {
+                this.http.get(this.apiUrl).subscribe((response) => {
                     this.data = response.data as SolicitudServicioPolicial[];
                     this.dataSource = new TableService(this.paginator, this.data);
                 });
             }
             else{
-            	 this.http.get('/v1/base/policias').subscribe((response) => {
+            	 this.http.get(this.apiUrl).subscribe((response) => {
 	                 this.data = response.data as SolicitudServicioPolicial[];
 	                 console.log(this.data)
 	                 this.dataSource = new TableService(this.paginator, this.data);

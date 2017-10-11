@@ -35,7 +35,7 @@ export class PoliciaCreateComponent {
 	templateUrl: './solicitud.component.html',
 })
 export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
-	public apiUrl: string = "/v1/base/policias";
+	public apiUrl = "/v1/base/solicitudes-pre-policias";
 	public casoId: number = null;
 	public id: number = null;
 	public form: FormGroup;
@@ -56,7 +56,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 		this.model = new SolicitudServicioPolicial();
 
 		this.form = new FormGroup({
-			'oficio': new FormControl(this.model.oficio),
+			'noOficio': new FormControl(this.model.noOficio),
 			'nombreComisario': new FormControl(this.model.nombreComisario),
 			'actuacionesSolicitadas': new FormControl(this.model.actuacionesSolicitadas)
 		});
