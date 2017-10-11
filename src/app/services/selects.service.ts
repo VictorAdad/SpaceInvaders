@@ -112,11 +112,18 @@ export class SelectsService {
             this.estados = this.constructOptions(response);
         });
     }
+    public getEstadoByPaisService(idPais: number){
+        return this.http.get('/v1/catalogos/estado/pais/'+idPais+'/options');
+    }
 
     public getMunicipiosByEstado(idEstado: number){
         this.http.get('/v1/catalogos/municipio/estado/'+idEstado+'/options').subscribe((response) => {
             this.municipios = this.constructOptions(response);
         });
+    }
+
+    public getMunicipiosByEstadoService(idEstado: number){
+        return this.http.get('/v1/catalogos/municipio/estado/'+idEstado+'/options');
     }
 
     public getColoniasByMunicipio(idMunicipio: number){
@@ -131,7 +138,7 @@ export class SelectsService {
         });
     }
 
-    private constructOptions(_data:any){
+    public constructOptions(_data:any){
         let options: MOption[] = [];
 
         for (var key in _data) {

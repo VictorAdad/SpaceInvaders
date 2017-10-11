@@ -3,18 +3,18 @@ export class NoEjercicioAccionPenal {
     //Determinación de no ejercicio
     narracionHechos: string;
     datosPrueba: string;
-    fechaHecho: string;
-    articuloCPEM: string;
-    referirHipotesis: string;
+    fechaHechoDelictivo: string;
+    articuloCpem: string;
+    hipotesisCnpp: string;
     fraccionArticulo: string;
-    hipotesis: string;
+    hipotesisSobreseimiento: string;
     nombreProcurador: string;
 
     //Determinación incompetencia
-    hechosAmbito: string;
-    nombreAutoridad: string;
-    causa: string;
-    cargoAutoridad: string;
+    ambitoHechos: string;
+    autoridadCompetente: string;
+    causaIncompetencia: string;
+    cargoAutoridadCompetente: string;
     observaciones: string;
     caso: Caso = new Caso();
 }

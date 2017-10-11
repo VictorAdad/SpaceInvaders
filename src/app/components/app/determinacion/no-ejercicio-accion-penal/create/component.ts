@@ -55,16 +55,16 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
 		this.form = new FormGroup({
 			'narracionHechos': new FormControl(this.model.narracionHechos),
 			'datosPrueba': new FormControl(this.model.datosPrueba),
-			'fechaHecho': new FormControl(this.model.fechaHecho),
-			'articuloCPEM': new FormControl(this.model.articuloCPEM),
-			'referirHipotesis': new FormControl(this.model.referirHipotesis),
+			'fechaHechoDelictivo': new FormControl(this.model.fechaHechoDelictivo),
+			'articuloCpem': new FormControl(this.model.articuloCpem),
+			'hipotesisCnpp': new FormControl(this.model.hipotesisCnpp),
 			'fraccionArticulo': new FormControl(this.model.fraccionArticulo),
-			'hipotesis': new FormControl(this.model.hipotesis),
+			'hipotesisSobreseimiento': new FormControl(this.model.hipotesisSobreseimiento),
 			'nombreProcurador': new FormControl(this.model.nombreProcurador),
-			'hechosAmbito': new FormControl(this.model.hechosAmbito),
-			'nombreAutoridad': new FormControl(this.model.nombreAutoridad),
-			'causa': new FormControl(this.model.causa),
-			'cargoAutoridad': new FormControl(this.model.cargoAutoridad),
+			'ambitoHechos': new FormControl(this.model.ambitoHechos),
+			'autoridadCompetente': new FormControl(this.model.autoridadCompetente),
+			'causaIncompetencia': new FormControl(this.model.causaIncompetencia),
+			'cargoAutoridadCompetente': new FormControl(this.model.cargoAutoridadCompetente),
 			'observaciones': new FormControl(this.model.observaciones)
 		});
 
@@ -108,6 +108,7 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
     }
 
     public fillForm(_data) {
+		_data.fechaHechoDelictivo = new Date(_data.fechaHechoDelictivo);
         this.form.patchValue(_data);
         console.log(_data);
     }

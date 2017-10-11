@@ -18,6 +18,8 @@ import {arrDESPARAICION_CONSUMACION}   from '@models/datos/desaparicionConsumaci
 import {arrVIOLENCIA_GENERO}           from '@models/datos/violenciaGenero';
 import {arrEFECTO_DETALLE}             from '@models/datos/efectoDetalle';
 import {arrTIPO_TRANSPORTACION}        from '@models/datos/tipoTrasportacion';
+import {arrCONDUCTA_DETALLE}           from '@models/datos/conductaDetalle';
+import {arrMODALIDAD_AMBITO}           from '@models/datos/modalidadAmbito';
 @Injectable()
 export class CIndexedDB {
     nameDB:string = "SIGI";
@@ -120,6 +122,10 @@ export class CIndexedDB {
             obj.update("catalogos",{id:"violencia_genero",arreglo:arrVIOLENCIA_GENERO.arreglo});
             obj.update("catalogos",{id:"efecto_detalle",arreglo:arrEFECTO_DETALLE.arreglo});
             obj.update("catalogos",{id:"tipo_transportacion",arreglo:arrTIPO_TRANSPORTACION.arreglo});
+            obj.update("catalogos",{id:"conducta_detalle",arreglo:arrCONDUCTA_DETALLE.arreglo});
+            obj.update("catalogos",{id:"modalidad_ambito",arreglo:arrMODALIDAD_AMBITO.arreglo});
+            
+            
         }  
     }
 

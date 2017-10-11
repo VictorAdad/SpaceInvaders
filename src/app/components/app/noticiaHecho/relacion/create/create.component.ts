@@ -14,6 +14,7 @@ import { HttpService} from '@services/http.service';
 import { NoticiaHechoGlobal } from '../../global';
 import { NoticiaHechoService } from '@services/noticia-hecho.service';
 import { CIndexedDB } from '@services/indexedDB';
+import { SelectsService} from '@services/selects.service';
 
 
 @Component({
@@ -97,6 +98,13 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     arrordenProteccion=[{label:'SI',value:'SI'},{label:'NO',value:'NO'},];
     arrefecto=[{label:'SI',value:'SI'},{label:'NO',value:'NO'},];
     arrdetalle=[{label:'SABRA',value:'SABRA'},{label:'NO SABE',value:'NO SABE'},];
+    arrtipo=[{label:'ELECTRICO',value:'ELECTRICO'},{label:'MECANICO',value:'MECANICO'},];
+    arrtransportacion=[{label:'BICICLETA',value:'BICICLETA'},{label:'AUTOMOTOR',value:'AUTOMOTOR'},{label:'CAMIONETA',value:'CAMIONETA'},{label:'AVION',value:'AVION'},];
+    arrEstadosOrigen=[];
+    arrMunicipiosOrigen=[];
+    arrEstadosDestino=[];
+    arrMunicipiosDestino=[];
+    trataPersonasArr=[];
 
     violenciaGenero={
         delincuenciaOrganizada:null,
@@ -115,6 +123,13 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
     efectoDetalleArr=[];
 
+    tipoTransportacion={
+        tipo:null,
+        transportacion:null
+    }
+    tipoTransportacionSeleccionado:null;
+
+
 
 
     constructor(
@@ -124,7 +139,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         private http: HttpService,
         private router: Router,
         private db:CIndexedDB,
-        private optionsNoticia: NoticiaHechoService
+        private optionsNoticia: NoticiaHechoService,
+        private optionsService: SelectsService
         ) {
         super();
     }
@@ -134,6 +150,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
       this.efectoViolenciaGenero= new EfectoViolenciaGenero();
       this.trataPersonas= new TrataPersonas();
       this.hostigamiento= new HostigamientoAcoso;
+      this.optionsService.getData();
 
       this.relacionForm  = new FormGroup({
           'tipo'                      : new FormControl(this.model.tipo, [Validators.required,]),
@@ -203,12 +220,14 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
           
         });
       this.trataPersonasForm  = new FormGroup({
-          'paisOrigen': new FormControl(this.trataPersonas.paisOrigen),
-          'estadoOrigen': new FormControl(this.trataPersonas.estadoOrigen),
-          'municipioOrigen': new FormControl(this.trataPersonas.municipioOrigen),
-          'paisDestino': new FormControl(this.trataPersonas.paisDestino),
-          'estadoDestino': new FormControl(this.trataPersonas.estadoDestino),
-          'municipioDestino': new FormControl(this.trataPersonas.municipioDestino),
+          'paisOrigen': new FormControl(this.trataPersonas.paisOrigen,[Validators.required,]),
+          'estadoOrigen': new FormControl(this.trataPersonas.estadoOrigen,[Validators.required,]),
+          'municipioOrigen': new FormControl(this.trataPersonas.municipioOrigen,[Validators.required,]),
+          'paisDestino': new FormControl(this.trataPersonas.paisDestino,[Validators.required,]),
+          'estadoDestino': new FormControl(this.trataPersonas.estadoDestino,[Validators.required,]),
+          'municipioDestino': new FormControl(this.trataPersonas.municipioDestino,[Validators.required,]),
+          'tipo': new FormControl("",[Validators.required,]),
+          'transportacion': new FormControl("",[Validators.required,]),            
 
         });
 
@@ -289,7 +308,26 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         this.efectoDetalleSeleccionado=null;
         this.efectoViolenciaForm.patchValue({detalle:""});
         this.efectoViolenciaForm.patchValue({efecto:""});
-        
+    }
+
+    saveTrataPersona(val){
+        val["tipoTransportacion"]=this.tipoTransportacionSeleccionado;
+        console.log("->",val);
+        this.trataPersonasArr.push(val);
+        this.trataDataSource = new ExampleDataSource(this.trataPersonasArr);
+        this.tipoTransportacionSeleccionado=null;
+        this.trataPersonasForm.patchValue({paisOrigen:""});
+        this.trataPersonasForm.patchValue({paisDestino:""});
+        this.trataPersonasForm.patchValue({estadoDestino:""});
+        this.trataPersonasForm.patchValue({estadoDestino:""});
+        this.trataPersonasForm.patchValue({municipioDestino:""});
+        this.trataPersonasForm.patchValue({municipioDestino:""});
+        this.trataPersonasForm.patchValue({tipo:""});
+        this.trataPersonasForm.patchValue({transportacion:""});
+        this.arrMunicipiosDestino=[];
+        this.arrMunicipiosOrigen=[];
+        this.arrEstadosOrigen=[];
+        this.arrEstadosDestino=[];
     }
 
     save(_valid : any, _model : any):void{
@@ -443,6 +481,21 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
       }else{
         this.isViolenciaGenero = false;
       }
+    }
+
+    changePais(val,arr){
+        if (val)
+            this.optionsService.getEstadoByPaisService(val).subscribe(estados=>{
+                this[arr]=this.optionsService.constructOptions(estados);
+            });
+
+    }
+
+    changeEstado(val,arr){
+        if (val)
+            this.optionsService.getMunicipiosByEstadoService(val).subscribe(municipios=>{
+                this[arr]=this.optionsService.constructOptions(municipios);
+            });
     }
 
 

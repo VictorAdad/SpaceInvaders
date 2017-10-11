@@ -25,22 +25,17 @@
 <md-table #table [dataSource]="dataSource">
     <ng-container mdColumnDef="ambito">
         <md-header-cell *mdHeaderCellDef> Los hechos son del ámbito de </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.ambito}} </md-cell>
-    </ng-container>
-
-    <ng-container mdColumnDef="calidadEntrevistado">
-        <md-header-cell *mdHeaderCellDef> Calidad del entrevistado </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.calidadEntrevistado}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.ambitoHechos}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="creadoPor">
         <md-header-cell *mdHeaderCellDef> Creado por </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.creadoPor}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.createdBy}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="fechaCreacion">
         <md-header-cell *mdHeaderCellDef> Fecha de creación </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.fechaCreacion}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.created | date:'dd/MM/yyyy'}} </md-cell>
     </ng-container>
 
     <md-header-row *mdHeaderRowDef="columns"></md-header-row>

@@ -9,21 +9,21 @@
                 <text label="Datos de prueba" name="datosPrueba" [(value)]="model.datosPrueba" [group]="form"></text>
             </div>
             <div class="col-md-3">
-                <date label="Fecha del hecho delictivo" name="fechaHecho" [(value)]="model.fechaHecho" [group]="form"></date>
+                <date label="Fecha del hecho delictivo" name="fechaHechoDelictivo" [(value)]="model.fechaHechoDelictivo" [group]="form"></date>
             </div>
             <div class="col-md-3">
-                <text label="Artículo del CPEM que sanciona y prevé el delito" name="articuloCPEM" [(value)]="model.articuloCPEM" [group]="form"></text>
+                <text label="Artículo del CPEM que sanciona y prevé el delito" name="articuloCpem" [(value)]="model.articuloCpem" [group]="form"></text>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <text label="Referir, fundar y motivar la actualización de la hipótesis del artículo 327 del CNPP" name="referirHipotesis" [(value)]="model.referirHipotesis" [group]="form"></text>
+                <text label="Referir, fundar y motivar la actualización de la hipótesis del artículo 327 del CNPP" name="hipotesisCnpp" [(value)]="model.hipotesisCnpp" [group]="form"></text>
             </div>
             <div class="col-md-3">
                 <text label="Fracción que corresponda del artículo 327" name="fraccionArticulo" [(value)]="model.fraccionArticulo" [group]="form"></text>
             </div>
             <div class="col-md-3">
-                <text label="Hipótesis de sobreseímientoue se actualiza" name="hipotesis" [(value)]="model.hipotesis" [group]="form"></text>
+                <text label="Hipótesis de sobreseímientoue se actualiza" name="hipotesisSobreseimiento" [(value)]="model.hipotesisSobreseimiento" [group]="form"></text>
             </div>
         </div>
         <div class="row">
@@ -39,18 +39,18 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-4">
-                <select2 placeholder="Los hechos son del ámbito de" name="hechosAmbito" [(value)]="model.hechosAmbito" [group]="form"></select2>
+                <select2 placeholder="Los hechos son del ámbito de" name="ambitoHechos" [(value)]="model.ambitoHechos" [group]="form"></select2>
             </div>
             <div class="col-md-4">
-                <text label="Nombre de la autoridad competente" name="nombreAutoridad" [(value)]="model.nombreAutoridad" [group]="form"></text>
+                <text label="Nombre de la autoridad competente" name="autoridadCompetente" [(value)]="model.autoridadCompetente" [group]="form"></text>
             </div>
             <div class="col-md-4">
-                <text label="Causa de la incompetencia" name="causa" [(value)]="model.causa" [group]="form"></text>
+                <text label="Causa de la incompetencia" name="causaIncompetencia" [(value)]="model.causaIncompetencia" [group]="form"></text>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <text-area label="Cargo, turno y adscripción de la autoridad competente" name="cargoAutoridad" [(value)]="model.cargoAutoridad" [group]="form"></text-area>
+                <text-area label="Cargo, turno y adscripción de la autoridad competente" name="cargoAutoridadCompetente" [(value)]="model.cargoAutoridadCompetente" [group]="form"></text-area>
             </div>
         </div>
         <div class="row">
@@ -66,6 +66,6 @@
        <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
     </div>
     <div class="col-sm-auto">
-       <button class="float-right" md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button> 
+       <button class="float-right" md-button routerLink="/caso/{{casoId}}/no-ejercicio-accion-penal">Cancelar</button> 
     </div>
 </div>

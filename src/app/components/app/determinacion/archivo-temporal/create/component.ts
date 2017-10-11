@@ -72,6 +72,8 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 	public save(valid: any, _model: any): void {
 		Object.assign(this.model, _model);
 		this.model.caso.id = this.casoId;
+		//var _date = new Date();
+		//this.model.fechaCreacion = _date.toString();
 		console.log('-> ArchivoTemporal@save()', this.model);
 		this.http.post(this.apiUrl, this.model).subscribe(
 			(response) => {
