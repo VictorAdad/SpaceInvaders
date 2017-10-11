@@ -334,49 +334,72 @@
             <br/>
 
             <!--Trata de personas -->
-            <!-- <div class="row" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">
+            <div class="row" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">
                 <div class="col">
-                   <form [formGroup]="this.trataPersonasForm">
-
                     <h5>Trata de personas</h5>
                     <div class="row">
                         <div class="col-sm-12 col-md-6 col-lg-4">
-                            <select2 placeholder="País de origen" [options]="optionsService.paises" name="paisOrigen" [group]="trataPersonasForm" (valueChange)="changePais($event,'arrEstadosOrigen')">
+                            <select2 placeholder="País de origen"
+                                [options]="optionsService.paises"
+                                name="id"
+                                [group]="form.controls.detalleDelito.controls.trataPersonas.controls.paisOrigen"
+                                (valueChange)="changePais($event,'arrEstadosOrigen')">
                             </select2>
-                            <select2 placeholder="País destino" [options]="optionsService.paises" name="paisDestino" [group]="trataPersonasForm" (valueChange)="changePais($event,'arrEstadosDestino')" >
+                            <select2 placeholder="País destino"
+                                [options]="optionsService.paises"
+                                name="id"
+                                [group]="trataPersonasForm"
+                                (valueChange)="changePais($event,'arrEstadosDestino')" >
                             </select2>
                            
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-4">
-                            <select2 placeholder="Estado origen" [options]="arrEstadosOrigen" name="estadoOrigen" [group]="trataPersonasForm" (valueChange)="changeEstado($event,'arrMunicipiosOrigen')">
+                            <select2 placeholder="Estado origen"
+                                [options]="arrEstadosOrigen"
+                                name="id"
+                                [group]="form.controls.detalleDelito.controls.trataPersonas.controls.paisOrigen"
+                                (valueChange)="changeEstado($event,'arrMunicipiosOrigen')">
                             </select2>
-                             <select2 placeholder="Estado destino" [options]="arrEstadosDestino" name="estadoDestino" [group]="trataPersonasForm" (valueChange)="changeEstado($event,'arrMunicipiosDestino')">
+                             <select2 placeholder="Estado destino"
+                                [options]="arrEstadosDestino"
+                                name="id"
+                                [group]="form.controls.detalleDelito.controls.trataPersonas.controls.paisOrigen"
+                                (valueChange)="changeEstado($event,'arrMunicipiosDestino')">
                             </select2>
  
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-4">
-                            <select2 placeholder="Municipio origen" [options]="arrMunicipiosOrigen" name="municipioOrigen"  [group]="trataPersonasForm">
+                            <select2 placeholder="Municipio origen" 
+                                [options]="arrMunicipiosOrigen"
+                                name="id" 
+                                [group]="form.controls.detalleDelito.controls.trataPersonas.controls.paisOrigen">
                             </select2>
-                           <select2 placeholder="Municipio destino" [options]="arrMunicipiosDestino" name="municipioDestino" [group]="trataPersonasForm">
+                           <select2 placeholder="Municipio destino" 
+                                [options]="arrMunicipiosDestino"
+                                name="id" 
+                                [group]="form.controls.detalleDelito.controls.trataPersonas.controls.paisOrigen">
                             </select2>
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-4">
-                            <select2 placeholder="Tipo" [options]="arrtipo" name="tipo"  [group]="trataPersonasForm" (valueChange)="set('tipoTransportacion','tipo',$event,'tipo_transportacion')">
+                            <select2 placeholder="Tipo"
+                                [options]="arrtipo"
+                                (valueChange)="set('tipoTransportacion','tipo',$event,'tipo_transportacion')">
                             </select2>                            
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-4">
-                            <select2 placeholder="Transportación" [options]="arrtransportacion" name="transportacion"  [group]="trataPersonasForm" (valueChange)="set('tipoTransportacion','transportacion',$event,'tipo_transportacion')">
+                            <select2 placeholder="Transportación"
+                                [options]="arrtransportacion"
+                                (valueChange)="set('tipoTransportacion','transportacion',$event,'tipo_transportacion')">
                             </select2>                           
                         </div>
                         
                     </div>
                     <div class="row">
                         <div class="col">
-                         <button class="float-right m-1" color="accent" md-raised-button >Limpiar</button> 
-                        <button class="float-right m-1" md-raised-button color="accent" _saving (saveFn)="saveTrataPersona(trataPersonasForm.value)" [disabled]="!trataPersonasForm.valid">Guardar</button>
+                        <button class="float-right m-1" color="accent" md-raised-button >Limpiar</button> 
+                        <button class="float-right m-1" md-raised-button color="accent" _saving (saveFn)="saveTrataPersona(form.controls.detalleDelito.controls.trataPersonas.value)" [disabled]="!form.controls.detalleDelito.controls.trataPersonas.valid">Guardar</button>
                         </div>
                     </div>
-                    </form>
                     <div class="row">
                         <div class="col">
                             <div class="">
@@ -427,7 +450,7 @@
                     </div>
                 </div>
             </div>
-            <br/> -->
+            <br/>
             
             <!--Hostigamiento y/o acoso -->
             <!-- <div class="row" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">
