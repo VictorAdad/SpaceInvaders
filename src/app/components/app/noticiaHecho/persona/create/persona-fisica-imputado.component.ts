@@ -463,6 +463,12 @@ export class LocalizacionComponent{
             this.options.getColoniasByMunicipio(id);
     }
 
+    changeColonia(id){
+        if(id)
+            this.options.getLocalidadByColonias(id);
+    }
+
+
     addLocalizacion(_e){
         this.localizaciones.unshift(null);
 

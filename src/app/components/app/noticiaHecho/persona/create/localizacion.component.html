@@ -30,7 +30,7 @@
                     <select2 [options]="options.municipios"
                         placeholder="Municipio/Delegación"
                         name="id"
-                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex].controls.estado"
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex].controls.municipio"
                         (valueChange)="changeMunicipio($event)">
                     </select2>
                 </div>
@@ -38,7 +38,8 @@
                     <select2 [options]="options.colonias"
                         placeholder="Colonia/Asentamiento"
                         name="id"
-                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex].controls.colonia">
+                        [group]="globals.form.controls.localizacionPersona.controls[localizacionIndex].controls.colonia"
+                        (valueChange)="changeColonia($event)">
                     </select2>
                 </div>
                 <div class="col-md-3" *ngIf="isMexico">
