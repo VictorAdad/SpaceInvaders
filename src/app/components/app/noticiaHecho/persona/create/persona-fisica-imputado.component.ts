@@ -392,36 +392,32 @@ export class IdentificacionComponent{
     public nombres: number = 0;
 
     constructor(private personaServ: PersonaService){
-        this.otrosNombres.unshift(null);
-        this.alias.unshift(null);
+
     }
 
 
     public addOtroNombre(_tipo: string){
         this.nombres++;
-        let form = this.nombreForm();
         if(_tipo === 'otroNombre'){
+            let form = this.nombreForm('Otro nombre');
             this.otrosNombres.unshift(null);
             form.patchValue({tipo:'Otro nombre'});
+            let otrosNombres = this.globals.form.get('aliasNombrePersona') as FormArray;
+            otrosNombres.push(form);
         }
         else{
+            let form = this.nombreForm('Alias');
             this.alias.unshift(null);
             form.patchValue({tipo:'Alias'});
+            let otrosNombres = this.globals.form.get('aliasNombrePersona') as FormArray;
+            otrosNombres.push(form);
         }
-        let otrosNombres = this.globals.form.get('aliasNombrePersona') as FormArray;
-        otrosNombres.push(new FormGroup({
-            'nombre' : new FormControl(),
-            'tipo'   : new FormControl()
-        }))
     }
-    // trackByIndex(index: number, obj: any): any {
-    // return index;
-    // }
 
-    public nombreForm(){
+    public nombreForm(_tipo: string){
         return new FormGroup({
             'nombre' : new FormControl(),
-            'tipo'   : new FormControl()
+            'tipo'   : new FormControl(_tipo)
         });
     }
 
