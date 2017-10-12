@@ -39,7 +39,7 @@
                     <select2 placeholder="Delito"
                         name="id"
                         *ngIf="isImputadoVictimaDelito"
-                        [(options)]="options"
+                        [(options)]="optionsNoticia.delitos"
                         [group]="form.controls.detalleDelito.controls.delitoCaso" >
 
                     </select2>
@@ -57,7 +57,7 @@
                     <select2 placeholder="Imputado"
                         name="id"
                         *ngIf="isImputadoVictimaDelito"
-                        [(options)]="imputadoOptions"
+                        [(options)]="optionsNoticia.imputados"
                         [group]="form.controls.personaCasoRelacionada">
 
                     </select2>
@@ -67,14 +67,14 @@
                 <div class="col">
                     <select2 placeholder="Víctima u ofendido"
                         name="id"
-                        [(options)]="victimasOptions"
+                        [(options)]="optionsNoticia.victimas"
                         [group]="form.controls.personaCaso">
 
                     </select2>
                 </div>
                 <div class="col">
                     <select2 placeholder="Asesor legal"
-                        [(options)]="asesorOptions"
+                        [(options)]="optionsNoticia.asesoresPublicos"
                         name="id"
                         [group]="form.controls.personaCasoRelacionada">
 
@@ -85,14 +85,14 @@
                 <div class="col">
                     <select2 placeholder="Víctima u ofendido"
                         name="id"
-                        [(options)]="victimasOptions"
+                        [(options)]="optionsNoticia.victimas"
                         [group]="form.controls.personaCaso">
 
                     </select2>
                 </div>
                 <div class="col">
                     <select2 placeholder="Defensor"
-                        [(options)]="defensoresOptions"
+                        [(options)]="optionsNoticia.defensoresPublicos"
                         name="id"
                         [group]="form.controls.personaCasoRelacionada">
 
@@ -103,14 +103,14 @@
                 <div class="col">
                     <select2 placeholder="Víctima u ofendido"
                         name="id"
-                        [(options)]="victimasOptions"
+                        [(options)]="optionsNoticia.victimas"
                         [group]="form.controls.personaCaso">
 
                     </select2>
                 </div>
                 <div class="col">
                     <select2 placeholder="Representante"
-                        [(options)]="representanteOptions"
+                        [(options)]="optionsNoticia.representantesLegales"
                         name="id"
                         [group]="form.controls.personaCasoRelacionada">
 
@@ -121,7 +121,7 @@
                 <div class="col">
                     <select2 placeholder="Víctima u ofendido"
                         name="id"
-                        [(options)]="victimasOptions"
+                        [(options)]="optionsNoticia.victimas"
                         [group]="form.controls.personaCaso">
 
                     </select2>
@@ -342,13 +342,13 @@
                             <select2 placeholder="País de origen"
                                 [options]="optionsService.paises"
                                 name="id"
-                                [group]="form.controls.detalleDelito.controls.trataPersonas.controls.paisOrigen"
+                                [group]="formRelacion.trataPersonasForm().controls.paisOrigen"
                                 (valueChange)="changePais($event,'arrEstadosOrigen')">
                             </select2>
                             <select2 placeholder="País destino"
                                 [options]="optionsService.paises"
                                 name="id"
-                                [group]="form.controls.detalleDelito.controls.trataPersonas.controls.paisDestino"
+                                [group]="formRelacion.trataPersonasForm().controls.paisDestino"
                                 (valueChange)="changePais($event,'arrEstadosDestino')" >
                             </select2>
 
@@ -357,13 +357,13 @@
                             <select2 placeholder="Estado origen"
                                 [options]="arrEstadosOrigen"
                                 name="id"
-                                [group]="form.controls.detalleDelito.controls.trataPersonas.controls.estadoOrigen"
+                                [group]="formRelacion.trataPersonasForm().controls.estadoOrigen"
                                 (valueChange)="changeEstado($event,'arrMunicipiosOrigen')">
                             </select2>
                              <select2 placeholder="Estado destino"
                                 [options]="arrEstadosDestino"
                                 name="id"
-                                [group]="form.controls.detalleDelito.controls.trataPersonas.controls.estadoDestino"
+                                [group]="formRelacion.trataPersonasForm().controls.estadoDestino"
                                 (valueChange)="changeEstado($event,'arrMunicipiosDestino')">
                             </select2>
 
@@ -372,12 +372,12 @@
                             <select2 placeholder="Municipio origen"
                                 [options]="arrMunicipiosOrigen"
                                 name="id"
-                                [group]="form.controls.detalleDelito.controls.trataPersonas.controls.municipioOrigen">
+                                [group]="formRelacion.trataPersonasForm().controls.municipioOrigen">
                             </select2>
                            <select2 placeholder="Municipio destino"
                                 [options]="arrMunicipiosDestino"
                                 name="id"
-                                [group]="form.controls.detalleDelito.controls.trataPersonas.controls.municipioDestino">
+                                [group]="formRelacion.trataPersonasForm().controls.municipioDestino">
                             </select2>
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-4">
@@ -483,8 +483,9 @@
                         </div>
                         <div class="col">
                             <select2 placeholder="Testigo"
-                                name="id"[group]="form.controls.detalleDelito.controls.hostigamientoAcoso.controls.testigo"
-                                    [options]="testigoOptions">
+                                name="id"
+                                [group]="formRelacion.hostigamientoForm().controls.testigo"
+                                [(options)]="optionsNoticia.testigos">
                             </select2>
                         </div>
                     </div>

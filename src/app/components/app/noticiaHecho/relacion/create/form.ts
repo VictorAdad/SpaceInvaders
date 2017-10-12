@@ -55,9 +55,15 @@ export class Form {
                 }),
                 'violenciaGen': new FormControl(),
                 'flagrancia': new FormControl(),
-                'hostigamientoAcoso': this.hostigamientoForm(),
-                'trataPersonas': this.trataPersonasForm(),
-                'efectoViolencia': this.efectoViolenciaForm(),
+                'hostigamientoAcoso': new FormArray([
+                    this.hostigamientoForm(),
+                ]),
+                'trataPersonas': new FormArray([
+                    this.trataPersonasForm(),
+                ]),
+                'efectoViolencia': new FormArray([
+                    this.efectoViolenciaForm(),
+                ])
             }),
           // 'lugar'                    : new FormControl(this.model.lugar,[Validators.required,]),
           // 'consumacion'            : new FormControl(this.model.consultorDelito),

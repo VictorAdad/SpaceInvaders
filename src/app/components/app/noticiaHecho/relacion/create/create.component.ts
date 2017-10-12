@@ -128,7 +128,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         private optionsNoticia   : NoticiaHechoService,
         private optionsService   : SelectsService,
         ) {
-        super();
+        super()
         this.optionsRelacion = new Options(http,db);
     }
 
