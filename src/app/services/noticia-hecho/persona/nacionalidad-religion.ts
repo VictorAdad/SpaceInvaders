@@ -1,5 +1,5 @@
-import { HttpService } from '@services/http.service';
-import { MatrizGlobal } from '../matriz-global';
+import { CIndexedDB } from '@services/indexedDB';
+import { MatrizGlobal } from '../matriz-global2';
 
 export class MatrizNacionalidadReligion extends MatrizGlobal{
 
@@ -7,11 +7,11 @@ export class MatrizNacionalidadReligion extends MatrizGlobal{
     public religion        = [];
     
     constructor(
-        private http: HttpService
+        private db: CIndexedDB
         ) {
-        super(http);
-        this.selected = new CejaBoca();
-        this.getMatriz('/v1/catalogos/nacionalidad-religion');
+        super(db,"nacionalidad_religion");
+        this.selected = new NacionalidadReligion();
+        this.getMatriz();
     }
 
     public validate(_object: any, _selected: any): boolean{
@@ -21,7 +21,7 @@ export class MatrizNacionalidadReligion extends MatrizGlobal{
     }
 }
 
-export class CejaBoca {
+export class NacionalidadReligion {
     public nacionalidad    : string = null;
     public religion        : string = null;
 }

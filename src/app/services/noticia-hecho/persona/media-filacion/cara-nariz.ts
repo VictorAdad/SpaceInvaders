@@ -1,5 +1,5 @@
-import { HttpService } from '@services/http.service';
-import { MatrizGlobal } from '../../matriz-global';
+import { CIndexedDB } from '@services/indexedDB';
+import { MatrizGlobal } from '../../matriz-global2';
 
 export class MatrizCaraNariz extends MatrizGlobal {
 
@@ -10,10 +10,10 @@ export class MatrizCaraNariz extends MatrizGlobal {
 	public baseNariz		= [];
 	public alturaNariz		= [];
 
-	constructor (private http: HttpService){
-		super(http);
+	constructor (private db: CIndexedDB){
+		super(db,"cara_nariz");
         this.selected = new CaraNariz();
-        this.getMatriz('/v1/catalogos/media-filiacion/cara-nariz');
+        this.getMatriz();
 	}
 
 	public validate(_object: any, _selected: any): boolean{

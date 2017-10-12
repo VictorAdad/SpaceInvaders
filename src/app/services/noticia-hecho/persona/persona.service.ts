@@ -9,6 +9,7 @@ import { MatrizLabioOjo } from './media-filacion/labio-ojo';
 import { MatrizCabello } from './media-filacion/cabello';
 import { MatrizIdiomaIdentificacion } from './idioma-identificacion';
 import { MatrizNacionalidadReligion } from './nacionalidad-religion';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Injectable()
 export class PersonaService {
@@ -24,18 +25,20 @@ export class PersonaService {
     public idiomaIdentificacion: MatrizIdiomaIdentificacion;
 
     constructor(
-        private http: HttpService
+        private http: HttpService,
+        private db: CIndexedDB
+
         ) {
 
-        this.oreja = new MatrizOreja(http);
-        this.complexionPielSangre = new MatrizComplexionPielSangre(http);
-        this.caraNariz = new MatrizCaraNariz(http);
-        this.frenteMenton = new MatrizFrenteMenton(http);
-        this.cejaBoca = new MatrizCejaBoca(http);
-        this.labioOjo = new MatrizLabioOjo(http);
-        this.cabello = new MatrizCabello(http);
-        this.nacionalidadReligion= new MatrizNacionalidadReligion(http);
-        this.idiomaIdentificacion= new MatrizIdiomaIdentificacion(http);
+        this.oreja = new MatrizOreja(db);
+        this.complexionPielSangre = new MatrizComplexionPielSangre(db);
+        this.caraNariz = new MatrizCaraNariz(db);
+        this.frenteMenton = new MatrizFrenteMenton(db);
+        this.cejaBoca = new MatrizCejaBoca(db);
+        this.labioOjo = new MatrizLabioOjo(db);
+        this.cabello = new MatrizCabello(db);
+        this.nacionalidadReligion= new MatrizNacionalidadReligion(db);
+        this.idiomaIdentificacion= new MatrizIdiomaIdentificacion(db);
     }
     
 }
