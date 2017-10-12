@@ -1,5 +1,5 @@
-import { HttpService } from '@services/http.service';
-import { MatrizGlobal } from '../../matriz-global';
+import { CIndexedDB } from '@services/indexedDB';
+import { MatrizGlobal } from '../../matriz-global2';
 
 export class MatrizFrenteMenton extends MatrizGlobal {
 
@@ -10,10 +10,10 @@ export class MatrizFrenteMenton extends MatrizGlobal {
 	public formaMenton		        = [];
 	public inclinacionMenton		= [];
 
-	constructor (private http: HttpService){
-		super(http);
+	constructor (private db: CIndexedDB){
+		super(db,"frente_menton");
         this.selected = new FrenteMenton();
-        this.getMatriz('/v1/catalogos/media-filiacion/frente-menton');
+        this.getMatriz();
 	}
 
 	public validate(_object: any, _selected: any): boolean{

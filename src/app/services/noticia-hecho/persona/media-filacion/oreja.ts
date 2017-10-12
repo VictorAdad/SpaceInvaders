@@ -1,5 +1,5 @@
-import { HttpService } from '@services/http.service';
-import { MatrizGlobal } from '../../matriz-global';
+import { CIndexedDB } from '@services/indexedDB';
+import { MatrizGlobal } from '../../matriz-global2';
 
 export class MatrizOreja extends MatrizGlobal{
 
@@ -14,11 +14,11 @@ export class MatrizOreja extends MatrizGlobal{
     public lobuloDimension      = [];
 
     constructor(
-        private http: HttpService
+        private db: CIndexedDB
         ) {
-        super(http);
+        super(db,"oreja");
         this.selected = new Oreja();
-        this.getMatriz('/v1/catalogos/media-filiacion/oreja');
+        this.getMatriz();
     }
 
     public validate(_object: any, _selected: any): boolean{

@@ -1,5 +1,5 @@
-import { HttpService } from '@services/http.service';
-import { MatrizGlobal } from '../matriz-global';
+import { CIndexedDB } from '@services/indexedDB';
+import { MatrizGlobal } from '../matriz-global2';
 
 export class MatrizCalibreMecanismo extends MatrizGlobal{
 
@@ -7,11 +7,11 @@ export class MatrizCalibreMecanismo extends MatrizGlobal{
     public calibre     = [];
 
     constructor(
-        private http: HttpService
+        private db: CIndexedDB
         ) {
-        super(http);
+        super(db,"calibre_mecanismo");
         this.selected = new CalibreMecanismo();
-        this.getMatriz('/v1/catalogos/arma/calibre-mecanismo');
+        this.getMatriz();
     }
 
     public validate(_object: any, _selected: any): boolean{

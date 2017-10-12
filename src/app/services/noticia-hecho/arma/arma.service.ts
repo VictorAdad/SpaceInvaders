@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '@services/http.service';
+import { CIndexedDB } from '@services/indexedDB';
 import { MatrizClaseArma } from './clase-arma';
 import { MatrizCalibreMecanismo } from './calibre-mecanismo';
 
@@ -10,11 +10,11 @@ export class ArmaService {
     public calibreMecanismo: MatrizCalibreMecanismo;
 
     constructor(
-        private http: HttpService
+        private db: CIndexedDB
         ) {
 
-        this.claseArma = new MatrizClaseArma(http);
-        this.calibreMecanismo = new MatrizCalibreMecanismo(http);
+        this.claseArma = new MatrizClaseArma(db);
+        this.calibreMecanismo = new MatrizCalibreMecanismo(db);
     }
     
 }
