@@ -48,7 +48,7 @@
                     <select2 placeholder="Forma de comisión"
                         name="id"
                         *ngIf="isImputadoVictimaDelito"
-                        [(options)]="options"
+                        [(options)]="optionsRelacion.formaComision"
                         [group]="form.controls.detalleDelito.controls.formaComision">
 
                     </select2>
@@ -137,7 +137,7 @@
                 <div class="col">
                     <select2 placeholder="Concurso del delito"
                         name="id"
-                        [(options)]="options"
+                        [(options)]="optionsRelacion.concursoDelito"
                         [group]="form.controls.detalleDelito.controls.concursoDelito">
 
                     </select2>
@@ -145,7 +145,7 @@
                 <div class="col">
                     <select2 placeholder="Clasificación del delito"
                         name="id"
-                        [(options)]="options"
+                        [(options)]="optionsRelacion.clasificacionDelitoOrden"
                         [group]="form.controls.detalleDelito.controls.clasificacionDelitoOrden">
 
                     </select2>
@@ -153,7 +153,7 @@
                 <div class="col">
                     <select2 placeholder="Elemento de comisión"
                         name="id"
-                        [(options)]="options"
+                        [(options)]="optionsRelacion.elementoComision"
                         [group]="form.controls.detalleDelito.controls.elementosComision">
 
                     </select2>
@@ -163,7 +163,7 @@
                 <div class="col">
                     <select2 placeholder="Clasificación"
                         name="id"
-                        [(options)]="options"
+                        [(options)]="optionsRelacion.clasificacionDelito"
                         [group]="form.controls.detalleDelito.controls.clasificacionDelito">
 
                     </select2>
@@ -171,7 +171,7 @@
                 <div class="col">
                     <select2 placeholder="Forma de acción"
                         name="id"
-                        [(options)]="options"
+                        [(options)]="optionsRelacion.formaAccion"
                         [group]="form.controls.detalleDelito.controls.formaAccion">
 
                     </select2>
@@ -189,7 +189,7 @@
                 <div class="col">
                     <select2 placeholder="Grado de participación"
                         name="id"
-                        [(options)]="options"
+                        [(options)]="optionsRelacion.gradoParticipacion"
                         [group]="form.controls.detalleDelito.controls.gradoParticipacion">
 
                     </select2>
@@ -209,7 +209,7 @@
                 <div class="col">
                     <select2 placeholder="Forma de conducta"
                         name="id"
-                        [(options)]="options"
+                        [(options)]="optionsRelacion.formaConducta"
                         [group]="form.controls.detalleDelito.controls.formaConducta">
 
                     </select2>
