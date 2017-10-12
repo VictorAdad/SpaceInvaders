@@ -22,6 +22,14 @@ export class Options {
 
     public getData(){
         this.getOptions('gradoParticipacion', '/v1/catalogos/relacion/grado-participacion');
+        this.getOptions('formaAccion', '/v1/catalogos/relacion/forma-accion');
+        this.getOptions('concursoDelito', '/v1/catalogos/relacion/concurso-delito');
+        this.getOptions('clasifiacionDelitoOrden', '/v1/catalogos/relacion/clasificacion-delito-orden');
+        this.getOptions('modalidadDelito', '/v1/catalogos/relacion/modalidad-delito');
+        this.getOptions('formaComision', '/v1/catalogos/relacion/forma-comision');
+        this.getOptions('clasificacionDelito', '/v1/catalogos/relacion/clasificacion-delito');
+        this.getOptions('elementoComision', '/v1/catalogos/relacion/elemento-comision');
+        this.getOptions('formaConducta', '/v1/catalogos/relacion/forma-conducta');
     }
 
     public getOptions(_attr: string, _url: string){

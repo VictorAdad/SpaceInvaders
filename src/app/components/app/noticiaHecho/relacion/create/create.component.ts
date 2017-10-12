@@ -99,7 +99,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     arrdetalle=[{label:'SABRA',value:'SABRA'},{label:'NO SABE',value:'NO SABE'},];
     arrtipo=[{label:'ELECTRICO',value:'ELECTRICO'},{label:'MECANICO',value:'MECANICO'},];
     arrtransportacion=[{label:'BICICLETA',value:'BICICLETA'},{label:'AUTOMOTOR',value:'AUTOMOTOR'},{label:'CAMIONETA',value:'CAMIONETA'},{label:'AVION',value:'AVION'},];
-    arrmodalidad=[{label:'EXPRESS',value:'EXPRESS'},{label:'CON TIEMPO',value:'CON TIEMPO'},];
+    // arrmodalidad=[{label:'EXPRESS',value:'EXPRESS'},{label:'CON TIEMPO',value:'CON TIEMPO'},];
     arrambito=[{label:'AMBITO 1',value:'AMBITO 1'},{label:'AMBITO 2',value:'AMBITO 2'},{label:'AMBITO 3',value:'AMBITO 3'},];
     arrconducta=[{label:'APROPIADA',value:'APROPIADA'},{label:'INAPROPIADA',value:'INAPROPIADA'},];
     arrdetalleHostigamineto=[{label:'ESTO ES BUENO',value:'ESTO ES BUENO'},{label:'ESTO ES MALO',value:'ESTO ES MALO'},{label:'BLA BLA',value:'BLA BLA'},{label:'JESUS COMPRO UNOS AUDIFONOS DE 2800',value:'JESUS COMPRO UNOS AUDIFONOS DE 2800'},];
