@@ -161,19 +161,19 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 'id': new FormControl([Validators.required,]),
             }),
             'detalleDelito': new FormGroup({
-                'modalidadDelito': new FormGroup({               
+                'modalidadDelito': new FormGroup({
                     'id': new FormControl([Validators.required,]),
                 }),
-                'formaComision'            : new FormGroup({               
+                'formaComision'            : new FormGroup({
                     'id': new FormControl([Validators.required,]),
                 }),
-                'delitoCaso': new FormGroup({               
+                'delitoCaso': new FormGroup({
                     'id': new FormControl([Validators.required,]),
                 }),
-                'concursoDelito'           : new FormGroup({               
+                'concursoDelito'           : new FormGroup({
                     'id': new FormControl([Validators.required,]),
                 }),
-                'clasificacionDelitoOrden' : new FormGroup({               
+                'clasificacionDelitoOrden' : new FormGroup({
                     'id': new FormControl([Validators.required,]),
                 }),
                 'caso': new FormGroup({
@@ -204,11 +204,9 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 'flagrancia'               : new FormControl(),
                 'hostigamientoAcoso': this.hostigamientoForm(),
                 'trataPersonas': this.trataPersonasForm(),
-                'efectoViolencia': this.efectoViolenciaForm(),  
+                'efectoViolencia': this.efectoViolenciaForm(),
             }),
           // 'lugar'                    : new FormControl(this.model.lugar,[Validators.required,]),
-          
-          
           // 'consumacion'            : new FormControl(this.model.consultorDelito),
           // 'tipoDesaparicion'       : new FormControl(this.model.relacionAcusadoOfendido),
           // 'relacionAcusadoOfendido': new FormControl(this.model.tipoDesaparicion),
@@ -223,7 +221,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
       this.generalForm = this._fbuilder.group({
         // itemRows: this._fbuilder.array([this.relacionForm,this.efectoViolenciaForm,this.trataPersonasForm,this.hostigamientForm])
-      }); 
+      });
 
       this.route.params.subscribe(params => {
             if(params['casoId']){
@@ -282,7 +280,6 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             });
 
             console.log(this);
-            
         });
       }
     }
@@ -298,7 +295,6 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             'testigo': new FormGroup({
                 'id': new FormControl(),
             }),
-          
         });
     }
 
