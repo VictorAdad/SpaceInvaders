@@ -79,13 +79,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     imputadoOptions:MOption[]=[];
     testigoOptions:MOption[]=[];
     representanteOptions:MOption[]=[];
-    desaparicionConsumada={
-        consumacion:"",
-        tipoDesaparicion:"",
-        relacionAcusadoOfendido:""
-    };
-    desaparicionConsumadaSeleccionado=null;
-
+    
     
     arrEstadosOrigen=[];
     arrMunicipiosOrigen=[];
@@ -93,29 +87,11 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     arrMunicipiosDestino=[];
     trataPersonasArr=[];
 
-    violenciaGenero={
-        delincuenciaOrganizada:null,
-        violenciaGenero:null,
-        victimaTrata:null,
-        victimaAcoso:null,
-        ordenProteccion:null
-    };
-    violenciaGeneroSeleccionado:null;
-
-    efectoDetalle={
-        efecto:null,
-        detalle:null
-    };
-    efectoDetalleSeleccionado:null;
-
+    
+    
     efectoDetalleArr=[];
 
-    tipoTransportacion={
-        tipo:null,
-        transportacion:null
-    }
-    tipoTransportacionSeleccionado:null;
-
+    
 
 
     constructor(
@@ -250,7 +226,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         if(this.onLine.onLine){
             Object.assign(this.model, _model);
             this.model.caso.id = this.casoId;
-            ((this.model["detalleDelito"])["desaparicionConsumada"])["id"]=this.desaparicionConsumada["id"];
+            //((this.model["detalleDelito"])["desaparicionConsumada"])["id"]=this.desaparicionConsumada["id"];
             console.log(this.model);
             //this.model.detalleDelito.desaparicionConsumada.id=1;
             // this.http.post('/v1/base/relaciones', this.model).subscribe(
@@ -373,13 +349,13 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     }
 
     set(variable,elemento, value,catalogo){
-      (this[variable])[elemento]=value;
-      let obj=this;
-      this.db.searchInCatalogo(catalogo,this[variable])
-        .then(item=>{
-          obj[variable+"Seleccionado"]=item;
-          //console.log(this[variable+"Seleccionado"]);
-        });
+      // (this[variable])[elemento]=value;
+      // let obj=this;
+      // this.db.searchInCatalogo(catalogo,this[variable])
+      //   .then(item=>{
+      //     obj[variable+"Seleccionado"]=item;
+      //     //console.log(this[variable+"Seleccionado"]);
+      //   });
     }
 
     resetValues(){
