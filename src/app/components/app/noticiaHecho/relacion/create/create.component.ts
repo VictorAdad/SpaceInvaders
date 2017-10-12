@@ -86,23 +86,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     };
     desaparicionConsumadaSeleccionado=null;
 
-    arrconsumacion=[{label:'si',value:'si'},{label:'no',value:'no'},];
-    arrtipoDesaparicion=[{label:'Forzada',value:'Forzada'},{label:'Voluntaria',value:'Voluntaria'},];
-    arrrelacionAcusadoOfendido=[{label:'amigo',value:'amigo'},{label:'familiar',value:'familiar'},{label:'conocido',value:'conocido'},{label:'desconocido',value:'desconocido'},];
-
-    arrdelincuenciaOrganizada=[{label:'SI',value:'SI'},{label:'NO',value:'NO'},];
-    arrviolenciaGenero=[{label:'SI',value:'SI'},{label:'NO',value:'NO'},];
-    arrvictimaTrata=[{label:'SI',value:'SI'},{label:'NO',value:'NO'},];
-    arrvictimaAcoso=[{label:'SI',value:'SI'},{label:'NO',value:'NO'},];
-    arrordenProteccion=[{label:'SI',value:'SI'},{label:'NO',value:'NO'},];
-    arrefecto=[{label:'SI',value:'SI'},{label:'NO',value:'NO'},];
-    arrdetalle=[{label:'SABRA',value:'SABRA'},{label:'NO SABE',value:'NO SABE'},];
-    arrtipo=[{label:'ELECTRICO',value:'ELECTRICO'},{label:'MECANICO',value:'MECANICO'},];
-    arrtransportacion=[{label:'BICICLETA',value:'BICICLETA'},{label:'AUTOMOTOR',value:'AUTOMOTOR'},{label:'CAMIONETA',value:'CAMIONETA'},{label:'AVION',value:'AVION'},];
-    // arrmodalidad=[{label:'EXPRESS',value:'EXPRESS'},{label:'CON TIEMPO',value:'CON TIEMPO'},];
-    arrambito=[{label:'AMBITO 1',value:'AMBITO 1'},{label:'AMBITO 2',value:'AMBITO 2'},{label:'AMBITO 3',value:'AMBITO 3'},];
-    arrconducta=[{label:'APROPIADA',value:'APROPIADA'},{label:'INAPROPIADA',value:'INAPROPIADA'},];
-    arrdetalleHostigamineto=[{label:'ESTO ES BUENO',value:'ESTO ES BUENO'},{label:'ESTO ES MALO',value:'ESTO ES MALO'},{label:'BLA BLA',value:'BLA BLA'},{label:'JESUS COMPRO UNOS AUDIFONOS DE 2800',value:'JESUS COMPRO UNOS AUDIFONOS DE 2800'},];
+    
     arrEstadosOrigen=[];
     arrMunicipiosOrigen=[];
     arrEstadosDestino=[];
@@ -134,19 +118,18 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
 
 
-
     constructor(
-        private _fbuilder: FormBuilder,
-        private route: ActivatedRoute,
-        private onLine: OnLineService,
-        private http: HttpService,
-        private router: Router,
-        private db:CIndexedDB,
-        private optionsNoticia: NoticiaHechoService,
-        private optionsService: SelectsService
+        private _fbuilder        : FormBuilder,
+        private route            : ActivatedRoute,
+        private onLine           : OnLineService,
+        private http             : HttpService,
+        private router           : Router,
+        private db               :CIndexedDB,
+        private optionsNoticia   : NoticiaHechoService,
+        private optionsService   : SelectsService,
         ) {
         super();
-        this.optionsRelacion = new Options(http);
+        this.optionsRelacion = new Options(http,db);
     }
 
     ngOnInit(){
@@ -433,8 +416,6 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
 }
 
-
-  
 
   
   /**

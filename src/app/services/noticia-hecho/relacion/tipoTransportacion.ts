@@ -1,5 +1,5 @@
-import { HttpService } from '@services/http.service';
-import { MatrizGlobal }from '../matriz-global';
+import { MatrizGlobal }from '../matriz-global2';
+import { CIndexedDB } from '@services/indexedDB';
 
 export class MatrizTipoTransportacion extends MatrizGlobal{
 
@@ -7,11 +7,11 @@ export class MatrizTipoTransportacion extends MatrizGlobal{
     public transportacion= [];
     
     constructor(
-        private http: HttpService
+        private db:CIndexedDB
         ) {
-        super(http);
+        super(db,"tipo_transportacion");
         this.selected = new TipoTransportacion();
-        this.getMatriz('/v1/catalogos/tipo-transportacion');
+        this.getMatriz();
     }
 
     public validate(_object: any, _selected: any): boolean{

@@ -180,7 +180,7 @@
                 <div class="col">
                     <select2 placeholder="Consumación"
                         name=""
-                        [(options)]="arrconsumacion"
+                        [(options)]="optionsRelacion.matrizDesaparicionConsumacion.consumacion"
                         [group]=""
                         (valueChange)="set('desaparicionConsumada','consumacion',$event,'desaparicion_consumacion')">
 
@@ -198,7 +198,7 @@
                 <div class="col">
                     <select2 placeholder="Relación entre acusado y ofendido"
                         name=""
-                        [(options)]="arrrelacionAcusadoOfendido"
+                        [(options)]="optionsRelacion.matrizDesaparicionConsumacion.relacionAcusadoOfendido"
                         [group]=""
                         (valueChange)="set('desaparicionConsumada','relacionAcusadoOfendido',$event,'desaparicion_consumacion')">
 
@@ -218,7 +218,7 @@
                 <div class="col">
                     <select2 placeholder="Tipo de desaparición"
                         name=""
-                        [(options)]="arrtipoDesaparicion"
+                        [(options)]="optionsRelacion.matrizDesaparicionConsumacion.tipoDesaparicion"
                         [group]=""
                         (valueChange)="set('desaparicionConsumada','tipoDesaparicion',$event,'desaparicion_consumacion')">
 
@@ -241,28 +241,28 @@
                             <div class="col-md-3">
                                 <select2 placeholder="Víctima de delincuencia organizada"
                                     name=""
-                                    [options]="arrdelincuenciaOrganizada"
+                                    [options]="optionsRelacion.matrizViolenciaGenero.delincuenciaOrganizada"
                                     (valueChange)="set('violenciaGenero','delincuenciaOrganizada',$event,'violencia_genero')">
 
                                 </select2>
                             </div>
                             <div class="col-md-3">
                                 <select2 placeholder="Víctima de violencia de genero"
-                                    [options]="arrviolenciaGenero"
+                                    [options]="optionsRelacion.matrizViolenciaGenero.violenciaGenero"
                                     (valueChange)="set('violenciaGenero','violenciaGenero',$event,'violencia_genero')">
 
                                 </select2>
                             </div>
                             <div class="col-md-3">
                                 <select2 placeholder="Víctima de trata"
-                                    [options]="arrvictimaTrata"
+                                    [options]="optionsRelacion.matrizViolenciaGenero.victimaTrata"
                                     (valueChange)="set('violenciaGenero','victimaTrata',$event,'violencia_genero')">
 
                                 </select2>
                             </div>
                             <div class="col-md-3">
                                 <select2 placeholder="Víctima de acoso"
-                                    [options]="arrvictimaAcoso"
+                                    [options]="optionsRelacion.matrizViolenciaGenero.victimaAcoso"
                                     (valueChange)="set('violenciaGenero','victimaAcoso',$event,'violencia_genero')">
 
                                 </select2>
@@ -271,7 +271,7 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <select2 placeholder="Orden de protección"
-                                    [options]="arrordenProteccion"
+                                    [options]="optionsRelacion.matrizViolenciaGenero.ordenProteccion"
                                     (valueChange)="set('violenciaGenero','ordenProteccion',$event,'violencia_genero')">
 
                                 </select2>
@@ -286,14 +286,14 @@
                     <div class="row">
                         <div class="col-md-3">
                             <select2 placeholder="Efecto"
-
+                                [options]="optionsRelacion.matrizEfectoDetalle.efecto"
                                 (valueChange)="set('efectoDetalle','efecto',$event,'efecto_detalle')">
 
                             </select2>
                         </div>
                         <div class="col-md-3">
                             <select2 placeholder="Detalle"
-
+                                [options]="optionsRelacion.matrizEfectoDetalle.detalle"
                                 (valueChange)="set('efectoDetalle','detalle',$event,'efecto_detalle')">
 
                             </select2>
@@ -382,13 +382,13 @@
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <select2 placeholder="Tipo"
-                                [options]="arrtipo"
+                                [options]="optionsRelacion.matrizTipoTransportacion.tipo"
                                 (valueChange)="set('tipoTransportacion','tipo',$event,'tipo_transportacion')">
                             </select2>
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <select2 placeholder="Transportación"
-                                [options]="arrtransportacion"
+                                [options]="optionsRelacion.matrizTipoTransportacion.transportacion"
                                 (valueChange)="set('tipoTransportacion','transportacion',$event,'tipo_transportacion')">
                             </select2>
                         </div>
@@ -460,25 +460,25 @@
                     <div class="row">
                         <div class="col">
                             <select2 placeholder="Modalidad"
-                                [options]="optionsRelacion.modalidadDelito">
+                                [options]="optionsRelacion.matrizModalidadAmbito.modalidad">
                             </select2>
 
                         </div>
                         <div class="col">
                             <select2 placeholder="Ámbito"
-                                [options]="arrambito">
+                                [options]="optionsRelacion.matrizModalidadAmbito.ambito">
                             </select2>
 
                         </div>
                         <div class="col">
                             <select2 placeholder="Conducta"
-                                [options]="arrconducta">
+                                [options]="optionsRelacion.matrizConductaDetalle.conducta">
                             </select2>
 
                         </div>
                         <div class="col">
                             <select2 placeholder="Detalle de conducta"
-                                [options]="arrdetalleHostigamineto">
+                                [options]="optionsRelacion.matrizConductaDetalle.detalle">
                             </select2>
                         </div>
                         <div class="col">

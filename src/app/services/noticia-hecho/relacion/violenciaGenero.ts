@@ -1,5 +1,5 @@
-import { HttpService } from '@services/http.service';
-import { MatrizGlobal }from '../matriz-global';
+import { CIndexedDB } from '@services/indexedDB';
+import { MatrizGlobal }from '../matriz-global2';
 
 export class MatrizViolenciaGenero extends MatrizGlobal{
 
@@ -10,11 +10,11 @@ export class MatrizViolenciaGenero extends MatrizGlobal{
     public ordenProteccion       =[];
     
     constructor(
-        private http: HttpService
+        private db: CIndexedDB
         ) {
-        super(http);
+        super(db,"violencia_genero");
         this.selected = new ViolenciaGenero();
-        this.getMatriz('/v1/catalogos/modalidad-ambito');
+        this.getMatriz();
     }
 
     public validate(_object: any, _selected: any): boolean{

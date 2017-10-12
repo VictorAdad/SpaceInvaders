@@ -1,5 +1,5 @@
-import { HttpService } from '@services/http.service';
-import { MatrizGlobal }from '../matriz-global';
+import { MatrizGlobal }from '../matriz-global2';
+import { CIndexedDB } from '@services/indexedDB';
 
 export class MatrizEfectoDetalle extends MatrizGlobal{
 
@@ -7,11 +7,11 @@ export class MatrizEfectoDetalle extends MatrizGlobal{
     public detalle= [];
     
     constructor(
-        private http: HttpService
+        private db:CIndexedDB
         ) {
-        super(http);
+        super(db,"efecto_detalle");
         this.selected = new EfectoDetalle();
-        this.getMatriz('/v1/catalogos/efecto-detalle');
+        this.getMatriz();
     }
 
     public validate(_object: any, _selected: any): boolean{
