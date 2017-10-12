@@ -1,5 +1,5 @@
 <breadcrumb [rutas]="breadcrumb"></breadcrumb>
-<div class="row space">    
+<div class="row space">
     <div class="col-md-12 text-right">
         <small>NIC:CAI/AIN/00/UAI/268/00126/17/08 - NUC: CAI/AIN/00/UAI/268/00126/17/08</small>
     </div>
@@ -453,7 +453,7 @@
             <br/>
 
             <!--Hostigamiento y/o acoso -->
-            <div class="row" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">
+            <div class="row space" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">
 
                 <div class="col">
                     <h5>Hostigamiento y/o acoso</h5>
@@ -532,7 +532,7 @@
             <div class="row justify-content-end space">
                 <div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" mdTooltipPosition="above">
                     <button md-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id != null">Editar</button>
-                    <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id == null">Guardar</button>
+                    <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)"  *ngIf="id == null">Guardar</button>
                 </div>
                 <div class="col-sm-auto">
                     <button md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>
