@@ -286,15 +286,19 @@
                     <div class="row">
                         <div class="col-md-3">
                             <select2 placeholder="Efecto"
+                                name="efecto"
+                                [group]="formRelacion.efectoDetalle"
                                 [options]="optionsRelacion.matrizEfectoDetalle.efecto"
-                                (valueChange)="set('efectoDetalle','efecto',$event,'efecto_detalle')">
+                                (valueChange)="optionsRelacion.matrizEfectoDetalle.find($event, 'efecto')">
 
                             </select2>
                         </div>
                         <div class="col-md-3">
                             <select2 placeholder="Detalle"
+                                name="detalle"
+                                [group]="formRelacion.efectoDetalle"
                                 [options]="optionsRelacion.matrizEfectoDetalle.detalle"
-                                (valueChange)="set('efectoDetalle','detalle',$event,'efecto_detalle')">
+                                (valueChange)="optionsRelacion.matrizEfectoDetalle.find($event, 'detalle')">
 
                             </select2>
                         </div>
@@ -302,12 +306,12 @@
                     <div class="row">
                         <div class="col">
                             <button class="float-right m-1" color="accent" md-raised-button >Limpiar</button>
-                            <button class="float-right m-1" md-raised-button color="accent" _saving (saveFn)="saveEfectoViolencia()" [disabled]="(efectoDetalleSeleccionado==null)">Guardar</button>
+                            <button class="float-right m-1" md-raised-button color="accent" (click)="addEfectoViolencia()" [disabled]="false">Agregar</button>
                         </div>
                     </div>
 
 
-                    <div class="row">
+                    <div class="row space">
                         <div class="col">
                             <div class="">
                               <md-table #table [dataSource]="efectoDataSource">
@@ -331,7 +335,6 @@
                     </div>
                 </div>
             </div>
-            <br/>
 
             <!--Trata de personas -->
             <div class="row" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">

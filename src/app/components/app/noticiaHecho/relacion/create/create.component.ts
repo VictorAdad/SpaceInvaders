@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormArray } from '@angular/forms';
 import { MOption } from '@partials/form/select2/select2.component';
 import { DataSource} from '@angular/cdk/collections';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -181,13 +182,13 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
       }
     }
 
-    saveEfectoViolencia(){
-        // this.efectoDetalleArr.push(this.efectoDetalleSeleccionado);
-        // this.efectoDataSource = new ExampleDataSource(this.efectoDetalleArr);
-        // this.efectoDetalleSeleccionado=null;
-        // this.efectoViolenciaForm.patchValue({detalle:""});
-        // this.efectoViolenciaForm.patchValue({efecto:""});
-    }
+    addEfectoViolencia(){
+        console.log('-> addEfectoViolencia', this.formRelacion.efectoDetalle.value);
+        console.log('-> addEfectoViolencia', this.optionsRelacion.matrizEfectoDetalle);
+        let efectoDetalle = this.form.get('detalleDelito').get('efectoViolencia').get('efectoDetalle') as FormArray;
+        // efectoDetalle.push(this.optionsRelacion.matrizEfectoDetalle);
+        console.log('-> form', this.form.value);
+    }       
 
     saveTrataPersona(val){
         // val["tipoTransportacion"]=this.tipoTransportacionSeleccionado;

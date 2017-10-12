@@ -54,6 +54,7 @@ export class MatrizGlobal {
     }
 
     public find(_e, _tipo:string){
+        console.log('-> Buscar registro');
         this.selected[_tipo] = _e;
         this.finded = this.objects.filter(object => {
             return this.validate(object, this.selected);

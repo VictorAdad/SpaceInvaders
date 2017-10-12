@@ -3,6 +3,10 @@ import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@ang
 export class Form {
 
 	public form: FormGroup;
+    public hostigamiento: FormGroup;
+    public trataPersonas: FormGroup;
+    public efectoViolencia: FormGroup;
+    public efectoDetalle: FormGroup;
 
 	constructor() {
 		this.form = new FormGroup({
@@ -77,6 +81,10 @@ export class Form {
           // 'ordenProteccion'           :new FormControl(this.model.ordenProteccion),
 
         });
+        this.hostigamiento = this.hostigamientoForm();
+        this.trataPersonas = this.trataPersonasForm();
+        this.efectoViolencia = this.efectoViolenciaForm();
+        this.efectoDetalle = this.efectoDetalleForm();
 	}
 
 	public hostigamientoForm(){
@@ -133,6 +141,14 @@ export class Form {
             'detalleDelito': new FormGroup({
                 'id': new FormControl([Validators.required,]),
              }),
+        });
+    }
+
+    public efectoDetalleForm(){
+        return new FormGroup({
+            'id': new FormControl(),
+            'efecto': new FormControl(),
+            'detalle': new FormControl(),
         });
     }
 }
