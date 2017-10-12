@@ -25,24 +25,24 @@
 <md-table #table [dataSource]="dataSource">
     <ng-container mdColumnDef="entrevistado">
         <md-header-cell *mdHeaderCellDef> Entrevistado </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.entrevistado}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.nombreEntrevistado}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="calidadEntrevistado">
         <md-header-cell *mdHeaderCellDef> Calidad entrevistado </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.calidadEntrevistado}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.tipoInterviniente.tipo}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="creadoPor">
         <md-header-cell *mdHeaderCellDef> Creado por </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.creadoPor}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.createdBy}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="fechaCreacion">
         <md-header-cell *mdHeaderCellDef> Fecha de creación </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.fechaCreacion}} </md-cell>
+        <md-cell *mdCellDef="let element"> {{element.created | date:'MM/dd/yyyy'}} </md-cell>
     </ng-container>
 
     <md-header-row *mdHeaderRowDef="columns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: columns;"></md-row>
+    <md-row *mdRowDef="let row; columns: columns;" routerLink="{{row.id}}/view"></md-row>
 </md-table>
