@@ -36,15 +36,15 @@ export class Options {
     }
 
     public getData(){
-        this.getOptions('gradoParticipacion', '/v1/catalogos/relacion/grado-participacion');
-        this.getOptions('formaAccion', '/v1/catalogos/relacion/forma-accion');
-        this.getOptions('concursoDelito', '/v1/catalogos/relacion/concurso-delito');
-        this.getOptions('clasifiacionDelitoOrden', '/v1/catalogos/relacion/clasificacion-delito-orden');
-        this.getOptions('modalidadDelito', '/v1/catalogos/relacion/modalidad-delito');
-        this.getOptions('formaComision', '/v1/catalogos/relacion/forma-comision');
-        this.getOptions('clasificacionDelito', '/v1/catalogos/relacion/clasificacion-delito');
-        this.getOptions('elementoComision', '/v1/catalogos/relacion/elemento-comision');
-        this.getOptions('formaConducta', '/v1/catalogos/relacion/forma-conducta');
+        this.getOptions('gradoParticipacion', '/v1/catalogos/relacion/grado-participacion/options');
+        this.getOptions('formaAccion', '/v1/catalogos/relacion/forma-accion/options');
+        this.getOptions('concursoDelito', '/v1/catalogos/relacion/concurso-delito/options');
+        this.getOptions('clasifiacionDelitoOrden', '/v1/catalogos/relacion/clasificacion-delito-orden/options');
+        this.getOptions('modalidadDelito', '/v1/catalogos/relacion/modalidad-delito/options');
+        this.getOptions('formaComision', '/v1/catalogos/relacion/forma-comision/options');
+        this.getOptions('clasificacionDelito', '/v1/catalogos/relacion/clasificacion-delito/options');
+        this.getOptions('elementoComision', '/v1/catalogos/relacion/elemento-comision/options');
+        this.getOptions('formaConducta', '/v1/catalogos/relacion/forma-conducta/options');
         this.matrizTipoTransportacion=new MatrizTipoTransportacion(this.db);
         this.matrizConductaDetalle=new MatrizConductaDetalle(this.db);
         console.log("conductadetalle",this.matrizConductaDetalle);
