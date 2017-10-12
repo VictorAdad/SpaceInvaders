@@ -20,6 +20,8 @@ import {arrEFECTO_DETALLE}             from '@models/datos/efectoDetalle';
 import {arrTIPO_TRANSPORTACION}        from '@models/datos/tipoTrasportacion';
 import {arrCONDUCTA_DETALLE}           from '@models/datos/conductaDetalle';
 import {arrMODALIDAD_AMBITO}           from '@models/datos/modalidadAmbito';
+import {arrNACIONALIDAD_RELIGION}      from '@models/datos/nacionalidadReligion';
+import {arrIDIOMA_IDENTIFICACION} from '@models/datos/idiomaIdentificacion';
 @Injectable()
 export class CIndexedDB {
     nameDB:string = "SIGI";
@@ -107,6 +109,9 @@ export class CIndexedDB {
             obj.update("catalogos",{id:"ceja_boca",arreglo:arrCEJA_BOCA.arreglo});
             obj.update("catalogos",{id:"cabello",arreglo:arrCABELLO.arreglo});
             obj.update("catalogos",{id:"labio_ojo",arreglo:arrLABIO_OJO.arreglo});
+            obj.update("catalogos",{id:"nacionalidad_religion",arreglo:arrNACIONALIDAD_RELIGION.arreglo});
+            obj.update("catalogos",{id:"idioma_identificacion",arreglo:arrIDIOMA_IDENTIFICACION.arreglo});
+            
 
             obj.update("catalogos",{id:"detalle_lugar",arreglo:arrDETALLE_LUGAR.arreglo});
             
@@ -124,6 +129,7 @@ export class CIndexedDB {
             obj.update("catalogos",{id:"tipo_transportacion",arreglo:arrTIPO_TRANSPORTACION.arreglo});
             obj.update("catalogos",{id:"conducta_detalle",arreglo:arrCONDUCTA_DETALLE.arreglo});
             obj.update("catalogos",{id:"modalidad_ambito",arreglo:arrMODALIDAD_AMBITO.arreglo});
+            
             
             
         }  
