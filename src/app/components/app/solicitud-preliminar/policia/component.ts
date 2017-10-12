@@ -12,7 +12,7 @@ import { CIndexedDB } from '@services/indexedDB';
 })
 export class PoliciaComponent {
     columns = ['oficio', 'comisario'];
-    public apiUrl = "/v1/base/solicitudes-pre-policias";
+    public apiUrl = "/v1/base/solicitudes-pre-policias/casos/{id}/page";
 	public dataSource: TableService | null;
 	public data: SolicitudServicioPolicial[];
     public casoId: number = null;
@@ -27,6 +27,7 @@ export class PoliciaComponent {
             if(params['casoId']){
             	this.haveCaso=true;
                 this.casoId = +params['casoId'];
+                this.apiUrl=this.apiUrl.replace("{id}",String(this.casoId));
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
                 this.http.get(this.apiUrl).subscribe((response) => {
                     this.data = response.data as SolicitudServicioPolicial[];
