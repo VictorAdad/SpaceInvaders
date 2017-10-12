@@ -41,6 +41,9 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	public id: number = null;
 	public form: FormGroup;
 	public model: Perito;
+	isPericiales:boolean=false;
+
+
 	dataSource: TableService | null;
 	@ViewChild(MdPaginator) paginator: MdPaginator;
 
@@ -80,6 +83,8 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 				this.id = +params['id'];
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
+					this.isPericiales=this.form.controls.tipo.value==='Periciales';
+					this.model= response as Perito;
 					this.fillForm(response);
 				});
 			}
@@ -120,11 +125,9 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 		this.form.patchValue(_data);
 		console.log(_data);
 	}
+	tipoChange(_tipo): void {
+		this.isPericiales=_tipo==='Periciales';
 
-	tipo: String = '';
-
-	tipoChange(_event): void {
-		this.tipo = _event;
 	}
 
 }

@@ -21,6 +21,7 @@ export class SelectsService {
     public adiccion: MOption[]     = [];
     public nacionalidad: MOption[] = [];
     public tipoDomicilio: MOption[]= [];
+    public tipoInterviniente: MOption[]= [];
 
     constructor(
         private http: HttpService
@@ -39,6 +40,7 @@ export class SelectsService {
         this.getAdiccion();
         this.getNacionalidad();
         this.getTipoDomicilio();
+        this.getTipoInterviniente();
     }
 
     public getPaises(){
@@ -52,6 +54,12 @@ export class SelectsService {
             this.sexo = this.constructOptions(response);
         });
     }    
+
+    public getTipoInterviniente(){
+        this.http.get('/v1/base/tipos-intervinientes/options').subscribe((response) => {
+            this.tipoInterviniente = this.constructOptions(response);
+        });
+    }
 
     public getEscolaridad(){
         this.http.get('/v1/catalogos/persona/escolaridad/options').subscribe((response) => {

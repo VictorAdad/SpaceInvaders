@@ -19,7 +19,7 @@ export class RegistroGeneralComponent {
 	@ViewChild(MdPaginator) 
 	paginator: MdPaginator;
     public breadcrumb = [];
-    public apiUrl:string="/v1/base/solicitudes-pre-registros";
+    public apiUrl:string="/v1/base/solicitudes-pre-registros/casos/{id}/page";
 
 	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
 
@@ -28,6 +28,7 @@ export class RegistroGeneralComponent {
             if(params['casoId']){
             	this.haveCaso=true;
                 this.casoId = +params['casoId'];
+                this.apiUrl=this.apiUrl.replace("{id}",String(this.casoId));
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
                 this.http.get(this.apiUrl).subscribe((response) => {
                     this.data = response.data as RegistroGeneral[];
