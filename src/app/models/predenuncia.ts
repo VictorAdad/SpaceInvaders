@@ -1,6 +1,6 @@
 export class Predenuncia{
 	id:number;
-
+    tipo:string;
 	calidadUsuario:string;
 	numeroTelefono:string;
 	tipoLineaTelefonica:string;
