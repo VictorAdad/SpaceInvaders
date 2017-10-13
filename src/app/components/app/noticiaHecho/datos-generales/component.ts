@@ -49,7 +49,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
     ngOnInit(){
         this.form  = new FormGroup({
             'titulo'   : new FormControl('', [Validators.required]),
-            'sintesis' : new FormControl('', [Validators.required]),
+            'descripcion' : new FormControl('', [Validators.required]),
             'delito'   : new FormControl('', [Validators.required])
         });
         this.activeRoute.params.subscribe(params => {
@@ -90,7 +90,6 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         if(this.onLine.onLine){
             Object.assign(_model, this.model);
             console.log('Model', _model);
-            _model["descripcion"]="descripcion";
             _model["agencia"]={id:1};
             _model["nic"]="CAI/AIN/00/UAI/268/00126/17/08 ";
             _model["estatus"]={id:1};

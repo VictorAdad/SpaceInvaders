@@ -259,7 +259,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             _model.personaCaso[0].caso.id = this.casoId;
             console.log('Model', _model);
             this.http.post('/v1/base/personas', _model).subscribe(
-                (response) => //this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
+                (response) => console.log(response),
+//this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
                 (error) => console.error('Error', error)
             );
 

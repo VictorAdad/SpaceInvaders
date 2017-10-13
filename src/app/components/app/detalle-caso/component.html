@@ -1,7 +1,7 @@
 <breadcrumb></breadcrumb>
 <div class="row space">    
     <div class="col-md-12 text-right">
-        <small>NIC:CAI/AIN/00/UAI/268/00126/17/08 - NUC: CAI/AIN/00/UAI/268/00126/17/08</small>
+        <small>NIC:{{caso.nic}} - NUC:{{caso.nuc}}</small>
     </div>
 </div>
 <div class="row space">
@@ -25,17 +25,17 @@
                             <div class="col-md-4">
                                 <strong>Involucrados</strong>
                                 <md-list>
-                                    <md-list-item>Nombre Paterno Materno</md-list-item>
-                                    <md-list-item>Nombre Paterno Materno</md-list-item>
-                                    <md-list-item>Nombre Paterno Materno</md-list-item>
+                                    <md-list-item *ngFor="let involucrado of involucrados">
+                                     {{involucrado.persona.nombre+" "+involucrado.persona.paterno+" "+involucrado.persona.materno}} 
+                                    </md-list-item>
                                 </md-list>
                             </div>
                             <div class="col-md-2">
                                 <strong>Delito</strong>
                                 <md-list>
-                                    <md-list-item>Delito</md-list-item>
-                                    <md-list-item>Delito</md-list-item>
-                                    <md-list-item>Delito</md-list-item>
+                                    <md-list-item *ngFor="let delitoCaso of delitos">
+                                     {{delitoCaso.delito.nombre}} 
+                                    </md-list-item>
                                 </md-list>
                             </div>
                         </div>
@@ -119,13 +119,18 @@
                 <div class="row">
                     <div class="col-md-8">
                         <strong>Detalle de los hechos</strong>
-                        <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus placerat dapibus consequat. Pellentesque
+                        <p class="text-justify">{{predenuncia.hechosNarrados}}
+  <!--
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus placerat dapibus consequat. Pellentesque
                             et finibus sapien, ac posuere nulla. Nam luctus, urna eget aliquam facilisis, mauris dui luctus
                             turpis, in aliquet quam dolor vitae mauris. Nam vel metus congue, semper augue eget, vehicula
                             mi. Donec elementum est eget pulvinar dictum. Pellentesque lectus nunc, volutpat in auctor suscipit,
                             tristique ut orci. Proin arcu nunc, molestie sed facilisis tincidunt, interdum sit amet neque.
                             Etiam ipsum dui, sagittis ut egestas nec, porta et augue. Mauris pharetra sem condimentum libero
-                            iaculis luctus. Morbi non viverra tellus.</p>
+                            iaculis luctus. Morbi non viverra tellus.
+    -->
+        
+                         </p>
                     </div>
                     <div class="col-md-4 text-right">
                         <strong>Fecha y hora de los hechos</strong>

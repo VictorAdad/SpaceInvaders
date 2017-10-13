@@ -4,10 +4,10 @@
             <div class="">
                 <div class="row justify-content-start">
                     <div class="col-md-3">
-                        <text label="Nombre de la autoridad que realiza la entrevista"></text>
+                        <text label="Nombre de la autoridad que realiza la entrevista" name="autoridadRealizaEntrevista" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Lugar donde se realiza la entrevista"></text>
+                        <text label="Lugar donde se realiza la entrevista" name="lugarRealizaEntrevista" [group]="form"></text>
                     </div>
                 </div>
             </div>
@@ -15,75 +15,78 @@
                 <h4>Datos del entrevistado</h4>
                 <div class="row">
                     <div class="col-md-3">
-                        <text label="Nombre del entrevistado"></text>
+                        <text label="Nombre del entrevistado" name="nombreEntrevistado" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <select2 placeholder="Sexo" [options]="
+                        <select2 placeholder="Sexo" [options]="options.sexo" name="id" [group]="form.controls.sexo">
+                        </select2>
+                    </div>
+                    <div class="col-md-3">
+                        <date label="Fecha de nacimiento" name="fechaNacimiento" [group]="form"></date>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Edad" name="edad" [group]="form"></text>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <text label="Nacionalidad" name="nacionalidad" [group]="form"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Originario de" name="originarioDe" [group]="form"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="En su caso, estado migratorio" name="estadoMigratorio" [group]="form"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <select2 placeholder="Tipo de interviniente" [options]="options.tipoInterviniente" name="id" [group]="form.controls.tipoInterviniente"></select2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <text label="Tipo de identificación" name="tipoIdentificacion" [group]="form"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Emisor de la identificación" name="emisorIdentificacion" [group]="form"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="Nº de la identificación" name="noIdentificacion" [group]="form"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <text label="CURP" name="curp" [group]="form"></text>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <text label="RFC" name="rfc" [group]="form"></text>
+                    </div>
+                    <div class="col-md-3">
+                        <select2 placeholder="¿Sabe leer y escribir?" 
+                        [options]="
                         [
-                          {label:'Hombre',value:'hombre'},
-                          {label:'Mujer',value:'mujer'}]"></select2>
+                             {label:'Si',value:true}, 
+                             {label:'No',value:false}
+                        ]" name="sabeLeerEscribir" [group]="form"></select2>
                     </div>
                     <div class="col-md-3">
-                        <date label="Fecha de nacimiento"></date>
+                        <text label="Grado de escolaridad" name="gradoEscolaridad" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Edad"></text>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <text label="Nacionalidad"></text>
-                    </div>
-                    <div class="col-md-3">
-                        <text label="Originario de"></text>
-                    </div>
-                    <div class="col-md-3">
-                        <text label="En su caso, estado migratorio"></text>
-                    </div>
-                    <div class="col-md-3">
-                        <select2 placeholder="Calidad"></select2>
+                        <text label="Ocupación" name="ocupacion" [group]="form"></text>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        <text label="Tipo de identificación"></text>
+                        <text label="Lugar de ocupación o negocios" name="lugarOcupacion" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Emisor de la identificación"></text>
+                        <text label="Estado civil" name="estadoCivil" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Nº de la identificación"></text>
+                        <text label="Salario semanal" name="salarioSemanal" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="CURP"></text>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <text label="RFC"></text>
-                    </div>
-                    <div class="col-md-3">
-                        <select2 placeholder="¿Sabe leer y escribir?"></select2>
-                    </div>
-                    <div class="col-md-3">
-                        <text label="Grado de escolaridad"></text>
-                    </div>
-                    <div class="col-md-3">
-                        <text label="Ocupación"></text>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <text label="Lugar de ocupación o negocios"></text>
-                    </div>
-                    <div class="col-md-3">
-                        <text label="Estado civil"></text>
-                    </div>
-                    <div class="col-md-3">
-                        <text label="Salario semanal"></text>
-                    </div>
-                    <div class="col-md-3">
-                        <text label="Relación del entrevistado con alguna de las partes"></text>
+                        <text label="Relación del entrevistado con alguna de las partes" name="relacionEntrevistado" [group]="form"></text>
                     </div>
                 </div>
             </div>
@@ -91,38 +94,38 @@
                 <h4>Domicilio para oír y recibir todo tipo de notificaciones</h4>
                 <div class="row">
                     <div class="col-md-3">
-                        <text label="Calle"></text>
+                        <text label="Calle" name="calle" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Nº Exterior"></text>
+                        <text label="Nº Exterior" name="noExterior" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Nº Interior"></text>
+                        <text label="Nº Interior" name="noInterior" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <select2 placeholder="Colonia"></select2>
+                        <text label="Colonia" name="colonia" [group]="form"></text>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        <text label="CP"></text>
+                        <text label="CP" name="cp" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Municipio"></text>
+                        <text label="Municipio" name="municipio" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Estado"></text>
+                        <text label="Estado" name="estado" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <select2 placeholder="Nº telefónico particular"></select2>
+                        <text label="Nº telefónico particular" name="noTelefonoParticular" [group]="form"></text>
                     </div>
                 </div>
                 <div class="row justify-content-start">
                     <div class="col-md-3">
-                        <text label="Nº telefónico celular"></text>
+                        <text label="Nº telefónico celular" name="noTelefonoCelular" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Correo electrónico"></text>
+                        <text label="Correo electrónico" name="correoElectronico" [group]="form"></text>
                     </div>
                 </div>
             </div>
@@ -130,32 +133,42 @@
                 <h4>Datos de la entrevista</h4>
                 <div class="row">
                     <div class="col-md-4">
-                        <select2 placeholder="¿Cuenta con representante legal?"></select2>
+                        <select2 [options]="
+                        [
+                             {label:'Si',value:true}, 
+                             {label:'No',value:false}
+                        ]" placeholder="¿Cuenta con representante legal?" [group]="form"
+                        name="tieneRepresentanteLegal">
+                        </select2>
                     </div>
                     <div class="col-md-4">
-                        <text label="En su caso, nombre del representante legal"></text>
+                        <text label="En su caso, nombre del representante legal" name="nombreRepresentanteLegal" [group]="form"></text>
                     </div>
                     <div class="col-md-4">
-                        <text label="¿Se utilizó medio tecnológico para el registro de la entrevista?"></text>
+                        <select2 [options]="
+                        [
+                             {label:'Si',value:true}, 
+                             {label:'No',value:false}
+                        ]" placeholder="¿Se utilizó medio tecnológico para el registro de la entrevista?" [group]="form"
+                        name="medioTecnologicoRegistro">
+                        </select2>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <text label="Medio tecnológico"></text>
+                        <text label="Medio tecnológico" name="medioTecnologicoUtilizado" [group]="form"></text>
                     </div>
                     <div class="col-md-4">
-                        <select2 label="¿Se utilizó medio técnico para el registro de la entrevista"></select2>
+                        <select2 [options]="
+                        [
+                             {label:'Si',value:true}, 
+                             {label:'No',value:false}
+                        ]" placeholder="¿Se utilizó medio técnico para el registro de la entrevista?" [group]="form"
+                        name="medioTecnicoRegistro">
+                        </select2>
                     </div>
                     <div class="col-md-4">
-                        <text label="Medio técnico utilizado"></text>
-                    </div>
-                </div>
-                <div class="row justify-content-start">
-                    <div class="col-md-3">
-                        <text label="Nº telefónico celular"></text>
-                    </div>
-                    <div class="col-md-3">
-                        <text label="Correo electrónico"></text>
+                        <text label="Medio técnico utilizado" name="medioTecnicoUtilizado" [group]="form"></text>
                     </div>
                 </div>
             </div>
@@ -163,21 +176,21 @@
                 <h4>Naracción de los hechos</h4>
                 <div class="row">
                     <div class="col">
-                        <text-area label="Narración de los hechos"></text-area>
+                        <text-area label="Narración de los hechos" name="narracionHechos" [group]="form"></text-area>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <text-area label="Observaciones/Incidencias"></text-area>
+                        <text-area label="Observaciones/Incidencias" name="observaciones" [group]="form"></text-area>
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-end">
-                <div class="p-2">
-                    <button md-raised-button color="accent">Guardar</button>
+            <div class="row justify-content-end">
+                <div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
+                    <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
                 </div>
-                <div class="p-2">
-                    <button md-button routerLink="/caso/{{casoId}}/entrevista">Cancelar</button>
+                <div class="col-sm-auto">
+                    <button class="float-right" md-button routerLink="/caso/{{casoId}}/entrevista">Cancelar</button>
                 </div>
             </div>
         </form>

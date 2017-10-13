@@ -148,8 +148,9 @@ const routes: Routes = [
     { path : 'caso/:id/detalle', component : DetalleCasoComponent, data : { breadcrumb : 'Detalle del caso' } },    
 
     //Entrevista
-    { path : 'caso/:id/entrevista', component : EntrevistaComponent, data : { breadcrumb : 'Entrevistas' } },
-    { path : 'caso/:id/entrevista/create', component : EntrevistaCreateComponent, data : { breadcrumb : 'Entrevistas' } },
+    { path : 'caso/:casoId/entrevista', component : EntrevistaComponent, data : { breadcrumb : 'Entrevistas' } },
+    { path : 'caso/:casoId/entrevista/create', component : EntrevistaCreateComponent, data : { breadcrumb : 'Entrevistas' } },
+    { path : 'caso/:casoId/entrevista/:id/view', component : EntrevistaCreateComponent, data : { breadcrumb : 'Entrevistas' } },
     //Catalogos
     { path : 'catalogos', component : CatalogosComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogo-armas', component : CatalogoArmasComponent, data : { breadcrumb : 'Catálogo de Armas', rutas:[{path:'/catalogos',label:"Catálogos"}]  } },

@@ -1,6 +1,7 @@
 export class AcuerdoInicio {
     id:number;
-    presento:string;
+    nombrePersonaAcepta:string;
+    presentoLlamada: string;
     manifesto: string;
     sintesisHechos: string;
     observaciones: string;

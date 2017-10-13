@@ -3,6 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
 import { Caso } from '@models/caso';
+import { Persona } from '@models/persona';
+import { DelitoCaso } from '@models/delitoCaso';
+import { Predenuncia } from '@models/predenuncia';
+
 
 @Component({
 	templateUrl:'./component.html'
@@ -14,13 +18,18 @@ export class DetalleCasoComponent implements OnInit{
 	private route: ActivatedRoute;
 	private onLine: OnLineService;
 	private http: HttpService;
-	caso: Caso;
+	public caso: Caso;
+	public involucrados:Persona[];
+	public delitos:DelitoCaso[];
+    public predenuncia:Predenuncia;
+
 
 	constructor(_route: ActivatedRoute, private _onLine: OnLineService, private _http: HttpService){
 		this.route = _route;
 		this.onLine = _onLine;
 		this.http   = _http;
 		this.caso = new Caso();
+		this.predenuncia=new Predenuncia();
 	}
 
 	ngOnInit(){
@@ -32,7 +41,22 @@ export class DetalleCasoComponent implements OnInit{
 		if(this.onLine.onLine){
 			this.http.get('/v1/base/casos/'+this.id).subscribe((response) => {
                 this.caso = response as Caso;
+                console.log(this.caso)
             });
-		}
+			this.http.get('/v1/base/personas-casos/casos/'+this.id+'/page').subscribe((response) => {
+                this.involucrados = response.data as Persona[];    
+                console.log(this.involucrados)
+            });
+			this.http.get('/v1/base/delitos-casos/casos/'+this.id+'/page').subscribe((response) => {
+                this.delitos = response.data as DelitoCaso[];    
+                console.log(this.delitos)
+            });  
+			/*this.http.get('/v1/base/predenuncias/casos/'+this.id).subscribe((response) => {
+                this.predenuncia = response.data as Predenuncia;    
+                console.log(this.predenuncia)
+            });  */
+
+        }    
+ 
 	}
 }

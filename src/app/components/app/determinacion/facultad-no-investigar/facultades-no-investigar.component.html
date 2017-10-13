@@ -56,7 +56,7 @@
 
         <ng-container mdColumnDef="Fecha">
             <md-header-cell *mdHeaderCellDef> Fecha de creación</md-header-cell>
-            <md-cell *mdCellDef="let element"> {{element.created}} </md-cell>
+            <md-cell *mdCellDef="let element"> {{element.created | date:'MM/dd/yyyy'}} </md-cell>
         </ng-container>
 
         <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>

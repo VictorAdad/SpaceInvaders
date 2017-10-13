@@ -2,37 +2,47 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
+import { Entrevista } from '@models/entrevista/entrevista';
+import { OnLineService} from '@services/onLine.service';
+import { HttpService} from '@services/http.service';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
     templateUrl:'./component.html',
 })
 export class EntrevistaComponent {
-	public breadcrumb = [];
-	public casoId: number = null;
 
-	columns = [ 'entrevistado', 'calidadEntrevistado','creadoPor', 'fechaCreacion'];
-	dataSource: TableService | null;
-	data: Entrevista[] = [
-		{ entrevistado: 'Wendy Sánchez Soto', calidadEntrevistado: 'Víctima', creadoPor: 'Call Center 1', fechaCreacion: '01/09/2017 16:03:34' }
-	];
-	@ViewChild(MdPaginator) paginator: MdPaginator;
+	public columns = [ 'entrevistado', 'calidadEntrevistado','creadoPor', 'fechaCreacion'];
+	public dataSource: TableService | null;
+	public data: Entrevista[] = [];
+    public casoId: number = null;
+    public haveCaso: boolean=false;
+	@ViewChild(MdPaginator) 
+    paginator: MdPaginator;
+    public breadcrumb = [];
+    public apiUrl="/v1/base/entrevistas";
 
-	constructor(private route: ActivatedRoute){}
+	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
 
 	ngOnInit() {
-    	this.dataSource = new TableService(this.paginator, this.data);
-
     	this.route.params.subscribe(params => {
-			if(params['id']){
-				this.casoId = +params['id'];
-				this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});
-			}  
+            if(params['casoId']){
+            	this.haveCaso=true;
+                this.casoId = +params['casoId'];
+                this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
+                this.http.get(this.apiUrl).subscribe((response) => {
+                    console.log(response);
+                    this.data = response.data as Entrevista[];
+                    this.dataSource = new TableService(this.paginator, this.data);
+                });
+            }
+            else{
+            	 this.http.get(this.apiUrl).subscribe((response) => {
+	                 this.data = response.data as Entrevista[];
+	                 console.log(this.data)
+	                 this.dataSource = new TableService(this.paginator, this.data);
+	                });
+            }
         });
   	}
-}
-export interface Entrevista {
-	entrevistado: string;
-	calidadEntrevistado: string;
-	creadoPor: string;
-	fechaCreacion: string;
 }
