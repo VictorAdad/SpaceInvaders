@@ -55,7 +55,7 @@ import {MatCheckboxModule} from '@angular/material';
 // import { MaterialModule} from '@angular/material';
 
 import { AgmCoreModule } from '@agm/core';
-
+import {Logger} from '@services/logger.service'
 
 @NgModule({
   declarations: [
@@ -135,7 +135,8 @@ import { AgmCoreModule } from '@agm/core';
     LugarService,
     VehiculoService,
     PersonaService,
-    ArmaService
+    ArmaService,
+    Logger
   ],
   entryComponents: [
     dyanamicComponents
