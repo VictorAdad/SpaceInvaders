@@ -1,5 +1,5 @@
 import { MOption } from '@partials/form/select2/select2.component';
-import { HttpService } from '@services/http.service';
+import { CIndexedDB } from '@services/indexedDB';
 
 export class MatrizGlobal {
 
@@ -7,13 +7,13 @@ export class MatrizGlobal {
     public finded   = [];
     public objects  = [];
 
-    constructor(public superHttp: HttpService){
+    constructor(private superDb:CIndexedDB, private catalogo: string){
 
     }
 
-    public getMatriz(url: string){
-        this.superHttp.get(url).subscribe((response) => {
-            this.objects = response;
+    public getMatriz(){
+        this.superDb.get("catalogos",this.catalogo).then(response=>{
+            this.objects = response["arreglo"];
             for(let attr in this){
                 if(
                     String(attr) !== 'selected'
@@ -24,7 +24,7 @@ export class MatrizGlobal {
                     && String(attr) !== 'constructor'
                     && String(attr) !== 'find'
                     && String(attr) !== 'validate'){
-                    this[String(attr)] = this.getUniques(response, attr);
+                    this[String(attr)] = this.getUniques(response["arreglo"], attr);
                 }
             }
         });
@@ -54,7 +54,6 @@ export class MatrizGlobal {
     }
 
     public find(_e, _tipo:string){
-        console.log('-> Buscar registro');
         this.selected[_tipo] = _e;
         this.finded = this.objects.filter(object => {
             return this.validate(object, this.selected);

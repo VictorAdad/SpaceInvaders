@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '@services/http.service';
+import { CIndexedDB } from '@services/indexedDB';
 import { MOption } from '@partials/form/select2/select2.component'
-import { MatrizGlobal } from './matriz-global';
+import { MatrizGlobal } from './matriz-global2';
 
 @Injectable()
 export class LugarService extends MatrizGlobal{
@@ -14,9 +15,11 @@ export class LugarService extends MatrizGlobal{
     public dia            = [];
 
     constructor(
-        private http: HttpService
+        private http: HttpService,
+        private db: CIndexedDB
         ) {
-        super(http);
+        super(db,"detalle_lugar");
+        this.getData();
     }
 
 
@@ -25,11 +28,11 @@ export class LugarService extends MatrizGlobal{
     }
 
     public getDetalleLugar(){
-        this.http.get('/v1/catalogos/lugar/detalle-lugar').subscribe((response) => {
-            this.detalleLugar = response;
-            this.tipoLugar    = this.getUniques(response, 'tipoLugar');
-            this.tipoZona     = this.getUniques(response, 'tipoZona');
-            this.dia          = this.getUniques(response, 'dia');
+        this.db.get("catalogos","detalle_lugar").then(response=>{
+            this.detalleLugar = response["arreglo"] as any[];
+            this.tipoLugar    = this.getUniques(this.detalleLugar, 'tipoLugar');
+            this.tipoZona     = this.getUniques(this.detalleLugar, 'tipoZona');
+            this.dia          = this.getUniques(this.detalleLugar, 'dia');
         });
     }
 

@@ -155,7 +155,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 'labioOjo': new FormGroup({
                     'id': new FormControl("",[]),
                 }),
-                'usaAnteojos': new FormControl("",[]),
+                'usaAnteojos': new FormControl(false),
                 'cicatrices': new FormControl("",[]),
                 'tatuajes': new FormControl("",[]),
                 'lunares': new FormControl("",[]),
@@ -198,21 +198,23 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             'estadoCivil': new FormGroup({
                 'id': new FormControl("",[]),
             }),
-            'personaCaso': new FormGroup({
-                'caso': new FormGroup({
-                    'id': new FormControl("",[]),
-                }),
-                'tipoInterviniente': new FormGroup({
-                    'id': new FormControl()
-                }),
-                'detalleDetenido': new FormGroup({
-                    'fechaDetencion'   : new FormControl(),
-                    'fechaDeclaracion' : new FormControl(),
-                    'tipoDetenido' : new FormGroup({
-                        'id' : new FormControl(),
-                    })
-                }),
-            }),
+            'personaCaso': new FormArray([
+                new FormGroup({
+                    'caso': new FormGroup({
+                        'id': new FormControl("",[]),
+                    }),
+                    'tipoInterviniente': new FormGroup({
+                        'id': new FormControl()
+                    }),
+                    'detalleDetenido': new FormGroup({
+                        'fechaDetencion'   : new FormControl(),
+                        'fechaDeclaracion' : new FormControl(),
+                        'tipoDetenido' : new FormGroup({
+                            'id' : new FormControl(),
+                        })
+                    }),
+                })
+            ]),
             'aliasNombrePersona' : new FormArray([
                 new FormGroup({
                     'nombre' : new FormControl(),
@@ -254,7 +256,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         // })
         
         if(this.onLine.onLine){
-            _model.personaCaso.caso.id = this.casoId;
+            _model.personaCaso[0].caso.id = this.casoId;
             console.log('Model', _model);
             this.http.post('/v1/base/personas', _model).subscribe(
                 (response) => console.log(response),

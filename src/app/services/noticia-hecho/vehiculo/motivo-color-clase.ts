@@ -1,5 +1,5 @@
-import { HttpService } from '@services/http.service';
-import { MatrizGlobal } from '../matriz-global';
+import { CIndexedDB } from '@services/indexedDB';
+import { MatrizGlobal } from '../matriz-global2';
 
 export class MatrizMotivoColorClase extends MatrizGlobal{
 
@@ -8,11 +8,11 @@ export class MatrizMotivoColorClase extends MatrizGlobal{
     public color          = [];
 
     constructor(
-        private http: HttpService
+        private db: CIndexedDB
         ) {
-        super(http);
+        super(db,"motivo_color_clase");
         this.selected = new MotivoClaseColor();
-        this.getMatriz('/v1/catalogos/vehiculo/motivo-color-clase');
+        this.getMatriz();
     }
 
     public findClaseArma(_e, _tipo:string){

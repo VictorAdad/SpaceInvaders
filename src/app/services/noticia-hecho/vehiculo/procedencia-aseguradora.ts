@@ -1,5 +1,5 @@
-import { HttpService } from '@services/http.service';
-import { MatrizGlobal } from '../matriz-global';
+import { CIndexedDB } from '@services/indexedDB';
+import { MatrizGlobal } from '../matriz-global2';
 
 export class MatrizProcedenciaAseguradora extends MatrizGlobal{
 
@@ -7,11 +7,11 @@ export class MatrizProcedenciaAseguradora extends MatrizGlobal{
     public aseguradora = [];
 
     constructor(
-        private http: HttpService
+        private db: CIndexedDB
         ) {
-        super(http);
+        super(db,"procedencia_aseguradora");
         this.selected = new ProcedenciaAseguradora();
-        this.getMatriz('/v1/catalogos/vehiculo/procedencia-aseguradora');
+        this.getMatriz();
     }
 
 }
