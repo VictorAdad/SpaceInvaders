@@ -66,7 +66,7 @@ export class Form {
                     this.trataPersonasForm(),
                 ]),
                 'efectoViolencia': new FormArray([
-                    this.efectoViolenciaForm(),
+                    // this.efectoViolenciaForm(),
                 ])
             }),
           // 'lugar'                    : new FormControl(this.model.lugar,[Validators.required,]),
@@ -83,7 +83,7 @@ export class Form {
         });
         this.hostigamiento = this.hostigamientoForm();
         this.trataPersonas = this.trataPersonasForm();
-        this.efectoViolencia = this.efectoViolenciaForm();
+        // this.efectoViolencia = this.efectoViolenciaForm();
         this.efectoDetalle = this.efectoDetalleForm();
 	}
 
@@ -133,13 +133,10 @@ export class Form {
         });
     }
 
-    public efectoViolenciaForm(){
+    public efectoViolenciaForm(_val: any){
         return new FormGroup({
             'efectoDetalle': new FormGroup({
-                'id': new FormControl([Validators.required,]),
-             }),
-            'detalleDelito': new FormGroup({
-                'id': new FormControl([Validators.required,]),
+                'id': new FormControl(_val, [Validators.required,]),
              }),
         });
     }

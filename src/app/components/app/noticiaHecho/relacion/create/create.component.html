@@ -306,7 +306,7 @@
                     <div class="row">
                         <div class="col">
                             <button class="float-right m-1" color="accent" md-raised-button >Limpiar</button>
-                            <button class="float-right m-1" md-raised-button color="accent" (click)="addEfectoViolencia()" [disabled]="false">Agregar</button>
+                            <button class="float-right m-1" md-raised-button color="accent" (click)="addEfectoDetalle(formRelacion.efectoDetalle.value)" [disabled]="false">Agregar</button>
                         </div>
                     </div>
 
@@ -314,7 +314,7 @@
                     <div class="row space">
                         <div class="col">
                             <div class="">
-                              <md-table #table [dataSource]="efectoDataSource">
+                              <md-table #table [dataSource]="colections.sourceEfectoDetalle">
                                     <!-- Efecto Column -->
                                     <ng-container mdColumnDef="efecto">
                                         <md-header-cell *mdHeaderCellDef> Efecto </md-header-cell>

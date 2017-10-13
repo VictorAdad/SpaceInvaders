@@ -18,6 +18,7 @@ import { CIndexedDB } from '@services/indexedDB';
 import { SelectsService} from '@services/selects.service';
 import { Form } from './form';
 import { Options } from './options';
+import { Colections } from './colections';
 
 
 @Component({
@@ -26,6 +27,8 @@ import { Options } from './options';
 })
 export class RelacionCreateComponent extends NoticiaHechoGlobal{
     public formRelacion: Form = new Form();
+    public colections: Colections = new Colections();
+
     public optionsRelacion: Options;
     public form  : FormGroup;
     public generalForm:FormGroup;
@@ -182,12 +185,15 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
       }
     }
 
-    addEfectoViolencia(){
-        console.log('-> addEfectoViolencia', this.formRelacion.efectoDetalle.value);
-        console.log('-> addEfectoViolencia', this.optionsRelacion.matrizEfectoDetalle);
-        let efectoDetalle = this.form.get('detalleDelito').get('efectoViolencia').get('efectoDetalle') as FormArray;
-        // efectoDetalle.push(this.optionsRelacion.matrizEfectoDetalle);
-        console.log('-> form', this.form.value);
+    addEfectoDetalle(_val: any){
+        this.colections.add('efectoDetalle', 'subjectEfectoDetalle', _val);
+        let efectoViolencia = this.form.get('detalleDelito').get('efectoViolencia') as FormArray;
+        efectoViolencia.push(
+            this.formRelacion.efectoViolenciaForm(this.optionsRelacion.matrizEfectoDetalle.finded[0].id)
+        );
+        console.log('-> efectoDetalle', efectoViolencia);
+        console.log('-> matrizEfectoDetalle', this.optionsRelacion.matrizEfectoDetalle);
+        console.log('-> source', this.colections.sourceEfectoDetalle);
     }       
 
     saveTrataPersona(val){
