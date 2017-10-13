@@ -41,6 +41,7 @@ export class SelectsService {
         this.getNacionalidad();
         this.getTipoDomicilio();
         this.getTipoInterviniente();
+        this.getAlfabetismo();
     }
 
     public getPaises(){
@@ -143,6 +144,12 @@ export class SelectsService {
     public getLocalidadByColonias(idColonia: number){
         this.http.get('/v1/catalogos/localidad/colonia/'+idColonia+'/options').subscribe((response) => {
             this.localidad = this.constructOptions(response);
+        });
+    }
+
+    public getAlfabetismo(){
+        this.http.get('/v1/catalogos/persona/alfabetismo/options').subscribe((response) => {
+            this.alfabetismo = this.constructOptions(response);
         });
     }
 
