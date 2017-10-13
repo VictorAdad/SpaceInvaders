@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '@services/http.service';
 import { MatrizOreja } from './media-filacion/oreja';
 import { MatrizComplexionPielSangre } from './media-filacion/complexion-piel-sangre';
 import { MatrizCaraNariz } from './media-filacion/cara-nariz';
@@ -25,7 +24,6 @@ export class PersonaService {
     public idiomaIdentificacion: MatrizIdiomaIdentificacion;
 
     constructor(
-        private http: HttpService,
         private db: CIndexedDB
 
         ) {
