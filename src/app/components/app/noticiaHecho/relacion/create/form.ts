@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@ang
 export class Form {
 
 	public form: FormGroup;
+    public trataPersonasForm: FormGroup;
     public hostigamiento: FormGroup;
     public trataPersonas: FormGroup;
     public efectoViolencia: FormGroup;
@@ -63,7 +64,7 @@ export class Form {
                     this.hostigamientoForm(),
                 ]),
                 'trataPersonas': new FormArray([
-                    this.trataPersonasForm(),
+                    // this.trataPersonasForm(),
                 ]),
                 'efectoViolencia': new FormArray([
                     // this.efectoViolenciaForm(),
@@ -81,12 +82,13 @@ export class Form {
           // 'ordenProteccion'           :new FormControl(this.model.ordenProteccion),
 
         });
-        this.hostigamiento = this.hostigamientoForm();
-        this.trataPersonas = this.trataPersonasForm();
-        // this.efectoViolencia = this.efectoViolenciaForm();
+        this.trataPersonasForm = this.getTrataPersonasForm();
+        this.hostigamiento = this.hostForm();
+        this.trataPersonas = this.trataForm();
         this.efectoDetalle = this.efectoDetalleForm();
 	}
 
+    //Formulario de DetalleDelito
 	public hostigamientoForm(){
         return new FormGroup({
             'modalidadAmbito': new FormGroup({
@@ -101,7 +103,7 @@ export class Form {
         });
     }
 
-    public trataPersonasForm(){
+    public getTrataPersonasForm(){
         return new FormGroup({
             'paisOrigen': new FormGroup({
                 'id': new FormControl([Validators.required,]),
@@ -141,11 +143,35 @@ export class Form {
         });
     }
 
+    //Formularios Individuales
     public efectoDetalleForm(){
         return new FormGroup({
             'id': new FormControl(),
             'efecto': new FormControl(),
             'detalle': new FormControl(),
+        });
+    }
+
+    public trataForm(){
+        return new FormGroup({
+            'paisOrigen': new FormControl(),
+            'estadoOrigen': new FormControl(),
+            'municipioOrigen': new FormControl(),
+            'paisDestino': new FormControl(),
+            'estadoDestino': new FormControl(),
+            'municipioDestino': new FormControl(),
+            'tipo': new FormControl(),
+            'transportacion': new FormControl(),
+        });
+    }
+
+    public hostForm(){
+        return new FormGroup({
+            'modalidad': new FormControl(),
+            'ambito': new FormControl(),
+            'conducta': new FormControl(),
+            'detalleConducta': new FormControl(),
+            'testigo': new FormControl(),
         });
     }
 }

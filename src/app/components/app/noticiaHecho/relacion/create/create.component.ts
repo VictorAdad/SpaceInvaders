@@ -187,14 +187,25 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
     addEfectoDetalle(_val: any){
         this.colections.add('efectoDetalle', 'subjectEfectoDetalle', _val);
-        let efectoViolencia = this.form.get('detalleDelito').get('efectoViolencia') as FormArray;
-        efectoViolencia.push(
+        let form = this.form.get('detalleDelito').get('efectoViolencia') as FormArray;
+        form.push(
             this.formRelacion.efectoViolenciaForm(this.optionsRelacion.matrizEfectoDetalle.finded[0].id)
         );
-        console.log('-> efectoDetalle', efectoViolencia);
-        console.log('-> matrizEfectoDetalle', this.optionsRelacion.matrizEfectoDetalle);
-        console.log('-> source', this.colections.sourceEfectoDetalle);
-    }       
+    } 
+
+    addTrataPersonas(_val: any){
+        this.colections.add('trataPersonas', 'subjectTrataPersonas', _val);
+        let form = this.form.get('detalleDelito').get('trataPersonas') as FormArray;
+        form.push(this.formRelacion.trataPersonasForm); 
+    } 
+
+    addHostigamiento(_val: any){
+        this.colections.add('hostigamiento', 'subjectHostigamiento', _val);
+        let form = this.form.get('detalleDelito').get('hostigamiento') as FormArray;
+        form.push(
+            this.formRelacion.efectoViolenciaForm(this.optionsRelacion.matrizEfectoDetalle.finded[0].id)
+        );
+    } 
 
     saveTrataPersona(val){
         // val["tipoTransportacion"]=this.tipoTransportacionSeleccionado;
