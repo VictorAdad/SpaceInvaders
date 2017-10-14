@@ -13,7 +13,7 @@ export class OnLineService {
     onLine: boolean = true;
     timer = Observable.timer(2000,1000);
     //este timer se executa cada hora, la primera se sera a los 14s de iniciar la app
-    timerSincronizarMatrices = Observable.timer(7000*2,1000*60*60);
+    timerSincronizarMatrices = Observable.timer(7000,1000*60*60);
     anterior: boolean= true;
 
     matricesASincronizar=[
@@ -126,6 +126,92 @@ export class OnLineService {
 
     ];
 
+    catalogosASincronizar=[
+        //persona
+        {
+            catalogo:"delito",
+            uri:"/v1/catalogos/delitos"
+        },
+        {
+            catalogo:"modalidad_delito",
+            uri:'/v1/catalogos/relacion/modalidad-delito/options'
+        },
+        {
+            catalogo:"concurso_delito",
+            uri:'/v1/catalogos/relacion/concurso-delito/options'
+        },
+        {
+            catalogo:"grado_participacion",
+            uri:'/v1/catalogos/relacion/grado-participacion/options'
+        },
+        {
+            catalogo:"forma_comision",
+            uri:'/v1/catalogos/relacion/forma-comision/options'
+        },
+        {
+            catalogo:"clasificiacion_delito_orden",
+            uri:'/v1/catalogos/relacion/clasificacion-delito-orden/options'
+        },
+        {
+            catalogo:"forma_accion",
+            uri:'/v1/catalogos/relacion/forma-accion/options'
+        },
+        {
+            catalogo:"elemento_comision",
+            uri:'/v1/catalogos/relacion/elemento-comision/options'
+        },
+        {
+            catalogo:"forma_conducta",
+            uri:'/v1/catalogos/relacion/forma-conducta/options'
+        },
+        {
+            catalogo:"sexo",
+            uri:'/v1/catalogos/persona/sexo/options'
+        },
+        {
+            catalogo:"escolaridad",
+            uri:'/v1/catalogos/persona/escolaridad/options'
+        },
+        {
+            catalogo:"ocupacion", 
+            uri:'/v1/catalogos/persona/ocupacion/options'
+        },
+        {
+            catalogo:"estado_civil",
+            uri:'/v1/catalogos/persona/estado-civil/options'
+        },
+        {
+            catalogo:"grupo_etnico",
+            uri:'/v1/catalogos/persona/grupo-etnico/options'
+        },
+        {
+            catalogo:"alfabetismo",
+            uri:'/v1/catalogos/persona/alfabetismo/options'
+        },
+        {
+            catalogo:"interprete",
+            uri:'/v1/catalogos/persona/interprete/options'
+        },
+        {
+            catalogo:"pais",
+            uri:'/v1/catalogos/pais/options'
+        },
+        {
+            catalogo:"estado",
+            uri:'/v1/catalogos/estado'
+        },
+        {
+            catalogo:"municipio",
+            uri:'/v1/catalogos/municipio'
+        },
+        {
+            catalogo:"distrito",
+            uri:'/v1/catalogos/usuario/distrito/options'
+        },
+
+
+    ];
+
 
     constructor(
         public snackBar: MdSnackBar,
@@ -149,32 +235,34 @@ export class OnLineService {
         });
 
         this.timerSincronizarMatrices.subscribe(t=>{
-            console.log("%c" + "-> Iniciando Sincronizacion", "color: black;font-weight:bold;");
-            this.sincronizaMatrices(0);
+            this.sincronizaCatalogos(0,this.matricesASincronizar,"matrices");
+            this.sincronizaCatalogos(0,this.catalogosASincronizar,"catalogos");
         });
     }
 
-    private sincronizaMatrices(i){
-        if (i==this.matricesASincronizar.length){
-            console.log("%c" + "-> Matrices sincronizadas", "color: blue;font-weight:bold;");
+    private sincronizaCatalogos(i,arr:any[],titulo:string=""){
+        if (i==0){
+            console.time(titulo);
+            console.log("%c" + "-> Iniciando Sincronizacion de "+titulo, "color: black;font-weight:bold;");
+        }
+        if (i==arr.length){
+            console.log("%c" + "-> "+titulo+" sincronizadas", "color: blue;font-weight:bold;");
+            console.timeEnd(titulo);
             return;
         }
-        this.sincronizaMatrix(i,this.matricesASincronizar[i]);
+        this.sincronizaMatrix(i,arr[i],arr,titulo);
 
     }
 
-    private sincronizaMatrix(i,item){
+    private sincronizaMatrix(i,item,arr,titulo:string=""){
         this.http.get(item["uri"]).subscribe((response) => {
-            if (Array.isArray(response)){
-                this.db.update("catalogos",{id:item["catalogo"], arreglo:response}).then(e=>{
-                    this.sincronizaMatrices(i+1);
+            this.db.update("catalogos",{id:item["catalogo"], arreglo:response}).then(e=>{
+                    this.sincronizaCatalogos(i+1,arr,titulo);
                 });
-            }else
-                this.sincronizaMatrices(i+1);
         },
         (error)=>{
             console.log("Fallo el servicio "+item["uri"]);
-            this.sincronizaMatrices(i+1);
+            this.sincronizaCatalogos(i+1,arr,titulo);
         });
     }
 
