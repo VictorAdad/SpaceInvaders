@@ -18,6 +18,15 @@ export class Form {
             'personaCasoRelacionada': new FormGroup({
                 'id': new FormControl([Validators.required,]),
             }),
+            'caso': new FormGroup({
+                'id': new FormControl([Validators.required,]),
+            }),
+            'id': new FormGroup({
+                'caso': new FormControl(1, [Validators.required,]),
+                'personaCaso': new FormControl(1, [Validators.required,]),
+                // 'detalleDelito': new FormControl(1, [Validators.required,]),
+                'personaCasoRelacionada': new FormControl(2, [Validators.required,]),
+            }),
             'detalleDelito': new FormGroup({
                 'modalidadDelito': new FormGroup({
                     'id': new FormControl([Validators.required,]),
@@ -61,13 +70,13 @@ export class Form {
                 'violenciaGen': new FormControl(),
                 'flagrancia': new FormControl(),
                 'hostigamientoAcoso': new FormArray([
-                    this.hostigamientoForm(),
+                    // this.hostigamientoForm(),
                 ]),
-                'trataPersonas': new FormArray([
-                    // this.trataPersonasForm(),
+                'trataPersona': new FormArray([
+                    // this.getTrataPersonasForm(),
                 ]),
                 'efectoViolencia': new FormArray([
-                    // this.efectoViolenciaForm(),
+                    // this.efectoViolenciaForm(1),
                 ])
             }),
           // 'lugar'                    : new FormControl(this.model.lugar,[Validators.required,]),

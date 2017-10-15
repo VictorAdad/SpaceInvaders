@@ -63,14 +63,14 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     isTutorVictima: boolean = false;
     isViolenciaGenero: boolean = false;
     isAChange: boolean = false;
-    
+
     efectoDisplayedColumns = ['efecto', 'detalle'];
     efectoDataSource = new ExampleDataSource([]);
 
     trataData: TrataPersonas[] = []
     trataDisplayedColumns = ['País de origen', 'Estado de origen','Municipio de origen','País destino','Estado destino','Municipio destino', 'Tipo de trata','Transportación'];
     trataDataSource = new ExampleDataSource(this.trataData);
-    
+
     hostigamientoData= []
     hostigamientoDisplayedColumns = ['Modalidad', 'Ámbito','Conducta','Detalle','Testigo'];
     hostigamientoDataSource = new ExampleDataSource(this.hostigamientoData);
@@ -83,19 +83,19 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     imputadoOptions:MOption[]=[];
     testigoOptions:MOption[]=[];
     representanteOptions:MOption[]=[];
-    
-    
+
+
     arrEstadosOrigen=[];
     arrMunicipiosOrigen=[];
     arrEstadosDestino=[];
     arrMunicipiosDestino=[];
     trataPersonasArr=[];
 
-    
-    
+
+
     efectoDetalleArr=[];
 
-    
+
 
 
     constructor(
@@ -108,7 +108,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         private optionsNoticia   : NoticiaHechoService,
         private optionsService   : SelectsService,
         ) {
-        super()
+        super();
         this.optionsRelacion = new Options(http,db);
     }
 
@@ -240,17 +240,15 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     }
 
     save(_valid : any, _model : any):void{
-        console.log("Datos a guardar => ",_model);
         if(this.onLine.onLine){
-            Object.assign(this.model, _model);
-            this.model.caso.id = this.casoId;
-            //((this.model["detalleDelito"])["desaparicionConsumada"])["id"]=this.desaparicionConsumada["id"];
-            console.log(this.model);
-            //this.model.detalleDelito.desaparicionConsumada.id=1;
-            // this.http.post('/v1/base/relaciones', this.model).subscribe(
-            //     (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
-            //     (error) => console.error('Error', error)
-            // );
+            _model.caso.id = this.casoId;
+            console.log('-> Model', _model);
+            // ((this.model["detalleDelito"])["desaparicionConsumada"])["id"]=this.desaparicionConsumada["id"];
+            // this.model.detalleDelito.desaparicionConsumada.id=1;
+            this.http.post('/v1/base/tipo-relacion-persona', _model).subscribe(
+                (response) => //this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
+                (error) => console.error('Error', error)
+            );
         }else{
             // Object.assign(this.model, _model);
             // this.model.caso.id = this.casoId;
