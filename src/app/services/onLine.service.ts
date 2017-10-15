@@ -233,11 +233,14 @@ export class OnLineService {
                 });
             }
         });
-
-        this.timerSincronizarMatrices.subscribe(t=>{
-            this.sincronizaCatalogos(0,this.matricesASincronizar,"matrices");
-            this.sincronizaCatalogos(0,this.catalogosASincronizar,"catalogos");
-        });
+        if(localStorage.getItem('sincronizacion') !== 'true')
+            this.timerSincronizarMatrices.subscribe(t=>{
+                this.sincronizaCatalogos(0,this.matricesASincronizar,"matrices");
+                this.sincronizaCatalogos(0,this.catalogosASincronizar,"catalogos");
+                localStorage.setItem('sincronizacion', 'true')
+            });
+        else
+            console.log('Ya existen catalogos sincroinzados');
     }
 
     private sincronizaCatalogos(i,arr:any[],titulo:string=""){
