@@ -87,22 +87,51 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 this.id = +params['id'];
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/personas/'+this.id).subscribe(response =>{
+                        console.log("PERSONA->",response);
                         this.fillForm(response);
+                        this.fillNombres(response["aliasNombrePersona"]);
                     });
                 }else{
-                    this._tabla.get("casos",this.casoId).then(t=>{
-                        let armas=t["arma"] as any[];
-                        for (var i = 0; i < armas.length; ++i) {
-                            if ((armas[i])["id"]==this.id){
-                                this.fillForm(armas[i]);
-                                break;
-                            }
-                        }
+                    this._tabla.get("personas",this.casoId).then(t=>{
+                        //falta editar
                     });
                 }
             }
         });
         console.log('Form', this.globals.form);
+    }
+
+    public fillNombres(_alias:any[]){
+        var nombreForm=function(){
+            return new FormGroup({
+                'nombre' : new FormControl(),
+                'tipo'   : new FormControl(),
+                'id'     : new FormControl(),
+            });
+        }
+        console.log("Alias->", _alias);
+        for(var i=0;i<_alias.length;i++){
+            this.globals.indexNombres;
+            var item=_alias[i];
+            if(item["tipo"]=="Otro nombre"){
+                this.globals.otrosNombres.nombres.push(item["nombre"]);
+                this.globals.otrosNombres.ids.push(item["id"]);
+                let form = nombreForm();
+                form.patchValue({tipo:'Otro nombre',id:item["id"],nombre:item["nombre"]});
+                let otrosNombres = this.globals.form.get('aliasNombrePersona') as FormArray;
+                otrosNombres.push(form);
+            }
+            if(item["tipo"]=="Alias"){
+                this.globals.alias.nombres.push(item["nombre"]);
+                this.globals.alias.ids.push(item["id"]);
+                let form = nombreForm();
+                form.patchValue({tipo:'Alias',id:item["id"],nombre:item["nombre"]});
+                let otrosNombres = this.globals.form.get('aliasNombrePersona') as FormArray;
+                otrosNombres.push(form);
+            }
+            
+        }
+        console.log("Globals->",this.globals);
     }
 
     public createForm(){
@@ -218,7 +247,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             'aliasNombrePersona' : new FormArray([
                 new FormGroup({
                     'nombre' : new FormControl(),
-                    'tipo'   : new FormControl()
+                    'tipo'   : new FormControl(),
+                    'id'     : new FormControl(),
                 })]
             ),
         });
@@ -232,48 +262,122 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     save(valid : any, _model : any):void{
+        console.log(this);
         console.log('-> Form', this.form);
-        // this.tabla.get("catalagos","oreja").then(t=>{
-        //     var lista=t["arreglo"] as any[];
-        //     var p = _model as Persona;
-        //     for (var i = 0; i < lista.length; ++i) {
-        //         var item=lista[i];
-        //         var c=(item["forma"]==p.orejaDerechaForma)
-        //                 && (item["helixOriginal"]==p.orejaDerechaHelixOriginal)
-        //                 && (item["helixAdherencia"]==p.orejaDerechaHelixAdherencia)
-        //                 && (item["helixPosterior"]==p.orejaDerechaHelixPosterior)
-        //                 && (item["helixSuperior"]==p.orejaDerechaHelixSuperior)
-        //                 && (item["lobuloAdherencia"]==p.orejaDerechaLobuloAdherencia)
-        //                 && (item["lobuloContorno"]==p.orejaDerechaLobuloContorno)
-        //                 && (item["lobuloParticular"]==p.orejaDerechaLobuloParticular)
-        //                 && (item["lobuloDimension"]==p.orejaDerechaLobuloDimensional);
-
-        //         if (c){
-        //             console.log(item);
-        //         }
-
-        //     }
-        // })
+       
         
         if(this.onLine.onLine){
             _model.personaCaso[0].caso.id = this.casoId;
             console.log('Model', _model);
             this.http.post('/v1/base/personas', _model).subscribe(
-                (response) => console.log(response),
-//this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
+                (response) => {
+                    console.log(response);
+                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                },
                 (error) => console.error('Error', error)
             );
 
         }else{
-            this.tabla.add('personas', this.persona).then( p => {
-                this.caso.personas.push({id:p["id"]});
-                this.tabla.update("casos",this.caso).then(
-                    response=>{
-                        console.log("Se actualizo registro");
+            _model.personaCaso[0].caso.id = this.casoId;
+            let temId=Date.now();
+            let dato={
+                url:'/v1/base/personas',
+                body:_model,
+                options:[],
+                tipo:"post",
+                pendiente:true,
+                dependeDe:[this.casoId],
+                temId: temId
+            }
+            console.log("SI");
+            this.tabla.add("sincronizar",dato).then(response=>{
+                this.tabla.get("casos",this.casoId).then(
+                        casoR=>{
+                    this.caso=casoR as Caso;
+
+                    _model["tipoInterviniente"]={tipo:"por sincronizar"};
+                    _model["persona"]={nombre:_model["nombre"]};
+                    _model["alias"]=_model.aliasNombrePersona.nombre;
+                    if (!_model["razonSocial"])
+                        _model["razonSocial"]="";        
+                    console.log("SI");
+                    this.tabla.add('personas', _model).then( p => {
+                        console.log("SI");
+                        if (!this.caso["personas"])
+                            this.caso["personas"]=[];
+                        this.caso["personas"].push({id:p["id"]});
+                        this.tabla.update("casos",this.caso).then(
+                            ds=>{
+                                console.log("Se actualizo registro");
+                                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
+
+                        });
+                        console.log('-> Persona Guardada',p);
+                        
+                    });
 
                 });
-                console.log('-> Persona Guardada',p);
-                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
+            });
+        }
+    }
+
+    edit(valid : any, _model : any):void{
+        console.log('Editar -> Form', this.form);
+        
+        if(this.onLine.onLine){
+            _model.personaCaso[0].caso.id = this.casoId;
+            console.log('Model', _model);
+            this.http.put('/v1/base/personas/'+this.id, _model).subscribe(
+                (response) => {
+                    console.log("Editar Persona->",response);
+                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                },
+                (error) => {
+                    console.error('Error', error)
+                    console.log(this);
+                }
+            );
+
+        }else{
+            _model.personaCaso[0].caso.id = this.casoId;
+            let temId=Date.now();
+            let dato={
+                url:'/v1/base/personas',
+                body:_model,
+                options:[],
+                tipo:"post",
+                pendiente:true,
+                dependeDe:[this.casoId],
+                temId: temId
+            }
+            console.log("SI");
+            this.tabla.add("sincronizar",dato).then(response=>{
+                this.tabla.get("casos",this.casoId).then(
+                        casoR=>{
+                    this.caso=casoR as Caso;
+
+                    _model["tipoInterviniente"]={tipo:"por sincronizar"};
+                    _model["persona"]={nombre:_model["nombre"]};
+                    _model["alias"]=_model.aliasNombrePersona.nombre;
+                    if (!_model["razonSocial"])
+                        _model["razonSocial"]="";        
+                    console.log("SI");
+                    this.tabla.add('personas', _model).then( p => {
+                        console.log("SI");
+                        if (!this.caso["personas"])
+                            this.caso["personas"]=[];
+                        this.caso["personas"].push({id:p["id"]});
+                        this.tabla.update("casos",this.caso).then(
+                            ds=>{
+                                console.log("Se actualizo registro");
+                                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
+
+                        });
+                        console.log('-> Persona Guardada',p);
+                        
+                    });
+
+                });
             });
         }
     }
@@ -285,11 +389,17 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
               delete _data[propName];
             }
           }
-         for (var propName in _data.localizacionPersona) { 
-            if (_data.localizacionPersona[propName] === null || _data.localizacionPersona[propName] === undefined) {
-              delete _data.localizacionPersona[propName];
+        for (var propName in (_data.localizacionPersona[0])) { 
+            if ((_data.localizacionPersona[0])[propName] === null || (_data.localizacionPersona[0])[propName] === undefined) {
+                delete (_data.localizacionPersona[0])[propName];
             }
-          }
+        }
+        for (var propName in _data.mediaFiliacion) { 
+            if (_data.mediaFiliacion[propName] === null || _data.mediaFiliacion[propName] === undefined) {
+                delete _data.mediaFiliacion[propName];
+            }
+        }
+        console.log("datos ->",_data);
         this.form.patchValue(_data);
         console.log('After patch', this.form);
     }
@@ -391,27 +501,42 @@ export class IdentificacionComponent{
     globals: PersonaGlobals;
     @Input()
     options: SelectsService;
-    public otrosNombres:string[]=[];
-    public alias:string[]=[];
-    public nombres: number = 0;
+    @Input()
+    otrosNombres:{
+        nombres:string[],
+        ids:number[]
+    }
+    @Input()
+    alias:{
+        nombres:string[],
+        ids:number[]
+    }
+    
+    @Input()
+    nombres: number = 0;
 
     constructor(private personaServ: PersonaService){
 
     }
 
+    ngOnInit(){
+        console.log("globals",this.globals);
+    }
 
     public addOtroNombre(_tipo: string){
         this.nombres++;
         if(_tipo === 'otroNombre'){
             let form = this.nombreForm('Otro nombre');
-            this.otrosNombres.unshift(null);
+            this.otrosNombres.nombres.unshift(null);
+            this.otrosNombres.ids.unshift(null);
             form.patchValue({tipo:'Otro nombre'});
             let otrosNombres = this.globals.form.get('aliasNombrePersona') as FormArray;
             otrosNombres.push(form);
         }
         else{
             let form = this.nombreForm('Alias');
-            this.alias.unshift(null);
+            this.alias.nombres.unshift(null);
+            this.alias.ids.unshift(null);
             form.patchValue({tipo:'Alias'});
             let otrosNombres = this.globals.form.get('aliasNombrePersona') as FormArray;
             otrosNombres.push(form);
@@ -421,7 +546,8 @@ export class IdentificacionComponent{
     public nombreForm(_tipo: string){
         return new FormGroup({
             'nombre' : new FormControl(),
-            'tipo'   : new FormControl(_tipo)
+            'tipo'   : new FormControl(_tipo),
+            'id'     : new FormControl(),
         });
     }
 
@@ -506,6 +632,15 @@ export class PersonaGlobals{
     public detenido: boolean = false;
     public persona:Persona;
     public formLocalizacion: FormGroup;
+    public otrosNombres={
+        nombres:[],
+        ids:[]
+    };
+    public alias={
+        nombres:[],
+        ids:[]
+    };
+    public indexNombres:number=0;
 
     constructor(
         _form: FormGroup,
@@ -513,5 +648,9 @@ export class PersonaGlobals{
         ){
         this.form = _form;
         this.persona=_persona;
+        this.alias.ids=[];
+        this.alias.nombres=[];
+        this.otrosNombres.ids=[];
+        this.otrosNombres.nombres=[];
     }
 }

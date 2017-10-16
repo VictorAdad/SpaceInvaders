@@ -21,7 +21,7 @@
                         name="tipo"
                         [(options)]="tiposRelacion"
                         (valueChange)="changeTipoRelacion($event)"
-                        [group]="form">
+                        [group]="form.controls.tipoRelacionPersona">
 
                     </select2 >
                 </div>
@@ -31,7 +31,7 @@
                         name="id"
                         *ngIf="isImputadoVictimaDelito"
                         [(options)]="options"
-                        [group]="form.controls.detalleDelito.controls.modalidadDelito">
+                        [group]="form.controls.modalidadDelito">
 
                     </select2>
                 </div>
@@ -40,7 +40,7 @@
                         name="id"
                         *ngIf="isImputadoVictimaDelito"
                         [(options)]="optionsNoticia.delitos"
-                        [group]="form.controls.detalleDelito.controls.delitoCaso" >
+                        [group]="form.controls.delitoCaso" >
 
                     </select2>
                 </div>
@@ -49,7 +49,7 @@
                         name="id"
                         *ngIf="isImputadoVictimaDelito"
                         [(options)]="optionsRelacion.formaComision"
-                        [group]="form.controls.detalleDelito.controls.formaComision">
+                        [group]="form.controls.formaComision">
 
                     </select2>
                 </div>
@@ -58,7 +58,7 @@
                         name="id"
                         *ngIf="isImputadoVictimaDelito"
                         [(options)]="optionsNoticia.imputados"
-                        [group]="form.controls.personaCasoRelacionada">
+                        [group]="form.controls.tipoRelacionPersona.controls.personaCasoRelacionada">
 
                     </select2>
                 </div>
@@ -68,7 +68,7 @@
                     <select2 placeholder="Víctima u ofendido"
                         name="id"
                         [(options)]="optionsNoticia.victimas"
-                        [group]="form.controls.personaCaso">
+                        [group]="form.controls.tipoRelacionPersona.controls.personaCaso">
 
                     </select2>
                 </div>
@@ -76,7 +76,7 @@
                     <select2 placeholder="Asesor legal"
                         [(options)]="optionsNoticia.asesoresPublicos"
                         name="id"
-                        [group]="form.controls.personaCasoRelacionada">
+                        [group]="form.controls.tipoRelacionPersona.controls.personaCasoRelacionada">
 
                     </select2>
                 </div>
@@ -86,7 +86,7 @@
                     <select2 placeholder="Víctima u ofendido"
                         name="id"
                         [(options)]="optionsNoticia.victimas"
-                        [group]="form.controls.personaCaso">
+                        [group]="form.controls.tipoRelacionPersona.controls.personaCaso">
 
                     </select2>
                 </div>
@@ -94,7 +94,7 @@
                     <select2 placeholder="Defensor"
                         [(options)]="optionsNoticia.defensoresPublicos"
                         name="id"
-                        [group]="form.controls.personaCasoRelacionada">
+                        [group]="form.controls.tipoRelacionPersona.controls.personaCasoRelacionada">
 
                     </select2>
                 </div>
@@ -104,7 +104,7 @@
                     <select2 placeholder="Víctima u ofendido"
                         name="id"
                         [(options)]="optionsNoticia.victimas"
-                        [group]="form.controls.personaCaso">
+                        [group]="form.controls.tipoRelacionPersona.controls.personaCaso">
 
                     </select2>
                 </div>
@@ -112,7 +112,7 @@
                     <select2 placeholder="Representante"
                         [(options)]="optionsNoticia.representantesLegales"
                         name="id"
-                        [group]="form.controls.personaCasoRelacionada">
+                        [group]="form.controls.tipoRelacionPersona.controls.personaCasoRelacionada">
 
                     </select2>
                 </div>
@@ -122,7 +122,7 @@
                     <select2 placeholder="Víctima u ofendido"
                         name="id"
                         [(options)]="optionsNoticia.victimas"
-                        [group]="form.controls.personaCaso">
+                        [group]="form.controls.tipoRelacionPersona.controls.personaCaso">
 
                     </select2>
                 </div>
@@ -138,7 +138,7 @@
                     <select2 placeholder="Concurso del delito"
                         name="id"
                         [(options)]="optionsRelacion.concursoDelito"
-                        [group]="form.controls.detalleDelito.controls.concursoDelito">
+                        [group]="form.controls.concursoDelito">
 
                     </select2>
                 </div>
@@ -146,7 +146,7 @@
                     <select2 placeholder="Clasificación del delito"
                         name="id"
                         [(options)]="optionsRelacion.clasificacionDelitoOrden"
-                        [group]="form.controls.detalleDelito.controls.clasificacionDelitoOrden">
+                        [group]="form.controls.clasificacionDelitoOrden">
 
                     </select2>
                 </div>
@@ -154,7 +154,7 @@
                     <select2 placeholder="Elemento de comisión"
                         name="id"
                         [(options)]="optionsRelacion.elementoComision"
-                        [group]="form.controls.detalleDelito.controls.elementosComision">
+                        [group]="form.controls.elementoComision">
 
                     </select2>
                 </div>
@@ -164,7 +164,7 @@
                     <select2 placeholder="Clasificación"
                         name="id"
                         [(options)]="optionsRelacion.clasificacionDelito"
-                        [group]="form.controls.detalleDelito.controls.clasificacionDelito">
+                        [group]="form.controls.clasificacionDelito">
 
                     </select2>
                 </div>
@@ -172,7 +172,7 @@
                     <select2 placeholder="Forma de acción"
                         name="id"
                         [(options)]="optionsRelacion.formaAccion"
-                        [group]="form.controls.detalleDelito.controls.formaAccion">
+                        [group]="form.controls.formaAccion">
 
                     </select2>
                 </div>
@@ -190,7 +190,7 @@
                     <select2 placeholder="Grado de participación"
                         name="id"
                         [(options)]="optionsRelacion.gradoParticipacion"
-                        [group]="form.controls.detalleDelito.controls.gradoParticipacion">
+                        [group]="form.controls.gradoParticipacion">
 
                     </select2>
                 </div>
@@ -210,7 +210,7 @@
                     <select2 placeholder="Forma de conducta"
                         name="id"
                         [(options)]="optionsRelacion.formaConducta"
-                        [group]="form.controls.detalleDelito.controls.formaConducta">
+                        [group]="form.controls.formaConducta">
 
                     </select2>
                 </div>
@@ -224,10 +224,10 @@
 
                     </select2>
                 </div>
-                <div class="col" [formGroup]="form.controls.detalleDelito">
+                <div class="col" [formGroup]="form">
                     <md-checkbox class="example-margin" name="flagrancia" formControlName="flagrancia" >Flagrancia</md-checkbox>
                 </div>
-                <div class="col" [formGroup]="form.controls.detalleDelito">
+                <div class="col" [formGroup]="form">
                     <!-- <md-checkbox class="example-margin" name="violenciaGenero" formControlName="violenciaGenero" (change)="changeViolenciaGenero($event)">Violencia de genero</md-checkbox> -->
                     <checkbox label="Violencia de genero" (valueChange)="changeViolenciaGenero($event)"></checkbox>
                 </div>
@@ -403,7 +403,7 @@
                         <button class="float-right m-1" 
                             md-raised-button color="accent"
                             (click)="addTrataPersonas(formRelacion.trataPersonasForm.value)"
-                            [disabled]="!form.controls.detalleDelito.controls.trataPersona.valid">
+                            [disabled]="!form.controls.trataPersona.valid">
                             Guardar
                         </button>
                         </div>
@@ -468,62 +468,74 @@
                     <div class="row">
                         <div class="col">
                             <select2 placeholder="Modalidad"
-                                [options]="optionsRelacion.matrizModalidadAmbito.modalidad">
+                                name="modalidad"
+                                [group]="formRelacion.hostigamiento"
+                                [options]="optionsRelacion.matrizModalidadAmbito.modalidad"
+                                (valueChange)="optionsRelacion.matrizModalidadAmbito.find($event, 'modalidad')">
                             </select2>
 
                         </div>
                         <div class="col">
                             <select2 placeholder="Ámbito"
-                                [options]="optionsRelacion.matrizModalidadAmbito.ambito">
+                                name="ambito"
+                                [group]="formRelacion.hostigamiento"
+                                [options]="optionsRelacion.matrizModalidadAmbito.ambito"
+                                (valueChange)="optionsRelacion.matrizModalidadAmbito.find($event, 'ambito')">
                             </select2>
 
                         </div>
                         <div class="col">
                             <select2 placeholder="Conducta"
-                                [options]="optionsRelacion.matrizConductaDetalle.conducta">
+                                name="conducta"
+                                [group]="formRelacion.hostigamiento"
+                                [options]="optionsRelacion.matrizConductaDetalle.conducta"
+                                (valueChange)="optionsRelacion.matrizConductaDetalle.find($event, 'conducta')">
                             </select2>
 
                         </div>
                         <div class="col">
                             <select2 placeholder="Detalle de conducta"
-                                [options]="optionsRelacion.matrizConductaDetalle.detalle">
+                                name="detalle"
+                                [group]="formRelacion.hostigamiento"
+                                [options]="optionsRelacion.matrizConductaDetalle.detalle"
+                                (valueChange)="optionsRelacion.matrizConductaDetalle.find($event, 'detalle')">
                             </select2>
                         </div>
                         <div class="col">
                             <select2 placeholder="Testigo"
-                                name="id"
-                                [group]="formRelacion.hostigamientoForm().controls.testigo"
+                                name="testigo"
+                                [group]="formRelacion.hostigamiento"
                                 [(options)]="optionsNoticia.testigos">
                             </select2>
                         </div>
                     </div>
-                         <div class="row">
-                            <div class="col">
-                             <button class="float-right m-1" color="accent" md-raised-button >Limpiar</button>
-                            <button class="float-right m-1" md-raised-button color="accent" _saving (saveFn)="saveHostigamiento(hostigamientForm.value)">Guardar</button>
-                            </div>
+                    <div class="row">
+                        <div class="col">
+                            <button class="float-right m-1" color="accent" md-raised-button >Limpiar</button>
+                            <button class="float-right m-1" md-raised-button color="accent" [disabled]="!formRelacion.hostigamiento.valid" (click)="addHostigamiento(formRelacion.hostigamiento.value)">Agregar</button>
                         </div>
+                    </div>
                     <div class="row">
                         <div class="col">
                             <div class="">
-                                <md-table #table [dataSource]="hostigamientoDataSource">
+                                <md-table #table [dataSource]="colections.sourceHostigamiento">
 
                                     <ng-container mdColumnDef="Modalidad">
                                         <md-header-cell *mdHeaderCellDef> Modalidad </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.modalidad_ambito.modalidad}} </md-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.modalidad}} </md-cell>
                                     </ng-container>
                                     <ng-container mdColumnDef="Ámbito">
                                         <md-header-cell *mdHeaderCellDef> Ámbito </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.modalidad_ambito.ambito}} </md-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.ambito}} </md-cell>
                                     </ng-container>
                                     <ng-container mdColumnDef="Conducta">
                                         <md-header-cell *mdHeaderCellDef> Conducta </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.conducta_detalle.conducta}} </md-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.conducta}} </md-cell>
                                     </ng-container>
 
                                     <ng-container mdColumnDef="Detalle">
                                         <md-header-cell *mdHeaderCellDef> Detalle </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.conducta_detalle.detalle}} </md-cell>
+                                        <md-cell *mdCellDef="let element"> {{element.detalle}} </md-cell>
                                     </ng-container>
                                     <ng-container mdColumnDef="Testigo">
                                         <md-header-cell *mdHeaderCellDef> Testigo </md-header-cell>
@@ -541,7 +553,7 @@
             <div class="row justify-content-end space">
                 <div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" mdTooltipPosition="above">
                     <button md-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id != null">Editar</button>
-                    <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)"  *ngIf="id == null">Guardar</button>
+                    <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id == null">Guardar</button>
                 </div>
                 <div class="col-sm-auto">
                     <button md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>
