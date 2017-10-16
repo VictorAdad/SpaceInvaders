@@ -1,13 +1,31 @@
-import { Component, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { MdPaginator } from '@angular/material';
-import { TableService} from '@utils/table/table.service';
-import { OnLineService} from '@services/onLine.service';
-import { HttpService} from '@services/http.service';
 import { Predenuncia } from '@models/predenuncia';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import { Component, ViewChild } from '@angular/core';
+import { MdPaginator } from '@angular/material';
+import { TableService } from '@utils/table/table.service';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { OnLineService } from '@services/onLine.service';
+import { HttpService } from '@services/http.service';
+import { _config } from '@app/app.config';
+import { CIndexedDB } from '@services/indexedDB';
+
+export class PredenunciaGlobal{
+	
+    public validateMsg(form: FormGroup){
+        return !form.valid ? 'No se han llenado los campos requeridos' : '';
+    }
+
+	public validateForm(form: FormGroup) {
+        Object.keys(form.controls).forEach(field => {
+            const control = form.get(field);         
+            if (control instanceof FormControl) {         
+                control.markAsTouched({ onlySelf: true });
+            } else if (control instanceof FormGroup) {
+                this.validateForm(control);           
+            }
+        });
+    } 
+}
 
 @Component({
     templateUrl:'./create.component.html',
@@ -34,12 +52,13 @@ export class PredenunciaCreateComponent {
 	selector: 'predenuncia',
     templateUrl:'./predenuncia.component.html',
 })
-export class PredenunciaComponent {
-	public form1  : FormGroup;
-    public form2  : FormGroup;
+export class PredenunciaComponent  extends PredenunciaGlobal{
+	public form : FormGroup;
     public model : Predenuncia;
     public isUserX: boolean=false;// cambiar aquí la lógica del usuario
     public casoId: number = null;
+    public hasPredenuncia:boolean=false;
+    public apiUrl:string="/v1/base/predenuncias/casos/";
 
 
     constructor(
@@ -47,18 +66,32 @@ export class PredenunciaComponent {
         private onLine: OnLineService,
         private http: HttpService,
         private router: Router, 
-        private route: ActivatedRoute) { }
+        private route: ActivatedRoute) { 
+            super();
+        }
 
     ngOnInit(){
         this.route.params.subscribe(params => {
-            if(params['id']){
-                this.casoId = +params['id'];
-              }
-        });
-        this.model = new Predenuncia();
+            if (params['casoId'])
+              {  this.casoId = +params['casoId'];
+                 console.log(this.casoId);
+                 this.http.get(this.apiUrl+this.casoId).subscribe(response => {
+                 if(parseInt(response.totalCount) !== 0){
+                    this.hasPredenuncia = true;
+                    console.log("Dont have predenuncia");
+                    this.form.disable();
+                    this.model= response.data[0] as Predenuncia;
+                    
+                    this.fillForm(response.data[0]);
+                }
+             });
+            }
 
+        });
+
+        this.model = new Predenuncia();
         if (this.isUserX) {
-            this.form1  = new FormGroup({
+            this.form  = new FormGroup({
             'calidadUsuario'        :  new FormControl(this.model.calidadUsuario),
             'numeroTelefono'        :  new FormControl(this.model.numeroTelefono),
             'tipoLineaTelefonica'   :  new FormControl(this.model.tipoLineaTelefonica),
@@ -72,7 +105,7 @@ export class PredenunciaComponent {
 
           });
         } else {
-            this.form1  = new FormGroup({
+            this.form  = new FormGroup({
             //Constancia de lectura de Derechos
             'numeroFolio'                    :  new FormControl(this.model.numeroFolio),
             'hablaEspanol'                   :  new FormControl(this.model.hablaEspanol),
@@ -118,15 +151,23 @@ export class PredenunciaComponent {
         if(this.onLine.onLine){
             Object.assign(this.model, _model);
             this.model.caso.id = this.casoId;
+            console.log(this.model);
+            this.model.tipo="Predenuncia";// temporalmente
             this.http.post('/v1/base/predenuncias', this.model).subscribe(
                 (response) => {
+                    console.log(response)
                     this.router.navigate(['/caso/'+this.casoId+'/detalle' ]);
-                },
+                 },
                 (error) => {
                     console.error('Error', error);
                 }
             );
         }
+    }
+
+    public fillForm(_data) {
+        this.form.patchValue(_data);        
+        console.log(_data);
     }
 	
 }

@@ -32,10 +32,10 @@
                 </select2>
             </div>
             <div class="col-md-3">
-                <text label="Nº tarjeta de circulación" name="nTarjeta" [group]="form"></text>
+                <text label="Nº tarjeta de circulación" name="tarjetaCirculacion" [group]="form"></text>
             </div>
             <div class="col-md-3">
-                <text label="Nº económico" name="nEconomico" [group]="form"></text>
+                <text label="Nº económico" name="economico" [group]="form"></text>
             </div>
         </div>
         <div class="row">
@@ -80,7 +80,7 @@
                 <select2 placeholder="Estado de origen de las placas"
                         [(options)]="optionsServ.estados"
                         name="id"
-                        [group]="form.controls.estadoOrigenPlacas">
+                        [group]="form.controls.estadoOrigen">
 
                 </select2>
             </div>
@@ -93,7 +93,7 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                <text label="Registro federal del vehículo (RFV)" name="rfv" [group]="form"></text>
+                <text label="Registro federal del vehículo (RFV)" name="registroFederal" [group]="form"></text>
             </div>
             <div class="col-md-3">
                 <text label="Nº serie (VIN)" name="serie" [group]="form"></text>
@@ -116,13 +116,13 @@
             </div>
             <div class="col-md-3">
                 <select2 placeholder="Datos tomados de"
-                    name="datosTomadosDe"
+                    name="datosTomados"
                     [options]="vehiculoServ.tipoUsoTipoVehiculo.datosTomadosDe"
                     [group]="form">
                 </select2>
             </div>
             <div class="col-md-3">
-                <text label="Nº póliza" name="nPoliza" [group]="form"></text>
+                <text label="Nº póliza" name="poliza" [group]="form"></text>
             </div>
             <div class="col-md-3">
                 <text label="Valor estimado" name="valorEstimado" [group]="form"></text>
@@ -146,7 +146,7 @@
                         </select2>
                     </div>
                     <div class="col" *ngIf="isProcedenciaExtranjera==true">
-                        <text label="Pedimento de importación" name="pedimentoDeImportacion" [group]="form">></text>
+                        <text label="Pedimento de importación" name="pedimentoImportacion" [group]="form"></text>
                     </div>
                 </div>
             </div>
@@ -163,7 +163,7 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <text label="Señas particulares"  name="señasParticulares" [group]="form"></text>
+                <text label="Señas particulares"  name="senasParticulares" [group]="form"></text>
             </div>
         </div>
         <div class="row">
