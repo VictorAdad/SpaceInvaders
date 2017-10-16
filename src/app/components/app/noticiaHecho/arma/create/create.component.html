@@ -12,14 +12,16 @@
 		<button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/noticia-hecho" color="accent">Regresar</button>
 	</div>
 	<div class="col-md-12">
-		<form [formGroup]="form">
+		<form [formGroup]="form" *ngIf="model">
 			<div class="row">
 				<div class="col-sm-6 col-md-4 col-lg-3">
 					<select2 placeholder= "Clase de Arma"
-						name="clase"
+						name="clase_arma"
 						[(options)]="armaServ.claseArma.claseArma"
 						(valueChange)="claseChange($event)"
-						[group]="form">
+						[group]="form.controls.claseArma"
+						[(value)]="model.claseArma.clase_arma"
+						>
 				    </select2> 
 				</div>
 				<div  *ngIf="isArmaFuego || isArmaBlanca" class="col-sm-6 col-md-4 col-lg-3">

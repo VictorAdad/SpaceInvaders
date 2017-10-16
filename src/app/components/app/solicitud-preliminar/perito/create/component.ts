@@ -114,7 +114,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	public edit(_valid: any, _model: any): void {
 		console.log('-> AcuerdoGeneral@edit()', _model);
 		this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
-			console.log('-> Registro acutualizado', response);
+			console.log('-> Registro actualizado', response);
 			if (this.id) {
 				this.router.navigate(['/caso/' + this.casoId + '/perito']);
 			}
