@@ -67,7 +67,7 @@
         </div>
         <!-- Datos de identificacion -->
         <div class="row  justify-content-md-center align-items-center" *ngIf="muestraDatos();">
-          <identificacion [globals]="globals"  [options]="options" style="width: 95%"></identificacion>
+          <identificacion [globals]="globals"  [options]="options" style="width: 95%" [otrosNombres]="globals.otrosNombres" [alias]="globals.alias" [nombres]="globals.indexNombres"></identificacion>
         </div>
         <!-- Datos de localizacion -->
         <div class="row  justify-content-md-center align-items-center" *ngIf="muestraDatos();" >
@@ -83,7 +83,7 @@
         </div>
         <div class="row justify-content-end space">
             <div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" mdTooltipPosition="above">
-                <button md-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id != null">Editar</button>    
+                <button md-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id != null">Editar</button>{{id}}    
                 <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
             </div>
             <div class="col-sm-auto">
