@@ -11,37 +11,37 @@ export class Form {
 
 	constructor() {
 		this.form = new FormGroup({
-            'tipo': new FormControl( [Validators.required,]),
+            'tipo': new FormControl('', [Validators.required,]),
             'personaCaso': new FormGroup({
-                'id': new FormControl([Validators.required,]),
+                'id': new FormControl('', [Validators.required,]),
             }),
             'personaCasoRelacionada': new FormGroup({
-                'id': new FormControl([Validators.required,]),
+                'id': new FormControl('', [Validators.required,]),
             }),
             'caso': new FormGroup({
-                'id': new FormControl([Validators.required,]),
+                'id': new FormControl(),
             }),
             'id': new FormGroup({
-                'caso': new FormControl(1, [Validators.required,]),
-                'personaCaso': new FormControl(1, [Validators.required,]),
-                // 'detalleDelito': new FormControl(1, [Validators.required,]),
-                'personaCasoRelacionada': new FormControl(2, [Validators.required,]),
+                'caso': new FormControl(),
+                'personaCaso': new FormControl(),
+                'detalleDelito': new FormControl(),
+                'personaCasoRelacionada': new FormControl(),
             }),
             'detalleDelito': new FormGroup({
                 'modalidadDelito': new FormGroup({
-                    'id': new FormControl([Validators.required,]),
+                    'id': new FormControl(),
                 }),
                 'formaComision'            : new FormGroup({
-                    'id': new FormControl([Validators.required,]),
+                    'id': new FormControl(),
                 }),
                 'delitoCaso': new FormGroup({
-                    'id': new FormControl([Validators.required,]),
+                    'id': new FormControl(),
                 }),
                 'concursoDelito'           : new FormGroup({
-                    'id': new FormControl([Validators.required,]),
+                    'id': new FormControl(),
                 }),
                 'clasificacionDelitoOrden' : new FormGroup({
-                    'id': new FormControl([Validators.required,]),
+                    'id': new FormControl(),
                 }),
                 'caso': new FormGroup({
                     'id': new FormControl("",[]),
@@ -67,7 +67,7 @@ export class Form {
                 'violenciaGenero': new FormGroup({
                     'id': new FormControl("",[]),
                 }),
-                'violenciaGen': new FormControl(),
+                'tieneViolenciaGenero': new FormControl(),
                 'flagrancia': new FormControl(),
                 'hostigamientoAcoso': new FormArray([
                     // this.hostigamientoForm(),
