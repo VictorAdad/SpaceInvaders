@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@ang
 export class Form {
 
 	public form: FormGroup;
+    public trataPersonasForm: FormGroup;
     public hostigamiento: FormGroup;
     public trataPersonas: FormGroup;
     public efectoViolencia: FormGroup;
@@ -10,28 +11,37 @@ export class Form {
 
 	constructor() {
 		this.form = new FormGroup({
-            'tipo': new FormControl( [Validators.required,]),
+            'tipo': new FormControl('', [Validators.required,]),
             'personaCaso': new FormGroup({
-                'id': new FormControl([Validators.required,]),
+                'id': new FormControl('', [Validators.required,]),
             }),
             'personaCasoRelacionada': new FormGroup({
-                'id': new FormControl([Validators.required,]),
+                'id': new FormControl('', [Validators.required,]),
+            }),
+            'caso': new FormGroup({
+                'id': new FormControl(),
+            }),
+            'id': new FormGroup({
+                'caso': new FormControl(),
+                'personaCaso': new FormControl(),
+                'detalleDelito': new FormControl(),
+                'personaCasoRelacionada': new FormControl(),
             }),
             'detalleDelito': new FormGroup({
                 'modalidadDelito': new FormGroup({
-                    'id': new FormControl([Validators.required,]),
+                    'id': new FormControl(),
                 }),
                 'formaComision'            : new FormGroup({
-                    'id': new FormControl([Validators.required,]),
+                    'id': new FormControl(),
                 }),
                 'delitoCaso': new FormGroup({
-                    'id': new FormControl([Validators.required,]),
+                    'id': new FormControl(),
                 }),
                 'concursoDelito'           : new FormGroup({
-                    'id': new FormControl([Validators.required,]),
+                    'id': new FormControl(),
                 }),
                 'clasificacionDelitoOrden' : new FormGroup({
-                    'id': new FormControl([Validators.required,]),
+                    'id': new FormControl(),
                 }),
                 'caso': new FormGroup({
                     'id': new FormControl("",[]),
@@ -57,16 +67,16 @@ export class Form {
                 'violenciaGenero': new FormGroup({
                     'id': new FormControl("",[]),
                 }),
-                'violenciaGen': new FormControl(),
+                'tieneViolenciaGenero': new FormControl(),
                 'flagrancia': new FormControl(),
                 'hostigamientoAcoso': new FormArray([
-                    this.hostigamientoForm(),
+                    // this.hostigamientoForm(),
                 ]),
-                'trataPersonas': new FormArray([
-                    this.trataPersonasForm(),
+                'trataPersona': new FormArray([
+                    // this.getTrataPersonasForm(),
                 ]),
                 'efectoViolencia': new FormArray([
-                    // this.efectoViolenciaForm(),
+                    // this.efectoViolenciaForm(1),
                 ])
             }),
           // 'lugar'                    : new FormControl(this.model.lugar,[Validators.required,]),
@@ -81,12 +91,13 @@ export class Form {
           // 'ordenProteccion'           :new FormControl(this.model.ordenProteccion),
 
         });
-        this.hostigamiento = this.hostigamientoForm();
-        this.trataPersonas = this.trataPersonasForm();
-        // this.efectoViolencia = this.efectoViolenciaForm();
+        this.trataPersonasForm = this.getTrataPersonasForm();
+        this.hostigamiento = this.hostForm();
+        this.trataPersonas = this.trataForm();
         this.efectoDetalle = this.efectoDetalleForm();
 	}
 
+    //Formulario de DetalleDelito
 	public hostigamientoForm(){
         return new FormGroup({
             'modalidadAmbito': new FormGroup({
@@ -101,7 +112,7 @@ export class Form {
         });
     }
 
-    public trataPersonasForm(){
+    public getTrataPersonasForm(){
         return new FormGroup({
             'paisOrigen': new FormGroup({
                 'id': new FormControl([Validators.required,]),
@@ -141,11 +152,35 @@ export class Form {
         });
     }
 
+    //Formularios Individuales
     public efectoDetalleForm(){
         return new FormGroup({
             'id': new FormControl(),
             'efecto': new FormControl(),
             'detalle': new FormControl(),
+        });
+    }
+
+    public trataForm(){
+        return new FormGroup({
+            'paisOrigen': new FormControl(),
+            'estadoOrigen': new FormControl(),
+            'municipioOrigen': new FormControl(),
+            'paisDestino': new FormControl(),
+            'estadoDestino': new FormControl(),
+            'municipioDestino': new FormControl(),
+            'tipo': new FormControl(),
+            'transportacion': new FormControl(),
+        });
+    }
+
+    public hostForm(){
+        return new FormGroup({
+            'modalidad': new FormControl(),
+            'ambito': new FormControl(),
+            'conducta': new FormControl(),
+            'detalleConducta': new FormControl(),
+            'testigo': new FormControl(),
         });
     }
 }

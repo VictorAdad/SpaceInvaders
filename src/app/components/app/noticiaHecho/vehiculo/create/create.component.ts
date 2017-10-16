@@ -52,29 +52,29 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         this.form = new FormGroup({
             'motivoRegistro'        : new FormControl("", [Validators.required,]),
             'campoVehiculo'         : new FormControl("", [Validators.required,]),
-            'nTarjeta'             : new FormControl("", [Validators.required,]),
-            'nEconomico'           : new FormControl("", [Validators.required,]),
+            'tarjetaCirculacion'    : new FormControl("", [Validators.required,]),
+            'economico'           : new FormControl("", [Validators.required,]),
             'clase'                 : new FormControl("", [Validators.required,]),
             'marca'                 : new FormControl("", [Validators.required,]),
             'submarca'              : new FormControl("", [Validators.required,]),
             'color'                 : new FormControl("", [Validators.required,]),
             'modelo'                : new FormControl("", [Validators.required,]),
             'placas'                : new FormControl("", [Validators.required,]),
-            'placasAdicionales'    : new FormControl("", [Validators.required,]),
-            'rfv'                   : new FormControl("", [Validators.required,]),
+            'placasAdicionales'     : new FormControl("", [Validators.required,]),
+            'registroFederal'       : new FormControl("", [Validators.required,]),
             'serie'                 : new FormControl("", [Validators.required,]),
             'motor'                 : new FormControl("", [Validators.required,]),
             'aseguradora'           : new FormControl("", [Validators.required,]),
             'factura'               : new FormControl("", [Validators.required,]),
-            'datosTomadosDe'      : new FormControl("", [Validators.required,]),
-            'nPoliza'              : new FormControl("", [Validators.required,]),
-            'valorEstimado'        : new FormControl("", [Validators.required,]),
+            'datosTomados'          : new FormControl("", [Validators.required,]),
+            'poliza'                : new FormControl("", [Validators.required,]),
+            'valorEstimado'         : new FormControl("", [Validators.required,]),
             'tipoUso'               : new FormControl("", []),
             'procedencia'           : new FormControl("", [Validators.required,]),
-            'pedimentoDeImportacion': new FormControl("", [Validators.required,]),
-            'llevaCarga'           : new FormControl("", [Validators.required,]),
+            'pedimentoImportacion'  : new FormControl("", [Validators.required,]),
+            'llevaCarga'            : new FormControl("", [Validators.required,]),
             'alterado'              : new FormControl("", [Validators.required,]),
-            'señasParticulares'    : new FormControl("", [Validators.required,]),
+            'senasParticulares'     : new FormControl("", [Validators.required,]),
             'notas'                 : new FormControl("", []),
 
             'marcaSubmarca'         : new FormGroup({
@@ -89,7 +89,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             'caso'                  : new  FormGroup({
                 'id'    : new FormControl("",[])
             }),
-            'estadoOrigenPlacas'  : new FormGroup({
+            'estadoOrigen'  : new FormGroup({
                 'id'    : new FormControl("",[]),
             }), 
             'motivoColorClase'       : new FormGroup({
@@ -98,7 +98,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
 
         });
 
-        this.form.controls.pedimentoDeImportacion.disable();
+        this.form.controls.pedimentoImportacion.disable();
 
         this.route.params.subscribe(params => {
             if(params['casoId']){
@@ -130,7 +130,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     public change(option){
         if (option == "cdmx") {
             this.isProcedenciaExtranjera = true;
-            this.form.controls.pedimentoDeImportacion.enable();
+            this.form.controls.pedimentoImportacion.enable();
         }else{
             this.isProcedenciaExtranjera = false;
         }
