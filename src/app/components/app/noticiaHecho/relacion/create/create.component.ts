@@ -225,6 +225,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             _model.tipoRelacionPersona.id.personaCaso = _model.tipoRelacionPersona.personaCaso.id;
             _model.tipoRelacionPersona.id.personaCasoRelacionada = _model.tipoRelacionPersona.personaCasoRelacionada.id;
             _model.tipoRelacionPersona.caso.id = this.casoId;
+            _model.tieneViolenciaGenero = this.isViolenciaGenero;
             console.log('-> Model', _model);
             // ((this.model["detalleDelito"])["desaparicionConsumada"])["id"]=this.desaparicionConsumada["id"];
             // this.model.detalleDelito.desaparicionConsumada.id=1;
