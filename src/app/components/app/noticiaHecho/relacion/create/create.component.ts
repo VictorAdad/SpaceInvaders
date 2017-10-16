@@ -120,11 +120,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
         this.form  = this.formRelacion.form;
 
-      this.generalForm = this._fbuilder.group({
-        // itemRows: this._fbuilder.array([this.relacionForm,this.efectoViolenciaForm,this.trataPersonasForm,this.hostigamientForm])
-      });
-
-      this.route.params.subscribe(params => {
+        this.route.params.subscribe(params => {
             if(params['casoId']){
                 this.casoId = params['casoId'];
                 this.optionsNoticia.setId(this.casoId);
@@ -153,41 +149,41 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         });
 
 
-      if(this.onLine.onLine){
-        this.http.get('/v1/base/personas-casos/casos/'+this.casoId+'/page').subscribe((response) => {
-            response.data.forEach(object => {
-                //victima u ofendido
-                let persona=object["persona"];
-                let tipoInterviniente=object["tipoInterviniente"];
-                if (tipoInterviniente["id"] == 8 ||  tipoInterviniente["id"] == 9){
-                  this.victimasOptions.push({value: object.id,label:persona["nombre"]+" "+persona["paterno"]+" "+persona["materno"]});
-                }
-                //defensor publico o defensor privado
-                if (tipoInterviniente["id"] == 2 ||  tipoInterviniente["id"] == 10){
-                  this.defensoresOptions.push({value: object.id,label:persona["nombre"]+" "+persona["paterno"]+" "+persona["materno"]});
-                }
-                //Asesor juridico publico o Asesor juridico privado
-                if (tipoInterviniente["id"] == 4 ||  tipoInterviniente["id"] == 7){
-                  this.asesorOptions.push({value: object.id,label:persona["nombre"]+" "+persona["paterno"]+" "+persona["materno"]});
-                }
-                //defensor publico o defensor privado
-                if (tipoInterviniente["id"] == 5){
-                  this.imputadoOptions.push({value: object.id,label:persona["nombre"]+" "+persona["paterno"]+" "+persona["materno"]});
-                }
-                //testigo
-                if (tipoInterviniente["id"] == 6){
-                  this.testigoOptions.push({value: object.id,label:persona["nombre"]+" "+persona["paterno"]+" "+persona["materno"]});
-                }
-            });
+        if(this.onLine.onLine){
+            this.http.get('/v1/base/personas-casos/casos/'+this.casoId+'/page').subscribe((response) => {
+                response.data.forEach(object => {
+                    //victima u ofendido
+                    let persona=object["persona"];
+                    let tipoInterviniente=object["tipoInterviniente"];
+                    if (tipoInterviniente["id"] == 8 ||  tipoInterviniente["id"] == 9){
+                      this.victimasOptions.push({value: object.id,label:persona["nombre"]+" "+persona["paterno"]+" "+persona["materno"]});
+                    }
+                    //defensor publico o defensor privado
+                    if (tipoInterviniente["id"] == 2 ||  tipoInterviniente["id"] == 10){
+                      this.defensoresOptions.push({value: object.id,label:persona["nombre"]+" "+persona["paterno"]+" "+persona["materno"]});
+                    }
+                    //Asesor juridico publico o Asesor juridico privado
+                    if (tipoInterviniente["id"] == 4 ||  tipoInterviniente["id"] == 7){
+                      this.asesorOptions.push({value: object.id,label:persona["nombre"]+" "+persona["paterno"]+" "+persona["materno"]});
+                    }
+                    //defensor publico o defensor privado
+                    if (tipoInterviniente["id"] == 5){
+                      this.imputadoOptions.push({value: object.id,label:persona["nombre"]+" "+persona["paterno"]+" "+persona["materno"]});
+                    }
+                    //testigo
+                    if (tipoInterviniente["id"] == 6){
+                      this.testigoOptions.push({value: object.id,label:persona["nombre"]+" "+persona["paterno"]+" "+persona["materno"]});
+                    }
+                });
 
-            console.log(this);
-        });
-      }
+            });
+        }
+        this.initForm();
     }
 
     addEfectoDetalle(_val: any){
         this.colections.add('efectoDetalle', 'subjectEfectoDetalle', _val);
-        let form = this.form.get('detalleDelito').get('efectoViolencia') as FormArray;
+        let form = this.form.get('efectoViolencia') as FormArray;
         form.push(
             this.formRelacion.efectoViolenciaForm(this.optionsRelacion.matrizEfectoDetalle.finded[0].id)
         );
@@ -195,53 +191,40 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
     addTrataPersonas(_val: any){
         this.colections.add('trataPersonas', 'subjectTrataPersonas', _val);
-        let form = this.form.get('detalleDelito').get('trataPersonas') as FormArray;
+        let form = this.form.get('trataPersona') as FormArray;
         form.push(this.formRelacion.trataPersonasForm); 
     } 
 
     addHostigamiento(_val: any){
         this.colections.add('hostigamiento', 'subjectHostigamiento', _val);
-        let form = this.form.get('detalleDelito').get('hostigamiento') as FormArray;
+        let form = this.form.get('hostigamientoAcoso') as FormArray;
         form.push(
-            this.formRelacion.efectoViolenciaForm(this.optionsRelacion.matrizEfectoDetalle.finded[0].id)
+            this.formRelacion.setHostigamientoForm(
+                this.optionsRelacion.matrizModalidadAmbito.finded[0].id,
+                this.optionsRelacion.matrizConductaDetalle.finded[0].id,
+                _val.testigo
+            )
         );
     } 
 
-    saveTrataPersona(val){
-        // val["tipoTransportacion"]=this.tipoTransportacionSeleccionado;
-        // console.log("->",val);
-        // this.trataPersonasArr.push(val);
-        // this.trataDataSource = new ExampleDataSource(this.trataPersonasArr);
-        // this.tipoTransportacionSeleccionado=null;
-        // this.trataPersonasForm.patchValue({paisOrigen:""});
-        // this.trataPersonasForm.patchValue({paisDestino:""});
-        // this.trataPersonasForm.patchValue({estadoDestino:""});
-        // this.trataPersonasForm.patchValue({estadoDestino:""});
-        // this.trataPersonasForm.patchValue({municipioDestino:""});
-        // this.trataPersonasForm.patchValue({municipioDestino:""});
-        // this.trataPersonasForm.patchValue({tipo:""});
-        // this.trataPersonasForm.patchValue({transportacion:""});
-        // this.arrMunicipiosDestino=[];
-        // this.arrMunicipiosOrigen=[];
-        // this.arrEstadosOrigen=[];
-        // this.arrEstadosDestino=[];
-    }
+    // saveHostigamiento(val){
+    //     console.log("->",val);
+    //     var dat=val;
+    //     this.db.searchInCatalogo("modalidad_ambito",{modalidad:val["modalidad"],ambito:val["ambito"]}).then(e=>{
+    //         this.db.searchInCatalogo("conducta_detalle",{conducta:val["conducta"],detalle:val["detalle"]}).then(y=>{
+    //             this.hostigamientoData.push({modalidad_ambito:e,conducta_detalle:y, testigo:val["testigo"]});
+    //             this.hostigamientoDataSource = new ExampleDataSource(this.hostigamientoData);
 
-    saveHostigamiento(val){
-        console.log("->",val);
-        var dat=val;
-        this.db.searchInCatalogo("modalidad_ambito",{modalidad:val["modalidad"],ambito:val["ambito"]}).then(e=>{
-            this.db.searchInCatalogo("conducta_detalle",{conducta:val["conducta"],detalle:val["detalle"]}).then(y=>{
-                this.hostigamientoData.push({modalidad_ambito:e,conducta_detalle:y, testigo:val["testigo"]});
-                this.hostigamientoDataSource = new ExampleDataSource(this.hostigamientoData);
-
-            });
-        });
-    }
+    //         });
+    //     });
+    // }
 
     save(_valid : any, _model : any):void{
         if(this.onLine.onLine){
-            _model.caso.id = this.casoId;
+            _model.tipoRelacionPersona.id.caso = this.casoId;
+            _model.tipoRelacionPersona.id.personaCaso = _model.tipoRelacionPersona.personaCaso.id;
+            _model.tipoRelacionPersona.id.personaCasoRelacionada = _model.tipoRelacionPersona.personaCasoRelacionada.id;
+            _model.tipoRelacionPersona.caso.id = this.casoId;
             console.log('-> Model', _model);
             // ((this.model["detalleDelito"])["desaparicionConsumada"])["id"]=this.desaparicionConsumada["id"];
             // this.model.detalleDelito.desaparicionConsumada.id=1;
@@ -312,24 +295,20 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         this.form.patchValue(_data);
     }
 
-    activaCamposImputado(opt){
-        if (opt){
-        // this.form.controls.modalidad.enable();
-        // this.form.controls.delito.enable();
-        // this.form.controls.formaComision.enable();
-        // this.form.controls.lugar.enable();
-        // this.form.controls.elementosComision.enable();
-        // this.form.controls.formaAccion.enable();
-        // this.form.controls.detalleDelito.enable();
-        }else{
-        // this.form.controls.modalidad.disable();
-        // this.form.controls.delito.disable();
-        // this.form.controls.formaComision.disable();
-        // this.form.controls.lugar.disable();
-        // this.form.controls.elementosComision.disable();
-        // this.form.controls.formaAccion.disable();
-        // this.form.controls.detalleDelito.disable();
-        }
+    public initForm(){
+        this.form.get('delitoCaso.id').disable();
+        this.form.get('elementoComision.id').disable();
+        this.form.get('formaAccion.id').disable();
+        this.form.get('formaComision.id').disable();
+        this.form.get('modalidadDelito.id').disable();
+    }
+
+    public activaCamposImputado(){
+        this.form.get('delitoCaso.id').enable();
+        this.form.get('elementoComision.id').enable();
+        this.form.get('formaAccion.id').enable();
+        this.form.get('formaComision.id').enable();
+        this.form.get('modalidadDelito.id').enable();
     }
 
     changeTipoRelacion(option){
@@ -338,27 +317,27 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
       switch(option){
         case 'Defensor':{
           this.isDefensorImputado = true;
-          this.activaCamposImputado(false);
+          this.initForm();
           break;
         }
         case 'Imputado':{
           this.isImputadoVictimaDelito = true;
-          this.activaCamposImputado(true);
+          this.activaCamposImputado();
           break;
         }
         case 'Asesor':{
           this.isAsesorJuridicoVictima = true;
-          this.activaCamposImputado(false);
+          this.initForm();
           break;
         }
         case 'Representante':{
           this.isRepresentanteVictima = true;
-          this.activaCamposImputado(false);
+          this.initForm();
           break;
         }
         case 'Tutor':{
           this.isTutorVictima = true;
-          this.activaCamposImputado(false);
+          this.initForm();
           break;
         }
       }

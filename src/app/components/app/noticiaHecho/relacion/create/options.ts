@@ -47,11 +47,11 @@ export class Options {
         this.getOptions('formaConducta', '/v1/catalogos/relacion/forma-conducta/options');
         this.matrizTipoTransportacion=new MatrizTipoTransportacion(this.db);
         this.matrizConductaDetalle=new MatrizConductaDetalle(this.db);
-        console.log("conductadetalle",this.matrizConductaDetalle);
         this.matrizEfectoDetalle=new MatrizEfectoDetalle(this.db);
         this.matrizViolenciaGenero=new MatrizViolenciaGenero(this.db);
         this.matrizModalidadAmbito=new MatrizModalidadAmbito(this.db);
         this.matrizDesaparicionConsumacion=new MatrizDesaparicionConsumacion(this.db);
+
     }
 
     public getOptions(_attr: string, _url: string){

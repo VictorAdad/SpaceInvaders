@@ -11,84 +11,74 @@ export class Form {
 
 	constructor() {
 		this.form = new FormGroup({
-            'tipo': new FormControl('', [Validators.required,]),
-            'personaCaso': new FormGroup({
-                'id': new FormControl('', [Validators.required,]),
-            }),
-            'personaCasoRelacionada': new FormGroup({
-                'id': new FormControl('', [Validators.required,]),
-            }),
+            'flagrancia': new FormControl(),
+            'tieneViolenciaGenero': new FormControl(),
             'caso': new FormGroup({
+                'id': new FormControl("",[]),
+            }),
+            'clasificacionDelito'      : new FormGroup({
+                'id': new FormControl("",[]),
+            }),
+            'clasificacionDelitoOrden' : new FormGroup({
                 'id': new FormControl(),
             }),
-            'id': new FormGroup({
-                'caso': new FormControl(),
-                'personaCaso': new FormControl(),
-                'detalleDelito': new FormControl(),
-                'personaCasoRelacionada': new FormControl(),
+            'concursoDelito'           : new FormGroup({
+                'id': new FormControl(),
             }),
-            'detalleDelito': new FormGroup({
-                'modalidadDelito': new FormGroup({
-                    'id': new FormControl(),
+            'delitoCaso': new FormGroup({
+                'id': new FormControl('', [Validators.required]),
+            }),
+            'desaparicionConsumada': new FormGroup({
+                'id': new FormControl("",[]),
+            }),
+            'elementoComision'        : new FormGroup({
+                'id': new FormControl('',[/*Validators.required*/]),
+            }),
+            'formaAccion'              : new FormGroup({
+                'id': new FormControl('', [Validators.required]),
+            }),
+            'formaComision': new FormGroup({
+                'id': new FormControl('', [Validators.required]),
+            }),
+            'formaConducta': new FormGroup({
+                'id': new FormControl("",[]),
+            }),
+            'gradoParticipacion': new FormGroup({
+                'id': new FormControl("",[]),
+            }),
+            'modalidadDelito': new FormGroup({
+                'id': new FormControl('', [Validators.required]),
+            }),  
+            'violenciaGenero': new FormGroup({
+                'id': new FormControl("",[]),
+            }),
+            'hostigamientoAcoso': new FormArray([
+                // this.hostigamientoForm(),
+            ]),
+            'trataPersona': new FormArray([
+                // this.getTrataPersonasForm(),
+            ]),
+            'efectoViolencia': new FormArray([
+                // this.efectoViolenciaForm(1),
+            ]),
+            'tipoRelacionPersona': new FormGroup({
+                'tipo': new FormControl('', [Validators.required,]),
+                'personaCaso': new FormGroup({
+                    'id': new FormControl('', [Validators.required,]),
                 }),
-                'formaComision'            : new FormGroup({
-                    'id': new FormControl(),
-                }),
-                'delitoCaso': new FormGroup({
-                    'id': new FormControl(),
-                }),
-                'concursoDelito'           : new FormGroup({
-                    'id': new FormControl(),
-                }),
-                'clasificacionDelitoOrden' : new FormGroup({
-                    'id': new FormControl(),
+                'personaCasoRelacionada': new FormGroup({
+                    'id': new FormControl('', [Validators.required,]),
                 }),
                 'caso': new FormGroup({
-                    'id': new FormControl("",[]),
+                    'id': new FormControl(),
                 }),
-                'elementosComision'        : new FormGroup({
-                    'id': new FormControl("",[]),
+                'id': new FormGroup({
+                    'caso': new FormControl(),
+                    'personaCaso': new FormControl(),
+                    'detalleDelito': new FormControl(),
+                    'personaCasoRelacionada': new FormControl(),
                 }),
-                'clasificacionDelito'      : new FormGroup({
-                    'id': new FormControl("",[]),
-                }),
-                'formaAccion'              : new FormGroup({
-                    'id': new FormControl("",[]),
-                }),
-                'desaparicionConsumada': new FormGroup({
-                    'id': new FormControl("",[]),
-                }),
-                'gradoParticipacion': new FormGroup({
-                    'id': new FormControl("",[]),
-                }),
-                'formaConducta': new FormGroup({
-                    'id': new FormControl("",[]),
-                }),
-                'violenciaGenero': new FormGroup({
-                    'id': new FormControl("",[]),
-                }),
-                'tieneViolenciaGenero': new FormControl(),
-                'flagrancia': new FormControl(),
-                'hostigamientoAcoso': new FormArray([
-                    // this.hostigamientoForm(),
-                ]),
-                'trataPersona': new FormArray([
-                    // this.getTrataPersonasForm(),
-                ]),
-                'efectoViolencia': new FormArray([
-                    // this.efectoViolenciaForm(1),
-                ])
-            }),
-          // 'lugar'                    : new FormControl(this.model.lugar,[Validators.required,]),
-          // 'consumacion'            : new FormControl(this.model.consultorDelito),
-          // 'tipoDesaparicion'       : new FormControl(this.model.relacionAcusadoOfendido),
-          // 'relacionAcusadoOfendido': new FormControl(this.model.tipoDesaparicion),
-          // 'tipoViolenciaGenero'      : new FormControl(this.model.tipoViolenciaGenero),
-          // 'victimaDelincuenciaOrganizada': new FormControl(this.model.victimaDelincuenciaOrganizada),
-          // 'victimaViolenciaGenero'    : new FormControl(this.model.victimaViolenciaGenero),
-          // 'victimaTrata'              :new FormControl(this.model.victimaTrata),
-          // 'victimaAcoso'              :new FormControl(this.model.victimaAcoso),
-          // 'ordenProteccion'           :new FormControl(this.model.ordenProteccion),
+            })
 
         });
         this.trataPersonasForm = this.getTrataPersonasForm();
@@ -98,16 +88,16 @@ export class Form {
 	}
 
     //Formulario de DetalleDelito
-	public hostigamientoForm(){
+	public setHostigamientoForm(_modalidadAmbito, _conductaDetalle, _testigo){
         return new FormGroup({
             'modalidadAmbito': new FormGroup({
-                'id': new FormControl(),
+                'id': new FormControl(_modalidadAmbito),
             }),
             'conductaDetalle': new FormGroup({
-                'id': new FormControl(),
+                'id': new FormControl(_conductaDetalle),
             }),
             'testigo': new FormGroup({
-                'id': new FormControl(),
+                'id': new FormControl(_testigo),
             }),
         });
     }
@@ -176,11 +166,11 @@ export class Form {
 
     public hostForm(){
         return new FormGroup({
-            'modalidad': new FormControl(),
-            'ambito': new FormControl(),
-            'conducta': new FormControl(),
-            'detalleConducta': new FormControl(),
-            'testigo': new FormControl(),
+            'modalidad': new FormControl('', [Validators.required]),
+            'ambito': new FormControl('', [Validators.required]),
+            'conducta': new FormControl('', [Validators.required]),
+            'detalle': new FormControl('', [Validators.required]),
+            'testigo': new FormControl('', [Validators.required]),
         });
     }
 }
