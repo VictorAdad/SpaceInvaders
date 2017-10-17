@@ -14,6 +14,9 @@ export class MatrizGlobal {
     public getMatriz(){
         this.superDb.get("catalogos",this.catalogo).then(response=>{
             this.objects = response["arreglo"];
+            if ((response["arreglo"])["data"]){
+                this.objects = (response["arreglo"])["data"];
+            }
             for(let attr in this){
                 if(
                     String(attr) !== 'selected'
@@ -24,7 +27,7 @@ export class MatrizGlobal {
                     && String(attr) !== 'constructor'
                     && String(attr) !== 'find'
                     && String(attr) !== 'validate'){
-                    this[String(attr)] = this.getUniques(response["arreglo"], attr);
+                    this[String(attr)] = this.getUniques(this.objects, attr);
                 }
             }
         });
@@ -54,7 +57,10 @@ export class MatrizGlobal {
     }
 
     public find(_e, _tipo:string){
-        this.selected[_tipo] = _e;
+        if (typeof _e!=="undefined")
+            this.selected[_tipo] = _e;
+        else
+            this.selected[_tipo] = null;
         this.finded = this.objects.filter(object => {
             return this.validate(object, this.selected);
         });
