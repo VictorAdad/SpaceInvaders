@@ -190,6 +190,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     } 
 
     addTrataPersonas(_val: any){
+        _val.tipoTransportacion.id = this.optionsRelacion.matrizTipoTransportacion.finded[0].id;
         this.colections.add('trataPersonas', 'subjectTrataPersonas', _val);
         let form = this.form.get('trataPersona') as FormArray;
         form.push(this.formRelacion.trataPersonasForm); 
@@ -226,9 +227,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             _model.tipoRelacionPersona.id.personaCasoRelacionada = _model.tipoRelacionPersona.personaCasoRelacionada.id;
             _model.tipoRelacionPersona.caso.id = this.casoId;
             _model.tieneViolenciaGenero = this.isViolenciaGenero;
+            _model.violenciaGenero.id = this.optionsRelacion.matrizViolenciaGenero.finded[0].id;
             console.log('-> Model', _model);
-            // ((this.model["detalleDelito"])["desaparicionConsumada"])["id"]=this.desaparicionConsumada["id"];
-            // this.model.detalleDelito.desaparicionConsumada.id=1;
             this.http.post('/v1/base/tipo-relacion-persona', _model).subscribe(
                 (response) => //this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
                 (error) => console.error('Error', error)

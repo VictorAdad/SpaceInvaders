@@ -105,25 +105,25 @@ export class Form {
     public getTrataPersonasForm(){
         return new FormGroup({
             'paisOrigen': new FormGroup({
-                'id': new FormControl([Validators.required,]),
+                'id': new FormControl('', []),
              }),
             'estadoOrigen': new FormGroup({
-                'id': new FormControl([Validators.required,]),
+                'id': new FormControl('', []),
              }),
             'municipioOrigen': new FormGroup({
-                'id': new FormControl([Validators.required,]),
+                'id': new FormControl('', []),
              }),
             'paisDestino': new FormGroup({
-                'id': new FormControl([Validators.required,]),
+                'id': new FormControl('', []),
              }),
             'estadoDestino': new FormGroup({
-                'id': new FormControl([Validators.required,]),
+                'id': new FormControl('', []),
              }),
             'municipioDestino': new FormGroup({
-                'id': new FormControl([Validators.required,]),
+                'id': new FormControl('', []),
              }),
             'tipoTransportacion': new FormGroup({
-                'id': new FormControl([Validators.required,]),
+                'id': new FormControl('', []),
              }),
             'paisOrigenOtro': new FormControl(),
             'estadoOrigenOtro': new FormControl(),
