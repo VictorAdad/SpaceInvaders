@@ -343,7 +343,9 @@ export class CIndexedDB {
         var promesa = new Promise( 
             function(resolve,reject){
                 obj.get("catalogos",_catalogo).then(lista=>{
-                    let arreglo=lista["arreglo"] as any[];
+                    var arreglo=lista["arreglo"] as any[];
+                    if ((lista["arreglo"])["data"])
+                        arreglo = (lista["arreglo"])["data"] as any[];
                     let igual;
                     for (var i = 0; i<arreglo.length; i++) {
                         igual=true;
