@@ -150,7 +150,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         _model.caso.id             = this.casoId;
         _model.claseArma.id        = this.armaServ.claseArma.finded[0].id
         if(this.isArmaFuego){
-            let a=_model.calibreMecanismo.id 
+            _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id
         }
 
         console.log('-> Arma@edit()', _model);
