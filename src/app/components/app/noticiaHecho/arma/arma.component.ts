@@ -31,6 +31,7 @@ export class ArmaComponent{
                 this.casoId = +params['id'];
                 if(this.onLine.onLine){
                     this.page('/v1/base/armas/casos/'+this.casoId+'/page');
+
                 }else{
                     this.db.get("casos",this.casoId).then(caso=>{
                         if (caso){
@@ -47,6 +48,7 @@ export class ArmaComponent{
     public changePage(_e){
         if(this.onLine.onLine){
             this.page('/v1/base/casos/'+this.casoId+'/armas?p='+_e.pageIndex+'&tr='+_e.pageSize);
+            
         }
     }  
 
@@ -54,6 +56,8 @@ export class ArmaComponent{
         this.http.get(url).subscribe((response) => {
             this.pag = response.totalCount;
             this.data = response.data as Arma[];
+            console.log("Loading armas..");
+            console.log(this.data);
             this.dataSource = new TableService(this.paginator, this.data);
         });
     }
