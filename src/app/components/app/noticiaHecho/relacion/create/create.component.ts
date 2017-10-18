@@ -244,6 +244,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
     public edit(_valid : any, _model : any):void{
         console.log('-> Relacion@edit()', _model);
+        if(_model.tieneViolenciaGenero)
+            _model.violenciaGenero.id = this.optionsRelacion.matrizViolenciaGenero.finded[0].id;
         if(this.onLine.onLine){
             this.http.put('/v1/base/detalle-delitos/'+_model.id, _model).subscribe((response) => {
                 console.log('-> Registro acutualizado', response);
