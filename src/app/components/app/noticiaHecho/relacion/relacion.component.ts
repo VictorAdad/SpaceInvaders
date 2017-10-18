@@ -14,7 +14,7 @@ import { NoticiaHechoService } from '@services/noticia-hecho.service';
 })
 
 export class RelacionComponent{
-  
+
     public casoId: number   = null;
 	public displayedColumns = ['Tipo', 'Elementos'];
 	public relaciones:Relacion[]  = [];
@@ -36,7 +36,7 @@ export class RelacionComponent{
             if(params['id']){
                 this.casoId = +params['id'];
                 if(this.onLine.onLine){
-                    this.http.get('/v1/base/relaciones/casos/'+this.casoId+'/page').subscribe((response) => {
+                    this.http.get('/v1/base/tipo-relacion-persona/casos/'+this.casoId+'/page').subscribe((response) => {
                         this.pag = response.totalCount;
                         this.relaciones = response.data as Relacion[];
                         this.dataSource = new TableService(this.paginator, this.relaciones);

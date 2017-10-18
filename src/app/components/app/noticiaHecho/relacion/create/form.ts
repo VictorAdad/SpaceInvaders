@@ -72,12 +72,12 @@ export class Form {
                 'caso': new FormGroup({
                     'id': new FormControl(),
                 }),
-                'id': new FormGroup({
-                    'caso': new FormControl(),
-                    'personaCaso': new FormControl(),
-                    'detalleDelito': new FormControl(),
-                    'personaCasoRelacionada': new FormControl(),
-                }),
+                // 'id': new FormGroup({
+                //     'caso': new FormControl(),
+                //     'personaCaso': new FormControl(),
+                //     'detalleDelito': new FormControl(),
+                //     'personaCasoRelacionada': new FormControl(),
+                // }),
             })
 
         });

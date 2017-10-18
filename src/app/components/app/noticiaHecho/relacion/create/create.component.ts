@@ -131,7 +131,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             if(params['id']){
                 this.id = +params['id'];
                 if(this.onLine.onLine){
-                  this.http.get('/v1/base/relaciones/'+this.id).subscribe(response =>{
+                  this.http.get('/v1/base/tipo-relacion-persona/'+this.id).subscribe(response =>{
                       this.fillForm(response);
                   });
                 }else{
@@ -221,9 +221,9 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
     save(_valid : any, _model : any):void{
         if(this.onLine.onLine){
-            _model.tipoRelacionPersona.id.caso = this.casoId;
-            _model.tipoRelacionPersona.id.personaCaso = _model.tipoRelacionPersona.personaCaso.id;
-            _model.tipoRelacionPersona.id.personaCasoRelacionada = _model.tipoRelacionPersona.personaCasoRelacionada.id;
+            // _model.tipoRelacionPersona.id.caso = this.casoId;
+            // _model.tipoRelacionPersona.id.personaCaso = _model.tipoRelacionPersona.personaCaso.id;
+            // _model.tipoRelacionPersona.id.personaCasoRelacionada = _model.tipoRelacionPersona.personaCasoRelacionada.id;
             _model.tipoRelacionPersona.caso.id = this.casoId;
             _model.tieneViolenciaGenero = this.isViolenciaGenero;
             console.log('-> Model', _model);
@@ -293,7 +293,22 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     }
 
     public fillForm(_data){
-        this.form.patchValue(_data);
+        this.form.patchValue({
+            tipoRelacionPersona: {
+                tipo: _data.tipo,
+            }
+        });
+        let timer = Observable.timer(7000,1000*60*60);
+        timer.subscribe(t=>{
+            console.log('fill');
+            for (var propName in _data.detalleDelito) {
+            if (_data.detalleDelito[propName] === null || _data.detalleDelito[propName] === undefined) {
+              delete _data.detalleDelito[propName];
+            }
+          }
+            this.form.patchValue(_data.detalleDelito);
+        });
+        // this.form.patchValue(_data);
     }
 
     public initForm(){
