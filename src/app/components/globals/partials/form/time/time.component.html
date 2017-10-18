@@ -1,0 +1,16 @@
+<div class="form-group">
+	<md-form-field [formGroup]="group" class="full-width">
+			<md-icon mdPrefix *ngIf="prefixIcon">{{ prefixIcon }}</md-icon>
+			<span *ngIf="prefix" mdPrefix>{{ prefix }}&nbsp;</span>
+			<input mdInput 
+				placeholder="{{label}}" 
+				[(ngModel)]="value" 
+				(ngModelChange)="update($event)" 
+				name="{{name}}"
+				type="time"
+				formControlName="{{name}}"  >
+			<md-icon mdSuffix *ngIf="sufix">{{ sufix }}</md-icon>
+			<md-hint align="start" *ngIf="hintStart">{{hintStart}} </md-hint>
+		    <md-hint align="end" *ngIf="hintEnd">{{hintEnd}}</md-hint>
+	</md-form-field> 
+</div>
