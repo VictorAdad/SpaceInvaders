@@ -20,7 +20,6 @@
 						[(options)]="armaServ.claseArma.claseArma"
 						(valueChange)="claseChange($event)"
 						[group]="form"
-						[(value)]="model.claseArma.clase_arma"
 						>
 				    </select2> 
 				</div>
@@ -30,7 +29,6 @@
 						[(options)]="armaServ.claseArma.tipo"
 						(valueChange)="armaServ.claseArma.find($event, 'tipo')"
 						[group]="form"
-						[(value)]="model.claseArma.tipo"
 						>
 					</select2> 
 				</div>
@@ -42,7 +40,6 @@
 		 				[(options)]="armaServ.claseArma.subtipo"
 		 				(valueChange)="armaServ.claseArma.find($event, 'subtipo')"
 						 [group]="form"
-						 [(value)]="model.claseArma.subtipo"						 
 						 >
 		 			</select2> 
 				</div>
@@ -52,31 +49,29 @@
 				 		[(options)]="armaServ.calibreMecanismo.calibre"
 				 		(valueChange)="armaServ.calibreMecanismo.find($event, 'calibre')"
 						 [group]="form"
-						 [(value)]="model.calibreMecanismo.calibre"						 
 						 >	
 				    </select2> 
 				</div>
 				<div class="col-sm-6 col-md-4 col-lg-3">
 					<select2 placeholder= "Mecanismo de acción"
-						name="mecanismoAccion"
+						name="mecanismo"
 						[(options)]="armaServ.calibreMecanismo.mecanismo"
 						(valueChange)="armaServ.calibreMecanismo.find($event, 'mecanismo')"
 						[group]="form"
-						[(value)]="model.calibreMecanismo.mecanismo"						 						
 						>	
 				    </select2> 
 				</div>
 				<div class="col-sm-6 col-md-4 col-lg-3">
-					<text label="Serie" name="serie" [group]="form" [(value)]="model.serie"></text>  
+					<text label="Serie" name="serie" [group]="form" ></text>  
 				</div>
 				<div class="col-sm-6 col-md-4 col-lg-3">
-					<text label="Matrícula" name="matricula" [group]="form"	[(value)]="model.matricula"></text>  
+					<text label="Matrícula" name="matricula" [group]="form"	></text>  
 				</div>
 			</div>
 
 			<div class="row space">
 				<div class="col-sm-12 col-md-12 col-lg-12">
-				<text-area label="Notas" name="notas" [group]="form" [(value)]="model.observaciones"></text-area>  
+				<text-area label="Notas" name="notas" [group]="form"></text-area>  
 				</div>
 			</div>
 			<div class="row justify-content-end">

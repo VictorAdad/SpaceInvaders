@@ -1,8 +1,9 @@
+import { ClaseArma } from './../../../../../models/arma';
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { MOption } from '@partials/form/select2/select2.component'
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Arma } from '@models/arma';
+import { Arma,CalibreMecanismo } from '@models/arma';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { NoticiaHechoGlobal } from '../../global';
@@ -21,14 +22,6 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
     public id: number = null;
     public data: any = null;
     public breadcrumb = [];
-
-
-    clasesArmas:MOption[]=[
-        {value:"Arma blanca", label:"Arma blanca"},
-        {value:"Arma de fuego", label:"Arma de fuego"},
-        {value:"Macana", label:"Macana"},
-        {value:"Otra", label:"Otra"}
-    ];
     isArmaFuego  :boolean=false;
     isArmaBlanca :boolean=false;
     public form  : FormGroup;
@@ -53,7 +46,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
             'tipo'            : new FormControl(''),
             'subtipo'         : new FormControl(''),
             'calibre'         : new FormControl(''),
-            'mecanismoAccion' : new FormControl(''),
+            'mecanismo' : new FormControl(''),
             'serie'           : new FormControl(''),
             'notas'           : new FormControl(''),
             'matricula'       : new FormControl(''),
@@ -78,9 +71,9 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/armas/'+this.id).subscribe(response =>{
                         this.model = response as Arma;
-                        this.isArmaFuego=this.model.claseArma.clase_arma==="fuego";
+                        this.isArmaFuego=this.model.claseArma.claseArma==="fuego";
+                        console.log(this.model);                        
                         this.fillForm(response);
-                        console.log(this.model);
                     });
                 }else{
                     this.db.get("casos",this.casoId).then(t=>{
@@ -147,66 +140,69 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
     }
 
     public edit(_valid : any, _model : any):void{
+        console.log('Arma Serv', this.armaServ);
         _model.caso.id             = this.casoId;
-        _model.claseArma.id        = this.armaServ.claseArma.finded[0].id
-        if(this.isArmaFuego){
-            _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id
-        }
-
-        console.log('-> Arma@edit()', _model);
-        if(this.onLine.onLine){            
-            this.http.put('/v1/base/armas/'+this.id, _model).subscribe((response) => {
-                console.log('-> Registro acutualizado', response);
-            });
-        }else{
-            //this.model.caso["id"]= this.casoId;
-            let dato={
-                url:'/v1/base/armas/'+this.id,
-                body:_model,
-                options:[],
-                tipo:"update",
-                pendiente:true,
-                dependeDe:[this.casoId, this.id]
+        if(this.armaServ.claseArma.finded.length>0 && this.armaServ.calibreMecanismo.finded.length>0){
+            _model.claseArma.id        = this.armaServ.claseArma.finded[0].id
+            if(this.isArmaFuego){
+                _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id
             }
-            this.db.add("sincronizar",dato).then(p=>{
-                this.db.get("casos",this.casoId).then(t=>{
-                    let armas=t["arma"] as any[];
-                    for (var i = 0; i < armas.length; ++i) {
-                        if ((armas[i])["id"]==this.id){
-                            armas[i]=_model;
-                            break;
-                        }
-                    }
-                    console.log("caso",t);
+    
+            console.log('-> Arma@edit()', _model);
+            if(this.onLine.onLine){            
+                this.http.put('/v1/base/armas/'+this.id, _model).subscribe((response) => {
+                    console.log('-> Registro acutualizado', response);
                 });
-                //this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
-            }); 
+            }else{
+                //this.model.caso["id"]= this.casoId;
+                let dato={
+                    url:'/v1/base/armas/'+this.id,
+                    body:_model,
+                    options:[],
+                    tipo:"update",
+                    pendiente:true,
+                    dependeDe:[this.casoId, this.id]
+                }
+                this.db.add("sincronizar",dato).then(p=>{
+                    this.db.get("casos",this.casoId).then(t=>{
+                        let armas=t["arma"] as any[];
+                        for (var i = 0; i < armas.length; ++i) {
+                            if ((armas[i])["id"]==this.id){
+                                armas[i]=_model;
+                                break;
+                            }
+                        }
+                        console.log("caso",t);
+                    });
+                    //this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                }); 
+            }
+            
+        }else{
+            console.log("No se ha encontrado combinación clase de arma, tipo, subtipo o calibre mecanismo")
         }
-    }
 
+    }
     public fillForm(_data){
-        this.form.patchValue(_data);
-        // Observable.of(this.setClaseArma(_data)).subscribe(response => {
-        //     delete _data.clase;
-        //     this.form.patchValue(_data);
-        //     this.form.patchValue({
-        //         // 'clase': _data.claseArma.claseArama,
-        //         'tipo': _data.claseArma.tipo,
-        //         'subtipo': _data.claseArma.subtipo,
-        //         'calibre': _data.calibreMecanismo.calibre,
-        //         'mecanismo': _data.calibreMecanismo.mecanismo,
-        //     });
-        // })
-    }
+        this.form.patchValue(_data)
+        let timer = Observable.timer(1);    
+       timer.subscribe(t => {
+            this.form.patchValue({
+            'tipo': _data.claseArma.tipo,
+            'subtipo': _data.claseArma.subtipo,
+            'calibre': _data.calibreMecanismo.calibre,
+            'mecanismo': _data.calibreMecanismo.mecanismo,
+            'serie': _data.serie,
+            'matricula': _data.matricula,
+            'claseArma' : _data.claseArma,
+            'calibreMecanismo' : _data.calibreMecanismo
+        })});
 
-    public setClaseArma(_data){
-        this.form.patchValue(_data);
     }
 
 
 
     claseChange(option){
-
         if(option=="fuego"){
            this.isArmaFuego=true;
         }
@@ -222,6 +218,8 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         }
         
         this.armaServ.claseArma.find(option, 'claseArma');
+        console.log(this.armaServ.claseArma)
+        
     }
 
     }
