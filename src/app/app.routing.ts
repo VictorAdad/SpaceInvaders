@@ -152,7 +152,7 @@ const routes: Routes = [
     { path : 'caso/:casoId/entrevista/create', component : EntrevistaCreateComponent, data : { breadcrumb : 'Entrevistas' } },
     { path : 'caso/:casoId/entrevista/:id/view', component : EntrevistaCreateComponent, data : { breadcrumb : 'Entrevistas' } },
     //Catalogos
-    { path : 'catalogos', component : CatalogosComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/:tipo', component : CatalogosComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogo-armas', component : CatalogoArmasComponent, data : { breadcrumb : 'Catálogo de Armas', rutas:[{path:'/catalogos',label:"Catálogos"}]  } },
     { path : 'tipo-arma', component : TipoArmaComponent, data : { breadcrumb : 'Tipo de arma', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"}] } },
     { path : 'tipo-arma/create', component : CreateArmaComponent, data : { breadcrumb : 'Agregar Tipo de Arma', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Tipo de arma"}] }  },

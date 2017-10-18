@@ -4,7 +4,8 @@ import { TableService } from '@utils/table/table.service';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { _catalogos } from './catalogos';
 
 @Component({
     templateUrl: 'catalogos.component.html',
@@ -19,7 +20,7 @@ export class CatalogosComponent {
 
     @ViewChild(MdPaginator) paginator: MdPaginator;
 
-    constructor(private router: Router) {}
+    constructor(private router: Router, private _activeRoute: ActivatedRoute) {}
 
     setClickedRow(row) {
         this.selectedRow = row.id;
@@ -32,6 +33,12 @@ export class CatalogosComponent {
     }
 
     ngOnInit() {
+        this._activeRoute.params.subscribe(params => {
+            if(params['tipo']){
+                console.log(_catalogos);
+                console.log(_catalogos[params['tipo']]);
+            }
+        });
         this.dataSource = new ExampleDataSource();
     }
 }
