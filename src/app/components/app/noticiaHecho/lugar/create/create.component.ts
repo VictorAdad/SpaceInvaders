@@ -248,8 +248,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
     }
 
     changePais(id){
-        if(id){
-            if(id === 1){
+        if(id != null){
+            if(id === 0){
                 this.isMexico = true;
                 this.optionsServ.getEstadoByPais(id);
                 this.form.controls.estado.enable();

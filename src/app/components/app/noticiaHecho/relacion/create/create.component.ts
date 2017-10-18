@@ -50,12 +50,6 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         { value:'Representante', label:'Representante de la víctima' }
     ];
 
-    options:MOption[]=[
-    {value:"1", label:"Opcion 1"},
-    {value:"2", label:"Opcion 2"},
-    {value:"3", label:"Opcion 3"}
-    ];
-
     isDefensorImputado: boolean = false;
     isImputadoVictimaDelito: boolean = false;
     isAsesorJuridicoVictima: boolean = false;
@@ -190,6 +184,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     } 
 
     addTrataPersonas(_val: any){
+        console.log('Add TrataPersonas', _val);
         _val.tipoTransportacion.id = this.optionsRelacion.matrizTipoTransportacion.finded[0].id;
         this.colections.add('trataPersonas', 'subjectTrataPersonas', _val);
         let form = this.form.get('trataPersona') as FormArray;
@@ -312,6 +307,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                         this.addEfectoDetalle(object.efectoDetalle);
                     }
                     for (var object of _data.detalleDelito.trataPersona) {
+                        this.formRelacion.trataPersonasForm.patchValue(object);
                         this.optionsRelacion.matrizTipoTransportacion.finded.push(object.tipoTransportacion);
                         this.addTrataPersonas(object);
                     }
