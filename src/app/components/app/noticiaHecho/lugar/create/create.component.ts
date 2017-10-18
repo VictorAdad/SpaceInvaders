@@ -12,6 +12,7 @@ import { } from 'googlemaps';
 import * as moment from 'moment';
 import { SelectsService} from '@services/selects.service';
 import { LugarService} from '@services/noticia-hecho/lugar.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'lugar-create',
@@ -71,6 +72,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 this.id = +params['id'];
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/lugares/'+this.id).subscribe(response =>{
+                        console.log(response)
                         this.fillForm(response);
                     });
                 }else{
@@ -114,24 +116,24 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
 
     public createForm(): FormGroup{
         return new FormGroup({
-            'tipo'            : new FormControl(this.model.tipo, [Validators.required,]),
-            'tipoZona'        : new FormControl(this.model.tipo_zona, [Validators.required,]),
-            'calle'           : new FormControl(this.model.calle, [Validators.required,]),
-            'referencias'     : new FormControl(this.model.referencias, [Validators.required,]),
-            'estadoOtro'      : new FormControl(this.model.estado, [Validators.required,]),
-            'municipioOtro'   : new FormControl(this.model.municipio_delegacion, [Validators.required,]),
-            'coloniaOtro'     : new FormControl(this.model.colonia_asentamiento, [Validators.required,]),
-            'fecha'           : new FormControl(this.model.fecha, [Validators.required,]),
-            'hora'            : new FormControl(this.model.hora, [Validators.required,]),
-            'cp'              : new FormControl(this.model.notas, []),
-            'dia'             : new FormControl(this.model.notas, []),
-            'descripcionLugar'     : new FormControl(this.model.notas, []),
-            'notas'           : new FormControl(this.model.notas, []),
-            'numExterior'     : new FormControl(this.model.notas, []),
-            'numInterior'     : new FormControl(this.model.notas, []),
-            'refeGeograficas' : new FormControl(this.model.notas, []),
+            'tipo'            : new FormControl('', [Validators.required,]),
+            'tipoZona'        : new FormControl('', [Validators.required,]),
+            'calle'           : new FormControl('', [Validators.required,]),
+            'referencias'     : new FormControl('', [Validators.required,]),
+            'estadoOtro'      : new FormControl('', [Validators.required,]),
+            'municipioOtro'   : new FormControl('', []),
+            'coloniaOtro'     : new FormControl('', []),
+            'fecha'           : new FormControl('', [Validators.required,]),
+            'hora'            : new FormControl('', [Validators.required,]),
+            'cp'              : new FormControl('', []),
+            'dia'             : new FormControl('', []),
+            'descripcionLugar'     : new FormControl('', []),
+            'notas'           : new FormControl('', []),
+            'numExterior'     : new FormControl('', []),
+            'numInterior'     : new FormControl('', []),
+            'refeGeograficas' : new FormControl('', []),
             'detalleLugar' : new FormGroup({
-                'id': new FormControl("",[]),
+                'id': new FormControl("",[])                
             }),
             'pais': new FormGroup({
                 'id': new FormControl("",[Validators.required,]),
@@ -140,10 +142,10 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 'id': new FormControl("",[Validators.required,]),
             }),
             'municipio': new FormGroup({
-                'id': new FormControl("",[Validators.required,]),
+                'id': new FormControl("",[]),
             }),
             'colonia': new FormGroup({
-                'id': new FormControl("",[Validators.required,]),
+                'id': new FormControl("",[]),
             }),
             'caso': new FormGroup({
                 'id': new FormControl("",[]),
@@ -152,6 +154,9 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
     }
 
     public save(_valid : any, _model : any):void{
+        _model.municipioOtro="wwww";
+        _model.coloniaOtro="wwwwwww";
+        _model.estadoOtro="Yucatán"
         _model.caso.id      = this.casoId;
         _model.latitud      = this.latMarker;
         _model.longitud     = this.lngMarker;
@@ -163,6 +168,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         if(this.onLine.onLine){
             this.http.post('/v1/base/lugares', _model).subscribe(
                 (response) => {
+                    console.log('-> registro guardado', response);
                     this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
                 },
                 (error) => {
@@ -233,12 +239,52 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
 
     public fillForm(_data){
         _data.fecha = new Date(_data.fecha);
+        console.log(_data.fecha);
         this.zoom   = 17;
         this.lat    = _data.latitud;
         this.lng    = _data.longitud;
         this.latMarker = _data.latitud;
         this.lngMarker = _data.longitud;
-        this.form.patchValue(_data);
+        let timer = Observable.timer(1);
+       /* 
+        timer.subscribe(t=>{
+            this.form.patchValue(
+              {
+                  'tipo'            : _data.detalleLugar.tipo,
+                  'tipoZona'        : _data.detalleLugar.tipoZona,
+                  "dia"             :_data.detalleLugar.dia,
+              }
+
+            );
+        });
+        */
+
+        this.form.patchValue(
+            {
+                'tipo'            : _data.detalleLugar.tipoLugar,
+                'tipoZona'        : _data.detalleLugar.tipoZona,
+                "dia"             :_data.detalleLugar.dia,
+                "colonia"         :_data.detalleLugar.dia,
+                "estadoOtro"      :_data.estadoOtro,
+                "municipioOtro"   :_data.municipioOtro,
+                "coloniaOtro"     :_data.coloniaOtro,
+                "cp"              :_data.cp,
+                "fecha"           :_data.fecha,
+                "hora"            : moment(_data.fecha.getTime()).format("HH:MM"),
+                "descripcionLugar":_data.descripcionLugar,
+                "notas"           :_data.notas,
+                "refeGeograficas" :_data.refeGeograficas,
+                "calle"           :_data.calle,
+                "numExterior"     :_data.numExterior,
+                "numInterior"     :_data.numInterior,
+                "pais"            :_data.pais,
+                "referencias"     :_data.referencias,
+                
+            }
+
+          );
+    //  this.form.patchValue(_data);
+        
     }
 
     public changeLocation(_e){
