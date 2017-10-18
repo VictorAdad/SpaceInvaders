@@ -8,6 +8,7 @@ export class Form {
     public trataPersonas: FormGroup;
     public efectoViolencia: FormGroup;
     public efectoDetalle: FormGroup;
+    public violenciaGenero: FormGroup;
 
 	constructor() {
 		this.form = new FormGroup({
@@ -85,6 +86,7 @@ export class Form {
         this.hostigamiento = this.hostForm();
         this.trataPersonas = this.trataForm();
         this.efectoDetalle = this.efectoDetalleForm();
+        this.violenciaGenero = this.getViolenciaGeneroForm();
 	}
 
     //Formulario de DetalleDelito
@@ -173,4 +175,15 @@ export class Form {
             'testigo': new FormControl('', [Validators.required]),
         });
     }
+
+    public getViolenciaGeneroForm(){
+        return new FormGroup({
+            'delincuenciaOrganizada': new FormControl('', [Validators.required]),
+            'violenciaGenero': new FormControl('', [Validators.required]),
+            'victimaTrata': new FormControl('', [Validators.required]),
+            'victimaAcoso': new FormControl('', [Validators.required]),
+            'ordenProteccion': new FormControl('', [Validators.required]),
+        });
+    }
+
 }

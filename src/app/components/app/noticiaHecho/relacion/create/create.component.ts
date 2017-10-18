@@ -208,29 +208,14 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         );
     } 
 
-    // saveHostigamiento(val){
-    //     console.log("->",val);
-    //     var dat=val;
-    //     this.db.searchInCatalogo("modalidad_ambito",{modalidad:val["modalidad"],ambito:val["ambito"]}).then(e=>{
-    //         this.db.searchInCatalogo("conducta_detalle",{conducta:val["conducta"],detalle:val["detalle"]}).then(y=>{
-    //             this.hostigamientoData.push({modalidad_ambito:e,conducta_detalle:y, testigo:val["testigo"]});
-    //             this.hostigamientoDataSource = new ExampleDataSource(this.hostigamientoData);
-
-    //         });
-    //     });
-    // }
-
     save(_valid : any, _model : any):void{
         if(this.onLine.onLine){
-            // _model.tipoRelacionPersona.id.caso = this.casoId;
-            // _model.tipoRelacionPersona.id.personaCaso = _model.tipoRelacionPersona.personaCaso.id;
-            // _model.tipoRelacionPersona.id.personaCasoRelacionada = _model.tipoRelacionPersona.personaCasoRelacionada.id;
             _model.tipoRelacionPersona.caso.id = this.casoId;
             _model.tieneViolenciaGenero = this.isViolenciaGenero;
             _model.violenciaGenero.id = this.optionsRelacion.matrizViolenciaGenero.finded[0].id;
             console.log('-> Model', _model);
             this.http.post('/v1/base/tipo-relacion-persona', _model).subscribe(
-                (response) => //this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
+                (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
                 (error) => console.error('Error', error)
             );
         }else{
@@ -298,17 +283,45 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 tipo: _data.tipo,
             }
         });
-        let timer = Observable.timer(7000,1000*60*60);
-        timer.subscribe(t=>{
-            console.log('fill');
+        let timer = Observable.timer(1);
+        let timer2 = Observable.timer(1);
+        timer.subscribe(t => {
+            console.log('Fill Detalle Delito');
+            this.form.patchValue({
+                tipoRelacionPersona: {
+                    personaCaso: {
+                        id: _data.personaCaso.id,
+                    },
+                    personaCasoRelacionada: {
+                        id: _data.personaCasoRelacionada.id
+                    }
+                }
+            });
             for (var propName in _data.detalleDelito) {
-            if (_data.detalleDelito[propName] === null || _data.detalleDelito[propName] === undefined) {
-              delete _data.detalleDelito[propName];
+                if (_data.detalleDelito[propName] === null || _data.detalleDelito[propName] === undefined)
+                    delete _data.detalleDelito[propName];
             }
-          }
             this.form.patchValue(_data.detalleDelito);
+            this.isViolenciaGenero = _data.detalleDelito.tieneViolenciaGenero;
+            if(this.isViolenciaGenero)
+                timer.subscribe(t => {
+                    console.log('-> Fill violencia genero');
+                    this.formRelacion.violenciaGenero.patchValue(_data.detalleDelito.violenciaGenero);
+                    for (var object of _data.detalleDelito.efectoViolencia) {
+                        this.optionsRelacion.matrizEfectoDetalle.finded.push(object.efectoDetalle);
+                        this.addEfectoDetalle(object.efectoDetalle);
+                    }
+                    for (var object of _data.detalleDelito.trataPersona) {
+                        this.optionsRelacion.matrizTipoTransportacion.finded.push(object.tipoTransportacion);
+                        this.addTrataPersonas(object);
+                    }
+                    for (var object of _data.detalleDelito.hostigamientoAcoso) {
+                        this.optionsRelacion.matrizModalidadAmbito.finded.push(_data.detalleDelito.hostigamientoAcoso.modalidad)
+                        this.optionsRelacion.matrizConductaDetalle.finded.push(_data.detalleDelito.hostigamientoAcoso.ambito)
+                        this.addHostigamiento(object);
+                    }
+                });
         });
-        // this.form.patchValue(_data);
     }
 
     public initForm(){

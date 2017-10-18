@@ -228,8 +228,8 @@
                     <md-checkbox class="example-margin" name="flagrancia" formControlName="flagrancia" >Flagrancia</md-checkbox>
                 </div>
                 <div class="col" [formGroup]="form">
-                    <!-- <md-checkbox class="example-margin" name="tieneViolenciaGenero" formControlName="violenciaGenero" (change)="changeViolenciaGenero($event)">Violencia de genero</md-checkbox> -->
-                    <checkbox label="Violencia de genero"  (valueChange)="changeViolenciaGenero($event)"></checkbox>
+                    <md-checkbox class="example-margin" formControlName="tieneViolenciaGenero" (change)="changeViolenciaGenero($event)">Violencia de genero</md-checkbox>
+                    <!-- <checkbox label="Violencia de genero" name="tieneViolenciaGenero"  (valueChange)="changeViolenciaGenero($event)"></checkbox> -->
                 </div>
             </div>
             <br/>
@@ -240,7 +240,8 @@
 
                             <div class="col-md-3">
                                 <select2 placeholder="Víctima de delincuencia organizada"
-                                    name=""
+                                    name="delincuenciaOrganizada"
+                                    [group]="formRelacion.violenciaGenero"
                                     [options]="optionsRelacion.matrizViolenciaGenero.delincuenciaOrganizada"
                                     (valueChange)="optionsRelacion.matrizViolenciaGenero.find($event, 'delincuenciaOrganizada')">
 
@@ -248,6 +249,8 @@
                             </div>
                             <div class="col-md-3">
                                 <select2 placeholder="Víctima de violencia de genero"
+                                    name="violenciaGenero"
+                                    [group]="formRelacion.violenciaGenero"
                                     [options]="optionsRelacion.matrizViolenciaGenero.violenciaGenero"
                                     (valueChange)="optionsRelacion.matrizViolenciaGenero.find($event, 'violenciaGenero')">
 
@@ -255,6 +258,8 @@
                             </div>
                             <div class="col-md-3">
                                 <select2 placeholder="Víctima de trata"
+                                    name="victimaTrata"
+                                    [group]="formRelacion.violenciaGenero"
                                     [options]="optionsRelacion.matrizViolenciaGenero.victimaTrata"
                                     (valueChange)="optionsRelacion.matrizViolenciaGenero.find($event, 'victimaTrata')">
 
@@ -262,6 +267,8 @@
                             </div>
                             <div class="col-md-3">
                                 <select2 placeholder="Víctima de acoso"
+                                    name="victimaAcoso"
+                                    [group]="formRelacion.violenciaGenero"
                                     [options]="optionsRelacion.matrizViolenciaGenero.victimaAcoso"
                                     (valueChange)="optionsRelacion.matrizViolenciaGenero.find($event, 'victimaAcoso')">
 
@@ -271,6 +278,8 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <select2 placeholder="Orden de protección"
+                                    name="ordenProteccion"
+                                    [group]="formRelacion.violenciaGenero"
                                     [options]="optionsRelacion.matrizViolenciaGenero.ordenProteccion"
                                     (valueChange)="optionsRelacion.matrizViolenciaGenero.find($event, 'ordenProteccion')">
 
