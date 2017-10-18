@@ -15,6 +15,7 @@ import { PersonaService} from '@services/noticia-hecho/persona/persona.service';
 import { NoticiaHechoGlobal } from '../../global';
 import { Form } from './form';
 import { Observable }                  from 'rxjs/Observable';
+import * as moment from 'moment';
 
 @Component({
     templateUrl : './persona-fisica-imputado.component.html',
@@ -102,9 +103,6 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         console.log('Form', this.globals.form);
     }
 
-    ngAfterContentInit(){
-        console.log("DESPUES del inicio");
-    }
 
     public fillPersonaCaso(_personaCaso){
         let pcaso = this.globals.form.get('personaCaso') as FormArray;
@@ -136,13 +134,13 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 'id'     : new FormControl(),
             });
         }
-        console.log("Alias->", _alias);
+        this.globals.indexNombres=0;
         for(var i=0;i<_alias.length;i++){
-            this.globals.indexNombres;
             var item=_alias[i];
             if(item["tipo"]=="Otro nombre"){
                 this.globals.otrosNombres.nombres.push(item["nombre"]);
                 this.globals.otrosNombres.ids.push(item["id"]);
+                this.globals.otrosNombres.indices.push(this.globals.indexNombres);
                 let form = nombreForm();
                 form.patchValue({tipo:'Otro nombre',id:item["id"],nombre:item["nombre"]});
                 let otrosNombres = this.globals.form.get('aliasNombrePersona') as FormArray;
@@ -151,11 +149,14 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             if(item["tipo"]=="Alias"){
                 this.globals.alias.nombres.push(item["nombre"]);
                 this.globals.alias.ids.push(item["id"]);
+                this.globals.alias.indices.push(this.globals.indexNombres);
                 let form = nombreForm();
                 form.patchValue({tipo:'Alias',id:item["id"],nombre:item["nombre"]});
                 let otrosNombres = this.globals.form.get('aliasNombrePersona') as FormArray;
                 otrosNombres.push(form);
             }
+
+            this.globals.indexNombres++;
             
         }
         console.log("Globals->",this.globals);
@@ -238,9 +239,11 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             'estado': new FormGroup({
                 'id': new FormControl("",[]),
             }),
+            'estadoNacimientoOtro': new FormControl("",[]),
             'municipio': new FormGroup({
                 'id': new FormControl("",[]),
             }),
+            'municipioNacimientoOtro': new FormControl("",[]),
             'escolaridad': new FormGroup({
                 'id': new FormControl("",[]),
             }),
@@ -280,11 +283,11 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 })
             ]),
             'aliasNombrePersona' : new FormArray([
-                // new FormGroup({
-                //     'nombre' : new FormControl(),
-                //     'tipo'   : new FormControl(),
-                //     'id'     : new FormControl(),
-                // })
+                new FormGroup({
+                    'nombre' : new FormControl(),
+                    'tipo'   : new FormControl(),
+                    'id'     : new FormControl(),
+                })
                 ]
             ),
         });
@@ -608,7 +611,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     edit(valid : any, _model : any):void{
-       
+
         var buscar=[];
         var obj=this;
 
@@ -779,6 +782,13 @@ export class IdentidadComponent{
     changeDetenido(checked){
         this.globals.detenido=checked;
     }
+
+    edad(e){
+        var a=moment(e);
+        var hoy=moment();
+        var edad=hoy.diff(a, 'years');
+        this.globals.form.patchValue({edad:edad});
+    }
 }
 
 @Component({
@@ -794,12 +804,14 @@ export class IdentificacionComponent{
     @Input()
     otrosNombres:{
         nombres:string[],
-        ids:number[]
+        ids:number[],
+        indices:number[],
     }
     @Input()
     alias:{
         nombres:string[],
-        ids:number[]
+        ids:number[],
+        indices:number[],
     }
     
     @Input()
@@ -810,15 +822,15 @@ export class IdentificacionComponent{
     }
 
     ngOnInit(){
-        console.log("globals",this.globals);
+        
     }
 
     public addOtroNombre(_tipo: string){
-        this.nombres++;
         if(_tipo === 'otroNombre'){
             let form = this.nombreForm('Otro nombre');
             this.otrosNombres.nombres.unshift(null);
             this.otrosNombres.ids.unshift(null);
+            this.otrosNombres.indices.unshift(this.nombres);
             form.patchValue({tipo:'Otro nombre'});
             let otrosNombres = this.globals.form.get('aliasNombrePersona') as FormArray;
             otrosNombres.push(form);
@@ -827,10 +839,12 @@ export class IdentificacionComponent{
             let form = this.nombreForm('Alias');
             this.alias.nombres.unshift(null);
             this.alias.ids.unshift(null);
+            this.alias.indices.unshift(this.nombres);
             form.patchValue({tipo:'Alias'});
             let otrosNombres = this.globals.form.get('aliasNombrePersona') as FormArray;
             otrosNombres.push(form);
         }
+        this.nombres++;
     }
 
     public nombreForm(_tipo: string){
@@ -926,11 +940,13 @@ export class PersonaGlobals{
     public formLocalizacion: FormGroup;
     public otrosNombres={
         nombres:[],
-        ids:[]
+        ids:[],
+        indices:[],
     };
     public alias={
         nombres:[],
-        ids:[]
+        ids:[],
+        indices:[],
     };
     public indexNombres:number=0;
     public formMediaFilicion=this.createFormMediaFiliacion();

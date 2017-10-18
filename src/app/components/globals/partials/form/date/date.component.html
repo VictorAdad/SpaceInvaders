@@ -5,6 +5,7 @@
 			[mdDatepicker]="picker"
 			formControlName="{{name}}"  
 			name="{{name}}"
+			(ngModelChange)="update($event)" 
 			placeholder="{{label}}">
 		<md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
 		<md-datepicker touchUi="true" #picker></md-datepicker>
@@ -13,6 +14,7 @@
 		<input
 			mdInput
 			[mdDatepicker]="picker"
+			(ngModelChange)="update($event)" 
 			placeholder="{{label}}">
 		<md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
 		<md-datepicker touchUi="true" #picker></md-datepicker>
