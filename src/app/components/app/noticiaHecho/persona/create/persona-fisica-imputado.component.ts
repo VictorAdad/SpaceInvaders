@@ -14,6 +14,7 @@ import { SelectsService} from '@services/selects.service';
 import { PersonaService} from '@services/noticia-hecho/persona/persona.service';
 import { NoticiaHechoGlobal } from '../../global';
 import { Form } from './form';
+import { Observable }                  from 'rxjs/Observable';
 
 @Component({
     templateUrl : './persona-fisica-imputado.component.html',
@@ -86,10 +87,10 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             if(params['id']){
                 this.id = +params['id'];
                 if(this.onLine.onLine){
-                    this.http.get('/v1/base/personas/'+this.id).subscribe(response =>{
-                        console.log("PERSONA->",response);
-                        this.fillForm(response);
-                        this.fillNombres(response["aliasNombrePersona"]);
+                    this.http.get('/v1/base/personas-casos/'+this.id).subscribe(response =>{
+                        console.log("PERSONACASO->",response);
+                        this.globals.personaCaso=response["persona"];
+                        this.fillPersonaCaso(response);
                     });
                 }else{
                     this._tabla.get("personas",this.casoId).then(t=>{
@@ -99,6 +100,32 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             }
         });
         console.log('Form', this.globals.form);
+    }
+
+    ngAfterContentInit(){
+        console.log("DESPUES del inicio");
+    }
+
+    public fillPersonaCaso(_personaCaso){
+        let pcaso = this.globals.form.get('personaCaso') as FormArray;
+        pcaso.controls[0].patchValue(_personaCaso);
+        this.globals.tipoInterviniente=""+_personaCaso["tipoInterviniente"].id;
+        let timer = Observable.timer(1);
+        timer.subscribe(t => {
+            let mediaF = this.globals.form.get('mediaFiliacion') as FormArray;
+            if ( this.globals.tipoInterviniente=="5"){
+                for (var propName in _personaCaso["persona"].mediaFiliacion) { 
+                    if (_personaCaso["persona"].mediaFiliacion[propName] === null || _personaCaso["persona"].mediaFiliacion[propName] === undefined) {
+                      delete (_personaCaso["persona"].mediaFiliacion)[propName];
+                    }
+                }
+                mediaF.patchValue(_personaCaso["persona"].mediaFiliacion);
+                this.globals.formMediaFilicion.patchValue(_personaCaso["persona"].mediaFiliacion);
+            }
+            this.fillForm(_personaCaso["persona"]);
+            this.fillNombres(_personaCaso["persona"].aliasNombrePersona);
+        });
+           
     }
 
     public fillNombres(_alias:any[]){
@@ -151,9 +178,17 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             'ingresoMensual'   : new FormControl("",[]),
             'detenido'         : new FormControl("",[]),
             'nacionalidad'     : new FormControl(),
+            'nacionalidadReligion'     : new FormGroup({
+                    'id': new FormControl("",[]),
+                }),
             'religion'         : new FormControl(),
             'hablaEspaniol'    : new FormControl(),
+            'familiaLinguistica'    : new FormControl(),
+            'lenguaIndigena'    : new FormControl(),
             'identificacion'   : new FormControl(),
+            'idiomaIdentificacion': new FormGroup({
+                    'id': new FormControl("",[]),
+                }),
             'autoridadEmisora' : new FormControl(),
             'folioIdentificacion' : new FormControl(),
             'localizacionPersona': new FormArray([
@@ -245,11 +280,12 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 })
             ]),
             'aliasNombrePersona' : new FormArray([
-                new FormGroup({
-                    'nombre' : new FormControl(),
-                    'tipo'   : new FormControl(),
-                    'id'     : new FormControl(),
-                })]
+                // new FormGroup({
+                //     'nombre' : new FormControl(),
+                //     'tipo'   : new FormControl(),
+                //     'id'     : new FormControl(),
+                // })
+                ]
             ),
         });
     }
@@ -261,11 +297,200 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             this.form.controls.razonSocial.disable();
     }
 
-    save(valid : any, _model : any):void{
-        console.log(this);
-        console.log('-> Form', this.form);
-       
+    searchCatalogos(datos:any[]){
+        var obj= this;
+        var encontrados={};
+        var promesa = new Promise( 
+            function(resolve,reject){
+                var recursion=function(i){
+                    if (i==datos.length){
+                        resolve(encontrados);
+                        return;
+                    }
+                    obj.tabla.searchInCatalogo( (datos[i])["catalogo"],(datos[i])["data"]).then(e=>{
+                         encontrados[(datos[i])["name"]]=e;
+                         recursion(i+1);
+                    });
+                }
+                recursion(0);
+
+            });
+
+        return promesa;
+    }
+
+    buscaMediaFiliacion(_model:any){
+
+        var buscar=[];
+
+        buscar.push({
+            catalogo:"oreja",
+            name:"orejaDerecha",
+            data:{
+                forma:this.globals.formMediaFilicion.controls.orejaDerecha["controls"].forma.value,
+                helixOriginal:this.globals.formMediaFilicion.controls.orejaDerecha["controls"].helixOriginal.value,
+                helixPosterior:this.globals.formMediaFilicion.controls.orejaDerecha["controls"].helixPosterior.value,
+                helixAdherencia:this.globals.formMediaFilicion.controls.orejaDerecha["controls"].helixAdherencia.value,
+                helixSuperior:this.globals.formMediaFilicion.controls.orejaDerecha["controls"].helixSuperior.value,
+                lobuloContorno:this.globals.formMediaFilicion.controls.orejaDerecha["controls"].lobuloContorno.value,
+                lobuloAdherencia:this.globals.formMediaFilicion.controls.orejaDerecha["controls"].lobuloAdherencia.value,
+                lobuloParticularidad:this.globals.formMediaFilicion.controls.orejaDerecha["controls"].lobuloParticularidad.value,
+                lobuloDimension:this.globals.formMediaFilicion.controls.orejaDerecha["controls"].lobuloDimension.value
+            }
+        });
+
+        buscar.push({
+            catalogo:"oreja",
+            name:"orejaIzquierda",
+            data:{
+                forma:this.globals.formMediaFilicion.controls.orejaIzquierda["controls"].forma.value,
+                helixOriginal:this.globals.formMediaFilicion.controls.orejaIzquierda["controls"].helixOriginal.value,
+                helixPosterior:this.globals.formMediaFilicion.controls.orejaIzquierda["controls"].helixPosterior.value,
+                helixAdherencia:this.globals.formMediaFilicion.controls.orejaIzquierda["controls"].helixAdherencia.value,
+                helixSuperior:this.globals.formMediaFilicion.controls.orejaIzquierda["controls"].helixSuperior.value,
+                lobuloContorno:this.globals.formMediaFilicion.controls.orejaIzquierda["controls"].lobuloContorno.value,
+                lobuloAdherencia:this.globals.formMediaFilicion.controls.orejaIzquierda["controls"].lobuloAdherencia.value,
+                lobuloParticularidad:this.globals.formMediaFilicion.controls.orejaIzquierda["controls"].lobuloParticularidad.value,
+                lobuloDimension:this.globals.formMediaFilicion.controls.orejaIzquierda["controls"].lobuloDimension.value
+            }
+        });
+
+        buscar.push({
+            catalogo:"complexion_piel_sangre",
+            name:"complexionPielSangre",
+            data:{
+                tipoComplexion:this.globals.formMediaFilicion.controls.complexionPielSangre["controls"].tipoComplexion.value,
+                colorPiel:this.globals.formMediaFilicion.controls.complexionPielSangre["controls"].colorPiel.value,
+                tipoSangre:this.globals.formMediaFilicion.controls.complexionPielSangre["controls"].tipoSangre.value,
+                factorRHSangre:this.globals.formMediaFilicion.controls.complexionPielSangre["controls"].factorRHSangre.value
+            }
+        });
+
+        buscar.push({
+            catalogo:"cabello",
+            name:"cabello",
+            data:{
+                color:this.globals.formMediaFilicion.controls.cabello["controls"].color.value,
+                forma:this.globals.formMediaFilicion.controls.cabello["controls"].forma.value,
+                calvicie:this.globals.formMediaFilicion.controls.cabello["controls"].calvicie.value,
+                implantacion:this.globals.formMediaFilicion.controls.cabello["controls"].implantacion.value
+            }
+        });
+
+        buscar.push({
+            catalogo:"frente_menton",
+            name:"frenteMenton",
+            data:{
+                alturaFrente:this.globals.formMediaFilicion.controls.frenteMenton["controls"].alturaFrente.value,
+                inclinacionFrente:this.globals.formMediaFilicion.controls.frenteMenton["controls"].inclinacionFrente.value,
+                anchoFrente:this.globals.formMediaFilicion.controls.frenteMenton["controls"].anchoFrente.value,
+                tipoMenton:this.globals.formMediaFilicion.controls.frenteMenton["controls"].tipoMenton.value,
+                formaMenton:this.globals.formMediaFilicion.controls.frenteMenton["controls"].formaMenton.value,
+                inclinacionMenton:this.globals.formMediaFilicion.controls.frenteMenton["controls"].inclinacionMenton.value
+            }
+        });
+
+        buscar.push({
+            catalogo:"ceja_boca",
+            name:"cejaBoca",
+            data:{
+                direccionCeja:this.globals.formMediaFilicion.controls.cejaBoca["controls"].direccionCeja.value,
+                implantacionCeja:this.globals.formMediaFilicion.controls.cejaBoca["controls"].implantacionCeja.value,
+                formaCeja:this.globals.formMediaFilicion.controls.cejaBoca["controls"].formaCeja.value,
+                tamanioCeja:this.globals.formMediaFilicion.controls.cejaBoca["controls"].tamanioCeja.value,
+                tamanioBoca:this.globals.formMediaFilicion.controls.cejaBoca["controls"].tamanioBoca.value,
+                comisurasBoca:this.globals.formMediaFilicion.controls.cejaBoca["controls"].comisurasBoca.value
+            }
+        });
+
+        buscar.push({
+            catalogo:"labio_ojo",
+            name:"labioOjo",
+            data:{
+                colorOjo:this.globals.formMediaFilicion.controls.labioOjo["controls"].colorOjo.value,
+                formaOjo:this.globals.formMediaFilicion.controls.labioOjo["controls"].formaOjo.value,
+                tamanioOjo:this.globals.formMediaFilicion.controls.labioOjo["controls"].tamanioOjo.value,
+                espesorLabio:this.globals.formMediaFilicion.controls.labioOjo["controls"].espesorLabio.value,
+                alturaNasoLabialLabio:this.globals.formMediaFilicion.controls.labioOjo["controls"].alturaNasoLabialLabio.value,
+                prominenciaLabio:this.globals.formMediaFilicion.controls.labioOjo["controls"].prominenciaLabio.value
+            }
+        });
+
+        buscar.push({
+            catalogo:"cara_nariz",
+            name:"caraNariz",
+            data:{
+                raizNariz:this.globals.formMediaFilicion.controls.caraNariz["controls"].raizNariz.value,
+                dorsoNariz:this.globals.formMediaFilicion.controls.caraNariz["controls"].dorsoNariz.value,
+                anchoNariz:this.globals.formMediaFilicion.controls.caraNariz["controls"].anchoNariz.value,
+                baseNariz:this.globals.formMediaFilicion.controls.caraNariz["controls"].baseNariz.value,
+                alturaNariz:this.globals.formMediaFilicion.controls.caraNariz["controls"].alturaNariz.value,
+                formaCara:this.globals.formMediaFilicion.controls.caraNariz["controls"].formaCara.value
+            }
+        });
+
+        var promesa = new Promise((resolve,reject)=>{
+            this.searchCatalogos(buscar).then(e=>{
+                for(let key in e){
+                    if (e[key]!=null){
+                        (_model["mediaFiliacion"])[key]={id:e[key].id};
+                    }
+                }
+                resolve(_model);
+            });
+        });
+
+        return promesa;
+
         
+
+    }
+
+    save(valid : any, _model : any):void{
+        
+        // console.log('-> Form', this.form);
+
+        var buscar=[];
+        var obj=this;
+
+        buscar.push({
+            catalogo:"nacionalidad_religion",
+            name:"nacionalidadReligion",
+            data:{
+                nacionalidad:this.form.controls.nacionalidad.value,
+                religion:this.form.controls.religion.value,
+            }
+        });
+
+        this.personaServ.nacionalidadReligion.find(this.form.controls.nacionalidad.value,"nacionalidad");
+        this.personaServ.nacionalidadReligion.find(this.form.controls.religion.value,"religion");
+        if (this.personaServ.nacionalidadReligion.finded[0])
+            _model["nacionalidadReligion"]={id:this.personaServ.nacionalidadReligion.finded[0].id};
+
+        buscar.push({
+            catalogo:"idioma_identificacion",
+            name:"idiomaIdentificacion",
+            data:{
+                hablaEspaniol:this.form.controls.hablaEspaniol.value,
+                lenguaIndigena:this.form.controls.lenguaIndigena.value,
+                familiaLinguistica:this.form.controls.familiaLinguistica.value
+            }
+        });
+
+        this.searchCatalogos(buscar).then(e=>{
+            for(let key in e){
+                if (e[key]!=null){
+                    _model[key]={id:e[key].id};
+                }
+            }
+            this.buscaMediaFiliacion(_model).then(datos=>{
+                console.log("Model",datos);
+                obj.doSave(datos);
+            });
+        });
+    }
+
+    doSave(_model:any){
         if(this.onLine.onLine){
             _model.personaCaso[0].caso.id = this.casoId;
             console.log('Model', _model);
@@ -321,13 +546,13 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         }
     }
 
-    edit(valid : any, _model : any):void{
-        console.log('Editar -> Form', this.form);
-        
+    doEdit(_model){
+        console.log('Editar -> Form', _model);
+    
         if(this.onLine.onLine){
             _model.personaCaso[0].caso.id = this.casoId;
             console.log('Model', _model);
-            this.http.put('/v1/base/personas/'+this.id, _model).subscribe(
+            this.http.put('/v1/base/personas/'+this.globals.personaCaso["id"], _model).subscribe(
                 (response) => {
                     console.log("Editar Persona->",response);
                     this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
@@ -356,7 +581,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         casoR=>{
                     this.caso=casoR as Caso;
 
-                    _model["tipoInterviniente"]={tipo:"por sincronizar"};
+                    _model["tipoInterviniente"]={id:"por sincronizar"};
                     _model["persona"]={nombre:_model["nombre"]};
                     _model["alias"]=_model.aliasNombrePersona.nombre;
                     if (!_model["razonSocial"])
@@ -382,6 +607,58 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         }
     }
 
+    edit(valid : any, _model : any):void{
+       
+        var buscar=[];
+        var obj=this;
+
+        buscar.push({
+            catalogo:"nacionalidad_religion",
+            name:"nacionalidadReligion",
+            data:{
+                nacionalidad:this.form.controls.nacionalidad.value,
+                religion:this.form.controls.religion.value,
+            }
+        });
+
+        this.personaServ.nacionalidadReligion.find(this.form.controls.nacionalidad.value,"nacionalidad");
+        this.personaServ.nacionalidadReligion.find(this.form.controls.religion.value,"religion");
+        if (this.personaServ.nacionalidadReligion.finded[0])
+            _model["nacionalidadReligion"]={id:this.personaServ.nacionalidadReligion.finded[0].id};
+
+        buscar.push({
+            catalogo:"idioma_identificacion",
+            name:"idiomaIdentificacion",
+            data:{
+                hablaEspaniol:this.form.controls.hablaEspaniol.value,
+                lenguaIndigena:this.form.controls.lenguaIndigena.value,
+                familiaLinguistica:this.form.controls.familiaLinguistica.value
+            }
+        });
+
+        this.searchCatalogos(buscar).then(e=>{
+            for(let key in e){
+                if (e[key]!=null){
+                    _model[key]={id:e[key].id};
+                }
+            }
+            this.buscaMediaFiliacion(_model).then(datos=>{
+                if (this.globals.personaCaso["mediaFiliacion"].id){
+                    if (this.globals.tipoInterviniente=="5"){
+                        (datos["mediaFiliacion"])["id"]=this.globals.personaCaso["mediaFiliacion"].id;
+                    }else{
+                        delete datos["mediaFiliacion"];
+                    }
+                }
+                if (this.globals.personaCaso["id"])
+                    datos["id"]=this.globals.personaCaso["id"];
+                console.log("Model",datos);
+                console.log(this.globals.personaCaso);
+                this.doEdit(datos);
+            });
+        });
+    }
+
     public fillForm(_data){
         _data.fechaNacimiento = new Date(_data.fechaNacimiento);
         for (var propName in _data) { 
@@ -399,6 +676,17 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 delete _data.mediaFiliacion[propName];
             }
         }
+        if (_data["nacionalidadReligion"]){
+            _data["nacionalidad"]=(_data["nacionalidadReligion"])["nacionalidad"];
+            _data["religion"]=(_data["nacionalidadReligion"])["religion"];
+        }
+        
+        if (_data["idiomaIdentificacion"]){
+            _data["familiaLinguistica"]=(_data["idiomaIdentificacion"])["familiaLinguistica"];
+            _data["lenguaIndigena"]=(_data["idiomaIdentificacion"])["lenguaIndigena"];
+            _data["hablaEspaniol"]=(_data["idiomaIdentificacion"])["hablaEspaniol"];
+        }
+        
         console.log("datos ->",_data);
         this.form.patchValue(_data);
         console.log('After patch', this.form);
@@ -443,6 +731,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             'localidadOtro': new FormControl(),
         });
     }
+
+
 }
 
 @Component({
@@ -617,14 +907,16 @@ export class MediaFilacionComponent{
     globals: PersonaGlobals;
     @Input()
     options: any[];
+    
 
     constructor(private personaServ: PersonaService){
-
+        
     }
 }
 
 
 export class PersonaGlobals{
+    public personaCaso;
     public personaForm: Form;
     public form: FormGroup;
     public tipoPersona: string="";
@@ -641,6 +933,7 @@ export class PersonaGlobals{
         ids:[]
     };
     public indexNombres:number=0;
+    public formMediaFilicion=this.createFormMediaFiliacion();
 
     constructor(
         _form: FormGroup,
@@ -652,5 +945,77 @@ export class PersonaGlobals{
         this.alias.nombres=[];
         this.otrosNombres.ids=[];
         this.otrosNombres.nombres=[];
+    }
+
+    public createFormMediaFiliacion(){
+        return new FormGroup({
+            'complexionPielSangre': new FormGroup({
+                'tipoComplexion': new FormControl(),
+                'colorPiel': new FormControl(),
+                'tipoSangre': new FormControl(),
+                'factorRHSangre': new FormControl(),
+            }),
+            'cabello': new FormGroup({
+                'cantidad': new FormControl(),
+                'color': new FormControl(),
+                'forma': new FormControl(),
+                'calvicie': new FormControl(),
+                'implantacion': new FormControl(),
+            }),
+            'frenteMenton': new FormGroup({
+                'alturaFrente': new FormControl(),
+                'inclinacionFrente': new FormControl(),
+                'anchoFrente': new FormControl(),
+                'tipoMenton': new FormControl(),
+                'formaMenton': new FormControl(),
+                'inclinacionMenton': new FormControl(),
+            }),
+            'cejaBoca': new FormGroup({
+                'direccionCeja': new FormControl(),
+                'implantacionCeja': new FormControl(),
+                'formaCeja': new FormControl(),
+                'tamanioCeja': new FormControl(),
+                'tamanioBoca': new FormControl(),
+                'comisurasBoca': new FormControl(),
+            }),
+            'labioOjo': new FormGroup({
+                'colorOjo': new FormControl(),
+                'formaOjo': new FormControl(),
+                'tamanioOjo': new FormControl(),
+                'espesorLabio': new FormControl(),
+                'alturaNasoLabialLabio': new FormControl(),
+                'prominenciaLabio': new FormControl(),
+            }),
+            'caraNariz': new FormGroup({
+                'raizNariz': new FormControl(),
+                'dorsoNariz': new FormControl(),
+                'anchoNariz': new FormControl(),
+                'baseNariz': new FormControl(),
+                'alturaNariz': new FormControl(),
+                'formaCara': new FormControl(),
+            }),
+            'orejaIzquierda': new FormGroup({
+                'forma': new FormControl(),
+                'helixOriginal': new FormControl(),
+                'helixSuperior': new FormControl(),
+                'helixPosterior': new FormControl(),
+                'helixAdherencia': new FormControl(),
+                'lobuloContorno': new FormControl(),
+                'lobuloAdherencia': new FormControl(),
+                'lobuloParticularidad': new FormControl(),
+                'lobuloDimension': new FormControl(),
+            }),
+            'orejaDerecha': new FormGroup({
+                'forma': new FormControl(),
+                'helixOriginal': new FormControl(),
+                'helixSuperior': new FormControl(),
+                'helixPosterior': new FormControl(),
+                'helixAdherencia': new FormControl(),
+                'lobuloContorno': new FormControl(),
+                'lobuloAdherencia': new FormControl(),
+                'lobuloParticularidad': new FormControl(),
+                'lobuloDimension': new FormControl(),
+            }),
+        });
     }
 }
