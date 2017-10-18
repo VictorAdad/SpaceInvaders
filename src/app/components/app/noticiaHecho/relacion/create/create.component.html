@@ -30,7 +30,7 @@
                     <select2 placeholder="Modalidad"
                         name="id"
                         *ngIf="isImputadoVictimaDelito"
-                        [(options)]="options"
+                        [(options)]="optionsRelacion.modalidadDelito"
                         [group]="form.controls.modalidadDelito">
 
                     </select2>
