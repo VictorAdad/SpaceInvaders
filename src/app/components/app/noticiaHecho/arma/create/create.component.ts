@@ -43,6 +43,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         private armaServ: ArmaService
         ) {
         super();
+        console.log(this.armaServ);
     }
 
     ngOnInit(){
@@ -61,7 +62,6 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
             }),
             'claseArma' : new FormGroup({
                 'id' : new FormControl(''),
-                'clase_arma' : new FormControl(this.model.claseArma.clase_arma),
             }),
             'calibreMecanismo' : new FormGroup({
                 'id' : new FormControl(''),
@@ -147,8 +147,14 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
     }
 
     public edit(_valid : any, _model : any):void{
+        _model.caso.id             = this.casoId;
+        _model.claseArma.id        = this.armaServ.claseArma.finded[0].id
+        if(this.isArmaFuego){
+            _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id
+        }
+
         console.log('-> Arma@edit()', _model);
-        if(this.onLine.onLine){
+        if(this.onLine.onLine){            
             this.http.put('/v1/base/armas/'+this.id, _model).subscribe((response) => {
                 console.log('-> Registro acutualizado', response);
             });
@@ -179,7 +185,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
     }
 
     public fillForm(_data){
-
+        this.form.patchValue(_data);
         // Observable.of(this.setClaseArma(_data)).subscribe(response => {
         //     delete _data.clase;
         //     this.form.patchValue(_data);

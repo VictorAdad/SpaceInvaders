@@ -242,28 +242,28 @@
                                 <select2 placeholder="Víctima de delincuencia organizada"
                                     name=""
                                     [options]="optionsRelacion.matrizViolenciaGenero.delincuenciaOrganizada"
-                                    (valueChange)="set('violenciaGenero','delincuenciaOrganizada',$event,'violencia_genero')">
+                                    (valueChange)="optionsRelacion.matrizViolenciaGenero.find($event, 'delincuenciaOrganizada')">
 
                                 </select2>
                             </div>
                             <div class="col-md-3">
                                 <select2 placeholder="Víctima de violencia de genero"
                                     [options]="optionsRelacion.matrizViolenciaGenero.violenciaGenero"
-                                    (valueChange)="set('violenciaGenero','violenciaGenero',$event,'violencia_genero')">
+                                    (valueChange)="optionsRelacion.matrizViolenciaGenero.find($event, 'violenciaGenero')">
 
                                 </select2>
                             </div>
                             <div class="col-md-3">
                                 <select2 placeholder="Víctima de trata"
                                     [options]="optionsRelacion.matrizViolenciaGenero.victimaTrata"
-                                    (valueChange)="set('violenciaGenero','victimaTrata',$event,'violencia_genero')">
+                                    (valueChange)="optionsRelacion.matrizViolenciaGenero.find($event, 'victimaTrata')">
 
                                 </select2>
                             </div>
                             <div class="col-md-3">
                                 <select2 placeholder="Víctima de acoso"
                                     [options]="optionsRelacion.matrizViolenciaGenero.victimaAcoso"
-                                    (valueChange)="set('violenciaGenero','victimaAcoso',$event,'violencia_genero')">
+                                    (valueChange)="optionsRelacion.matrizViolenciaGenero.find($event, 'victimaAcoso')">
 
                                 </select2>
                             </div>
@@ -272,7 +272,7 @@
                             <div class="col-md-3">
                                 <select2 placeholder="Orden de protección"
                                     [options]="optionsRelacion.matrizViolenciaGenero.ordenProteccion"
-                                    (valueChange)="set('violenciaGenero','ordenProteccion',$event,'violencia_genero')">
+                                    (valueChange)="optionsRelacion.matrizViolenciaGenero.find($event, 'ordenProteccion')">
 
                                 </select2>
                             </div>
@@ -386,13 +386,13 @@
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <select2 placeholder="Tipo"
                                 [options]="optionsRelacion.matrizTipoTransportacion.tipo"
-                                (valueChange)="set('tipoTransportacion','tipo',$event,'tipo_transportacion')">
+                                (valueChange)="optionsRelacion.matrizTipoTransportacion.find($event, 'tipo')">
                             </select2>
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <select2 placeholder="Transportación"
                                 [options]="optionsRelacion.matrizTipoTransportacion.transportacion"
-                                (valueChange)="set('tipoTransportacion','transportacion',$event,'tipo_transportacion')">
+                                (valueChange)="optionsRelacion.matrizTipoTransportacion.find($event, 'transportacion')">
                             </select2>
                         </div>
 
@@ -402,9 +402,8 @@
                         <button class="float-right m-1" color="accent" md-raised-button >Limpiar</button>
                         <button class="float-right m-1" 
                             md-raised-button color="accent"
-                            (click)="addTrataPersonas(formRelacion.trataPersonasForm.value)"
-                            [disabled]="!form.controls.trataPersona.valid">
-                            Guardar
+                            (click)="addTrataPersonas(formRelacion.trataPersonasForm.value)">
+                            Agregar
                         </button>
                         </div>
                     </div>

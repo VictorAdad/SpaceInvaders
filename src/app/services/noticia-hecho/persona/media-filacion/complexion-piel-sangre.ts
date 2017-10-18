@@ -6,7 +6,7 @@ export class MatrizComplexionPielSangre extends MatrizGlobal{
     public tipoComplexion     = [];
     public colorPiel          = [];
     public tipoSangre         = [];
-    public factorRhSangre     = [];
+    public factorRHSangre     = [];
 
     constructor(
         private db: CIndexedDB
@@ -21,7 +21,7 @@ export class MatrizComplexionPielSangre extends MatrizGlobal{
             _object.tipoComplexion === _selected.tipoComplexion 
             && _object.colorPiel === _selected.colorPiel
             && _object.tipoSangre === _selected.tipoSangre
-            && _object.factorRhSangre === _selected.factorRhSangre
+            && _object.factorRHSangre === _selected.factorRHSangre
             );
     }
 }
@@ -30,5 +30,5 @@ export class ComplexionPielSangre {
     public tipoComplexion: string = null;
     public colorPiel: string = null;
     public tipoSangre: string = null;
-    public factorRhSangre: string = null;
+    public factorRHSangre: string = null;
 }
