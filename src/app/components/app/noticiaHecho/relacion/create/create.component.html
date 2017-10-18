@@ -423,7 +423,7 @@
 
                                     <ng-container mdColumnDef="País de origen">
                                         <md-header-cell *mdHeaderCellDef> País de origen </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.paisOrigen.id}} </md-cell>
+                                        <md-cell *mdCellDef="let element"> {{ optionsService.find('paises', element.paisOrigen.id).label }} </md-cell>
                                     </ng-container>
 
 
@@ -441,7 +441,7 @@
                                     </ng-container>
                                     <ng-container mdColumnDef="Estado destino">
                                         <md-header-cell *mdHeaderCellDef> Estado destino </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.estadoDestino.id}} </md-cell>
+                                        <md-cell *mdCellDef="let element"> {{ optionsService.find('paises', element.paisDestino.id).label }} </md-cell>
                                     </ng-container>
                                     <ng-container mdColumnDef="Municipio destino">
                                         <md-header-cell *mdHeaderCellDef> Municipio destino </md-header-cell>

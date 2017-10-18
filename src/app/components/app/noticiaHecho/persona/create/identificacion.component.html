@@ -36,9 +36,9 @@
                 <div class="col-md-auto">
                     <button class="float-left" md-raised-button (click)="addOtroNombre('alias')" color="accent" >Agregar alias</button>
                 </div>
-                <div class="col-md-12" *ngFor="let nombre of alias.nombres;let i=index; trackBy:trackByIndex " [formGroupName]="nombres">
+                <div class="col-md-12" *ngFor="let nombre of alias.nombres;let i=index; trackBy:trackByIndex " [formGroupName]="alias.indices[i]">
                     <md-form-field class="full-width">
-                        <input mdInput placeholder="Alias" formControlName="nombre">
+                        <input mdInput placeholder="Alias" formControlName="nombre"value="{{nombre}}">
                     </md-form-field>
                     <input type="hidden" value="Alias" formControlName="tipo">
                     <input type="hidden" value="{{alias.ids[i]}}" formControlName="id">
@@ -50,7 +50,7 @@
                 <div class="col-md-auto">
                     <button class="float-left" md-raised-button (click)="addOtroNombre('otroNombre')" color="accent" >Agregar otro nombre</button>
                 </div>
-                <div class="col-md-12" *ngFor="let nombre of otrosNombres.nombres;let i=index; trackBy:trackByIndex " [formGroupName]="nombres">
+                <div class="col-md-12" *ngFor="let nombre of otrosNombres.nombres;let i=index; trackBy:trackByIndex " [formGroupName]="otrosNombres.indices[i]">
                     <md-form-field class="full-width">
                         <input mdInput placeholder="Otro nombre" formControlName="nombre"value="{{nombre}}">
                     </md-form-field>

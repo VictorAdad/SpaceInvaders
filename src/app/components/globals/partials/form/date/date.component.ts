@@ -11,4 +11,8 @@ export class DateComponent{
 	@Input() value : string;
 	@Input() name  : string  = '';
 	@Input() group : FormGroup = new FormGroup({});
+	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
+	update(value) {
+		this.valueChange.emit(value);
+	}
 }

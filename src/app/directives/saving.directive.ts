@@ -2,6 +2,8 @@ import { Directive, ElementRef, HostListener, Input, Output, EventEmitter } from
 import { GlobalService } from "@services/global.service";
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { ResolveEmit,ConfirmSettings} from '@utils/alert/alert.service';
+import { Observable } from 'rxjs';
+
 
 @Directive({ selector: '[_saving]' })
 export class SavingDirective{
@@ -26,12 +28,16 @@ export class SavingDirective{
 		this._confirmation.create('Advertencia','¿Estás seguro de guardar la información?',this.settings)
          .subscribe(
          	(ans: ResolveEmit) => {
-         		// console.log(ans);
          		if(ans.resolved){
 	 				this.prepareSave(true);
-					this.saveFn.emit();
-					this.prepareSave(false);
-					this.globalService.openSnackBar('Registro guardado con éxito');
+					Observable.of(this.saveFn.emit()).subscribe(
+						response => {
+							this.prepareSave(false);
+							this.globalService.openSnackBar('Registro guardado con éxito');
+						},
+						error => console.error('Ocurrio un error al guardar D:')
+					);
+
 				}
          	}
 		);
