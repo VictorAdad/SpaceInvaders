@@ -163,5 +163,9 @@ export class SelectsService {
         return options;
     }
 
+    public find(_attr:string, _val:string){
+        return this[_attr][_val];
+    }
+
     
 }

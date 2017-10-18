@@ -65,4 +65,10 @@ export class MatrizGlobal {
         return true;
     }
 
+    public findById(_id:number){
+        return this.objects.filter(object => {
+            return object.id === _id;
+        });
+    }
+
 }

@@ -204,11 +204,11 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     } 
 
     save(_valid : any, _model : any):void{
-        if(this.onLine.onLine){
-            _model.tipoRelacionPersona.caso.id = this.casoId;
-            _model.tieneViolenciaGenero = this.isViolenciaGenero;
+        _model.tipoRelacionPersona.caso.id = this.casoId;
+        _model.tieneViolenciaGenero = this.isViolenciaGenero;
+        if(_model.tieneViolenciaGenero)
             _model.violenciaGenero.id = this.optionsRelacion.matrizViolenciaGenero.finded[0].id;
-            console.log('-> Model', _model);
+        if(this.onLine.onLine){
             this.http.post('/v1/base/tipo-relacion-persona', _model).subscribe(
                 (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
                 (error) => console.error('Error', error)
@@ -245,7 +245,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     public edit(_valid : any, _model : any):void{
         console.log('-> Relacion@edit()', _model);
         if(this.onLine.onLine){
-            this.http.put('/v1/base/relaciones/'+this.id, _model).subscribe((response) => {
+            this.http.put('/v1/base/detalle-delitos/'+_model.id, _model).subscribe((response) => {
                 console.log('-> Registro acutualizado', response);
             });
         }else{
@@ -395,7 +395,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     }
 
     changePais(val,arr){
-        if (val)
+        if (val != null)
             this.optionsService.getEstadoByPaisService(val).subscribe(estados=>{
                 this[arr]=this.optionsService.constructOptions(estados);
             });
@@ -403,7 +403,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     }
 
     changeEstado(val,arr){
-        if (val)
+        if (val != null)
             this.optionsService.getMunicipiosByEstadoService(val).subscribe(municipios=>{
                 this[arr]=this.optionsService.constructOptions(municipios);
             });
