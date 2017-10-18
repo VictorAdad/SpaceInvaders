@@ -57,11 +57,11 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
     ngOnInit(){
         this.model = new Inspeccion();
 
-
         this.form  = new FormGroup({
-            'fechaHoraInspeccion'       : new FormControl(this.model.fechaHoraInspeccion),
+            'fechaHoraInspeccion'  : new FormControl(this.model.fechaHoraInspeccion),
             'adscripcion' : new FormControl(this.model.adscripcion),
-            'descripcion' : new FormControl(this.model.descripcion)
+            'descripcion' : new FormControl(this.model.descripcion),
+            'horaInspeccion': new FormControl('')
           });
 
         this.route.params.subscribe(params => {
@@ -72,7 +72,11 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
                 this.id = +params['id'];
                 console.log('id', this.id);
                 this.http.get(this.apiUrl+'/'+this.id).subscribe(response =>{
-                	console.log(response.data),
+                        var fechaCompleta:Date= new Date(response.fechaHoraInspeccion);
+                        response.fechaHoraInspeccion=fechaCompleta;
+                        var horas: string=(String(fechaCompleta.getHours()).length==1)?'0'+fechaCompleta.getHours():String(fechaCompleta.getHours());
+                        var minutos: string=(String(fechaCompleta.getMinutes()).length==1)?'0'+fechaCompleta.getMinutes():String(fechaCompleta.getMinutes());;
+                        response.horaInspeccion=horas+':'+minutos;
                         this.fillForm(response);
                     });
             }
@@ -84,11 +88,20 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
             Object.assign(this.model, _model);
             this.model.caso.id = this.casoId;
             console.log('-> Inspeccion@save()', this.model);
+            
+            var fechaCompleta = new Date (this.model.fechaHoraInspeccion);
+            fechaCompleta.setMinutes(this.model['horaInspeccion'].split(':')[1]);
+            fechaCompleta.setHours(this.model['horaInspeccion'].split(':')[0]);
+            console.log();
+            var mes:number=fechaCompleta.getMonth()+1;
+            this.model.fechaHoraInspeccion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
+            //console.log('lo que envio: '+  this.model.fechaHoraInspeccion);
+        
             this.http.post(this.apiUrl, this.model).subscribe(
 
                 (response) => {
-                    console.log(response);
-                    console.log('here')
+                    //console.log(response);
+                    //console.log('lo que recibo: '+ new Date(response.fechaHoraInspeccion));
                   if(this.casoId){
                     this.router.navigate(['/caso/'+this.casoId+'/inspeccion' ]);      
                   }
@@ -104,9 +117,19 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
     }
 
     public edit(_valid : any, _model : any):void{
-        console.log('-> Inspeccion@edit()', _model);
-            this.http.put(this.apiUrl+'/'+this.id, _model).subscribe((response) => {
-                console.log('-> Registro acutualizado', response);
+        Object.assign(this.model, _model);
+        console.log('-> Inspeccion@edit()', this.model);
+
+        var fechaCompleta = new Date (this.model.fechaHoraInspeccion);
+        fechaCompleta.setMinutes(this.model['horaInspeccion'].split(':')[1]);
+        fechaCompleta.setHours(this.model['horaInspeccion'].split(':')[0]);
+        console.log();
+        var mes:number=fechaCompleta.getMonth()+1;
+        this.model.fechaHoraInspeccion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
+        console.log('lo que envio: '+  this.model.fechaHoraInspeccion);
+    
+            this.http.put(this.apiUrl+'/'+this.id, this.model).subscribe((response) => {
+                console.log('lo que recibo: '+ new Date(response.fechaHoraInspeccion));
                 if(this.id){
                     this.router.navigate(['/caso/'+this.casoId+'/inspeccion']);
                 }
