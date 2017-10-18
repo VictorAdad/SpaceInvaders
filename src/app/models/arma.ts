@@ -22,7 +22,7 @@ export class Caso {
 
 export class ClaseArma {
     public id        : number
-    public clase_arma: string;
+    public claseArma: string;
     public tipo      : string;
     public subtipo   : string;
 }
