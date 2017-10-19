@@ -22,6 +22,10 @@ export class SelectsService {
     public nacionalidad: MOption[] = [];
     public tipoDomicilio: MOption[]= [];
     public tipoInterviniente: MOption[]= [];
+    public peritoMateria: MOption[] = [];
+    public tipoExamen: MOption[] = [];
+    public denunciaQuerella: MOption[] = [];
+    public victimaQuerellante: MOption[] = [];
 
     constructor(
         private http: HttpService
@@ -42,6 +46,34 @@ export class SelectsService {
         this.getTipoDomicilio();
         this.getTipoInterviniente();
         this.getAlfabetismo();
+        this.getPeritoMateria();
+        this.getTipoExamen();
+        this.getDenunciaQuerella();
+        this.getVictimaQuerellante();
+    }
+
+    public getVictimaQuerellante(){
+        this.http.get('/v1/catalogos/solicitud-preliminar/victima-querellante/options').subscribe((response) => {
+            this.victimaQuerellante = this.constructOptions(response);
+        });
+    }
+
+    public getDenunciaQuerella(){
+        this.http.get('/v1/catalogos/solicitud-preliminar/denuncia-querella/options').subscribe((response) => {
+            this.denunciaQuerella = this.constructOptions(response);
+        });
+    }
+
+    public getPeritoMateria(){
+        this.http.get('/v1/catalogos/solicitud-preliminar/perito-materia/options').subscribe((response) => {
+            this.peritoMateria = this.constructOptions(response);
+        });
+    }
+
+    public getTipoExamen(){
+        this.http.get('/v1/catalogos/solicitud-preliminar/tipo-examen/options').subscribe((response) => {
+            this.tipoExamen = this.constructOptions(response);
+        });
     }
 
     public getPaises(){
