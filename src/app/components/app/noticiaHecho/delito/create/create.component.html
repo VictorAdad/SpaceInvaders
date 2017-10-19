@@ -9,24 +9,24 @@
         <h3>Fundamentación</h3>
     </div>
     <div class="col-md-6">
-        <button class="float-right" md-raised-button color="accent" (click)="openDialog()">Agregar</button>
+        <button class="float-right" mat-raised-button color="accent" (click)="openDialog()">Agregar</button>
     </div>
 </div>
 <div class="row justify-content-center space">
     <div class="col-md-10">
-        <md-card>
+        <mat-card>
             <div style="height: 300px; overflow: scroll;">
                 <p *ngFor="let delito of listaDelitos">
                     {{delito.nombre}}
                 </p>
             </div>
-        </md-card>
+        </mat-card>
     </div>
 </div>
 
 <!-- <div class="row space">
     <div class="col-md-6">
-        <md-slide-toggle>Captura manual</md-slide-toggle>
+        <mat-slide-toggle>Captura manual</mat-slide-toggle>
     </div>
 </div> -->
 <div class="row">
@@ -36,10 +36,10 @@
     <div class="col-md-6">
         <div class="row justify-content-end">
             <div class="col-md-auto">
-                <button class="float-right" md-raised-button  color="accent" _saving (saveFn)="guardar()" >Guardar</button>
+                <button class="float-right" mat-raised-button  color="accent" _saving (saveFn)="guardar()" >Guardar</button>
             </div>
             <div class="col-md-auto">
-                <button class="float-right" md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>
+                <button class="float-right" mat-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>
             </div>
         </div>
     </div>

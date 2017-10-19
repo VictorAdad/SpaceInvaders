@@ -1,5 +1,5 @@
 import { Component, Inject, Output, EventEmitter } from '@angular/core';
-import { MdDialogRef,MD_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef,MAT_DIALOG_DATA } from '@angular/material';
 import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -41,8 +41,8 @@ export class FormCreateDelitoCasoComponent {
 
     constructor(
         private _tabla: CIndexedDB,
-        @Inject(MD_DIALOG_DATA) private data: {lista:any},
-        public dialogRef: MdDialogRef<FormCreateDelitoCasoComponent>,
+        @Inject(MAT_DIALOG_DATA) private data: {lista:any},
+        public dialogRef: MatDialogRef<FormCreateDelitoCasoComponent>,
         private http: HttpService
         ){
         this.tabla=_tabla;

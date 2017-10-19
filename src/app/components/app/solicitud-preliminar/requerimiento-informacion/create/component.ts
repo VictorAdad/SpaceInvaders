@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MdPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
@@ -40,7 +40,7 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 	public form: FormGroup;
 	public model: RequerimientoInformacion;
 	dataSource: TableService | null;
-	@ViewChild(MdPaginator) paginator: MdPaginator;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
 
 	constructor(
 		private _fbuilder: FormBuilder,
@@ -135,7 +135,7 @@ export class DocumentoRequerimientoInformacionComponent {
 	];
 
 	dataSource: TableService | null;
-	@ViewChild(MdPaginator) paginator: MdPaginator;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
 
 
 	ngOnInit() {

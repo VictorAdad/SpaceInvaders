@@ -11,7 +11,7 @@
             <h2 *ngIf="mecanismo && isEdit">Editar Mecanismo</h2>
         </div>
         <div class="col-md-2">
-            <button class="float-right" md-raised-button (click)="return()" color="accent">Regresar</button>
+            <button class="float-right" mat-raised-button (click)="return()" color="accent">Regresar</button>
         </div>
     </div>
     <div class="content">
@@ -51,10 +51,10 @@
 
             <div class="d-flex justify-content-end">
                 <div class="p-2">
-                    <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]">Guardar</button>
+                    <button mat-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]">Guardar</button>
                 </div>
                 <div class="p-2">
-                    <button md-button>Cancelar</button>
+                    <button mat-button>Cancelar</button>
                 </div>
             </div>
         </form>

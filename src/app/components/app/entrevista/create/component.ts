@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MdPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Entrevista } from '@models/entrevista/entrevista';
 import { OnLineService } from '@services/onLine.service';
@@ -42,7 +42,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 	public form: FormGroup;
 	public model: Entrevista;
 	dataSource: TableService | null;
-	@ViewChild(MdPaginator) paginator: MdPaginator;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
 
 	constructor(
 		private _fbuilder: FormBuilder,
@@ -229,7 +229,7 @@ export class DocumentoEntrevistaComponent {
 	];
 
 	dataSource: TableService | null;
-	@ViewChild(MdPaginator) paginator: MdPaginator;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
 
 
 	ngOnInit() {

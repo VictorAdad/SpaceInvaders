@@ -3,31 +3,31 @@
         <h2>Documentos</h2>
     </div>
     <div class="col-md-12">
-        <button class="float-right" md-raised-button (click)="openDialog()" color="accent">Adjuntar documento</button>
+        <button class="float-right" mat-raised-button (click)="openDialog()" color="accent">Adjuntar documento</button>
     </div>
 </div>
 <div class="">
-    <md-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
-    </md-paginator>
-    <md-table #table [dataSource]="dataSource">
+    <mat-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+    <mat-table #table [dataSource]="dataSource">
 
-        <ng-container mdColumnDef="nombre">
-            <md-header-cell *mdHeaderCellDef> Nombre </md-header-cell>
-            <md-cell *mdCellDef="let element"> 
-                <span  (click)="download(element.idBlob,element.nombre,element.type)">{{element.nombre}}</span> </md-cell>
+        <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+            <mat-cell *matCellDef="let element"> 
+                <span  (click)="download(element.idBlob,element.nombre,element.type)">{{element.nombre}}</span> </mat-cell>
         </ng-container>
 
-        <ng-container mdColumnDef="procedimiento">
-            <md-header-cell *mdHeaderCellDef> Procedimiento </md-header-cell>
-            <md-cell *mdCellDef="let element"> {{element.procedimiento}} </md-cell>
+        <ng-container matColumnDef="procedimiento">
+            <mat-header-cell *matHeaderCellDef> Procedimiento </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.procedimiento}} </mat-cell>
         </ng-container>
 
-        <ng-container mdColumnDef="fecha">
-            <md-header-cell *mdHeaderCellDef> Fecha </md-header-cell>
-            <md-cell *mdCellDef="let element"> {{element.fecha}} </md-cell>
+        <ng-container matColumnDef="fecha">
+            <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.fecha}} </mat-cell>
         </ng-container>
 
-        <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-        <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
-    </md-table>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
 </div>

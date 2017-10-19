@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { MdPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { TableService} from '@utils/table/table.service';
 import { CIndexedDB } from '@services/indexedDB';
@@ -21,7 +21,7 @@ export class PersonaComponent implements OnInit{
     data: Persona[] = [];
     dataSource: TableService | null;
     tabla: CIndexedDB;
-    @ViewChild(MdPaginator) paginator: MdPaginator;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(
         private _tabla: CIndexedDB,

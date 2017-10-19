@@ -3,51 +3,51 @@
         <h3>Usuarios</h3>
     </div>
     <div class="col-md-6">
-        <button class="float-right" md-raised-button routerLink="/usuarios/create" color="accent">Agregar usuario</button>
+        <button class="float-right" mat-raised-button routerLink="/usuarios/create" color="accent">Agregar usuario</button>
     </div>
 </div>
-<md-paginator #paginator
+<mat-paginator #paginator
     [length]="data.length"
     [pageIndex]="0"
     [pageSize]="10"
     [pageSizeOptions]="[5, 10, 25, 100]">
-  </md-paginator>
-<md-table #table [dataSource]="dataSource">
+  </mat-paginator>
+<mat-table #table [dataSource]="dataSource">
 
     <!--- Note that these columns can be defined in any order.
       The actual rendered columns are set as a property on the row definition" -->
 
-    <ng-container mdColumnDef="Usuario">
-        <md-header-cell *mdHeaderCellDef> Usuario</md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.usuario}} </md-cell>
+    <ng-container matColumnDef="Usuario">
+        <mat-header-cell *matHeaderCellDef> Usuario</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.usuario}} </mat-cell>
     </ng-container>
 
-    <ng-container mdColumnDef="Nombre">
-        <md-header-cell *mdHeaderCellDef> Nombre </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.nombre}} </md-cell>
+    <ng-container matColumnDef="Nombre">
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
     </ng-container>
 
-    <ng-container mdColumnDef="Apellido paterno">
-        <md-header-cell *mdHeaderCellDef>Apellido paterno </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.apellidoPaterno}} </md-cell>
+    <ng-container matColumnDef="Apellido paterno">
+        <mat-header-cell *matHeaderCellDef>Apellido paterno </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.apellidoPaterno}} </mat-cell>
     </ng-container>
 
-    <ng-container mdColumnDef="Apellido materno">
-        <md-header-cell *mdHeaderCellDef> Apellido materno </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.apellidoMaterno}} </md-cell>
+    <ng-container matColumnDef="Apellido materno">
+        <mat-header-cell *matHeaderCellDef> Apellido materno </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.apellidoMaterno}} </mat-cell>
     </ng-container>
-    <ng-container mdColumnDef="Acciones">
-      <md-header-cell *mdHeaderCellDef>Acciones</md-header-cell>
-       <md-cell *mdCellDef="let row"> 
-         <a md-icon-button [routerLink]="['/usuarios/edit', row.id]">
-          <md-icon class="md-24">edit</md-icon>
+    <ng-container matColumnDef="Acciones">
+      <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+       <mat-cell *matCellDef="let row"> 
+         <a mat-icon-button [routerLink]="['/usuarios/edit', row.id]">
+          <mat-icon class="md-24">edit</mat-icon>
          </a>
-         <a md-icon-button color="black" (click)="delete(row.id)">
-          <md-icon class="md-24">delete</md-icon>
+         <a mat-icon-button color="black" (click)="delete(row.id)">
+          <mat-icon class="md-24">delete</mat-icon>
          </a>
-      </md-cell>
+      </mat-cell>
     </ng-container>
 
-    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
-</md-table>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

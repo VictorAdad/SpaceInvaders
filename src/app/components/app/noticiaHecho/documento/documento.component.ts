@@ -1,6 +1,6 @@
 import { Component,ViewChild, Inject } from '@angular/core';
 
-import { MdPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { MiservicioService,MDato } from '@services/miservicio.service';
 
@@ -8,7 +8,7 @@ import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
-import {MdDialog, MD_DIALOG_DATA} from '@angular/material';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { DocumentoCreateComponent } from './create/create.component';
 import { CIndexedDB } from '@services/indexedDB';
 import { ActivatedRoute } from '@angular/router';
@@ -21,7 +21,7 @@ import { OnLineService} from '@services/onLine.service';
 
 export class DocumentoComponent{
     private db: CIndexedDB 
-    constructor(public dialog: MdDialog,private _db: CIndexedDB, private onLine: OnLineService, private route:ActivatedRoute){
+    constructor(public dialog: MatDialog,private _db: CIndexedDB, private onLine: OnLineService, private route:ActivatedRoute){
       this.db=_db;
     }
 
@@ -30,7 +30,7 @@ export class DocumentoComponent{
     dataSource: TableService | null;
     casoId:number;
 
-    @ViewChild(MdPaginator) paginator: MdPaginator;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
     dataURItoBlob(dataURI, type) {
         var binary = atob(dataURI);

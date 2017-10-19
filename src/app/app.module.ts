@@ -1,3 +1,4 @@
+import {MATERIAL_COMPATIBILITY_MODE} from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,23 +35,23 @@ import { ArmaService } from '@services/noticia-hecho/arma/arma.service';
 import { PersonaService } from '@services/noticia-hecho/persona/persona.service';
 import { JasperoConfirmationsModule } from '@jaspero/ng2-confirmations';
 
-import { MdNativeDateModule, MdIconModule} from '@angular/material';
-import {MdMenuModule} from '@angular/material';
-import {MdPaginatorModule} from '@angular/material';
-import {MdTableModule} from '@angular/material';
-import {MdExpansionModule} from '@angular/material';
-import {MdDatepickerModule} from '@angular/material';
-import {MdRadioModule} from '@angular/material';
-import {MdAutocompleteModule} from '@angular/material';
-import {MdSelectModule} from '@angular/material';
-import {MdTooltipModule} from '@angular/material';
-import {MdSnackBarModule} from '@angular/material';
-import {MdToolbarModule} from '@angular/material';
-import {MdListModule} from '@angular/material';
-import {MdCardModule} from '@angular/material';
-import {MdTabsModule} from '@angular/material';
-import {MdButtonModule} from '@angular/material';
-import {MdInputModule} from '@angular/material';
+import { MatNativeDateModule, MatIconModule} from '@angular/material';
+import {MatMenuModule} from '@angular/material';
+import {MatPaginatorModule} from '@angular/material';
+import {MatTableModule} from '@angular/material';
+import {MatExpansionModule} from '@angular/material';
+import {MatDatepickerModule} from '@angular/material';
+import {MatRadioModule} from '@angular/material';
+import {MatAutocompleteModule} from '@angular/material';
+import {MatSelectModule} from '@angular/material';
+import {MatTooltipModule} from '@angular/material';
+import {MatSnackBarModule} from '@angular/material';
+import {MatToolbarModule} from '@angular/material';
+import {MatListModule} from '@angular/material';
+import {MatCardModule} from '@angular/material';
+import {MatTabsModule} from '@angular/material';
+import {MatButtonModule} from '@angular/material';
+import {MatInputModule} from '@angular/material';
 import {MatCheckboxModule} from '@angular/material';
 // import { MaterialModule} from '@angular/material';
 
@@ -80,24 +81,24 @@ import {Logger} from '@services/logger.service'
   ],
   imports: [
     BrowserModule,
-    MdNativeDateModule,
-    MdIconModule,
-    MdMenuModule,
-    MdPaginatorModule,
-    MdTableModule,
-    MdExpansionModule,
-    MdDatepickerModule,
-    MdRadioModule,
-    MdAutocompleteModule,
-    MdSelectModule,
-    MdTooltipModule,
-    MdSnackBarModule,
-    MdToolbarModule,
-    MdListModule,
-    MdCardModule,
-    MdTabsModule,
-    MdButtonModule,
-    MdInputModule,
+    MatNativeDateModule,
+    MatIconModule,
+    MatMenuModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatRadioModule,
+    MatAutocompleteModule,
+    MatSelectModule,
+    MatTooltipModule,
+    MatSnackBarModule,
+    MatToolbarModule,
+    MatListModule,
+    MatCardModule,
+    MatTabsModule,
+    MatButtonModule,
+    MatInputModule,
     MatCheckboxModule,
     // MaterialModule,
     BrowserAnimationsModule,
@@ -136,7 +137,8 @@ import {Logger} from '@services/logger.service'
     VehiculoService,
     PersonaService,
     ArmaService,
-    Logger
+    Logger,
+    {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}
   ],
   entryComponents: [
     dyanamicComponents

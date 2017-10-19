@@ -3,39 +3,39 @@
         <h3>Lugares</h3>
     </div>
     <div class="col-md-6">
-        <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/lugares/create" color="accent">Agregar lugar</button>
+        <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/lugares/create" color="accent">Agregar lugar</button>
     </div>
 </div>
-<md-paginator #paginator [length]="pag" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" >
-</md-paginator>
-<md-table #table [dataSource]="dataSource">
+<mat-paginator #paginator [length]="pag" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" >
+</mat-paginator>
+<mat-table #table [dataSource]="dataSource">
 
-    <ng-container mdColumnDef="tipo">
-        <md-header-cell *mdHeaderCellDef> Tipo </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.tipo}} </md-cell>
+    <ng-container matColumnDef="tipo">
+        <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.tipo}} </mat-cell>
     </ng-container>
 
-    <ng-container mdColumnDef="calle">
-        <md-header-cell *mdHeaderCellDef> Calle </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.calle}} </md-cell>
+    <ng-container matColumnDef="calle">
+        <mat-header-cell *matHeaderCellDef> Calle </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.calle}} </mat-cell>
     </ng-container>
 
-    <ng-container mdColumnDef="colonia">
-        <md-header-cell *mdHeaderCellDef> Colonia </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.coloniaOtro || element.colonia?.nombre}} </md-cell>
+    <ng-container matColumnDef="colonia">
+        <mat-header-cell *matHeaderCellDef> Colonia </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.coloniaOtro || element.colonia?.nombre}} </mat-cell>
     </ng-container>
 
-    <ng-container mdColumnDef="localidad">
-        <md-header-cell *mdHeaderCellDef> Localidad </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.municipioOtro || element.municipio?.nombre}} </md-cell>
+    <ng-container matColumnDef="localidad">
+        <mat-header-cell *matHeaderCellDef> Localidad </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.municipioOtro || element.municipio?.nombre}} </mat-cell>
     </ng-container>
 
-    <ng-container mdColumnDef="estado">
-        <md-header-cell *mdHeaderCellDef> Estado </md-header-cell>
-        <md-cell  *mdCellDef="let element"> {{element.estadoOtro || element.estado?.nombre}} </md-cell>
+    <ng-container matColumnDef="estado">
+        <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+        <mat-cell  *matCellDef="let element"> {{element.estadoOtro || element.estado?.nombre}} </mat-cell>
     </ng-container>
 
-    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: displayedColumns;" routerLink="/caso/{{casoId}}/lugares/{{row.id}}"></md-row>
-</md-table>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" routerLink="/caso/{{casoId}}/lugares/{{row.id}}"></mat-row>
+</mat-table>
 

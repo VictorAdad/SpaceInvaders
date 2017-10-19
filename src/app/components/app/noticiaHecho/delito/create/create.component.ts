@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {MdDialog, MD_DIALOG_DATA} from '@angular/material';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import {FormCreateDelitoComponent} from "./formcreate.component"
 import { CIndexedDB } from '@services/indexedDB';
 import {Router} from '@angular/router';
@@ -32,7 +32,7 @@ export class DelitoCreateComponent{
     tabla:CIndexedDB;
     
 
-    constructor(public dialog: MdDialog, private _tabla: CIndexedDB, private router:Router, private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService) { 
+    constructor(public dialog: MatDialog, private _tabla: CIndexedDB, private router:Router, private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService) { 
         this.tabla=_tabla;
     }
     ngOnInit(){

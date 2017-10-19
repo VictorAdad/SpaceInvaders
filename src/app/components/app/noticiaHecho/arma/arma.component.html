@@ -3,47 +3,47 @@
         <h3 class="mb-0">Armas</h3>
     </div>
     <div class="col-sm-auto">
-        <button md-raised-button routerLink="/caso/{{casoId}}/armas/create" color="accent">Agregar arma</button>
+        <button mat-raised-button routerLink="/caso/{{casoId}}/armas/create" color="accent">Agregar arma</button>
     </div>
 </div>
-<md-paginator #paginator
+<mat-paginator #paginator
     [length]="pag"
     [pageIndex]="0"
     [pageSize]="10"
     [pageSizeOptions]="[5, 10, 25, 100]"
     (page)="changePage($event)">
-  </md-paginator>
-<md-table #table [dataSource]="dataSource">
+  </mat-paginator>
+<mat-table #table [dataSource]="dataSource">
 
     <!--- Note that these columns can be defined in any order.
       The actual rendered columns are set as a property on the row definition" -->
 
     <!-- Arma Column -->
-    <ng-container mdColumnDef="Arma">
-        <md-header-cell *mdHeaderCellDef> Arma</md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.clase}} </md-cell>
+    <ng-container matColumnDef="Arma">
+        <mat-header-cell *matHeaderCellDef> Arma</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.clase}} </mat-cell>
     </ng-container>
 
     <!-- Tipo Column -->
-    <ng-container mdColumnDef="Tipo">
-        <md-header-cell *mdHeaderCellDef> Tipo </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.tipo}} </md-cell>
+    <ng-container matColumnDef="Tipo">
+        <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.tipo}} </mat-cell>
     </ng-container>
 
     <!-- Marca Column -->
-    <ng-container mdColumnDef="Marca">
-        <md-header-cell *mdHeaderCellDef> Marca y/o Modelo </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.serie}} </md-cell>
+    <ng-container matColumnDef="Marca">
+        <mat-header-cell *matHeaderCellDef> Marca y/o Modelo </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.serie}} </mat-cell>
     </ng-container>
 
     <!-- Calibre Column -->
-    <ng-container mdColumnDef="Calibre">
-        <md-header-cell *mdHeaderCellDef> Calibre </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.calibreMecanismo != null ? element.calibreMecanismo.calibre : ""}} </md-cell>
+    <ng-container matColumnDef="Calibre">
+        <mat-header-cell *matHeaderCellDef> Calibre </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.calibreMecanismo != null ? element.calibreMecanismo.calibre : ""}} </mat-cell>
 
-        <!-- <md-cell *mdCellDef="let element"> {{element.calibreMecanismo.calibre || ""}} </md-cell> -->
+        <!-- <mat-cell *matCellDef="let element"> {{element.calibreMecanismo.calibre || ""}} </mat-cell> -->
     </ng-container>
 
-    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: displayedColumns;" routerLink="/caso/{{casoId}}/armas/{{row.id}}"></md-row>
-</md-table>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" routerLink="/caso/{{casoId}}/armas/{{row.id}}"></mat-row>
+</mat-table>

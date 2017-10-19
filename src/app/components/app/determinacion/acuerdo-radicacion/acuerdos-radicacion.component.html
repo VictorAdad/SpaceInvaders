@@ -9,7 +9,7 @@
         <h2>Acuerdos de Radicación</h2>
     </div>
     <div class="col-md-6">
-        <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
+        <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
     </div>
 </div>
 <div class="row space"></div>
@@ -21,37 +21,37 @@
         <search></search>
     </div>
     <div class="col-md-auto">
-        <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/acuerdo-radicacion/create" color="accent">Agregar acuerdo</button>
+        <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/acuerdo-radicacion/create" color="accent">Agregar acuerdo</button>
     </div>
 </div>
 <br/>
 
 <div class="">
-    <md-paginator #paginator
+    <mat-paginator #paginator
         [length]="dataSource ? dataSource.data.length : 0"
         [pageIndex]="0"
         [pageSize]="10"
         [pageSizeOptions]="[5, 10, 25, 100]">
-    </md-paginator>
-    <md-table #table [dataSource]="dataSource">
+    </mat-paginator>
+    <mat-table #table [dataSource]="dataSource">
 
         <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
 
         <!-- Position Column -->
-        <ng-container mdColumnDef="Titulo">
-            <md-header-cell *mdHeaderCellDef> Creado por </md-header-cell>
-            <md-cell *mdCellDef="let element"> {{element.titulo}} </md-cell>
+        <ng-container matColumnDef="Titulo">
+            <mat-header-cell *matHeaderCellDef> Creado por </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.titulo}} </mat-cell>
         </ng-container>
 
         <!-- Name Column -->
-        <ng-container mdColumnDef="Fecha">
-            <md-header-cell *mdHeaderCellDef> Fecha de creación</md-header-cell>
-            <md-cell *mdCellDef="let element"> {{element.created | date: 'MM/dd/yyyy'}} </md-cell>
+        <ng-container matColumnDef="Fecha">
+            <mat-header-cell *matHeaderCellDef> Fecha de creación</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.created | date: 'MM/dd/yyyy'}} </mat-cell>
         </ng-container>
 
-        <md-header-row *mdHeaderRowDef="columns"></md-header-row>
-        <md-row *mdRowDef="let row; columns: columns;" routerLink="{{row.id}}/edit"></md-row>
-    </md-table>
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns;" routerLink="{{row.id}}/edit"></mat-row>
+    </mat-table>
 
 </div>

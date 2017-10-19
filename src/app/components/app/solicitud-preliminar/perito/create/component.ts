@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MdPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Perito } from '@models/solicitud-preliminar/perito';
 import { OnLineService } from '@services/onLine.service';
@@ -45,7 +45,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 
 
 	dataSource: TableService | null;
-	@ViewChild(MdPaginator) paginator: MdPaginator;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
 
 	constructor(
 		private _fbuilder: FormBuilder,
@@ -148,7 +148,7 @@ export class DocumentoPeritoComponent {
 	];
 
 	dataSource: TableService | null;
-	@ViewChild(MdPaginator) paginator: MdPaginator;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
 
 	ngOnInit() {
 		this.dataSource = new TableService(this.paginator, this.data);

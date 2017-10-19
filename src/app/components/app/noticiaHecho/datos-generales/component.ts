@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, Input} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MdDialog, MD_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { Http, Response } from '@angular/http';
 import { Caso } from '@models/caso';
 import { Delito } from '@models/catalogo/delito';
@@ -22,7 +22,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
     public id      : number = null;
     private db     : CIndexedDB;
     private router : Router;
-    private dialog : MdDialog;
+    private dialog : MatDialog;
     private activeRoute : ActivatedRoute;
     private onLine : OnLineService;
     @Input()
@@ -31,7 +31,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
     public delito: Delito;
 
     public constructor(
-        _dialog: MdDialog,
+        _dialog: MatDialog,
         _db: CIndexedDB,
         _router: Router,
         _activeRoute: ActivatedRoute,

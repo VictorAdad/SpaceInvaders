@@ -4,7 +4,7 @@
         <h3>Notificaciones</h3>
     </div>
     <div class="col-md-6">
-        <button class="float-right" md-raised-button routerLink="/" color="accent">Regresar</button>
+        <button class="float-right" mat-raised-button routerLink="/" color="accent">Regresar</button>
     </div>
 </div>
 <div class="row space">
@@ -12,36 +12,36 @@
         <search class="float-right"></search>    
     </div>
 </div>
-<md-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></md-paginator>
-<md-table #table [dataSource]="dataSource">
+<mat-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+<mat-table #table [dataSource]="dataSource">
 
-    <ng-container mdColumnDef="Fecha y Hora">
-        <md-header-cell *mdHeaderCellDef> Fecha y Hora </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.fecha}} </md-cell>
+    <ng-container matColumnDef="Fecha y Hora">
+        <mat-header-cell *matHeaderCellDef> Fecha y Hora </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.fecha}} </mat-cell>
     </ng-container>
 
-    <ng-container mdColumnDef="Titulo del caso">
-        <md-header-cell *mdHeaderCellDef> Titulo del caso </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.titulo}} </md-cell>
+    <ng-container matColumnDef="Titulo del caso">
+        <mat-header-cell *matHeaderCellDef> Titulo del caso </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.titulo}} </mat-cell>
     </ng-container>
 
-    <ng-container mdColumnDef="NIC">
-        <md-header-cell *mdHeaderCellDef> NIC </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.nic}} </md-cell>
+    <ng-container matColumnDef="NIC">
+        <mat-header-cell *matHeaderCellDef> NIC </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nic}} </mat-cell>
     </ng-container>
 
-    <ng-container mdColumnDef="NUC">
-        <md-header-cell *mdHeaderCellDef> NUC </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.nuc}} </md-cell>
+    <ng-container matColumnDef="NUC">
+        <mat-header-cell *matHeaderCellDef> NUC </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nuc}} </mat-cell>
     </ng-container>
 
-    <ng-container mdColumnDef="Asignado por">
-        <md-header-cell *mdHeaderCellDef> Asignado por </md-header-cell>
-        <md-cell  *mdCellDef="let element"> {{element.asignado}} </md-cell>
+    <ng-container matColumnDef="Asignado por">
+        <mat-header-cell *matHeaderCellDef> Asignado por </mat-header-cell>
+        <mat-cell  *matCellDef="let element"> {{element.asignado}} </mat-cell>
     </ng-container>
 
-    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
-</md-table>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
 
 

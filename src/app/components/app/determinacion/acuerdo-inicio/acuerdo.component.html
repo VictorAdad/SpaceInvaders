@@ -8,11 +8,11 @@
     <text-area label="Observaciones/incidencias" name="observaciones" [(value)]="model.observaciones" [group]="form"></text-area>
     <div class="row space"></div>
     <div class="row justify-content-end">
-        <div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
-            <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid" *ngIf="!hasAcuerdoInicio">Guardar</button>
+        <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
+            <button mat-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid" *ngIf="!hasAcuerdoInicio">Guardar</button>
         </div>
         <div class="col-sm-auto">
-            <button class="float-right" md-button routerLink="/caso/{{casoId}}/detalle">Cancelar</button>
+            <button class="float-right" mat-button routerLink="/caso/{{casoId}}/detalle">Cancelar</button>
         </div>
     </div>
 </form>

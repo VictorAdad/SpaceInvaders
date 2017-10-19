@@ -1,21 +1,21 @@
 
 <div  *ngIf="name==''" >
-	<md-radio-group [(ngModel)]="value" (ngModelChange)="update($event)">
+	<mat-radio-group [(ngModel)]="value" (ngModelChange)="update($event)">
 
 	<div class="row">
 	<div *ngFor="let radio of radios" class="{{class}}">
-		<md-radio-button   value="{{radio.value}}" >{{radio.label}}</md-radio-button>
+		<mat-radio-button   value="{{radio.value}}" >{{radio.label}}</mat-radio-button>
 	</div>
 	  </div>
-	</md-radio-group>
+	</mat-radio-group>
 </div>
 <div [formGroup]="group"  *ngIf="name!=''" >
-	<md-radio-group [(ngModel)]="value" (ngModelChange)="update($event)" formControlName="{{name}}" required="true">
+	<mat-radio-group [(ngModel)]="value" (ngModelChange)="update($event)" formControlName="{{name}}" required="true">
 
 	<div class="row">
 	<div *ngFor="let radio of radios" class="{{class}}">
-		<md-radio-button   value="{{radio.value}}" >{{radio.label}}</md-radio-button>
+		<mat-radio-button   value="{{radio.value}}" >{{radio.label}}</mat-radio-button>
 	</div>
 	  </div>
-	</md-radio-group>
+	</mat-radio-group>
 </div>

@@ -3,30 +3,30 @@
         <h3>Delitos</h3>
     </div>
     <div class="col-md-6">
-        <button class="float-right" md-raised-button routerLink="/caso/{{id}}/delito/create" color="accent">Agregar delito</button>
+        <button class="float-right" mat-raised-button routerLink="/caso/{{id}}/delito/create" color="accent">Agregar delito</button>
     </div>
 </div>
-<md-paginator #paginator 
+<mat-paginator #paginator 
 [length]="pag" 
 [pageIndex]="0" 
 [pageSize]="10" 
 [pageSizeOptions]="[5, 10, 25, 100]"
 (page)="changePage($event)">    
-</md-paginator>
-<md-table #table [dataSource]="dataSource">
-    <ng-container mdColumnDef="nombre">
-        <md-header-cell *mdHeaderCellDef> Nombre </md-header-cell>
-        <md-cell *mdCellDef="let element">{{element.delito.nombre}}</md-cell>
+</mat-paginator>
+<mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.delito.nombre}}</mat-cell>
     </ng-container>
 
-    <ng-container mdColumnDef="principal">
-        <md-header-cell *mdHeaderCellDef> Principal </md-header-cell>
-        <md-cell *mdCellDef="let element" style="text-align: center;">
-            <md-icon *ngIf="element.principal==true" style="color: gold;" (click)="swap(element)">star</md-icon>
-            <md-icon  *ngIf="element.principal==false" style="color: gold;" (click)="swap(element)" >star_border</md-icon>
-        </md-cell>
+    <ng-container matColumnDef="principal">
+        <mat-header-cell *matHeaderCellDef> Principal </mat-header-cell>
+        <mat-cell *matCellDef="let element" style="text-align: center;">
+            <mat-icon *ngIf="element.principal==true" style="color: gold;" (click)="swap(element)">star</mat-icon>
+            <mat-icon  *ngIf="element.principal==false" style="color: gold;" (click)="swap(element)" >star_border</mat-icon>
+        </mat-cell>
     </ng-container>
 
-    <md-header-row *mdHeaderRowDef="_columns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: _columns;"></md-row>
-</md-table>
+    <mat-header-row *matHeaderRowDef="_columns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: _columns;"></mat-row>
+</mat-table>

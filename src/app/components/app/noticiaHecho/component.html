@@ -9,8 +9,8 @@
         <h2>Noticia de Hechos</h2>
     </div>
     <div class="col-md-6">
-        <button class="float-right" *ngIf="id == null; else idNull" md-raised-button routerLink="/" color="accent">Regresar</button>
-        <button class="float-right"  *ngIf="id != null" id="idNull" md-raised-button routerLink="{{returnRoute}}" color="accent">Regresar</button>
+        <button class="float-right" *ngIf="id == null; else idNull" mat-raised-button routerLink="/" color="accent">Regresar</button>
+        <button class="float-right"  *ngIf="id != null" id="idNull" mat-raised-button routerLink="{{returnRoute}}" color="accent">Regresar</button>
     </div>
 </div>
 <div class="mdl-tabs vertical-mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
@@ -18,40 +18,40 @@
         <div class="col-md-3 col-sm-2">
             <div class="mdl-tabs__tab-bar">
                 <a href="#tab1-panel" class="mdl-tabs__tab is-active">
-                    <md-icon class="d-inline">class</md-icon>
+                    <mat-icon class="d-inline">class</mat-icon>
                     <label class="d-xs-none d-sm-none d-md-inline">Datos generales</label>
                 </a>
                 <div [class]="hasId() ? '' : 'hidden' ">
                     <a href="#tab2-panel" class="mdl-tabs__tab disabled">
-                        <md-icon>assignment_ind</md-icon>
+                        <mat-icon>assignment_ind</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Personas</label>
                     </a>
                     <a href="#tab3-panel" class="mdl-tabs__tab">
-                        <md-icon>gavel</md-icon>
+                        <mat-icon>gavel</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Delitos</label>
                     </a>
                     <a href="#tab4-panel" class="mdl-tabs__tab">
-                        <md-icon>room</md-icon>
+                        <mat-icon>room</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Lugares</label>
                     </a>
                     <a href="#tab5-panel" class="mdl-tabs__tab">
-                        <md-icon>room</md-icon>
+                        <mat-icon>room</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Armas</label>
                     </a>
                     <a href="#tab6-panel" class="mdl-tabs__tab">
-                        <md-icon>directions_car</md-icon>
+                        <mat-icon>directions_car</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Vehículos</label>
                     </a>
                     <a href="#tab7-panel" class="mdl-tabs__tab">
-                        <md-icon>compare_arrows</md-icon>
+                        <mat-icon>compare_arrows</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Relaciones</label>
                     </a>
                     <a href="#tab8-panel" class="mdl-tabs__tab">
-                        <md-icon>description</md-icon>
+                        <mat-icon>description</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Titulares</label>
                     </a>
                     <a href="#tab9-panel" class="mdl-tabs__tab">
-                        <md-icon>insert_drive_file</md-icon>
+                        <mat-icon>insert_drive_file</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Documentos</label>
                     </a>
                 </div>

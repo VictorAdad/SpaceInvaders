@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { MdPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 import { ActivatedRoute }    from '@angular/router';
 import { CIndexedDB } from '@services/indexedDB';
 import { OnLineService } from '@services/onLine.service';
@@ -19,8 +19,8 @@ export class HomeComponent implements OnInit {
     public casos: Caso[] = [];
     public dataSource: TableService;
     public pag: number = 0;
-    @ViewChild(MdPaginator) 
-    paginator: MdPaginator;
+    @ViewChild(MatPaginator) 
+    paginator: MatPaginator;
     
 
     constructor(

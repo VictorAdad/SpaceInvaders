@@ -1,16 +1,16 @@
-<md-toolbar color="primary" class="mat-drawer-container mat-sidenav-container mat-drawer-transition mat-elevation-z8">
+<mat-toolbar color="primary" class="mat-drawer-container mat-sidenav-container mat-drawer-transition mat-elevation-z8">
     <span>
-        <md-list-item>SIGI</md-list-item>
+        <mat-list-item>SIGI</mat-list-item>
     </span>
-</md-toolbar>
+</mat-toolbar>
 <div class="container">
 	<div class="row justify-content-md-center align-items-center" style="height: 75%;">
 		<div class="col-md-8 col">
-			<md-card>
-				<md-card-header>
+			<mat-card>
+				<mat-card-header>
 					<h1 class="full-width text-center">Inicio de sesión</h1>
-				</md-card-header>
-				<md-card-content>
+				</mat-card-header>
+				<mat-card-content>
 					<form (submit)="login()">
 						<div class="space">
 							<text label="Usuario" [(value)]="usuario"></text>
@@ -18,16 +18,16 @@
 							<checkbox label="Recordarme"></checkbox>
 						</div>
 						<div class="space">
-							<button class="full-width btn-lg" md-raised-button color="accent" type="submit">Iniciar sesión</button>
+							<button class="full-width btn-lg" mat-raised-button color="accent" type="submit">Iniciar sesión</button>
 						</div>
 						<div class="space text-center">
 							<a href="">¿Olivdaste tu contraseña?</a>
 						</div>
 					</form>
-				</md-card-content>
-				<md-card-actions>
-				</md-card-actions>
-			</md-card>
+				</mat-card-content>
+				<mat-card-actions>
+				</mat-card-actions>
+			</mat-card>
 
 	</div>
 </div>

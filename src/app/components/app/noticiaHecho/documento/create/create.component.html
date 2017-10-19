@@ -1,6 +1,6 @@
-<h2 md-dialog-title>
+<h2 matDialogTitle>
     Carga de documentos</h2>
-<md-dialog-content>
+<mat-dialog-content>
     <div class="container h-100">
         <div class="row" *ngIf="uploader.queue.length == 0">
             <div ng2FileSelect ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader"
@@ -20,7 +20,7 @@
                 <tbody>
                     <tr *ngFor="let item of uploader.queue">
                         <td>{{item?.file?.name}}</td>
-                        <td><button md-icon-button mdTooltip="Eliminar" (click)="item.remove()"><md-icon>clear</md-icon></button></td>
+                        <td><button mat-icon-button matTooltip="Eliminar" (click)="item.remove()"><mat-icon>clear</mat-icon></button></td>
                     </tr>
                 </tbody>
             </table>
@@ -34,12 +34,12 @@
             </div>
         </div>
     </div>
-</md-dialog-content>
-<md-dialog-actions class="d-flex justify-content-end">
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-end">
     <div class="p-2">
-        <button md-raised-button md-dialog-close color="accent" (click)="guardar()">Guardar</button>
+        <button mat-raised-button matDialogClose color="accent" (click)="guardar()">Guardar</button>
     </div>
     <div class="p-2">
-        <button md-button (click)="close()">Cerrar</button>
+        <button mat-button (click)="close()">Cerrar</button>
     </div>
-</md-dialog-actions>
+</mat-dialog-actions>

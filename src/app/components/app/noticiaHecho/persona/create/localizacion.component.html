@@ -1,12 +1,12 @@
-<md-expansion-panel [formGroup]="globals.form">
-    <md-expansion-panel-header>
-        <md-panel-title>
-            <md-icon>room</md-icon> Datos de Localización
-        </md-panel-title>
-        <md-panel-description>
+<mat-expansion-panel [formGroup]="globals.form">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <mat-icon>room</mat-icon> Datos de Localización
+        </mat-panel-title>
+        <mat-panel-description>
 
-        </md-panel-description>
-    </md-expansion-panel-header>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
     <div formArrayName="localizacionPersona">
         <div *ngFor="let localizacion of globals.form.controls.localizacionPersona.controls; let i=index; trackBy:trackByIndex" [formGroupName]="i">
             <div class="row" >
@@ -82,9 +82,9 @@
                     </text>
                 </div>
                 <div class="col-md-2">
-                    <!-- <md-form-field class="full-width">
-                        <input mdInput placeholder="Calle" formControlName="calle">
-                    </md-form-field> -->
+                    <!-- <mat-form-field class="full-width">
+                        <input matInput placeholder="Calle" formControlName="calle">
+                    </mat-form-field> -->
                     <text label="Calle" name="calle" [group]="globals.form.controls.localizacionPersona.controls[i]"></text>
                 </div>
                 <div class="col-md-2">
@@ -192,7 +192,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <button md-raised-button color="accent" (click)="addLocalizacion($event)">Agregar localización</button>
+            <button mat-raised-button color="accent" (click)="addLocalizacion($event)">Agregar localización</button>
         </div>
     </div>
-</md-expansion-panel>
+</mat-expansion-panel>

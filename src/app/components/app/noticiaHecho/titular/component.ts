@@ -1,12 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { MdPaginator, MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
+import { MatPaginator, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 
 @Component({
     templateUrl:'tranferir.component.html'
 })
 export class TransferirComponent{
-    constructor(public dialogRef: MdDialogRef<TransferirComponent>){}
+    constructor(public dialogRef: MatDialogRef<TransferirComponent>){}
 
     close(){
         this.dialogRef.close();
@@ -21,9 +21,9 @@ export class TitularComponent{
 	columns = ['operador', 'oficina', 'titular', 'asignacion', 'nic', 'transferir'];
 	data      :Titular[];
 	dataSource: TableService | null;
-	@ViewChild(MdPaginator) paginator: MdPaginator;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
 
-	constructor(public dialog: MdDialog){}
+	constructor(public dialog: MatDialog){}
 
 	ngOnInit() {
         this.data = data;

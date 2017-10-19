@@ -3,28 +3,28 @@
         <h3>Relaciones</h3>
     </div>
     <div class="col-md-6">
-        <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/relaciones/create" color="accent">Agregar relación</button>
+        <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/relaciones/create" color="accent">Agregar relación</button>
     </div>
 </div>
 
-<md-paginator #paginator
+<mat-paginator #paginator
     [length]="pag"
     [pageIndex]="0"
     [pageSize]="10"
     [pageSizeOptions]="[5, 10, 25, 100]"
     (page)="changePage($event)">
-  </md-paginator>
-<md-table #table [dataSource]="dataSource">
-    <ng-container mdColumnDef="Tipo">
-        <md-header-cell *mdHeaderCellDef> Tipo de relación </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.tipo}} </md-cell>
+  </mat-paginator>
+<mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="Tipo">
+        <mat-header-cell *matHeaderCellDef> Tipo de relación </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.tipo}} </mat-cell>
     </ng-container>
-    <ng-container mdColumnDef="Elementos">
-        <md-header-cell *mdHeaderCellDef> Elementos relacionados </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.elementos}} </md-cell>
+    <ng-container matColumnDef="Elementos">
+        <mat-header-cell *matHeaderCellDef> Elementos relacionados </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.elementos}} </mat-cell>
     </ng-container>
 
-    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: displayedColumns;" routerLink="/caso/{{casoId}}/relaciones/{{row.id}}"></md-row>
-</md-table>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" routerLink="/caso/{{casoId}}/relaciones/{{row.id}}"></mat-row>
+</mat-table>
 

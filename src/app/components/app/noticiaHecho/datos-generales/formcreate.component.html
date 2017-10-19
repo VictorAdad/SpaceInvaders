@@ -1,4 +1,4 @@
-<md-dialog-content>
+<mat-dialog-content>
     <div class="content-dialog-lg">
         <div class="">
             <div class="row breadcrumd">
@@ -7,8 +7,8 @@
                     <text label="Buscar delitos" [functionChange]="setDelito.bind(this)"></text>
                 </div>
                 <div class="col-sm-auto">
-                    <button md-fab color="accent" (click)="buscar()">
-                        <md-icon >search</md-icon>
+                    <button mat-fab color="accent" (click)="buscar()">
+                        <mat-icon >search</mat-icon>
                     </button>
                 </div>
             </div>
@@ -17,58 +17,58 @@
         <div class="row space">
             <div class="col-md-6" >
                 <div class="cuadro" style="height: 300px; overflow: scroll; ">
-                 <md-table #table [dataSource]="dataSource">
+                 <mat-table #table [dataSource]="dataSource">
 
-                    <ng-container mdColumnDef="resultado">
-                      <md-header-cell *mdHeaderCellDef> Resultados </md-header-cell>
-                      <md-cell *mdCellDef="let element"> 
+                    <ng-container matColumnDef="resultado">
+                      <mat-header-cell *matHeaderCellDef> Resultados </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> 
                         <div>
                             {{element.nombre}} 
                         </div>
                         <div class="float-right">
-                            <button md-icon-button (click)="agregar(element)">
-                                <md-icon >add</md-icon>
+                            <button mat-icon-button (click)="agregar(element)">
+                                <mat-icon >add</mat-icon>
                             </button>
                         </div>
                        
-                  </md-cell>
+                  </mat-cell>
                     </ng-container>
 
-                    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-                    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
-                </md-table>   
+                </mat-table>   
                 </div>    
             </div>
             <div class="col-md-6" >
                 <div class="cuadro" style="height: 300px; overflow: scroll; ">
-                <md-table #table [dataSource]="dataSourceaddList">
+                <mat-table #table [dataSource]="dataSourceaddList">
 
-                    <ng-container mdColumnDef="resultado">
-                      <md-header-cell *mdHeaderCellDef> Fundamentación </md-header-cell>
-                      <md-cell *mdCellDef="let element"> 
+                    <ng-container matColumnDef="resultado">
+                      <mat-header-cell *matHeaderCellDef> Fundamentación </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> 
                         <div>
                             {{element.nombre}} 
                         </div>
-                  </md-cell>
+                  </mat-cell>
                     </ng-container>
 
-                    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-                    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
-                </md-table>
+                </mat-table>
                 </div>
             </div>
         </div>
     </div>
-</md-dialog-content>
-<md-dialog-actions>
+</mat-dialog-content>
+<mat-dialog-actions>
     <div class="row justify-content-end">
         <div class="col-sm-auto">
-            <button md-raised-button color="accent" (click)="fireEvent()" [disabled]="listaDeSeleccionados.length==0" >Agregar delitos</button>
+            <button mat-raised-button color="accent" (click)="fireEvent()" [disabled]="listaDeSeleccionados.length==0" >Agregar delitos</button>
         </div>
         <div class="col-sm-auto">
-            <button md-button (click)="cerrar();" >Cerrar</button>
+            <button mat-button (click)="cerrar();" >Cerrar</button>
         </div>
     </div>
-</md-dialog-actions>
+</mat-dialog-actions>

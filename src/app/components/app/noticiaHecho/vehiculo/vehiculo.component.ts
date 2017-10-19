@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MdPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { ActivatedRoute } from '@angular/router';
 import { OnLineService} from '@services/onLine.service';
@@ -19,7 +19,7 @@ export class VehiculoComponent{
 	public vehiculos: Vehiculo[] = [];
 	public dataSource: TableService | null;
     public pag: number = 0;
-	@ViewChild(MdPaginator) paginator: MdPaginator;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB) { }
 

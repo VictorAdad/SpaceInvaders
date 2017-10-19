@@ -12,7 +12,7 @@ class IBreadcrumb {
   selector: "breadcrumb",
   template: `
   <nav class="breadcrumb">
-    <a class="breadcrumb-item" routerLink="/"><md-icon>home</md-icon></a>
+    <a class="breadcrumb-item" routerLink="/"><mat-icon>home</mat-icon></a>
     <a class="breadcrumb-item"   *ngFor="let ruta of breadcrumb.childs"   routerLink="{{ruta.path}}" >{{ruta.label}}</a>
     <span class="breadcrumb-item active">{{breadcrumb.label}}</span>
   </nav>

@@ -6,7 +6,7 @@
 </div>
 <div class="row space">
     <div class="col-md-12">
-        <md-card>
+        <mat-card>
             <div class="row">
                 <div class="col">
                     <div class="d-flex">
@@ -15,7 +15,7 @@
                         </div>
                     </div>
                     <div class="row space"></div>
-                    <md-card-content>
+                    <mat-card-content>
                         <div class="row">
                             <div class="col-md-6">
                                 <strong>Información general</strong>
@@ -24,27 +24,27 @@
                             </div>
                             <div class="col-md-4">
                                 <strong>Involucrados</strong>
-                                <md-list>
-                                    <md-list-item *ngFor="let involucrado of involucrados">
+                                <mat-list>
+                                    <mat-list-item *ngFor="let involucrado of involucrados">
                                      {{involucrado.persona.nombre+" "+involucrado.persona.paterno+" "+involucrado.persona.materno}} 
-                                    </md-list-item>
-                                </md-list>
+                                    </mat-list-item>
+                                </mat-list>
                             </div>
                             <div class="col-md-2">
                                 <strong>Delito</strong>
-                                <md-list>
-                                    <md-list-item *ngFor="let delitoCaso of delitos">
+                                <mat-list>
+                                    <mat-list-item *ngFor="let delitoCaso of delitos">
                                      {{delitoCaso.delito.nombre}} 
-                                    </md-list-item>
-                                </md-list>
+                                    </mat-list-item>
+                                </mat-list>
                             </div>
                         </div>
-                        <md-divider></md-divider>
+                        <mat-divider></mat-divider>
                         <div class="row space"></div>
                         <div class="row">
                             <div class="col-md-4">
-                                <md-card class="h-100">
-                                    <md-card-content class="d-flex flex-column h-100">
+                                <mat-card class="h-100">
+                                    <mat-card-content class="d-flex flex-column h-100">
                                         <div class="row ml-0 mr-0 align-items-center mb-auto">
                                             <div class="col-lg-8">
                                                 <div class="row">
@@ -64,14 +64,14 @@
                                         </div>
                                         <div class="row space"></div>
                                         <div class="row">
-                                            <button md-button routerLink="/caso/{{id}}/noticia-hecho">Ver ahora</button>
+                                            <button mat-button routerLink="/caso/{{id}}/noticia-hecho">Ver ahora</button>
                                         </div>
-                                    </md-card-content>
-                                </md-card>
+                                    </mat-card-content>
+                                </mat-card>
                             </div>
                             <div class="col-md-4">
-                                <md-card class="h-100">
-                                    <md-card-content class="d-flex flex-column h-100">
+                                <mat-card class="h-100">
+                                    <mat-card-content class="d-flex flex-column h-100">
                                         <div class="row ml-0 mr-0 align-items-center mb-auto">
                                             <div class="col-lg-8">
                                                 <div class="row">
@@ -91,31 +91,31 @@
                                         </div>
                                         <div class="row space"></div>
                                         <div class="row">
-                                            <button md-button routerLink="/caso/{{id}}/predenuncia/create">Ver ahora</button>
+                                            <button mat-button routerLink="/caso/{{id}}/predenuncia/create">Ver ahora</button>
                                         </div>
-                                    </md-card-content>
-                                </md-card>
+                                    </mat-card-content>
+                                </mat-card>
                             </div>
                         </div>
-                    </md-card-content>
+                    </mat-card-content>
                 </div>
             </div>
-        </md-card>
+        </mat-card>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        <md-card>
+        <mat-card>
             <div class="d-flex justify-content-between">
                 <div class="row">
                     <h2>Detalle pre denuncia <small>(NIC: CAI/AIN/00/UAI/255/00131/17/09)</small></h2>
                 </div>
                 <div>
-                    <md-icon>more_vert</md-icon>
+                    <mat-icon>more_vert</mat-icon>
                 </div>
             </div>
             <div class="row space"></div>
-            <md-card-content>
+            <mat-card-content>
                 <div class="row">
                     <div class="col-md-8">
                         <strong>Detalle de los hechos</strong>
@@ -138,7 +138,7 @@
                     </div>
                 </div>
 
-                <md-divider></md-divider>
+                <mat-divider></mat-divider>
                 <div class="row space"></div>
                 <div class="row align-items-center">
                     <div class="col-md-auto space">
@@ -150,8 +150,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <md-card class="h-100">
-                            <md-card-content class="d-flex flex-column h-100">
+                        <mat-card class="h-100">
+                            <mat-card-content class="d-flex flex-column h-100">
                                 <div class="row ml-0 mr-0 align-items-center mb-auto">
                                     <div class="col-lg-8">
                                         <div class="row">
@@ -171,14 +171,14 @@
                                 </div>
                                 <div class="row space"></div>
                                 <div class="row">
-                                    <button md-button routerLink="/caso/{{id}}/perito">Ver ahora</button>
+                                    <button mat-button routerLink="/caso/{{id}}/perito">Ver ahora</button>
                                 </div>
-                            </md-card-content>
-                        </md-card>
+                            </mat-card-content>
+                        </mat-card>
                     </div>
                     <div class="col-md-4">
-                        <md-card class="h-100">
-                            <md-card-content class="d-flex align-items-start flex-column h-100">
+                        <mat-card class="h-100">
+                            <mat-card-content class="d-flex align-items-start flex-column h-100">
                                 <div class="d-flex flex-wrap align-items-center mb-auto">
                                     <div class="col-lg-8">
                                         <div class="row">
@@ -198,14 +198,14 @@
                                 </div>
                                 <div class="row space"></div>
                                 <div class="row">
-                                    <button md-button routerLink="/caso/{{id}}/policia">Ver ahora</button>
+                                    <button mat-button routerLink="/caso/{{id}}/policia">Ver ahora</button>
                                 </div>
-                            </md-card-content>
-                        </md-card>
+                            </mat-card-content>
+                        </mat-card>
                     </div>
                     <div class="col-md-4">
-                        <md-card class="h-100">
-                            <md-card-content class="d-flex flex-column h-100">
+                        <mat-card class="h-100">
+                            <mat-card-content class="d-flex flex-column h-100">
                                 <div class="row ml-0 mr-0 align-items-center mb-auto">
                                     <div class="col-lg-8">
                                         <div class="row">
@@ -225,17 +225,17 @@
                                 </div>
                                 <div class="row space"></div>
                                 <div class="row">
-                                    <button md-button routerLink="/caso/{{id}}/acuerdo-general">Ver ahora</button>
+                                    <button mat-button routerLink="/caso/{{id}}/acuerdo-general">Ver ahora</button>
                                 </div>
-                            </md-card-content>
-                        </md-card>
+                            </mat-card-content>
+                        </mat-card>
                     </div>
                 </div>
                 <div class="row space"></div>
                 <div class="row">
                     <div class="col-md-4">
-                        <md-card class="h-100">
-                            <md-card-content class="d-flex flex-column h-100">
+                        <mat-card class="h-100">
+                            <mat-card-content class="d-flex flex-column h-100">
                                 <div class="row ml-0 mr-0 align-items-center mb-auto">
                                     <div class="col-lg-8">
                                         <div class="row">
@@ -255,14 +255,14 @@
                                 </div>
                                 <div class="row space"></div>
                                 <div class="row">
-                                    <button md-button routerLink="/caso/{{id}}/registro-general">Ver ahora</button>
+                                    <button mat-button routerLink="/caso/{{id}}/registro-general">Ver ahora</button>
                                 </div>
-                            </md-card-content>
-                        </md-card>
+                            </mat-card-content>
+                        </mat-card>
                     </div>
                     <div class="col-md-4">
-                        <md-card class="h-100">
-                            <md-card-content class="d-flex flex-column h-100">
+                        <mat-card class="h-100">
+                            <mat-card-content class="d-flex flex-column h-100">
                                 <div class="row ml-0 mr-0 align-items-center mb-auto">
                                     <div class="col-lg-8">
                                         <div class="row">
@@ -282,14 +282,14 @@
                                 </div>
                                 <div class="row space"></div>
                                 <div class="row">
-                                    <button md-button routerLink="/caso/{{id}}/inspeccion">Ver ahora</button>
+                                    <button mat-button routerLink="/caso/{{id}}/inspeccion">Ver ahora</button>
                                 </div>
-                            </md-card-content>
-                        </md-card>
+                            </mat-card-content>
+                        </mat-card>
                     </div>
                     <div class="col-md-4">
-                        <md-card class="h-100">
-                            <md-card-content class="d-flex flex-column h-100">
+                        <mat-card class="h-100">
+                            <mat-card-content class="d-flex flex-column h-100">
                                 <div class="row ml-0 mr-0 align-items-center mb-auto">
                                     <div class="col-lg-8">
                                         <div class="row">
@@ -309,10 +309,10 @@
                                 </div>
                                 <div class="row space"></div>
                                 <div class="row">
-                                    <button md-button routerLink="/caso/{{id}}/requerimiento-informacion">Ver ahora</button>
+                                    <button mat-button routerLink="/caso/{{id}}/requerimiento-informacion">Ver ahora</button>
                                 </div>
-                            </md-card-content>
-                        </md-card>
+                            </mat-card-content>
+                        </mat-card>
                     </div>
                 </div>
                 <div class="row space"></div>
@@ -326,8 +326,8 @@
                 </div>
                 <div class="row space">
                     <div class="col-md-4">
-                        <md-card class="h-100">
-                            <md-card-content class="d-flex flex-column h-100">
+                        <mat-card class="h-100">
+                            <mat-card-content class="d-flex flex-column h-100">
                                 <div class="row ml-0 mr-0 align-items-center mb-auto">
                                     <div class="col-lg-8">
                                         <div class="row">
@@ -347,14 +347,14 @@
                                 </div>
                                 <div class="row space"></div>
                                 <div class="row">
-                                    <button md-button routerLink="/caso/{{id}}/acuerdo-inicio">Ver ahora</button>
+                                    <button mat-button routerLink="/caso/{{id}}/acuerdo-inicio">Ver ahora</button>
                                 </div>
-                            </md-card-content>
-                        </md-card>
+                            </mat-card-content>
+                        </mat-card>
                     </div>
                     <div class="col-md-4">
-                        <md-card class="h-100">
-                            <md-card-content class="d-flex flex-column h-100">
+                        <mat-card class="h-100">
+                            <mat-card-content class="d-flex flex-column h-100">
                                 <div class="row ml-0 mr-0 align-items-center mb-auto">
                                     <div class="col-lg-8">
                                         <div class="row">
@@ -374,10 +374,10 @@
                                 </div>
                                 <div class="row space"></div>
                                 <div class="row">
-                                    <button md-button routerLink="/caso/{{id}}/acuerdo-radicacion">Ver ahora</button>
+                                    <button mat-button routerLink="/caso/{{id}}/acuerdo-radicacion">Ver ahora</button>
                                 </div>
-                            </md-card-content>
-                        </md-card>
+                            </mat-card-content>
+                        </mat-card>
                     </div>
                 </div>
                 <div class="row space"></div>
@@ -391,8 +391,8 @@
                 </div>
                 <div class="row space">
                     <div class="col-md-4">
-                        <md-card class="h-100">
-                            <md-card-content class="d-flex flex-column h-100">
+                        <mat-card class="h-100">
+                            <mat-card-content class="d-flex flex-column h-100">
                                 <div class="row ml-0 mr-0 align-items-center mb-auto">
                                     <div class="col-lg-8">
                                         <div class="row">
@@ -412,10 +412,10 @@
                                 </div>
                                 <div class="row space"></div>
                                 <div class="row">
-                                    <button md-button routerLink="/caso/{{id}}/entrevista">Ver ahora</button>
+                                    <button mat-button routerLink="/caso/{{id}}/entrevista">Ver ahora</button>
                                 </div>
-                            </md-card-content>
-                        </md-card>
+                            </mat-card-content>
+                        </mat-card>
                     </div>
                 </div>
                 <div class="row space"></div>
@@ -429,8 +429,8 @@
                 </div>
                 <div class="row space">
                     <div class="col-md-4">
-                        <md-card class="h-100">
-                            <md-card-content class="d-flex flex-column h-100">
+                        <mat-card class="h-100">
+                            <mat-card-content class="d-flex flex-column h-100">
                                 <div class="row ml-0 mr-0 align-items-center mb-auto">
                                     <div class="col-lg-8">
                                         <div class="row">
@@ -450,14 +450,14 @@
                                 </div>
                                 <div class="row space"></div>
                                 <div class="row">
-                                    <button md-button routerLink="/caso/{{id}}/archivo-temporal">Ver ahora</button>
+                                    <button mat-button routerLink="/caso/{{id}}/archivo-temporal">Ver ahora</button>
                                 </div>
-                            </md-card-content>
-                        </md-card>
+                            </mat-card-content>
+                        </mat-card>
                     </div>
                     <div class="col-md-4">
-                        <md-card class="h-100">
-                            <md-card-content class="d-flex flex-column h-100">
+                        <mat-card class="h-100">
+                            <mat-card-content class="d-flex flex-column h-100">
                                 <div class="row ml-0 mr-0 align-items-center mb-auto">
                                     <div class="col-lg-8">
                                         <div class="row">
@@ -477,14 +477,14 @@
                                 </div>
                                 <div class="row space"></div>
                                 <div class="row">
-                                    <button md-button routerLink="/caso/{{id}}/no-ejercicio-accion-penal">Ver ahora</button>
+                                    <button mat-button routerLink="/caso/{{id}}/no-ejercicio-accion-penal">Ver ahora</button>
                                 </div>
-                            </md-card-content>
-                        </md-card>
+                            </mat-card-content>
+                        </mat-card>
                     </div>
                     <div class="col-md-4">
-                        <md-card class="h-100">
-                            <md-card-content class="d-flex flex-column h-100">
+                        <mat-card class="h-100">
+                            <mat-card-content class="d-flex flex-column h-100">
                                 <div class="row ml-0 mr-0 align-items-center mb-auto">
                                     <div class="col-lg-8">
                                         <div class="row">
@@ -504,16 +504,16 @@
                                 </div>
                                 <div class="row space"></div>
                                 <div class="row">
-                                    <button md-button routerLink="/caso/{{id}}/facultad-no-investigar">Ver ahora</button>
+                                    <button mat-button routerLink="/caso/{{id}}/facultad-no-investigar">Ver ahora</button>
                                 </div>
-                            </md-card-content>
-                        </md-card>
+                            </mat-card-content>
+                        </mat-card>
                     </div>
                 </div>
-            </md-card-content>
-            <md-card-footer>
+            </mat-card-content>
+            <mat-card-footer>
 
-            </md-card-footer>
-        </md-card>
+            </mat-card-footer>
+        </mat-card>
     </div>
 </div>

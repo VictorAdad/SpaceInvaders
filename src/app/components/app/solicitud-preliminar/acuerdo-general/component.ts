@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MdPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { AcuerdoGeneral } from '@models/solicitud-preliminar/acuerdoGeneral';
 import { OnLineService} from '@services/onLine.service';
@@ -18,8 +18,8 @@ export class AcuerdoGeneralComponent {
 	public data: AcuerdoGeneral[] = [];
     public casoId: number = null;
     public haveCaso: boolean=false;
-	@ViewChild(MdPaginator) 
-    paginator: MdPaginator;
+	@ViewChild(MatPaginator) 
+    paginator: MatPaginator;
     public breadcrumb = [];
     public apiUrl="/v1/base/solicitudes-pre-acuerdos/casos/{id}/page";
 

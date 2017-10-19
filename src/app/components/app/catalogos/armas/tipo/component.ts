@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MdPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
@@ -17,7 +17,7 @@ export class TipoArmaComponent {
     hidePaginator: boolean = false;
     selectedRow: Number;
 
-	@ViewChild(MdPaginator) paginator: MdPaginator;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(private router: Router) {}
     

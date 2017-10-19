@@ -30,12 +30,12 @@
                 </div>
             </div>
             <div class="row justify-content-end">
-                <div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
-                    <button md-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id != null">Editar</button>
-                    <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
+                <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
+                    <button mat-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id != null">Editar</button>
+                    <button mat-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
                 </div>
                 <div class="col-sm-auto">
-                    <button class="float-right" md-button routerLink="/caso/{{casoId}}/registro-general">Cancelar</button>
+                    <button class="float-right" mat-button routerLink="/caso/{{casoId}}/registro-general">Cancelar</button>
                 </div>
             </div>
         </form>

@@ -4,43 +4,43 @@
     </div>
 </div>
 <div class="">
-    <md-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
-    </md-paginator>
-    <md-table #table [dataSource]="dataSource">
+    <mat-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+    <mat-table #table [dataSource]="dataSource">
 
-        <ng-container mdColumnDef="operador">
-            <md-header-cell *mdHeaderCellDef> Operador </md-header-cell>
-            <md-cell *mdCellDef="let element"> {{element.operador}} </md-cell>
+        <ng-container matColumnDef="operador">
+            <mat-header-cell *matHeaderCellDef> Operador </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.operador}} </mat-cell>
         </ng-container>
 
-        <ng-container mdColumnDef="oficina">
-            <md-header-cell *mdHeaderCellDef> Oficina </md-header-cell>
-            <md-cell *mdCellDef="let element"> {{element.oficina}} </md-cell>
+        <ng-container matColumnDef="oficina">
+            <mat-header-cell *matHeaderCellDef> Oficina </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.oficina}} </mat-cell>
         </ng-container>
 
-        <ng-container mdColumnDef="titular">
-            <md-header-cell *mdHeaderCellDef> Titular </md-header-cell>
-            <md-cell *mdCellDef="let element"> {{element.titular}} </md-cell>
+        <ng-container matColumnDef="titular">
+            <mat-header-cell *matHeaderCellDef> Titular </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.titular}} </mat-cell>
         </ng-container>
 
-        <ng-container mdColumnDef="asignacion">
-            <md-header-cell *mdHeaderCellDef> Fecha de asignación de titular </md-header-cell>
-            <md-cell *mdCellDef="let element"> {{element.asignacion}} </md-cell>
+        <ng-container matColumnDef="asignacion">
+            <mat-header-cell *matHeaderCellDef> Fecha de asignación de titular </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.asignacion}} </mat-cell>
         </ng-container>
 
-        <ng-container mdColumnDef="nic">
-            <md-header-cell *mdHeaderCellDef> NIC </md-header-cell>
-            <md-cell *mdCellDef="let element"> {{element.nic}} </md-cell>
+        <ng-container matColumnDef="nic">
+            <mat-header-cell *matHeaderCellDef> NIC </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.nic}} </mat-cell>
         </ng-container>
 
-        <ng-container mdColumnDef="transferir">
-            <md-header-cell *mdHeaderCellDef> Transferir </md-header-cell>
-            <md-cell *mdCellDef="let element">
-                <button class="float-right" md-icon-button (click)="transferirDialog()"><md-icon  class="md-24">arrow_forward</md-icon></button>
-            </md-cell>
+        <ng-container matColumnDef="transferir">
+            <mat-header-cell *matHeaderCellDef> Transferir </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button class="float-right" mat-icon-button (click)="transferirDialog()"><mat-icon  class="md-24">arrow_forward</mat-icon></button>
+            </mat-cell>
         </ng-container>
 
-        <md-header-row *mdHeaderRowDef="columns"></md-header-row>
-        <md-row *mdRowDef="let row; columns: columns;"></md-row>
-    </md-table>
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+    </mat-table>
 </div>

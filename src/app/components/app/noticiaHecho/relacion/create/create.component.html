@@ -9,7 +9,7 @@
         <h2>Registrar Relación</h2>
     </div>
     <div class="col-md-6">
-        <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/noticia-hecho" color="accent">Regresar</button>
+        <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/noticia-hecho" color="accent">Regresar</button>
     </div>
 </div>
 <div class="row">
@@ -225,10 +225,10 @@
                     </select2>
                 </div>
                 <div class="col" [formGroup]="form">
-                    <md-checkbox class="example-margin" name="flagrancia" formControlName="flagrancia" >Flagrancia</md-checkbox>
+                    <mat-checkbox class="example-margin" name="flagrancia" formControlName="flagrancia" >Flagrancia</mat-checkbox>
                 </div>
                 <div class="col" [formGroup]="form">
-                    <md-checkbox class="example-margin" formControlName="tieneViolenciaGenero" (change)="changeViolenciaGenero($event)">Violencia de genero</md-checkbox>
+                    <mat-checkbox class="example-margin" formControlName="tieneViolenciaGenero" (change)="changeViolenciaGenero($event)">Violencia de genero</mat-checkbox>
                     <!-- <checkbox label="Violencia de genero" name="tieneViolenciaGenero"  (valueChange)="changeViolenciaGenero($event)"></checkbox> -->
                 </div>
             </div>
@@ -314,8 +314,8 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <button class="float-right m-1" color="accent" md-raised-button >Limpiar</button>
-                            <button class="float-right m-1" md-raised-button color="accent" (click)="addEfectoDetalle(formRelacion.efectoDetalle.value)" [disabled]="false">Agregar</button>
+                            <button class="float-right m-1" color="accent" mat-raised-button >Limpiar</button>
+                            <button class="float-right m-1" mat-raised-button color="accent" (click)="addEfectoDetalle(formRelacion.efectoDetalle.value)" [disabled]="false">Agregar</button>
                         </div>
                     </div>
 
@@ -323,22 +323,22 @@
                     <div class="row space">
                         <div class="col">
                             <div class="">
-                              <md-table #table [dataSource]="colections.sourceEfectoDetalle">
+                              <mat-table #table [dataSource]="colections.sourceEfectoDetalle">
                                     <!-- Efecto Column -->
-                                    <ng-container mdColumnDef="efecto">
-                                        <md-header-cell *mdHeaderCellDef> Efecto </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.efecto}} </md-cell>
+                                    <ng-container matColumnDef="efecto">
+                                        <mat-header-cell *matHeaderCellDef> Efecto </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.efecto}} </mat-cell>
                                     </ng-container>
 
                                     <!-- Detalle Column -->
-                                    <ng-container mdColumnDef="detalle">
-                                        <md-header-cell *mdHeaderCellDef> Detalle </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.detalle}} </md-cell>
+                                    <ng-container matColumnDef="detalle">
+                                        <mat-header-cell *matHeaderCellDef> Detalle </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.detalle}} </mat-cell>
                                     </ng-container>
 
-                                    <md-header-row *mdHeaderRowDef="efectoDisplayedColumns"></md-header-row>
-                                    <md-row *mdRowDef="let row; columns: efectoDisplayedColumns;"></md-row>
-                                </md-table>
+                                    <mat-header-row *matHeaderRowDef="efectoDisplayedColumns"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: efectoDisplayedColumns;"></mat-row>
+                                </mat-table>
                             </div>
                         </div>
                     </div>
@@ -408,9 +408,9 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                        <button class="float-right m-1" color="accent" md-raised-button >Limpiar</button>
+                        <button class="float-right m-1" color="accent" mat-raised-button >Limpiar</button>
                         <button class="float-right m-1" 
-                            md-raised-button color="accent"
+                            mat-raised-button color="accent"
                             (click)="addTrataPersonas(formRelacion.trataPersonasForm.value)">
                             Agregar
                         </button>
@@ -419,48 +419,48 @@
                     <div class="row">
                         <div class="col">
                             <div class="">
-                                <md-table #table [dataSource]="colections.sourceTrataPersonas">
+                                <mat-table #table [dataSource]="colections.sourceTrataPersonas">
 
-                                    <ng-container mdColumnDef="País de origen">
-                                        <md-header-cell *mdHeaderCellDef> País de origen </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{ optionsService.find('paises', element.paisOrigen.id).label }} </md-cell>
-                                    </ng-container>
-
-
-                                    <ng-container mdColumnDef="Estado de origen">
-                                        <md-header-cell *mdHeaderCellDef> Estado de origen </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.estadoOrigen.id}} </md-cell>
-                                    </ng-container>
-                                    <ng-container mdColumnDef="Municipio de origen">
-                                        <md-header-cell *mdHeaderCellDef> Municipio de origen </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.municipioOrigen.id}} </md-cell>
-                                    </ng-container>
-                                    <ng-container mdColumnDef="País destino">
-                                        <md-header-cell *mdHeaderCellDef> País destino </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.paisDestino.id}} </md-cell>
-                                    </ng-container>
-                                    <ng-container mdColumnDef="Estado destino">
-                                        <md-header-cell *mdHeaderCellDef> Estado destino </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{ optionsService.find('paises', element.paisDestino.id).label }} </md-cell>
-                                    </ng-container>
-                                    <ng-container mdColumnDef="Municipio destino">
-                                        <md-header-cell *mdHeaderCellDef> Municipio destino </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.municipioDestino.id}} </md-cell>
+                                    <ng-container matColumnDef="País de origen">
+                                        <mat-header-cell *matHeaderCellDef> País de origen </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{ optionsService.find('paises', element.paisOrigen.id).label }} </mat-cell>
                                     </ng-container>
 
-                                    <ng-container mdColumnDef="Tipo de trata">
-                                        <md-header-cell *mdHeaderCellDef> Tipo de trata </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.tipoTransportacion.id}} </md-cell>
+
+                                    <ng-container matColumnDef="Estado de origen">
+                                        <mat-header-cell *matHeaderCellDef> Estado de origen </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.estadoOrigen.id}} </mat-cell>
                                     </ng-container>
-                                    <ng-container mdColumnDef="Transportación">
-                                        <md-header-cell *mdHeaderCellDef> Transportación </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.tipoTransportacion.id}}
-                                        </md-cell>
+                                    <ng-container matColumnDef="Municipio de origen">
+                                        <mat-header-cell *matHeaderCellDef> Municipio de origen </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.municipioOrigen.id}} </mat-cell>
+                                    </ng-container>
+                                    <ng-container matColumnDef="País destino">
+                                        <mat-header-cell *matHeaderCellDef> País destino </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.paisDestino.id}} </mat-cell>
+                                    </ng-container>
+                                    <ng-container matColumnDef="Estado destino">
+                                        <mat-header-cell *matHeaderCellDef> Estado destino </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{ optionsService.find('paises', element.paisDestino.id).label }} </mat-cell>
+                                    </ng-container>
+                                    <ng-container matColumnDef="Municipio destino">
+                                        <mat-header-cell *matHeaderCellDef> Municipio destino </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.municipioDestino.id}} </mat-cell>
                                     </ng-container>
 
-                            <md-header-row *mdHeaderRowDef="trataDisplayedColumns"></md-header-row>
-                                    <md-row *mdRowDef="let row; columns: trataDisplayedColumns;"></md-row>
-                                </md-table>
+                                    <ng-container matColumnDef="Tipo de trata">
+                                        <mat-header-cell *matHeaderCellDef> Tipo de trata </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.tipoTransportacion.id}} </mat-cell>
+                                    </ng-container>
+                                    <ng-container matColumnDef="Transportación">
+                                        <mat-header-cell *matHeaderCellDef> Transportación </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.tipoTransportacion.id}}
+                                        </mat-cell>
+                                    </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="trataDisplayedColumns"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: trataDisplayedColumns;"></mat-row>
+                                </mat-table>
                             </div>
                         </div>
                     </div>
@@ -519,52 +519,52 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <button class="float-right m-1" color="accent" md-raised-button >Limpiar</button>
-                            <button class="float-right m-1" md-raised-button color="accent" [disabled]="!formRelacion.hostigamiento.valid" (click)="addHostigamiento(formRelacion.hostigamiento.value)">Agregar</button>
+                            <button class="float-right m-1" color="accent" mat-raised-button >Limpiar</button>
+                            <button class="float-right m-1" mat-raised-button color="accent" [disabled]="!formRelacion.hostigamiento.valid" (click)="addHostigamiento(formRelacion.hostigamiento.value)">Agregar</button>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <div class="">
-                                <md-table #table [dataSource]="colections.sourceHostigamiento">
+                                <mat-table #table [dataSource]="colections.sourceHostigamiento">
 
-                                    <ng-container mdColumnDef="Modalidad">
-                                        <md-header-cell *mdHeaderCellDef> Modalidad </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.modalidad}} </md-cell>
+                                    <ng-container matColumnDef="Modalidad">
+                                        <mat-header-cell *matHeaderCellDef> Modalidad </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.modalidad}} </mat-cell>
                                     </ng-container>
-                                    <ng-container mdColumnDef="Ámbito">
-                                        <md-header-cell *mdHeaderCellDef> Ámbito </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.ambito}} </md-cell>
+                                    <ng-container matColumnDef="Ámbito">
+                                        <mat-header-cell *matHeaderCellDef> Ámbito </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.ambito}} </mat-cell>
                                     </ng-container>
-                                    <ng-container mdColumnDef="Conducta">
-                                        <md-header-cell *mdHeaderCellDef> Conducta </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.conducta}} </md-cell>
-                                    </ng-container>
-
-                                    <ng-container mdColumnDef="Detalle">
-                                        <md-header-cell *mdHeaderCellDef> Detalle </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.detalle}} </md-cell>
-                                    </ng-container>
-                                    <ng-container mdColumnDef="Testigo">
-                                        <md-header-cell *mdHeaderCellDef> Testigo </md-header-cell>
-                                        <md-cell *mdCellDef="let element"> {{element.testigo}} </md-cell>
+                                    <ng-container matColumnDef="Conducta">
+                                        <mat-header-cell *matHeaderCellDef> Conducta </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.conducta}} </mat-cell>
                                     </ng-container>
 
-                                    <md-header-row *mdHeaderRowDef="hostigamientoDisplayedColumns"></md-header-row>
-                                    <md-row *mdRowDef="let row; columns: hostigamientoDisplayedColumns;"></md-row>
-                                </md-table>
+                                    <ng-container matColumnDef="Detalle">
+                                        <mat-header-cell *matHeaderCellDef> Detalle </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.detalle}} </mat-cell>
+                                    </ng-container>
+                                    <ng-container matColumnDef="Testigo">
+                                        <mat-header-cell *matHeaderCellDef> Testigo </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.testigo}} </mat-cell>
+                                    </ng-container>
+
+                                    <mat-header-row *matHeaderRowDef="hostigamientoDisplayedColumns"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: hostigamientoDisplayedColumns;"></mat-row>
+                                </mat-table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row justify-content-end space">
-                <div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" mdTooltipPosition="above">
-                    <button md-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id != null">Editar</button>
-                    <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id == null">Guardar</button>
+                <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" matTooltipPosition="above">
+                    <button mat-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id != null">Editar</button>
+                    <button mat-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id == null">Guardar</button>
                 </div>
                 <div class="col-sm-auto">
-                    <button md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>
+                    <button mat-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>
                 </div>
             </div>
         </form>

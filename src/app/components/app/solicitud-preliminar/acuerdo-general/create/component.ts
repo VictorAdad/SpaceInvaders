@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MdPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
@@ -44,7 +44,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
     public form: FormGroup;
     public model: AcuerdoGeneral;
     dataSource: TableService | null;
-    @ViewChild(MdPaginator) paginator: MdPaginator;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(
         private _fbuilder: FormBuilder,
@@ -136,7 +136,7 @@ export class DocumentoAcuerdoGeneralComponent {
     ];
 
     dataSource: TableService | null;
-    @ViewChild(MdPaginator) paginator: MdPaginator;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
     ngOnInit() {
         this.dataSource = new TableService(this.paginator, this.data);

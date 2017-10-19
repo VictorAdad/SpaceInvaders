@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import {MdSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material';
 
 
 @Injectable()
 export class GlobalService{
 	public _LOADER : boolean = false;
 
-	constructor(public snackBar: MdSnackBar) {}
+	constructor(public snackBar: MatSnackBar) {}
 
 	openSnackBar(message: string) {
 		this.snackBar.open(message, '', {

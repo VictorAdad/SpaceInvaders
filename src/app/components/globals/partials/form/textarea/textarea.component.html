@@ -1,17 +1,17 @@
 <div class="form-group">
-	<md-form-field class="full-width" *ngIf="name==''">
-			<textarea  mdInput rows="8" placeholder="{{label}}" [(ngModel)]="value" (ngModelChange)="update($event)" name="{{name}}">
+	<mat-form-field class="full-width" *ngIf="name==''">
+			<textarea  matInput rows="8" placeholder="{{label}}" [(ngModel)]="value" (ngModelChange)="update($event)" name="{{name}}">
 			</textarea>
- 	</md-form-field>
-	<md-form-field class="full-width" [formGroup]="group" *ngIf="name!=''">
+ 	</mat-form-field>
+	<mat-form-field class="full-width" [formGroup]="group" *ngIf="name!=''">
 			<textarea
 			    rows="8" 
-				mdInput 
+				matInput 
 				placeholder="{{label}}" 
 				[(ngModel)]="value" 
 				(ngModelChange)="update($event)" 
 				formControlName="{{name}}"  
 				name="{{name}}">
 			</textarea>
-	</md-form-field>
+	</mat-form-field>
 </div>

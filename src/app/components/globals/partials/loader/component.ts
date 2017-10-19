@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'loader',
@@ -7,6 +7,6 @@ import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 })
 export class LoaderComponent {
 
-    constructor(public _dialog: MdDialogRef<LoaderComponent>) { }
+    constructor(public _dialog: MatDialogRef<LoaderComponent>) { }
 
 }

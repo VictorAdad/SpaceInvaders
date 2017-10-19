@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MdPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
@@ -19,7 +19,7 @@ export class LugarComponent{
     public data: Lugar[] = [];
     public dataSource: TableService | null;
     public pag: number = 0;
-    @ViewChild(MdPaginator) paginator: MdPaginator;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
 

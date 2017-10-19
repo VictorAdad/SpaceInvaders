@@ -3,40 +3,40 @@
 		<h3>Personas</h3>
 	</div>
 	<div class="col-md-6">
-		<button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/personas/persona-fisica-imputado" color="accent">Agregar persona</button>
+		<button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/personas/persona-fisica-imputado" color="accent">Agregar persona</button>
 	</div>
 </div>
-<md-paginator #paginator 
+<mat-paginator #paginator 
 [length]="pag" 
 [pageIndex]="0" 
 [pageSize]="10" 
 [pageSizeOptions]="[5, 10, 25, 100]" 
 (page)="changePage($event)">
-</md-paginator>
-<md-table #table [dataSource]="dataSource">
-	<ng-container mdColumnDef="tipo">
-		<md-header-cell *mdHeaderCellDef> Tipo de interviniente </md-header-cell>
-		<md-cell *mdCellDef="let element"> {{element.tipoInterviniente.tipo}} </md-cell>
+</mat-paginator>
+<mat-table #table [dataSource]="dataSource">
+	<ng-container matColumnDef="tipo">
+		<mat-header-cell *matHeaderCellDef> Tipo de interviniente </mat-header-cell>
+		<mat-cell *matCellDef="let element"> {{element.tipoInterviniente.tipo}} </mat-cell>
 	</ng-container>
 
 	<!-- Name Column -->
-	<ng-container mdColumnDef="nombre">
-		<md-header-cell *mdHeaderCellDef> Nombre </md-header-cell>
-		<md-cell *mdCellDef="let element"> {{element.persona.nombre}} </md-cell>
+	<ng-container matColumnDef="nombre">
+		<mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+		<mat-cell *matCellDef="let element"> {{element.persona.nombre}} </mat-cell>
 	</ng-container>
 
 	<!-- Razon Social Column -->
-	<ng-container mdColumnDef="razonSocial">
-		<md-header-cell *mdHeaderCellDef> Razón social </md-header-cell>
-		<md-cell *mdCellDef="let element"> {{element.razonSocial}} </md-cell>
+	<ng-container matColumnDef="razonSocial">
+		<mat-header-cell *matHeaderCellDef> Razón social </mat-header-cell>
+		<mat-cell *matCellDef="let element"> {{element.razonSocial}} </mat-cell>
 	</ng-container>
 
 	<!-- Alias Column -->
-	<ng-container mdColumnDef="alias">
-		<md-header-cell *mdHeaderCellDef> Alias </md-header-cell>
-		<md-cell *mdCellDef="let element"> {{element.alias}} </md-cell>
+	<ng-container matColumnDef="alias">
+		<mat-header-cell *matHeaderCellDef> Alias </mat-header-cell>
+		<mat-cell *matCellDef="let element"> {{element.alias}} </mat-cell>
 	</ng-container>
 
-	<md-header-row *mdHeaderRowDef="columns"></md-header-row>
-	<md-row *mdRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/personas/{{row.id}}"></md-row>
-</md-table>
+	<mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+	<mat-row *matRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/personas/{{row.id}}"></mat-row>
+</mat-table>

@@ -3,7 +3,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { MdPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { OnLineService } from '@services/onLine.service';
@@ -23,7 +23,7 @@ export class DelitoComponent {
     public delitoCasos: DelitoCaso[] = [];
     dataSource: TableService | null;
     db: CIndexedDB;
-    @ViewChild(MdPaginator) paginator: MdPaginator;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
     activeRoute: ActivatedRoute;
     id: number;

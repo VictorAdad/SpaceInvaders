@@ -10,7 +10,7 @@
             <h2>Registrar lugar</h2>
         </div>
         <div class="col-md-2">
-            <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/noticia-hecho" color="accent">Regresar</button>
+            <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/noticia-hecho" color="accent">Regresar</button>
         </div>
     </div>
     <div class="content">
@@ -126,8 +126,8 @@
                     <div class="form-group">
                         <div class="md-custom-search">
                             <input type="search" placeholder="Buscar ubicación" #search [formControl]="searchControl">
-                            <md-icon  class="suffix" *ngIf="search.value === ''">search</md-icon>
-                            <md-icon  class="suffix" *ngIf="search.value !== ''" (click)="search.value=''">close</md-icon>
+                            <mat-icon  class="suffix" *ngIf="search.value === ''">search</mat-icon>
+                            <mat-icon  class="suffix" *ngIf="search.value !== ''" (click)="search.value=''">close</mat-icon>
                         </div>
                     </div>
                 </div>
@@ -140,12 +140,12 @@
                 </div>
             </div>
             <div class="row justify-content-end">
-                <div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" mdTooltipPosition="above">
-                    <button md-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id != null">Editar</button>    
-                    <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id == null">Guardar</button>
+                <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" matTooltipPosition="above">
+                    <button mat-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id != null">Editar</button>    
+                    <button mat-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id == null">Guardar</button>
                 </div>
                 <div class="col-sm-auto">
-                    <button md-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>
+                    <button mat-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>
                 </div>
             </div>
         </form>

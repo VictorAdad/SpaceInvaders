@@ -9,7 +9,7 @@
         <h2>Solicitudes de registro general</h2>
     </div>
     <div class="col-md-6">
-        <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
+        <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
     </div>
 </div>
 <div class="row space justify-content-end">
@@ -17,26 +17,26 @@
         <search></search>
     </div>
     <div class="col-md-auto">
-        <button md-raised-button color="accent" routerLink="/caso/{{casoId}}/registro-general/create">Agregar solicitud</button>
+        <button mat-raised-button color="accent" routerLink="/caso/{{casoId}}/registro-general/create">Agregar solicitud</button>
     </div>
 </div>
-<md-paginator #paginator
+<mat-paginator #paginator
     [length]="dataSource ? dataSource.data.length : 0"
     [pageIndex]="0"
     [pageSize]="10"
     [pageSizeOptions]="[5, 10, 25, 100]">
-  </md-paginator>
-<md-table #table [dataSource]="dataSource">
-    <ng-container mdColumnDef="fundamento">
-        <md-header-cell *mdHeaderCellDef> Nombre de la persona que atiende la llamada telefónica</md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.atencionLlamada}} </md-cell>
+  </mat-paginator>
+<mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="fundamento">
+        <mat-header-cell *matHeaderCellDef> Nombre de la persona que atiende la llamada telefónica</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.atencionLlamada}} </mat-cell>
     </ng-container>
 
-    <ng-container mdColumnDef="plazo">
-        <md-header-cell *mdHeaderCellDef> Número telefónico </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.noTelefonico}} </md-cell>
+    <ng-container matColumnDef="plazo">
+        <mat-header-cell *matHeaderCellDef> Número telefónico </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.noTelefonico}} </mat-cell>
     </ng-container>
 
-    <md-header-row *mdHeaderRowDef="columns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/registro-general/{{row.id}}/edit"></md-row>
-</md-table>
+    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/registro-general/{{row.id}}/edit"></mat-row>
+</mat-table>

@@ -1,24 +1,24 @@
 <div class="form-group">
-	<md-form-field class="full-width" *ngIf="name==''">
-			<md-icon mdPrefix *ngIf="prefixIcon">{{ prefixIcon }}</md-icon>
-			<span *ngIf="prefix" mdPrefix>{{ prefix }}&nbsp;</span>
-			<input mdInput placeholder="{{label}}" [(ngModel)]="value" (ngModelChange)="update($event)" name="{{name}}">
-			<md-icon mdSuffix *ngIf="sufix">{{ sufix }}</md-icon>
-			<md-hint align="start" *ngIf="hintStart">{{hintStart}} </md-hint>
-		    <md-hint align="end" *ngIf="hintEnd">{{hintEnd}}</md-hint>
-	</md-form-field>
-	<md-form-field class="full-width" [formGroup]="group" *ngIf="name!=''">
-			<span *ngIf="prefix" mdPrefix>{{ prefix }}&nbsp;</span>
+	<mat-form-field class="full-width" *ngIf="name==''">
+			<mat-icon matPrefix *ngIf="prefixIcon">{{ prefixIcon }}</mat-icon>
+			<span *ngIf="prefix" matPrefix>{{ prefix }}&nbsp;</span>
+			<input matInput placeholder="{{label}}" [(ngModel)]="value" (ngModelChange)="update($event)" name="{{name}}">
+			<mat-icon matSuffix *ngIf="sufix">{{ sufix }}</mat-icon>
+			<mat-hint align="start" *ngIf="hintStart">{{hintStart}} </mat-hint>
+		    <mat-hint align="end" *ngIf="hintEnd">{{hintEnd}}</mat-hint>
+	</mat-form-field>
+	<mat-form-field class="full-width" [formGroup]="group" *ngIf="name!=''">
+			<span *ngIf="prefix" matPrefix>{{ prefix }}&nbsp;</span>
 			<input 
-				mdInput 
+				matInput 
 				placeholder="{{label}}" 
 				[(ngModel)]="value" 
 				(ngModelChange)="update($event)" 
 				formControlName="{{name}}"  
 				name="{{name}}"
 				[readonly]="readonly ? readonly : false ">
-			<md-icon mdSuffix *ngIf="sufix">{{ sufix }}</md-icon>
-			<md-hint align="start" *ngIf="hintStart">{{hintStart}} </md-hint>
-		    <md-hint align="end" *ngIf="hintEnd">{{hintEnd}}</md-hint>
-	</md-form-field>
+			<mat-icon matSuffix *ngIf="sufix">{{ sufix }}</mat-icon>
+			<mat-hint align="start" *ngIf="hintStart">{{hintStart}} </mat-hint>
+		    <mat-hint align="end" *ngIf="hintEnd">{{hintEnd}}</mat-hint>
+	</mat-form-field>
 </div>

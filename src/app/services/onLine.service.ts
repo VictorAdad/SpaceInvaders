@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import {Observable} from 'rxjs/Rx';
 
-import {MdSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material';
 import { CIndexedDB } from '@services/indexedDB';
 import { HttpService} from '@services/http.service';
 
@@ -214,7 +214,7 @@ export class OnLineService {
 
 
     constructor(
-        public snackBar: MdSnackBar,
+        public snackBar: MatSnackBar,
         private db:CIndexedDB,
         private http:HttpService
     ) { 

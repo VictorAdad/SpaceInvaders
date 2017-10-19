@@ -4,28 +4,28 @@
         <h2>Catálogos de {{ catalogo.title }}</h2>
     </div>
     <div class="col-md-6">
-        <button class="float-right" md-raised-button routerLink="/catalogos/{{ tipo }}/create" color="accent">Nuevo</button>
+        <button class="float-right" mat-raised-button routerLink="/catalogos/{{ tipo }}/create" color="accent">Nuevo</button>
     </div>
 </div>
 <hr>
 <div class="row space"></div>
-<md-table #table [dataSource]="dataSource">
-    <ng-container mdColumnDef="nombre">
-        <md-header-cell *mdHeaderCellDef> Nombre </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.nombre}} </md-cell>
+<mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
     </ng-container>
 
-    <!-- <ng-container mdColumnDef="descripcion">
-        <md-header-cell *mdHeaderCellDef> Descripción </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.descripcion}} </md-cell>
+    <!-- <ng-container matColumnDef="descripcion">
+        <mat-header-cell *matHeaderCellDef> Descripción </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
     </ng-container> -->
 
-    <md-header-row *mdHeaderRowDef="columns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: columns;" routerLink="/catalogos/{{ tipo }}/{{ row.id }}" [class.active]="row.id == selectedRow"></md-row>
-</md-table>
+    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columns;" routerLink="/catalogos/{{ tipo }}/{{ row.id }}" [class.active]="row.id == selectedRow"></mat-row>
+</mat-table>
 <div class="row space"></div>
 <div class="row space">
     <div class="col-md-12">
-        <button class="float-right" md-raised-button routerLink="/" color="accent">Regresar</button>
+        <button class="float-right" mat-raised-button routerLink="/" color="accent">Regresar</button>
     </div>
 </div>

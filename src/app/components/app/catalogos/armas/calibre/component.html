@@ -4,27 +4,27 @@
         <h2>Calibre de Armas</h2>
     </div>
     <div class="col-md-6">
-        <button class="float-right" md-raised-button routerLink="/catalogo-armas" color="accent">Regresar</button>
+        <button class="float-right" mat-raised-button routerLink="/catalogo-armas" color="accent">Regresar</button>
     </div>
 </div>
 <hr>
 <div class="row space"></div>
 <div class="row">
     <div class="col">
-        <button class="float-right" md-raised-button routerLink="/calibre-arma/create" color="accent">Agregar calibre</button>
+        <button class="float-right" mat-raised-button routerLink="/calibre-arma/create" color="accent">Agregar calibre</button>
     </div>
 </div>
-<md-table #table [dataSource]="dataSource">
-    <ng-container mdColumnDef="calibre">
-        <md-header-cell *mdHeaderCellDef> Calibre </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.calibre}} </md-cell>
+<mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="calibre">
+        <mat-header-cell *matHeaderCellDef> Calibre </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.calibre}} </mat-cell>
     </ng-container>
 
-    <ng-container mdColumnDef="modificacion">
-        <md-header-cell *mdHeaderCellDef> Última modificación </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.modificacion}} </md-cell>
+    <ng-container matColumnDef="modificacion">
+        <mat-header-cell *matHeaderCellDef> Última modificación </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.modificacion}} </mat-cell>
     </ng-container>
 
-    <md-header-row *mdHeaderRowDef="columns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: columns;" (click)="setClickedRow(row)" [class.active]="row.id == selectedRow"></md-row>
-</md-table>
+    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columns;" (click)="setClickedRow(row)" [class.active]="row.id == selectedRow"></mat-row>
+</mat-table>

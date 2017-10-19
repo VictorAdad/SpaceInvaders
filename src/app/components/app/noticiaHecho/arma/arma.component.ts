@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MdPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { TableService } from '@utils/table/table.service';
 import { Observable } from 'rxjs';
@@ -20,8 +20,8 @@ export class ArmaComponent{
     public data: Arma[] = [];
     public pag: number = 0;
 
-	@ViewChild(MdPaginator) 
-    paginator: MdPaginator;
+	@ViewChild(MatPaginator) 
+    paginator: MatPaginator;
 
 	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
 

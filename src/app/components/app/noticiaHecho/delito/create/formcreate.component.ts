@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MdDialogRef,MD_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef,MAT_DIALOG_DATA } from '@angular/material';
 import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -39,8 +39,8 @@ export class FormCreateDelitoComponent {
     constructor(
         private http: HttpService,
         private _tabla: CIndexedDB,
-        @Inject(MD_DIALOG_DATA) private data: {lista:any},
-        public dialogRef: MdDialogRef<FormCreateDelitoComponent>
+        @Inject(MAT_DIALOG_DATA) private data: {lista:any},
+        public dialogRef: MatDialogRef<FormCreateDelitoComponent>
         ){
         this.tabla=_tabla;
     }

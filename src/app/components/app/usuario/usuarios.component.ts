@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MdPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { Usuario } from '@models/usuario';
 
@@ -14,7 +14,7 @@ export class UsuariosComponent{
 	data:Usuario[];
 
 	dataSource: TableService | null;
-	@ViewChild(MdPaginator) paginator: MdPaginator;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
 
 	constructor(){}
 

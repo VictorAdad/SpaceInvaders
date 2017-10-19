@@ -9,7 +9,7 @@
         <h2>Solicitudes de inspección</h2>
     </div>
     <div class="col-md-6">
-        <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
+        <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
     </div>
 </div>
 <div class="row space justify-content-end">
@@ -17,27 +17,27 @@
         <search></search>
     </div>
     <div class="col-md-auto">
-        <button md-raised-button *ngIf="hasCaso" color="accent" routerLink="/caso/{{casoId}}/inspeccion/create">Agregar solicitud</button>
-        <button md-raised-button *ngIf="!hasCaso" color="accent" routerLink="create">Agregar solicitud</button>
+        <button mat-raised-button *ngIf="hasCaso" color="accent" routerLink="/caso/{{casoId}}/inspeccion/create">Agregar solicitud</button>
+        <button mat-raised-button *ngIf="!hasCaso" color="accent" routerLink="create">Agregar solicitud</button>
     </div>
 </div>
-<md-paginator #paginator
+<mat-paginator #paginator
     [length]="dataSource ? dataSource.data.length : 0"
     [pageIndex]="0"
     [pageSize]="10"
     [pageSizeOptions]="[5, 10, 25, 100]">
-</md-paginator>
-<md-table #table [dataSource]="dataSource">
-    <ng-container mdColumnDef="fecha">
-        <md-header-cell *mdHeaderCellDef> Fecha</md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.fechaHoraInspeccion | date: 'dd/MM/yyyy'}} </md-cell>
+</mat-paginator>
+<mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="fecha">
+        <mat-header-cell *matHeaderCellDef> Fecha</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.fechaHoraInspeccion | date: 'dd/MM/yyyy'}} </mat-cell>
     </ng-container>
 
-    <ng-container mdColumnDef="adscripcion">
-        <md-header-cell *mdHeaderCellDef> Adscripción</md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.adscripcion}} </md-cell>
+    <ng-container matColumnDef="adscripcion">
+        <mat-header-cell *matHeaderCellDef> Adscripción</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.adscripcion}} </mat-cell>
     </ng-container>
 
-    <md-header-row *mdHeaderRowDef="columns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/inspeccion/{{row.id}}/edit"></md-row>
-</md-table>
+    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/inspeccion/{{row.id}}/edit"></mat-row>
+</mat-table>

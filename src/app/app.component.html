@@ -1,26 +1,26 @@
-<md-sidenav-container  *ngIf="authService.isLoggedin" fullscreen>
-    <md-toolbar style="" color="primary" class="mat-drawer-container mat-sidenav-container mat-drawer-transition mat-elevation-z8">
-        <button md-icon-button (click)="sidenav.toggle()" *ngIf="_SIDEBAR">
-            <md-icon class="md-24">menu</md-icon>
+<mat-sidenav-container  *ngIf="authService.isLoggedin" fullscreen>
+    <mat-toolbar style="" color="primary" class="mat-drawer-container mat-sidenav-container mat-drawer-transition mat-elevation-z8">
+        <button mat-icon-button (click)="sidenav.toggle()" *ngIf="_SIDEBAR">
+            <mat-icon class="md-24">menu</mat-icon>
         </button>
         <span>
-            <md-list-item routerLink="/" style="cursor: pointer;">SIGI</md-list-item>
+            <mat-list-item routerLink="/" style="cursor: pointer;">SIGI</mat-list-item>
         </span>
         <span class="spacer"></span>
         
-        <button md-icon-button [mdMenuTriggerFor]="notify">
-            <md-icon class="button-menu">notifications</md-icon>
+        <button mat-icon-button [matMenuTriggerFor]="notify">
+            <mat-icon class="button-menu">notifications</mat-icon>
         </button>
 
-        <md-menu #notify="mdMenu" class="notification-list">
-            <button class="titulo" md-menu-item>
+        <mat-menu #notify="matMenu" class="notification-list">
+            <button class="titulo" mat-menu-item>
                 <h4>Notificaciones</h4>
             </button>
 
-            <button md-menu-item>
+            <button mat-menu-item>
                 <div class="row"> 
                     <div class="col-md-2">
-                        <md-icon class="prueba" fxHide="false" fxHide.gt-sm>perm_identity</md-icon>
+                        <mat-icon class="prueba" fxHide="false" fxHide.gt-sm>perm_identity</mat-icon>
                     </div>  
                     <div class="col-md-8 not"> 
                         <label>Robo a casa habitación</label><br/>
@@ -28,15 +28,15 @@
                         <label>Hace 2 horas</label>
                     </div>
                     <div class="col-md-2 z">
-                        <md-icon fxHide="false" fxHide.gt-sm>clear</md-icon>
+                        <mat-icon fxHide="false" fxHide.gt-sm>clear</mat-icon>
                     </div>
                 </div>
             </button>
 
-            <button md-menu-item>
+            <button mat-menu-item>
                 <div class="row"> 
                     <div class="col-md-2">
-                        <md-icon fxHide="false" fxHide.gt-sm>perm_identity</md-icon>
+                        <mat-icon fxHide="false" fxHide.gt-sm>perm_identity</mat-icon>
                     </div>  
                     <div class="col-md-8 not"> 
                         <label>Robo a casa habitación</label><br/>
@@ -44,15 +44,15 @@
                         <label>Hace 2 horas</label>
                     </div>
                     <div class="col-md-2 z">
-                        <md-icon fxHide="false" fxHide.gt-sm>clear</md-icon>
+                        <mat-icon fxHide="false" fxHide.gt-sm>clear</mat-icon>
                     </div>
                 </div>
             </button>
 
-            <button md-menu-item>
+            <button mat-menu-item>
                 <div class="row"> 
                     <div class="col-md-2">
-                        <md-icon fxHide="false" fxHide.gt-sm>perm_identity</md-icon>
+                        <mat-icon fxHide="false" fxHide.gt-sm>perm_identity</mat-icon>
                     </div>  
                     <div class="col-md-8 not"> 
                         <label>Robo a casa habitación</label><br/>
@@ -60,15 +60,15 @@
                         <label>Hace 2 horas</label>
                     </div>
                     <div class="col-md-2 z">
-                        <md-icon fxHide="false" fxHide.gt-sm>clear</md-icon>
+                        <mat-icon fxHide="false" fxHide.gt-sm>clear</mat-icon>
                     </div>
                 </div>
             </button>
 
-            <button md-menu-item>
+            <button mat-menu-item>
                 <div class="row"> 
                     <div class="col-md-2">
-                        <md-icon fxHide="false" fxHide.gt-sm>perm_identity</md-icon>
+                        <mat-icon fxHide="false" fxHide.gt-sm>perm_identity</mat-icon>
                     </div>  
                     <div class="col-md-8 not"> 
                         <label>Robo a casa habitación</label><br/>
@@ -76,15 +76,15 @@
                         <label>Hace 2 horas</label>
                     </div>
                     <div class="col-md-2 z">
-                        <md-icon fxHide="false" fxHide.gt-sm>clear</md-icon>
+                        <mat-icon fxHide="false" fxHide.gt-sm>clear</mat-icon>
                     </div>
                 </div>
             </button>
 
-            <button md-menu-item>
+            <button mat-menu-item>
                 <div class="row"> 
                     <div class="col-md-2">
-                        <md-icon fxHide="false" fxHide.gt-sm>perm_identity</md-icon>
+                        <mat-icon fxHide="false" fxHide.gt-sm>perm_identity</mat-icon>
                     </div>  
                     <div class="col-md-8 not"> 
                         <label>Robo a casa habitación</label><br/>
@@ -95,67 +95,67 @@
                         <label>Hace 2 horas</label>
                     </div>
                     <div class="col-md-2 z">
-                        <md-icon fxHide="false" fxHide.gt-sm>clear</md-icon>
+                        <mat-icon fxHide="false" fxHide.gt-sm>clear</mat-icon>
                     </div>
                 </div>
             </button>
 
-            <button class="titulo" md-menu-item>
+            <button class="titulo" mat-menu-item>
                 <h4>Ver todas</h4>
             </button>
 
-        </md-menu>
+        </mat-menu>
 
 
-        <md-icon class="button-menu">account_circle</md-icon>
+        <mat-icon class="button-menu">account_circle</mat-icon>
         <span class="d-xs-none d-sm-none d-md-inline"> Administrador del sistema</span>
-        <button md-icon-button [mdMenuTriggerFor]="menu">
-            <md-icon fxHide="false" fxHide.gt-sm>more_vert</md-icon>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon fxHide="false" fxHide.gt-sm>more_vert</mat-icon>
         </button>
-        <md-menu #menu="mdMenu">
-            <button md-menu-item>
-                <md-icon fxHide="false" fxHide.gt-sm>perm_identity</md-icon>Perfil
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+                <mat-icon fxHide="false" fxHide.gt-sm>perm_identity</mat-icon>Perfil
             </button>
-            <button md-menu-item>
-                <md-icon fxHide="false" fxHide.gt-sm>build</md-icon>Configuración
+            <button mat-menu-item>
+                <mat-icon fxHide="false" fxHide.gt-sm>build</mat-icon>Configuración
             </button>
-            <button md-menu-item>
-                <md-icon fxHide="false" fxHide.gt-sm>help_outline</md-icon>Ayuda
+            <button mat-menu-item>
+                <mat-icon fxHide="false" fxHide.gt-sm>help_outline</mat-icon>Ayuda
             </button>
-            <md-divider></md-divider>
-            <button md-menu-item>
-                <md-icon fxHide="false" fxHide.gt-sm>autorenew</md-icon>
+            <mat-divider></mat-divider>
+            <button mat-menu-item>
+                <mat-icon fxHide="false" fxHide.gt-sm>autorenew</mat-icon>
             </button>
-            <button (click)="logout()" md-menu-item>
-                <md-icon fxHide="false" fxHide.gt-sm>highlight_off</md-icon>Logout
+            <button (click)="logout()" mat-menu-item>
+                <mat-icon fxHide="false" fxHide.gt-sm>highlight_off</mat-icon>Logout
             </button>
-        </md-menu>
-    </md-toolbar>
-    <md-sidenav #sidenav opened="true" mode="side" class="mat-elevation-z8" *ngIf="_SIDEBAR">
-        <md-toolbar color="primary">
+        </mat-menu>
+    </mat-toolbar>
+    <mat-sidenav #sidenav opened="true" mode="side" class="mat-elevation-z8" *ngIf="_SIDEBAR">
+        <mat-toolbar color="primary">
             <h2>
                 <span>Menu</span>
             </h2>
             <span class="spacer"></span>
-        </md-toolbar>
-        <md-list>
-            <md-list-item><a routerLink="/">Home</a></md-list-item>
-            <md-list-item><a routerLink="/usuarios">Usuarios</a></md-list-item>
-            <md-list-item><a routerLink="/vehiculos">Vehículos</a></md-list-item>
-            <md-list-item><a routerLink="/lugares">Lugares</a></md-list-item>
-            <md-list-item><a routerLink="/armas">Armas </a></md-list-item>
-            <md-list-item><a routerLink="/personas/persona-fisica-imputado">Persona fisica imputado</a></md-list-item>
-            <md-list-item><a routerLink="/relaciones">Relaciones</a></md-list-item>
-        </md-list>
-    </md-sidenav>
-    <md-progress-bar *ngIf="globalService._LOADER" mode="indeterminate" color="accent"></md-progress-bar>
+        </mat-toolbar>
+        <mat-list>
+            <mat-list-item><a routerLink="/">Home</a></mat-list-item>
+            <mat-list-item><a routerLink="/usuarios">Usuarios</a></mat-list-item>
+            <mat-list-item><a routerLink="/vehiculos">Vehículos</a></mat-list-item>
+            <mat-list-item><a routerLink="/lugares">Lugares</a></mat-list-item>
+            <mat-list-item><a routerLink="/armas">Armas </a></mat-list-item>
+            <mat-list-item><a routerLink="/personas/persona-fisica-imputado">Persona fisica imputado</a></mat-list-item>
+            <mat-list-item><a routerLink="/relaciones">Relaciones</a></mat-list-item>
+        </mat-list>
+    </mat-sidenav>
+    <mat-progress-bar *ngIf="globalService._LOADER" mode="indeterminate" color="accent"></mat-progress-bar>
     <div class="container-fluid inner-sidenav-content" style="padding-top: 16px;">
         <router-outlet></router-outlet>
     </div>
-</md-sidenav-container>
-<md-sidenav-container  *ngIf="!authService.isLoggedin" fullscreen>
+</mat-sidenav-container>
+<mat-sidenav-container  *ngIf="!authService.isLoggedin" fullscreen>
     <login></login>
-</md-sidenav-container>
+</mat-sidenav-container>
 <jaspero-confirmations ></jaspero-confirmations>
 
 

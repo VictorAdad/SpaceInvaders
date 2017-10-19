@@ -1,12 +1,12 @@
-<md-expansion-panel>
-    <md-expansion-panel-header>
-        <md-panel-title>
-            <md-icon>fingerprint</md-icon> Datos de identificación
-            </md-panel-title>
-            <md-panel-description>
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <mat-icon>fingerprint</mat-icon> Datos de identificación
+            </mat-panel-title>
+            <mat-panel-description>
 
-            </md-panel-description>
-    </md-expansion-panel-header>
+            </mat-panel-description>
+    </mat-expansion-panel-header>
     <div class="row">
         <div class="col-md-3">
             <select2 placeholder="Documento de identificación"
@@ -34,12 +34,12 @@
         <div class="col-md-5" *ngIf="globals.tipoInterviniente=='5'" [formGroup]="globals.form">
             <div  class="row" formArrayName="aliasNombrePersona" >
                 <div class="col-md-auto">
-                    <button class="float-left" md-raised-button (click)="addOtroNombre('alias')" color="accent" >Agregar alias</button>
+                    <button class="float-left" mat-raised-button (click)="addOtroNombre('alias')" color="accent" >Agregar alias</button>
                 </div>
                 <div class="col-md-12" *ngFor="let nombre of alias.nombres;let i=index; trackBy:trackByIndex " [formGroupName]="alias.indices[i]">
-                    <md-form-field class="full-width">
-                        <input mdInput placeholder="Alias" formControlName="nombre"value="{{nombre}}">
-                    </md-form-field>
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Alias" formControlName="nombre"value="{{nombre}}">
+                    </mat-form-field>
                     <input type="hidden" value="Alias" formControlName="tipo">
                     <input type="hidden" value="{{alias.ids[i]}}" formControlName="id">
                 </div>
@@ -48,16 +48,16 @@
         <div class="col-md-5" [formGroup]="globals.form">
             <div  class="row" formArrayName="aliasNombrePersona" >
                 <div class="col-md-auto">
-                    <button class="float-left" md-raised-button (click)="addOtroNombre('otroNombre')" color="accent" >Agregar otro nombre</button>
+                    <button class="float-left" mat-raised-button (click)="addOtroNombre('otroNombre')" color="accent" >Agregar otro nombre</button>
                 </div>
                 <div class="col-md-12" *ngFor="let nombre of otrosNombres.nombres;let i=index; trackBy:trackByIndex " [formGroupName]="otrosNombres.indices[i]">
-                    <md-form-field class="full-width">
-                        <input mdInput placeholder="Otro nombre" formControlName="nombre"value="{{nombre}}">
-                    </md-form-field>
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Otro nombre" formControlName="nombre"value="{{nombre}}">
+                    </mat-form-field>
                     <input type="hidden" value="Otro nombre" formControlName="tipo">
                     <input type="hidden" value="{{otrosNombres.ids[i]}}" formControlName="id">
                 </div>
             </div>
         </div>
     </div>
-</md-expansion-panel>
+</mat-expansion-panel>

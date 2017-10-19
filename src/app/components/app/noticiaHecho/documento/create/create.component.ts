@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FileUploader, FileDropDirective, FileSelectDirective } from 'ng2-file-upload';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
@@ -12,7 +12,7 @@ export class DocumentoCreateComponent {
 
     private db: CIndexedDB    
 
-    constructor(public dialogRef: MdDialogRef<DocumentoCreateComponent>, 
+    constructor(public dialogRef: MatDialogRef<DocumentoCreateComponent>, 
         private _db: CIndexedDB){
         this.db=_db;
     }

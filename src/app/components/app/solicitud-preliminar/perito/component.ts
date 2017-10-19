@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MdPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { Perito } from '@models/solicitud-preliminar/perito';
 import { OnLineService} from '@services/onLine.service';
@@ -24,7 +24,7 @@ export class PeritoComponent {
 		{id : 2, tipo: 'Fundamento B',  oficio: 'Plazo B'},
 		{id : 3, tipo: 'Fundamento C',  oficio: 'Plazo C'},
 	];*/
-	@ViewChild(MdPaginator) paginator: MdPaginator;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
 
 	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
 

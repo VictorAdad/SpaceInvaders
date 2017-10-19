@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MdPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { Entrevista } from '@models/entrevista/entrevista';
 import { OnLineService} from '@services/onLine.service';
@@ -17,8 +17,8 @@ export class EntrevistaComponent {
 	public data: Entrevista[] = [];
     public casoId: number = null;
     public haveCaso: boolean=false;
-	@ViewChild(MdPaginator) 
-    paginator: MdPaginator;
+	@ViewChild(MatPaginator) 
+    paginator: MatPaginator;
     public breadcrumb = [];
     public apiUrl="/v1/base/entrevistas";
 
