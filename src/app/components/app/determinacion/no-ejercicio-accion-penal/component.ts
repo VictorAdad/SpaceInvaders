@@ -11,7 +11,7 @@ import { CIndexedDB } from '@services/indexedDB';
 	templateUrl: './component.html',
 })
 export class NoEjercicioAccionPenalComponent {
-	public apiUrl: string = "/v1/base/no-ejercicio-accion/casos/{idCaso}/page"; //cambiar esta url cuando este el servicio por caso
+	public apiUrl: string = "/v1/base/no-ejercicio-accion/casos/{idCaso}/page"; 
 	public breadcrumb = [];
 	columns = ['ambito', 'creadoPor', 'fechaCreacion'];
 	public dataSource: TableService | null;
