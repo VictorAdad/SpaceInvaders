@@ -1,7 +1,10 @@
+import { Municipio } from './../../../../../models/catalogo/municipio';
+import { Colonia } from './../../../../../models/persona';
+import { Caso } from './../../../../../models/caso';
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router} from '@angular/router';
-import { Lugar } from '@models/lugar';
+import { Lugar} from '@models/lugar';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { MOption } from '@partials/form/select2/select2.component';
@@ -13,6 +16,7 @@ import * as moment from 'moment';
 import { SelectsService} from '@services/selects.service';
 import { LugarService} from '@services/noticia-hecho/lugar.service';
 import { Observable } from 'rxjs';
+import { _config} from '@app/app.config';
 
 @Component({
     selector: 'lugar-create',
@@ -62,6 +66,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         this.model = new Lugar();
         this.searchControl = new FormControl();
         this.form = this.createForm();
+        console.log(this.optionsServ);
 
         this.route.params.subscribe(params => {
             if(params['casoId']){
@@ -154,9 +159,6 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
     }
 
     public save(_valid : any, _model : any):void{
-        _model.municipioOtro="wwww";
-        _model.coloniaOtro="wwwwwww";
-        _model.estadoOtro="Yucatán"
         _model.caso.id      = this.casoId;
         _model.latitud      = this.latMarker;
         _model.longitud     = this.lngMarker;
@@ -246,25 +248,12 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         this.latMarker = _data.latitud;
         this.lngMarker = _data.longitud;
         let timer = Observable.timer(1);
-       /* 
-        timer.subscribe(t=>{
-            this.form.patchValue(
-              {
-                  'tipo'            : _data.detalleLugar.tipo,
-                  'tipoZona'        : _data.detalleLugar.tipoZona,
-                  "dia"             :_data.detalleLugar.dia,
-              }
-
-            );
-        });
-        */
 
         this.form.patchValue(
             {
                 'tipo'            : _data.detalleLugar.tipoLugar,
                 'tipoZona'        : _data.detalleLugar.tipoZona,
                 "dia"             :_data.detalleLugar.dia,
-                "colonia"         :_data.detalleLugar.dia,
                 "estadoOtro"      :_data.estadoOtro,
                 "municipioOtro"   :_data.municipioOtro,
                 "coloniaOtro"     :_data.coloniaOtro,
@@ -279,6 +268,11 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 "numInterior"     :_data.numInterior,
                 "pais"            :_data.pais,
                 "referencias"     :_data.referencias,
+                "colonia"         :_data.colonia? _data.colonia:new Colonia(),
+                "estado"          :_data.estado? _data.estado:{},
+                "municipio"       :_data.municipio? _data.municipio:new Municipio(),
+                "detalleLugar"    :_data.detalleLugar? _data.detalleLugar:{},
+                "caso"            :_data.caso? _data.caso:new Caso(),
                 
             }
 
@@ -293,37 +287,29 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         this.lngMarker = _e.coords.lng;
     }
 
-    changePais(id){
-        if(id != null){
-            if(id === 0){
-                this.isMexico = true;
-                this.optionsServ.getEstadoByPais(id);
-                this.form.controls.estado.enable();
-                this.form.controls.municipio.enable();
-                this.form.controls.colonia.enable();
-                this.form.controls.estadoOtro.disable();
-                this.form.controls.municipioOtro.disable();
-                this.form.controls.coloniaOtro.disable();
-            }else{
-                this.isMexico = false;
-                this.form.controls.estado.disable();
-                this.form.controls.municipio.disable();
-                this.form.controls.colonia.disable();
-                this.form.controls.estadoOtro.enable();
-                this.form.controls.municipioOtro.enable();
-                this.form.controls.coloniaOtro.enable();
-            }
-        }
+    changePais(id){        
+        if(id!=null && typeof id !='undefined'){ 
+            this.optionsServ.getEstadoByPais(id);
+            this.isMexico=id==_config.optionValue.idMexico;
+            console.log(this.optionsServ.paises);
+          }
+          
+          
     }  
 
     changeEstado(id){
-        if(id)
+        if(id){
             this.optionsServ.getMunicipiosByEstado(id);
+            this.form.controls.estado=id;
+            console.log(this.form.controls)
+            }
+
     }
 
     changeMunicipio(id){
         if(id)
             this.optionsServ.getColoniasByMunicipio(id);
+
     }
 
 }
