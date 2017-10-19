@@ -1,46 +1,65 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MdPaginator } from '@angular/material';
-import { TableService} from '@utils/table/table.service';
+import { TableService } from '@utils/table/table.service';
 import { RequerimientoInformacion } from '@models/solicitud-preliminar/requerimientoInformacion';
-import { OnLineService} from '@services/onLine.service';
-import { HttpService} from '@services/http.service';
+import { OnLineService } from '@services/onLine.service';
+import { HttpService } from '@services/http.service';
 import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
-    templateUrl:'./component.html',
+    templateUrl: './component.html',
 })
 export class RequerimientoInformacionComponent {
+    public pag: number = 0;
     columns = ['numeroOficio', 'fechaRequerimiento', 'nombreAutoridad'];
-    public apiUrl: string = "/v1/base/solicitudes-pre-info";
-	public dataSource: TableService | null;
-	public data: RequerimientoInformacion[];
+    public apiUrl: string = "/v1/base/solicitudes-pre-info/casos/{id}/page";
+    public dataSource: TableService | null;
+    public data: RequerimientoInformacion[] = [];
     public casoId: number = null;
-    public haveCaso: boolean=false;
+    public haveCaso: boolean = false;
     public breadcrumb = [];
-	@ViewChild(MdPaginator) 
-	paginator: MdPaginator;
+    @ViewChild(MdPaginator)
+    paginator: MdPaginator;
 
-	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
+    constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db: CIndexedDB) { }
 
-	ngOnInit() {
-    	this.route.params.subscribe(params => {
-            if(params['casoId']){
-            	this.haveCaso=true;
+    ngOnInit() {
+        this.route.params.subscribe(params => {
+            if (params['casoId']) {
+                this.haveCaso = true;
                 this.casoId = +params['casoId'];
-                this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
+                this.apiUrl = this.apiUrl.replace("{id}", String(this.casoId));
+                this.breadcrumb.push({ path: `/caso/${this.casoId}/detalle`, label: "Detalle del caso" })
+                this.page(this.apiUrl);
+            }
+            else {
                 this.http.get(this.apiUrl).subscribe((response) => {
                     this.data = response.data as RequerimientoInformacion[];
+                    console.log(this.data)
                     this.dataSource = new TableService(this.paginator, this.data);
                 });
             }
-            else{
-            	 this.http.get(this.apiUrl).subscribe((response) => {
-	                 this.data = response.data as RequerimientoInformacion[];
-	                 console.log(this.data)
-	                 this.dataSource = new TableService(this.paginator, this.data);
-	                });
-            }
-        }); 
-  	}
+        });
+    }
+
+    public changePage(_e) {
+        this.page(this.apiUrl + '?p=' + _e.pageIndex + '&tr=' + _e.pageSize);
+    }
+
+    public page(url: string) {
+        this.data = [];
+        this.http.get(url).subscribe((response) => {
+            //console.log('Paginator response', response.data);
+
+            response.data.forEach(object => {
+                this.pag = response.totalCount;
+                //console.log("Respuestadelitos", response["data"]);
+                this.data.push(Object.assign(new RequerimientoInformacion(), object));
+                //response["data"].push(Object.assign(new Caso(), object));
+                this.dataSource = new TableService(this.paginator, this.data);
+            });
+            console.log('Datos finales', this.dataSource);
+        });
+    }
 }
