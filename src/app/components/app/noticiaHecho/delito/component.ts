@@ -77,7 +77,7 @@ export class DelitoComponent {
     }
 
     public page(url: string) {
-        this.dataSource = null;
+        this.delitoCasos = [];
         this.http.get(url).subscribe((response) => {
             //console.log('Paginator response', response.data);
             

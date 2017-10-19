@@ -9,7 +9,7 @@
         <h2>Solicitudes de Requerimiento de información</h2>
     </div>
     <div class="col-md-6">
-        <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
+        <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
     </div>
 </div>
 <div class="row space justify-content-end">
@@ -17,27 +17,27 @@
         <search></search>
     </div>
     <div class="col-md-auto">
-        <button mat-raised-button color="accent" routerLink="/caso/{{casoId}}/requerimiento-informacion/create">Agregar solicitud</button>
+        <button md-raised-button color="accent" routerLink="/caso/{{casoId}}/requerimiento-informacion/create">Agregar solicitud</button>
     </div>
 </div>
-<mat-paginator #paginator [length]="dataSource ? dataSource.data.length : 0" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
-</mat-paginator>
-<mat-table #table [dataSource]="dataSource">
-    <ng-container matColumnDef="numeroOficio">
-        <mat-header-cell *matHeaderCellDef> Número de oficio </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.noOficio}} </mat-cell>
+<md-paginator #paginator [length]="pag" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="changePage($event)">
+</md-paginator>
+<md-table #table [dataSource]="dataSource">
+    <ng-container mdColumnDef="numeroOficio">
+        <md-header-cell *mdHeaderCellDef> Número de oficio </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.noOficio}} </md-cell>
     </ng-container>
 
-    <ng-container matColumnDef="fechaRequerimiento">
-        <mat-header-cell *matHeaderCellDef> Fecha de requerimiento </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.fechaReq | date:'MM/dd/yyyy'}} </mat-cell>
+    <ng-container mdColumnDef="fechaRequerimiento">
+        <md-header-cell *mdHeaderCellDef> Fecha de requerimiento </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.fechaReq | date:'MM/dd/yyyy'}} </md-cell>
     </ng-container>
 
-    <ng-container matColumnDef="nombreAutoridad">
-        <mat-header-cell *matHeaderCellDef> Nombre de la autoridad requerida </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.autoridadReq }} </mat-cell>
+    <ng-container mdColumnDef="nombreAutoridad">
+        <md-header-cell *mdHeaderCellDef> Nombre de la autoridad requerida </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.autoridadReq }} </md-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/requerimiento-informacion/{{row.id}}/edit"></mat-row>
-</mat-table>
+    <md-header-row *mdHeaderRowDef="columns"></md-header-row>
+    <md-row *mdRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/requerimiento-informacion/{{row.id}}/edit"></md-row>
+</md-table>

@@ -9,7 +9,7 @@
         <h2>Facultad no Investigar</h2>
     </div>
     <div class="col-md-6">
-        <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
+        <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
     </div>
 </div>
 <div class="row space"></div>
@@ -20,47 +20,48 @@
         <search></search>
     </div>    
     <div class="col-md-auto">
-        <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/facultad-no-investigar/create" color="accent">Agregar determinación</button>
+        <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/facultad-no-investigar/create" color="accent">Agregar determinación</button>
     </div>
 </div>
 <br/>
 
 <div class="">
-    <mat-paginator #paginator
-        [length]="dataSource ? dataSource.data.length : 0"
+    <md-paginator #paginator
+        [length]="pag"
         [pageIndex]="0"
         [pageSize]="10"
-        [pageSizeOptions]="[5, 10, 25, 100]">
-    </mat-paginator>
-    <mat-table #table [dataSource]="dataSource">
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        (page)="changePage($event)">
+    </md-paginator>
+    <md-table #table [dataSource]="dataSource">
 
         <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
 
         <!-- Position Column    displayedColumns = ['Remitente','Motivos','Creado por' 'Fecha'];
 -->
-        <ng-container matColumnDef="Remitente">
-            <mat-header-cell *matHeaderCellDef>A quien se remite la determinación </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.destinatarioDeterminacion}} </mat-cell>
+        <ng-container mdColumnDef="Remitente">
+            <md-header-cell *mdHeaderCellDef>A quien se remite la determinación </md-header-cell>
+            <md-cell *mdCellDef="let element"> {{element.destinatarioDeterminacion}} </md-cell>
         </ng-container>
 
-        <ng-container matColumnDef="Motivos">
-            <mat-header-cell *matHeaderCellDef> Motivos por los que se abstuvo de investigar</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.motivosAbstuvoInvestigar}} </mat-cell>
+        <ng-container mdColumnDef="Motivos">
+            <md-header-cell *mdHeaderCellDef> Motivos por los que se abstuvo de investigar</md-header-cell>
+            <md-cell *mdCellDef="let element"> {{element.motivosAbstuvoInvestigar}} </md-cell>
         </ng-container>
 
-        <ng-container matColumnDef="Creado por">
-            <mat-header-cell *matHeaderCellDef> Creado por</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.creadoPor}} </mat-cell>
+        <ng-container mdColumnDef="Creado por">
+            <md-header-cell *mdHeaderCellDef> Creado por</md-header-cell>
+            <md-cell *mdCellDef="let element"> {{element.creadoPor}} </md-cell>
         </ng-container>
 
-        <ng-container matColumnDef="Fecha">
-            <mat-header-cell *matHeaderCellDef> Fecha de creación</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.created | date:'MM/dd/yyyy'}} </mat-cell>
+        <ng-container mdColumnDef="Fecha">
+            <md-header-cell *mdHeaderCellDef> Fecha de creación</md-header-cell>
+            <md-cell *mdCellDef="let element"> {{element.created | date:'MM/dd/yyyy'}} </md-cell>
         </ng-container>
 
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;" routerLink="{{row.id}}/edit"></mat-row>
-    </mat-table>
+        <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+        <md-row *mdRowDef="let row; columns: displayedColumns;" routerLink="{{row.id}}/edit"></md-row>
+    </md-table>
 
 </div>

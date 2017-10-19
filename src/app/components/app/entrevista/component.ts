@@ -20,7 +20,9 @@ export class EntrevistaComponent {
 	@ViewChild(MatPaginator) 
     paginator: MatPaginator;
     public breadcrumb = [];
-    public apiUrl="/v1/base/entrevistas";
+    public apiUrl="/v1/base/entrevistas";//cambiar esta URL cuando este el servicio por caso
+    public pag: number = 0;
+    
 
 	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
 
@@ -30,11 +32,7 @@ export class EntrevistaComponent {
             	this.haveCaso=true;
                 this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
-                this.http.get(this.apiUrl).subscribe((response) => {
-                    console.log(response);
-                    this.data = response.data as Entrevista[];
-                    this.dataSource = new TableService(this.paginator, this.data);
-                });
+                this.page(this.apiUrl);                
             }
             else{
             	 this.http.get(this.apiUrl).subscribe((response) => {
@@ -44,5 +42,22 @@ export class EntrevistaComponent {
 	                });
             }
         });
-  	}
+        
+      }
+      
+      public changePage(_e){
+        if(this.onLine.onLine){
+            this.page(this.apiUrl+'?p='+_e.pageIndex+'&tr='+_e.pageSize);
+        }
+    }  
+
+    public page(url: string){
+        this.http.get(url).subscribe((response) => {
+            this.pag = response.totalCount;
+            this.data = response.data as Entrevista[];
+            console.log("Loading armas..");
+            console.log(this.data);
+            this.dataSource = new TableService(this.paginator, this.data);
+        });
+    }
 }

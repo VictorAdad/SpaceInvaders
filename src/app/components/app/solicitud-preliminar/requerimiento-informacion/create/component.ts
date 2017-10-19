@@ -63,7 +63,10 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 			'infoRequerida': new FormControl(this.model.infoRequerida),
 			'plazoDias': new FormControl(this.model.plazoDias),
 			'apercibimiento': new FormControl(this.model.apercibimiento),
-			'observaciones': new FormControl(this.model.observaciones)
+			'observaciones': new FormControl(this.model.observaciones),
+			'caso': new FormGroup({
+				'id': new FormControl("", []),
+			})
 		});
 
 		this.route.params.subscribe(params => {
@@ -83,17 +86,15 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 
 	public save(valid: any, _model: any): void {
 
-		Object.assign(this.model, _model);
-		this.model.caso.id = this.casoId;
-		console.log('-> RequerimientoInformacion@save()', this.model);
-		this.http.post(this.apiUrl, this.model).subscribe(
+		_model.caso.id = this.casoId;
+		console.log('-> RequerimientoInformacion@save()', _model);
+		this.http.post(this.apiUrl, _model).subscribe(
 
 			(response) => {
 				console.log(response);
-				console.log('here')
-				if (this.casoId) {
-					this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion']);
-				}
+				console.log('here');
+				this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion']);
+				
 			},
 			(error) => {
 				console.error('Error', error);
@@ -106,9 +107,9 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 		console.log('-> RequerimientoInformacion@edit()', _model);
 		this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
 			console.log('-> Registro acutualizado', response);
-			if (this.id) {
-				this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion']);
-			}
+			
+			this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion']);
+			
 		});
 	}
 

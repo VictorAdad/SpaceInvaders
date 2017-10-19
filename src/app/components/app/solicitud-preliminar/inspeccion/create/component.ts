@@ -90,19 +90,19 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
             console.log('-> Inspeccion@save()', this.model);
             
             var fechaCompleta = new Date (this.model.fechaHoraInspeccion);
-            fechaCompleta.setMinutes(this.model['horaInspeccion'].split(':')[1]);
-            fechaCompleta.setHours(this.model['horaInspeccion'].split(':')[0]);
+            fechaCompleta.setMinutes(parseInt(this.model['horaInspeccion'].split(':')[1]));
+            fechaCompleta.setHours(parseInt(this.model['horaInspeccion'].split(':')[0]));
             console.log();
             var mes:number=fechaCompleta.getMonth()+1;
             this.model.fechaHoraInspeccion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
-            //console.log('lo que envio: '+  this.model.fechaHoraInspeccion);
+            console.log('lo que envio: '+  this.model.fechaHoraInspeccion);
         
             this.http.post(this.apiUrl, this.model).subscribe(
 
                 (response) => {
                     //console.log(response);
                     //console.log('lo que recibo: '+ new Date(response.fechaHoraInspeccion));
-                  if(this.casoId){
+                  if(this.casoId!=null){
                     this.router.navigate(['/caso/'+this.casoId+'/inspeccion' ]);      
                   }
                   else {

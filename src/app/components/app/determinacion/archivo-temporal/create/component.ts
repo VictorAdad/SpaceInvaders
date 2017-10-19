@@ -78,7 +78,7 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 		this.http.post(this.apiUrl, this.model).subscribe(
 			(response) => {
 				console.log(response);
-				if (this.casoId) {
+				if (this.casoId!=null) {
 					this.router.navigate(['/caso/' + this.casoId + '/archivo-temporal']);
 				}
 			},
@@ -93,7 +93,9 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 		console.log('-> ArchivoTemporal@edit()', _model);
 		this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
 			console.log('-> Registro acutualizado', response);
-			this.router.navigate(['/caso/' + this.casoId + '/archivo-temporal']);
+			if(this.id!=null){
+				this.router.navigate(['/caso/' + this.casoId + '/archivo-temporal']);
+			}
 		});
 	}
 

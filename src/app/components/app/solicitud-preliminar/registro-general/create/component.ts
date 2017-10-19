@@ -16,13 +16,13 @@ import { CIndexedDB } from '@services/indexedDB';
 export class RegistroGeneralCreateComponent {
 
 	public casoId: number = null;
-    public breadcrumb = [];
+	public breadcrumb = [];
 	constructor(private route: ActivatedRoute) { }
 	ngOnInit() {
 		this.route.params.subscribe(params => {
-			if (params['casoId']){
+			if (params['casoId']) {
 				this.casoId = +params['casoId'];
-                this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
+				this.breadcrumb.push({ path: `/caso/${this.casoId}/detalle`, label: "Detalle del caso" })
 			}
 		});
 	}
@@ -85,9 +85,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 		this.http.post(this.apiUrl, this.model).subscribe(
 
 			(response) => {
-				console.log(response);
-				console.log('here')
-				if (this.casoId) {
+				if(this.casoId!=null){
 					this.router.navigate(['/caso/' + this.casoId + '/registro-general']);
 				}
 			},

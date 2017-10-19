@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatPaginator } from '@angular/material';
+import { MdPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { NoEjercicioAccionPenal } from '@models/determinacion/no-ejercicio-accion-penal';
 import { OnLineService } from '@services/onLine.service';
@@ -11,16 +11,17 @@ import { CIndexedDB } from '@services/indexedDB';
 	templateUrl: './component.html',
 })
 export class NoEjercicioAccionPenalComponent {
-	public apiUrl: string = "/v1/base/no-ejercicio-accion";
+	public apiUrl: string = "/v1/base/no-ejercicio-accion/casos/{idCaso}/page"; 
 	public breadcrumb = [];
 	columns = ['ambito', 'creadoPor', 'fechaCreacion'];
 	public dataSource: TableService | null;
 	public data: NoEjercicioAccionPenal[];
 	public casoId: number = null;
 	public haveCaso: boolean = false;
-	@ViewChild(MatPaginator)
-	paginator: MatPaginator;
-
+	@ViewChild(MdPaginator)
+	paginator: MdPaginator;
+    public pag: number = 0;
+	
 	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db: CIndexedDB) { }
 
 	ngOnInit() {
@@ -28,13 +29,29 @@ export class NoEjercicioAccionPenalComponent {
 			if (params['casoId']) {
 				this.haveCaso = true;
 				this.casoId = +params['casoId'];
-				this.http.get(this.apiUrl).subscribe((response) => {
-					this.data = response.data as NoEjercicioAccionPenal[];
-					this.dataSource = new TableService(this.paginator, this.data);
-				});
+				this.apiUrl=this.apiUrl.replace("{idCaso}",String(this.casoId));
+				this.page(this.apiUrl);
 				this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});
 			}
 
 		});
 	}
+
+	public changePage(_e){
+        if(this.onLine.onLine){
+			console.log(this.apiUrl) 
+            this.page(this.apiUrl+'?p='+_e.pageIndex+'&tr='+_e.pageSize);
+            
+        }
+    }  
+
+    public page(url: string){
+        this.http.get(url).subscribe((response) => {
+            this.pag = response.totalCount;
+            this.data = response.data as NoEjercicioAccionPenal[];
+            console.log("Loading armas..");
+            console.log(this.data);
+            this.dataSource = new TableService(this.paginator, this.data);
+        });
+    }
 }

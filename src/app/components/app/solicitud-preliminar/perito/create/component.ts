@@ -7,8 +7,10 @@ import { HttpService } from '@services/http.service';
 import { SolicitudPreliminarGlobal } from '../../global';
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
+import { SelectsService } from '@services/selects.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
 	templateUrl: './component.html',
@@ -16,14 +18,14 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 export class PeritoCreateComponent {
 
 	public casoId: number = null;
-    public breadcrumb = [];
+	public breadcrumb = [];
 	constructor(private route: ActivatedRoute) { }
 
 	ngOnInit() {
 		this.route.params.subscribe(params => {
-			if (params['casoId']){
+			if (params['casoId']) {
 				this.casoId = +params['casoId'];
-                this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
+				this.breadcrumb.push({ path: `/caso/${this.casoId}/detalle`, label: "Detalle del caso" })
 			}
 		});
 	}
@@ -41,7 +43,8 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	public id: number = null;
 	public form: FormGroup;
 	public model: Perito;
-	isPericiales:boolean=false;
+	isPericiales: boolean = false;
+	isPsicofisico: boolean = false;
 
 
 	dataSource: TableService | null;
@@ -53,27 +56,13 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 		private onLine: OnLineService,
 		private http: HttpService,
 		private router: Router,
-		private db: CIndexedDB
+		private db: CIndexedDB,
+		private options: SelectsService
 	) { super(); }
 
 	ngOnInit() {
 		this.model = new Perito();
-
-		this.form = new FormGroup({
-			'tipo': new FormControl(this.model.tipo),
-			'hechosNarrados': new FormControl(this.model.hechosNarrados),
-			'hechosDenunciados': new FormControl(this.model.hechosDenunciados),
-			'noOficio': new FormControl(this.model.noOficio),
-			'directorInstituto': new FormControl(this.model.directorInstituto),
-			'peritoMateria': new FormControl(this.model.peritoMateria),
-			'finalidad': new FormControl(this.model.finalidad),
-			'plazoDias': new FormControl(this.model.plazoDias),
-			'apercibimiento': new FormControl(this.model.apercibimiento),
-			'observaciones': new FormControl(this.model.observaciones),
-			'medicoLegista': new FormControl(this.model.medicoLegista),
-			'realizadoA': new FormControl(this.model.realizadoA),
-			'tipoExamen': new FormControl(this.model.tipoExamen)
-		});
+		this.form = this.createForm();
 
 		this.route.params.subscribe(params => {
 			if (params['casoId'])
@@ -83,25 +72,48 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 				this.id = +params['id'];
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-					this.isPericiales=this.form.controls.tipo.value==='Periciales';
-					this.model= response as Perito;
+					this.isPericiales = this.form.controls.tipo.value === 'Periciales';
+					this.isPsicofisico = this.form.controls.tipo.value === 'Psicofísico';
+
+
 					this.fillForm(response);
 				});
 			}
 		});
 	}
 
-	public save(valid: any, _model: any): void {
+	public createForm() {
+		return new FormGroup({
+			'tipo': new FormControl(this.model.tipo),
+			'hechosNarrados': new FormControl(this.model.hechosNarrados),
+			'hechosDenunciados': new FormControl(this.model.hechosDenunciados),
+			'noOficio': new FormControl(this.model.noOficio),
+			'directorInstituto': new FormControl(this.model.directorInstituto),
+			'peritoMateria': new FormGroup({
+				'id': new FormControl("", []),
+			}),
+			'finalidad': new FormControl(this.model.finalidad),
+			'plazoDias': new FormControl(this.model.plazoDias),
+			'apercibimiento': new FormControl(this.model.apercibimiento),
+			'observaciones': new FormControl(this.model.observaciones),
+			'medicoLegista': new FormControl(this.model.medicoLegista),
+			'realizadoA': new FormControl(this.model.realizadoA),
+			'tipoExamen': new FormGroup({
+				'id': new FormControl("", []),
+			}),
+			'caso': new FormGroup({
+				'id': new FormControl("", []),
+			})
+		});
+	}
 
-		Object.assign(this.model, _model);
-		this.model.caso.id = this.casoId;
-		console.log('-> Perito@save()', this.model);
-		this.http.post(this.apiUrl, this.model).subscribe(
+	public save(valid: any, _model: any): void {
+		_model.caso.id = this.casoId;
+		console.log('-> Perito@save()', _model);
+		this.http.post(this.apiUrl, _model).subscribe(
 
 			(response) => {
-				console.log(response);
-				console.log('here')
-				if (this.casoId) {
+				if(this.casoId!=null){
 					this.router.navigate(['/caso/' + this.casoId + '/perito']);
 				}
 			},
@@ -122,12 +134,23 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	}
 
 	public fillForm(_data) {
-		this.form.patchValue(_data);
-		console.log(_data);
+		console.log('_data1', _data);
+		for (var propName in _data) {
+			if (_data[propName] === null || _data[propName] === undefined)
+				delete _data[propName];
+		}
+		console.log('_data2', _data);
+		this.form.patchValue({
+			tipo: _data.tipo
+		});
+		let timer = Observable.timer(1);
+		timer.subscribe(t => {
+			this.form.patchValue(_data);
+		})
 	}
 	tipoChange(_tipo): void {
-		this.isPericiales=_tipo==='Periciales';
-
+		this.isPericiales = _tipo === 'Periciales';
+		this.isPsicofisico = _tipo === 'Psicofísico';
 	}
 
 }

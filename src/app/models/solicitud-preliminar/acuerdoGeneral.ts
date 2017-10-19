@@ -1,3 +1,5 @@
+import { Caso } from '@models/caso';
+
 export class AcuerdoGeneral {
     id: number;
     tipo: string;
@@ -6,15 +8,27 @@ export class AcuerdoGeneral {
     finalidad: string;
     plazo: string;
     apercibimiento: string;
-    senialar: string;
+    senialarSolicitud: string;
     observaciones: string;
+    noOficioAtencion: string;
+    autoridadAtencion: string;
+    cargoAdscripcionAtencion: string;
+    necesidades: string;
+    ubicacionAtencion: string;
+    autoridadJuridico: string;
+    cargoAdscripcionJuridico: string;
+    ubicacionJuridico: string;
+    denunciaQuerella: DenunciaQuerella = new DenunciaQuerella();
+    victimaQuerellante: VictimaQuerellante = new VictimaQuerellante();
     caso: Caso = new Caso();
 }
-export class Caso {
-    public id       : number;
-    public titulo   : string;
-    public sintesis : string;
-    public delito   : string;
-    public nic      : string;
-    public nuc      : string;
+
+export class DenunciaQuerella{
+    id      :   number;
+    nombre  :   string;
+}
+
+export class VictimaQuerellante{
+    id      :   number;
+    nombre  :   string;
 }

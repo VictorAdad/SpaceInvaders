@@ -79,7 +79,7 @@ export class AcuerdoRadicacionComponent extends DeterminacionGlobal{
             this.http.post(this.apiUrl, this.model).subscribe(
                 (response) => {
                     console.log(response);
-                  if(this.casoId){
+                  if(this.casoId!=null){
                     this.router.navigate(['/caso/'+this.casoId+'/acuerdo-radicacion' ]);      
                   }
                 },
