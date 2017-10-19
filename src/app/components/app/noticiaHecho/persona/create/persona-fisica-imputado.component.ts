@@ -144,6 +144,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     formLoc.patchValue(_data.localizacionPersona[i]);
                     
                 }
+                this.globals.form.controls.razonSocial.patchValue(_personaCaso["persona"].razonSocial);
 
             });
             
@@ -613,12 +614,12 @@ export class IdentidadComponent{
     } 
 
     changeEstado(id){
-        if(id)
+        if(id!=null && typeof id !='undefined') 
             this.options.getMunicipiosByEstado(id);
     }
 
     changeMunicipio(id){
-        if(id)
+        if(id!=null && typeof id !='undefined')
             this.options.getColoniasByMunicipio(id);
     }
 
@@ -724,17 +725,17 @@ export class LocalizacionComponent{
     }
 
     changeEstado(id){
-        if(id)
+        if(id!=null && typeof id !='undefined')
         this.options.getMunicipiosByEstado(id);
     }
 
     changeMunicipio(id){
-        if(id)
+        if(id!=null && typeof id !='undefined')
             this.options.getColoniasByMunicipio(id);
     }
 
     changeColonia(id){
-        if(id)
+        if(id!=null && typeof id !='undefined')
             this.options.getLocalidadByColonias(id);
     }
 
