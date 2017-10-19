@@ -1,4 +1,4 @@
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormArray } from '@angular/forms';
 
 export class NoticiaHechoGlobal{
 	
@@ -13,6 +13,15 @@ export class NoticiaHechoGlobal{
                 control.markAsTouched({ onlySelf: true });
             } else if (control instanceof FormGroup) {
                 this.validateForm(control);           
+            } else if (control instanceof FormArray){
+                Object.keys(control.controls).forEach(fieldArray => {
+                    const controlArray = control.controls[fieldArray]; 
+                    if (controlArray instanceof FormControl) {         
+                        controlArray.markAsTouched({ onlySelf: true });
+                    } else if (controlArray instanceof FormGroup) {
+                        this.validateForm(controlArray); 
+                    }
+                });
             }
         });
     } 
