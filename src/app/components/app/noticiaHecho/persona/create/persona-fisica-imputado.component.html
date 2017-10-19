@@ -71,7 +71,7 @@
         </div>
         <!-- Datos de localizacion -->
         <div class="row  justify-content-md-center align-items-center" *ngIf="muestraDatos();" >
-          <localizacion [globals]="globals"  [options]="options" style="width: 95%"></localizacion>
+          <localizacion [globals]="globals"  [options]="options" style="width: 95%" [localizaciones]="globals.localizaciones"></localizacion>
         </div>
 
         <!-- Media de filiación -->
