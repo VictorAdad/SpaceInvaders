@@ -9,6 +9,7 @@ import { HttpService } from '@services/http.service';
 import { SolicitudPreliminarGlobal } from '../../global';
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
+import { SelectsService} from '@services/selects.service';
 
 @Component({
     templateUrl: './component.html',
@@ -43,6 +44,9 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
     public id: number = null;
     public form: FormGroup;
     public model: AcuerdoGeneral;
+    public isAcuerdoGral: boolean = false;
+    public isAtencion: boolean = false;
+    public isJuridico: boolean = false;
     dataSource: TableService | null;
     @ViewChild(MdPaginator) paginator: MdPaginator;
 
@@ -52,22 +56,14 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
         private onLine: OnLineService,
         private http: HttpService,
         private router: Router,
-        private db: CIndexedDB
+        private db: CIndexedDB,
+        private options: SelectsService
     ) { super(); }
 
 
     ngOnInit() {
         this.model = new AcuerdoGeneral();
-
-        this.form = new FormGroup({
-            'fundamentoLegal': new FormControl(this.model.fundamentoLegal),
-            'contenidoAcuerdo': new FormControl(this.model.contenidoAcuerdo),
-            'finalidad': new FormControl(this.model.finalidad),
-            'apercibimiento': new FormControl(this.model.apercibimiento),
-            'plazo': new FormControl(this.model.plazo),
-            'senialar': new FormControl(this.model.senialar),
-            'observaciones': new FormControl(this.model.observaciones),
-        });
+        this.form = this.createForm();
 
         this.route.params.subscribe(params => {
             if (params['casoId'])
@@ -75,27 +71,57 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
             if (params['id']) {
                 this.id = +params['id'];
                 this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
+                    this.isAcuerdoGral = (this.form.controls.tipo.value==='Acuerdo General');
+                    this.isJuridico = (this.form.controls.tipo.value==='Asignación de asesor jurídico');
+                    this.isAtencion = (this.form.controls.tipo.value==='Ayuda y atención a víctimas');
+                    this.model = response as AcuerdoGeneral;
                     this.fillForm(response);
                 });
             }
         });
     }
 
+    public createForm(){
+        return new FormGroup({
+            'tipo': new FormControl(this.model.tipo),
+            'fundamentoLegal': new FormControl(this.model.fundamentoLegal),
+            'contenidoAcuerdo': new FormControl(this.model.contenidoAcuerdo),
+            'finalidad': new FormControl(this.model.finalidad),
+            'apercibimiento': new FormControl(this.model.apercibimiento),
+            'plazo': new FormControl(this.model.plazo),
+            'senialarSolicitud': new FormControl(this.model.senialarSolicitud),
+            'observaciones': new FormControl(this.model.observaciones),
+            'noOficioAtencion': new FormControl(this.model.noOficioAtencion),
+            'autoridadAtencion': new FormControl(this.model.autoridadAtencion),
+            'cargoAdscripcionAtencion': new FormControl(this.model.cargoAdscripcionAtencion),
+            'necesidades': new FormControl(this.model.necesidades),
+            'ubicacionAtencion': new FormControl(this.model.ubicacionAtencion),
+            'ubicacionJuridico': new FormControl(this.model.ubicacionJuridico),
+            'autoridadJuridico': new FormControl(this.model.autoridadJuridico),
+            'cargoAdscripcionJuridico': new FormControl(this.model.cargoAdscripcionJuridico),
+            'denunciaQuerella': new FormGroup({
+                'id': new FormControl("",[])
+            }),
+            'victimaQuerellante': new FormGroup({
+                'id': new FormControl("",[])
+            }),
+            'caso': new FormGroup({
+                'id': new FormControl("",[])
+            })
+        });
+    }
+
     public save(valid: any, _model: any): void {
 
-        Object.assign(this.model, _model);
-        this.model.caso.id = this.casoId;
-        console.log('-> AcuerdoGeneral@save()', this.model);
-        this.http.post(this.apiUrl, this.model).subscribe(
+        _model.caso.id = this.casoId;
+        console.log('-> AcuerdoGeneral@save()', _model);
+        this.http.post(this.apiUrl, _model).subscribe(
 
             (response) => {
-                console.log(response);
-                console.log('here')
-                if (this.casoId) {
+                if(this.casoId!=null){
                     this.router.navigate(['/caso/' + this.casoId + '/acuerdo-general']);
-                }
-                else {
-                    this.router.navigate(['/acuerdos-generales']);
+                }else{
+                    this.router.navigate(['/acuerdos' ]);
                 }
             },
             (error) => {
@@ -109,13 +135,21 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
         console.log('-> AcuerdoGeneral@edit()', _model);
         this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
             console.log('-> Registro acutualizado', response);
-            this.router.navigate(['/caso/' + this.casoId + '/acuerdo-general']);
+            if(this.id!=null){
+                this.router.navigate(['/caso/' + this.casoId + '/acuerdo-general']);
+            }
         });
     }
 
     public fillForm(_data) {
         this.form.patchValue(_data);
         console.log(_data);
+    }
+
+    public tipoChange(_tipo): void{
+        this.isAcuerdoGral = (_tipo==='Acuerdo General');
+        this.isJuridico = (_tipo==='Asignación de asesor jurídico');
+        this.isAtencion = (_tipo==='Ayuda y atención a víctimas');
     }
 
 }

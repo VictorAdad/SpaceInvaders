@@ -84,7 +84,7 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
         this.http.post(this.apiUrl, this.model).subscribe(
             (response) => {
                 console.log(response);
-                if (this.casoId) {
+                if (this.casoId!=null) {
                     this.router.navigate(['/caso/' + this.casoId + '/facultad-no-investigar']);
                 }
             },
@@ -99,7 +99,9 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
         console.log('-> FacultadNoInvestigar@edit()', _model);
         this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
             console.log('-> Registro acutualizado', response);
-            this.router.navigate(['/caso/' + this.casoId + '/facultad-no-investigar']);
+            if(this.id!=null){
+                this.router.navigate(['/caso/' + this.casoId + '/facultad-no-investigar']);
+            }
         });
     }
 

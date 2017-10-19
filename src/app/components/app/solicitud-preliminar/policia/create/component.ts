@@ -15,15 +15,15 @@ import { CIndexedDB } from '@services/indexedDB';
 })
 export class PoliciaCreateComponent {
 	public casoId: number = null;
-    public breadcrumb = [];
+	public breadcrumb = [];
 
 	constructor(private route: ActivatedRoute) { }
 
 	ngOnInit() {
 		this.route.params.subscribe(params => {
-			if (params['casoId']){
+			if (params['casoId']) {
 				this.casoId = +params['casoId'];
-                this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
+				this.breadcrumb.push({ path: `/caso/${this.casoId}/detalle`, label: "Detalle del caso" })
 			}
 		});
 	}
@@ -84,9 +84,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 		this.http.post(this.apiUrl, this.model).subscribe(
 
 			(response) => {
-				console.log(response);
-				console.log('here')
-				if (this.casoId) {
+				if(this.casoId!=null){
 					this.router.navigate(['/caso/' + this.casoId + '/policia']);
 				}
 			},
@@ -99,12 +97,17 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 
 	public edit(_valid: any, _model: any): void {
 		console.log('-> Policia@edit()', _model);
-		this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
-			console.log('-> Registro acutualizado', response);
-			if (this.id) {
-				this.router.navigate(['/caso/' + this.casoId + '/policia']);
+		this.http.put(this.apiUrl + '/' + this.id, _model).subscribe(
+			(response) => {
+				console.log('-> Registro acutualizado', response);
+				if(this.id!=null){
+					this.router.navigate(['/caso/' + this.casoId + '/policia']);
+				}
+			},
+			(error) => {
+				console.error('Error', error);
 			}
-		});
+		);
 	}
 
 	public fillForm(_data) {

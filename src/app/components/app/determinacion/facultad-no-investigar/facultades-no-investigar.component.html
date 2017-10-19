@@ -27,10 +27,11 @@
 
 <div class="">
     <md-paginator #paginator
-        [length]="dataSource ? dataSource.data.length : 0"
+        [length]="pag"
         [pageIndex]="0"
         [pageSize]="10"
-        [pageSizeOptions]="[5, 10, 25, 100]">
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        (page)="changePage($event)">
     </md-paginator>
     <md-table #table [dataSource]="dataSource">
 
