@@ -9,7 +9,7 @@
         <h2>Solicitudes preliminares a periciales</h2>
     </div>
     <div class="col-md-6">
-        <button class="float-right" md-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
+        <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
     </div>
 </div>
 <div class="row space justify-content-end">
@@ -17,27 +17,27 @@
         <search></search>
     </div>
     <div class="col-md-auto">
-        <button md-raised-button color="accent" routerLink="/caso/{{casoId}}/perito/create">Agregar solicitud</button>
+        <button mat-raised-button color="accent" routerLink="/caso/{{casoId}}/perito/create">Agregar solicitud</button>
     </div>
 </div>
-<md-paginator #paginator
+<mat-paginator #paginator
     [length]="pag"
     [pageIndex]="0"
     [pageSize]="10"
     [pageSizeOptions]="[5, 10, 25, 100]"
     (page)="changePage($event)">
-  </md-paginator>
-<md-table #table [dataSource]="dataSource">
-    <ng-container mdColumnDef="tipo">
-        <md-header-cell *mdHeaderCellDef> Tipo de solicitud</md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.tipo}} </md-cell>
+  </mat-paginator>
+<mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="tipo">
+        <mat-header-cell *matHeaderCellDef> Tipo de solicitud</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.tipo}} </mat-cell>
     </ng-container>
 
-    <ng-container mdColumnDef="oficio">
-        <md-header-cell *mdHeaderCellDef> Número de oficio</md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.noOficio}} </md-cell>
+    <ng-container matColumnDef="oficio">
+        <mat-header-cell *matHeaderCellDef> Número de oficio</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.noOficio}} </mat-cell>
     </ng-container>
 
-    <md-header-row *mdHeaderRowDef="columns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/perito/{{row.id}}/edit"></md-row>
-</md-table>
+    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/perito/{{row.id}}/edit"></mat-row>
+</mat-table>

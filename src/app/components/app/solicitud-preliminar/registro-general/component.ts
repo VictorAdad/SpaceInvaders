@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MdPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { RegistroGeneral } from '@models/solicitud-preliminar/registroGeneral';
 import { OnLineService } from '@services/onLine.service';
@@ -16,8 +16,8 @@ export class RegistroGeneralComponent {
     public data: RegistroGeneral[] = [];
     public casoId: number = null;
     public haveCaso: boolean = false;
-    @ViewChild(MdPaginator)
-    paginator: MdPaginator;
+    @ViewChild(MatPaginator)
+    paginator: MatPaginator;
     public breadcrumb = [];
     public apiUrl: string = "/v1/base/solicitudes-pre-registros/casos/{id}/page";
     public pag: number = 0;

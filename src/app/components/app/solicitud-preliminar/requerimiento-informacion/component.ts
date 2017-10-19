@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MdPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { RequerimientoInformacion } from '@models/solicitud-preliminar/requerimientoInformacion';
 import { OnLineService } from '@services/onLine.service';
@@ -19,8 +19,8 @@ export class RequerimientoInformacionComponent {
     public casoId: number = null;
     public haveCaso: boolean = false;
     public breadcrumb = [];
-    @ViewChild(MdPaginator)
-    paginator: MdPaginator;
+    @ViewChild(MatPaginator)
+    paginator: MatPaginator;
 
     constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db: CIndexedDB) { }
 

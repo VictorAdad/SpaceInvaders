@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MdPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { ArchivoTemporal } from '@models/determinacion/archivoTemporal';
 import { OnLineService } from '@services/onLine.service';
@@ -18,8 +18,8 @@ export class ArchivoTemporalComponent {
 	public data: ArchivoTemporal[] = [];
 	public casoId: number = null;
 	public haveCaso: boolean = false;
-	@ViewChild(MdPaginator)
-	paginator: MdPaginator;
+	@ViewChild(MatPaginator)
+	paginator: MatPaginator;
 	public pag: number = 0;
 
 	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db: CIndexedDB) { }
