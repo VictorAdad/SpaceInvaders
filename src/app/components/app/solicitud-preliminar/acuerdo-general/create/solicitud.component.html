@@ -1,45 +1,98 @@
-<div class="row space">
-    <div class="col-md-12">
-        <h3>Fundamento legal</h3>
-    </div>
-</div>
 <div class="row">
     <div class="col-md-12">
-        <form>
-            <div class="row">
-                <div class="col">
-                    <text label="Fundamento legal" name="fundamentoLegal" [(value)]="model.fundamentoLegal" [group]="form"></text>
+        <form [formGroup]="form">
+            <h3>Tipo de solicitud</h3>
+            <select2 [options]="
+                [
+                     {label:'Asignación de asesor jurídico',value:'Asignación de asesor jurídico'}, 
+                     {label:'Ayuda y atención a víctimas',value:'Ayuda y atención a víctimas'},
+                     {label:'Acuerdo General',value:'Acuerdo General'}
+                ]" placeholder="Tipo de solicitud" (valueChange)="tipoChange($event)" [group]="form" name="tipo">
+            </select2>
+            <div *ngIf="isAcuerdoGral">
+                <h4>Fundamento legal</h4>
+                <div class="row">
+                    <div class="col">
+                        <text label="Fundamento legal" name="fundamentoLegal" [group]="form"></text>
+                    </div>
+                    <div class="col">
+                        <text label="Contenido del acuerdo" name="contenidoAcuerdo" [group]="form"></text>
+                    </div>
+                    <div class="col">
+                        <text label="Con la finalidad de" name="finalidad" [group]="form"></text>
+                    </div>
                 </div>
-                <div class="col">
-                    <text label="Contenido del acuerdo" name="contenidoAcuerdo" [(value)]="model.contenidoAcuerdo" [group]="form"></text>
+                <div class="row">
+                    <div class="col">
+                        <text label="Plazo en el que debe ser complementado" name="plazo" [group]="form"></text>
+                    </div>
+                    <div class="col">
+                        <text label="Apercibimientos" name="apercibimiento" [group]="form"></text>
+                    </div>
+                    <div class="col">
+                        <text label="Señalar que se solicita" name="senialarSolicitud" [group]="form"></text>
+                    </div>
                 </div>
-                <div class="col">
-                    <text label="Con la finalidad de" name="finalidad" [(value)]="model.finalidad" [group]="form"></text>
+                <div class="row">
+                    <div class="col">
+                        <text-area label="Observaciones/Incidencias" name="observaciones" [group]="form"></text-area>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <text label="Plazo en el que debe ser complementado" name="plazo" [(value)]="model.plazo" [group]="form"></text>
+            <div *ngIf="isJuridico">
+                <h4>Oficio de asignación de asesor jurídico</h4>
+                <div class="row">
+                    <div class="col">
+                        <text label="Nombre de la autoridad a quien se dirige el oficio" name="autoridadJuridico" [group]="form"></text>
+                    </div>
+                    <div class="col">
+                        <select2 placeholder="¿Denuncia o querella?" [options]="options.denunciaQuerella" name="id" [group]="form.controls.denunciaQuerella"></select2>
+                    </div>
+                    <div class="col">
+                        <text label="Ubicación de la unidad inmediata" name="ubicacionJuridico" [group]="form"></text>
+                    </div>
+                    <div class="col">
+                        <select2 placeholder="¿Víctima, ofendido o querellante?" [options]="options.victimaQuerellante" name="id" [group]="form.controls.victimaQuerellante"></select2>
+                    </div>
                 </div>
-                <div class="col">
-                    <text label="Apercibimientos" name="apercibimiento" [(value)]="model.apercibimiento" [group]="form"></text>
-                </div>
-                <div class="col">
-                    <text label="Señalar que se solicita" name="senialar" [(value)]="model.senialar" [group]="form"></text>
+                <div class="row">
+                    <div class="col-md-4">
+                        <text label="Cargo y adscripción de la autoridad a la que se dirige el oficio" name="cargoAdscripcionJuridico" [group]="form"></text>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <text-area label="Observaciones/Incidencias" name="observaciones" [(value)]="model.observaciones"  [group]="form" ></text-area>
+            <div *ngIf="isAtencion">
+                <h4>Oficio para ayuda y atención a víctima</h4>
+                <div class="row">
+                    <div class="col">
+                        <text label="Oficio" name="noOficioAtencion" [group]="form"></text>
+                    </div>
+                    <div class="col">
+                        <text label="Nombre de la autoridad a quien se dirige el oficio" name="autoridadAtencion" [group]="form"></text>
+                    </div>
+                    <div class="col">
+                        <text label="Necesidades que se ayudarán a cubrir" name="necesidades" [group]="form"></text>
+                    </div>
+                    <div class="col">
+                        <text label="Ubicación de la unidad inmediata" name="ubicacionAtencion" [group]="form"></text>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <text label="Cargo y adscripción de la autoridad a la que se dirige el oficio" name="cargoAdscripcionAtencion" [group]="form"></text>
+                    </div>
+                    <div class="col-md-8">
+                        <text label="Observaciones/Incidencias" name="observaciones" [group]="form"></text>
+                    </div>
                 </div>
             </div>
             <div class="row justify-content-end">
                 <div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
-                    <button md-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id != null">Editar</button>    
+                    <button md-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id != null">Editar</button>
                     <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
                 </div>
                 <div class="col-sm-auto">
-                    <button class="float-right" md-button routerLink="/caso/{{casoId}}/acuerdo-general">Cancelar</button> 
+                    <button class="float-right" md-button routerLink="/caso/{{casoId}}/acuerdo-general">Cancelar</button>
                 </div>
             </div>
         </form>

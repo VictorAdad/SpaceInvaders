@@ -12,7 +12,7 @@ import { CIndexedDB } from '@services/indexedDB';
 })
 export class AcuerdoGeneralComponent {
 
-
+    public pag: number = 0;
 	public columns = ['fundamento', 'plazo'];
 	public dataSource: TableService | null;
 	public data: AcuerdoGeneral[] = [];
@@ -28,18 +28,15 @@ export class AcuerdoGeneralComponent {
 	ngOnInit() {
         this.route.params.subscribe(params => {
             if(params['casoId']){
+                console.log('casoID---');
             	this.haveCaso=true;
                 this.casoId = +params['casoId'];
                 this.apiUrl=this.apiUrl.replace("{id}",String(this.casoId));
-                this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
-                this.http.get(this.apiUrl).subscribe((response) => {
-                    console.log('response acuerdo');
-                    console.log(response);
-                    this.data = response.data as AcuerdoGeneral[];
-                    this.dataSource = new TableService(this.paginator, this.data);
-                });
+                this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"});
+                this.page('/v1/base/solicitudes-pre-acuerdos/casos/' + this.casoId + '/page');
             }
             else{
+                console.log('sin casoId');
             	 this.http.get(this.apiUrl).subscribe((response) => {
 	                 this.data = response.data as AcuerdoGeneral[];
 	                 console.log(this.data)
@@ -47,6 +44,26 @@ export class AcuerdoGeneralComponent {
 	                });
             }
         });  
-  	}
+      }
+      
+      public changePage(_e) {
+        this.page('/v1/base/solicitudes-pre-acuerdos/casos/' + this.casoId + '/page?p=' + _e.pageIndex + '&tr=' + _e.pageSize);
+    }
+
+    public page(url: string) {
+        this.data = [];
+        this.http.get(url).subscribe((response) => {
+            //console.log('Paginator response', response.data);
+            
+            response.data.forEach(object => {
+                this.pag = response.totalCount;
+                //console.log("Respuestadelitos", response["data"]);
+                this.data.push(Object.assign(new AcuerdoGeneral(), object));
+                //response["data"].push(Object.assign(new Caso(), object));
+                this.dataSource = new TableService(this.paginator, this.data);
+            });
+            console.log('Datos finales', this.dataSource);
+        });
+    }
 
 }
