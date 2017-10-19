@@ -13,6 +13,7 @@ import { HttpService} from '@services/http.service';
 import { SelectsService} from '@services/selects.service';
 import { PersonaService} from '@services/noticia-hecho/persona/persona.service';
 import { NoticiaHechoGlobal } from '../../global';
+import { _config} from '@app/app.config';
 import { Form } from './form';
 import { Observable }                  from 'rxjs/Observable';
 import * as moment from 'moment';
@@ -598,12 +599,12 @@ export class IdentidadComponent{
     }
 
     changePais(id){
-      if(id)
-      { this.options.getEstadoByPais(id);
-        this.isMexico=false;
+      if(id!=null && typeof id !='undefined'){ 
+        this.options.getEstadoByPais(id);
+        this.isMexico=id==_config.optionValue.idMexico;
         for (var i = 0; i < this.options.paises.length; ++i) {
             var pais=this.options.paises[i]
-            if(pais.value==id && pais.label=="MEXICO"){
+            if(pais.value==id && pais.label=="ME"){
                 this.isMexico=true;
 
             }
@@ -710,9 +711,9 @@ export class LocalizacionComponent{
     }
 
     changePais(id){
-      if(id){
+      if(id!=null && typeof id !='undefined'){
+      this.isMexico=id==_config.optionValue.idMexico;    
       this.options.getEstadoByPais(id);
-      this.isMexico=false;
         for (var i = 0; i < this.options.paises.length; ++i) {
             var pais=this.options.paises[i];
             if(pais.value==id && pais.label=="MEXICO"){
