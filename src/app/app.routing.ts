@@ -57,6 +57,7 @@ import { EntrevistaCreateComponent } from '@components-app/entrevista/create/com
 
 //Catalogos
 import { CatalogosComponent } from '@components-app/catalogos/catalogos.component';
+import { CatalogosCreateComponent } from '@components-app/catalogos/create/component';
 import { CatalogoArmasComponent } from '@components-app/catalogos/armas/component';
 import { TipoArmaComponent } from '@components-app/catalogos/armas/tipo/component';
 import { CalibreArmaComponent } from '@components-app/catalogos/armas/calibre/component';
@@ -152,7 +153,9 @@ const routes: Routes = [
     { path : 'caso/:casoId/entrevista/create', component : EntrevistaCreateComponent, data : { breadcrumb : 'Entrevistas' } },
     { path : 'caso/:casoId/entrevista/:id/view', component : EntrevistaCreateComponent, data : { breadcrumb : 'Entrevistas' } },
     //Catalogos
-    { path : 'catalogos', component : CatalogosComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/:tipo', component : CatalogosComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/:tipo/create', component : CatalogosCreateComponent, data : { breadcrumb : 'Crear catálogos' } },
+    { path : 'catalogos/:tipo/:id', component : CatalogosCreateComponent, data : { breadcrumb : 'Crear catálogos' } },
     { path : 'catalogo-armas', component : CatalogoArmasComponent, data : { breadcrumb : 'Catálogo de Armas', rutas:[{path:'/catalogos',label:"Catálogos"}]  } },
     { path : 'tipo-arma', component : TipoArmaComponent, data : { breadcrumb : 'Tipo de arma', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"}] } },
     { path : 'tipo-arma/create', component : CreateArmaComponent, data : { breadcrumb : 'Agregar Tipo de Arma', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Tipo de arma"}] }  },
@@ -222,6 +225,7 @@ export const routingComponents = [
 
   //Catalogos
   CatalogosComponent,
+  CatalogosCreateComponent,
   CatalogoArmasComponent,
   TipoArmaComponent,
   CreateArmaComponent,
