@@ -20,7 +20,12 @@
         <button md-raised-button color="accent" routerLink="/caso/{{casoId}}/entrevista/create">Agregar entrevista</button>
     </div>
 </div>
-<md-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+<md-paginator #paginator 
+[length]="pag" 
+[pageIndex]="0" [pageSize]="10" 
+[pageSizeOptions]="[5, 10, 25, 100]"
+(page)="changePage($event)"
+  >
 </md-paginator>
 <md-table #table [dataSource]="dataSource">
     <ng-container mdColumnDef="entrevistado">
