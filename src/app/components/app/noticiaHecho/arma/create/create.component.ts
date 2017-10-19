@@ -194,16 +194,19 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
             'mecanismo': _data.calibreMecanismo.mecanismo,
             'serie': _data.serie,
             'matricula': _data.matricula,
-            'claseArma' : _data.claseArma,
+            'claseArma' : _data.claseArma.claseArma,
             'calibreMecanismo' : _data.calibreMecanismo
-        })});
+            })
+            
+        });
 
     }
 
 
 
-    claseChange(option){
-        if(option=="fuego"){
+    public claseChange(option){
+        
+        if(option == _config.optionValue.armaFuego){
            this.isArmaFuego=true;
         }
         else{
