@@ -17,6 +17,8 @@ import { HttpService } from '@services/http.service';
 })
 export class DelitoComponent {
     public pag: number = 0;
+    public pageIndex: number = 0;
+    public pageSize: number = 0;
     _columns = ['nombre', 'principal'];
     public delitoCasos: DelitoCaso[] = [];
     dataSource: TableService | null;
@@ -56,15 +58,26 @@ export class DelitoComponent {
         });
     }
 
+    public setClickedRow(row){
+        console.log('row',row);
+        this.http.get('/v1/base/delitos-casos/'+row.id+'/casos/'+this.id).subscribe((response) => {
+            console.log('response', response);
+            this.page('/v1/base/delitos-casos/casos/' + this.id + '/page');  
+        });
+    }
+
     public changePage(_e) {
+        this.pageIndex = _e.pageIndex;
+        this.pageSize = _e.pageSize;
         console.log('Page index', _e.pageIndex);
         console.log('Page size', _e.pageSize);
         console.log('Id caso', this.id);
         this.delitoCasos = [];
-        this.page('/v1/base/casos/' + this.id + '/delitos-casos?p=' + _e.pageIndex + '&tr=' + _e.pageSize);
+        this.page('/v1/base/delitos-casos/casos/' + this.id + '/page?p=' + _e.pageIndex + '&tr=' + _e.pageSize);
     }
 
     public page(url: string) {
+        this.dataSource = null;
         this.http.get(url).subscribe((response) => {
             //console.log('Paginator response', response.data);
             
@@ -80,7 +93,21 @@ export class DelitoComponent {
     }
 
     swap(e) {
-        e.principal = !e.principal;
+        console.log('row',e);
+        this.http.get('/v1/base/delitos-casos/'+e.id+'/casos/'+this.id).subscribe((response) => {
+            var msj = response.message;
+            if(msj.indexOf('correctamente') >= 0){
+                e.principal = true;
+                if(this.pageIndex!=0 || this.pageSize!=0){
+                    this.page('/v1/base/delitos-casos/casos/' + this.id + '/page?p=' + this.pageIndex + '&tr=' + this.pageSize);
+                }else{
+                    this.page('/v1/base/delitos-casos/casos/' + this.id + '/page'); 
+                }
+            }else{
+                e.principal = false;
+            }
+        });
+        
         //this.db.update("casos",this.caso);
     }
 }
