@@ -8,29 +8,28 @@
                 ]" placeholder="Tipo de solicitud" (valueChange)="tipoChange($event)" [group]="form"
                 name="tipo">
             </select2>
-            <div *ngIf="isPericiales;else psicofisico">
+            <div *ngIf="isPericiales">
                 <h4>Narración de los hechos denunciados</h4>
-                <text-area label="Hechos narrados (hechos denunciados)" name="hechosDenunciados" [(value)]="model.hechosDenunciados" [group]="form"></text-area>
-                <text-area label="Hechos narrados que se denuncian" name="hechosNarrados" [(value)]="model.hechosNarrados" [group]="form"></text-area>
+                <text-area label="Hechos narrados (hechos denunciados)" name="hechosDenunciados" [group]="form"></text-area>
+                <text-area label="Hechos narrados que se denuncian" name="hechosNarrados" [group]="form"></text-area>
                 <h4>Oficio solicitud de servicios periciales</h4>
-                <text label="Número de oficio" name="noOficio" [(value)]="model.noOficio" [group]="form"></text>
-                <text label="Nombre del director de del instituto de servicios periciales" name="directorInstituto" [(value)]="model.directorInstituto"
-                    [group]="form"></text>
-                <text label="Se solicita al pertio en materia de" name="peritoMateria" [(value)]="model.peritoMateria" [group]="form"></text>
-                <text label="Finalidad del requerimiento" name="finalidad" [(value)]="model.finalidad" [group]="form"></text>
-                <text label="Plazo en días para cumplir el informe" name="plazoDias" [(value)]="model.plazoDias" [group]="form"></text>
-                <text label="Apercibimiento o medidas de apremio" name="apercibimiento" [(value)]="model.apercibimiento" [group]="form"></text>
-                <text-area label="Observaciones/incidencias" name="observaciones" [(value)]="model.observaciones" [group]="form"></text-area>
+                <text label="Número de oficio" name="noOficio" [group]="form"></text>
+                <text label="Nombre del director de del instituto de servicios periciales" name="directorInstituto" [group]="form"></text>
+                <select2 placeholder="Se solicita al pertio en materia de" [options]="options.peritoMateria" name="id" [group]="form.controls.peritoMateria"></select2>
+                <text label="Finalidad del requerimiento" name="finalidad" [group]="form"></text>
+                <text label="Plazo en días para cumplir el informe" name="plazoDias" [group]="form"></text>
+                <text label="Apercibimiento o medidas de apremio" name="apercibimiento" [group]="form"></text>
+                <text-area label="Observaciones/incidencias" name="observaciones" [group]="form"></text-area>
             </div>
-            <ng-template #psicofisico>
+            <div *ngIf="isPsicofisico">
                 <h4>Éxamen psicofísico</h4>
-                <text label="Número de oficio" name="noOficio" [(value)]="model.noOficio" [group]="form"></text>
-                <text label="Nombre del médico legista" name="medicoLegista" [(value)]="model.medicoLegista" [group]="form"></text>
-                <text label="A quien se realizará el éxamen" name="realizadoA" [(value)]="model.realizadoA" [group]="form"></text>
-                <select2 placeholder="Se solicita éxamen" name="tipoExamen" [(value)]="model.tipoExamen" [group]="form"></select2>
-                <text-area label="Apercibimiento o medidas de apremio" name="apercibimiento" [(value)]="model.apercibimiento" [group]="form"></text-area>
-                <text-area label="Observaciones/incidencias" name="observaciones" [(value)]="model.observaciones" [group]="form"></text-area>
-            </ng-template> 
+                <text label="Número de oficio" name="noOficio" [group]="form"></text>
+                <text label="Nombre del médico legista" name="medicoLegista" [group]="form"></text>
+                <text label="A quien se realizará el éxamen" name="realizadoA" [group]="form"></text>
+                <select2 placeholder="Se solicita éxamen" [options]="options.tipoExamen" name="id" [group]="form.controls.tipoExamen"></select2>
+                <text-area label="Apercibimiento o medidas de apremio" name="apercibimiento" [group]="form"></text-area>
+                <text-area label="Observaciones/incidencias" name="observaciones" [group]="form"></text-area>
+            </div> 
 
             <div class="row justify-content-end">
                 <div class="col-sm-auto" [mdTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
@@ -38,7 +37,7 @@
                     <button md-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
                 </div>
                 <div class="col-sm-auto">
-                    <button class="float-right" md-button routerLink="/caso/{{casoId}}/inspeccion">Cancelar</button>
+                    <button class="float-right" md-button routerLink="/caso/{{casoId}}/perito">Cancelar</button>
                 </div>
             </div>
         </form>
