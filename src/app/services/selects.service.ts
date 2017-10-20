@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '@services/http.service';
 import { MOption } from '@partials/form/select2/select2.component'
+import { OnLineService} from '@services/onLine.service';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Injectable()
 export class SelectsService {
@@ -28,7 +30,9 @@ export class SelectsService {
     public victimaQuerellante: MOption[] = [];
 
     constructor(
-        private http: HttpService
+        private http: HttpService,
+        private onLine: OnLineService,
+        private db: CIndexedDB,
         ) {
     }
 
@@ -77,15 +81,27 @@ export class SelectsService {
     }
 
     public getPaises(){
-        this.http.get('/v1/catalogos/pais/options').subscribe((response) => {
-            this.paises = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/pais/options').subscribe((response) => {
+                this.paises = this.constructOptions(response);
+            });
+        }else{
+            this.db.get("catalogos","paises").then(response=>{
+                this.paises = this.constructOptions(response);
+            });
+        }
     }   
 
     public getSexo(){
-        this.http.get('/v1/catalogos/persona/sexo/options').subscribe((response) => {
-            this.sexo = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/persona/sexo/options').subscribe((response) => {
+                this.sexo = this.constructOptions(response);
+            });
+        }else{
+            this.db.get("catalogos","sexo").then(response=>{
+                this.sexo = this.constructOptions(response);
+            });
+        }
     }    
 
     public getTipoInterviniente(){
@@ -149,18 +165,38 @@ export class SelectsService {
     }
 
     public getEstadoByPais(idPais: number){
-        this.http.get('/v1/catalogos/estado/pais/'+idPais+'/options').subscribe((response) => {
-            this.estados = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/estado/pais/'+idPais+'/options').subscribe((response) => {
+                this.estados = this.constructOptions(response);
+            });
+        }else{
+            this.db.searchInNotMatrx("estado",{pais:{id:idPais}}).then(response=>{
+                let estados={};
+                for(let e in response){
+                    estados[""+response[e].id]=response[e].nombre
+                }
+                this.estados=this.constructOptions(estados);
+            });
+        }
     }
     public getEstadoByPaisService(idPais: number){
         return this.http.get('/v1/catalogos/estado/pais/'+idPais+'/options');
     }
 
     public getMunicipiosByEstado(idEstado: number){
-        this.http.get('/v1/catalogos/municipio/estado/'+idEstado+'/options').subscribe((response) => {
-            this.municipios = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/municipio/estado/'+idEstado+'/options').subscribe((response) => {
+                this.municipios = this.constructOptions(response);
+            });
+        }else{
+            this.db.searchInNotMatrx("municipio",{estado:{id:idEstado}}).then(response=>{
+                let estados={};
+                for(let e in response){
+                    estados[""+response[e].id]=response[e].nombre
+                }
+                this.municipios=this.constructOptions(estados);
+            });
+        }
     }
 
     public getMunicipiosByEstadoService(idEstado: number){

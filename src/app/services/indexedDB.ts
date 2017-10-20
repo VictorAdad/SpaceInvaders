@@ -337,7 +337,7 @@ export class CIndexedDB {
         return this.action(_table, "clear");
     }
 
-    //busca en catalogo
+    //busca en matrices
     searchInCatalogo(_catalogo, _item){
         var obj= this;
         var promesa = new Promise( 
@@ -359,6 +359,38 @@ export class CIndexedDB {
                     }
                     if (!igual)
                         resolve(null);
+                });
+
+            });
+        return promesa;
+    }
+    //busca en los catalogos
+    searchInNotMatrx(_catalogo, _item){
+        var rec=function(e,y) {
+            if((typeof e)=="object"){
+                let igual=true;
+                for (var element in e){
+                    igual=igual&&rec(e[element],y[element]);
+                }
+                return igual;
+            }
+            return e==y;
+            
+        }
+        var obj= this;
+        var promesa = new Promise( 
+            function(resolve,reject){
+                obj.get("catalogos",_catalogo).then(lista=>{
+                    var arreglo=lista["arreglo"] as any[];
+                    if ((lista["arreglo"])["data"])
+                        arreglo = (lista["arreglo"])["data"] as any[];
+                    var conincidencias=[];
+                    for (var i = 0; i<arreglo.length; i++) {
+                        let igual=rec(_item,arreglo[i]);
+                        if (igual)
+                            conincidencias.push(arreglo[i]);
+                    }
+                    resolve(conincidencias);
                 });
 
             });

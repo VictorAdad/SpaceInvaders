@@ -79,8 +79,9 @@
             <media-filacion [globals]="globals"  [options]="options" style="width: 95%"></media-filacion>
         </div>
         <div class="row space">
-          
+
         </div>
+          <input name="id" formControlName="id" [formGroup]="globals.form" hidden>
         <div class="row justify-content-end space">
             <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" matTooltipPosition="above">
                 <button mat-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid" *ngIf="id != null">Editar</button> 

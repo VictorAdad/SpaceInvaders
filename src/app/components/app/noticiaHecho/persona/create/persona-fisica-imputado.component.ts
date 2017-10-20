@@ -77,6 +77,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho`,label:"Detalle noticia de hechos"});
             }
+            this.globals.inicioOnline=this.onLine.onLine;
             if(!this.onLine.onLine){
                 if (!isNaN(this.casoId)){
                     this.tabla.get("casos",this.casoId).then(
@@ -94,8 +95,14 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         this.fillPersonaCaso(response);
                     });
                 }else{
-                    this._tabla.get("personas",this.casoId).then(t=>{
-                        //falta editar
+                    this._tabla.get("personas",this.id).then(t=>{
+                        console.log("Persona->",t);
+                        let persona_caso=(t["personaCaso"])[0];
+                        persona_caso["persona"]=t;
+                        (persona_caso["persona"])["id"]=persona_caso["personaId"];
+                        this.globals.form.patchValue(persona_caso["persona"]);
+                        this.globals.personaCaso=persona_caso["persona"];
+                        console.log("PERSONA_CASO -> ",persona_caso);
                     });
                 }
             }
@@ -411,12 +418,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 this.tabla.get("casos",this.casoId).then(
                         casoR=>{
                     this.caso=casoR as Caso;
-
-                    _model["tipoInterviniente"]={tipo:"por sincronizar"};
-                    _model["persona"]={nombre:_model["nombre"]};
-                    _model["alias"]=_model.aliasNombrePersona.nombre;
-                    if (!_model["razonSocial"])
-                        _model["razonSocial"]="";        
+       
                     console.log("SI");
                     this.tabla.add('personas', _model).then( p => {
                         console.log("SI");
@@ -439,10 +441,9 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     doEdit(_model){
-        console.log('Editar -> Form', _model);
-    
         if(this.onLine.onLine){
             _model.personaCaso[0].caso.id = this.casoId;
+            (_model.personaCaso[0])["id"]=this.id;
             console.log('Model', _model);
             this.http.put('/v1/base/personas/'+this.globals.personaCaso["id"], _model).subscribe(
                 (response) => {
@@ -457,40 +458,36 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
         }else{
             _model.personaCaso[0].caso.id = this.casoId;
-            let temId=Date.now();
+            (_model.personaCaso[0])["id"]=this.id;
+            (_model.personaCaso[0])["personaId"]=_model["id"];
+            _model["id"]=this.id;
             let dato={
-                url:'/v1/base/personas',
+                url:'/v1/base/personas/'+this.globals.personaCaso["id"] ,
                 body:_model,
                 options:[],
                 tipo:"post",
                 pendiente:true,
                 dependeDe:[this.casoId],
-                temId: temId
             }
-            console.log("SI");
             this.tabla.add("sincronizar",dato).then(response=>{
                 this.tabla.get("casos",this.casoId).then(
                         casoR=>{
                     this.caso=casoR as Caso;
-
-                    _model["tipoInterviniente"]={id:"por sincronizar"};
                     _model["persona"]={nombre:_model["nombre"]};
                     _model["alias"]=_model.aliasNombrePersona.nombre;
                     if (!_model["razonSocial"])
                         _model["razonSocial"]="";        
-                    console.log("SI");
-                    this.tabla.add('personas', _model).then( p => {
-                        console.log("SI");
+                    this.tabla.update('personas', _model).then( p => {
+                        console.log("SI se guardo persona",p);
                         if (!this.caso["personas"])
                             this.caso["personas"]=[];
                         this.caso["personas"].push({id:p["id"]});
                         this.tabla.update("casos",this.caso).then(
                             ds=>{
-                                console.log("Se actualizo registro");
+                                console.log("Editar Persona->",ds);
                                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
 
                         });
-                        console.log('-> Persona Guardada',p);
                         
                     });
 
@@ -500,6 +497,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     edit(valid : any, _model : any):void{
+
+        console.log("Modelo a guardar:",_model);
 
         var buscar=[];
         var obj=this;
@@ -527,7 +526,6 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 familiaLinguistica:this.form.controls.familiaLinguistica.value
             }
         });
-
         this.searchCatalogos(buscar).then(e=>{
             for(let key in e){
                 if (e[key]!=null){
@@ -535,17 +533,12 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 }
             }
             this.buscaMediaFiliacion(_model).then(datos=>{
-                if (this.globals.personaCaso["mediaFiliacion"].id){
-                    if (this.globals.tipoInterviniente=="5"){
+                if (this.globals.tipoInterviniente=="5"){
+                    if((datos["mediaFiliacion"])["id"])
                         (datos["mediaFiliacion"])["id"]=this.globals.personaCaso["mediaFiliacion"].id;
-                    }else{
-                        delete datos["mediaFiliacion"];
-                    }
+                }else{
+                    delete datos["mediaFiliacion"];
                 }
-                if (this.globals.personaCaso["id"])
-                    datos["id"]=this.globals.personaCaso["id"];
-                console.log("Model",datos);
-                console.log(this.globals.personaCaso);
                 this.doEdit(datos);
             });
         });
@@ -600,9 +593,10 @@ export class IdentidadComponent{
     }
 
     changePais(id){
-      if(id!=null && typeof id !='undefined'){ 
-        this.options.getEstadoByPais(id);
+      if(id!=null && typeof id !='undefined'){
         this.isMexico=id==_config.optionValue.idMexico;
+        if (this.isMexico)
+            this.options.getEstadoByPais(id);
         for (var i = 0; i < this.options.paises.length; ++i) {
             var pais=this.options.paises[i]
             if(pais.value==id && pais.label=="ME"){
@@ -769,6 +763,7 @@ export class MediaFilacionComponent{
 
 
 export class PersonaGlobals{
+    public inicioOnline:boolean;
     public personaCaso;
     public personaForm: Form;
     public form: FormGroup;
@@ -929,9 +924,8 @@ class LosForm{
     }
 
     public static createForm(){
-        var form=LosForm.createFormLocalizacion();
-
         return new FormGroup({
+            'id': new FormControl("",[]),
             'tipoPersona'      : new FormControl("", [Validators.required,]),
             'nombre'           : new FormControl("", [Validators.required,]),
             'paterno'          : new FormControl("", [Validators.required,]),

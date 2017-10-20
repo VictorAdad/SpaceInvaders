@@ -41,7 +41,16 @@ export class PersonaComponent implements OnInit{
                     //Nota: si marca error es por que ya existe la base de datos y no se le puede agregar una nueva tabla
                     //para solucionarlo borra la base evomatik
                     this.tabla.list("personas").then(lista => {
-                        this.dataSource = new TableService(this.paginator, lista);
+                        console.log("Personas ->",lista);
+                        var data=[];
+                        for (var i = 0; i < lista["length"]; ++i) {
+                            let item = lista[i];
+                            let tipoInterviniente=(item["personaCaso"])[0].tipoInterviniente["id"];
+                            let nombre = item["nombre"];
+                            let razonSocial = item["razonSocial"];
+                            data.push({tipoInterviniente:{tipo:tipoInterviniente}, persona:{nombre:nombre}, razonSocial:razonSocial, alias:"", id:item["id"]});
+                        }
+                        this.dataSource = new TableService(this.paginator, data);
                     });
                 } 
             }
