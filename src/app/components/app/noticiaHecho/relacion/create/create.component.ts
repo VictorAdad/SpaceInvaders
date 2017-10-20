@@ -411,7 +411,6 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             });
     }
 
-
 }
 
 
