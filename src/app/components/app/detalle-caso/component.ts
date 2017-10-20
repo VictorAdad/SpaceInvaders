@@ -21,8 +21,9 @@ export class DetalleCasoComponent implements OnInit{
 	public caso: Caso;
 	public involucrados:Persona[];
 	public delitos:DelitoCaso[];
-    public predenuncia:Predenuncia;
-
+	public predenuncia:Predenuncia;
+	hasPredenuncia:boolean=false;
+    hasRelacionVictimaImputado:boolean=false;
 
 	constructor(_route: ActivatedRoute, private _onLine: OnLineService, private _http: HttpService){
 		this.route = _route;
@@ -40,7 +41,9 @@ export class DetalleCasoComponent implements OnInit{
 		
 		if(this.onLine.onLine){
 			this.http.get('/v1/base/casos/'+this.id).subscribe((response) => {
-                this.caso = response as Caso;
+				this.caso = response as Caso;
+				this.hasPredenuncia=this.caso.hasPredenuncia;
+				this.hasRelacionVictimaImputado=this.caso.hasRelacionVictimaImputado;
                 console.log(this.caso)
             });
 			this.http.get('/v1/base/personas-casos/casos/'+this.id+'/page').subscribe((response) => {

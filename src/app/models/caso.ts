@@ -9,7 +9,9 @@ export class Caso {
     public name     : string = `NIC: ${this.nic || ''}  -  NUC: ${this.nuc || ''}`;
     public formatFecha : string = this.fecha(this.created);
     public delitoCaso: DelitoCaso = new DelitoCaso();
-
+    public hasPredenuncia:boolean;
+    public hasRelacionVictimaImputado:boolean;
+    
     fecha (_date: Date){
        let meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 

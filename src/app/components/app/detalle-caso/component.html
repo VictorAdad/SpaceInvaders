@@ -69,7 +69,7 @@
                                     </mat-card-content>
                                 </mat-card>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" *ngIf="hasRelacionVictimaImputado">
                                 <mat-card class="h-100">
                                     <mat-card-content class="d-flex flex-column h-100">
                                         <div class="row ml-0 mr-0 align-items-center mb-auto">
@@ -106,29 +106,30 @@
 <div class="row">
     <div class="col-md-12">
         <mat-card>
-            <div class="d-flex justify-content-between">
-                <div class="row">
-                    <h2>Detalle pre denuncia <small>(NIC: CAI/AIN/00/UAI/255/00131/17/09)</small></h2>
-                </div>
-                <div>
-                    <mat-icon>more_vert</mat-icon>
-                </div>
-            </div>
-            <div class="row space"></div>
-            <mat-card-content>
+            
+            <mat-card-content *ngIf="hasPredenuncia">
+             <div class="d-flex justify-content-between">
+                    <div class="row">
+                        <h2>Detalle pre denuncia <small>(NIC: CAI/AIN/00/UAI/255/00131/17/09)</small></h2>
+                    </div>
+                    <div>
+                        <mat-icon>more_vert</mat-icon>
+                    </div>
+                </div >
+                <div class="row space"></div>
                 <div class="row">
                     <div class="col-md-8">
                         <strong>Detalle de los hechos</strong>
                         <p class="text-justify">{{predenuncia.hechosNarrados}}
-  <!--
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus placerat dapibus consequat. Pellentesque
+                         <!--
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus placerat dapibus consequat. Pellentesque
                             et finibus sapien, ac posuere nulla. Nam luctus, urna eget aliquam facilisis, mauris dui luctus
                             turpis, in aliquet quam dolor vitae mauris. Nam vel metus congue, semper augue eget, vehicula
                             mi. Donec elementum est eget pulvinar dictum. Pellentesque lectus nunc, volutpat in auctor suscipit,
                             tristique ut orci. Proin arcu nunc, molestie sed facilisis tincidunt, interdum sit amet neque.
                             Etiam ipsum dui, sagittis ut egestas nec, porta et augue. Mauris pharetra sem condimentum libero
                             iaculis luctus. Morbi non viverra tellus.
-    -->
+                         -->
         
                          </p>
                     </div>
@@ -137,7 +138,6 @@
                         <p>14 de diciembre de 2017 a las 14:00 hrs</p>
                     </div>
                 </div>
-
                 <mat-divider></mat-divider>
                 <div class="row space"></div>
                 <div class="row align-items-center">
@@ -315,6 +315,8 @@
                         </mat-card>
                     </div>
                 </div>
+            </mat-card-content>
+                <mat-card-content>
                 <div class="row space"></div>
                 <div class="row align-items-center">
                     <div class="col-md-auto space">
