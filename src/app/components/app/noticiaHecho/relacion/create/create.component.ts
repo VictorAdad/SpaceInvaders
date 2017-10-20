@@ -178,14 +178,16 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     addEfectoDetalle(_val: any){
         this.colections.add('efectoDetalle', 'subjectEfectoDetalle', _val);
         let form = this.form.get('efectoViolencia') as FormArray;
-        form.push(
-            this.formRelacion.efectoViolenciaForm(this.optionsRelacion.matrizEfectoDetalle.finded[0].id)
-        );
+        if(this.optionsRelacion.matrizEfectoDetalle.finded[0])
+            form.push(
+                this.formRelacion.efectoViolenciaForm(this.optionsRelacion.matrizEfectoDetalle.finded[0].id)
+            );
     } 
 
     addTrataPersonas(_val: any){
         console.log('Add TrataPersonas', _val);
-        _val.tipoTransportacion.id = this.optionsRelacion.matrizTipoTransportacion.finded[0].id;
+        if(this.optionsRelacion.matrizTipoTransportacion.finded[0])
+            _val.tipoTransportacion.id = this.optionsRelacion.matrizTipoTransportacion.finded[0].id;
         this.colections.add('trataPersonas', 'subjectTrataPersonas', _val);
         let form = this.form.get('trataPersona') as FormArray;
         form.push(this.formRelacion.trataPersonasForm); 
@@ -196,9 +198,9 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         let form = this.form.get('hostigamientoAcoso') as FormArray;
         form.push(
             this.formRelacion.setHostigamientoForm(
-                this.optionsRelacion.matrizModalidadAmbito.finded[0].id,
-                this.optionsRelacion.matrizConductaDetalle.finded[0].id,
-                _val.testigo
+                this.optionsRelacion.matrizModalidadAmbito.finded[0].id || null,
+                this.optionsRelacion.matrizConductaDetalle.finded[0].id || null,
+                _val.testigo || null
             )
         );
     } 
@@ -207,7 +209,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         _model.tipoRelacionPersona.caso.id = this.casoId;
         _model.tieneViolenciaGenero = this.isViolenciaGenero;
         if(_model.tieneViolenciaGenero)
-            _model.violenciaGenero.id = this.optionsRelacion.matrizViolenciaGenero.finded[0].id;
+            if(this.optionsRelacion.matrizViolenciaGenero.finded[0])
+                _model.violenciaGenero.id = this.optionsRelacion.matrizViolenciaGenero.finded[0].id;
         if(this.onLine.onLine){
             this.http.post('/v1/base/tipo-relacion-persona', _model).subscribe(
                 (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
@@ -245,7 +248,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     public edit(_valid : any, _model : any):void{
         console.log('-> Relacion@edit()', _model);
         if(_model.tieneViolenciaGenero)
-            _model.violenciaGenero.id = this.optionsRelacion.matrizViolenciaGenero.finded[0].id;
+            if(this.optionsRelacion.matrizViolenciaGenero.finded[0])
+                _model.violenciaGenero.id = this.optionsRelacion.matrizViolenciaGenero.finded[0].id;
         if(this.onLine.onLine){
             this.http.put('/v1/base/detalle-delitos/'+_model.id, _model).subscribe((response) => {
                 console.log('-> Registro acutualizado', response);
