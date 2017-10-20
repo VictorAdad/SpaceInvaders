@@ -314,7 +314,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <button class="float-right m-1" color="accent" mat-raised-button >Limpiar</button>
+                            <button class="float-right m-1" color="accent" mat-raised-button (click)="formRelacion.efectoDetalle.reset()">Limpiar</button>
                             <button class="float-right m-1" mat-raised-button color="accent" (click)="addEfectoDetalle(formRelacion.efectoDetalle.value)" [disabled]="false">Agregar</button>
                         </div>
                     </div>
@@ -408,7 +408,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                        <button class="float-right m-1" color="accent" mat-raised-button >Limpiar</button>
+                        <button class="float-right m-1" color="accent" mat-raised-button (click)="formRelacion.trataPersonasForm.reset()">Limpiar</button>
                         <button class="float-right m-1" 
                             mat-raised-button color="accent"
                             (click)="addTrataPersonas(formRelacion.trataPersonasForm.value)">
@@ -519,8 +519,8 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <button class="float-right m-1" color="accent" mat-raised-button >Limpiar</button>
-                            <button class="float-right m-1" mat-raised-button color="accent" [disabled]="!formRelacion.hostigamiento.valid" (click)="addHostigamiento(formRelacion.hostigamiento.value)">Agregar</button>
+                            <button class="float-right m-1" color="accent" mat-raised-button (click)="formRelacion.hostigamiento.reset()">Limpiar</button>
+                            <button class="float-right m-1" mat-raised-button color="accent" (click)="addHostigamiento(formRelacion.hostigamiento.value)">Agregar</button>
                         </div>
                     </div>
                     <div class="row">
