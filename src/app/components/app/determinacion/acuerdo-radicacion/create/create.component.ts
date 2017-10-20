@@ -56,7 +56,8 @@ export class AcuerdoRadicacionComponent extends DeterminacionGlobal{
     ngOnInit(){
         this.model = new AcuerdoRadicacion();
         this.form  = new FormGroup({
-            'observaciones': new FormControl(this.model.observaciones)
+            'observaciones': new FormControl(this.model.observaciones),
+            'tipo': new FormControl('Acuerdo Radicación')
           });
 
         this.route.params.subscribe(params => {
