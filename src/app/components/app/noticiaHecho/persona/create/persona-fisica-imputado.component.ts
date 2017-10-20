@@ -441,7 +441,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     doEdit(_model){
-        if(this.onLine.onLine){
+        if(this.onLine.onLine&&this.globals.inicioOnline){
             _model.personaCaso[0].caso.id = this.casoId;
             (_model.personaCaso[0])["id"]=this.id;
             console.log('Model', _model);
