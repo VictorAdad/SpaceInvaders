@@ -34,9 +34,10 @@ export class ArmaComponent{
 
                 }else{
                     this.db.get("casos",this.casoId).then(caso=>{
+                        console.log("Caso en armas ->",caso);
                         if (caso){
-                            if(caso["armas"]){
-                                this.dataSource = new TableService(this.paginator, caso["armas"] as Arma[]);
+                            if(caso["arma"]){
+                                this.dataSource = new TableService(this.paginator, caso["arma"] as Arma[]);
                             }
                         }
                     });
