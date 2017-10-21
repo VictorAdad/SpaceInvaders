@@ -93,6 +93,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         console.log("PERSONACASO->",response);
                         this.globals.personaCaso=response["persona"];
                         this.fillPersonaCaso(response);
+                        console.log('Form', this.globals);
                     });
                 }else{
                     this._tabla.get("personas",this.id).then(t=>{
@@ -101,13 +102,19 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         persona_caso["persona"]=t;
                         (persona_caso["persona"])["id"]=persona_caso["personaId"];
                         this.globals.form.patchValue(persona_caso["persona"]);
-                        this.globals.personaCaso=persona_caso["persona"];
+                        this.fillNombres(t["aliasNombrePersona"]);
+                        var promesa=new Promise((resolve)=>{
+                            resolve(persona_caso["persona"]);
+                        }).then(copia=>{
+                            this.globals.personaCaso=copia;
+                        });
+                        
                         console.log("PERSONA_CASO -> ",persona_caso);
+                        console.log('Form', this.globals);
                     });
                 }
             }
         });
-        console.log('Form', this.globals.form);
     }
 
 
@@ -160,6 +167,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     public fillNombres(_alias:any[]){
+        console.log("alias->",_alias);
         this.globals.indexNombres=0;
         for(var i=0;i<_alias.length;i++){
             var item=_alias[i];
@@ -347,7 +355,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
     save(valid : any, _model : any):void{
         
-        // console.log('-> Form', this.form);
+        console.log('-> Form', this.form);
 
         var buscar=[];
         var obj=this;
@@ -375,7 +383,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 familiaLinguistica:this.form.controls.familiaLinguistica.value
             }
         });
-
+        
         this.searchCatalogos(buscar).then(e=>{
             for(let key in e){
                 if (e[key]!=null){
@@ -387,6 +395,58 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 obj.doSave(datos);
             });
         });
+        
+    }
+    /**
+    agrega al model los ids temporales para que funcione esto,
+    en otros id se guardan los ids que se tienen que crear
+    */
+    agregaIdTemporales(_model, temId,otrosID){
+        var dependeDe=[this.casoId];
+        (_model.personaCaso[0])["personaId"]=temId;
+        otrosID.push({personaCaso:{0: {personaId:temId} } });
+        dependeDe.push(temId);
+        temId++;
+        _model["id"]=temId;
+        (_model.personaCaso[0])["id"]=temId;
+        dependeDe.push(temId);
+        otrosID.push({personaCaso:{0: {id:temId} } });
+        //las localizaciones
+        if (_model["localizacionPersona"])
+        {
+            for (var i = 0; i < _model["localizacionPersona"].length; ++i) {
+                temId++;
+                var obj={};
+                    obj[i]={id:temId};
+                ((_model["localizacionPersona"])[i])["id"]=temId;
+                otrosID.push({localizacionPersona:{obj} });
+                dependeDe.push(temId);
+            }
+        }
+        //los mediafiliacion
+        if (this.globals.tipoInterviniente=="5"){
+            if (_model["mediaFiliacion"])
+            {
+                temId++;
+                (_model["mediaFiliacion"])["id"]=temId;
+                otrosID.push({mediaFiliacion:{ id:temId}});
+                dependeDe.push(temId);
+            }
+        }
+        //los aliasnombres
+        if(_model["aliasNombrePersona"]){
+            for (var i = 0; i < _model["aliasNombrePersona"].length; ++i) {
+                if (((_model["aliasNombrePersona"])[i])["nombre"]!=null){
+                    temId++;
+                    var obj={};
+                    obj[i]={id:temId};
+                    ((_model["aliasNombrePersona"])[i])["id"]=temId;
+                    otrosID.push({aliasNombrePersona:{obj} });
+                    dependeDe.push(temId);
+                }
+            }
+        }
+        return dependeDe;
     }
 
     doSave(_model:any){
@@ -404,14 +464,19 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         }else{
             _model.personaCaso[0].caso.id = this.casoId;
             let temId=Date.now();
+            var otrosID=[];
+            var dependeDe=this.agregaIdTemporales(_model,temId,otrosID);
+            console.log(dependeDe, otrosID);
+            
             let dato={
                 url:'/v1/base/personas',
                 body:_model,
                 options:[],
                 tipo:"post",
                 pendiente:true,
-                dependeDe:[this.casoId],
-                temId: temId
+                dependeDe:dependeDe,
+                temId: temId,
+                otrosID: otrosID
             }
             console.log("SI");
             this.tabla.add("sincronizar",dato).then(response=>{
@@ -420,6 +485,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     this.caso=casoR as Caso;
        
                     console.log("SI");
+                    _model["dependeDe"]=dependeDe;
                     this.tabla.add('personas', _model).then( p => {
                         console.log("SI");
                         if (!this.caso["personas"])
@@ -461,13 +527,14 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             (_model.personaCaso[0])["id"]=this.id;
             (_model.personaCaso[0])["personaId"]=_model["id"];
             _model["id"]=this.id;
+            console.log("->PERSONA",this.globals.personaCaso);
             let dato={
                 url:'/v1/base/personas/'+this.globals.personaCaso["id"] ,
                 body:_model,
                 options:[],
                 tipo:"post",
                 pendiente:true,
-                dependeDe:[this.casoId],
+                dependeDe:(this.globals.personaCaso)["dependeDe"],
             }
             this.tabla.add("sincronizar",dato).then(response=>{
                 this.tabla.get("casos",this.casoId).then(
@@ -955,6 +1022,7 @@ class LosForm{
             'folioIdentificacion' : new FormControl(),
             'localizacionPersona': new FormArray([]),
             'mediaFiliacion': new FormGroup({
+                'id':new FormControl("",[]),
                 'orejaDerecha': new FormGroup({
                     'id': new FormControl("",[]),
                 }),
@@ -1042,11 +1110,11 @@ class LosForm{
                 })
             ]),
             'aliasNombrePersona' : new FormArray([
-                new FormGroup({
-                    'nombre' : new FormControl(),
-                    'tipo'   : new FormControl(),
-                    'id'     : new FormControl(),
-                })
+                // new FormGroup({
+                //     'nombre' : new FormControl(),
+                //     'tipo'   : new FormControl(),
+                //     'id'     : new FormControl(),
+                // })
                 ]
             ),
         });
