@@ -16,7 +16,7 @@
 	<div class="col-md-12">
 		<mat-tab-group>
 			<mat-tab label="Pre denuncia"><predenuncia></predenuncia></mat-tab>
-			<mat-tab label="Documentos"><documento-predenuncia></documento-predenuncia></mat-tab>
+			<mat-tab label="Documentos" *ngIf="hasPredenuncia"><documento-predenuncia></documento-predenuncia></mat-tab>
 		</mat-tab-group>
 	</div>
 </div>
