@@ -110,7 +110,12 @@
 		    	<text label="Calidad de la persona" name="calidadPersona" [(value)]="model.calidadPersona" [group]="form"></text> 
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Tipo de persona" name="tipoPersona" [(value)]="model.tipoPersona" [group]="form"></text> 
+		    	<select2 [options]="[{value: true,label: 'Si'},{value: false,label: 'No'}]"
+				placeholder="Tipo de persona"
+				[(value)]="model.tipoPersona"
+				name="tipoPersona" 
+				[group]="form">
+			    </select2>	 
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text label="Lugar en donde ocurrieron los hechos" name="lugarHechos" [(value)]="model.lugarHechos" [group]="form"></text> 
@@ -124,7 +129,12 @@
 		    	<text label="Conclusión en base a los hechos denunciados" name="conclusionHechos" [(value)]="model.conclusionHechos" [group]="form"></text> 
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="¿Se canaliza a otra área o institución?" name="canalizaOtraArea" [(value)]="model.canalizaOtraArea" [group]="form"></text> 
+		    	<select2 [options]="[{value: true,label: 'Si'},{value: false,label: 'No'}]"
+				placeholder="¿Se canaliza a otra área o institución?"
+				[(value)]="model.canalizacion"
+				name="canalizacion" 
+				[group]="form">
+			    </select2> 
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text label="En su caso, institución a que se canaliza" name="institucionCanalizacion" [(value)]="model.lugarHechos" [group]="form"></text> 

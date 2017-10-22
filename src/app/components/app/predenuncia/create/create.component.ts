@@ -125,7 +125,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             'lugarHechos'          :  new FormControl(this.model.lugarHechos),
             'hechosNarrados'        :  new FormControl(this.model.hechosNarrados),
             'conclusionHechos'          :  new FormControl(this.model.conclusionHechos),
-            'canalizaOtraArea'          :  new FormControl(this.model.canalizaOtraArea),
+            'canalizacion'          :  new FormControl(this.model.canalizacion),
             'institucionCanalizacion'          :  new FormControl(this.model.institucionCanalizacion),
             'motivocanalizacion'          :  new FormControl(this.model.motivocanalizacion),
             'fechaCanalizacion'          :  new FormControl(this.model.fechaCanalizacion),
