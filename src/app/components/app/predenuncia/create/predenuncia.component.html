@@ -83,7 +83,7 @@
 			</div>   
 		</div>
 		
-		<div class="row space"> <h2>Oficio de asignación de asesor jurídico</h2></div>
+		<!-- <div class="row space"> <h2>Oficio de asignación de asesor jurídico</h2></div>
 		<div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text label="Nombre de la autoridad a quien se dirige el oficio" name="autoridadOficioAsignacion" [(value)]="model.autoridadOficioAsignacion" [group]="form"></text> 
@@ -102,7 +102,7 @@
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text label="Cargo o adscripción de la autoridad a quien se dirige el oficio" name="cargoAutoridadOficioAsignacion" [(value)]="model.cargoAutoridadOficioAsignacion" [group]="form"></text> 
 		    </div>
-		</div>
+		</div> -->
 
 		<div class="row space"> <h2>Registro presencial</h2></div>
 		<div class="row">
@@ -110,7 +110,12 @@
 		    	<text label="Calidad de la persona" name="calidadPersona" [(value)]="model.calidadPersona" [group]="form"></text> 
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Tipo de persona" name="tipoPersona" [(value)]="model.tipoPersona" [group]="form"></text> 
+		    	<select2 [options]="[{value: true,label: 'Si'},{value: false,label: 'No'}]"
+				placeholder="Tipo de persona"
+				[(value)]="model.tipoPersona"
+				name="tipoPersona" 
+				[group]="form">
+			    </select2>	 
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text label="Lugar en donde ocurrieron los hechos" name="lugarHechos" [(value)]="model.lugarHechos" [group]="form"></text> 
@@ -121,10 +126,15 @@
 		</div>
 		<div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Conclusión en base a los hecos denunciados" name="conclusionHechos" [(value)]="model.conclusionHechos" [group]="form"></text> 
+		    	<text label="Conclusión en base a los hechos denunciados" name="conclusionHechos" [(value)]="model.conclusionHechos" [group]="form"></text> 
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="¿Se canaliza a otra área o institución?" name="canalizaOtraArea" [(value)]="model.canalizaOtraArea" [group]="form"></text> 
+		    	<select2 [options]="[{value: true,label: 'Si'},{value: false,label: 'No'}]"
+				placeholder="¿Se canaliza a otra área o institución?"
+				[(value)]="model.canalizacion"
+				name="canalizacion" 
+				[group]="form">
+			    </select2> 
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text label="En su caso, institución a que se canaliza" name="institucionCanalizacion" [(value)]="model.lugarHechos" [group]="form"></text> 
@@ -144,7 +154,7 @@
 		    	<text label="Si lo sabe, nombre de quien causó el hecho" name="personaCausohecho" [(value)]="model.personaCausohecho" [group]="form"></text> 
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Si lo sabe, dimicilio de quien casuó el hecho" name="domicilioQuienCauso" [(value)]="model.domicilioQuienCauso" [group]="form"></text> 
+		    	<text label="Si lo sabe, domicilio de quien causó el hecho" name="domicilioQuienCauso" [(value)]="model.domicilioQuienCauso" [group]="form"></text> 
 		    </div>
 		</div>
 		<div class="row">
@@ -153,7 +163,7 @@
 		    </div>
 		</div>
 
-	    <div class="row space"> <h2>Oficio para ayuda y atención a víctima</h2></div>
+	    <!-- <div class="row space"> <h2>Oficio para ayuda y atención a víctima</h2></div>
 		<div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text label="Oficio" name="oficio" [(value)]="model.oficio" [group]="form"></text> 
@@ -172,7 +182,7 @@
 		    <div class="col-md-4 col-sm-12 col-lg-4">
 		    	<text label="Cargo o adscripción de la autoridad a quien se dirige el oficio" name="cargoAutoridadVictima" [(value)]="model.cargoAutoridadVictima" [group]="form"></text> 
 		    </div>
-		</div>
+		</div> -->
 		<div class="row">
 		    <div class="col-md-12 col-sm-12 col-lg-12">
 		    	<text-area label="Observaciones/Incidencias" name="observaciones" [group]="form"></text-area> 

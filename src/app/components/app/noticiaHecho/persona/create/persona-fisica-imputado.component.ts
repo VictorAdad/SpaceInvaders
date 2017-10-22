@@ -33,6 +33,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     caso:Caso;
     tabla: CIndexedDB;
     public breadcrumb = [];
+    public tipoInter = [];
 
     forma=[{label:"Redonda", value:"Redonda"},{label:"Eliptica",value:"Eliptica"}];
     helixOriginal=[{label:"Si", value:"Si"},{label:"No",value:"No"}];
@@ -115,6 +116,14 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 }
             }
         });
+    }
+
+    public compare(a,b) {
+      if (a.label < b.label)
+        return -1;
+      if (a.label > b.label)
+        return 1;
+      return 0;
     }
 
 

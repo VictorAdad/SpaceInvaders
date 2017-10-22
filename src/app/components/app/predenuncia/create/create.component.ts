@@ -32,10 +32,12 @@ export class PredenunciaGlobal{
 })
 export class PredenunciaCreateComponent {
     public casoId: number = null;
+    public hasPredenuncia:boolean = false;
+    public apiUrl:string="/v1/base/predenuncias/casos/";
     public breadcrumb = [];
 
 
-    constructor(private route: ActivatedRoute){}
+    constructor(private route: ActivatedRoute, private http: HttpService){}
 
     ngOnInit(){
         this.route.params.subscribe(params => {
@@ -43,6 +45,14 @@ export class PredenunciaCreateComponent {
                 this.casoId = +params['id'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
             }
+            if (params['casoId']){
+                this.http.get(this.apiUrl+params['casoId']).subscribe(response => {
+                    if(parseInt(response.totalCount) !== 0){
+                        this.hasPredenuncia = true;
+                    }
+                });
+            }
+
         });
     }
 
@@ -125,7 +135,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             'lugarHechos'          :  new FormControl(this.model.lugarHechos),
             'hechosNarrados'        :  new FormControl(this.model.hechosNarrados),
             'conclusionHechos'          :  new FormControl(this.model.conclusionHechos),
-            'canalizaOtraArea'          :  new FormControl(this.model.canalizaOtraArea),
+            'canalizacion'          :  new FormControl(this.model.canalizacion),
             'institucionCanalizacion'          :  new FormControl(this.model.institucionCanalizacion),
             'motivocanalizacion'          :  new FormControl(this.model.motivocanalizacion),
             'fechaCanalizacion'          :  new FormControl(this.model.fechaCanalizacion),
@@ -156,7 +166,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             this.http.post('/v1/base/predenuncias', this.model).subscribe(
                 (response) => {
                     console.log(response)
-                    this.router.navigate(['/caso/'+this.casoId+'/detalle' ]);
+                    this.router.navigate(['/caso/'+this.casoId+'/predenuncia/create' ]);
                  },
                 (error) => {
                     console.error('Error', error);

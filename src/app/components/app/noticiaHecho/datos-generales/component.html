@@ -11,10 +11,10 @@
 					<label class="mb-0">Delito principal</label>
 				</div>
 				<div class="col-sm-auto">
-					<button mat-raised-button color="accent" (click)="openDialog()" [disabled]="hasId() ? true : false">Agregar delito</button>
+					<button mat-raised-button color="accent" (click)="openDialog()" [disabled]="hasId() ? true : false">Agregar delitos</button>
 				</div>
 			</div>
-			<text name="delito" hintStart="Campo obligatorio" [group]="form" readonly="true"></text>
+			<text name="delito" hintStart="Campo obligatorio" readonly="true" [group]="form"> </text>
 			<div class="row justify-content-end">
 				<div class="col-sm-auto" [matTooltip]="!form.valid ? 'No se han llenado los campos requeridos' : ''" (mouseenter)="validateForm(form)">
 					<button mat-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="hasId()">Editar</button>	

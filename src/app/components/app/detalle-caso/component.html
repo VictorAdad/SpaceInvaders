@@ -69,7 +69,7 @@
                                     </mat-card-content>
                                 </mat-card>
                             </div>
-                            <div class="col-md-4" *ngIf="hasRelacionVictimaImputado">
+                            <div class="col-md-4">
                                 <mat-card class="h-100">
                                     <mat-card-content class="d-flex flex-column h-100">
                                         <div class="row ml-0 mr-0 align-items-center mb-auto">
@@ -91,7 +91,7 @@
                                         </div>
                                         <div class="row space"></div>
                                         <div class="row">
-                                            <button mat-button routerLink="/caso/{{id}}/predenuncia/create">Ver ahora</button>
+                                            <button mat-button [disabled]="!hasRelacionVictimaImputado" routerLink="/caso/{{id}}/predenuncia/create">Ver ahora</button>
                                         </div>
                                     </mat-card-content>
                                 </mat-card>
@@ -107,7 +107,7 @@
     <div class="col-md-12">
         <mat-card>
             
-            <mat-card-content *ngIf="hasPredenuncia">
+            <mat-card-content>
              <div class="d-flex justify-content-between">
                     <div class="row">
                         <h2>Detalle pre denuncia <small>(NIC: CAI/AIN/00/UAI/255/00131/17/09)</small></h2>
@@ -120,18 +120,7 @@
                 <div class="row">
                     <div class="col-md-8">
                         <strong>Detalle de los hechos</strong>
-                        <p class="text-justify">{{predenuncia.hechosNarrados}}
-                         <!--
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus placerat dapibus consequat. Pellentesque
-                            et finibus sapien, ac posuere nulla. Nam luctus, urna eget aliquam facilisis, mauris dui luctus
-                            turpis, in aliquet quam dolor vitae mauris. Nam vel metus congue, semper augue eget, vehicula
-                            mi. Donec elementum est eget pulvinar dictum. Pellentesque lectus nunc, volutpat in auctor suscipit,
-                            tristique ut orci. Proin arcu nunc, molestie sed facilisis tincidunt, interdum sit amet neque.
-                            Etiam ipsum dui, sagittis ut egestas nec, porta et augue. Mauris pharetra sem condimentum libero
-                            iaculis luctus. Morbi non viverra tellus.
-                         -->
-        
-                         </p>
+                        <p class="text-justify">{{predenuncia.hechosNarrados}}</p>
                     </div>
                     <div class="col-md-4 text-right">
                         <strong>Fecha y hora de los hechos</strong>
@@ -139,247 +128,251 @@
                     </div>
                 </div>
                 <mat-divider></mat-divider>
-                <div class="row space"></div>
-                <div class="row align-items-center">
-                    <div class="col-md-auto space">
-                        <img src="./assets/images/NoticiaDeHechos/solicitudes.svg">
+                <div *ngIf="auth.user.hasRoles(auth.roles.uai, auth.roles.express, auth.roles.mpuai, auth.roles.mpi)">
+                    <div class="row space"></div>
+                    <div class="row align-items-center">
+                        <div class="col-md-auto space">
+                            <img src="./assets/images/NoticiaDeHechos/solicitudes.svg">
+                        </div>
+                        <div class="col-md-auto space">
+                            <h4>Solicitudes preliminares</h4>
+                        </div>
                     </div>
-                    <div class="col-md-auto space">
-                        <h4>Solicitudes preliminares</h4>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <mat-card class="h-100">
-                            <mat-card-content class="d-flex flex-column h-100">
-                                <div class="row ml-0 mr-0 align-items-center mb-auto">
-                                    <div class="col-lg-8">
-                                        <div class="row">
-                                            <p class="font-weight-bold">Solicitudes a periciales</p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-card class="h-100">
+                                <mat-card-content class="d-flex flex-column h-100">
+                                    <div class="row ml-0 mr-0 align-items-center mb-auto">
+                                        <div class="col-lg-8">
+                                            <div class="row">
+                                                <p class="font-weight-bold">Solicitudes a periciales</p>
+                                            </div>
+                                            <div class="row">
+                                                <p>Recepción y resolución de solicitudes de peritaje</p>
+                                            </div>
                                         </div>
-                                        <div class="row">
-                                            <p>Recepción y resolución de solicitudes de peritaje</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="row text-center">
-                                            <div class="col p-0">
-                                                <img src="./assets/images/Solicitudes-preliminares/detective.svg">
+                                        <div class="col-lg-4">
+                                            <div class="row text-center">
+                                                <div class="col p-0">
+                                                    <img src="./assets/images/Solicitudes-preliminares/detective.svg">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row space"></div>
-                                <div class="row">
-                                    <button mat-button routerLink="/caso/{{id}}/perito">Ver ahora</button>
-                                </div>
-                            </mat-card-content>
-                        </mat-card>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-card class="h-100">
-                            <mat-card-content class="d-flex align-items-start flex-column h-100">
-                                <div class="d-flex flex-wrap align-items-center mb-auto">
-                                    <div class="col-lg-8">
-                                        <div class="row">
-                                            <p class="font-weight-bold">Solicitudes a policía ministerial</p>
-                                        </div>
-                                        <div class="row">
-                                            <p>Recepción y resolución de solicitudes de policía</p>
-                                        </div>
+                                    <div class="row space"></div>
+                                    <div class="row">
+                                        <button mat-button [disabled]="!hasPredenuncia" routerLink="/caso/{{id}}/perito">Ver ahora</button>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <div class="row text-center">
-                                            <div class="col p-0">
-                                                <img src="./assets/images/Solicitudes-preliminares/policeCap.svg">
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-card class="h-100">
+                                <mat-card-content class="d-flex align-items-start flex-column h-100">
+                                    <div class="d-flex flex-wrap align-items-center mb-auto">
+                                        <div class="col-lg-8">
+                                            <div class="row">
+                                                <p class="font-weight-bold">Solicitudes a policía ministerial</p>
+                                            </div>
+                                            <div class="row">
+                                                <p>Recepción y resolución de solicitudes de policía</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="row text-center">
+                                                <div class="col p-0">
+                                                    <img src="./assets/images/Solicitudes-preliminares/policeCap.svg">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row space"></div>
-                                <div class="row">
-                                    <button mat-button routerLink="/caso/{{id}}/policia">Ver ahora</button>
-                                </div>
-                            </mat-card-content>
-                        </mat-card>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-card class="h-100">
-                            <mat-card-content class="d-flex flex-column h-100">
-                                <div class="row ml-0 mr-0 align-items-center mb-auto">
-                                    <div class="col-lg-8">
-                                        <div class="row">
-                                            <p class="font-weight-bold">Acuerdo general</p>
-                                        </div>
-                                        <div class="row">
-                                            <p>Resolución de solicitudes de acuerdos generales</p>
-                                        </div>
+                                    <div class="row space"></div>
+                                    <div class="row">
+                                        <button mat-button [disabled]="!hasPredenuncia" routerLink="/caso/{{id}}/policia">Ver ahora</button>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <div class="row text-center">
-                                            <div class="col p-0">
-                                                <img src="./assets/images/Solicitudes-preliminares/contratos.svg">
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-card class="h-100">
+                                <mat-card-content class="d-flex flex-column h-100">
+                                    <div class="row ml-0 mr-0 align-items-center mb-auto">
+                                        <div class="col-lg-8">
+                                            <div class="row">
+                                                <p class="font-weight-bold">Acuerdo general</p>
+                                            </div>
+                                            <div class="row">
+                                                <p>Resolución de solicitudes de acuerdos generales</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="row text-center">
+                                                <div class="col p-0">
+                                                    <img src="./assets/images/Solicitudes-preliminares/contratos.svg">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row space"></div>
-                                <div class="row">
-                                    <button mat-button routerLink="/caso/{{id}}/acuerdo-general">Ver ahora</button>
-                                </div>
-                            </mat-card-content>
-                        </mat-card>
-                    </div>
-                </div>
-                <div class="row space"></div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <mat-card class="h-100">
-                            <mat-card-content class="d-flex flex-column h-100">
-                                <div class="row ml-0 mr-0 align-items-center mb-auto">
-                                    <div class="col-lg-8">
-                                        <div class="row">
-                                            <p class="font-weight-bold">Registro general</p>
-                                        </div>
-                                        <div class="row">
-                                            <p>Recepción y resolución de solicitudes de registro</p>
-                                        </div>
+                                    <div class="row space"></div>
+                                    <div class="row">
+                                        <button mat-button [disabled]="!hasPredenuncia" routerLink="/caso/{{id}}/acuerdo-general">Ver ahora</button>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <div class="row text-center">
-                                            <div class="col p-0">
-                                                <img src="./assets/images/Solicitudes-preliminares/letter.svg">
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                    <div class="row space"></div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-card class="h-100">
+                                <mat-card-content class="d-flex flex-column h-100">
+                                    <div class="row ml-0 mr-0 align-items-center mb-auto">
+                                        <div class="col-lg-8">
+                                            <div class="row">
+                                                <p class="font-weight-bold">Registro general</p>
+                                            </div>
+                                            <div class="row">
+                                                <p>Recepción y resolución de solicitudes de registro</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="row text-center">
+                                                <div class="col p-0">
+                                                    <img src="./assets/images/Solicitudes-preliminares/letter.svg">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row space"></div>
-                                <div class="row">
-                                    <button mat-button routerLink="/caso/{{id}}/registro-general">Ver ahora</button>
-                                </div>
-                            </mat-card-content>
-                        </mat-card>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-card class="h-100">
-                            <mat-card-content class="d-flex flex-column h-100">
-                                <div class="row ml-0 mr-0 align-items-center mb-auto">
-                                    <div class="col-lg-8">
-                                        <div class="row">
-                                            <p class="font-weight-bold">Inspecciones</p>
-                                        </div>
-                                        <div class="row">
-                                            <p>Recepción y resolución de inspección</p>
-                                        </div>
+                                    <div class="row space"></div>
+                                    <div class="row">
+                                        <button mat-button [disabled]="!hasPredenuncia" routerLink="/caso/{{id}}/registro-general">Ver ahora</button>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <div class="row text-center">
-                                            <div class="col p-0">
-                                                <img src="./assets/images/Solicitudes-preliminares/fingerprint.svg">
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-card class="h-100">
+                                <mat-card-content class="d-flex flex-column h-100">
+                                    <div class="row ml-0 mr-0 align-items-center mb-auto">
+                                        <div class="col-lg-8">
+                                            <div class="row">
+                                                <p class="font-weight-bold">Inspecciones</p>
+                                            </div>
+                                            <div class="row">
+                                                <p>Recepción y resolución de inspección</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="row text-center">
+                                                <div class="col p-0">
+                                                    <img src="./assets/images/Solicitudes-preliminares/fingerprint.svg">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row space"></div>
-                                <div class="row">
-                                    <button mat-button routerLink="/caso/{{id}}/inspeccion">Ver ahora</button>
-                                </div>
-                            </mat-card-content>
-                        </mat-card>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-card class="h-100">
-                            <mat-card-content class="d-flex flex-column h-100">
-                                <div class="row ml-0 mr-0 align-items-center mb-auto">
-                                    <div class="col-lg-8">
-                                        <div class="row">
-                                            <p class="font-weight-bold">Requerimiento de información</p>
-                                        </div>
-                                        <div class="row">
-                                            <p>Resolución de solicitudes de requerimiento de información</p>
-                                        </div>
+                                    <div class="row space"></div>
+                                    <div class="row">
+                                        <button mat-button [disabled]="!hasPredenuncia" routerLink="/caso/{{id}}/inspeccion">Ver ahora</button>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <div class="row text-center">
-                                            <div class="col p-0">
-                                                <img src="./assets/images/Solicitudes-preliminares/evidence.svg">
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-card class="h-100">
+                                <mat-card-content class="d-flex flex-column h-100">
+                                    <div class="row ml-0 mr-0 align-items-center mb-auto">
+                                        <div class="col-lg-8">
+                                            <div class="row">
+                                                <p class="font-weight-bold">Requerimiento de información</p>
+                                            </div>
+                                            <div class="row">
+                                                <p>Resolución de solicitudes de requerimiento de información</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="row text-center">
+                                                <div class="col p-0">
+                                                    <img src="./assets/images/Solicitudes-preliminares/evidence.svg">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row space"></div>
-                                <div class="row">
-                                    <button mat-button routerLink="/caso/{{id}}/requerimiento-informacion">Ver ahora</button>
-                                </div>
-                            </mat-card-content>
-                        </mat-card>
+                                    <div class="row space"></div>
+                                    <div class="row">
+                                        <button mat-button [disabled]="!hasPredenuncia" routerLink="/caso/{{id}}/requerimiento-informacion">Ver ahora</button>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
                     </div>
                 </div>
             </mat-card-content>
-                <mat-card-content>
-                <div class="row space"></div>
-                <div class="row align-items-center">
-                    <div class="col-md-auto space">
-                        <img src="./assets/images/NoticiaDeHechos/acuerdosC.svg">
+            <mat-card-content>
+                <div *ngIf="auth.user.hasRoles(auth.roles.uai, auth.roles.express, auth.roles.mpuai, auth.roles.mpi)">
+                    <div class="row space"></div>
+                    <div class="row align-items-center">
+                        <div class="col-md-auto space">
+                            <img src="./assets/images/NoticiaDeHechos/acuerdosC.svg">
+                        </div>
+                        <div class="col-md-auto space">
+                            <h4>Acuerdos</h4>
+                        </div>
                     </div>
-                    <div class="col-md-auto space">
-                        <h4>Acuerdos</h4>
-                    </div>
-                </div>
-                <div class="row space">
-                    <div class="col-md-4">
-                        <mat-card class="h-100">
-                            <mat-card-content class="d-flex flex-column h-100">
-                                <div class="row ml-0 mr-0 align-items-center mb-auto">
-                                    <div class="col-lg-8">
-                                        <div class="row">
-                                            <p class="font-weight-bold">Acuerdo de inicio</p>
+                    <div class="row space">
+                        <div class="col-md-4">
+                            <mat-card class="h-100">
+                                <mat-card-content class="d-flex flex-column h-100">
+                                    <div class="row ml-0 mr-0 align-items-center mb-auto">
+                                        <div class="col-lg-8">
+                                            <div class="row">
+                                                <p class="font-weight-bold">Acuerdo de inicio</p>
+                                            </div>
+                                            <div class="row">
+                                                <p>Registro de acuerdo</p>
+                                            </div>
                                         </div>
-                                        <div class="row">
-                                            <p>Registro de acuerdo</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="row text-center">
-                                            <div class="col p-0">
-                                                <img src="./assets/images/Acuerdos/acuerdo.svg">
+                                        <div class="col-lg-4">
+                                            <div class="row text-center">
+                                                <div class="col p-0">
+                                                    <img src="./assets/images/Acuerdos/acuerdo.svg">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row space"></div>
-                                <div class="row">
-                                    <button mat-button routerLink="/caso/{{id}}/acuerdo-inicio">Ver ahora</button>
-                                </div>
-                            </mat-card-content>
-                        </mat-card>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-card class="h-100">
-                            <mat-card-content class="d-flex flex-column h-100">
-                                <div class="row ml-0 mr-0 align-items-center mb-auto">
-                                    <div class="col-lg-8">
-                                        <div class="row">
-                                            <p class="font-weight-bold">Acuerdo de radicación</p>
-                                        </div>
-                                        <div class="row">
-                                            <p>Registro de acuerdo de radicación</p>
-                                        </div>
+                                    <div class="row space"></div>
+                                    <div class="row">
+                                        <button mat-button routerLink="/caso/{{id}}/acuerdo-inicio">Ver ahora</button>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <div class="row text-center">
-                                            <div class="col p-0">
-                                                <img src="./assets/images/Acuerdos/acuerdoRadicacion.svg">
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-card class="h-100">
+                                <mat-card-content class="d-flex flex-column h-100">
+                                    <div class="row ml-0 mr-0 align-items-center mb-auto">
+                                        <div class="col-lg-8">
+                                            <div class="row">
+                                                <p class="font-weight-bold">Acuerdo de radicación</p>
+                                            </div>
+                                            <div class="row">
+                                                <p>Registro de acuerdo de radicación</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="row text-center">
+                                                <div class="col p-0">
+                                                    <img src="./assets/images/Acuerdos/acuerdoRadicacion.svg">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row space"></div>
-                                <div class="row">
-                                    <button mat-button routerLink="/caso/{{id}}/acuerdo-radicacion">Ver ahora</button>
-                                </div>
-                            </mat-card-content>
-                        </mat-card>
+                                    <div class="row space"></div>
+                                    <div class="row">
+                                        <button mat-button routerLink="/caso/{{id}}/acuerdo-radicacion">Ver ahora</button>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
                     </div>
                 </div>
                 <div class="row space"></div>
@@ -420,96 +413,98 @@
                         </mat-card>
                     </div>
                 </div>
-                <div class="row space"></div>
-                <div class="row align-items-center">
-                    <div class="col-md-auto space">
-                        <img src="./assets/images/NoticiaDeHechos/entrevistasC.svg">
+                <div *ngIf="auth.user.hasRoles(auth.roles.uai, auth.roles.express, auth.roles.mpuai, auth.roles.mpi)">
+                    <div class="row space"></div>
+                    <div class="row align-items-center">
+                        <div class="col-md-auto space">
+                            <img src="./assets/images/NoticiaDeHechos/entrevistasC.svg">
+                        </div>
+                        <div class="col-md-auto space">
+                            <h4>Conclusiones</h4>
+                        </div>
                     </div>
-                    <div class="col-md-auto space">
-                        <h4>Conclusiones</h4>
-                    </div>
-                </div>
-                <div class="row space">
-                    <div class="col-md-4">
-                        <mat-card class="h-100">
-                            <mat-card-content class="d-flex flex-column h-100">
-                                <div class="row ml-0 mr-0 align-items-center mb-auto">
-                                    <div class="col-lg-8">
-                                        <div class="row">
-                                            <p class="font-weight-bold">Archivo temporal</p>
+                    <div class="row space">
+                        <div class="col-md-4">
+                            <mat-card class="h-100">
+                                <mat-card-content class="d-flex flex-column h-100">
+                                    <div class="row ml-0 mr-0 align-items-center mb-auto">
+                                        <div class="col-lg-8">
+                                            <div class="row">
+                                                <p class="font-weight-bold">Archivo temporal</p>
+                                            </div>
+                                            <div class="row">
+                                                <p>Enviar al archivo temporal</p>
+                                            </div>
                                         </div>
-                                        <div class="row">
-                                            <p>Enviar al archivo temporal</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="row text-center">
-                                            <div class="col p-0">
-                                                <img src="./assets/images/Conclusiones/folder.svg">
+                                        <div class="col-lg-4">
+                                            <div class="row text-center">
+                                                <div class="col p-0">
+                                                    <img src="./assets/images/Conclusiones/folder.svg">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row space"></div>
-                                <div class="row">
-                                    <button mat-button routerLink="/caso/{{id}}/archivo-temporal">Ver ahora</button>
-                                </div>
-                            </mat-card-content>
-                        </mat-card>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-card class="h-100">
-                            <mat-card-content class="d-flex flex-column h-100">
-                                <div class="row ml-0 mr-0 align-items-center mb-auto">
-                                    <div class="col-lg-8">
-                                        <div class="row">
-                                            <p class="font-weight-bold">No ejercicio de la Acción Penal</p>
-                                        </div>
-                                        <div class="row">
-                                            <p>No existe ejercicio de la acción penal</p>
-                                        </div>
+                                    <div class="row space"></div>
+                                    <div class="row">
+                                        <button mat-button routerLink="/caso/{{id}}/archivo-temporal">Ver ahora</button>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <div class="row text-center">
-                                            <div class="col p-0">
-                                                <img src="./assets/images/Conclusiones/lawyer.svg">
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-card class="h-100">
+                                <mat-card-content class="d-flex flex-column h-100">
+                                    <div class="row ml-0 mr-0 align-items-center mb-auto">
+                                        <div class="col-lg-8">
+                                            <div class="row">
+                                                <p class="font-weight-bold">No ejercicio de la Acción Penal</p>
+                                            </div>
+                                            <div class="row">
+                                                <p>No existe ejercicio de la acción penal</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="row text-center">
+                                                <div class="col p-0">
+                                                    <img src="./assets/images/Conclusiones/lawyer.svg">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row space"></div>
-                                <div class="row">
-                                    <button mat-button routerLink="/caso/{{id}}/no-ejercicio-accion-penal">Ver ahora</button>
-                                </div>
-                            </mat-card-content>
-                        </mat-card>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-card class="h-100">
-                            <mat-card-content class="d-flex flex-column h-100">
-                                <div class="row ml-0 mr-0 align-items-center mb-auto">
-                                    <div class="col-lg-8">
-                                        <div class="row">
-                                            <p class="font-weight-bold">Facultad de No Investigar</p>
-                                        </div>
-                                        <div class="row">
-                                            <p>No hay facultad de investigación</p>
-                                        </div>
+                                    <div class="row space"></div>
+                                    <div class="row">
+                                        <button mat-button routerLink="/caso/{{id}}/no-ejercicio-accion-penal">Ver ahora</button>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <div class="row text-center">
-                                            <div class="col p-0">
-                                                <img src="./assets/images/Conclusiones/quill.svg">
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-card class="h-100">
+                                <mat-card-content class="d-flex flex-column h-100">
+                                    <div class="row ml-0 mr-0 align-items-center mb-auto">
+                                        <div class="col-lg-8">
+                                            <div class="row">
+                                                <p class="font-weight-bold">Facultad de No Investigar</p>
+                                            </div>
+                                            <div class="row">
+                                                <p>No hay facultad de investigación</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="row text-center">
+                                                <div class="col p-0">
+                                                    <img src="./assets/images/Conclusiones/quill.svg">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row space"></div>
-                                <div class="row">
-                                    <button mat-button routerLink="/caso/{{id}}/facultad-no-investigar">Ver ahora</button>
-                                </div>
-                            </mat-card-content>
-                        </mat-card>
+                                    <div class="row space"></div>
+                                    <div class="row">
+                                        <button mat-button routerLink="/caso/{{id}}/facultad-no-investigar">Ver ahora</button>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
                     </div>
                 </div>
             </mat-card-content>

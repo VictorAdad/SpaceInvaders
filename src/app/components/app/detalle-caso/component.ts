@@ -6,6 +6,7 @@ import { Caso } from '@models/caso';
 import { Persona } from '@models/persona';
 import { DelitoCaso } from '@models/delitoCaso';
 import { Predenuncia } from '@models/predenuncia';
+import { AuthenticationService } from '@services/auth/authentication.service';
 
 
 @Component({
@@ -25,7 +26,12 @@ export class DetalleCasoComponent implements OnInit{
 	hasPredenuncia:boolean=false;
     hasRelacionVictimaImputado:boolean=false;
 
-	constructor(_route: ActivatedRoute, private _onLine: OnLineService, private _http: HttpService){
+	constructor(
+		_route: ActivatedRoute,
+		private _onLine: OnLineService,
+		private _http: HttpService,
+		private auth: AuthenticationService
+		){
 		this.route = _route;
 		this.onLine = _onLine;
 		this.http   = _http;

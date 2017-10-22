@@ -29,7 +29,7 @@ export class Predenuncia{
 	tipoPersona:string;
 	lugarHechos:string;
 	conclusionHechos: string;
-	canalizaOtraArea:string;
+	canalizacion:string;
 	institucionCanalizacion:string;
 	motivocanalizacion:string;
     fechaCanalizacion:string;
