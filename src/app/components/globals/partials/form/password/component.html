@@ -1,0 +1,25 @@
+<div class="form-group">
+	<mat-form-field class="full-width" *ngIf="name==''">
+			<mat-icon matPrefix *ngIf="prefixIcon">{{ prefixIcon }}</mat-icon>
+			<span *ngIf="prefix" matPrefix>{{ prefix }}&nbsp;</span>
+			<input matInput type="password" placeholder="{{label}}" [(ngModel)]="value" (ngModelChange)="update($event)" name="{{name}}">
+			<mat-icon matSuffix *ngIf="sufix">{{ sufix }}</mat-icon>
+			<mat-hint align="start" *ngIf="hintStart">{{hintStart}} </mat-hint>
+		    <mat-hint align="end" *ngIf="hintEnd">{{hintEnd}}</mat-hint>
+	</mat-form-field>
+	<mat-form-field class="full-width" [formGroup]="group" *ngIf="name!=''">
+			<span *ngIf="prefix" matPrefix>{{ prefix }}&nbsp;</span>
+			<input 
+				matInput
+				type="password" 
+				placeholder="{{label}}" 
+				[(ngModel)]="value" 
+				(ngModelChange)="update($event)" 
+				formControlName="{{name}}"  
+				name="{{name}}"
+				[readonly]="readonly ? readonly : false ">
+			<mat-icon matSuffix *ngIf="sufix">{{ sufix }}</mat-icon>
+			<mat-hint align="start" *ngIf="hintStart">{{hintStart}} </mat-hint>
+		    <mat-hint align="end" *ngIf="hintEnd">{{hintEnd}}</mat-hint>
+	</mat-form-field>
+</div>
