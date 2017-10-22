@@ -6,6 +6,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { AcuerdoInicio } from '@models/determinacion/acuerdoInicio';
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
+import { Observable }  from 'rxjs/Observable';
 import { DeterminacionGlobal } from '../global';
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
@@ -62,7 +63,8 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
             'presentoLlamada': new FormControl(this.model.presentoLlamada),
             'manifesto': new FormControl(this.model.manifesto),
             'sintesisHechos': new FormControl(this.model.sintesisHechos),
-            'observaciones': new FormControl(this.model.observaciones)
+            'observaciones': new FormControl(this.model.observaciones),
+            'tipo': new FormControl('Acuerdo Inicio'),
         });
 
         this.route.params.subscribe(params => {
@@ -99,6 +101,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
             },
             (error) => {
                 console.error('Error', error);
+                throw Observable.throw(error);
             }
         );
 

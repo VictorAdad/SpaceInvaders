@@ -251,9 +251,9 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
 
         this.form.patchValue(
             {
-                'tipo'            : _data.detalleLugar.tipoLugar,
-                'tipoZona'        : _data.detalleLugar.tipoZona,
-                "dia"             :_data.detalleLugar.dia,
+                'tipo'            : _data.detalleLugar ? _data.detalleLugar.tipoLugar : null,
+                'tipoZona'        : _data.detalleLugar ? _data.detalleLugar.tipoZona : null,
+                "dia"             : _data.detalleLugar ?_data.detalleLugar.dia : null,
                 "estadoOtro"      :_data.estadoOtro,
                 "municipioOtro"   :_data.municipioOtro,
                 "coloniaOtro"     :_data.coloniaOtro,
