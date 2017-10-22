@@ -108,7 +108,7 @@
 
 
         <mat-icon class="button-menu">account_circle</mat-icon>
-        <span class="d-xs-none d-sm-none d-md-inline"> Administrador del sistema</span>
+        <span class="d-xs-none d-sm-none d-md-inline">{{ authService.user.nombreCompleto}}</span>
         <button mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon fxHide="false" fxHide.gt-sm>more_vert</mat-icon>
         </button>
