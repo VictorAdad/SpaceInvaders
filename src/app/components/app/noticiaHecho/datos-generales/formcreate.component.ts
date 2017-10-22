@@ -6,6 +6,7 @@ import 'rxjs/add/observable/of';
 import { CIndexedDB } from '@services/indexedDB';
 import { HttpService } from '@services/http.service';
 import { Delito } from '@models/catalogo/delito';
+import { OnLineService } from '@services/onLine.service';
 
 @Component({
     templateUrl: './formcreate.component.html',
@@ -43,7 +44,8 @@ export class FormCreateDelitoCasoComponent {
         private _tabla: CIndexedDB,
         @Inject(MAT_DIALOG_DATA) private data: {lista:any},
         public dialogRef: MatDialogRef<FormCreateDelitoCasoComponent>,
-        private http: HttpService
+        private http: HttpService,
+        private onLine: OnLineService,
         ){
         this.tabla=_tabla;
     }
@@ -65,10 +67,18 @@ export class FormCreateDelitoCasoComponent {
 
     buscar(){
         
-        this.http.get('/v1/catalogos/delitos/search?name='+this.searchDelito).subscribe(response => {
-            console.log('-> done buscar delito', response)
-            this.dataSource = new ExampleDataSource(response);
-        });
+        if (typeof this.searchDelito == "undefined")
+            this.searchDelito="";
+        if (this.onLine.onLine)
+            this.http.get('/v1/catalogos/delitos/search?name='+this.searchDelito).subscribe(response => {
+                console.log('-> done buscar delito', response);
+                this.dataSource = new ExampleDataSource(response);
+            });
+        else
+            this.tabla.searchInNotMatrx("delito",{nombre:this.searchDelito}, true).then(response=>{
+                console.log('-> done buscar delito', response, this.searchDelito);
+                this.dataSource = new ExampleDataSource(response);
+            });
     }
 
     agregar(e){
