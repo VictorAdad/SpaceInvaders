@@ -20,7 +20,7 @@
                 <h4 matLine>{{caso.name}}</h4>
                 <h4 class="text-muted" matLine md-subheade>{{caso.titulo}}</h4>
                 <h4 class="text-muted" matLine md-subheade>{{caso.sintesis}}</h4>
-                <p matLine>{{caso.formatFecha}}</p>
+                <p matLine>{{caso.fecha()}}</p>
                 <button mat-icon-button [matMenuTriggerFor]="menuCaso">
                     <mat-icon>more_horiz</mat-icon>
                 </button>
