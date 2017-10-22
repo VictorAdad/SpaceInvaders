@@ -45,12 +45,13 @@ export class DelitoComponent {
                     this.id = parseInt(params['id']);
                     this.page('/v1/base/delitos-casos/casos/' + this.id + '/page');   
                 }else{
+                    this.id = parseInt(params['id']);
                     this.db.get("casos", this.id).then(
                     casoR => {
                         if (casoR) {
                             this.delitoCaso = casoR as DelitoCaso;
-                            if (casoR["delitos"])
-                                this.dataSource = new TableService(this.paginator, casoR["delitos"]);
+                            if (casoR["delitosCaso"])
+                                this.dataSource = new TableService(this.paginator, casoR["delitosCaso"]);
                         }
                     });
                 }    

@@ -113,13 +113,42 @@ export class DelitoCreateComponent{
             },
             principal:false
         }
-        this.http.post('/v1/base/delitos-casos',data).subscribe(response => {
-            console.log("->",response);
-            this.guardaLista(i+1,this.listaDelitos);
-        },
-        error=>{
-            this.guardaLista(i+1,this.listaDelitos);
-        });
+        if (this.onLine.onLine)
+            this.http.post('/v1/base/delitos-casos',data).subscribe(response => {
+                    console.log("->",response);
+                    this.guardaLista(i+1,this.listaDelitos);
+                },
+                error=>{
+                    this.guardaLista(i+1,this.listaDelitos);
+                });
+        else{
+            let temId=Date.now();
+            let dato={
+                url:'/v1/base/delitos-casos',
+                body:data,
+                options:[],
+                tipo:"post",
+                pendiente:true,
+                dependeDe:[this.casoId],
+                temId: temId
+            }
+            this.tabla.add("sincronizar",dato).then(p=>{
+                this.tabla.get("casos",this.casoId).then(caso=>{
+                    if (caso){
+                        if(!caso["delitosCaso"]){
+                            caso["delitosCaso"]=[];
+                            console.log("ITEM",item)
+                        }
+                        var dat={id:temId,delito:item, principal:false}
+                        caso["delitosCaso"].push(dat);
+                        this.tabla.update("casos",caso).then(t=>{
+                            this.guardaLista(i+1,this.listaDelitos);
+                        });
+                    }
+                });
+            }); 
+        }
+
     }
 
 }
