@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Output, EventEmitter} from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -15,6 +15,7 @@ import { CIndexedDB } from '@services/indexedDB';
 })
 export class PoliciaCreateComponent {
 	public casoId: number = null;
+    public solicitudId: number = null;
 	public breadcrumb = [];
 
 	constructor(private route: ActivatedRoute) { }
@@ -27,7 +28,10 @@ export class PoliciaCreateComponent {
 			}
 		});
 	}
-
+  idUpdate(event: any) {
+    this.solicitudId = event.id;
+	console.log(event.id);
+  }
 }
 
 @Component({
@@ -38,6 +42,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 	public apiUrl = "/v1/base/solicitudes-pre-policias";
 	public casoId: number = null;
 	public id: number = null;
+	@Output() idUpdate = new EventEmitter<any>();
 	public form: FormGroup;
 	public model: SolicitudServicioPolicial;
 	dataSource: TableService | null;
@@ -67,6 +72,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 			console.log('casoId', this.casoId);
 			if (params['id']) {
 				this.id = +params['id'];
+				this.idUpdate.emit({id: this.id});
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 					console.log(response.data),
@@ -85,7 +91,8 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 
 			(response) => {
 				if(this.casoId!=null){
-					this.router.navigate(['/caso/' + this.casoId + '/policia']);
+					this.id=response.id;
+					this.router.navigate(['/caso/' + this.casoId + '/policia/'+this.id+'/edit']);
 				}
 			},
 			(error) => {

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Output, EventEmitter  } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Perito } from '@models/solicitud-preliminar/perito';
@@ -18,6 +18,7 @@ import { Observable } from 'rxjs/Observable';
 export class PeritoCreateComponent {
 
 	public casoId: number = null;
+    public solicitudId: number = null;
 	public breadcrumb = [];
 	constructor(private route: ActivatedRoute) { }
 
@@ -29,6 +30,10 @@ export class PeritoCreateComponent {
 			}
 		});
 	}
+  idUpdate(event: any) {
+    this.solicitudId = event.id;
+	console.log(event.id);
+  }
 
 }
 
@@ -41,6 +46,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	public apiUrl: string = "/v1/base/solicitudes-pre-pericial";
 	public casoId: number = null;
 	public id: number = null;
+	@Output() idUpdate = new EventEmitter<any>();
 	public form: FormGroup;
 	public model: Perito;
 	isPericiales: boolean = false;
@@ -70,6 +76,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 			console.log('casoId', this.casoId);
 			if (params['id']) {
 				this.id = +params['id'];
+				this.idUpdate.emit({id: this.id});
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 					this.isPericiales = this.form.controls.tipo.value === 'Periciales';
@@ -114,7 +121,8 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 
 			(response) => {
 				if(this.casoId!=null){
-					this.router.navigate(['/caso/' + this.casoId + '/perito']);
+					this.id=response.id;
+					this.router.navigate(['/caso/' + this.casoId + '/perito/'+this.id+'/edit']);
 				}
 			},
 			(error) => {

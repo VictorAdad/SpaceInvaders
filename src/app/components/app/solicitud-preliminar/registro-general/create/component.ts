@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild , Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -17,6 +17,7 @@ export class RegistroGeneralCreateComponent {
 
 	public casoId: number = null;
 	public breadcrumb = [];
+    public solicitudId: number = null;
 	constructor(private route: ActivatedRoute) { }
 	ngOnInit() {
 		this.route.params.subscribe(params => {
@@ -26,6 +27,10 @@ export class RegistroGeneralCreateComponent {
 			}
 		});
 	}
+	idUpdate(event: any) {
+		this.solicitudId = event.id;
+		console.log(event.id);
+	 }
 
 }
 
@@ -38,6 +43,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 	public apiUrl: string = "/v1/base/solicitudes-pre-registros";
 	public casoId: number = null;
 	public id: number = null;
+	@Output() idUpdate = new EventEmitter<any>();
 	public form: FormGroup;
 	public model: RegistroGeneral;
 	dataSource: TableService | null;
@@ -69,6 +75,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 			if (params['id']) {
 				this.id = +params['id'];
 				console.log('id', this.id);
+				this.idUpdate.emit({id: this.id});
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 					console.log(response.data),
 						this.fillForm(response);
@@ -86,7 +93,8 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 
 			(response) => {
 				if(this.casoId!=null){
-					this.router.navigate(['/caso/' + this.casoId + '/registro-general']);
+					this.id=response.id;
+					this.router.navigate(['/caso/' + this.casoId + '/registro-general/'+this.id+'/edit']);
 				}
 			},
 			(error) => {

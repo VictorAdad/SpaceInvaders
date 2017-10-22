@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild , Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -16,6 +16,7 @@ import { SelectsService} from '@services/selects.service';
 })
 export class AcuerdoGeneralCreateComponent {
     public casoId: number = null;
+    public solicitudId: number = null;
     public breadcrumb = [];
 
 
@@ -31,7 +32,10 @@ export class AcuerdoGeneralCreateComponent {
 
         });
     }
-
+  idUpdate(event: any) {
+    this.solicitudId = event.id;
+	console.log(event.id);
+  }
 }
 
 @Component({
@@ -41,6 +45,7 @@ export class AcuerdoGeneralCreateComponent {
 export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal {
     public apiUrl = "/v1/base/solicitudes-pre-acuerdos";
     public casoId: number = null;
+	@Output() idUpdate = new EventEmitter<any>();
     public id: number = null;
     public form: FormGroup;
     public model: AcuerdoGeneral;
@@ -70,6 +75,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
                 this.casoId = +params['casoId'];
             if (params['id']) {
                 this.id = +params['id'];
+				this.idUpdate.emit({id: this.id});
                 this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
                     this.isAcuerdoGral = (this.form.controls.tipo.value==='Acuerdo General');
                     this.isJuridico = (this.form.controls.tipo.value==='Asignación de asesor jurídico');
@@ -119,9 +125,13 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
 
             (response) => {
                 if(this.casoId!=null){
-                    this.router.navigate(['/caso/' + this.casoId + '/acuerdo-general']);
-                }else{
-                    this.router.navigate(['/acuerdos' ]);
+					this.id=response.id;
+                    this.router.navigate(['/caso/' + this.casoId + '/acuerdo-general/'+this.id+'/edit']);
+					console.log('-> registro guardado',response);               
+			   }else{
+					this.id=response.id;
+					console.log('-> registro guardado',response);
+                    this.router.navigate(['/acuerdos'+this.id+'/edit' ]);
                 }
             },
             (error) => {

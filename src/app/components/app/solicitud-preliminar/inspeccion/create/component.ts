@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild,EventEmitter,Output} from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -16,6 +16,7 @@ import { CIndexedDB } from '@services/indexedDB';
 export class InspeccionCreateComponent {
     public casoId: number = null;
     public breadcrumb = [];
+	public solicitudId: number = null;
 	constructor(private route: ActivatedRoute){}
 
 	ngOnInit() {
@@ -27,7 +28,10 @@ export class InspeccionCreateComponent {
         });
         console.log('casoID', this.casoId);
   	}
-
+	idUpdate(event: any) {
+    this.solicitudId = event.id;
+	console.log(event.id);
+  }
 }
 
 @Component({
@@ -39,6 +43,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
     public apiUrl:string="/v1/base/solicitudes-pre-inspecciones";
     public casoId: number = null;
     public id: number = null;
+	@Output() idUpdate = new EventEmitter<any>();
     public form  : FormGroup;
     public model : Inspeccion;
     dataSource: TableService | null;
@@ -70,6 +75,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
                 console.log('casoId', this.casoId);
             if(params['id']){
                 this.id = +params['id'];
+				this.idUpdate.emit({id: this.id});
                 console.log('id', this.id);
                 this.http.get(this.apiUrl+'/'+this.id).subscribe(response =>{
                         var fechaCompleta:Date= new Date(response.fechaHoraInspeccion);
@@ -103,10 +109,11 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
                     //console.log(response);
                     //console.log('lo que recibo: '+ new Date(response.fechaHoraInspeccion));
                   if(this.casoId!=null){
-                    this.router.navigate(['/caso/'+this.casoId+'/inspeccion' ]);      
+					this.id=response.id;
+                    this.router.navigate(['/caso/'+this.casoId+'/inspeccion/'+this.casoId+'/edit' ]);      
                   }
                   else {
-                    this.router.navigate(['/inspecciones' ]);      
+                    this.router.navigate(['/inspecciones/'+this.casoId+'/edit' ]);      
                   }
                 },
                 (error) => {
