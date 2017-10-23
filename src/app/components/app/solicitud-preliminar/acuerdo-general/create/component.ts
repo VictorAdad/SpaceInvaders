@@ -45,8 +45,8 @@ export class AcuerdoGeneralCreateComponent {
 export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal {
     public apiUrl = "/v1/base/solicitudes-pre-acuerdos";
     public casoId: number = null;
-	@Output() idUpdate = new EventEmitter<any>();
     public id: number = null;
+	@Output() idUpdate = new EventEmitter<any>();
     public form: FormGroup;
     public model: AcuerdoGeneral;
     public isAcuerdoGral: boolean = false;
@@ -124,12 +124,11 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
         this.http.post(this.apiUrl, _model).subscribe(
 
             (response) => {
+				this.id=response.id;
                 if(this.casoId!=null){
-					this.id=response.id;
                     this.router.navigate(['/caso/' + this.casoId + '/acuerdo-general/'+this.id+'/edit']);
 					console.log('-> registro guardado',response);               
 			   }else{
-					this.id=response.id;
 					console.log('-> registro guardado',response);
                     this.router.navigate(['/acuerdos'+this.id+'/edit' ]);
                 }
