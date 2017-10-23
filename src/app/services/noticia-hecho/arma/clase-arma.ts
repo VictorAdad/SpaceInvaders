@@ -16,8 +16,8 @@ export class MatrizClaseArma extends MatrizGlobal{
     }
 
     public validate(_object: any, _selected: any): boolean{
-        console.log('object', _object, 'Selected', _selected);
-        console.log(_object.claseArma === _selected.claseArma && _object.tipo === _selected.tipo && _object.subtipo === _selected.subtipo);
+        // console.log('object', _object, 'Selected', _selected);
+        // console.log(_object.claseArma === _selected.claseArma && _object.tipo === _selected.tipo && _object.subtipo === _selected.subtipo);
         return (_object.claseArma === _selected.claseArma && _object.tipo === _selected.tipo && _object.subtipo === _selected.subtipo);
     }
 }
