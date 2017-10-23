@@ -77,7 +77,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 this.id = +params['id'];
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/lugares/'+this.id).subscribe(response =>{
-                        console.log(response)
+                        console.log("Lugar->",response)
                         this.fillForm(response);
                     });
                 }else{
@@ -85,6 +85,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                     let lugares=t["lugar"] as any[];
                     for (var i = 0; i < lugares.length; ++i) {
                         if ((lugares[i])["id"]==this.id){
+                            console.log("Lugar->",t)
                             this.fillForm(lugares[i]);
                             break;
                         }
@@ -127,8 +128,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             'calle'           : new FormControl('', [Validators.required,]),
             'referencias'     : new FormControl('', [Validators.required,]),
             'estadoOtro'      : new FormControl('', [Validators.required,]),
-            'municipioOtro'   : new FormControl('', []),
-            'coloniaOtro'     : new FormControl('', []),
+            'municipioOtro'   : new FormControl('', [Validators.required,]),
+            'coloniaOtro'     : new FormControl('', [Validators.required,]),
             'fecha'           : new FormControl('', [Validators.required,]),
             'hora'            : new FormControl('', [Validators.required,]),
             'cp'              : new FormControl('', []),
@@ -148,10 +149,10 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 'id': new FormControl("",[Validators.required,]),
             }),
             'municipio': new FormGroup({
-                'id': new FormControl("",[]),
+                'id': new FormControl("",[Validators.required,]),
             }),
             'colonia': new FormGroup({
-                'id': new FormControl("",[]),
+                'id': new FormControl("",[Validators.required,]),
             }),
             'caso': new FormGroup({
                 'id': new FormControl("",[]),
@@ -169,6 +170,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         }
         
         if(this.onLine.onLine){
+            console.log("MODELO",_model);
             this.http.post('/v1/base/lugares', _model).subscribe(
                 (response) => {
                     console.log('-> registro guardado', response);
@@ -196,6 +198,10 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                             caso["lugar"]=[];
                         }
                         _model["id"]=temId;
+                        _model.detalleLugar["dia"]=_model["dia"];
+                        _model.detalleLugar["tipoLugar"]=_model["tipo"];
+                        _model.detalleLugar["tipoZona"]=_model["tipoZona"];
+                        
                         caso["lugar"].push(_model);
                         this.db.update("casos",caso).then(t=>{
                             this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
@@ -294,21 +300,36 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             this.isMexico=id==_config.optionValue.idMexico;
             console.log(this.optionsServ.paises);
           }
+          if(id==0){
+              this.form.controls.estado.enable();
+              this.form.controls.municipio.enable();
+              this.form.controls.colonia.enable();
+              this.form.controls.estadoOtro.disable();
+              this.form.controls.coloniaOtro.disable();
+              this.form.controls.municipioOtro.disable();
+          }else{
+              this.form.controls.estado.disable();
+              this.form.controls.municipio.disable();
+              this.form.controls.colonia.disable();
+              this.form.controls.estadoOtro.enable();
+              this.form.controls.coloniaOtro.enable();
+              this.form.controls.municipioOtro.enable();
+          }
           
           
     }  
 
     changeEstado(id){
-        if(id){
+        if(id!=null && typeof id !='undefined'){ 
             this.optionsServ.getMunicipiosByEstado(id);
-            this.form.controls.estado=id;
+            this.form.controls.estado.patchValue(id);
             console.log(this.form.controls)
             }
 
     }
 
     changeMunicipio(id){
-        if(id)
+        if(id!=null && typeof id !='undefined')
             this.optionsServ.getColoniasByMunicipio(id);
 
     }
