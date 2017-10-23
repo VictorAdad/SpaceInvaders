@@ -1,4 +1,6 @@
-import { Component, ViewChild , Output, EventEmitter } from '@angular/core';
+import { Caso } from './../../../../../models/personaCaso';
+import { DenunciaQuerella, VictimaQuerellante } from './../../../../../models/solicitud-preliminar/acuerdoGeneral';
+import { Component, ViewChild , Output,Input, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -10,6 +12,7 @@ import { SolicitudPreliminarGlobal } from '../../global';
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { SelectsService} from '@services/selects.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     templateUrl: './component.html',
@@ -18,6 +21,7 @@ export class AcuerdoGeneralCreateComponent {
     public casoId: number = null;
     public solicitudId: number = null;
     public breadcrumb = [];
+    tipo:string=null;
 
 
     constructor(private route: ActivatedRoute) { }
@@ -36,6 +40,10 @@ export class AcuerdoGeneralCreateComponent {
     this.solicitudId = event.id;
 	console.log(event.id);
   }
+  tipoUpdate(event: any) {
+    this.tipo = event;
+	console.log(event);
+  }
 }
 
 @Component({
@@ -46,7 +54,8 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
     public apiUrl = "/v1/base/solicitudes-pre-acuerdos";
     public casoId: number = null;
     public id: number = null;
-	@Output() idUpdate = new EventEmitter<any>();
+    @Output() idUpdate = new EventEmitter<any>();
+    @Output() tipoUpdate= new EventEmitter<any>();
     public form: FormGroup;
     public model: AcuerdoGeneral;
     public isAcuerdoGral: boolean = false;
@@ -75,13 +84,17 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
                 this.casoId = +params['casoId'];
             if (params['id']) {
                 this.id = +params['id'];
-				this.idUpdate.emit({id: this.id});
+			        	this.idUpdate.emit({id: this.id});
                 this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
+                    console.log(response)
+                    this.fillForm(response);
+
                     this.isAcuerdoGral = (this.form.controls.tipo.value==='Acuerdo General');
                     this.isJuridico = (this.form.controls.tipo.value==='Asignación de asesor jurídico');
                     this.isAtencion = (this.form.controls.tipo.value==='Ayuda y atención a víctimas');
+                    this.tipoUpdate.emit(response.tipo);
                     this.model = response as AcuerdoGeneral;
-                    this.fillForm(response);
+                    console.log(response)
                 });
             }
         });
@@ -127,7 +140,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
 				this.id=response.id;
                 if(this.casoId!=null){
                     this.router.navigate(['/caso/' + this.casoId + '/acuerdo-general/'+this.id+'/edit']);
-					console.log('-> registro guardado',response);               
+					console.log('-> registro guardado',response);
 			   }else{
 					console.log('-> registro guardado',response);
                     this.router.navigate(['/acuerdos'+this.id+'/edit' ]);
@@ -150,9 +163,41 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
         });
     }
 
-    public fillForm(_data) {
-        this.form.patchValue(_data);
-        console.log(_data);
+    public fillForm(model) {
+        this.form.patchValue(
+        {
+          'tipo':model.tipo,
+      });
+      let timer = Observable.timer(1);
+      timer.subscribe(t => {
+        this.form.patchValue(
+          {
+           'fundamentoLegal':model.fundamentoLegal,
+           'contenidoAcuerdo':model.contenidoAcuerdo,
+           'finalidad':model.finalidad,
+           'apercibimiento': model.apercibimiento,
+           'plazo': model.plazo,
+           'senialarSolicitud': model.senialarSolicitud,
+           'observaciones': model.observaciones,
+           'noOficioAtencion': model.noOficioAtencion,
+           'autoridadAtencion': model.autoridadAtencion,
+           'cargoAdscripcionAtencion': model.cargoAdscripcionAtencion,
+           'necesidades': model.necesidades,
+           'ubicacionAtencion': model.ubicacionAtencion,
+           'ubicacionJuridico': model.ubicacionJuridico,
+           'autoridadJuridico': model.autoridadJuridico,
+           'cargoAdscripcionJuridico':model.cargoAdscripcionJuridico,
+           'denunciaQuerella': model.denunciaQuerella?model.denunciaQuerella:new DenunciaQuerella(),
+           'victimaQuerellante': model.victimaQuerellante?model.victimaQuerellante:new VictimaQuerellante(),
+           'caso':model.caso?model.caso:new Caso()
+          }
+         );
+
+      });
+
+        console.log();
+
+
     }
 
     public tipoChange(_tipo): void{
@@ -177,6 +222,13 @@ export class DocumentoAcuerdoGeneralComponent {
         { id: 4, nombre: 'Entrevista1.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
         { id: 5, nombre: 'Fase1.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
     ];
+    @Input() tipo;string=null;
+    tipo_options={
+      'Acuerdo General':[{'label':'ACUERDO GENERAL','value':'F1-006'}],
+      'Asignación de asesor jurídico':[{'label':'SOLICITUD DE ASESOR JURIDICO','value':'F1-002'}],
+      'Ayuda y atención a víctimas':[{'label':'OFICIO PARA AYUDA Y ATENCIÓN A VÍCTIMA','value':'F1-001'}]
+    }
+
 
     dataSource: TableService | null;
     @ViewChild(MatPaginator) paginator: MatPaginator;
