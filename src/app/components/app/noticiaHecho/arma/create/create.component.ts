@@ -89,6 +89,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                 }
             }
         });
+        this.validateForm(this.form);
     }
 
     public save(valid : any, _model : any):void{

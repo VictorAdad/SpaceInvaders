@@ -125,6 +125,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                 
             }
         });
+        this.validateForm(this.form);
     }
 
     public change(option){

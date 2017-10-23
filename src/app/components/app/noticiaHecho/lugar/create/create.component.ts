@@ -117,6 +117,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 });
             });
         });
+        this.validateForm(this.form);
     }
 
     public createForm(): FormGroup{

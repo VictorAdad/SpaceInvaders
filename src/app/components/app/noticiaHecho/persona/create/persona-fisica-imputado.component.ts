@@ -116,6 +116,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 }
             }
         });
+        // this.validateForm(this.form);
     }
 
     public compare(a,b) {
