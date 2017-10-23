@@ -405,7 +405,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 this.buscaMediaFiliacion(_model).then(datos=>{
                     console.log("Model",datos);
                     obj.doSave(datos).then(r=>{
-                        resolve(true);
+                        resolve(r);
                     }).catch(e=>reject(e));
                 });
             });
@@ -472,7 +472,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 this.http.post('/v1/base/personas', _model).subscribe(
                     (response) => {
                         console.log(response);
-                        resolve(this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]));
+                        resolve("Se creo la persona con éxito");
+                        this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
                     },
                     (error) => {
                         console.error('Error', error);
@@ -513,7 +514,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                             this.tabla.update("casos",this.caso).then(
                                 ds=>{
                                     console.log("Se actualizo registro");
-                                    resolve(this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']));
+                                    resolve("Se creo la persona de manera local");
+                                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
 
                             });
                             console.log('-> Persona Guardada',p);
@@ -535,7 +537,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 this.http.put('/v1/base/personas/'+this.globals.personaCaso["id"], _model).subscribe(
                     (response) => {
                         console.log("Editar Persona->",response);
-                        resolve(this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]));
+                        resolve("Se actualizó la persona de manera local");
+                        this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
                     },
                     (error) => {
                         console.error('Error', error);
