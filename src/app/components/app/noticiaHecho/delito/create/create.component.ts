@@ -76,79 +76,81 @@ export class DelitoCreateComponent{
         }
 
     guardar(){
-        if (this.listaDelitos.length>0){
-            // if (!this.caso["delito"])
-            //     this.caso["delito"]=[];
-            // this.caso["delito"].push({delitos:this.listaDelitos, principal:false});
-            // console.log("-> caso", this.caso);
-            // this.tabla.update("casos", this.caso).then(
-            //     response=>{
-            //         console.log("Seactualizo", response);
-            //         this.listaDelitos=[];
-            //         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
-            //     });
 
-            this.guardaLista(0,this.listaDelitos);
-                
-            
-            
-            console.log("Se tiene que crear el servicio de delito", this.listaDelitos);
-
-            
-        }
-    }
-
-    guardaLista(i,lista:any[]){
-        if (i==lista.length){
-            this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
-            return;
-        }
-        let item=lista[i];
-        let data={
-            caso:{
-                id:this.casoId
-            },
-            delito:{
-                id:item["id"]
-            },
-            principal:false
-        }
-        if (this.onLine.onLine)
-            this.http.post('/v1/base/delitos-casos',data).subscribe(response => {
-                    console.log("->",response);
-                    this.guardaLista(i+1,this.listaDelitos);
-                },
-                error=>{
-                    this.guardaLista(i+1,this.listaDelitos);
-                });
-        else{
-            let temId=Date.now();
-            let dato={
-                url:'/v1/base/delitos-casos',
-                body:data,
-                options:[],
-                tipo:"post",
-                pendiente:true,
-                dependeDe:[this.casoId],
-                temId: temId
-            }
-            this.tabla.add("sincronizar",dato).then(p=>{
-                this.tabla.get("casos",this.casoId).then(caso=>{
-                    if (caso){
-                        if(!caso["delitosCaso"]){
-                            caso["delitosCaso"]=[];
-                            console.log("ITEM",item)
-                        }
-                        var dat={id:temId,delito:item, principal:false}
-                        caso["delitosCaso"].push(dat);
-                        this.tabla.update("casos",caso).then(t=>{
-                            this.guardaLista(i+1,this.listaDelitos);
-                        });
+        return new Promise((resolve,reject)=>{
+            if (this.listaDelitos.length>0){
+                // if (!this.caso["delito"])
+                //     this.caso["delito"]=[];
+                // this.caso["delito"].push({delitos:this.listaDelitos, principal:false});
+                // console.log("-> caso", this.caso);
+                // this.tabla.update("casos", this.caso).then(
+                //     response=>{
+                //         console.log("Seactualizo", response);
+                //         this.listaDelitos=[];
+                //         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
+                //     });
+                var listaErrores=[];
+                var obj=this;
+                var guardaLista=function(i,lista:any[], listaErrores:any[]){
+                    if (i==lista.length){
+                        if (listaErrores.length>0)
+                            reject(listaErrores);
+                        resolve("Se agregaron los delitos");
+                        obj.router.navigate(['/caso/'+obj.casoId+'/noticia-hecho']);
+                        return;
                     }
-                });
-            }); 
-        }
+                    let item=lista[i];
+                    let data={
+                        caso:{
+                            id:obj.casoId
+                        },
+                        delito:{
+                            id:item["id"]
+                        },
+                        principal:false
+                    }
+                    if (obj.onLine.onLine)
+                        obj.http.post('/v1/base/delitos-casos',data).subscribe(response => {
+                                console.log("->",response);
+                                guardaLista(i+1,obj.listaDelitos,listaErrores);
+                            },
+                            error=>{
+                                guardaLista(i+1,obj.listaDelitos,listaErrores);
+                                listaErrores.push(error);
+                            });
+                    else{
+                        let temId=Date.now();
+                        let dato={
+                            url:'/v1/base/delitos-casos',
+                            body:data,
+                            options:[],
+                            tipo:"post",
+                            pendiente:true,
+                            dependeDe:[obj.casoId],
+                            temId: temId
+                        }
+                        obj.tabla.add("sincronizar",dato).then(p=>{
+                            obj.tabla.get("casos",obj.casoId).then(caso=>{
+                                if (caso){
+                                    if(!caso["delitosCaso"]){
+                                        caso["delitosCaso"]=[];
+                                        console.log("ITEM",item)
+                                    }
+                                    var dat={id:temId,delito:item, principal:false}
+                                    caso["delitosCaso"].push(dat);
+                                    obj.tabla.update("casos",caso).then(t=>{
+                                        guardaLista(i+1,obj.listaDelitos, listaErrores);
+                                    });
+                                }
+                            });
+                        }); 
+                    }
 
+                }
+                guardaLista(0,this.listaDelitos,listaErrores);
+            }
+
+        });
     }
 
 }
