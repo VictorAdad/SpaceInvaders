@@ -17,7 +17,8 @@ export class SavingDirective{
 	    declineText: "Cancelar",
     };
 	
-	@Output('saveFn') saveFn: EventEmitter<any> = new EventEmitter();
+	@Input('saveFn')
+	saveFn: any;
 
     constructor(_el: ElementRef, public globalService : GlobalService, private _confirmation: ConfirmationService) {
     	this.el =  _el;
@@ -30,16 +31,27 @@ export class SavingDirective{
          	(ans: ResolveEmit) => {
          		if(ans.resolved){
 	 				this.prepareSave(true);
-					Observable.of(this.saveFn.emit()).subscribe(
+					this.saveFn().then(
 						response => {
 							this.prepareSave(false);
 							this.globalService.openSnackBar('Registro guardado con éxito');
 						},
-						error => console.error('Ocurrio un error al guardar D:')
+						error => console.error('Ocurrio un error al guardar D:', error)
 					);
 
 				}
          	}
+		);
+	}
+
+	savePromise(save: Promise<any>){
+		this.prepareSave(true);
+		save.then(
+			response => {
+				this.prepareSave(false);
+				this.globalService.openSnackBar('Registro guardado con éxito');
+			},
+			error => console.error('Ocurrio un error al guardar D:')
 		);
 	}
 

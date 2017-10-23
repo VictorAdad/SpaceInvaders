@@ -97,60 +97,63 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         this.validateForm(this.form);
     }
 
-    public save(valid : any, _model : any):void{
-        if(this.onLine.onLine){
-            console.log('Arma Serv', this.armaServ);
-            _model.caso.id             = this.casoId;
-            if(this.armaServ.claseArma.finded[0])
-                _model.claseArma.id        = this.armaServ.claseArma.finded[0].id
-            if(this.isArmaFuego){
-                if(this.armaServ.calibreMecanismo.finded[0])
-                    _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id
-            }
-            
-            this.http.post('/v1/base/armas', _model).subscribe(
-                (response) => {
-                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
-                },
-                (error) => {
-                    console.error('Error', error);
+    public save(_valid, _model){
+        // let _model = this.form.value;
+        return new Promise<any>((resolve, reject) => {
+            if(this.onLine.onLine){
+                console.log('Arma Serv', this.armaServ);
+                _model.caso.id             = this.casoId;
+                if(this.armaServ.claseArma.finded[0])
+                    _model.claseArma.id        = this.armaServ.claseArma.finded[0].id
+                if(this.isArmaFuego){
+                    if(this.armaServ.calibreMecanismo.finded[0])
+                        _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id
                 }
-            );
-        }else{
-            _model.caso.id             = this.casoId;
-            if(this.armaServ.claseArma.finded[0])
-                _model.claseArma.id        = this.armaServ.claseArma.finded[0].id
-            if(this.isArmaFuego){
-                if(this.armaServ.calibreMecanismo.finded[0])
-                    _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id
-            }
-            let temId=Date.now();
-            let dato={
-                url:'/v1/base/armas',
-                body:_model,
-                options:[],
-                tipo:"post",
-                pendiente:true,
-                dependeDe:[this.casoId],
-                temId: temId
-            }
-            this.db.add("sincronizar",dato).then(p=>{
-                this.db.get("casos",this.casoId).then(caso=>{
-                    if (caso){
-                        if(!caso["arma"]){
-                            caso["arma"]=[];
-                        }
-                        _model["id"]=temId;
-                        caso["arma"].push(_model);
-                        console.log("caso arma", caso["arma"]);
-                        this.db.update("casos",caso).then(t=>{
-                            console.log("caso arma", t["arma"]);
-                            this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
-                        });
+                
+                this.http.post('/v1/base/armas', _model).subscribe(
+                    (response) => {
+                        resolve(this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]));
+                    },
+                    (error) => {
+                        reject(error);
                     }
-                });
-            }); 
-        }
+                );
+            }else{
+                _model.caso.id             = this.casoId;
+                if(this.armaServ.claseArma.finded[0])
+                    _model.claseArma.id        = this.armaServ.claseArma.finded[0].id
+                if(this.isArmaFuego){
+                    if(this.armaServ.calibreMecanismo.finded[0])
+                        _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id
+                }
+                let temId=Date.now();
+                let dato={
+                    url:'/v1/base/armas',
+                    body:_model,
+                    options:[],
+                    tipo:"post",
+                    pendiente:true,
+                    dependeDe:[this.casoId],
+                    temId: temId
+                }
+                this.db.add("sincronizar",dato).then(p=>{
+                    this.db.get("casos",this.casoId).then(caso=>{
+                        if (caso){
+                            if(!caso["arma"]){
+                                caso["arma"]=[];
+                            }
+                            _model["id"]=temId;
+                            caso["arma"].push(_model);
+                            console.log("caso arma", caso["arma"]);
+                            this.db.update("casos",caso).then(t=>{
+                                console.log("caso arma", t["arma"]);
+                                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                            });
+                        }
+                    });
+                }); 
+            }
+        });
     }
 
     public edit(_valid : any, _model : any):void{
