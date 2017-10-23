@@ -364,46 +364,50 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
     }
 
-    save(valid : any, _model : any):void{
+    save(valid : any, _model : any){
+        return new Promise<any>((resolve, reject) => {
         
-        console.log('-> Form', this.form);
+            console.log('-> Form', this.form);
 
-        var buscar=[];
-        var obj=this;
+            var buscar=[];
+            var obj=this;
 
-        buscar.push({
-            catalogo:"nacionalidad_religion",
-            name:"nacionalidadReligion",
-            data:{
-                nacionalidad:this.form.controls.nacionalidad.value,
-                religion:this.form.controls.religion.value,
-            }
-        });
-
-        this.personaServ.nacionalidadReligion.find(this.form.controls.nacionalidad.value,"nacionalidad");
-        this.personaServ.nacionalidadReligion.find(this.form.controls.religion.value,"religion");
-        if (this.personaServ.nacionalidadReligion.finded[0])
-            _model["nacionalidadReligion"]={id:this.personaServ.nacionalidadReligion.finded[0].id};
-
-        buscar.push({
-            catalogo:"idioma_identificacion",
-            name:"idiomaIdentificacion",
-            data:{
-                hablaEspaniol:this.form.controls.hablaEspaniol.value,
-                lenguaIndigena:this.form.controls.lenguaIndigena.value,
-                familiaLinguistica:this.form.controls.familiaLinguistica.value
-            }
-        });
-        
-        this.searchCatalogos(buscar).then(e=>{
-            for(let key in e){
-                if (e[key]!=null){
-                    _model[key]={id:e[key].id};
+            buscar.push({
+                catalogo:"nacionalidad_religion",
+                name:"nacionalidadReligion",
+                data:{
+                    nacionalidad:this.form.controls.nacionalidad.value,
+                    religion:this.form.controls.religion.value,
                 }
-            }
-            this.buscaMediaFiliacion(_model).then(datos=>{
-                console.log("Model",datos);
-                obj.doSave(datos);
+            });
+
+            this.personaServ.nacionalidadReligion.find(this.form.controls.nacionalidad.value,"nacionalidad");
+            this.personaServ.nacionalidadReligion.find(this.form.controls.religion.value,"religion");
+            if (this.personaServ.nacionalidadReligion.finded[0])
+                _model["nacionalidadReligion"]={id:this.personaServ.nacionalidadReligion.finded[0].id};
+
+            buscar.push({
+                catalogo:"idioma_identificacion",
+                name:"idiomaIdentificacion",
+                data:{
+                    hablaEspaniol:this.form.controls.hablaEspaniol.value,
+                    lenguaIndigena:this.form.controls.lenguaIndigena.value,
+                    familiaLinguistica:this.form.controls.familiaLinguistica.value
+                }
+            });
+            
+            this.searchCatalogos(buscar).then(e=>{
+                for(let key in e){
+                    if (e[key]!=null){
+                        _model[key]={id:e[key].id};
+                    }
+                }
+                this.buscaMediaFiliacion(_model).then(datos=>{
+                    console.log("Model",datos);
+                    obj.doSave(datos).then(r=>{
+                        resolve(true);
+                    }).catch(e=>reject(e));
+                });
             });
         });
         
@@ -461,163 +465,174 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     doSave(_model:any){
-        if(this.onLine.onLine){
-            _model.personaCaso[0].caso.id = this.casoId;
-            console.log('Model', _model);
-            this.http.post('/v1/base/personas', _model).subscribe(
-                (response) => {
-                    console.log(response);
-                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
-                },
-                (error) => console.error('Error', error)
-            );
+        return new Promise((resolve,reject)=>{
+            if(this.onLine.onLine){
+                _model.personaCaso[0].caso.id = this.casoId;
+                console.log('Model', _model);
+                this.http.post('/v1/base/personas', _model).subscribe(
+                    (response) => {
+                        console.log(response);
+                        resolve(this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]));
+                    },
+                    (error) => {
+                        console.error('Error', error);
+                        reject(error);
+                    }
+                );
 
-        }else{
-            _model.personaCaso[0].caso.id = this.casoId;
-            let temId=Date.now();
-            var otrosID=[];
-            var dependeDe=this.agregaIdTemporales(_model,temId,otrosID);
-            console.log(dependeDe, otrosID);
-            
-            let dato={
-                url:'/v1/base/personas',
-                body:_model,
-                options:[],
-                tipo:"post",
-                pendiente:true,
-                dependeDe:dependeDe,
-                temId: temId,
-                otrosID: otrosID
-            }
-            console.log("SI");
-            this.tabla.add("sincronizar",dato).then(response=>{
-                this.tabla.get("casos",this.casoId).then(
-                        casoR=>{
-                    this.caso=casoR as Caso;
-       
-                    console.log("SI");
-                    _model["dependeDe"]=dependeDe;
-                    this.tabla.add('personas', _model).then( p => {
+            }else{
+                _model.personaCaso[0].caso.id = this.casoId;
+                let temId=Date.now();
+                var otrosID=[];
+                var dependeDe=this.agregaIdTemporales(_model,temId,otrosID);
+                console.log(dependeDe, otrosID);
+                
+                let dato={
+                    url:'/v1/base/personas',
+                    body:_model,
+                    options:[],
+                    tipo:"post",
+                    pendiente:true,
+                    dependeDe:dependeDe,
+                    temId: temId,
+                    otrosID: otrosID
+                }
+                console.log("SI");
+                this.tabla.add("sincronizar",dato).then(response=>{
+                    this.tabla.get("casos",this.casoId).then(
+                            casoR=>{
+                        this.caso=casoR as Caso;
+           
                         console.log("SI");
-                        if (!this.caso["personas"])
-                            this.caso["personas"]=[];
-                        this.caso["personas"].push({id:p["id"]});
-                        this.tabla.update("casos",this.caso).then(
-                            ds=>{
-                                console.log("Se actualizo registro");
-                                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
+                        _model["dependeDe"]=dependeDe;
+                        this.tabla.add('personas', _model).then( p => {
+                            console.log("SI");
+                            if (!this.caso["personas"])
+                                this.caso["personas"]=[];
+                            this.caso["personas"].push({id:p["id"]});
+                            this.tabla.update("casos",this.caso).then(
+                                ds=>{
+                                    console.log("Se actualizo registro");
+                                    resolve(this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']));
 
+                            });
+                            console.log('-> Persona Guardada',p);
+                            
                         });
-                        console.log('-> Persona Guardada',p);
-                        
-                    });
 
+                    });
                 });
-            });
-        }
+            }
+        });
     }
 
     doEdit(_model){
-        if(this.onLine.onLine&&this.globals.inicioOnline){
-            _model.personaCaso[0].caso.id = this.casoId;
-            (_model.personaCaso[0])["id"]=this.id;
-            console.log('Model', _model);
-            this.http.put('/v1/base/personas/'+this.globals.personaCaso["id"], _model).subscribe(
-                (response) => {
-                    console.log("Editar Persona->",response);
-                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
-                },
-                (error) => {
-                    console.error('Error', error)
-                    console.log(this);
+        return new Promise((resolve,reject)=>{
+            if(this.onLine.onLine&&this.globals.inicioOnline){
+                _model.personaCaso[0].caso.id = this.casoId;
+                (_model.personaCaso[0])["id"]=this.id;
+                console.log('Model', _model);
+                this.http.put('/v1/base/personas/'+this.globals.personaCaso["id"], _model).subscribe(
+                    (response) => {
+                        console.log("Editar Persona->",response);
+                        resolve(this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]));
+                    },
+                    (error) => {
+                        console.error('Error', error);
+                        reject(error);
+                    }
+                );
+
+            }else{
+                _model.personaCaso[0].caso.id = this.casoId;
+                (_model.personaCaso[0])["id"]=this.id;
+                (_model.personaCaso[0])["personaId"]=_model["id"];
+                _model["id"]=this.id;
+                console.log("->PERSONA",this.globals.personaCaso);
+                let dato={
+                    url:'/v1/base/personas/'+this.globals.personaCaso["id"] ,
+                    body:_model,
+                    options:[],
+                    tipo:"post",
+                    pendiente:true,
+                    dependeDe:(this.globals.personaCaso)["dependeDe"],
                 }
-            );
+                this.tabla.add("sincronizar",dato).then(response=>{
+                    this.tabla.get("casos",this.casoId).then(
+                            casoR=>{
+                        this.caso=casoR as Caso;
+                        _model["persona"]={nombre:_model["nombre"]};
+                        _model["alias"]=_model.aliasNombrePersona.nombre;
+                        if (!_model["razonSocial"])
+                            _model["razonSocial"]="";        
+                        this.tabla.update('personas', _model).then( p => {
+                            console.log("SI se guardo persona",p);
+                            if (!this.caso["personas"])
+                                this.caso["personas"]=[];
+                            this.caso["personas"].push({id:p["id"]});
+                            this.tabla.update("casos",this.caso).then(
+                                ds=>{
+                                    console.log("Editar Persona->",ds);
+                                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
 
-        }else{
-            _model.personaCaso[0].caso.id = this.casoId;
-            (_model.personaCaso[0])["id"]=this.id;
-            (_model.personaCaso[0])["personaId"]=_model["id"];
-            _model["id"]=this.id;
-            console.log("->PERSONA",this.globals.personaCaso);
-            let dato={
-                url:'/v1/base/personas/'+this.globals.personaCaso["id"] ,
-                body:_model,
-                options:[],
-                tipo:"post",
-                pendiente:true,
-                dependeDe:(this.globals.personaCaso)["dependeDe"],
-            }
-            this.tabla.add("sincronizar",dato).then(response=>{
-                this.tabla.get("casos",this.casoId).then(
-                        casoR=>{
-                    this.caso=casoR as Caso;
-                    _model["persona"]={nombre:_model["nombre"]};
-                    _model["alias"]=_model.aliasNombrePersona.nombre;
-                    if (!_model["razonSocial"])
-                        _model["razonSocial"]="";        
-                    this.tabla.update('personas', _model).then( p => {
-                        console.log("SI se guardo persona",p);
-                        if (!this.caso["personas"])
-                            this.caso["personas"]=[];
-                        this.caso["personas"].push({id:p["id"]});
-                        this.tabla.update("casos",this.caso).then(
-                            ds=>{
-                                console.log("Editar Persona->",ds);
-                                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
-
+                            });
+                            
                         });
-                        
-                    });
 
+                    });
                 });
-            });
-        }
+            }
+        });
     }
 
-    edit(valid : any, _model : any):void{
+    edit(valid : any, _model : any){
+        return new Promise((resolve,reject)=>{
+            console.log("Modelo a guardar:",_model);
 
-        console.log("Modelo a guardar:",_model);
+            var buscar=[];
+            var obj=this;
 
-        var buscar=[];
-        var obj=this;
-
-        buscar.push({
-            catalogo:"nacionalidad_religion",
-            name:"nacionalidadReligion",
-            data:{
-                nacionalidad:this.form.controls.nacionalidad.value,
-                religion:this.form.controls.religion.value,
-            }
-        });
-
-        this.personaServ.nacionalidadReligion.find(this.form.controls.nacionalidad.value,"nacionalidad");
-        this.personaServ.nacionalidadReligion.find(this.form.controls.religion.value,"religion");
-        if (this.personaServ.nacionalidadReligion.finded[0])
-            _model["nacionalidadReligion"]={id:this.personaServ.nacionalidadReligion.finded[0].id};
-
-        buscar.push({
-            catalogo:"idioma_identificacion",
-            name:"idiomaIdentificacion",
-            data:{
-                hablaEspaniol:this.form.controls.hablaEspaniol.value,
-                lenguaIndigena:this.form.controls.lenguaIndigena.value,
-                familiaLinguistica:this.form.controls.familiaLinguistica.value
-            }
-        });
-        this.searchCatalogos(buscar).then(e=>{
-            for(let key in e){
-                if (e[key]!=null){
-                    _model[key]={id:e[key].id};
+            buscar.push({
+                catalogo:"nacionalidad_religion",
+                name:"nacionalidadReligion",
+                data:{
+                    nacionalidad:this.form.controls.nacionalidad.value,
+                    religion:this.form.controls.religion.value,
                 }
-            }
-            this.buscaMediaFiliacion(_model).then(datos=>{
-                if (this.globals.tipoInterviniente=="5"){
-                    if((datos["mediaFiliacion"])["id"])
-                        (datos["mediaFiliacion"])["id"]=this.globals.personaCaso["mediaFiliacion"].id;
-                }else{
-                    delete datos["mediaFiliacion"];
+            });
+
+            this.personaServ.nacionalidadReligion.find(this.form.controls.nacionalidad.value,"nacionalidad");
+            this.personaServ.nacionalidadReligion.find(this.form.controls.religion.value,"religion");
+            if (this.personaServ.nacionalidadReligion.finded[0])
+                _model["nacionalidadReligion"]={id:this.personaServ.nacionalidadReligion.finded[0].id};
+
+            buscar.push({
+                catalogo:"idioma_identificacion",
+                name:"idiomaIdentificacion",
+                data:{
+                    hablaEspaniol:this.form.controls.hablaEspaniol.value,
+                    lenguaIndigena:this.form.controls.lenguaIndigena.value,
+                    familiaLinguistica:this.form.controls.familiaLinguistica.value
                 }
-                this.doEdit(datos);
+            });
+            this.searchCatalogos(buscar).then(e=>{
+                for(let key in e){
+                    if (e[key]!=null){
+                        _model[key]={id:e[key].id};
+                    }
+                }
+                this.buscaMediaFiliacion(_model).then(datos=>{
+                    if (this.globals.tipoInterviniente=="5"){
+                        if((datos["mediaFiliacion"])["id"])
+                            (datos["mediaFiliacion"])["id"]=this.globals.personaCaso["mediaFiliacion"].id;
+                    }else{
+                        delete datos["mediaFiliacion"];
+                    }
+                    this.doEdit(datos).then(
+                        r=>{
+                            resolve(true);
+                        }).catch(e=>{reject(e)});
+                });
             });
         });
     }
@@ -1013,7 +1028,7 @@ class LosForm{
         return new FormGroup({
             'id': new FormControl("",[]),
             'tipoPersona'      : new FormControl("", [Validators.required,]),
-            'nombre'           : new FormControl("", [Validators.required,]),
+            'nombre'           : new FormControl("", []),
             'paterno'          : new FormControl("", [Validators.required,]),
             'materno'          : new FormControl("", [Validators.required,]),
             'razonSocial'      : new FormControl("", [Validators.required,Validators.minLength(4)]),
