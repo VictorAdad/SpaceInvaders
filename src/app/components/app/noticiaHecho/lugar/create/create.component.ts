@@ -160,90 +160,103 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         });
     }
 
-    public save(_valid : any, _model : any):void{
-        _model.caso.id      = this.casoId;
-        _model.latitud      = this.latMarker;
-        _model.longitud     = this.lngMarker;
-        _model.fecha        = moment(_model.fecha).format('YYYY-MM-DD');
-        if(this.lugarServ.finded.length > 0){
-            _model.detalleLugar.id = this.lugarServ.finded[0].id;
-        }
-        
-        if(this.onLine.onLine){
-            console.log("MODELO",_model);
-            this.http.post('/v1/base/lugares', _model).subscribe(
-                (response) => {
-                    console.log('-> registro guardado', response);
-                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
-                },
-                (error) => {
-                    console.error('Error', error);
-                }
-            );
-        }else{
-            let temId=Date.now();
-            let dato={
-                url:'/v1/base/lugares',
-                body:_model,
-                options:[],
-                tipo:"post",
-                pendiente:true,
-                dependeDe:[this.casoId],
-                temId: temId
+    public save(_valid : any, _model : any){
+        return new Promise<any>((resolve, reject)=>{
+            _model.caso.id      = this.casoId;
+            _model.latitud      = this.latMarker;
+            _model.longitud     = this.lngMarker;
+            _model.fecha        = moment(_model.fecha).format('YYYY-MM-DD');
+            if(this.lugarServ.finded.length > 0){
+                _model.detalleLugar.id = this.lugarServ.finded[0].id;
             }
-            this.db.add("sincronizar",dato).then(p=>{
-                this.db.get("casos",this.casoId).then(caso=>{
-                    if (caso){
-                        if(!caso["lugar"]){
-                            caso["lugar"]=[];
-                        }
-                        _model["id"]=temId;
-                        _model.detalleLugar["dia"]=_model["dia"];
-                        _model.detalleLugar["tipoLugar"]=_model["tipo"];
-                        _model.detalleLugar["tipoZona"]=_model["tipoZona"];
-                        
-                        caso["lugar"].push(_model);
-                        this.db.update("casos",caso).then(t=>{
-                            this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
-                        });
+            
+            if(this.onLine.onLine){
+                console.log("MODELO",_model);
+                this.http.post('/v1/base/lugares', _model).subscribe(
+                    (response) => {
+                        console.log('-> registro guardado', response);
+                        resolve("Se creo un nuevo lugar con éxito");
+                        this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                    },
+                    (error) => {
+                        console.error('Error', error);
+                        reject(error);
                     }
-                });
-            }); 
-        }
+                );
+            }else{
+                let temId=Date.now();
+                let dato={
+                    url:'/v1/base/lugares',
+                    body:_model,
+                    options:[],
+                    tipo:"post",
+                    pendiente:true,
+                    dependeDe:[this.casoId],
+                    temId: temId
+                }
+                this.db.add("sincronizar",dato).then(p=>{
+                    this.db.get("casos",this.casoId).then(caso=>{
+                        if (caso){
+                            if(!caso["lugar"]){
+                                caso["lugar"]=[];
+                            }
+                            _model["id"]=temId;
+                            _model.detalleLugar["dia"]=_model["dia"];
+                            _model.detalleLugar["tipoLugar"]=_model["tipo"];
+                            _model.detalleLugar["tipoZona"]=_model["tipoZona"];
+                            
+                            caso["lugar"].push(_model);
+                            this.db.update("casos",caso).then(t=>{
+                                resolve("Se creo un nuevo lugar con éxito");
+                                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                            });
+                        }
+                    });
+                }); 
+            }
+        });
     }
 
-    public edit(_valid : any, _model : any):void{
-        console.log('-> Lugar@edit()', _model);
-        Object.assign(this.model, _model);
-        this.model.fecha = moment(this.model.fecha).format('YYYY-MM-DD');
-        this.model.latitud      = this.latMarker;
-        this.model.longitud     = this.lngMarker;
-        if(this.onLine.onLine){
-            this.http.put('/v1/base/lugares/'+this.id, _model).subscribe((response) => {
-                console.log('-> Registro acutualizado', response);
-            });
-        }else{
-            let dato={
-                url:'/v1/base/lugares/'+this.id,
-                body:_model,
-                options:[],
-                tipo:"update",
-                pendiente:true,
-                dependeDe:[this.casoId, this.id]
-            }
-            this.db.add("sincronizar",dato).then(p=>{
-                this.db.get("casos",this.casoId).then(t=>{
-                    let lugares=t["lugar"] as any[];
-                    for (var i = 0; i < lugares.length; ++i) {
-                        if ((lugares[i])["id"]==this.id){
-                            lugares[i]=_model;
-                            break;
-                        }
-                    }
-                    console.log("caso",t);
+    public edit(_valid : any, _model : any){
+        return new Promise<any>((resolve, reject)=>{
+            console.log('-> Lugar@edit()', _model);
+            Object.assign(this.model, _model);
+            this.model.fecha = moment(this.model.fecha).format('YYYY-MM-DD');
+            this.model.latitud      = this.latMarker;
+            this.model.longitud     = this.lngMarker;
+            if(this.onLine.onLine){
+                this.http.put('/v1/base/lugares/'+this.id, _model).subscribe((response) => {
+                    console.log('-> Registro acutualizado', response);
+                    resolve("Se actualizo el lugar");
+                },e=>{
+                    reject(e);
                 });
-            }); 
-        }
+            }else{
+                let dato={
+                    url:'/v1/base/lugares/'+this.id,
+                    body:_model,
+                    options:[],
+                    tipo:"update",
+                    pendiente:true,
+                    dependeDe:[this.casoId, this.id]
+                }
+                this.db.add("sincronizar",dato).then(p=>{
+                    this.db.get("casos",this.casoId).then(t=>{
+                        let lugares=t["lugar"] as any[];
+                        for (var i = 0; i < lugares.length; ++i) {
+                            if ((lugares[i])["id"]==this.id){
+                                lugares[i]=_model;
+                                break;
+                            }
+                        }
+                        this.db.update("casos",t).then(t=>{
+                            resolve("Se actualizo el lugar de manera local");
+                        });
+                        console.log("caso",t);
+                    });
+                }); 
+            }
+        });
     }
 
     public fillForm(_data){
