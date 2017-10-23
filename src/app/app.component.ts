@@ -6,6 +6,8 @@ import { GlobalService } from '@services/global.service';
 
 import { OnLineService } from "@services/onLine.service";
 import { SelectsService } from "@services/selects.service";
+import {DomSanitizer} from '@angular/platform-browser';
+import {MdIconRegistry} from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -24,8 +26,11 @@ export class AppComponent {
     	public globalService : GlobalService,
     	private servicio: OnLineService,
     	private activeRoute: ActivatedRoute,
+        private mdIconRegistry: MdIconRegistry, 
+        private sanitizer: DomSanitizer,
         private selects: SelectsService
 	) {
+        mdIconRegistry.addSvgIcon('arma',sanitizer.bypassSecurityTrustResourceUrl('./assets/images/iconos/arma.svg'));
         this._SIDEBAR = false;
         this.selects.getData();
     }

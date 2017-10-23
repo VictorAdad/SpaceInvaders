@@ -8,7 +8,7 @@
         </mat-panel-description>
     </mat-expansion-panel-header>
     <div formArrayName="localizacionPersona">
-        <div *ngFor="let localizacion of globals.form.controls.localizacionPersona.controls; let i=index; trackBy:trackByIndex" [formGroupName]="i">
+        <div *ngFor="let localizacion of (globals.form.controls.localizacionPersona)['controls']; let i=index; trackBy:trackByIndex" [formGroupName]="i">
             <div class="row" >
                 <div class="col-md-3">
                     <select2 [options]="options.paises"

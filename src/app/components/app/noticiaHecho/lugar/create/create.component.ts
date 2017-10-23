@@ -49,8 +49,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         private db:CIndexedDB,
         private mapsAPILoader: MapsAPILoader,
         private ngZone: NgZone,
-        private optionsServ: SelectsService,
-        private lugarServ: LugarService
+        public optionsServ: SelectsService,
+        public lugarServ: LugarService
         ) {
         super();
         lugarServ.getData();

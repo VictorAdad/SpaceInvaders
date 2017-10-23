@@ -33,7 +33,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         private http: HttpService,
         private router: Router,
         private db:CIndexedDB,
-        private armaServ: ArmaService
+        public armaServ: ArmaService
         ) {
         super();
         console.log(this.armaServ);

@@ -26,14 +26,14 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
 
 
     constructor(
-        private optionsServ: SelectsService,
+        public optionsServ: SelectsService,
         private _fbuilder: FormBuilder,
         private route: ActivatedRoute,
         private onLine: OnLineService,
         private http: HttpService,
         private router: Router,
         private db:CIndexedDB,
-        private vehiculoServ: VehiculoService
+        public vehiculoServ: VehiculoService
         ) {
         super();
         console.log('vehiculoserv', this.vehiculoServ);

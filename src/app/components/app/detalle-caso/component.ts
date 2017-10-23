@@ -30,7 +30,7 @@ export class DetalleCasoComponent implements OnInit{
 		_route: ActivatedRoute,
 		private _onLine: OnLineService,
 		private _http: HttpService,
-		private auth: AuthenticationService
+		public auth: AuthenticationService
 		){
 		this.route = _route;
 		this.onLine = _onLine;

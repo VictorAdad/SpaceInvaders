@@ -40,7 +40,7 @@
 				    	<text label="Fiscalía a la que pertenece" name="fiscalia" [(value)]="model.fiscalia" [group]="form"></text>  
 				    </div>
 				    <div class="col-md-4 col-sm-12 col-lg-4">
-				    	<select2 placeholder= "Agencia de adscripción" name="agenciaAdscripcion"  [(value)]="model.agenciaAdscipcion" [(options)] ="sexos"  [group]="form"></select2> 
+				    	<select2 placeholder= "Agencia de adscripción" name="agenciaAdscripcion"  [(value)]="model.agenciaAdscripcion" [(options)] ="sexos"  [group]="form"></select2> 
 				    </div>
 			    </div>	
 			    <div class="row">
@@ -61,8 +61,7 @@
 
 				    <div class="col-md-2 col-sm-6 col-lg-2 m-2">
 				       <label>Permisos a otorgar </label>
-				        <radiobutton label="Permisos a otorgar"[(value)]="permiso" [radios]="permisos" name="permiso"  [group]="form" >Permisos a otorgar </radiobutton>
-		  
+				        <radiobutton label="Permisos a otorgar" [(value)]="permiso" [radios]="permisos" name="permiso"  [group]="form"> Permisos a otorgar </radiobutton>
 				    </div>
 				    <div class="col-md-2 col-sm-6 col-lg-2">
 		                 <checkbox label="Inhabilitado" [(value)]="inhabilitado" ></checkbox>
@@ -72,7 +71,6 @@
 					<div class="col-md-2 col-sm-6 col-lg-2 m-2">
 				       <label>Acciones sobre las carpetas </label>
 				        <radiobutton label="Permisos a otorgar"[(value)]="permiso" [radios]="accionesCarpeta" name="accionesCarpetas"  [group]="form" ></radiobutton>
-		  
 				    </div>
 				</div>
 			  	<button class="float-right" mat-button>Cancelar</button>	

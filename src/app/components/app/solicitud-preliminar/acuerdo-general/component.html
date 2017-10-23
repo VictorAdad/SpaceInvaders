@@ -17,8 +17,8 @@
         <search></search>
     </div>
     <div class="col-md-auto">
-        <button mat-raised-button *ngIf="hasCaso" color="accent" routerLink="/caso/{{casoId}}/acuerdo-general/create">Agregar solicitud</button>
-        <button mat-raised-button *ngIf="!hasCaso" color="accent" routerLink="create">Agregar solicitud</button>
+        <button mat-raised-button *ngIf="haveCaso" color="accent" routerLink="/caso/{{casoId}}/acuerdo-general/create">Agregar solicitud</button>
+        <button mat-raised-button *ngIf="!haveCaso" color="accent" routerLink="create">Agregar solicitud</button>
     </div>
 </div>
 <mat-paginator #paginator 

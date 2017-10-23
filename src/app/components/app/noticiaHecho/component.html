@@ -9,8 +9,8 @@
         <h2>Noticia de Hechos</h2>
     </div>
     <div class="col-md-6">
-        <button class="float-right" *ngIf="id == null; else idNull" mat-raised-button routerLink="/" color="accent">Regresar</button>
-        <button class="float-right"  *ngIf="id != null" id="idNull" mat-raised-button routerLink="{{returnRoute}}" color="accent">Regresar</button>
+        <button class="float-right" *ngIf="id == null"  mat-raised-button routerLink="/" color="accent">Regresar</button>
+        <button class="float-right"  *ngIf="id != null" mat-raised-button routerLink="{{returnRoute}}" color="accent">Regresar</button>
     </div>
 </div>
 <div class="mdl-tabs vertical-mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
@@ -35,7 +35,7 @@
                         <label class="d-xs-none d-sm-none d-md-inline">Lugares</label>
                     </a>
                     <a href="#tab5-panel" class="mdl-tabs__tab">
-                        <mat-icon>room</mat-icon>
+                        <mat-icon svgIcon="arma"></mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Armas</label>
                     </a>
                     <a href="#tab6-panel" class="mdl-tabs__tab">

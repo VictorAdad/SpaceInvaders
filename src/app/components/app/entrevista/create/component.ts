@@ -51,7 +51,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 		private http: HttpService,
 		private router: Router,
 		private db: CIndexedDB,
-		private options: SelectsService
+		public options: SelectsService
 	) { super(); }
 
 	ngOnInit() {

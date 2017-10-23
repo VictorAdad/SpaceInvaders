@@ -14,6 +14,8 @@ import { ResolveEmit,ConfirmSettings} from '@utils/alert/alert.service';
 export class UsuarioCreateComponent{
 
     public form  : FormGroup;
+    public permiso : '';
+    public inhabilitado : '';
     public model : Usuario;
     public titulo: string;
     public sub: any;

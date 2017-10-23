@@ -52,8 +52,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         private route: ActivatedRoute,
         private onLine: OnLineService,
         private http: HttpService,
-        private options: SelectsService,
-        private personaServ: PersonaService
+        public options: SelectsService,
+        public personaServ: PersonaService
         ) {
         super();
         this.tabla = _tabla;
@@ -70,6 +70,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     ngOnInit(){
         this.persona= new Persona();
         this.form  = LosForm.createForm();
+        console.log('holaaaaa', this.form);
         this.globals = new PersonaGlobals(this.form,this.persona);
         this.globals.form.controls.razonSocial.disable();
         this.globals.formLocalizacion = LosForm.createFormLocalizacion();
@@ -664,7 +665,7 @@ export class IdentidadComponent{
     options: SelectsService;
     isMexico:boolean=false;
 
-    constructor(private personaServ: PersonaService){
+    constructor(public personaServ: PersonaService){
         
     }
 
@@ -731,12 +732,16 @@ export class IdentificacionComponent{
     @Input()
     nombres: number = 0;
 
-    constructor(private personaServ: PersonaService){
+    constructor(public personaServ: PersonaService){
 
     }
 
     ngOnInit(){
         
+    }
+
+    trackByIndex(index, item){
+        return index;
     }
 
     public addOtroNombre(_tipo: string){
@@ -777,7 +782,7 @@ export class LocalizacionComponent{
     localizaciones: string[] = [];
     public localizacionIndex: number = 0;
 
-    constructor(private personaServ: PersonaService){
+    constructor(public personaServ: PersonaService){
         this.localizaciones.unshift(null);
     }
 
@@ -792,6 +797,10 @@ export class LocalizacionComponent{
             }
         } 
        }
+    }
+
+    trackByIndex(index, item){
+        return index;
     }
 
     changeEstado(id){
@@ -832,7 +841,7 @@ export class MediaFilacionComponent{
     options: any[];
     
 
-    constructor(private personaServ: PersonaService){
+    constructor(public personaServ: PersonaService){
         
     }
 }
