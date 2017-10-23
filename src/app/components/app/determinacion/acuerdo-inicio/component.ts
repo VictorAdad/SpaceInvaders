@@ -31,7 +31,7 @@ export class AcuerdoInicioComponent {
     }
   idUpdate(event: any) {
     this.acuerdoId = event.id;
-	console.log(event.id);
+	  console.log(this.acuerdoId);
   }
 
 }
@@ -77,16 +77,18 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
         this.route.params.subscribe(params => {
             if (params['casoId'])
                 this.casoId = +params['casoId'];
-                this.apiUrl=this.apiUrl.replace("{id}",String(this.casoId));                
+                this.apiUrl=this.apiUrl.replace("{id}",String(this.casoId));
                  this.http.get(this.apiUrl).subscribe(response => {
                 if(response.totalCount!=0){
-					this.hasAcuerdoInicio = true;
+				          	this.hasAcuerdoInicio = true;
                     this.form.disable();
                     this.fillForm(response.data[0]);
-				}
+                    this.idUpdate.emit({id: (response.data[0]).id});
+
+			         	}
                 if(params['id']){
-					this.id=params['id'];
-				    this.idUpdate.emit({id: this.id});
+					      this.id=params['id'];
+				        this.idUpdate.emit({id: this.id});
                     this.hasAcuerdoInicio = true;
                     this.form.disable();
                     this.fillForm(response.data[0]);
