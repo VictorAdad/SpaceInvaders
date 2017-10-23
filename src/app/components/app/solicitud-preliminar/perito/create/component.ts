@@ -1,4 +1,4 @@
-import { Component, ViewChild, Output, EventEmitter  } from '@angular/core';
+import { Component, ViewChild, Output,Input, EventEmitter  } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Perito } from '@models/solicitud-preliminar/perito';
@@ -18,8 +18,9 @@ import { Observable } from 'rxjs/Observable';
 export class PeritoCreateComponent {
 
 	public casoId: number = null;
-    public solicitudId: number = null;
-	public breadcrumb = [];
+  public solicitudId: number = null;
+  public breadcrumb = [];
+	isPericiales: boolean = false;
 	constructor(private route: ActivatedRoute) { }
 
 	ngOnInit() {
@@ -34,6 +35,10 @@ export class PeritoCreateComponent {
     this.solicitudId = event.id;
 	console.log(event.id);
   }
+  pericialesUpdate(event: any) {
+    this.isPericiales = event;
+	console.log(event);
+  }
 
 }
 
@@ -46,7 +51,8 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	public apiUrl: string = "/v1/base/solicitudes-pre-pericial";
 	public casoId: number = null;
 	public id: number = null;
-	@Output() idUpdate = new EventEmitter<any>();
+  @Output() idUpdate = new EventEmitter<any>();
+  @Output() isPericialesUpdate= new EventEmitter<any>();
 	public form: FormGroup;
 	public model: Perito;
 	isPericiales: boolean = false;
@@ -79,12 +85,12 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 				this.idUpdate.emit({id: this.id});
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
+          this.fillForm(response);
 					this.isPericiales = this.form.controls.tipo.value === 'Periciales';
 					this.isPsicofisico = this.form.controls.tipo.value === 'Psicofísico';
+          this.isPericialesUpdate.emit(this.isPericiales);
 
-
-					this.fillForm(response);
-				});
+        });
 			}
 		});
 	}
@@ -169,7 +175,8 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 })
 export class DocumentoPeritoComponent {
 
-	columns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  columns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  @Input() isPericiales:boolean=false;
 	data: DocumentoPerito[] = [
 		{ id: 1, nombre: 'Entrevista.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
 		{ id: 2, nombre: 'Nota.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
@@ -183,7 +190,7 @@ export class DocumentoPeritoComponent {
 
 	ngOnInit() {
 		this.dataSource = new TableService(this.paginator, this.data);
-	}
+  }
 }
 
 export interface DocumentoPerito {
