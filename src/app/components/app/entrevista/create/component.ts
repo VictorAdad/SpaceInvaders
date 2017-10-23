@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild , Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Entrevista } from '@models/entrevista/entrevista';
@@ -17,6 +17,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 export class EntrevistaCreateComponent {
 	public casoId: number = null;
 	public breadcrumb = [];
+    public entrevistaId: number = null;
+
 	constructor(private route: ActivatedRoute) { }
 
 	ngOnInit() {
@@ -28,6 +30,10 @@ export class EntrevistaCreateComponent {
 
 		});
 	}
+  idUpdate(event: any) {
+    this.entrevistaId = event.id;
+	console.log(event.id);
+  }
 
 }
 
@@ -39,6 +45,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 	public apiUrl: string = "/v1/base/entrevistas";
 	public casoId: number = null;
 	public id: number = null;
+	@Output() idUpdate = new EventEmitter<any>();
 	public form: FormGroup;
 	public model: Entrevista;
 	dataSource: TableService | null;
@@ -108,6 +115,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 			console.log('casoId', this.casoId);
 			if (params['id']) {
 				this.id = +params['id'];
+				this.idUpdate.emit({id: this.id});
 				this.form.disable();
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
@@ -177,10 +185,10 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 			this.http.post(this.apiUrl, _model).subscribe(
 
 				(response) => {
-					console.log(response);
-					console.log('here')
-					if (this.casoId) {
-						this.router.navigate(['/caso/' + this.casoId + '/entrevista']);
+					this.id=response.id;
+					if (this.casoId!=null) {
+					    console.log(response);
+						this.router.navigate(['/caso/' + this.casoId + '/entrevista/'+this.id+'/view']);
 					}
 				},
 				(error) => {

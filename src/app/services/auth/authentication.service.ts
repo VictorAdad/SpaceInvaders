@@ -23,16 +23,27 @@ import 'rxjs/add/operator/map'
 export class AuthenticationService {
     public token: string;
     public isLoggedin: boolean;
+    public user: Usuario;
+    public roles: any;
 
     constructor(private http: Http) {
         // set token if saved in local storage
-        var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        this.token = currentUser && currentUser.token;
-        if (localStorage.getItem("currentUser") == null) {
+        let usuario = JSON.parse(localStorage.getItem('user'))
+        if (localStorage.getItem("user") == null) {
             this.isLoggedin = false;
         }
         else {
-             this.isLoggedin = true;
+            this.user   = new Usuario(usuario.nombreCompleto, usuario.username, usuario.roles);
+            this.token  = this.user && this.user.token;
+            this.isLoggedin = true;
+        }
+
+        this.roles = {
+            'callCenter': 'callCenter',
+            'uai': 'uai',
+            'express': 'express',
+            'mpuai': 'mpuai',
+            'mpi': 'mpi',
         }
     }
 
@@ -51,8 +62,12 @@ export class AuthenticationService {
                     // se guarda el nombre del usuario logueado en el Localstorage(donde???)
                     // para preservalo incluso cuando la pagina se refresca
                     // localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
-                    localStorage.setItem('currentUser', JSON.stringify({ username: username}));
-                    this.isLoggedin = true;
+                    let usuario = _usuarios[username];
+                    if(usuario != null){
+                        this.user  = new Usuario(usuario.nombreCompleto, usuario.username, usuario.roles);
+                        localStorage.setItem('user', JSON.stringify(this.user));
+                        this.isLoggedin = true;
+                    }
                 
                     // return true;
             //     } else {
@@ -65,13 +80,13 @@ export class AuthenticationService {
     logout(): void {
         // Se elimina usuario del almacenamiento local
         this.token = null;
-        localStorage.removeItem('currentUser');
+        localStorage.removeItem('user');
         this.isLoggedin = false;
     }
 
     isLoggedIn(): boolean{
         //debugger;
-        if (localStorage.getItem("currentUser") == null) {
+        if (localStorage.getItem("user") == null) {
             this.isLoggedin = false;
             return this.isLoggedin;
         }
@@ -80,3 +95,71 @@ export class AuthenticationService {
         }
     }
 }
+
+export class Usuario {
+
+    public nombreCompleto: string;
+    public username: string;
+    public roles: string[];
+    public token: string;
+    
+    constructor(_nombreCompleto: string, _username: string, _roles: string[]) {
+        this.nombreCompleto = _nombreCompleto;
+        this.username = _username;
+        this.roles = this.setRoles(_roles);
+    }
+
+    public setRoles(_roles: string[]): string[]{
+        let roles: string[] = [];
+
+        for (let role of _roles) {
+            roles.push(role);
+        }
+
+        return roles;
+    }
+
+    public hasRoles(..._roles): boolean{
+        return _roles.some( role => this.roles.includes(role));
+    }
+}
+
+export class Role {
+
+    public nombre: string;
+    
+    constructor(_role: string) {
+        this.nombre = _role;
+    }
+}
+
+export var _usuarios = {
+    'callCenter' : {
+        'nombreCompleto': 'Call Center',
+        'username': 'callCEnter', 
+        'roles': ['callCenter']
+    },
+    'uai' : {
+        'nombreCompleto': 'Orientador Jurídico',
+        'username': 'uai', 
+        'roles': ['uai']
+    }, 
+    'express' : {
+        'nombreCompleto': 'Módulo Express',
+        'username': 'express', 
+        'roles': ['express']
+    },
+    'mpuai' : {
+        'nombreCompleto': 'MP de UAI',
+        'username': 'mpuai', 
+        'roles': ['mpuai']
+    },
+    'mpi' : {
+        'nombreCompleto': 'MPI',
+        'username': 'mpi', 
+        'roles': ['mpi']
+    } 
+}
+
+
+

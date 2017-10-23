@@ -5,19 +5,17 @@ export class Caso {
     public delito   : string;
     public nic      : string;
     public nuc      : string;
-    public created  : Date = new Date();
+    public created  : Date;
     public name     : string = `NIC: ${this.nic || ''}  -  NUC: ${this.nuc || ''}`;
-    public formatFecha : string = this.fecha(this.created);
     public delitoCaso: DelitoCaso = new DelitoCaso();
     public hasPredenuncia:boolean;
     public hasRelacionVictimaImputado:boolean;
     
-    fecha (_date: Date){
+    fecha (){
        let meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
-       var date = _date;
-
-       var dia = date.getDay();
+       var date = new Date(this.created);
+       var dia = date.getDate();
        var mes = date.getMonth();
        var year = date.getFullYear();
 

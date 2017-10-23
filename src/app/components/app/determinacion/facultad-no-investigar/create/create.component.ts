@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild,Output, EventEmitter} from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -17,6 +17,7 @@ export class FacultadNoInvestigarCreateComponent {
     public casoId: number = null;
     public breadcrumb = [];
     constructor(private route: ActivatedRoute) { }
+    public determinacionId: number = null;
 
     ngOnInit() {
         this.route.params.subscribe(params => {
@@ -27,7 +28,10 @@ export class FacultadNoInvestigarCreateComponent {
                 
         });
     }
-
+  idUpdate(event: any) {
+    this.determinacionId = event.id;
+	console.log(event.id);
+  }
 }
 
 @Component({
@@ -38,6 +42,7 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
     public apiUrl = '/v1/base/facultades-no-investigar';
     public casoId: number = null;
     public id: number = null;
+	@Output() idUpdate = new EventEmitter<any>();
     public form: FormGroup;
     public model: FacultadNoInvestigar;
     dataSource: TableService | null;
@@ -69,6 +74,7 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
                 this.casoId = +params['casoId'];
             if (params['id']) {
                 this.id = +params['id'];
+				this.idUpdate.emit({id: this.id});
                 this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
                     console.log(response.data),
                         this.fillForm(response);
@@ -84,8 +90,9 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
         this.http.post(this.apiUrl, this.model).subscribe(
             (response) => {
                 console.log(response);
+				this.id= response.id;
                 if (this.casoId!=null) {
-                    this.router.navigate(['/caso/' + this.casoId + '/facultad-no-investigar']);
+                    this.router.navigate(['/caso/' + this.casoId + '/facultad-no-investigar/'+this.id+'/edit']);
                 }
             },
             (error) => {

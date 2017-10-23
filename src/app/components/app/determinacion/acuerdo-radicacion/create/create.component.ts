@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -15,6 +15,7 @@ import { CIndexedDB } from '@services/indexedDB';
 })
 export class AcuerdoRadicacionCreateComponent {
     public breadcrumb = [];
+    public acuerdoId: number = null;
 	public casoId: number = null;
 	constructor(private route: ActivatedRoute){}
 	ngOnInit() {
@@ -26,7 +27,10 @@ export class AcuerdoRadicacionCreateComponent {
                 
         });
   	}
-
+  idUpdate(event: any) {
+    this.acuerdoId = event.id;
+	console.log(event.id);
+  }
 }
 
 @Component({
@@ -38,6 +42,7 @@ export class AcuerdoRadicacionComponent extends DeterminacionGlobal{
     public apiUrl:string="/v1/base/acuerdos";
     public casoId: number = null;
     public id: number = null;
+	@Output() idUpdate = new EventEmitter<any>();
     public form  : FormGroup;
     public model : AcuerdoRadicacion;
     dataSource: TableService | null;
@@ -65,6 +70,7 @@ export class AcuerdoRadicacionComponent extends DeterminacionGlobal{
                 this.casoId = +params['casoId'];
             if(params['id']){
                 this.id = +params['id'];
+				this.idUpdate.emit({id: this.id});
                 this.http.get(this.apiUrl+'/'+this.id).subscribe(response =>{
                     console.log(response.data),
                         this.fillForm(response);
@@ -80,8 +86,9 @@ export class AcuerdoRadicacionComponent extends DeterminacionGlobal{
             this.http.post(this.apiUrl, this.model).subscribe(
                 (response) => {
                     console.log(response);
+                   this.id=response.id;  
                   if(this.casoId!=null){
-                    this.router.navigate(['/caso/'+this.casoId+'/acuerdo-radicacion' ]);      
+                    this.router.navigate(['/caso/'+this.casoId+'/acuerdo-radicacion/'+this.id+'/edit' ]);      
                   }
                 },
                 (error) => {

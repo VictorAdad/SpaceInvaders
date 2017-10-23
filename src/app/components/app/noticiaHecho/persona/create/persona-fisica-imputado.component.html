@@ -54,7 +54,7 @@
               </div>
               <div class="row">
               <div class="col-md-10">
-              <radiobutton class="col-md-3" [radios]="options.tipoInterviniente" name="id"
+              <radiobutton class="col-md-3" [radios]="options.tipoInterviniente.sort(compare)" name="id"
               [group]="form.controls.personaCaso.controls[0].controls.tipoInterviniente"
               (valueChange)="changeTipoInterviniente($event)"></radiobutton>
               </div>

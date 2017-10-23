@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild,Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -15,7 +15,9 @@ import { CIndexedDB } from '@services/indexedDB';
 })
 export class NoEjercicioAccionPenalCreateComponent {
 	public casoId: number = null;
+    public determinacionId: number = null;
 	public breadcrumb = [];
+	
 	constructor(private route: ActivatedRoute) { }
 	ngOnInit() {
 		this.route.params.subscribe(params => {
@@ -25,7 +27,10 @@ export class NoEjercicioAccionPenalCreateComponent {
 			}
 		});
 	}
-
+  idUpdate(event: any) {
+    this.determinacionId = event.id;
+	console.log(event.id);
+  }
 }
 
 @Component({
@@ -36,6 +41,7 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
 	public apiUrl: string = "/v1/base/no-ejercicio-accion";
 	public casoId: number = null;
 	public id: number = null;
+	@Output() idUpdate = new EventEmitter<any>();
 	public form: FormGroup;
 	public model: NoEjercicioAccionPenal;
 	dataSource: TableService | null;
@@ -73,6 +79,7 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
 				this.casoId = +params['casoId'];
 			if (params['id']) {
 				this.id = +params['id'];
+				this.idUpdate.emit({id: this.id});
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 					console.log(response.data),
 						this.fillForm(response);
@@ -88,8 +95,9 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
         this.http.post(this.apiUrl, this.model).subscribe(
             (response) => {
                 console.log(response);
+				this.id=response.id;
                 if (this.casoId) {
-                    this.router.navigate(['/caso/' + this.casoId + '/no-ejercicio-accion-penal']);
+                    this.router.navigate(['/caso/' + this.casoId + '/no-ejercicio-accion-penal'+this.id+'/edit']);
                 }
             },
             (error) => {

@@ -87,8 +87,8 @@ const routes: Routes = [
     { path : 'vehiculos', component :  VehiculoComponent, data: { breadcrumb: 'Vehiculos'}},
     { path : 'caso/:casoId/vehiculos/create', component : VehiculoCreateComponent, data: { breadcrumb: 'Nuevo Vehiculo'}},
     { path : 'caso/:casoId/vehiculos/:id', component : VehiculoCreateComponent, data: { breadcrumb: 'Nuevo Vehiculo'}},
-    { path : 'caso/:casoId/personas/persona-fisica-imputado', component : PersonaFisicaImputadoComponent, data : { breadcrumb : 'Crear Persona'}},
-    { path : 'caso/:casoId/personas/:id', component : PersonaFisicaImputadoComponent, data : { breadcrumb : 'Crear Persona', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}] }},
+    { path : 'caso/:casoId/personas/persona-fisica-imputado', component : PersonaFisicaImputadoComponent, data : { breadcrumb : 'Crear persona'}},
+    { path : 'caso/:casoId/personas/:id', component : PersonaFisicaImputadoComponent, data : { breadcrumb : 'Crear persona', rutas:[{path:'/noticia-hecho',label:"Detalle noticia de hechos"}] }},
     { path : 'documentos', component : DocumentoComponent },
     { path : 'documentos/create', component : DocumentoCreateComponent },
     { path : 'notificaciones', component : NotificacionesComponent, data : { breadcrumb : 'Notificaciones' }},
@@ -125,7 +125,7 @@ const routes: Routes = [
     { path : 'caso/:casoId/requerimiento-informacion/:id/edit', component : RequerimientoInformacionCreateComponent, data : { breadcrumb : 'Requerimiento de información' } },
     //Determinación
     { path : 'caso/:casoId/acuerdo-inicio', component : AcuerdoInicioComponent, data : { breadcrumb : 'Acuerdo de inicio'}},
-    { path : 'caso/:casoId/acuerdo-inicio/:id', component : AcuerdoInicioComponent, data : { breadcrumb : 'Acuerdo de inicio'}},
+    { path : 'caso/:casoId/acuerdo-inicio/:id/view', component : AcuerdoInicioComponent, data : { breadcrumb : 'Acuerdo de inicio'}},
 
     { path : 'caso/:casoId/delito/create', component : DelitoCreateComponent, data : { breadcrumb : 'Delitos'}},
     { path : 'caso/:casoId/delito/:id', component : DelitoCreateComponent, data : { breadcrumb : 'Delitos'}},
