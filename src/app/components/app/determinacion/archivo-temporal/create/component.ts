@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Output, EventEmitter  } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -16,6 +16,7 @@ import { CIndexedDB } from '@services/indexedDB';
 export class ArchivoTemporalCreateComponent {
 	public breadcrumb = [];
 	public casoId: number = null;
+    public archivoId: number = null;
 	constructor(private route: ActivatedRoute) { }
 	ngOnInit() {
 		this.route.params.subscribe(params => {
@@ -25,7 +26,10 @@ export class ArchivoTemporalCreateComponent {
 			}	
 		});
 	}
-
+  idUpdate(event: any) {
+    this.archivoId = event.id;
+	console.log(event.id);
+  }
 }
 
 @Component({
@@ -36,6 +40,7 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 	public apiUrl: string = "/v1/base/archivos-temporales";
 	public casoId: number = null;
 	public id: number = null;
+	@Output() idUpdate = new EventEmitter<any>();
 	public form: FormGroup;
 	public model: ArchivoTemporal;
 	dataSource: TableService | null;
@@ -61,6 +66,7 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 				this.casoId = +params['casoId'];
 			if (params['id']) {
 				this.id = +params['id'];
+				this.idUpdate.emit({id: this.id});
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 					console.log(response.data),
 						this.fillForm(response);
@@ -77,9 +83,10 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 		console.log('-> ArchivoTemporal@save()', this.model);
 		this.http.post(this.apiUrl, this.model).subscribe(
 			(response) => {
+				this.id=response.id;
 				console.log(response);
 				if (this.casoId!=null) {
-					this.router.navigate(['/caso/' + this.casoId + '/archivo-temporal']);
+					this.router.navigate(['/caso/' + this.casoId + '/archivo-temporal/'+this.id+'/edit']);
 				}
 			},
 			(error) => {

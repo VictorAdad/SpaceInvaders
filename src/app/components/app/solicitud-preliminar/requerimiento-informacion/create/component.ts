@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Output, EventEmitter} from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -15,6 +15,7 @@ import { CIndexedDB } from '@services/indexedDB';
 })
 export class RequerimientoInformacionCreateComponent {
 	public casoId: number = null;
+    public solicitudId: number = null;
     public breadcrumb = [];
 	constructor(private route: ActivatedRoute){}
 
@@ -26,6 +27,10 @@ export class RequerimientoInformacionCreateComponent {
 			}
 		});
 	}
+     idUpdate(event: any) {
+      this.solicitudId = event.id;
+	  console.log(event.id);
+    }
 
 }
 
@@ -37,6 +42,7 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 	public apiUrl: string = "/v1/base/solicitudes-pre-info";
 	public casoId: number = null;
 	public id: number = null;
+	@Output() idUpdate = new EventEmitter<any>();
 	public form: FormGroup;
 	public model: RequerimientoInformacion;
 	dataSource: TableService | null;
@@ -75,6 +81,7 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 			console.log('casoId', this.casoId);
 			if (params['id']) {
 				this.id = +params['id'];
+				this.idUpdate.emit({id: this.id});
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 					console.log('Get reg ',response),
@@ -93,7 +100,8 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 			(response) => {
 				console.log(response);
 				console.log('here');
-				this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion']);
+				this.id=response.id;
+				this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion/'+this.id+'/edit']);
 				
 			},
 			(error) => {

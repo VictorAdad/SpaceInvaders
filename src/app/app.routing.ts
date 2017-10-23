@@ -125,7 +125,7 @@ const routes: Routes = [
     { path : 'caso/:casoId/requerimiento-informacion/:id/edit', component : RequerimientoInformacionCreateComponent, data : { breadcrumb : 'Requerimiento de información' } },
     //Determinación
     { path : 'caso/:casoId/acuerdo-inicio', component : AcuerdoInicioComponent, data : { breadcrumb : 'Acuerdo de inicio'}},
-    { path : 'caso/:casoId/acuerdo-inicio/:id', component : AcuerdoInicioComponent, data : { breadcrumb : 'Acuerdo de inicio'}},
+    { path : 'caso/:casoId/acuerdo-inicio/:id/view', component : AcuerdoInicioComponent, data : { breadcrumb : 'Acuerdo de inicio'}},
 
     { path : 'caso/:casoId/delito/create', component : DelitoCreateComponent, data : { breadcrumb : 'Delitos'}},
     { path : 'caso/:casoId/delito/:id', component : DelitoCreateComponent, data : { breadcrumb : 'Delitos'}},

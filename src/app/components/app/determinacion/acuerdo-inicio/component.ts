@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild , Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -16,6 +16,8 @@ import { CIndexedDB } from '@services/indexedDB';
 })
 export class AcuerdoInicioComponent {
     public casoId: number = null;
+    public acuerdoId: number = null;
+
     public breadcrumb = [];
     constructor(private route: ActivatedRoute) { }
 
@@ -27,6 +29,10 @@ export class AcuerdoInicioComponent {
             }
         });
     }
+  idUpdate(event: any) {
+    this.acuerdoId = event.id;
+	console.log(event.id);
+  }
 
 }
 
@@ -36,10 +42,11 @@ export class AcuerdoInicioComponent {
 })
 export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
 
-    public apiUrl: string = "/v1/base/acuerdos/casos/{id}/page";
+    public apiUrl: string = "/v1/base/acuerdos";
     public casoId: number = null;
     public hasAcuerdoInicio: boolean = false;
     public id: number = null;
+	@Output() idUpdate = new EventEmitter<any>();
     public form: FormGroup;
     public model: AcuerdoInicio;
     dataSource: TableService | null;
@@ -72,8 +79,14 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
                 this.casoId = +params['casoId'];
                 this.apiUrl=this.apiUrl.replace("{id}",String(this.casoId));                
                  this.http.get(this.apiUrl).subscribe(response => {
-                
-                if(parseInt(response.totalCount) !== 0){
+                if(response.totalCount!=0){
+					this.hasAcuerdoInicio = true;
+                    this.form.disable();
+                    this.fillForm(response.data[0]);
+				}
+                if(params['id']){
+					this.id=params['id'];
+				    this.idUpdate.emit({id: this.id});
                     this.hasAcuerdoInicio = true;
                     this.form.disable();
                     this.fillForm(response.data[0]);
@@ -91,12 +104,13 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
         this.http.post(this.apiUrl, this.model).subscribe(
 
             (response) => {
+				this.id=response.id;
                 console.log(response);
-                if (this.casoId) {
-                    this.router.navigate(['/caso/' + this.casoId + '/acuerdo-inicio']);
+                if (this.casoId!=null) {
+                    this.router.navigate(['/caso/' + this.casoId + '/acuerdo-inicio/'+this.id+'/view']);
                 }
                 else {
-                    this.router.navigate(['/acuerdos-inicio']);
+                    this.router.navigate(['/acuerdos-inicio'+this.id+'/view']);
                 }
             },
             (error) => {

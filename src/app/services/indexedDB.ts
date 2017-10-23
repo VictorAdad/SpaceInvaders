@@ -71,8 +71,8 @@ export class CIndexedDB {
                 newDB=true;
             };
             open.onsuccess=function(){
-                if (newDB)
-                    obj.inicialiazaCatalogos();
+                // if (newDB)
+                //     obj.inicialiazaCatalogos();
             }
         }else{
             console.log("La BD ya se encuentra inicializada ;)");
@@ -364,8 +364,11 @@ export class CIndexedDB {
             });
         return promesa;
     }
-    //busca en los catalogos
-    searchInNotMatrx(_catalogo, _item){
+    //busca en los catalogos los item que son exactos con los datos de item
+    searchInNotMatrx(_catalogo, _item, like=false){
+        /**
+        buscamos si el elemento y del catalogo es igual a e 
+        */
         var rec=function(e,y) {
             if((typeof e)=="object"){
                 let igual=true;
@@ -374,7 +377,11 @@ export class CIndexedDB {
                 }
                 return igual;
             }
-            return e==y;
+            if (!like)
+                return e==y;
+            if(e=="")
+                return true;
+            return y.indexOf(e)>0;
             
         }
         var obj= this;

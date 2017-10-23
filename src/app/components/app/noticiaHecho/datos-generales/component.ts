@@ -77,7 +77,8 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                 }
                 
             }
-        });    
+        });
+        this.validateForm(this.form);  
     }
 
     public openDialog() {

@@ -72,7 +72,6 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                     this.http.get('/v1/base/armas/'+this.id).subscribe(response =>{
                         this.model = response as Arma;
                         this.isArmaFuego=this.model.claseArma.claseArma==="fuego";
-                        console.log(this.model);                        
                         this.fillForm(response);
                     });
                 }else{
@@ -80,7 +79,13 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                         let armas=t["arma"] as any[];
                         for (var i = 0; i < armas.length; ++i) {
                             if ((armas[i])["id"]==this.id){
-                                
+                                var arma=armas[i];
+                                (arma["claseArma"])["claseArma"]=arma["clase"];
+                                if (arma["subtipo"])
+                                    (arma["claseArma"])["subtipo"]=arma["subtipo"];
+                                if (arma["tipo"])
+                                    (arma["claseArma"])["tipo"]=arma["tipo"];
+
                                 this.fillForm(armas[i]);
                                 break;
                             }
@@ -89,6 +94,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                 }
             }
         });
+        this.validateForm(this.form);
     }
 
     public save(valid : any, _model : any):void{
@@ -134,9 +140,11 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                         if(!caso["arma"]){
                             caso["arma"]=[];
                         }
-                        this.model["id"]=temId;
+                        _model["id"]=temId;
                         caso["arma"].push(_model);
+                        console.log("caso arma", caso["arma"]);
                         this.db.update("casos",caso).then(t=>{
+                            console.log("caso arma", t["arma"]);
                             this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
                         });
                     }
