@@ -177,36 +177,47 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 		});
 	}
 
-	public save(valid: any, _model: any): void {
+	public save(valid: any, _model: any) {
 
 		_model.caso.id = this.casoId;
 		console.log('-> Entrevista@save()', _model);
-		if (this.onLine.onLine) {
-			this.http.post(this.apiUrl, _model).subscribe(
+		return new Promise<any>(
+            (resolve, reject) => {
+				if (this.onLine.onLine) {
+					this.http.post(this.apiUrl, _model).subscribe(
 
-				(response) => {
-					this.id=response.id;
-					if (this.casoId!=null) {
-					    console.log(response);
-						this.router.navigate(['/caso/' + this.casoId + '/entrevista/'+this.id+'/view']);
-					}
-				},
-				(error) => {
-					console.error('Error', error);
+						(response) => {
+							this.id=response.id;
+							if (this.casoId!=null) {
+							    console.log(response);
+								this.router.navigate(['/caso/' + this.casoId + '/entrevista/'+this.id+'/view']);
+							}
+							resolve('Entrevista creada con éxito');
+						},
+						(error) => {
+							console.error('Error', error);
+							reject(error);
+						}
+					);
 				}
-			);
-		}
+			}
+		);
 	}
 
-	public edit(_valid: any, _model: any): void {
+	public edit(_valid: any, _model: any) {
 		this.model.sexo.id = 2;
 		console.log('-> Entrevista@edit()', _model);
-		this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
-			console.log('-> Registro acutualizado', response);
-			if (this.id) {
-				this.router.navigate(['/caso/' + this.casoId + '/entrevista']);
+		return new Promise<any>(
+            (resolve, reject) => {
+				this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
+					console.log('-> Registro acutualizado', response);
+					if (this.id) {
+						this.router.navigate(['/caso/' + this.casoId + '/entrevista']);
+					}
+					resolve('Entrevista actualizada con éxito');
+				});
 			}
-		});
+		);
 	}
 
 	public fillForm(_data) {

@@ -89,7 +89,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
         });
     }
 
-    public save(valid : any, _model : any):void{
+    public save(valid : any, _model : any){
 
             Object.assign(this.model, _model);
             this.model.caso.id = this.casoId;
@@ -103,27 +103,33 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
             this.model.fechaHoraInspeccion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
             console.log('lo que envio: '+  this.model.fechaHoraInspeccion);
         
-            this.http.post(this.apiUrl, this.model).subscribe(
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.http.post(this.apiUrl, this.model).subscribe(
 
-                (response) => {
-                    //console.log(response);
-                    //console.log('lo que recibo: '+ new Date(response.fechaHoraInspeccion));
-                  if(this.casoId!=null){
-					this.id=response.id;
-                    this.router.navigate(['/caso/'+this.casoId+'/inspeccion/'+this.casoId+'/edit' ]);      
-                  }
-                  else {
-                    this.router.navigate(['/inspecciones/'+this.casoId+'/edit' ]);      
-                  }
-                },
-                (error) => {
-                    console.error('Error', error);
-                }
-            );
+                    (response) => {
+                        //console.log(response);
+                        //console.log('lo que recibo: '+ new Date(response.fechaHoraInspeccion));
+                      if(this.casoId!=null){
+    					this.id=response.id;
+                        this.router.navigate(['/caso/'+this.casoId+'/inspeccion/'+this.casoId+'/edit' ]);      
+                      }
+                      else {
+                        this.router.navigate(['/inspecciones/'+this.casoId+'/edit' ]);      
+                      }
+                      resolve('Solicitud de inspección creada con éxito');
+                    },
+                    (error) => {
+                        console.error('Error', error);
+                        reject(error);
+                    }
+                );
+            }
+        );
 
     }
 
-    public edit(_valid : any, _model : any):void{
+    public edit(_valid : any, _model : any){
         Object.assign(this.model, _model);
         console.log('-> Inspeccion@edit()', this.model);
 
@@ -134,13 +140,18 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
         var mes:number=fechaCompleta.getMonth()+1;
         this.model.fechaHoraInspeccion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
         console.log('lo que envio: '+  this.model.fechaHoraInspeccion);
-    
-            this.http.put(this.apiUrl+'/'+this.id, this.model).subscribe((response) => {
-                console.log('lo que recibo: '+ new Date(response.fechaHoraInspeccion));
-                if(this.id){
-                    this.router.navigate(['/caso/'+this.casoId+'/inspeccion']);
-                }
-            });
+        
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.http.put(this.apiUrl+'/'+this.id, this.model).subscribe((response) => {
+                    console.log('lo que recibo: '+ new Date(response.fechaHoraInspeccion));
+                    if(this.id){
+                        this.router.navigate(['/caso/'+this.casoId+'/inspeccion']);
+                    }
+                    resolve('Solicitud de inspección actualizada con éxito');
+                });
+            }
+        );
      }
 
     public fillForm(_data){

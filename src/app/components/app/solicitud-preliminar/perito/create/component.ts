@@ -120,31 +120,44 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 		});
 	}
 
-	public save(valid: any, _model: any): void {
+	public save(valid: any, _model: any){
 		_model.caso.id = this.casoId;
-		console.log('-> Perito@save()', _model);
-		this.http.post(this.apiUrl, _model).subscribe(
-
-			(response) => {
-				if(this.casoId!=null){
-					this.id=response.id;
-					this.router.navigate(['/caso/' + this.casoId + '/perito/'+this.id+'/edit']);
-				}
-			},
-			(error) => {
-				console.error('Error', error);
+		return new Promise<any>(
+			(resolve, reject) => {
+				console.log('-> Perito@save()', _model);
+				this.http.post(this.apiUrl, _model).subscribe(
+					(response) => {
+						if(this.casoId!=null){
+							this.id=response.id;
+							this.router.navigate(['/caso/' + this.casoId + '/perito/'+this.id+'/edit']);
+						}
+						resolve('Solicitud pericial creada con éxito');
+					},
+					(error) => {
+						console.error('Error', error);
+						reject(error);
+					}
+				);
 			}
 		);
 	}
 
-	public edit(_valid: any, _model: any): void {
+	public edit(_valid: any, _model: any){
 		console.log('-> AcuerdoGeneral@edit()', _model);
-		this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
-			console.log('-> Registro actualizado', response);
-			if (this.id) {
-				this.router.navigate(['/caso/' + this.casoId + '/perito']);
+		return new Promise<any>(
+			(resolve, reject) => {
+				this.http.put(this.apiUrl + '/' + this.id, _model).subscribe(
+					response => {
+						console.log('-> Registro actualizado', response);
+						if (this.id) {
+							this.router.navigate(['/caso/' + this.casoId + '/perito']);
+						}
+						resolve('Solicitud pericial actualizada con éxito');
+					},
+					error => reject(error)
+				);
 			}
-		});
+		);
 	}
 
 	public fillForm(_data) {

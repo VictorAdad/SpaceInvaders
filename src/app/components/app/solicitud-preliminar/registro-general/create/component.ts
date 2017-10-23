@@ -84,34 +84,46 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 		});
 	}
 
-	public save(valid: any, _model: any): void {
+	public save(valid: any, _model: any) {
 
 		Object.assign(this.model, _model);
 		this.model.caso.id = this.casoId;
 		console.log('-> RegistroGeneral@save()', this.model);
-		this.http.post(this.apiUrl, this.model).subscribe(
 
-			(response) => {
-				if(this.casoId!=null){
-					this.id=response.id;
-					this.router.navigate(['/caso/' + this.casoId + '/registro-general/'+this.id+'/edit']);
-				}
-			},
-			(error) => {
-				console.error('Error', error);
+		return new Promise<any>(
+            (resolve, reject) => {
+				this.http.post(this.apiUrl, this.model).subscribe(
+
+					(response) => {
+						if(this.casoId!=null){
+							this.id=response.id;
+							this.router.navigate(['/caso/' + this.casoId + '/registro-general/'+this.id+'/edit']);
+						}
+						resolve('Solicitud de registro general creada con éxito');
+					},
+					(error) => {
+						console.error('Error', error);
+						reject(error)
+					}
+				);
 			}
 		);
 
 	}
 
-	public edit(_valid: any, _model: any): void {
+	public edit(_valid: any, _model: any) {
 		console.log('-> Policia@edit()', _model);
-		this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
-			console.log('-> Registro acutualizado', response);
-			if (this.id) {
-				this.router.navigate(['/caso/' + this.casoId + '/registro-general']);
+		return new Promise<any>(
+            (resolve, reject) => {
+				this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
+					console.log('-> Registro acutualizado', response);
+					if (this.id) {
+						this.router.navigate(['/caso/' + this.casoId + '/registro-general']);
+					}
+					resolve('Solicitud de registro general actualizada con éxito');
+				});
 			}
-		});
+		);
 	}
 
 	public fillForm(_data) {
