@@ -36,7 +36,11 @@ export class SavingDirective{
 							this.prepareSave(false);
 							this.globalService.openSnackBar('Registro guardado con éxito');
 						},
-						error => console.error('Ocurrio un error al guardar D:', error)
+						error => {
+							console.error('Ocurrio un error al guardar D:', error)
+							this.globalService.openSnackBar('X Ocurrió un error al guardar');
+							this.prepareSave(false);
+						}
 					);
 
 				}
