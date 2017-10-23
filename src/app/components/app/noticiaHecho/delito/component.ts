@@ -95,21 +95,60 @@ export class DelitoComponent {
 
     swap(e) {
         console.log('row',e);
-        this.http.get('/v1/base/delitos-casos/'+e.id+'/casos/'+this.id).subscribe((response) => {
-            var msj = response.message;
-            if(msj.indexOf('correctamente') >= 0){
-                e.principal = true;
-                if(this.pageIndex!=0 || this.pageSize!=0){
-                    this.page('/v1/base/delitos-casos/casos/' + this.id + '/page?p=' + this.pageIndex + '&tr=' + this.pageSize);
+        if (this.onLine.onLine){
+            this.http.get('/v1/base/delitos-casos/'+e.id+'/casos/'+this.id).subscribe((response) => {
+                var msj = response.message;
+                if(msj.indexOf('correctamente') >= 0){
+                    e.principal = true;
+                    if(this.pageIndex!=0 || this.pageSize!=0){
+                        this.page('/v1/base/delitos-casos/casos/' + this.id + '/page?p=' + this.pageIndex + '&tr=' + this.pageSize);
+                    }else{
+                        this.page('/v1/base/delitos-casos/casos/' + this.id + '/page'); 
+                    }
                 }else{
-                    this.page('/v1/base/delitos-casos/casos/' + this.id + '/page'); 
+                    e.principal = false;
                 }
-            }else{
-                e.principal = false;
+            });
+
+        }else{
+            let temId=Date.now();
+            let dato={
+                url:'/v1/base/delitos-casos/'+e.id+'/casos/'+this.id,
+                body:null,
+                options:[],
+                tipo:"get",
+                pendiente:true,
+                dependeDe:[this.id,e.id]
             }
-        });
+            this.db.add("sincronizar",dato).then(p=>{
+                this.db.get("casos", this.id).then(
+                    casoR => {
+                        if (casoR) {
+                            this.delitoCaso = casoR as DelitoCaso;
+                            if (casoR["delitosCaso"]){
+                                e.principal = !e.principal;
+                                var lista = casoR["delitosCaso"] as any[];
+                                for (var i = 0; i < lista.length; ++i) {
+                                    if (e.principal){
+                                        lista[i].principal=false;
+                                    }
+                                    if (lista[i].id==e.id){
+                                        lista[i].principal=e.principal;
+                                        this.db.update("casos",casoR).then(casoU=>{
+                                            this.dataSource = new TableService(this.paginator, casoU["delitosCaso"]);
+                                        });
+                                    }
+                                }
+                                
+                            }
+                        }
+                    });
+                
+            }); 
+        }
         
-        //this.db.update("casos",this.caso);
+        
+        //
     }
 }
 
