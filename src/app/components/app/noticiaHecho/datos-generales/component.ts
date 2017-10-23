@@ -93,62 +93,73 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         });
     }
 
-    public save(_valid : boolean, _model : any):void{
-        if(this.onLine.onLine){
-            Object.assign(_model, this.model);
-            console.log('Model', _model);
-            _model["agencia"]={id:1};
-            _model["nic"]="CAI/AIN/00/UAI/268/00126/17/08 ";
-            _model["estatus"]={id:1};
+    public save(_valid : boolean, _model : any):Promise<any>{
+        return new Promise((resolve,reject)=>{
+            if(this.onLine.onLine){
+                Object.assign(_model, this.model);
+                console.log('Model', _model);
+                _model["agencia"]={id:1};
+                _model["nic"]="CAI/AIN/00/UAI/268/00126/17/08 ";
+                _model["estatus"]={id:1};
 
-            _model.created = null;
-            _model.delitoCaso.delito.id =  this.delito.id;
-            this.http.post('/v1/base/casos', _model).subscribe((response) => {
-                this.router.navigate(['/caso/'+response.id+'/noticia-hecho' ]);
-            });
-        }else{
-            let dato={
-                url:'/v1/base/casos',
-                body:{
-                    titulo:_model.titulo,
-                    sintesis:_model.sintesis,
-                    delito:_model.delito
-                },
-                options:[],
-                tipo:"post",
-                pendiente:true,
-                newId:0
-            }
-            _model.created = new Date();
-            this.db.add('casos', _model).then(object => {
-                dato["temId"]=object["id"];
-                this.db.add("sincronizar",dato).then(p=>{
-                    this.router.navigate(['/caso/'+object['id']+'/noticia-hecho' ]);
+                _model.created = null;
+                _model.delitoCaso.delito.id =  this.delito.id;
+                this.http.post('/v1/base/casos', _model).subscribe((response) => {
+                    resolve("Se creo con éxito el Caso");
+                    this.router.navigate(['/caso/'+response.id+'/noticia-hecho' ]);
+                },e=>{
+                    reject(e);
                 });
-            });
-            
-            
-        }
+            }else{
+                let dato={
+                    url:'/v1/base/casos',
+                    body:{
+                        titulo:_model.titulo,
+                        sintesis:_model.sintesis,
+                        delito:_model.delito
+                    },
+                    options:[],
+                    tipo:"post",
+                    pendiente:true,
+                    newId:0
+                }
+                _model.created = new Date();
+                this.db.add('casos', _model).then(object => {
+                    dato["temId"]=object["id"];
+                    this.db.add("sincronizar",dato).then(p=>{
+                        resolve("Se creo el caso de manera local");
+                        this.router.navigate(['/caso/'+object['id']+'/noticia-hecho' ]);
+                    });
+                });
+                
+                
+            }
+        });
     }
 
-    public edit(_valid : boolean, _model : any):void{
-        console.log('-> Caso@edit()', _model);
-        if(this.onLine.onLine){
-            this.http.put('/v1/base/casos/'+this.id, _model).subscribe((response) => {
-                console.log('-> Registro actualizado', response);
-            });
-        }else{
-            let dato={
-                url:'/v1/base/casos/'+this.id,
-                body:_model,
-                options:[],
-                tipo:"update",
-                pendiente:true
+    public edit(_valid : boolean, _model : any):Promise<any>{
+        return new Promise((resolve,reject)=>{
+            console.log('-> Caso@edit()', _model);
+            if(this.onLine.onLine){
+                this.http.put('/v1/base/casos/'+this.id, _model).subscribe((response) => {
+                    resolve("Caso actualizado");
+                },e=>{
+                    reject(e);
+                });
+            }else{
+                let dato={
+                    url:'/v1/base/casos/'+this.id,
+                    body:_model,
+                    options:[],
+                    tipo:"update",
+                    pendiente:true
+                }
+                this.db.add("sincronizar",dato).then(p=>{
+                    resolve("Se actualizó el caso de manera local");
+                    console.log('-> Registro acutualizado');
+                }); 
             }
-            this.db.add("sincronizar",dato).then(p=>{
-                console.log('-> Registro acutualizado');
-            }); 
-        }
+        });
     }
 
     public hasId(): boolean{
