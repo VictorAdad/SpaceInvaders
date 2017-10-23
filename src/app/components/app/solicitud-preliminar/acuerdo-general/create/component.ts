@@ -117,37 +117,47 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
         });
     }
 
-    public save(valid: any, _model: any): void {
+    public save(valid: any, _model: any) {
 
         _model.caso.id = this.casoId;
         console.log('-> AcuerdoGeneral@save()', _model);
-        this.http.post(this.apiUrl, _model).subscribe(
-
-            (response) => {
-				this.id=response.id;
-                if(this.casoId!=null){
-                    this.router.navigate(['/caso/' + this.casoId + '/acuerdo-general/'+this.id+'/edit']);
-					console.log('-> registro guardado',response);               
-			   }else{
-					console.log('-> registro guardado',response);
-                    this.router.navigate(['/acuerdos'+this.id+'/edit' ]);
-                }
-            },
-            (error) => {
-                console.error('Error', error);
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.http.post(this.apiUrl, _model).subscribe(
+                    (response) => {
+        				this.id=response.id;
+                        if(this.casoId!=null){
+                            this.router.navigate(['/caso/' + this.casoId + '/acuerdo-general/'+this.id+'/edit']);
+        					console.log('-> registro guardado',response);               
+        			   }else{
+        					console.log('-> registro guardado',response);
+                            this.router.navigate(['/acuerdos'+this.id+'/edit' ]);
+                        }
+                        resolve('Solicitud de acuerdo general creada con éxito');
+                    },
+                    (error) => {
+                        console.error('Error', error);
+                        reject(error);
+                    }
+                );
             }
         );
 
     }
 
-    public edit(_valid: any, _model: any): void {
+    public edit(_valid: any, _model: any) {
         console.log('-> AcuerdoGeneral@edit()', _model);
-        this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
-            console.log('-> Registro acutualizado', response);
-            if(this.id!=null){
-                this.router.navigate(['/caso/' + this.casoId + '/acuerdo-general']);
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
+                    console.log('-> Registro acutualizado', response);
+                    if(this.id!=null){
+                        this.router.navigate(['/caso/' + this.casoId + '/acuerdo-general']);
+                    }
+                    resolve('Solicitud de acuerdo general actualizada con éxito');
+                });
             }
-        });
+        );
     }
 
     public fillForm(_data) {

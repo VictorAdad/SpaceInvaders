@@ -91,34 +91,46 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 		});
 	}
 
-	public save(valid: any, _model: any): void {
+	public save(valid: any, _model: any) {
 
 		_model.caso.id = this.casoId;
 		console.log('-> RequerimientoInformacion@save()', _model);
-		this.http.post(this.apiUrl, _model).subscribe(
 
-			(response) => {
-				console.log(response);
-				console.log('here');
-				this.id=response.id;
-				this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion/'+this.id+'/edit']);
-				
-			},
-			(error) => {
-				console.error('Error', error);
+		return new Promise<any>(
+            (resolve, reject) => {
+				this.http.post(this.apiUrl, _model).subscribe(
+
+					(response) => {
+						console.log(response);
+						console.log('here');
+						this.id=response.id;
+						this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion/'+this.id+'/edit']);
+						resolve('Solicitud de requerimiento de información creada con éxito');
+						
+					},
+					(error) => {
+						console.error('Error', error);
+						reject(error);
+					}
+				);
 			}
 		);
 
 	}
 
-	public edit(_valid: any, _model: any): void {
+	public edit(_valid: any, _model: any) {
 		console.log('-> RequerimientoInformacion@edit()', _model);
-		this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
-			console.log('-> Registro acutualizado', response);
-			
-			this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion']);
-			
-		});
+		return new Promise<any>(
+            (resolve, reject) => {
+				this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
+					console.log('-> Registro acutualizado', response);
+					
+					this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion']);
+					resolve('Solicitud de requerimiento de información actualizada con éxito');
+					
+				});
+			}
+		);
 	}
 
 	public fillForm(_data) {

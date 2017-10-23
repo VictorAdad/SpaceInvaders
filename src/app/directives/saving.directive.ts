@@ -34,7 +34,7 @@ export class SavingDirective{
 					this.saveFn().then(
 						response => {
 							this.prepareSave(false);
-							this.globalService.openSnackBar('Registro guardado con éxito');
+							this.globalService.openSnackBar(response);
 						},
 						error => {
 							console.error('Ocurrio un error al guardar D:', error)

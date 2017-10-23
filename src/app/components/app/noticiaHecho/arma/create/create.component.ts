@@ -97,8 +97,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         this.validateForm(this.form);
     }
 
-    public save(_valid, _model){
-        // let _model = this.form.value;
+    public save(_valid:boolean, _model:any){
         return new Promise<any>((resolve, reject) => {
             if(this.onLine.onLine){
                 console.log('Arma Serv', this.armaServ);
