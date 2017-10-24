@@ -118,11 +118,12 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 });
             });
         });
-        this.validateForm(this.form);
+        //this.validateForm(this.form);
     }
 
     public createForm(): FormGroup{
         return new FormGroup({
+            'id': new FormControl('', []),
             'tipo'            : new FormControl('', [Validators.required,]),
             'tipoZona'        : new FormControl('', [Validators.required,]),
             'calle'           : new FormControl('', [Validators.required,]),
