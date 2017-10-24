@@ -1,5 +1,5 @@
 <breadcrumb [rutas]="breadcrumb"></breadcrumb>
-<div class="row space">    
+<div class="row space">
     <div class="col-md-12 text-right">
         <small>NIC:CAI/AIN/00/UAI/268/00126/17/08 - NUC: CAI/AIN/00/UAI/268/00126/17/08</small>
     </div>
@@ -22,8 +22,9 @@
                         [(options)]="lugarServ.tipoLugar"
                         name="tipo"
                         [group]="form"
+                        hintStart="Campo obligatorio"
                         (valueChange)="lugarServ.find($event, 'tipoLugar')">
-                        
+
                     </select2>
                 </div>
                 <div class="col-md-2">
@@ -32,14 +33,15 @@
                         [(options)]="lugarServ.tipoZona"
                         name="tipoZona"
                         [group]="form"
-                        (valueChange)="lugarServ.find($event, 'tipoZona')">    
+                        hintStart="Campo obligatorio"
+                        (valueChange)="lugarServ.find($event, 'tipoZona')">
                     </select2>
                 </div>
                 <div class="col-md-4">
-                    <text label="Calle" name="calle" [group]="form"></text>
+                    <text label="Calle" name="calle" [group]="form" hintStart="Campo obligatorio"></text>
                 </div>
                 <div class="col-md-2">
-                    <text label="Nº exterior" name="numExterior" [group]="form"></text>
+                    <text label="Nº exterior" name="numExterior" [group]="form" ></text>
                 </div>
                 <div class="col-md-2">
                     <text label="Nº interior" name="numInterior" [group]="form"></text>
@@ -47,51 +49,57 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <text-area label="Referencias" name="referencias" [group]="form"></text-area>
+                    <text-area label="Referencias"  name="referencias" [group]="form" hintStart="Campo obligatorio"></text-area>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-3 full-width">
-                    <select2 
+                    <select2
                         placeholder="País"
                         [options]="optionsServ.paises"
                         name="id"
                         [group]="form.controls.pais"
-                        (valueChange)="changePais($event)">
-                                
+                        (valueChange)="changePais($event)"
+                        hintStart="Campo obligatorio"
+                        >
+
                     </select2>
                 </div>
                 <div class="col-md-3" *ngIf="!isMexico">
-                    <text label="Estado" name="estadoOtro" [group]="form"></text>
+                    <text label="Estado" name="estadoOtro" [group]="form"hintStart="Campo obligatorio"></text>
                 </div>
                 <div class="col-md-3" *ngIf="!isMexico">
-                    <text label="Municipio/Delegación" name="municipioOtro" [group]="form"></text>
+                    <text label="Municipio/Delegación" name="municipioOtro" [group]="form" hintStart="Campo obligatorio"></text>
                 </div>
                 <div class="col-md-3" *ngIf="!isMexico">
-                    <text label="Colonia/Asentamiento" name="coloniaOtro" [group]="form"></text>
+                    <text label="Colonia/Asentamiento" name="coloniaOtro" [group]="form" hintStart="Campo obligatorio"></text>
                 </div>
                 <div class="col-md-3" *ngIf="isMexico">
-                    <select2 
+                    <select2
                         placeholder="Estado"
                         [options]="optionsServ.estados"
                         name="id"
                         [group]="form.controls.estado"
-                        (valueChange)="changeEstado($event)">
-                        
+                        (valueChange)="changeEstado($event)"
+                        hintStart="Campo obligatorio"
+                        >
+
                     </select2>
                 </div>
-                <div class="col-md-3" *ngIf="isMexico">
+                <div class="col-md-3" *ngIf="isMexico" >
                     <select2
                          placeholder="Municipio/Delegacion"
                          [options]="optionsServ.municipios"
                          name="id"
                          [group]="form.controls.municipio"
-                         (valueChange)="changeMunicipio($event)">
-                            
+                         (valueChange)="changeMunicipio($event)"
+                         hintStart="Campo obligatorio"
+                         >
+
                     </select2>
                 </div>
                 <div class="col-md-3" *ngIf="isMexico">
-                    <select2 placeholder="Colonia" [options]="optionsServ.colonias" name="id" [group]="form.controls.colonia"></select2>
+                    <select2 placeholder="Colonia" [options]="optionsServ.colonias" name="id" [group]="form.controls.colonia" hintStart="Campo obligatorio"></select2>
                 </div>
             </div>
             <div class="row">
@@ -99,18 +107,18 @@
                     <text label="C.P." name="cp" [group]="form"></text>
                 </div>
                 <div class="col-md-3">
-                    <date label="Fecha" name="fecha" [group]="form"></date>
+                    <date label="Fecha" name="fecha" [group]="form" hintStart="Campo obligatorio"></date>
                 </div>
                 <div class="col-md-3">
                     <time label="Hora" name="hora" [group]="form"></time>
                 </div>
                 <div class="col-md-3">
-                    <select2 
+                    <select2
                         placeholder="Día"
                         name="dia"
                         [options]="lugarServ.dia"
                         [group]="form"
-                        (valueChange)="lugarServ.find($event, 'dia')">    
+                        (valueChange)="lugarServ.find($event, 'dia')">
                     </select2>
                 </div>
             </div>
@@ -142,7 +150,7 @@
             <input name="id" formControlName="id" [formGroup]="form" hidden>
             <div class="row justify-content-end">
                 <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" matTooltipPosition="above">
-                    <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id != null">Editar</button>    
+                    <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id != null">Editar</button>
                     <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id == null">Guardar</button>
                 </div>
                 <div class="col-sm-auto">
