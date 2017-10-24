@@ -138,7 +138,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         let timer = Observable.timer(1);
         timer.subscribe(t => {
             let mediaF = this.globals.form.get('mediaFiliacion') as FormArray;
-            if ( this.globals.tipoInterviniente=="4"){
+            if ( this.globals.tipoInterviniente==_config.optionValue.imputado){
                 for (var propName in _personaCaso["persona"].mediaFiliacion) { 
                     if (_personaCaso["persona"].mediaFiliacion[propName] === null || _personaCaso["persona"].mediaFiliacion[propName] === undefined) {
                       delete (_personaCaso["persona"].mediaFiliacion)[propName];
@@ -440,7 +440,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             }
         }
         //los mediafiliacion
-        if (this.globals.tipoInterviniente=="4"){
+        if (this.globals.tipoInterviniente==_config.optionValue.imputado){
             if (_model["mediaFiliacion"])
             {
                 temId++;
@@ -634,7 +634,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     }
                 }
                 this.buscaMediaFiliacion(_model).then(datos=>{
-                    if (this.globals.tipoInterviniente=="4"){
+                    if (this.globals.tipoInterviniente==_config.optionValue.imputado){
                         if((datos["mediaFiliacion"])["id"])
                             (datos["mediaFiliacion"])["id"]=this.globals.personaCaso["mediaFiliacion"].id;
                     }else{
@@ -885,6 +885,7 @@ export class PersonaGlobals{
     public detenido: boolean = false;
     public persona:Persona;
     public formLocalizacion: FormGroup;
+    public imputado = _config.optionValue.imputado;
     public otrosNombres={
         nombres:[],
         ids:[],

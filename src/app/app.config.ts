@@ -7,7 +7,8 @@ export var _config = {
 	optionValue:{
 		armaFuego : "fuego",
 		armaBlanca : "Arma blanca",
-		idMexico  : 0
+		idMexico  : 0,
+		imputado : '4',
 	}
 
 }
