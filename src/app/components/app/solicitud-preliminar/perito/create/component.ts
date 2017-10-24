@@ -1,3 +1,4 @@
+import { FormatosGlobal } from './../../formatos';
 import { Component, ViewChild, Output,Input, EventEmitter  } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
@@ -186,10 +187,12 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	selector: 'documento-perito',
 	templateUrl: './documento.component.html',
 })
-export class DocumentoPeritoComponent {
+export class DocumentoPeritoComponent extends FormatosGlobal {
 
   columns = ['nombre', 'procedimiento', 'fechaCreacion'];
   @Input() isPericiales:boolean=false;
+  @Input() id:boolean=false;
+
 	data: DocumentoPerito[] = [
 		{ id: 1, nombre: 'Entrevista.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
 		{ id: 2, nombre: 'Nota.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
@@ -198,11 +201,17 @@ export class DocumentoPeritoComponent {
 		{ id: 5, nombre: 'Fase1.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
 	];
 
-	dataSource: TableService | null;
-	@ViewChild(MatPaginator) paginator: MatPaginator;
+  dataSource: TableService | null;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
-	ngOnInit() {
-		this.dataSource = new TableService(this.paginator, this.data);
+  constructor(
+      public http: HttpService
+      ){
+      super(http);
+  }
+
+  ngOnInit() {
+      this.dataSource = new TableService(this.paginator, this.data);
   }
 }
 

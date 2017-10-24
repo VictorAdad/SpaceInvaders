@@ -1,4 +1,5 @@
-import { Component, ViewChild, Output, EventEmitter} from '@angular/core';
+import { FormatosGlobal } from './../../formatos';
+import { Component, ViewChild, Output, Input, EventEmitter} from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -106,7 +107,7 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 						this.id=response.id;
 						this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion/'+this.id+'/edit']);
 						resolve('Solicitud de requerimiento de información creada con éxito');
-						
+
 					},
 					(error) => {
 						console.error('Error', error);
@@ -124,10 +125,10 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
             (resolve, reject) => {
 				this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
 					console.log('-> Registro acutualizado', response);
-					
+
 					this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion']);
 					resolve('Solicitud de requerimiento de información actualizada con éxito');
-					
+
 				});
 			}
 		);
@@ -144,7 +145,7 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 	selector: 'documento-requerimiento',
     templateUrl:'./documento.component.html',
 })
-export class DocumentoRequerimientoInformacionComponent {
+export class DocumentoRequerimientoInformacionComponent extends FormatosGlobal{
 
 	displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
 	data: DocumentoRequerimientoInformacion[] = [
@@ -153,15 +154,20 @@ export class DocumentoRequerimientoInformacionComponent {
 		{id : 3, nombre: 'Fase.png',        	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
 		{id : 4, nombre: 'Entrevista1.pdf',  	procedimiento: 'N/A',     	fechaCreacion:'07/09/2017'},
 		{id : 5, nombre: 'Fase1.png',        	procedimiento: 'N/A',     	fechaCreacion:'07/09/2017'},
-	];
+  ];
+  @Input() id:boolean=false;
+  dataSource: TableService | null;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
-	dataSource: TableService | null;
-	@ViewChild(MatPaginator) paginator: MatPaginator;
+  constructor(
+      public http: HttpService
+      ){
+      super(http);
+  }
 
-
-	ngOnInit() {
-    	this.dataSource = new TableService(this.paginator, this.data);
-  	}
+  ngOnInit() {
+      this.dataSource = new TableService(this.paginator, this.data);
+  }
 }
 
 export interface DocumentoRequerimientoInformacion {

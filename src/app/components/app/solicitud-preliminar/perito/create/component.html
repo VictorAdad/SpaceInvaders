@@ -16,7 +16,7 @@
 	<div class="col-md-12">
 		<mat-tab-group>
 			<mat-tab label="Solicitud"><solicitud-perito (isPericialesUpdate)="pericialesUpdate($event)" (idUpdate)="idUpdate($event)"></solicitud-perito></mat-tab>
-			<mat-tab label="Documentos" *ngIf="solicitudId!=null"><documento-perito [isPericiales]="isPericiales" ></documento-perito></mat-tab>
+			<mat-tab label="Documentos" *ngIf="solicitudId!=null"><documento-perito [isPericiales]="isPericiales" [id]="solicitudId"></documento-perito></mat-tab>
 		</mat-tab-group>
 	</div>
 </div>

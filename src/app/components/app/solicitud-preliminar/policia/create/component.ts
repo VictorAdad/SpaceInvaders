@@ -1,4 +1,5 @@
-import { Component, ViewChild, Output, EventEmitter} from '@angular/core';
+import { FormatosGlobal } from './../../formatos';
+import { Component, ViewChild, Output, Input, EventEmitter} from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -141,7 +142,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 	selector: 'documento-policia',
 	templateUrl: './documento.component.html',
 })
-export class DocumentoPoliciaComponent {
+export class DocumentoPoliciaComponent extends FormatosGlobal{
 
 	columns = ['nombre', 'procedimiento', 'fechaCreacion'];
 	data: DocumentoPolicia[] = [
@@ -151,13 +152,18 @@ export class DocumentoPoliciaComponent {
 		{ id: 4, nombre: 'Entrevista1.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
 		{ id: 5, nombre: 'Fase1.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
 	];
+  dataSource: TableService | null;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @Input() id:boolean=false;
+  constructor(
+      public http: HttpService
+      ){
+      super(http);
+  }
 
-	dataSource: TableService | null;
-	@ViewChild(MatPaginator) paginator: MatPaginator;
-
-	ngOnInit() {
-		this.dataSource = new TableService(this.paginator, this.data);
-	}
+  ngOnInit() {
+      this.dataSource = new TableService(this.paginator, this.data);
+  }
 }
 
 export interface DocumentoPolicia {

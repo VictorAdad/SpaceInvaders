@@ -1,4 +1,5 @@
-import { Component, ViewChild , Output, EventEmitter } from '@angular/core';
+import { FormatosGlobal } from './../../formatos';
+import { Component, ViewChild , Output,Input, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -137,7 +138,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 	selector: 'documento-registro-general',
 	templateUrl: './documento.component.html',
 })
-export class DocumentoRegistroGeneralComponent {
+export class DocumentoRegistroGeneralComponent  extends FormatosGlobal{
 	displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
 	data: DocumentoRegistroGeneral[] = [
 		{ id: 1, nombre: 'Entrevista.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
@@ -147,12 +148,19 @@ export class DocumentoRegistroGeneralComponent {
 		{ id: 5, nombre: 'Fase1.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
 	];
 
-	dataSource: TableService | null;
-	@ViewChild(MatPaginator) paginator: MatPaginator;
+  dataSource: TableService | null;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @Input() id:boolean=false;
 
-	ngOnInit() {
-		this.dataSource = new TableService(this.paginator, this.data);
-	}
+  constructor(
+      public http: HttpService
+      ){
+      super(http);
+  }
+
+  ngOnInit() {
+      this.dataSource = new TableService(this.paginator, this.data);
+  }
 }
 
 export interface DocumentoRegistroGeneral {
