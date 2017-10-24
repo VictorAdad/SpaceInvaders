@@ -9,6 +9,7 @@ import { AcuerdoGeneral } from '@models/solicitud-preliminar/acuerdoGeneral';
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
 import { SolicitudPreliminarGlobal } from '../../global';
+import { FormatosGlobal } from '../../formatos';
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { SelectsService} from '@services/selects.service';
@@ -221,26 +222,27 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
     selector: 'documento-acuerdo-general',
     templateUrl: './documento.component.html',
 })
-export class DocumentoAcuerdoGeneralComponent {
+export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
 
     displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
-    data: DocumentoAcuerdoGeneral[] = [
-        { id: 1, nombre: 'Entrevista.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-        { id: 2, nombre: 'Nota.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-        { id: 3, nombre: 'Fase.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-        { id: 4, nombre: 'Entrevista1.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-        { id: 5, nombre: 'Fase1.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-    ];
-    @Input() tipo;string=null;
+    data = [];
+    @Input() tipo:string=null;
+    @Input() id:number=null;
     tipo_options={
       'Acuerdo General':[{'label':'ACUERDO GENERAL','value':'F1-006'}],
       'Asignación de asesor jurídico':[{'label':'SOLICITUD DE ASESOR JURIDICO','value':'F1-002'}],
-      'Ayuda y atención a víctimas':[{'label':'OFICIO PARA AYUDA Y ATENCIÓN A VÍCTIMA','value':'F1-001'}]
+      'Ayuda y atención a víctimas':[{'label':'OFICIO PARA AYUDA Y ATENCIÓN A VÍCTIMA','value':'F1_001'}]
     }
 
 
     dataSource: TableService | null;
     @ViewChild(MatPaginator) paginator: MatPaginator;
+
+    constructor(
+        public http: HttpService
+        ){
+        super(http);
+    }
 
     ngOnInit() {
         this.dataSource = new TableService(this.paginator, this.data);

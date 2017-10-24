@@ -16,7 +16,7 @@
 	<div class="col-md-12">
 		<mat-tab-group>
 			<mat-tab label="Solicitud"><solicitud-acuerdo-general (tipoUpdate)="tipoUpdate($event)"  (idUpdate)="idUpdate($event)"></solicitud-acuerdo-general></mat-tab>
-			<mat-tab label="Documentos" *ngIf="solicitudId!=null"><documento-acuerdo-general [tipo]="tipo"></documento-acuerdo-general></mat-tab>
+			<mat-tab label="Documentos" *ngIf="solicitudId!=null"><documento-acuerdo-general [tipo]="tipo" [id]="solicitudId"></documento-acuerdo-general></mat-tab>
 		</mat-tab-group>
 	</div>
 </div>
