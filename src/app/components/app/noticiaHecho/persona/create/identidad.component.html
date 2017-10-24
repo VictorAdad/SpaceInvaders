@@ -9,19 +9,19 @@
     </mat-expansion-panel-header>
     <div class="row" *ngIf="globals.tipoPersona=='Moral'">
         <div class="col-md-3">
-            <text label="Razón social" name="razonSocial" [group]="globals.form" hintStart="Campo obligatorio"></text>
+            <text label="Razón social" name="razonSocial"  hintStart="Campo obligatorio" [group]="globals.form" hintStart="Campo obligatorio"></text>
         </div>
     </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col">
-                <text label="Nombre"  name="nombre" [group]="globals.form"></text>
+                <text label="Nombre"  hintStart="Campo obligatorio" name="nombre" [group]="globals.form"></text>
             </div>
             <div class="col">
-                <text label="Apellido paterno"  name="paterno" [group]="globals.form"></text>
+                <text label="Apellido paterno"   hintStart="Campo obligatorio" name="paterno" [group]="globals.form"></text>
             </div>
             <div class="col">
-                <text label="Apellido materno"  name="materno" [group]="globals.form"></text>
+                <text label="Apellido materno"   hintStart="Campo obligatorio" name="materno" [group]="globals.form"></text>
             </div>
         </div>
         <div class="row">
@@ -148,7 +148,7 @@
             <div class="col-md-2" *ngIf="globals.detenido">
                 <select2 [options]="
                 []" placeholder="Cereso" ></select2>
-            </div> 
+            </div>
 
         </div>
     </div>
