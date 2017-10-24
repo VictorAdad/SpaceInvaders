@@ -9,6 +9,8 @@ import { TokenInputComponent } from '@partials/form/tokeninput/tokeninput.compon
 import { BreadcrumbComponent } from '@partials/breadcrumb/breadcrumb.component';
 import { TimeComponent } from '@partials/form/time/time.component';
 import { PasswordComponent } from '@partials/form/password/component';
+import { LoaderComponent } from '@partials/loader/component';
+
 
 @NgModule()
 export class PartialsModule {}
@@ -24,4 +26,5 @@ export const partialsComponents = [
 	BreadcrumbComponent,
 	TimeComponent,
 	PasswordComponent,
+	LoaderComponent,
 ];
