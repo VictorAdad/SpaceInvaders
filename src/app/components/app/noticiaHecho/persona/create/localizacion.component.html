@@ -1,4 +1,4 @@
-<mat-expansion-panel [formGroup]="globals.form">
+<mat-expansion-panel [formGroup]="globals.form" expanded="true">
     <mat-expansion-panel-header>
         <mat-panel-title>
             <mat-icon>room</mat-icon> Datos de Localización
@@ -8,7 +8,7 @@
         </mat-panel-description>
     </mat-expansion-panel-header>
     <div formArrayName="localizacionPersona">
-        <div *ngFor="let localizacion of (globals.form.controls.localizacionPersona)['controls']; let i=index; trackBy:trackByIndex" [formGroupName]="i">
+        <div *ngFor="let localizacion of (globals.form.controls.localizacionPersona)['controls']; let i=index; trackBy:trackByIndex" [formGroupName]="i" class="container-fluid">
             <div class="row" >
                 <div class="col-md-3">
                     <select2 [options]="options.paises"
@@ -75,42 +75,39 @@
             </div>
 
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <text label="Localidad"
                         name="localidadOtro"
                         [group]="globals.form.controls.localizacionPersona.controls[i]">
                     </text>
                 </div>
-                <div class="col-md-2">
-                    <!-- <mat-form-field class="full-width">
-                        <input matInput placeholder="Calle" formControlName="calle">
-                    </mat-form-field> -->
+                <div class="col-md-3">
                     <text label="Calle" name="calle" [group]="globals.form.controls.localizacionPersona.controls[i]"></text>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <text label="No. exterior" name="noExterior" [group]="globals.form.controls.localizacionPersona.controls[i]"></text>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <text label="No. interior" name="noInterior" [group]="globals.form.controls.localizacionPersona.controls[i]"></text>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <text label="CP"
                         name="cp"
                         [group]="globals.form.controls.localizacionPersona.controls[i]">
         
                     </text>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <select2 placeholder="Tipo de domicilio"
                         [options]="options.tipoDomicilio"
                         name="id"
                         [group]="globals.form.controls.localizacionPersona.controls[i].controls.tipoDomicilio">
                     </select2>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <text label="Referencias"
                         name="referencias"
                         [group]="globals.form.controls.localizacionPersona.controls[i]">        
@@ -119,28 +116,28 @@
             </div>
 
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <text label="Tel. particular"
                         name="telParticular"
                         [group]="globals.form.controls.localizacionPersona.controls[i]">
                             
                     </text>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <text label="Tel. del trabajo"
                         name="telTrabajo"
                         [group]="globals.form.controls.localizacionPersona.controls[i]">
                             
                     </text>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <text label="Extensión"
                         name="extension"
                         [group]="globals.form.controls.localizacionPersona.controls[i]">
                             
                     </text>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <text label="Tel. móvil"
                         name="telMovil"
                         [group]="globals.form.controls.localizacionPersona.controls[i]">
@@ -150,21 +147,21 @@
             </div>
 
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <text label="Fax"
                         name="fax"
                         [group]="globals.form.controls.localizacionPersona.controls[i]">
                             
                     </text>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <text label="Otro medio de contacto"
                         name="otroMedioContacto"
                         [group]="globals.form.controls.localizacionPersona.controls[i]">
                             
                     </text>
                 </div>
-                <div class="correo">
+                <div class="col-md-3">
                     <text label="Correo"
                         name="correo"
                         [group]="globals.form.controls.localizacionPersona.controls[i]">
