@@ -395,12 +395,16 @@
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <select2 placeholder="Tipo"
                                 [options]="optionsRelacion.matrizTipoTransportacion.tipo"
+                                name="tipo"
+                                [group]="formRelacion.trataPersonasForm"
                                 (valueChange)="optionsRelacion.matrizTipoTransportacion.find($event, 'tipo')">
                             </select2>
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <select2 placeholder="Transportación"
                                 [options]="optionsRelacion.matrizTipoTransportacion.transportacion"
+                                name="transportacion"
+                                [group]="formRelacion.trataPersonasForm"
                                 (valueChange)="optionsRelacion.matrizTipoTransportacion.find($event, 'transportacion')">
                             </select2>
                         </div>
@@ -423,38 +427,53 @@
 
                                     <ng-container matColumnDef="País de origen">
                                         <mat-header-cell *matHeaderCellDef> País de origen </mat-header-cell>
-                                        <mat-cell *matCellDef="let element"> {{ optionsService.find('paises', element.paisOrigen.id).label }} </mat-cell>
+                                        <mat-cell *matCellDef="let element">
+                                            {{ optionsService.find('paises', element.paisOrigen.id).label }}
+                                        </mat-cell>
                                     </ng-container>
 
 
                                     <ng-container matColumnDef="Estado de origen">
                                         <mat-header-cell *matHeaderCellDef> Estado de origen </mat-header-cell>
-                                        <mat-cell *matCellDef="let element"> {{arrEstadosOrigen[element.estadoOrigen.id].label}} </mat-cell>
+                                        <mat-cell *matCellDef="let element">
+                                            {{arrEstadosOrigen[element.estadoOrigen.id].label}}
+                                        </mat-cell>
                                     </ng-container>
                                     <ng-container matColumnDef="Municipio de origen">
                                         <mat-header-cell *matHeaderCellDef> Municipio de origen </mat-header-cell>
-                                        <mat-cell *matCellDef="let element"> {{arrMunicipiosOrigen[element.municipioOrigen.id].label}} </mat-cell>
+                                        <mat-cell *matCellDef="let element">
+                                            {{arrMunicipiosOrigen[element.municipioOrigen.id].label}}
+                                        </mat-cell>
                                     </ng-container>
                                     <ng-container matColumnDef="País destino">
                                         <mat-header-cell *matHeaderCellDef> País destino </mat-header-cell>
-                                        <mat-cell *matCellDef="let element"> {{optionsService.find('paises', element.paisDestino.id).label}} </mat-cell>
+                                        <mat-cell *matCellDef="let element">
+                                            {{optionsService.find('paises', element.paisDestino.id).label}}
+                                        </mat-cell>
                                     </ng-container>
                                     <ng-container matColumnDef="Estado destino">
                                         <mat-header-cell *matHeaderCellDef> Estado destino </mat-header-cell>
-                                        <mat-cell *matCellDef="let element"> {{ arrEstadosDestino[element.estadoDestino.id].label }} </mat-cell>
+                                        <mat-cell *matCellDef="let element">
+                                            {{ arrEstadosDestino[element.estadoDestino.id].label }}
+                                        </mat-cell>
                                     </ng-container>
                                     <ng-container matColumnDef="Municipio destino">
                                         <mat-header-cell *matHeaderCellDef> Municipio destino </mat-header-cell>
-                                        <mat-cell *matCellDef="let element"> {{arrMunicipiosDestino[element.municipioDestino.id].label}} </mat-cell>
+                                        <mat-cell *matCellDef="let element">
+                                            {{arrMunicipiosDestino[element.municipioDestino.id].label}}
+                                        </mat-cell>
                                     </ng-container>
 
                                     <ng-container matColumnDef="Tipo de trata">
                                         <mat-header-cell *matHeaderCellDef> Tipo de trata </mat-header-cell>
-                                        <mat-cell *matCellDef="let element"> {{optionsRelacion.matrizTipoTransportacion.finded[0].tipo}} </mat-cell>
+                                        <mat-cell *matCellDef="let element">
+                                            <!-- {{optionsRelacion.matrizTipoTransportacion.finded[0].tipo}} -->
+                                        </mat-cell>
                                     </ng-container>
                                     <ng-container matColumnDef="Transportación">
                                         <mat-header-cell *matHeaderCellDef> Transportación </mat-header-cell>
-                                        <mat-cell *matCellDef="let element"> {{optionsRelacion.matrizTipoTransportacion.finded[0].transportacion}}
+                                        <mat-cell *matCellDef="let element">
+                                            <!-- {{optionsRelacion.matrizTipoTransportacion.finded[0].transportacion}} -->
                                         </mat-cell>
                                     </ng-container>
 

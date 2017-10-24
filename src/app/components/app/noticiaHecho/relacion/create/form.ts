@@ -135,6 +135,8 @@ export class Form {
             'paisDestinoOtro': new FormControl(),
             'estadoDestinoOtro': new FormControl(),
             'municipioDestinoOtro': new FormControl(),
+            'tipo': new FormControl(),
+            'transportacion': new FormControl(),
         });
     }
 
