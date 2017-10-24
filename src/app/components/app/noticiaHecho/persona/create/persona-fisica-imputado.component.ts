@@ -65,6 +65,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
     public changeTipoInterviniente(tipoInterviniente){
         this.globals.tipoInterviniente=tipoInterviniente;
+        console.log("TIPOINTERVINIENTE->",tipoInterviniente);
     }
 
     ngOnInit(){
@@ -137,7 +138,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         let timer = Observable.timer(1);
         timer.subscribe(t => {
             let mediaF = this.globals.form.get('mediaFiliacion') as FormArray;
-            if ( this.globals.tipoInterviniente=="5"){
+            if ( this.globals.tipoInterviniente=="4"){
                 for (var propName in _personaCaso["persona"].mediaFiliacion) { 
                     if (_personaCaso["persona"].mediaFiliacion[propName] === null || _personaCaso["persona"].mediaFiliacion[propName] === undefined) {
                       delete (_personaCaso["persona"].mediaFiliacion)[propName];
@@ -439,7 +440,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             }
         }
         //los mediafiliacion
-        if (this.globals.tipoInterviniente=="5"){
+        if (this.globals.tipoInterviniente=="4"){
             if (_model["mediaFiliacion"])
             {
                 temId++;
@@ -483,6 +484,14 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
             }else{
                 _model.personaCaso[0].caso.id = this.casoId;
+                var lista=this.options.tipoInterviniente as any[];
+                for (var i = 0; i < lista.length; ++i) {
+                    if((lista[i])["value"]==_model.personaCaso[0].tipoInterviniente["id"])
+                    {
+                        _model.personaCaso[0].tipoInterviniente["tipo"] = (lista[i])["label"];
+                        break;
+                    }
+                }
                 let temId=Date.now();
                 var otrosID=[];
                 var dependeDe=this.agregaIdTemporales(_model,temId,otrosID);
@@ -625,7 +634,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     }
                 }
                 this.buscaMediaFiliacion(_model).then(datos=>{
-                    if (this.globals.tipoInterviniente=="5"){
+                    if (this.globals.tipoInterviniente=="4"){
                         if((datos["mediaFiliacion"])["id"])
                             (datos["mediaFiliacion"])["id"]=this.globals.personaCaso["mediaFiliacion"].id;
                     }else{
@@ -1034,7 +1043,7 @@ class LosForm{
             'nombre'           : new FormControl("", []),
             'paterno'          : new FormControl("", [Validators.required,]),
             'materno'          : new FormControl("", [Validators.required,]),
-            'razonSocial'      : new FormControl("", [Validators.required,Validators.minLength(4)]),
+            'razonSocial'      : new FormControl("", [Validators.required,Validators.minLength(5)]),
             'fechaNacimiento'  : new FormControl("",[]),
             'edad'             : new FormControl("",[]),
             'curp'             : new FormControl("",[]),
