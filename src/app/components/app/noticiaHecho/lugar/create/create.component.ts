@@ -244,6 +244,10 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 this.db.add("sincronizar",dato).then(p=>{
                     this.db.get("casos",this.casoId).then(t=>{
                         let lugares=t["lugar"] as any[];
+                        _model["id"]=this.id;
+                        _model.detalleLugar["dia"]=_model["dia"];
+                        _model.detalleLugar["tipoLugar"]=_model["tipo"];
+                        _model.detalleLugar["tipoZona"]=_model["tipoZona"];
                         for (var i = 0; i < lugares.length; ++i) {
                             if ((lugares[i])["id"]==this.id){
                                 lugares[i]=_model;

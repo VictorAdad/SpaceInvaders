@@ -206,16 +206,19 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                 this.db.add("sincronizar",dato).then(p=>{
                     this.db.get("casos",this.casoId).then(t=>{
                         let vehiculos=t["vehiculo"] as any[];
+                        _model["id"]=this.id;
                         for (var i = 0; i < vehiculos.length; ++i) {
                             if ((vehiculos[i])["id"]==this.id){
                                 vehiculos[i]=_model;
                                 break;
                             }
                         }
+                        this.db.update("casos", t).then(r=>{
+                            resolve("vehiculo actualizado");
+                            console.log('-> Registro acutualizado');
+                        });
                         console.log("caso",t);
                     });
-                    resolve("vehiculo actualizado");
-                    console.log('-> Registro acutualizado');
                 }); 
             }
         });
