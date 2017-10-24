@@ -16,7 +16,7 @@
 	<div class="col-md-12">
 		<mat-tab-group>
 			<mat-tab label="Entrevista"><entrevista-entrevista (idUpdate)="idUpdate($event)"></entrevista-entrevista></mat-tab>
-			<mat-tab label="Documentos" *ngIf="entrevistaId!=null"><documento-entrevista></documento-entrevista></mat-tab>
+			<mat-tab label="Documentos" *ngIf="entrevistaId!=null"><documento-entrevista [id]="entrevistaId"></documento-entrevista></mat-tab>
 		</mat-tab-group>
 	</div>
 </div>

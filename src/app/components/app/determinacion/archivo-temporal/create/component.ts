@@ -1,4 +1,5 @@
-import { Component, ViewChild, Output, EventEmitter  } from '@angular/core';
+import { FormatosGlobal } from './../../../solicitud-preliminar/formatos';
+import { Component, ViewChild, Output, Input,EventEmitter  } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -23,7 +24,7 @@ export class ArchivoTemporalCreateComponent {
 			if (params['casoId']){
 				this.casoId = +params['casoId'];
 				this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});
-			}	
+			}
 		});
 	}
   idUpdate(event: any) {
@@ -126,9 +127,11 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 	selector: 'documento-archivo-temporal',
 	templateUrl: './documento.component.html',
 })
-export class DocumentoArchivoTemporalComponent {
+export class DocumentoArchivoTemporalComponent extends FormatosGlobal{
 
-	displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  @Input() id:number=null;
+
 	data: DocumentoArchivoTemporal[] = [
 		{ id: 1, nombre: 'Entrevista.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
 		{ id: 2, nombre: 'Nota.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
@@ -137,13 +140,18 @@ export class DocumentoArchivoTemporalComponent {
 		{ id: 5, nombre: 'Fase1.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
 	];
 
-	dataSource: TableService | null;
-	@ViewChild(MatPaginator) paginator: MatPaginator;
+  dataSource: TableService | null;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  constructor(
+      public http: HttpService
+      ){
+      super(http);
+  }
 
-	ngOnInit() {
-		this.dataSource = new TableService(this.paginator, this.data);
-	}
+  ngOnInit() {
+      this.dataSource = new TableService(this.paginator, this.data);
+  }
 }
 
 export interface DocumentoArchivoTemporal {

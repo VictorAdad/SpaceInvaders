@@ -1,4 +1,5 @@
-import { Component, ViewChild , Output, EventEmitter } from '@angular/core';
+import { FormatosGlobal } from './../../solicitud-preliminar/formatos';
+import { Component, ViewChild , Output, Input,EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -153,7 +154,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
     selector: 'documento-acuerdo-inicio',
     templateUrl: './documento.component.html',
 })
-export class DocumentoAcuerdoInicioComponent {
+export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
 
     displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
     data: DocumentoAcuerdoInicio[] = [
@@ -164,8 +165,17 @@ export class DocumentoAcuerdoInicioComponent {
         { id: 5, nombre: 'Fase1.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
     ];
 
+
+    @Input() id:boolean=false;
+
     dataSource: TableService | null;
     @ViewChild(MatPaginator) paginator: MatPaginator;
+
+    constructor(
+        public http: HttpService
+        ){
+        super(http);
+    }
 
     ngOnInit() {
         this.dataSource = new TableService(this.paginator, this.data);

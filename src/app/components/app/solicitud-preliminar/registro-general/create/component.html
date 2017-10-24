@@ -1,5 +1,5 @@
 <breadcrumb [rutas]="breadcrumb"></breadcrumb>
-<div class="row space">    
+<div class="row space">
     <div class="col-md-12 text-right">
         <small>NIC:CAI/AIN/00/UAI/268/00126/17/08 - NUC: CAI/AIN/00/UAI/268/00126/17/08</small>
     </div>
@@ -16,7 +16,7 @@
 	<div class="col-md-12">
 		<mat-tab-group>
 			<mat-tab label="Solicitud"><solicitud-registro-general (idUpdate)="idUpdate($event)"></solicitud-registro-general></mat-tab>
-			<mat-tab label="Documentos" *ngIf="solicitudId!=null"><documento-registro-general></documento-registro-general></mat-tab>
+			<mat-tab label="Documentos" *ngIf="solicitudId!=null"><documento-registro-general [id]="solicitudId"></documento-registro-general></mat-tab>
 		</mat-tab-group>
 	</div>
 </div>

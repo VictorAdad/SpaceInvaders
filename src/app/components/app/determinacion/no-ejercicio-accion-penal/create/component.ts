@@ -1,4 +1,5 @@
-import { Component, ViewChild,Output, EventEmitter } from '@angular/core';
+import { FormatosGlobal } from './../../../solicitud-preliminar/formatos';
+import { Component, ViewChild,Output, Input, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -17,7 +18,7 @@ export class NoEjercicioAccionPenalCreateComponent {
 	public casoId: number = null;
     public determinacionId: number = null;
 	public breadcrumb = [];
-	
+
 	constructor(private route: ActivatedRoute) { }
 	ngOnInit() {
 		this.route.params.subscribe(params => {
@@ -137,8 +138,9 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
 	selector: 'documento-accion-penal',
 	templateUrl: './documento.component.html',
 })
-export class DocumentoNoEjercicioAccionPenalComponent {
+export class DocumentoNoEjercicioAccionPenalComponent extends FormatosGlobal {
 
+  @Input() id:number=null;
 	displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
 	data: DocumentoNoEjercicioAccionPenal[] = [
 		{ id: 1, nombre: 'Entrevista.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
@@ -148,13 +150,18 @@ export class DocumentoNoEjercicioAccionPenalComponent {
 		{ id: 5, nombre: 'Fase1.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
 	];
 
-	dataSource: TableService | null;
-	@ViewChild(MatPaginator) paginator: MatPaginator;
+  dataSource: TableService | null;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  constructor(
+      public http: HttpService
+      ){
+      super(http);
+  }
 
-	ngOnInit() {
-		this.dataSource = new TableService(this.paginator, this.data);
-	}
+  ngOnInit() {
+      this.dataSource = new TableService(this.paginator, this.data);
+  }
 }
 
 export interface DocumentoNoEjercicioAccionPenal {

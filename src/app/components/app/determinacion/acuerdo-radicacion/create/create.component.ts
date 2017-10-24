@@ -1,4 +1,5 @@
-import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
+import { FormatosGlobal } from './../../../solicitud-preliminar/formatos';
+import { Component, ViewChild, Output,Input, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -24,7 +25,7 @@ export class AcuerdoRadicacionCreateComponent {
                 this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});
             }
-                
+
         });
   	}
   idUpdate(event: any) {
@@ -89,9 +90,9 @@ export class AcuerdoRadicacionComponent extends DeterminacionGlobal{
                 this.http.post(this.apiUrl, this.model).subscribe(
                     (response) => {
                         console.log(response);
-                       this.id=response.id;  
+                       this.id=response.id;
                       if(this.casoId!=null){
-                        this.router.navigate(['/caso/'+this.casoId+'/acuerdo-radicacion/'+this.id+'/edit' ]);      
+                        this.router.navigate(['/caso/'+this.casoId+'/acuerdo-radicacion/'+this.id+'/edit' ]);
                       }
                       resolve('Acuerdo de radicación creado con éxito')
                     },
@@ -123,7 +124,7 @@ export class AcuerdoRadicacionComponent extends DeterminacionGlobal{
     }
 
 
-	
+
 }
 
 @Component({
@@ -131,8 +132,9 @@ export class AcuerdoRadicacionComponent extends DeterminacionGlobal{
     templateUrl:'./documento-acuerdo-radicacion.component.html',
 })
 
-export class DocumentoAcuerdoRadicacionComponent {
+export class DocumentoAcuerdoRadicacionComponent extends FormatosGlobal{
 
+  @Input() id:number=null;
 	displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
 	data: DocumentoAcuerdoRadicación[] = [
 		{id: 1, nombre: 'Entrevista.pdf',    	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
@@ -142,13 +144,18 @@ export class DocumentoAcuerdoRadicacionComponent {
 		{id: 5, nombre: 'Fase1.png',        	procedimiento: 'N/A',     	fechaCreacion:'07/09/2017'},
 	];
 
-	dataSource: TableService | null;
-	@ViewChild(MatPaginator) paginator: MatPaginator;
+  dataSource: TableService | null;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  constructor(
+      public http: HttpService
+      ){
+      super(http);
+  }
 
-	ngOnInit() {
-    	this.dataSource = new TableService(this.paginator, this.data);
-  	}
+  ngOnInit() {
+      this.dataSource = new TableService(this.paginator, this.data);
+  }
 }
 
 export class DocumentoAcuerdoRadicación {

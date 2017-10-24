@@ -1,4 +1,5 @@
-import { Component, ViewChild,EventEmitter,Output} from '@angular/core';
+import { FormatosGlobal } from './../../formatos';
+import { Component, ViewChild,EventEmitter,Output,Input} from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -39,7 +40,7 @@ export class InspeccionCreateComponent {
     templateUrl:'./solicitud.component.html',
 })
 export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
-    
+
     public apiUrl:string="/v1/base/solicitudes-pre-inspecciones";
     public casoId: number = null;
     public id: number = null;
@@ -94,7 +95,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
             Object.assign(this.model, _model);
             this.model.caso.id = this.casoId;
             console.log('-> Inspeccion@save()', this.model);
-            
+
             var fechaCompleta = new Date (this.model.fechaHoraInspeccion);
             fechaCompleta.setMinutes(parseInt(this.model['horaInspeccion'].split(':')[1]));
             fechaCompleta.setHours(parseInt(this.model['horaInspeccion'].split(':')[0]));
@@ -102,7 +103,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
             var mes:number=fechaCompleta.getMonth()+1;
             this.model.fechaHoraInspeccion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
             console.log('lo que envio: '+  this.model.fechaHoraInspeccion);
-        
+
         return new Promise<any>(
             (resolve, reject) => {
                 this.http.post(this.apiUrl, this.model).subscribe(
@@ -112,10 +113,10 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
                         //console.log('lo que recibo: '+ new Date(response.fechaHoraInspeccion));
                       if(this.casoId!=null){
     					this.id=response.id;
-                        this.router.navigate(['/caso/'+this.casoId+'/inspeccion/'+this.casoId+'/edit' ]);      
+                        this.router.navigate(['/caso/'+this.casoId+'/inspeccion/'+this.casoId+'/edit' ]);
                       }
                       else {
-                        this.router.navigate(['/inspecciones/'+this.casoId+'/edit' ]);      
+                        this.router.navigate(['/inspecciones/'+this.casoId+'/edit' ]);
                       }
                       resolve('Solicitud de inspección creada con éxito');
                     },
@@ -140,7 +141,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
         var mes:number=fechaCompleta.getMonth()+1;
         this.model.fechaHoraInspeccion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
         console.log('lo que envio: '+  this.model.fechaHoraInspeccion);
-        
+
         return new Promise<any>(
             (resolve, reject) => {
                 this.http.put(this.apiUrl+'/'+this.id, this.model).subscribe((response) => {
@@ -158,14 +159,14 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
         this.form.patchValue(_data);
         console.log(_data);
     }
-	
+
 }
 
 @Component({
 	selector: 'documento-inspeccion',
     templateUrl:'./documento.component.html',
 })
-export class DocumentoInspeccionComponent {
+export class DocumentoInspeccionComponent extends FormatosGlobal{
 
 	displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
 	data: DocumentoInspeccion[] = [
@@ -175,14 +176,19 @@ export class DocumentoInspeccionComponent {
 		{id : 4, nombre: 'Entrevista1.pdf',  	procedimiento: 'N/A',     	fechaCreacion:'07/09/2017'},
 		{id : 5, nombre: 'Fase1.png',        	procedimiento: 'N/A',     	fechaCreacion:'07/09/2017'},
 	];
+  dataSource: TableService | null;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @Input() id:boolean=false;
 
-	dataSource: TableService | null;
-	@ViewChild(MatPaginator) paginator: MatPaginator;
+  constructor(
+      public http: HttpService
+      ){
+      super(http);
+  }
 
-
-	ngOnInit() {
-    	this.dataSource = new TableService(this.paginator, this.data);
-  	}
+  ngOnInit() {
+      this.dataSource = new TableService(this.paginator, this.data);
+  }
 }
 
 export interface DocumentoInspeccion {
