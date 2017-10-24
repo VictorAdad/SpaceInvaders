@@ -265,7 +265,10 @@
                         [group]="globals.form.controls.mediaFiliacion"></text>
                 </div>
               </div>
+              <div [formGroup]="globals.form.controls.mediaFiliacion" >
+                  <input name="id" formControlName="id" hidden>
+              </div>
 
-              <input name="id" formControlName="id" [formGroup]="globals.form.controls.mediaFiliacion" hidden>
+              
 
 </mat-expansion-panel>
