@@ -43,7 +43,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         this.model=new Arma();
         this.form  = new FormGroup({
             'clase'           : new FormControl('', [Validators.required,]),
-            'tipo'            : new FormControl(''),
+            'tipo'            : new FormControl('', [Validators.required,]),
             'subtipo'         : new FormControl(''),
             'calibre'         : new FormControl(''),
             'mecanismo' : new FormControl(''),
@@ -60,6 +60,8 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                 'id' : new FormControl(''),
             }),
           });
+
+        this.form.controls.tipo.disable();
 
         this.route.params.subscribe(params => {
             if(params['casoId']){
@@ -224,13 +226,15 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         
         if(option == _config.optionValue.armaFuego){
            this.isArmaFuego=true;
+           this.form.controls.tipo.enable();
         }
         else{
            this.isArmaFuego=false;
         }
-        if(option=="Arma blanca"){
+        if(option==_config.optionValue.armaBlanca){
             console.log(option);
            this.isArmaBlanca=true;
+           this.form.controls.tipo.enable();
         }
         else{
            this.isArmaBlanca=false;
