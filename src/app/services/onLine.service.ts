@@ -119,7 +119,7 @@ export class OnLineService {
             uri:'/v1/catalogos/relacion/desaparicion-consumacion'
         },
         {
-            catalogo:"consucta_detalle",
+            catalogo:"conducta_detalle",
             uri:'/v1/catalogos/relacion/conducta-detalle'
         },
 
@@ -208,6 +208,14 @@ export class OnLineService {
             catalogo:"distrito",
             uri:'/v1/catalogos/usuario/distrito/options'
         },
+        {
+            catalogo:"clasificacion_delito",
+            uri:'/v1/catalogos/relacion/clasificacion-delito/options'
+        },
+        {
+            catalogo:"clasificacion_delito_orden",
+            uri:'/v1/catalogos/relacion/clasificacion-delito-orden/options'
+        }
 
 
     ];
