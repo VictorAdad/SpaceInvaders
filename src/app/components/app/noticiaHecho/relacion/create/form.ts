@@ -34,7 +34,7 @@ export class Form {
                 'id': new FormControl("",[]),
             }),
             'elementoComision'        : new FormGroup({
-                'id': new FormControl('',[/*Validators.required*/]),
+                'id': new FormControl('',[Validators.required]),
             }),
             'formaAccion'              : new FormGroup({
                 'id': new FormControl('', [Validators.required]),
@@ -78,6 +78,20 @@ export class Form {
                     new FormGroup({
                         'lugar': new FormGroup({
                             'id': new FormControl('', [Validators.required]),
+                        })
+                    })
+                ]),
+                'armaTipoRelacionPersona': new FormArray([
+                    new FormGroup({
+                        'lugar': new FormGroup({
+                            'id': new FormControl(''),
+                        })
+                    })
+                ]),
+                'vehiculoTipoRelacionPersona': new FormArray([
+                    new FormGroup({
+                        'lugar': new FormGroup({
+                            'id': new FormControl(''),
                         })
                     })
                 ])

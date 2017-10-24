@@ -45,20 +45,20 @@
                     </select2>
                 </div>
                 <div class="col">
-                    <select2 placeholder="Forma de comisión"
+                    <select2 placeholder="Arma"
                         name="id"
                         *ngIf="isImputadoVictimaDelito"
-                        [(options)]="optionsRelacion.formaComision"
-                        [group]="form.controls.formaComision">
+                        [(options)]="optionsNoticia.armas"
+                        [group]="form.controls.tipoRelacionPersona.controls.armaTipoRelacionPersona.controls[0].controls.lugar">
 
                     </select2>
                 </div>
-                <div class="col" >
-                    <select2 placeholder="Imputado"
+                <div class="col">
+                    <select2 placeholder="Vehículo"
                         name="id"
                         *ngIf="isImputadoVictimaDelito"
-                        [(options)]="optionsNoticia.imputados"
-                        [group]="form.controls.tipoRelacionPersona.controls.personaCasoRelacionada">
+                        [(options)]="optionsNoticia.vehiculos"
+                        [group]="form.controls.tipoRelacionPersona.controls.vehiculoTipoRelacionPersona.controls[0].controls.lugar">
 
                     </select2>
                 </div>
@@ -119,6 +119,24 @@
             </div>
             <div class="row" *ngIf="isImputadoVictimaDelito">
                 <div class="col">
+                    <select2 placeholder="Forma de comisión"
+                        name="id"
+                        *ngIf="isImputadoVictimaDelito"
+                        [(options)]="optionsRelacion.formaComision"
+                        [group]="form.controls.formaComision">
+
+                    </select2>
+                </div>
+                <div class="col" >
+                    <select2 placeholder="Imputado"
+                        name="id"
+                        *ngIf="isImputadoVictimaDelito"
+                        [(options)]="optionsNoticia.imputados"
+                        [group]="form.controls.tipoRelacionPersona.controls.personaCasoRelacionada">
+
+                    </select2>
+                </div>
+                <div class="col">
                     <select2 placeholder="Víctima u ofendido"
                         name="id"
                         [(options)]="optionsNoticia.victimas"
@@ -142,6 +160,8 @@
 
                     </select2>
                 </div>
+            </div>
+            <div class="row" *ngIf="isImputadoVictimaDelito">
                 <div class="col">
                     <select2 placeholder="Clasificación del delito"
                         name="id"
@@ -151,15 +171,13 @@
                     </select2>
                 </div>
                 <div class="col">
-                    <select2 placeholder="Elemento de comisión"
+                    <select2 placeholder="Elementos de comisión"
                         name="id"
                         [(options)]="optionsRelacion.elementoComision"
                         [group]="form.controls.elementoComision">
 
                     </select2>
                 </div>
-            </div>
-            <div class="row" *ngIf="isImputadoVictimaDelito">
                 <div class="col">
                     <select2 placeholder="Clasificación"
                         name="id"
@@ -186,6 +204,8 @@
 
                     </select2>
                 </div>
+            </div>
+            <div class="row" *ngIf="isImputadoVictimaDelito">
                 <div class="col">
                     <select2 placeholder="Grado de participación"
                         name="id"
@@ -204,8 +224,6 @@
 
                     </select2>
                 </div>
-            </div>
-            <div class="row" *ngIf="isImputadoVictimaDelito">
                 <div class="col">
                     <select2 placeholder="Forma de conducta"
                         name="id"
@@ -226,8 +244,6 @@
                 </div>
                 <div class="col" [formGroup]="form">
                     <mat-checkbox class="example-margin" name="flagrancia" formControlName="flagrancia" >Flagrancia</mat-checkbox>
-                </div>
-                <div class="col" [formGroup]="form">
                     <mat-checkbox class="example-margin" formControlName="tieneViolenciaGenero" (change)="changeViolenciaGenero($event)">Violencia de genero</mat-checkbox>
                     <!-- <checkbox label="Violencia de genero" name="tieneViolenciaGenero"  (valueChange)="changeViolenciaGenero($event)"></checkbox> -->
                 </div>
