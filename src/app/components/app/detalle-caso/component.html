@@ -89,7 +89,7 @@
                                             <div class="col-lg-4">
                                                 <div class="row text-center">
                                                     <div class="col p-0">
-                                                        <img src="./assets/images/Acuerdos/acuerdo.svg">
+                                                        <img [style.opacity]="hasRelacionVictimaImputado? 1 : 0.2" src="./assets/images/Acuerdos/acuerdo.svg">
                                                     </div>
                                                 </div>
                                             </div>
@@ -159,7 +159,7 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img src="./assets/images/Solicitudes-preliminares/detective.svg">
+                                                    <img [style.opacity]="hasRelacionVictimaImputado? 1 : 0.2" src="./assets/images/Solicitudes-preliminares/detective.svg">
                                                 </div>
                                             </div>
                                         </div>
@@ -186,7 +186,7 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img src="./assets/images/Solicitudes-preliminares/policeCap.svg">
+                                                    <img [style.opacity]="hasRelacionVictimaImputado? 1 : 0.2" src="./assets/images/Solicitudes-preliminares/policeCap.svg">
                                                 </div>
                                             </div>
                                         </div>
@@ -213,7 +213,7 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img src="./assets/images/Solicitudes-preliminares/contratos.svg">
+                                                    <img [style.opacity]="hasRelacionVictimaImputado? 1 : 0.2" src="./assets/images/Solicitudes-preliminares/contratos.svg">
                                                 </div>
                                             </div>
                                         </div>
@@ -243,7 +243,7 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img src="./assets/images/Solicitudes-preliminares/letter.svg">
+                                                    <img [style.opacity]="hasRelacionVictimaImputado? 1 : 0.2" src="./assets/images/Solicitudes-preliminares/letter.svg">
                                                 </div>
                                             </div>
                                         </div>
@@ -270,7 +270,7 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img src="./assets/images/Solicitudes-preliminares/fingerprint.svg">
+                                                    <img [style.opacity]="hasRelacionVictimaImputado? 1 : 0.2" src="./assets/images/Solicitudes-preliminares/fingerprint.svg">
                                                 </div>
                                             </div>
                                         </div>
@@ -297,7 +297,7 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img src="./assets/images/Solicitudes-preliminares/evidence.svg">
+                                                    <img [style.opacity]="hasRelacionVictimaImputado? 1 : 0.2" src="./assets/images/Solicitudes-preliminares/evidence.svg">
                                                 </div>
                                             </div>
                                         </div>
@@ -339,14 +339,14 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img src="./assets/images/Acuerdos/acuerdo.svg">
+                                                    <img [style.opacity]="hasRelacionVictimaImputado? 1 : 0.2" src="./assets/images/Acuerdos/acuerdo.svg">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row space"></div>
                                     <div class="row">
-                                        <button mat-button routerLink="/caso/{{id}}/acuerdo-inicio">Ver ahora</button>
+                                        <button mat-button [disabled]="!hasRelacionVictimaImputado" routerLink="/caso/{{id}}/acuerdo-inicio">Ver ahora</button>
                                     </div>
                                 </mat-card-content>
                             </mat-card>
@@ -366,14 +366,14 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img src="./assets/images/Acuerdos/acuerdoRadicacion.svg">
+                                                    <img [style.opacity]="hasRelacionVictimaImputado? 1 : 0.2" src="./assets/images/Acuerdos/acuerdoRadicacion.svg">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row space"></div>
                                     <div class="row">
-                                        <button mat-button routerLink="/caso/{{id}}/acuerdo-radicacion">Ver ahora</button>
+                                        <button mat-button [disabled]="!hasRelacionVictimaImputado" routerLink="/caso/{{id}}/acuerdo-radicacion">Ver ahora</button>
                                     </div>
                                 </mat-card-content>
                             </mat-card>
@@ -405,14 +405,14 @@
                                     <div class="col-lg-4">
                                         <div class="row text-center">
                                             <div class="col p-0">
-                                                <img src="./assets/images/witness.svg">
+                                                <img [style.opacity]="hasRelacionVictimaImputado? 1 : 0.2" src="./assets/images/witness.svg">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row space"></div>
                                 <div class="row">
-                                    <button mat-button routerLink="/caso/{{id}}/entrevista">Ver ahora</button>
+                                    <button mat-button [disabled]="!hasRelacionVictimaImputado" routerLink="/caso/{{id}}/entrevista">Ver ahora</button>
                                 </div>
                             </mat-card-content>
                         </mat-card>
@@ -444,14 +444,14 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img src="./assets/images/Conclusiones/folder.svg">
+                                                    <img [style.opacity]="hasRelacionVictimaImputado? 1 : 0.2" src="./assets/images/Conclusiones/folder.svg">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row space"></div>
                                     <div class="row">
-                                        <button mat-button routerLink="/caso/{{id}}/archivo-temporal">Ver ahora</button>
+                                        <button mat-button [disabled]="!hasRelacionVictimaImputado" routerLink="/caso/{{id}}/archivo-temporal">Ver ahora</button>
                                     </div>
                                 </mat-card-content>
                             </mat-card>
@@ -471,14 +471,14 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img src="./assets/images/Conclusiones/lawyer.svg">
+                                                    <img [style.opacity]="hasRelacionVictimaImputado? 1 : 0.2" src="./assets/images/Conclusiones/lawyer.svg">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row space"></div>
                                     <div class="row">
-                                        <button mat-button routerLink="/caso/{{id}}/no-ejercicio-accion-penal">Ver ahora</button>
+                                        <button mat-button [disabled]="!hasRelacionVictimaImputado" routerLink="/caso/{{id}}/no-ejercicio-accion-penal">Ver ahora</button>
                                     </div>
                                 </mat-card-content>
                             </mat-card>
@@ -498,14 +498,14 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img src="./assets/images/Conclusiones/quill.svg">
+                                                    <img [style.opacity]="hasRelacionVictimaImputado? 1 : 0.2" src="./assets/images/Conclusiones/quill.svg">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row space"></div>
                                     <div class="row">
-                                        <button mat-button routerLink="/caso/{{id}}/facultad-no-investigar">Ver ahora</button>
+                                        <button mat-button [disabled]="!hasRelacionVictimaImputado" routerLink="/caso/{{id}}/facultad-no-investigar">Ver ahora</button>
                                     </div>
                                 </mat-card-content>
                             </mat-card>
