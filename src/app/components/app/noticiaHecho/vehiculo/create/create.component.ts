@@ -137,76 +137,91 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         }
     }
 
-    public save(valid : any, _model : any):void{
-        if(this.onLine.onLine){
-            Object.assign(this.model, _model);
-            this.model.caso.id = this.casoId;
-            // this.model.caso.created = null;
-            this.http.post('/v1/base/vehiculos', this.model).subscribe(
-                (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
-                (error) => console.error('Error', error)
-            );
-        }else{
-            Object.assign(this.model, _model);
-            this.model.caso.id = this.casoId;
-            // this.model.caso.created = null;
-            let temId=Date.now();
-            let dato={
-                url:'/v1/base/vehiculos',
-                body:this.model,
-                options:[],
-                tipo:"post",
-                pendiente:true,
-                dependeDe:[this.casoId],
-                temId: temId
-            }
-            this.db.add("sincronizar",dato).then(p=>{
-                this.db.get("casos",this.casoId).then(caso=>{
-                    if (caso){
-                        if(!caso["vehiculo"]){
-                            caso["vehiculo"]=[];
+    public save(valid : any, _model : any){
+        return new Promise<any>((resolve, reject)=>{
+            if(this.onLine.onLine){
+                Object.assign(this.model, _model);
+                this.model.caso.id = this.casoId;
+                // this.model.caso.created = null;
+                this.http.post('/v1/base/vehiculos', this.model).subscribe(
+                    (response) => {
+                        this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                        resolve("Se creo el vehículo con éxito");
+                    },
+                    (error) => reject(error)
+                );
+            }else{
+                Object.assign(this.model, _model);
+                this.model.caso.id = this.casoId;
+                // this.model.caso.created = null;
+                let temId=Date.now();
+                let dato={
+                    url:'/v1/base/vehiculos',
+                    body:this.model,
+                    options:[],
+                    tipo:"post",
+                    pendiente:true,
+                    dependeDe:[this.casoId],
+                    temId: temId
+                }
+                this.db.add("sincronizar",dato).then(p=>{
+                    this.db.get("casos",this.casoId).then(caso=>{
+                        if (caso){
+                            if(!caso["vehiculo"]){
+                                caso["vehiculo"]=[];
+                            }
+                            this.model["id"]=temId;
+                            caso["vehiculo"].push(this.model);
+                            this.db.update("casos",caso).then(t=>{
+                                resolve("Se creo el vehículo de manera local");
+                                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                            });
                         }
-                        this.model["id"]=temId;
-                        caso["vehiculo"].push(this.model);
-                        this.db.update("casos",caso).then(t=>{
-                            this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
-                        });
-                    }
-                });
-            }); 
+                    });
+                }); 
 
-        }
+            }
+        });
 	}
 
-    public edit(_valid : any, _model : any):void{
-        console.log('-> Vechiulo@edit()', _model);
-        if(this.onLine.onLine){
-            this.http.put('/v1/base/vehiculos/'+this.id, _model).subscribe((response) => {
-                console.log('-> Registro acutualizado', response);
-            });
-        }else{
-            let dato={
-                url:'/v1/base/vehiculos/'+this.id,
-                body:_model,
-                options:[],
-                tipo:"update",
-                pendiente:true,
-                dependeDe:[this.casoId, this.id]
-            }
-            this.db.add("sincronizar",dato).then(p=>{
-                this.db.get("casos",this.casoId).then(t=>{
-                    let vehiculos=t["vehiculo"] as any[];
-                    for (var i = 0; i < vehiculos.length; ++i) {
-                        if ((vehiculos[i])["id"]==this.id){
-                            vehiculos[i]=_model;
-                            break;
-                        }
-                    }
-                    console.log("caso",t);
+    public edit(_valid : any, _model : any){
+        return new Promise((resolve,reject)=>{
+            console.log('-> Vechiulo@edit()', _model);
+            if(this.onLine.onLine){
+                this.http.put('/v1/base/vehiculos/'+this.id, _model).subscribe((response) => {
+                    console.log('-> Registro acutualizado', response);
+                    resolve("Se actualizo el vehiculo");
+                },e=>{
+                    reject(e);
                 });
-                console.log('-> Registro acutualizado');
-            }); 
-        }
+            }else{
+                let dato={
+                    url:'/v1/base/vehiculos/'+this.id,
+                    body:_model,
+                    options:[],
+                    tipo:"update",
+                    pendiente:true,
+                    dependeDe:[this.casoId, this.id]
+                }
+                this.db.add("sincronizar",dato).then(p=>{
+                    this.db.get("casos",this.casoId).then(t=>{
+                        let vehiculos=t["vehiculo"] as any[];
+                        _model["id"]=this.id;
+                        for (var i = 0; i < vehiculos.length; ++i) {
+                            if ((vehiculos[i])["id"]==this.id){
+                                vehiculos[i]=_model;
+                                break;
+                            }
+                        }
+                        this.db.update("casos", t).then(r=>{
+                            resolve("vehiculo actualizado");
+                            console.log('-> Registro acutualizado');
+                        });
+                        console.log("caso",t);
+                    });
+                }); 
+            }
+        });
     }
 
     public fillForm(_data){

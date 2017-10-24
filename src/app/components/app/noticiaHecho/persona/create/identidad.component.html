@@ -1,4 +1,4 @@
-<mat-expansion-panel>
+<mat-expansion-panel expanded="true">
     <mat-expansion-panel-header>
         <mat-panel-title>
             <mat-icon>perm_identity</mat-icon>Datos de identidad
@@ -12,135 +12,144 @@
             <text label="Razón social" name="razonSocial" [group]="globals.form" hintStart="Campo obligatorio"></text>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col">
-            <text label="Nombre"  name="nombre" [group]="globals.form"></text>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <text label="Nombre"  name="nombre" [group]="globals.form"></text>
+            </div>
+            <div class="col">
+                <text label="Apellido paterno"  name="paterno" [group]="globals.form"></text>
+            </div>
+            <div class="col">
+                <text label="Apellido materno"  name="materno" [group]="globals.form"></text>
+            </div>
         </div>
-        <div class="col">
-            <text label="Apellido paterno"  name="paterno" [group]="globals.form"></text>
+        <div class="row">
+            <div class="col-md-3">
+              <select2 [options]="options.sexo" placeholder="Sexo" name="id" [group]="globals.form.controls.sexo"></select2>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col">
+                      <date label="Fecha de nacimiento" name="fechaNacimiento" [group]="globals.form" (valueChange)="edad($event)"></date>
+                    </div>
+                    <div class="col">
+                      <text label="Edad" name="edad" [group]="globals.form"></text>
+                    </div>
+
+                    <div class="col">
+                      <text label="CURP" name="curp" [group]="globals.form"></text>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+              <select2 [options]="personaServ.nacionalidadReligion.nacionalidad" placeholder="Nacionalidad" name="nacionalidad" [group]="globals.form"></select2>
+            </div>
         </div>
-        <div class="col">
-            <text label="Apellido materno"  name="materno" [group]="globals.form"></text>
+        <div class="row">
+            <div class="col-md-4">
+              <select2 [options]="options.paises" placeholder="País de nacimiento"  name="id" [group]="globals.form.controls.pais" (valueChange)="changePais($event)"></select2>
+            </div>
+            <div class="col-md-4" *ngIf="!isMexico">
+              <text label="Estado de nacimiento" name="estadoNacimientoOtro" [group]="globals.form" ></text>
+            </div>
+
+            <div class="col-md-4" *ngIf="!isMexico">
+              <text  label="Municipio" name="municipioNacimientoOtro" [group]="globals.form"></text>
+            </div>
+            <div class="col-md-4" *ngIf="isMexico">
+              <select2 [options]="options.estados" placeholder="Estado de nacimiento" name="id" [group]="globals.form.controls.estado" (valueChange)="changeEstado($event)"></select2>
+            </div>
+
+            <div class="col-md-4" *ngIf="isMexico">
+              <select2 [options]="options.municipios" placeholder="Municipio" name="id" [group]="globals.form.controls.municipio"></select2>
+            </div>
         </div>
-    </div>
-    <div class="row">
-    <div class="col-md-2">
-      <select2 [options]="options.sexo" placeholder="Sexo" name="id" [group]="globals.form.controls.sexo"></select2>
-    </div>
-    <div class="col-md-2">
-      <date label="Fecha de nacimiento" name="fechaNacimiento" [group]="globals.form" (valueChange)="edad($event)"></date>
-    </div>
-    <div class="col-md-2">
-      <text label="Edad" name="edad" [group]="globals.form"></text>
-    </div>
+        <div class="row">
+            <div class="col">
+              <select2 [options]="options.escolaridad" placeholder="Escolaridad" name="id" [group]="globals.form.controls.escolaridad" ></select2>
+            </div>
+            <div class="col">
+              <select2 [options]="options.ocupacion" placeholder="Ocupación"  name="id" [group]="globals.form.controls.ocupacion"></select2>
+            </div>
+            <div class="col">
+              <text label="Lugar de trabajo"  name="lugarTrabajo" [group]="globals.form"></text>
+            </div>
 
-    <div class="col-md-2">
-      <text label="CURP" name="curp" [group]="globals.form"></text>
-    </div>
+            <div class="col">
+              <text label="Ingresos mensuales"  name="ingresoMensual" [group]="globals.form"></text>
+            </div>
 
-    <div class="col-md-2">
-      <select2 [options]="personaServ.nacionalidadReligion.nacionalidad" placeholder="Nacionalidad" name="nacionalidad" [group]="globals.form"></select2>
-    </div>
-    <div class="col-md-2">
-      <select2 [options]="options.paises" placeholder="País de nacimiento"  name="id" [group]="globals.form.controls.pais" (valueChange)="changePais($event)"></select2>
-    </div>
-    <div class="col-md-2" *ngIf="!isMexico">
-      <text label="Estado de nacimiento" name="estadoNacimientoOtro" [group]="globals.form" ></text>
-    </div>
-
-    <div class="col-md-2" *ngIf="!isMexico">
-      <text  label="Municipio" name="municipioNacimientoOtro" [group]="globals.form"></text>
-    </div>
-    <div class="col-md-2" *ngIf="isMexico">
-      <select2 [options]="options.estados" placeholder="Estado de nacimiento" name="id" [group]="globals.form.controls.estado" (valueChange)="changeEstado($event)"></select2>
-    </div>
-
-    <div class="col-md-2" *ngIf="isMexico">
-      <select2 [options]="options.municipios" placeholder="Municipio" name="id" [group]="globals.form.controls.municipio"></select2>
-    </div>
-
-    <div class="col-md-2">
-      <select2 [options]="options.escolaridad" placeholder="Escolaridad" name="id" [group]="globals.form.controls.escolaridad" ></select2>
-    </div>
-    <div class="col-md-2">
-      <select2 [options]="options.ocupacion" placeholder="Ocupación"  name="id" [group]="globals.form.controls.ocupacion"></select2>
-    </div>
-    <div class="col-md-2">
-      <text label="Lugar de trabajo"  name="lugarTrabajo" [group]="globals.form"></text>
-    </div>
-
-    <div class="col-md-2">
-      <text label="Ingresos mensuales"  name="ingresoMensual" [group]="globals.form"></text>
-    </div>
-
-    <div class="col-md-2">
-     <text label='RFC' name="rfc" [group]="globals.form"></text>
-    </div>
-    <div class="col-md-2">
-      <select2 [options]="options.estadoCivil" placeholder="Estado civil"  name="id" [group]="globals.form.controls.estadoCivil"></select2>
-    </div>
-    <div class="col-md-2">
-      <text label="Número de hijos" name="numHijos" [group]="globals.form"></text>
-    </div>
-
-    <div class="col-md-2">
-      <select2 [options]="personaServ.nacionalidadReligion.religion" placeholder="Religion" name="religion" [group]="globals.form"></select2>
-    </div>
-
-    <div class="col-md-2">
-        <select2 [options]="personaServ.idiomaIdentificacion.hablaEspaniol" placeholder="Habla español" name="hablaEspaniol" [group]="globals.form"></select2>
-    </div>
-    <div class="col-md-2">
-      <select2 [options]="personaServ.idiomaIdentificacion.lenguaIndigena" placeholder="Lengua Índigena" name="lenguaIndigena" [group]="globals.form"></select2>
-    </div>
-    <div class="col-md-2">
-       <select2 [options]="options.grupoEtnico" placeholder="Grupo étnico" name="id" [group]="globals.form.controls.grupoEtnico"></select2>
-    </div>
-
-    <div class="col-md-2">
-      <select2 [options]="options.alfabetismo" placeholder="Alfabetismo" ></select2>
-    </div>
-
-    <div class="col-md-2">
-     <select2 [options]="personaServ.idiomaIdentificacion.familiaLinguistica" placeholder="Familia lingüistica" name="familiaLinguistica" [group]="globals.form"></select2>
-    </div>
-    <div class="col-md-2">
-      <select2 [options]="options.interprete" placeholder="Necesita interprete" name="id" [group]="globals.form.controls.adiccion"></select2>
-    </div>
-    <div class="col-md-4">
-       <select2 [options]="options.interprete" placeholder="Adicciones" name="id" [group]="globals.form.controls.interprete"></select2>
-    </div>
-    </div>
-
-    <div class="row" *ngIf="globals.tipoInterviniente==='5'">
-        <div class="col-md-2">
-            <checkbox label="Detenido" name="detenido" [group]="globals.form" (valueChange)="changeDetenido($event)" ></checkbox>
+            <div class="col">
+             <text label='RFC' name="rfc" [group]="globals.form"></text>
+            </div>
         </div>
-        <div class="col-md-2" *ngIf="globals.detenido">
-            <date label="Fecha de detención" name="fechaDetencion" [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido"></date>
+        <div class="row">
+            <div class="col-md-2">
+              <select2 [options]="options.estadoCivil" placeholder="Estado civil"  name="id" [group]="globals.form.controls.estadoCivil"></select2>
+            </div>
+            <div class="col-md-2">
+              <text label="Número de hijos" name="numHijos" [group]="globals.form"></text>
+            </div>
+
+            <div class="col-md-2">
+              <select2 [options]="personaServ.nacionalidadReligion.religion" placeholder="Religion" name="religion" [group]="globals.form"></select2>
+            </div>
+
+            <div class="col-md-2">
+                <select2 [options]="personaServ.idiomaIdentificacion.hablaEspaniol" placeholder="Habla español" name="hablaEspaniol" [group]="globals.form"></select2>
+            </div>
+            <div class="col-md-2">
+              <select2 [options]="personaServ.idiomaIdentificacion.lenguaIndigena" placeholder="Lengua Índigena" name="lenguaIndigena" [group]="globals.form"></select2>
+            </div>
+            <div class="col-md-2">
+               <select2 [options]="options.grupoEtnico" placeholder="Grupo étnico" name="id" [group]="globals.form.controls.grupoEtnico"></select2>
+            </div>
         </div>
-        <div class="col-md-2" *ngIf="globals.detenido">
-            <text label="Hora de detención" ></text>
+        <div class="row">
+            <div class="col-md-3">
+              <select2 [options]="options.alfabetismo" placeholder="Alfabetismo" name="id" [group]="globals.form.controls.alfabetismo"></select2>
+            </div>
+
+            <div class="col-md-3">
+             <select2 [options]="personaServ.idiomaIdentificacion.familiaLinguistica" placeholder="Familia lingüistica" name="familiaLinguistica" [group]="globals.form"></select2>
+            </div>
+            <div class="col-md-3">
+              <select2 [options]="options.interprete" placeholder="Necesita interprete" name="id" [group]="globals.form.controls.adiccion"></select2>
+            </div>
+            <div class="col-md-3">
+               <select2 [options]="options.interprete" placeholder="Adicciones" name="id" [group]="globals.form.controls.interprete"></select2>
+            </div>
         </div>
 
-        <div class="col-md-2" *ngIf="globals.detenido">
-            <select2 [options]="
-                []" placeholder="Tipo de denteción" ></select2>
-        </div>
+        <div class="row" *ngIf="globals.tipoInterviniente===globals.imputado">
+            <div class="col-md-2">
+                <checkbox label="Detenido" name="detenido" [group]="globals.form" (valueChange)="changeDetenido($event)" ></checkbox>
+            </div>
+            <div class="col-md-2" *ngIf="globals.detenido">
+                <date label="Fecha de detención" name="fechaDetencion" [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido"></date>
+            </div>
+            <div class="col-md-2" *ngIf="globals.detenido">
+                <text label="Hora de detención" ></text>
+            </div>
 
-        <div class="col-md-2" *ngIf="globals.detenido">
-            <date label="Fecha de declaración" name="fechaDeclaracion" [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido"></date>
-        </div>
-        <div class="col-md-2" *ngIf="globals.detenido">
-            <select2 [options]="
-            []" placeholder="Tipo de reincidencia" ></select2>
-        </div>
-        <div class="col-md-2" *ngIf="globals.detenido">
-            <select2 [options]="
-            []" placeholder="Cereso" ></select2>
-        </div> 
+            <div class="col-md-2" *ngIf="globals.detenido">
+                <select2 [options]="
+                    []" placeholder="Tipo de denteción" ></select2>
+            </div>
 
+            <div class="col-md-2" *ngIf="globals.detenido">
+                <date label="Fecha de declaración" name="fechaDeclaracion" [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido"></date>
+            </div>
+            <div class="col-md-2" *ngIf="globals.detenido">
+                <select2 [options]="
+                []" placeholder="Tipo de reincidencia" ></select2>
+            </div>
+            <div class="col-md-2" *ngIf="globals.detenido">
+                <select2 [options]="
+                []" placeholder="Cereso" ></select2>
+            </div> 
+
+        </div>
     </div>
-
 </mat-expansion-panel>

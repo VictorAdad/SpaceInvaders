@@ -5,8 +5,10 @@ export var _config = {
 	develop:true,
 	sede:"Xalapa, Veracruz",
 	optionValue:{
-		armaFuego : "Arma de fuego",
-		idMexico  : 0
+		armaFuego : "fuego",
+		armaBlanca : "Arma blanca",
+		idMexico  : 0,
+		imputado : '4',
 	}
 
 }

@@ -79,30 +79,42 @@ export class AcuerdoRadicacionComponent extends DeterminacionGlobal{
         });
     }
 
-    public save(valid : any, _model : any):void{
-            Object.assign(this.model, _model);
-            this.model.caso.id = this.casoId;
-            console.log('-> AcuerdoRadicacion@save()', this.model);
-            this.http.post(this.apiUrl, this.model).subscribe(
-                (response) => {
-                    console.log(response);
-                   this.id=response.id;  
-                  if(this.casoId!=null){
-                    this.router.navigate(['/caso/'+this.casoId+'/acuerdo-radicacion/'+this.id+'/edit' ]);      
-                  }
-                },
-                (error) => {
-                    console.error('Error', error);
-                }
-            );
+    public save(valid : any, _model : any){
+        Object.assign(this.model, _model);
+        this.model.caso.id = this.casoId;
+        console.log('-> AcuerdoRadicacion@save()', this.model);
+
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.http.post(this.apiUrl, this.model).subscribe(
+                    (response) => {
+                        console.log(response);
+                       this.id=response.id;  
+                      if(this.casoId!=null){
+                        this.router.navigate(['/caso/'+this.casoId+'/acuerdo-radicacion/'+this.id+'/edit' ]);      
+                      }
+                      resolve('Acuerdo de radicación creado con éxito')
+                    },
+                    (error) => {
+                        console.error('Error', error);
+                        reject(error);
+                    }
+                );
+            }
+        );
 
     }
 
-    public edit(_valid : any, _model : any):void{
+    public edit(_valid : any, _model : any){
         console.log('-> AcuerdoRadicacion@edit()', _model);
-            this.http.put(this.apiUrl+'/'+this.id, _model).subscribe((response) => {
-                console.log('-> Registro acutualizado', response);
-            });
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.http.put(this.apiUrl+'/'+this.id, _model).subscribe((response) => {
+                    console.log('-> Registro acutualizado', response);
+                    resolve('Acuerdo de radicación actualizado con éxito');
+                });
+            }
+        );
      }
 
     public fillForm(_data){

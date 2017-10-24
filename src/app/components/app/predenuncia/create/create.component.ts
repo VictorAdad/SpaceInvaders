@@ -157,22 +157,27 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
 
     }
 
-    public save(valid : any, _model : any):void{
-        if(this.onLine.onLine){
-            Object.assign(this.model, _model);
-            this.model.caso.id = this.casoId;
-            console.log(this.model);
-            this.model.tipo="Predenuncia";// temporalmente
-            this.http.post('/v1/base/predenuncias', this.model).subscribe(
-                (response) => {
-                    console.log(response)
-                    this.router.navigate(['/caso/'+this.casoId+'/predenuncia/create' ]);
-                 },
-                (error) => {
-                    console.error('Error', error);
+    public save(valid : any, _model : any){
+        return new Promise<any>(
+            (resolve, reject) => {
+                if(this.onLine.onLine){
+                    Object.assign(this.model, _model);
+                    this.model.caso.id = this.casoId;
+                    console.log(this.model);
+                    this.model.tipo="Predenuncia";// temporalmente
+                    this.http.post('/v1/base/predenuncias', this.model).subscribe(
+                        (response) => {
+                            console.log(response)
+                            resolve(this.router.navigate(['/caso/'+this.casoId+'/predenuncia/create' ]));
+                         },
+                        (error) => {
+                            console.error('Error', error);
+                            reject(error);
+                        }
+                    );
                 }
-            );
-        }
+            }
+        );
     }
 
     public fillForm(_data) {

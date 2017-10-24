@@ -83,33 +83,45 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
         });
     }
 
-    public save(valid: any, _model: any): void {
+    public save(valid: any, _model: any) {
         Object.assign(this.model, _model);
         this.model.caso.id = this.casoId;
         console.log('->FacultadNoInvestigar@save()', this.model);
-        this.http.post(this.apiUrl, this.model).subscribe(
-            (response) => {
-                console.log(response);
-				this.id= response.id;
-                if (this.casoId!=null) {
-                    this.router.navigate(['/caso/' + this.casoId + '/facultad-no-investigar/'+this.id+'/edit']);
-                }
-            },
-            (error) => {
-                console.error('Error', error);
+
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.http.post(this.apiUrl, this.model).subscribe(
+                    (response) => {
+                        console.log(response);
+        				this.id= response.id;
+                        if (this.casoId!=null) {
+                            this.router.navigate(['/caso/' + this.casoId + '/facultad-no-investigar/'+this.id+'/edit']);
+                        }
+                        resolve('Registro creado con éxito');
+                    },
+                    (error) => {
+                        reject(error);
+                    }
+                );
             }
         );
 
     }
 
-    public edit(_valid: any, _model: any): void {
+    public edit(_valid: any, _model: any) {
         console.log('-> FacultadNoInvestigar@edit()', _model);
-        this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
-            console.log('-> Registro acutualizado', response);
-            if(this.id!=null){
-                this.router.navigate(['/caso/' + this.casoId + '/facultad-no-investigar']);
+
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
+                    console.log('-> Registro acutualizado', response);
+                    if(this.id!=null){
+                        this.router.navigate(['/caso/' + this.casoId + '/facultad-no-investigar']);
+                    }
+                    resolve('Registro actualizado con éxito');
+                });
             }
-        });
+        );
     }
 
     public fillForm(_data) {

@@ -102,7 +102,7 @@
                     <date label="Fecha" name="fecha" [group]="form"></date>
                 </div>
                 <div class="col-md-3">
-                    <text label="Hora" name="hora" [group]="form"></text>
+                    <time label="Hora" name="hora" [group]="form"></time>
                 </div>
                 <div class="col-md-3">
                     <select2 
@@ -139,10 +139,11 @@
                     </agm-map>
                 </div>
             </div>
+            <input name="id" formControlName="id" [formGroup]="form" hidden>
             <div class="row justify-content-end">
                 <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" matTooltipPosition="above">
-                    <button mat-raised-button color="accent" _saving (saveFn)="edit(form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id != null">Editar</button>    
-                    <button mat-raised-button color="accent" _saving (saveFn)="save(form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id == null">Guardar</button>
+                    <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id != null">Editar</button>    
+                    <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id == null">Guardar</button>
                 </div>
                 <div class="col-sm-auto">
                     <button mat-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>

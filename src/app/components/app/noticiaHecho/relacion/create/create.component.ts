@@ -206,77 +206,85 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         );
     } 
 
-    save(_valid : any, _model : any):void{
-        _model.tipoRelacionPersona.caso.id = this.casoId;
-        _model.tieneViolenciaGenero = this.isViolenciaGenero;
-        if(_model.tieneViolenciaGenero)
-            if(this.optionsRelacion.matrizViolenciaGenero.finded[0])
-                _model.violenciaGenero.id = this.optionsRelacion.matrizViolenciaGenero.finded[0].id;
-        if(this.onLine.onLine){
-            this.http.post('/v1/base/tipo-relacion-persona', _model).subscribe(
-                (response) => this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]),
-                (error) => console.error('Error', error)
-            );
-        }else{
-            // Object.assign(this.model, _model);
-            // this.model.caso.id = this.casoId;
-            // let temId = Date.now();
-            // let dato={
-            //     url:'/v1/base/relaciones',
-            //     body:this.model,
-            //     options:[],
-            //     tipo:"post",
-            //     pendiente:true,
-            //     temId: temId
-            // }
-            // this.db.add("sincronizar",dato).then(p=>{
-            //   this.db.get("casos",this.casoId).then(caso=>{
-            //         if (caso){
-            //             if(!caso["relacion"]){
-            //                 caso["relacion"]=[];
-            //             }
-            //             this.model["id"]=temId;
-            //             caso["relacion"].push(this.model);
-            //             this.db.update("casos",caso).then(t=>{
-            //                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
-            //             });
-            //         }
-            //     });
-            // }); 
-        }
+    save(_valid : any, _model : any){
+        return new Promise((resolve,reject)=>{
+            _model.tipoRelacionPersona.caso.id = this.casoId;
+            _model.tieneViolenciaGenero = this.isViolenciaGenero;
+            if(_model.tieneViolenciaGenero)
+                if(this.optionsRelacion.matrizViolenciaGenero.finded[0])
+                    _model.violenciaGenero.id = this.optionsRelacion.matrizViolenciaGenero.finded[0].id;
+            if(this.onLine.onLine){
+                this.http.post('/v1/base/tipo-relacion-persona', _model).subscribe(
+                    (response) => {
+                        this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                        resolve("Se creo la relación con éxito");
+                    },
+                    (error) => {console.error('Error', error); reject(error);}
+                );
+            }else{
+                // Object.assign(this.model, _model);
+                // this.model.caso.id = this.casoId;
+                // let temId = Date.now();
+                // let dato={
+                //     url:'/v1/base/relaciones',
+                //     body:this.model,
+                //     options:[],
+                //     tipo:"post",
+                //     pendiente:true,
+                //     temId: temId
+                // }
+                // this.db.add("sincronizar",dato).then(p=>{
+                //   this.db.get("casos",this.casoId).then(caso=>{
+                //         if (caso){
+                //             if(!caso["relacion"]){
+                //                 caso["relacion"]=[];
+                //             }
+                //             this.model["id"]=temId;
+                //             caso["relacion"].push(this.model);
+                //             this.db.update("casos",caso).then(t=>{
+                //                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                //             });
+                //         }
+                //     });
+                // }); 
+            }
+        });
     }
 
-    public edit(_valid : any, _model : any):void{
-        console.log('-> Relacion@edit()', _model);
-        if(_model.tieneViolenciaGenero)
-            if(this.optionsRelacion.matrizViolenciaGenero.finded[0])
-                _model.violenciaGenero.id = this.optionsRelacion.matrizViolenciaGenero.finded[0].id;
-        if(this.onLine.onLine){
-            this.http.put('/v1/base/detalle-delitos/'+_model.id, _model).subscribe((response) => {
-                console.log('-> Registro acutualizado', response);
-            });
-        }else{
-            let dato={
-                url:'/v1/base/relaciones/'+this.id,
-                body:_model,
-                options:[],
-                tipo:"update",
-                pendiente:true,
-                dependeDe:[this.casoId, this.id]
-            }
-            this.db.add("sincronizar",dato).then(p=>{
-                this.db.get("casos",this.casoId).then(t=>{
-                    let relaciones=t["relacion"] as any[];
-                    for (var i = 0; i < relaciones.length; ++i) {
-                        if ((relaciones[i])["id"]==this.id){
-                            relaciones[i]=_model;
-                            break;
-                        }
-                    }
-                    console.log("caso",t);
+    public edit(_valid : any, _model : any){
+        return new Promise((resolve,reject)=>{
+            console.log('-> Relacion@edit()', _model);
+            if(_model.tieneViolenciaGenero)
+                if(this.optionsRelacion.matrizViolenciaGenero.finded[0])
+                    _model.violenciaGenero.id = this.optionsRelacion.matrizViolenciaGenero.finded[0].id;
+            if(this.onLine.onLine){
+                this.http.put('/v1/base/detalle-delitos/'+_model.id, _model).subscribe((response) => {
+                    console.log('-> Registro acutualizado', response);
                 });
-            });
-        }
+            }else{
+                let dato={
+                    url:'/v1/base/relaciones/'+this.id,
+                    body:_model,
+                    options:[],
+                    tipo:"update",
+                    pendiente:true,
+                    dependeDe:[this.casoId, this.id]
+                }
+                this.db.add("sincronizar",dato).then(p=>{
+                    this.db.get("casos",this.casoId).then(t=>{
+                        let relaciones=t["relacion"] as any[];
+                        for (var i = 0; i < relaciones.length; ++i) {
+                            if ((relaciones[i])["id"]==this.id){
+                                relaciones[i]=_model;
+                                break;
+                            }
+                        }
+                        console.log("caso",t);
+                    });
+                });
+            }
+        });
+        
     }
 
     public fillForm(_data){

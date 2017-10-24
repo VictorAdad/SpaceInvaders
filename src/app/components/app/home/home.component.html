@@ -17,7 +17,7 @@
         <mat-list *ngIf="dataSource != null">
             <mat-list-item *ngFor="let caso of dataSource.data">
                 <mat-icon mat-list-icon>folder</mat-icon>
-                <h4 matLine>{{caso.name}}</h4>
+                <h4 matLine>{{caso.nombre()}}</h4>
                 <h4 class="text-muted" matLine md-subheade>{{caso.titulo}}</h4>
                 <h4 class="text-muted" matLine md-subheade>{{caso.sintesis}}</h4>
                 <p matLine>{{caso.fecha()}}</p>

@@ -1,4 +1,4 @@
-<mat-expansion-panel>
+<mat-expansion-panel expanded="true">
     <mat-expansion-panel-header>
         <mat-panel-title>
             <mat-icon>fingerprint</mat-icon> Datos de identificación
@@ -7,55 +7,57 @@
 
             </mat-panel-description>
     </mat-expansion-panel-header>
-    <div class="row">
-        <div class="col-md-3">
-            <select2 placeholder="Documento de identificación"
-                [options]="personaServ.idiomaIdentificacion.familiaLinguistica"
-                name="identificacion"
-                [group]="globals.form">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <select2 placeholder="Documento de identificación"
+                    [options]="personaServ.idiomaIdentificacion.familiaLinguistica"
+                    name="identificacion"
+                    [group]="globals.form">
+                            
+                </select2>
+            </div>
+            <div class="col-md-4">
+                <text label="Autoridad emisora"
+                    name="autoridadEmisora"
+                    [group]="globals.form">
                         
-            </select2>
-        </div>
-        <div class="col-md-auto">
-            <text label="Autoridad emisora"
-                name="autoridadEmisora"
-                [group]="globals.form">
-                    
-            </text>
-        </div>
-        <div class="col-md-auto">
-            <text label="Número o folio de documento"
-                name="folioIdentificacion"
-                [group]="globals.form">        
-            </text>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-5" *ngIf="globals.tipoInterviniente=='5'" [formGroup]="globals.form">
-            <div  class="row" formArrayName="aliasNombrePersona" >
-                <div class="col-md-auto">
-                    <button class="float-left" mat-raised-button (click)="addOtroNombre('alias')" color="accent" >Agregar alias</button>
-                </div>
-                <div class="col-md-12" *ngFor="let nombre of alias.nombres;let i=index; trackBy:trackByIndex " [formGroupName]="alias.indices[i]">
-                    <mat-form-field class="full-width">
-                        <input matInput placeholder="Alias" formControlName="nombre"value="{{nombre}}">
-                    </mat-form-field>
-                    <input type="hidden" value="Alias" formControlName="tipo">
-                    <input type="hidden" value="{{alias.ids[i]}}" formControlName="id">
-                </div>
+                </text>
+            </div>
+            <div class="col-md-4">
+                <text label="Número o folio de documento"
+                    name="folioIdentificacion"
+                    [group]="globals.form">        
+                </text>
             </div>
         </div>
-        <div class="col-md-5" [formGroup]="globals.form">
-            <div  class="row" formArrayName="aliasNombrePersona" >
-                <div class="col-md-auto">
-                    <button class="float-left" mat-raised-button (click)="addOtroNombre('otroNombre')" color="accent" >Agregar otro nombre</button>
+        <div class="row">
+            <div class="col-md-6" *ngIf="globals.tipoInterviniente=='5'" [formGroup]="globals.form">
+                <div  class="row" formArrayName="aliasNombrePersona" >
+                    <div class="col-md-auto">
+                        <button class="float-left" mat-raised-button (click)="addOtroNombre('alias')" color="accent" >Agregar alias</button>
+                    </div>
+                    <div class="col-md-12" *ngFor="let nombre of alias.nombres;let i=index; trackBy:trackByIndex " [formGroupName]="alias.indices[i]">
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Alias" formControlName="nombre"value="{{nombre}}">
+                        </mat-form-field>
+                        <input type="hidden" value="Alias" formControlName="tipo">
+                        <input type="hidden" value="{{alias.ids[i]}}" formControlName="id">
+                    </div>
                 </div>
-                <div class="col-md-12" *ngFor="let nombre of otrosNombres.nombres;let i=index; trackBy:trackByIndex " [formGroupName]="otrosNombres.indices[i]">
-                    <mat-form-field class="full-width">
-                        <input matInput placeholder="Otro nombre" formControlName="nombre"value="{{nombre}}">
-                    </mat-form-field>
-                    <input type="hidden" value="Otro nombre" formControlName="tipo">
-                    <input type="hidden" value="{{otrosNombres.ids[i]}}" formControlName="id">
+            </div>
+            <div class="col-md-6" [formGroup]="globals.form">
+                <div  class="row" formArrayName="aliasNombrePersona" >
+                    <div class="col-md-auto">
+                        <button class="float-left" mat-raised-button (click)="addOtroNombre('otroNombre')" color="accent" >Agregar otro nombre</button>
+                    </div>
+                    <div class="col-md-12" *ngFor="let nombre of otrosNombres.nombres;let i=index; trackBy:trackByIndex " [formGroupName]="otrosNombres.indices[i]">
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Otro nombre" formControlName="nombre"value="{{nombre}}">
+                        </mat-form-field>
+                        <input type="hidden" value="Otro nombre" formControlName="tipo">
+                        <input type="hidden" value="{{otrosNombres.ids[i]}}" formControlName="id">
+                    </div>
                 </div>
             </div>
         </div>

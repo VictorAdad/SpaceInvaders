@@ -31,7 +31,7 @@ export class AcuerdoInicioComponent {
     }
   idUpdate(event: any) {
     this.acuerdoId = event.id;
-	console.log(event.id);
+	  console.log(this.acuerdoId);
   }
 
 }
@@ -77,16 +77,18 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
         this.route.params.subscribe(params => {
             if (params['casoId'])
                 this.casoId = +params['casoId'];
-                this.apiUrl=this.apiUrl.replace("{id}",String(this.casoId));                
+                this.apiUrl=this.apiUrl.replace("{id}",String(this.casoId));
                  this.http.get(this.apiUrl).subscribe(response => {
                 if(response.totalCount!=0){
-					this.hasAcuerdoInicio = true;
+				          	this.hasAcuerdoInicio = true;
                     this.form.disable();
                     this.fillForm(response.data[0]);
-				}
+                    this.idUpdate.emit({id: (response.data[0]).id});
+
+			         	}
                 if(params['id']){
-					this.id=params['id'];
-				    this.idUpdate.emit({id: this.id});
+					      this.id=params['id'];
+				        this.idUpdate.emit({id: this.id});
                     this.hasAcuerdoInicio = true;
                     this.form.disable();
                     this.fillForm(response.data[0]);
@@ -96,36 +98,48 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
         });
     }
 
-    public save(valid: any, _model: any): void {
+    public save(valid: any, _model: any) {
 
         Object.assign(this.model, _model);
         this.model.caso.id = this.casoId;
         console.log('-> AcuerdoInicio@save()', this.model);
-        this.http.post(this.apiUrl, this.model).subscribe(
 
-            (response) => {
-				this.id=response.id;
-                console.log(response);
-                if (this.casoId!=null) {
-                    this.router.navigate(['/caso/' + this.casoId + '/acuerdo-inicio/'+this.id+'/view']);
-                }
-                else {
-                    this.router.navigate(['/acuerdos-inicio'+this.id+'/view']);
-                }
-            },
-            (error) => {
-                console.error('Error', error);
-                throw Observable.throw(error);
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.http.post(this.apiUrl, this.model).subscribe(
+
+                    (response) => {
+        				this.id=response.id;
+                        console.log(response);
+                        if (this.casoId!=null) {
+                            this.router.navigate(['/caso/' + this.casoId + '/acuerdo-inicio/'+this.id+'/view']);
+                        }
+                        else {
+                            this.router.navigate(['/acuerdos-inicio'+this.id+'/view']);
+                        }
+                        resolve('Acuerdo de inicip creado con éxito');
+                    },
+                    (error) => {
+                        console.error('Error', error);
+                        reject(error);
+                    }
+                );
             }
         );
 
     }
 
-    public edit(_valid: any, _model: any): void {
+    public edit(_valid: any, _model: any) {
         console.log('-> AcuerdoInicio@edit()', _model);
-        this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
-            console.log('-> Registro acutualizado', response);
-        });
+
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
+                    console.log('-> Registro acutualizado', response);
+                    resolve('Acuerdo de inicio actualizado con éxito');
+                });
+            }
+        );
     }
 
     public fillForm(_data) {

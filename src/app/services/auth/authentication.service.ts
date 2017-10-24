@@ -33,7 +33,7 @@ export class AuthenticationService {
             this.isLoggedin = false;
         }
         else {
-            this.user   = new Usuario(usuario.nombreCompleto, usuario.username, usuario.roles);
+            this.user   = new Usuario(usuario);
             this.token  = this.user && this.user.token;
             this.isLoggedin = true;
         }
@@ -64,7 +64,7 @@ export class AuthenticationService {
                     // localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
                     let usuario = _usuarios[username];
                     if(usuario != null){
-                        this.user  = new Usuario(usuario.nombreCompleto, usuario.username, usuario.roles);
+                        this.user  = new Usuario(usuario);
                         localStorage.setItem('user', JSON.stringify(this.user));
                         this.isLoggedin = true;
                     }
@@ -102,11 +102,19 @@ export class Usuario {
     public username: string;
     public roles: string[];
     public token: string;
+    public fiscalia: string;
+    public agencia: string;
+    public turno: string;
+    public autoridad: string;
     
-    constructor(_nombreCompleto: string, _username: string, _roles: string[]) {
-        this.nombreCompleto = _nombreCompleto;
-        this.username = _username;
-        this.roles = this.setRoles(_roles);
+    constructor(_usuario: any) {
+        this.nombreCompleto = _usuario.nombreCompleto;
+        this.username = _usuario.username;
+        this.roles = this.setRoles(_usuario.roles);
+        this.fiscalia = _usuario.fiscalia;
+        this.agencia = _usuario.agencia;
+        this.autoridad = _usuario.autoridad;
+        this.turno = _usuario.turno;
     }
 
     public setRoles(_roles: string[]): string[]{
@@ -137,27 +145,47 @@ export var _usuarios = {
     'callCenter' : {
         'nombreCompleto': 'Call Center',
         'username': 'callCEnter', 
-        'roles': ['callCenter']
+        'roles': ['callCenter'],
+        'fiscalia': 'TOL',
+        'agencia': 'MET',
+        'turno': 'MAT',
+        'autoridad': 'CLL'
     },
     'uai' : {
         'nombreCompleto': 'Orientador Jurídico',
         'username': 'uai', 
-        'roles': ['uai']
+        'roles': ['uai'],
+        'fiscalia': 'TOL',
+        'agencia': 'MET',
+        'turno': 'MAT',
+        'autoridad': 'UAI'
     }, 
     'express' : {
         'nombreCompleto': 'Módulo Express',
         'username': 'express', 
-        'roles': ['express']
+        'roles': ['express'],
+        'fiscalia': 'TOL',
+        'agencia': 'MET',
+        'turno': 'MAT',
+        'autoridad': 'EXP'
     },
     'mpuai' : {
         'nombreCompleto': 'MP de UAI',
         'username': 'mpuai', 
-        'roles': ['mpuai']
+        'roles': ['mpuai'],
+        'fiscalia': 'TOL',
+        'agencia': 'MET',
+        'turno': 'MAT',
+        'autoridad': 'MPU'
     },
     'mpi' : {
         'nombreCompleto': 'MPI',
         'username': 'mpi', 
-        'roles': ['mpi']
+        'roles': ['mpi'],
+        'fiscalia': 'TOL',
+        'agencia': 'MET',
+        'turno': 'MAT',
+        'autoridad': 'MPI'
     } 
 }
 

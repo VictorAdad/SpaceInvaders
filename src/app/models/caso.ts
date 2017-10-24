@@ -25,6 +25,9 @@ export class Caso {
        return x;  
     }
 
+    nombre(){
+      return `NIC: ${this.nic || ''}  -  NUC: ${this.nuc || ''}`;
+    }
 
     public personas:any[];
     public delitos:any[];

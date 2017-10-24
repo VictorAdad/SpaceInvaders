@@ -1,6 +1,6 @@
 <div class="row space justify-content-end">
 	<div class="col-md-2">
-		<select2 placeholder= "Formatos"></select2>
+		<select2 placeholder= "Formatos"  [options]="[{label:'REGISTRO DE DERIVACION A LA UNIDAD DE MECANISMOS ALTERNATIVOS',value:'F2-117'}]"></select2>
 	</div>
 	<div class="col-md-auto">
 		<button mat-raised-button color="accent" >Adjuntar</button>
@@ -35,5 +35,5 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
 <div class="row space"></div>
-<button class="float-right" mat-button routerLink="/registro-general">Cancelar</button> 
+<button class="float-right" mat-button routerLink="/registro-general">Cancelar</button>
 <button class="float-right" mat-raised-button color="accent">Guardar</button>
