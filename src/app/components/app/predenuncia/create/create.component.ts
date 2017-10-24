@@ -1,5 +1,6 @@
+import { FormatosGlobal } from './../../solicitud-preliminar/formatos';
 import { Predenuncia } from '@models/predenuncia';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild,Output,Input,EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -10,21 +11,20 @@ import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 
 export class PredenunciaGlobal{
-	
-    public validateMsg(form: FormGroup){
+  public validateMsg(form: FormGroup){
         return !form.valid ? 'No se han llenado los campos requeridos' : '';
     }
-
 	public validateForm(form: FormGroup) {
         Object.keys(form.controls).forEach(field => {
-            const control = form.get(field);         
-            if (control instanceof FormControl) {         
+            const control = form.get(field);
+            if (control instanceof FormControl) {
                 control.markAsTouched({ onlySelf: true });
             } else if (control instanceof FormGroup) {
-                this.validateForm(control);           
+                this.validateForm(control);
             }
         });
-    } 
+    }
+
 }
 
 @Component({
@@ -35,7 +35,7 @@ export class PredenunciaCreateComponent {
     public hasPredenuncia:boolean = false;
     public apiUrl:string="/v1/base/predenuncias/casos/";
     public breadcrumb = [];
-
+    solicitudId:number=null
 
     constructor(private route: ActivatedRoute, private http: HttpService){}
 
@@ -56,6 +56,12 @@ export class PredenunciaCreateComponent {
         });
     }
 
+
+    idUpdate(event: any) {
+      this.solicitudId = event.id;
+      console.log("Recibiendo id emitido", event.id);
+    }
+
 }
 
 @Component({
@@ -69,14 +75,14 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
     public casoId: number = null;
     public hasPredenuncia:boolean=false;
     public apiUrl:string="/v1/base/predenuncias/casos/";
-
+    @Output() idEmitter = new EventEmitter<any>();
 
     constructor(
         private _fbuilder: FormBuilder,
         private onLine: OnLineService,
         private http: HttpService,
-        private router: Router, 
-        private route: ActivatedRoute) { 
+        private router: Router,
+        private route: ActivatedRoute) {
             super();
         }
 
@@ -91,7 +97,8 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                     console.log("Dont have predenuncia");
                     this.form.disable();
                     this.model= response.data[0] as Predenuncia;
-                    
+                    console.log("Emitiendo id..",this.model.id)
+                    this.idEmitter.emit({id: this.model.id});
                     this.fillForm(response.data[0]);
                 }
              });
@@ -181,10 +188,10 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
     }
 
     public fillForm(_data) {
-        this.form.patchValue(_data);        
+        this.form.patchValue(_data);
         console.log(_data);
     }
-	
+
 }
 
 @Component({
@@ -192,8 +199,10 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
     templateUrl:'./documento-predenuncia.component.html',
 })
 
-export class DocumentoPredenunciaComponent {
-	displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+export class DocumentoPredenunciaComponent extends FormatosGlobal {
+  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  @Input() id:number=null;
+
 	data: DocumentoPredenuncia[] = [
 		{id: 1, nombre: 'Entrevista.pdf',    	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
 		{id: 2, nombre: 'Nota.pdf',         	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
@@ -201,14 +210,18 @@ export class DocumentoPredenunciaComponent {
 		{id: 4, nombre: 'Entrevista1.pdf',  	procedimiento: 'N/A',     	fechaCreacion:'07/09/2017'},
 		{id: 5, nombre: 'Fase1.png',        	procedimiento: 'N/A',     	fechaCreacion:'07/09/2017'},
 	];
+  dataSource: TableService | null;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
-	dataSource: TableService | null;
-	@ViewChild(MatPaginator) paginator: MatPaginator;
+  constructor(
+      public http: HttpService
+      ){
+      super(http);
+  }
 
-
-	ngOnInit() {
-    	this.dataSource = new TableService(this.paginator, this.data);
-  	}
+  ngOnInit() {
+      this.dataSource = new TableService(this.paginator, this.data);
+  }
 }
 
 export class DocumentoPredenuncia {

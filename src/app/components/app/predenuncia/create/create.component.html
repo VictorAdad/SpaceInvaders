@@ -1,5 +1,5 @@
 <breadcrumb [rutas]="breadcrumb"></breadcrumb>
-<div class="row space">    
+<div class="row space">
     <div class="col-md-12 text-right">
         <small>NIC:CAI/AIN/00/UAI/268/00126/17/08 - NUC: CAI/AIN/00/UAI/268/00126/17/08</small>
     </div>
@@ -15,8 +15,8 @@
 <div class="row">
 	<div class="col-md-12">
 		<mat-tab-group>
-			<mat-tab label="Pre denuncia"><predenuncia></predenuncia></mat-tab>
-			<mat-tab label="Documentos" *ngIf="hasPredenuncia"><documento-predenuncia></documento-predenuncia></mat-tab>
+			<mat-tab label="Pre denuncia"><predenuncia (idEmitter)="idUpdate($event)"></predenuncia></mat-tab>
+			<mat-tab label="Documentos" *ngIf="hasPredenuncia"><documento-predenuncia [id]="solicitudId"></documento-predenuncia></mat-tab>
 		</mat-tab-group>
 	</div>
 </div>

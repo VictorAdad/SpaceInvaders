@@ -32,7 +32,7 @@ export class Predenuncia{
 	canalizacion:string;
 	institucionCanalizacion:string;
 	motivocanalizacion:string;
-    fechaCanalizacion:string;
+    fechaCanalizacion:any;
     nombrePersonaRegistro:string;
     horaCanalizacion:string;
     personaCausohecho:string;
@@ -48,7 +48,7 @@ export class Predenuncia{
 	cargoAutoridadVictima:string;
 
 	caso: Caso = new Caso();
-	
+
 }
 
 export class Caso {
