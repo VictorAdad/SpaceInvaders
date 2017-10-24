@@ -8,6 +8,7 @@ import { Delito } from '@models/catalogo/delito';
 import { GlobalComponent } from '@components-app/global.component';
 import { CIndexedDB } from '@services/indexedDB';
 import { FormCreateDelitoCasoComponent } from "./formcreate.component";
+import { AuthenticationService } from '@services/auth/authentication.service';
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
 import { NoticiaHechoGlobal } from '../global';
@@ -36,7 +37,8 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         _router: Router,
         _activeRoute: ActivatedRoute,
         _onLine: OnLineService,
-        private http: HttpService
+        private http: HttpService,
+        private auth: AuthenticationService
     ) { 
         super();
         this.db = _db;
@@ -99,7 +101,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                 Object.assign(_model, this.model);
                 console.log('Model', _model);
                 _model["agencia"]={id:1};
-                _model["nic"]="CAI/AIN/00/UAI/268/00126/17/08 ";
+                _model["nic"]=this.generateNIC(_model);
                 _model["estatus"]={id:1};
 
                 _model.created = null;
@@ -170,6 +172,21 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         });
 
         return hasId;
+    }
+
+    public generateNIC(_caso: any): string{
+        console.log('caso ', _caso.delitoCaso.delito.id);
+        let nic: string = '';
+        let user = this.auth.user;
+        nic=`${user.fiscalia}/${user.agencia}/${user.turno}/${user.autoridad}/${this.pad(this.delito.id, 3)}/00126/${(new Date()).getFullYear().toString().substr(-2)}/${this.pad((new Date()).getMonth(), 2)}`
+
+        return nic;
+    }
+
+    private pad(num:number, size:number): string {
+        let s = num+"";
+        while (s.length < size) s = "0" + s;
+        return s;
     }
 
 }
