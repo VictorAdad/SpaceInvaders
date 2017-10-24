@@ -1,4 +1,5 @@
-import { Component, ViewChild , Output, EventEmitter } from '@angular/core';
+import { FormatosGlobal } from './../../solicitud-preliminar/formatos';
+import { Component, ViewChild , Output,Input, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Entrevista } from '@models/entrevista/entrevista';
@@ -236,8 +237,9 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 	selector: 'documento-entrevista',
 	templateUrl: './documento.component.html',
 })
-export class DocumentoEntrevistaComponent {
+export class DocumentoEntrevistaComponent extends FormatosGlobal{
 
+  @Input() id:number=null;
 	displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
 	data: DocumentoEntrevista[] = [
 		{ id: 1, nombre: 'Entrevista.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
@@ -246,14 +248,18 @@ export class DocumentoEntrevistaComponent {
 		{ id: 4, nombre: 'Entrevista1.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
 		{ id: 5, nombre: 'Fase1.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
 	];
+  dataSource: TableService | null;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
-	dataSource: TableService | null;
-	@ViewChild(MatPaginator) paginator: MatPaginator;
+  constructor(
+      public http: HttpService
+      ){
+      super(http);
+  }
 
-
-	ngOnInit() {
-		this.dataSource = new TableService(this.paginator, this.data);
-	}
+  ngOnInit() {
+      this.dataSource = new TableService(this.paginator, this.data);
+  }
 }
 
 export interface DocumentoEntrevista {

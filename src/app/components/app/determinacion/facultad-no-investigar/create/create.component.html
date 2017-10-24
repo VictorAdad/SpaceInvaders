@@ -1,5 +1,5 @@
 <breadcrumb [rutas]="breadcrumb"></breadcrumb>
-<div class="row space">    
+<div class="row space">
     <div class="col-md-12 text-right">
         <small>NIC:CAI/AIN/00/UAI/268/00126/17/08 - NUC: CAI/AIN/00/UAI/268/00126/17/08</small>
     </div>
@@ -16,7 +16,7 @@
 	<div class="col-md-12">
 		<mat-tab-group>
 			<mat-tab label="Determinación"><facultad-no-investigar (idUpdate)="idUpdate($event)"></facultad-no-investigar></mat-tab>
-			<mat-tab label="Documentos" *ngIf="determinacionId!=null"><documento-facultad-no-investigar></documento-facultad-no-investigar></mat-tab>
+			<mat-tab label="Documentos" *ngIf="determinacionId!=null"><documento-facultad-no-investigar [id]="determinacionId"></documento-facultad-no-investigar></mat-tab>
 		</mat-tab-group>
 	</div>
 </div>
