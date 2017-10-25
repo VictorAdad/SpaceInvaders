@@ -167,7 +167,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             _model.caso.id      = this.casoId;
             _model.latitud      = this.latMarker;
             _model.longitud     = this.lngMarker;
-            _model.fecha        = moment(_model.fecha).format('YYYY-MM-DD');     
+            _model.fecha        = moment(_model.fecha).format('YYYY-MM-DD');
             if(this.lugarServ.finded.length > 0){
                 _model.detalleLugar.id = this.lugarServ.finded[0].id;
             }
@@ -177,7 +177,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 this.http.post('/v1/base/lugares', _model).subscribe(
                     (response) => {
                         console.log('-> registro guardado', response);
-                        resolve("Se creo un nuevo lugar con éxito");
+                        resolve("Se creó un nuevo lugar con éxito");
                         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
                     },
                     (error) => {
@@ -232,7 +232,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             if(this.onLine.onLine){
                 this.http.put('/v1/base/lugares/'+this.id, _model).subscribe((response) => {
                     console.log('-> Registro acutualizado', response);
-                    resolve("Se actualizo el lugar");
+                    resolve("Se actualizó el lugar");
                 },e=>{
                     reject(e);
                 });
