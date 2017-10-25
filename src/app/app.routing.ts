@@ -4,6 +4,7 @@ import { UsuariosComponent } from '@components-app/usuario/usuarios.component';
 import { UsuarioCreateComponent } from '@components-app/usuario/create/create.component';
 import { HomeComponent } from '@components-app/home/home.component';
 import { NoticiaHechoComponent } from '@components-app/noticiaHecho/component';
+import { PersonaComponent } from '@components-app/noticiaHecho/persona/component';
 import { ArmaComponent } from '@components-app/noticiaHecho/arma/arma.component';
 import { ArmaCreateComponent } from '@components-app/noticiaHecho/arma/create/create.component';
 import { LoginComponent } from '@components-app/login/login.component';
@@ -74,7 +75,9 @@ const routes: Routes = [
 
     //Noticia de Hecho
     { path : 'noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
-    { path : 'caso/:id/noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
+    { path : 'caso/:id/noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}, children : [
+        { path : 'persona', component : PersonaComponent }
+    ]},
     { path : 'armas', component : ArmaComponent, data : { breadcrumb : 'Armas' } },
     { path : 'caso/:casoId/armas/create', component : ArmaCreateComponent, data : { breadcrumb : 'Nueva arma'} },
     { path : 'caso/:casoId/armas/:id', component : ArmaCreateComponent, data : { breadcrumb : 'Nueva arma'} },

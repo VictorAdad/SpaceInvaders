@@ -22,7 +22,7 @@
                     <label class="d-xs-none d-sm-none d-md-inline">Datos generales</label>
                 </a>
                 <div [class]="hasId() ? '' : 'hidden' ">
-                    <a href="#tab2-panel" class="mdl-tabs__tab disabled">
+                    <a href="#tab2-panel" class="mdl-tabs__tab disabled" [routerLink]="['persona']">
                         <mat-icon>assignment_ind</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Personas</label>
                     </a>
@@ -59,11 +59,13 @@
         </div>
        <div class="col-md-9 col-sm-10">
             <div class="mdl-tabs__panel is-active" id="tab1-panel">
-                 <datos-generales></datos-generales>
+                 <!-- <datos-generales></datos-generales> -->
+                 <router-outlet></router-outlet>
             </div>
             <div [class]="hasId() ? '' : 'hidden' ">
                 <div class="mdl-tabs__panel" id="tab2-panel">
-                     <persona></persona>
+                     <!-- <persona></persona> -->
+                     <!-- <router-outlet name='noticia-hecho'></router-outlet> -->
                 </div>
                 <div class="mdl-tabs__panel" id="tab3-panel">
                       <delito></delito>
