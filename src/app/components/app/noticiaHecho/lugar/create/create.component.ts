@@ -316,10 +316,11 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         this.lngMarker = _e.coords.lng;
     }
 
-    changePais(id){        
+    changePais(id){    
+        console.log('-------->', id);    
         if(id!=null && typeof id !='undefined'){ 
             this.optionsServ.getEstadoByPais(id);
-            this.isMexico=id==_config.optionValue.idMexico;
+            this.isMexico = (id==_config.optionValue.idMexico);
             console.log(this.optionsServ.paises);
           }
           if(id==0){
