@@ -59,27 +59,51 @@ export class SelectsService {
     }
 
     public getVictimaQuerellante(){
-        this.http.get('/v1/catalogos/solicitud-preliminar/victima-querellante/options').subscribe((response) => {
-            this.victimaQuerellante = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/solicitud-preliminar/victima-querellante/options').subscribe((response) => {
+                this.victimaQuerellante = this.constructOptions(response);
+            });
+        }else{
+            this.db.get("catalogos","victima_querellante").then(response=>{
+                this.victimaQuerellante = this.constructOptions(response["arreglo"]);
+            });
+        }
     }
 
     public getDenunciaQuerella(){
-        this.http.get('/v1/catalogos/solicitud-preliminar/denuncia-querella/options').subscribe((response) => {
-            this.denunciaQuerella = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/solicitud-preliminar/denuncia-querella/options').subscribe((response) => {
+                this.denunciaQuerella = this.constructOptions(response);
+            });
+        }else{
+            this.db.get("catalogos","denuncia_querellante").then(response=>{
+                this.denunciaQuerella = this.constructOptions(response["arreglo"]);
+            });
+        }
     }
 
     public getPeritoMateria(){
-        this.http.get('/v1/catalogos/solicitud-preliminar/perito-materia/options').subscribe((response) => {
-            this.peritoMateria = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/solicitud-preliminar/perito-materia/options').subscribe((response) => {
+                this.peritoMateria = this.constructOptions(response);
+            });
+        }else{
+            this.db.get("catalogos","perito_materia").then(response=>{
+                this.peritoMateria = this.constructOptions(response["arreglo"]);
+            });
+        }
     }
 
     public getTipoExamen(){
-        this.http.get('/v1/catalogos/solicitud-preliminar/tipo-examen/options').subscribe((response) => {
-            this.tipoExamen = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/solicitud-preliminar/tipo-examen/options').subscribe((response) => {
+                this.tipoExamen = this.constructOptions(response);
+            });
+        }else{
+            this.db.get("catalogos","tipo_examen").then(response=>{
+                this.tipoExamen = this.constructOptions(response["arreglo"]);
+            });
+        }
     }
 
     public getPaises(){
@@ -88,8 +112,8 @@ export class SelectsService {
                 this.paises = this.constructOptions(response);
             });
         }else{
-            this.db.get("catalogos","paises").then(response=>{
-                this.paises = this.constructOptions(response);
+            this.db.get("catalogos","pais").then(response=>{
+                this.paises = this.constructOptions(response["arreglo"]);
             });
         }
     }   
@@ -101,69 +125,129 @@ export class SelectsService {
             });
         }else{
             this.db.get("catalogos","sexo").then(response=>{
-                this.sexo = this.constructOptions(response);
+                this.sexo = this.constructOptions(response["arreglo"]);
             });
         }
     }    
 
     public getTipoInterviniente(){
-        this.http.get('/v1/base/tipos-intervinientes/options').subscribe((response) => {
-            this.tipoInterviniente = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/base/tipos-intervinientes/options').subscribe((response) => {
+                this.tipoInterviniente = this.constructOptions(response);
+            });
+        }else{
+            this.db.get("catalogos","tipo_interviniente").then(response=>{
+                this.tipoInterviniente = this.constructOptions(response["arreglo"]);
+            });
+        }
     }
 
     public getEscolaridad(){
-        this.http.get('/v1/catalogos/persona/escolaridad/options').subscribe((response) => {
-            this.escolaridad = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/persona/escolaridad/options').subscribe((response) => {
+                this.escolaridad = this.constructOptions(response);
+            });
+        }else{
+            this.db.get("catalogos","escolaridad").then(response=>{
+                this.escolaridad = this.constructOptions(response["arreglo"]);
+            });
+        }
     }
 
     public getOcupacion(){
-        this.http.get('/v1/catalogos/persona/ocupacion/options').subscribe((response) => {
-            this.ocupacion = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/persona/ocupacion/options').subscribe((response) => {
+                this.ocupacion = this.constructOptions(response);
+            });
+        }else{
+            this.db.get("catalogos","ocupacion").then(response=>{
+                this.ocupacion = this.constructOptions(response["arreglo"]);
+            });
+        }
     }
 
     public getEstadoCivil(){
-        this.http.get('/v1/catalogos/persona/estado-civil/options').subscribe((response) => {
-            this.estadoCivil = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/persona/estado-civil/options').subscribe((response) => {
+                this.estadoCivil = this.constructOptions(response);
+            });
+        }else{
+            this.db.get("catalogos","estado_civil").then(response=>{
+                this.estadoCivil = this.constructOptions(response["arreglo"]);
+            });
+        }
     }
 
     public getIdioma(){
-        this.http.get('/v1/catalogos/persona/idioma/options').subscribe((response) => {
-            this.idioma = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/persona/idioma/options').subscribe((response) => {
+                this.idioma = this.constructOptions(response);
+            });
+        }else{
+            this.db.get("catalogos","idioma").then(response=>{
+                this.idioma = this.constructOptions(response["arreglo"]);
+            });
+        }
     }
 
     public getGrupoEtnico(){
-        this.http.get('/v1/catalogos/persona/grupo-etnico/options').subscribe((response) => {
-            this.grupoEtnico = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/persona/grupo-etnico/options').subscribe((response) => {
+                this.grupoEtnico = this.constructOptions(response);
+            });
+        }else{
+            this.db.get("catalogos","idioma").then(response=>{
+                this.grupoEtnico = this.constructOptions(response["arreglo"]);
+            });
+        }
     }
 
     public getInterprete(){
-        this.http.get('/v1/catalogos/persona/interprete/options').subscribe((response) => {
-            this.interprete = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/persona/interprete/options').subscribe((response) => {
+                this.interprete = this.constructOptions(response);
+            });
+        }else{
+            this.db.get("catalogos","interprete").then(response=>{
+                this.interprete = this.constructOptions(response["arreglo"]);
+            });
+        }
     }
 
     public getAdiccion(){
-        this.http.get('/v1/catalogos/persona/adiccion/options').subscribe((response) => {
-            this.adiccion = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/persona/adiccion/options').subscribe((response) => {
+                this.adiccion = this.constructOptions(response);
+            });
+        }else{
+            this.db.get("catalogos","adiccion").then(response=>{
+                this.adiccion = this.constructOptions(response["arreglo"]);
+            });
+        }
     }
 
     public getNacionalidad(){
-        this.http.get('/v1/catalogos/persona/nacionalidad/options').subscribe((response) => {
-            this.nacionalidad = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/persona/nacionalidad/options').subscribe((response) => {
+                this.nacionalidad = this.constructOptions(response);
+            });
+        }else{
+            this.db.get("catalogos","nacionalidad").then(response=>{
+                this.nacionalidad = this.constructOptions(response["arreglo"]);
+            });
+        }
     }
 
     public getTipoDomicilio(){
-        this.http.get('/v1/catalogos/tipo-domicilio/options').subscribe((response) => {
-            this.tipoDomicilio = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/tipo-domicilio/options').subscribe((response) => {
+                this.tipoDomicilio = this.constructOptions(response);
+            });
+        }else{
+            this.db.get("catalogos","tipo_domicilio").then(response=>{
+                this.tipoDomicilio = this.constructOptions(response["arreglo"]);
+            });
+        }
     }
 
     public getEstadoByPais(idPais: number){
@@ -218,9 +302,15 @@ export class SelectsService {
     }
 
     public getAlfabetismo(){
-        this.http.get('/v1/catalogos/persona/alfabetismo/options').subscribe((response) => {
-            this.alfabetismo = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/persona/alfabetismo/options').subscribe((response) => {
+                this.alfabetismo = this.constructOptions(response);
+            });
+        }else{
+            this.db.get("catalogos","alfabetismo").then(response=>{
+                this.alfabetismo = this.constructOptions(response["arreglo"]);
+            });
+        }
     }
 
     public getTipoPersona(){
