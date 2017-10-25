@@ -26,7 +26,7 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+    <mat-row *matRowDef="let row; columns: columns;" (click)="downloadFile(row, 'application-pdf')"></mat-row>
 </mat-table>
 <mat-paginator #paginator
     [length]="data.length"

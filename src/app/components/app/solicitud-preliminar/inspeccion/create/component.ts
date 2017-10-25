@@ -10,6 +10,7 @@ import { HttpService} from '@services/http.service';
 import { SolicitudPreliminarGlobal } from '../../global';
 import { _config} from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
+import { ConfirmationService } from '@jaspero/ng2-confirmations';
 
 @Component({
     templateUrl:'./component.html',
@@ -17,7 +18,8 @@ import { CIndexedDB } from '@services/indexedDB';
 export class InspeccionCreateComponent {
     public casoId: number = null;
     public breadcrumb = [];
-	public solicitudId: number = null;
+    public solicitudId: number = null;
+    public model:any=null;
 	constructor(private route: ActivatedRoute){}
 
 	ngOnInit() {
@@ -29,10 +31,11 @@ export class InspeccionCreateComponent {
         });
         console.log('casoID', this.casoId);
   	}
-	idUpdate(event: any) {
-    this.solicitudId = event.id;
-	console.log(event.id);
-  }
+    modelUpdate(model: any) {
+      this.solicitudId= model.id;
+      this.model=model
+      console.log(model);
+    }
 }
 
 @Component({
@@ -44,7 +47,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
     public apiUrl:string="/v1/base/solicitudes-pre-inspecciones";
     public casoId: number = null;
     public id: number = null;
-	@Output() idUpdate = new EventEmitter<any>();
+	  @Output() modelUpdate = new EventEmitter<any>();
     public form  : FormGroup;
     public model : Inspeccion;
     dataSource: TableService | null;
@@ -76,7 +79,6 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
                 console.log('casoId', this.casoId);
             if(params['id']){
                 this.id = +params['id'];
-				this.idUpdate.emit({id: this.id});
                 console.log('id', this.id);
                 this.http.get(this.apiUrl+'/'+this.id).subscribe(response =>{
                         var fechaCompleta:Date= new Date(response.fechaHoraInspeccion);
@@ -84,6 +86,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
                         var horas: string=(String(fechaCompleta.getHours()).length==1)?'0'+fechaCompleta.getHours():String(fechaCompleta.getHours());
                         var minutos: string=(String(fechaCompleta.getMinutes()).length==1)?'0'+fechaCompleta.getMinutes():String(fechaCompleta.getMinutes());;
                         response.horaInspeccion=horas+':'+minutos;
+                        this.modelUpdate.emit(response);
                         this.fillForm(response);
                     });
             }
@@ -169,26 +172,25 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
 export class DocumentoInspeccionComponent extends FormatosGlobal{
 
 	displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
-	data: DocumentoInspeccion[] = [
-		{id : 1, nombre: 'Entrevista.pdf',  	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
-		{id : 2, nombre: 'Nota.pdf',        	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
-		{id : 3, nombre: 'Fase.png',        	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
-		{id : 4, nombre: 'Entrevista1.pdf',  	procedimiento: 'N/A',     	fechaCreacion:'07/09/2017'},
-		{id : 5, nombre: 'Fase1.png',        	procedimiento: 'N/A',     	fechaCreacion:'07/09/2017'},
-	];
+	data=[];
   dataSource: TableService | null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @Input() id:boolean=false;
+  @Input() object: any;
 
   constructor(
-      public http: HttpService
+      public http: HttpService,
+      public confirmationService:ConfirmationService
       ){
-      super(http);
+      super(http,confirmationService);
   }
 
   ngOnInit() {
-      this.dataSource = new TableService(this.paginator, this.data);
-  }
+    console.log('-> Object ', this.object);
+    if(this.object.documentos)
+    this.data = this.object.documentos;
+    this.dataSource = new TableService(this.paginator, this.data);
+}
 }
 
 export interface DocumentoInspeccion {

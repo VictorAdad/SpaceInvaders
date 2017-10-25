@@ -10,6 +10,7 @@ import { HttpService } from '@services/http.service';
 import { SolicitudPreliminarGlobal } from '../../global';
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
+import { ConfirmationService } from '@jaspero/ng2-confirmations';
 
 @Component({
 	templateUrl: './component.html',
@@ -18,7 +19,8 @@ export class RegistroGeneralCreateComponent {
 
 	public casoId: number = null;
 	public breadcrumb = [];
-    public solicitudId: number = null;
+  public solicitudId: number = null;
+  public model:any=null;
 	constructor(private route: ActivatedRoute) { }
 	ngOnInit() {
 		this.route.params.subscribe(params => {
@@ -28,10 +30,11 @@ export class RegistroGeneralCreateComponent {
 			}
 		});
 	}
-	idUpdate(event: any) {
-		this.solicitudId = event.id;
-		console.log(event.id);
-	 }
+  modelUpdate(model: any) {
+    this.solicitudId= model.id;
+    this.model=model
+  console.log(model);
+  }
 
 }
 
@@ -44,7 +47,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 	public apiUrl: string = "/v1/base/solicitudes-pre-registros";
 	public casoId: number = null;
 	public id: number = null;
-	@Output() idUpdate = new EventEmitter<any>();
+  @Output() modelUpdate=new EventEmitter<any>();
 	public form: FormGroup;
 	public model: RegistroGeneral;
 	dataSource: TableService | null;
@@ -76,10 +79,11 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 			if (params['id']) {
 				this.id = +params['id'];
 				console.log('id', this.id);
-				this.idUpdate.emit({id: this.id});
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-					console.log(response.data),
-						this.fillForm(response);
+          console.log(response.data),
+          this.modelUpdate.emit(response);
+            this.fillForm(response);
+
 				});
 			}
 		});
@@ -139,28 +143,26 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 	templateUrl: './documento.component.html',
 })
 export class DocumentoRegistroGeneralComponent  extends FormatosGlobal{
-	displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
-	data: DocumentoRegistroGeneral[] = [
-		{ id: 1, nombre: 'Entrevista.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-		{ id: 2, nombre: 'Nota.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-		{ id: 3, nombre: 'Fase.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-		{ id: 4, nombre: 'Entrevista1.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-		{ id: 5, nombre: 'Fase1.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-	];
+  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  @Input() object: any;
+	data=[];
 
   dataSource: TableService | null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @Input() id:boolean=false;
-
+  @Input() id:number=null;
   constructor(
-      public http: HttpService
-      ){
-      super(http);
-  }
+    public http: HttpService,
+    public confirmationService:ConfirmationService
+    ){
+    super(http,confirmationService);
+}
 
-  ngOnInit() {
-      this.dataSource = new TableService(this.paginator, this.data);
-  }
+ngOnInit() {
+  console.log('-> Object ', this.object);
+  if(this.object.documentos)
+  this.data = this.object.documentos;
+  this.dataSource = new TableService(this.paginator, this.data);
+}
 }
 
 export interface DocumentoRegistroGeneral {

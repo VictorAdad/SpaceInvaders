@@ -22,7 +22,7 @@
     </ng-container>
     <ng-container matColumnDef="nombre">
         <mat-header-cell *matHeaderCellDef> Nombre</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.nameEcm}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="procedimiento">
@@ -36,5 +36,5 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="downloadFile(row, 'application-pdf')"></mat-row>
 </mat-table>

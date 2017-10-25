@@ -19,8 +19,8 @@
 <mat-table #table [dataSource]="dataSource">
     <ng-container matColumnDef="nombre">
         <mat-header-cell *matHeaderCellDef> Nombre</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
-    </ng-container>
+        <mat-cell *matCellDef="let element"> {{element.nameEcm}} </mat-cell>
+      </ng-container>
 
     <ng-container matColumnDef="procedimiento">
         <mat-header-cell *matHeaderCellDef> Procedimiento </mat-header-cell>

@@ -9,6 +9,12 @@
 		<button mat-raised-button color="accent" >Compartir</button>
 	</div>
 </div>
+<mat-paginator #paginator
+[length]="data.length"
+[pageIndex]="0"
+[pageSize]="10"
+[pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>
 <mat-table #table [dataSource]="dataSource">
     <ng-container matColumnDef="nombre">
         <mat-header-cell *matHeaderCellDef> Nombre</mat-header-cell>
@@ -26,11 +32,6 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="downloadFile(row, 'application-pdf')"></mat-row>
 </mat-table>
-<mat-paginator #paginator
-    [length]="data.length"
-    [pageIndex]="0"
-    [pageSize]="10"
-    [pageSizeOptions]="[5, 10, 25, 100]">
-</mat-paginator>
+

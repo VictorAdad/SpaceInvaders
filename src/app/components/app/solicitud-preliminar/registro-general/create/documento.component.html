@@ -32,8 +32,6 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="downloadFile(row, 'application-pdf')"></mat-row>
 </mat-table>
-<div class="row space"></div>
-<button class="float-right" mat-button routerLink="/registro-general">Cancelar</button>
-<button class="float-right" mat-raised-button color="accent">Guardar</button>
+
