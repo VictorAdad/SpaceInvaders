@@ -48,6 +48,7 @@ export class PredenunciaCreateComponent {
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
             }
             if (params['casoId']){
+                this.casoId = +params['casoId'];
                 this.http.get(this.apiUrl+params['casoId']+'/page').subscribe(response => {
                     if(parseInt(response.totalCount) !== 0){
                         this.hasPredenuncia = true;
@@ -180,8 +181,9 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                     this.model.tipo="Predenuncia";// temporalmente
                     this.http.post('/v1/base/predenuncias', this.model).subscribe(
                         (response) => {
-                            console.log(response)
-                            resolve(this.router.navigate(['/caso/'+this.casoId+'/predenuncia/create' ]));
+                            console.log(response);
+                            this.router.navigate(['/caso/'+this.casoId+'/predenuncia/create' ])
+                            resolve('Predenuncia creada con éxito');
                          },
                         (error) => {
                             console.error('Error', error);
@@ -194,6 +196,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
     }
 
     public fillForm(_data) {
+        _data.fechaCanalizacion = new Date(_data.fechaCanalizacion);
         this.form.patchValue(_data);
         console.log(_data);
     }
