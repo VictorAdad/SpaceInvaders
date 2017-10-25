@@ -8,7 +8,6 @@ import 'rxjs/add/observable/of';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Relacion} from '@models/relacion';
 import { EfectoViolenciaGenero} from '@models/efectoViolenciaGenero';
-import { TrataPersonas} from '@models/trataPersonas';
 import { HostigamientoAcoso} from '@models/hostigamientoAcoso';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
@@ -19,6 +18,7 @@ import { SelectsService} from '@services/selects.service';
 import { Form } from './form';
 import { Options } from './options';
 import { Colections } from './colections';
+import { TrataPersonas } from './colections';
 
 
 @Component({
@@ -61,7 +61,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     efectoDisplayedColumns = ['efecto', 'detalle'];
     efectoDataSource = new ExampleDataSource([]);
 
-    trataData: TrataPersonas[] = []
+    trataData = []
     trataDisplayedColumns = ['País de origen', 'Estado de origen','Municipio de origen','País destino','Estado destino','Municipio destino', 'Tipo de trata','Transportación'];
     trataDataSource = new ExampleDataSource(this.trataData);
 
@@ -189,7 +189,19 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         console.log('Add TrataPersonas', _val);
         if(this.optionsRelacion.matrizTipoTransportacion.finded[0])
             _val.tipoTransportacion.id = this.optionsRelacion.matrizTipoTransportacion.finded[0].id;
-        this.colections.add('trataPersonas', 'subjectTrataPersonas', _val);
+        this.colections.add(
+            'trataPersonas',
+            'subjectTrataPersonas',
+            new TrataPersonas(
+                _val,
+                this.optionsService,
+                this.arrEstadosOrigen,
+                this.arrMunicipiosOrigen,
+                this.arrEstadosDestino,
+                this.arrMunicipiosDestino,
+                this.optionsRelacion
+            )
+        );
         let form = this.form.get('trataPersona') as FormArray;
         form.push(this.formRelacion.trataPersonasForm); 
     } 
@@ -422,6 +434,13 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             this.optionsService.getMunicipiosByEstadoService(val).subscribe(municipios=>{
                 this[arr]=this.optionsService.constructOptions(municipios);
             });
+    }
+
+    find(_attr, _object):string {
+        if(_object)
+            return _object[_attr];
+
+        return null;
     }
 
 }

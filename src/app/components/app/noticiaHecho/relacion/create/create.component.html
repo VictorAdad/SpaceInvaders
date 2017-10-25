@@ -444,7 +444,7 @@
                                     <ng-container matColumnDef="País de origen">
                                         <mat-header-cell *matHeaderCellDef> País de origen </mat-header-cell>
                                         <mat-cell *matCellDef="let element">
-                                            {{ optionsService.find('paises', element.paisOrigen.id).label }}
+                                            {{ element.paisOrigen }}
                                         </mat-cell>
                                     </ng-container>
 
@@ -452,44 +452,44 @@
                                     <ng-container matColumnDef="Estado de origen">
                                         <mat-header-cell *matHeaderCellDef> Estado de origen </mat-header-cell>
                                         <mat-cell *matCellDef="let element">
-                                            {{arrEstadosOrigen[element.estadoOrigen.id].label}}
+                                            {{ element.estadoOrigen }}
                                         </mat-cell>
                                     </ng-container>
                                     <ng-container matColumnDef="Municipio de origen">
                                         <mat-header-cell *matHeaderCellDef> Municipio de origen </mat-header-cell>
                                         <mat-cell *matCellDef="let element">
-                                            {{arrMunicipiosOrigen[element.municipioOrigen.id].label}}
+                                            {{ element.municipioOrigen }}
                                         </mat-cell>
                                     </ng-container>
                                     <ng-container matColumnDef="País destino">
                                         <mat-header-cell *matHeaderCellDef> País destino </mat-header-cell>
                                         <mat-cell *matCellDef="let element">
-                                            {{optionsService.find('paises', element.paisDestino.id).label}}
+                                            {{ element.paisDestino }}
                                         </mat-cell>
                                     </ng-container>
                                     <ng-container matColumnDef="Estado destino">
                                         <mat-header-cell *matHeaderCellDef> Estado destino </mat-header-cell>
                                         <mat-cell *matCellDef="let element">
-                                            {{ arrEstadosDestino[element.estadoDestino.id].label }}
+                                            {{ element.estadoDestino  }}
                                         </mat-cell>
                                     </ng-container>
                                     <ng-container matColumnDef="Municipio destino">
                                         <mat-header-cell *matHeaderCellDef> Municipio destino </mat-header-cell>
                                         <mat-cell *matCellDef="let element">
-                                            {{arrMunicipiosDestino[element.municipioDestino.id].label}}
+                                            {{ element.municipioDestino }}
                                         </mat-cell>
                                     </ng-container>
 
                                     <ng-container matColumnDef="Tipo de trata">
                                         <mat-header-cell *matHeaderCellDef> Tipo de trata </mat-header-cell>
                                         <mat-cell *matCellDef="let element">
-                                            <!-- {{optionsRelacion.matrizTipoTransportacion.finded[0].tipo}} -->
+                                            {{ element.tipo }}
                                         </mat-cell>
                                     </ng-container>
                                     <ng-container matColumnDef="Transportación">
                                         <mat-header-cell *matHeaderCellDef> Transportación </mat-header-cell>
                                         <mat-cell *matCellDef="let element">
-                                            <!-- {{optionsRelacion.matrizTipoTransportacion.finded[0].transportacion}} -->
+                                            {{ element.transportacion }}
                                         </mat-cell>
                                     </ng-container>
 
