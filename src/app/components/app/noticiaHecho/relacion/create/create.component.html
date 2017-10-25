@@ -244,14 +244,14 @@
                 </div>
                 <div class="col" [formGroup]="form">
                     <mat-checkbox class="example-margin" name="flagrancia" formControlName="flagrancia" >Flagrancia</mat-checkbox>
-                    <mat-checkbox class="example-margin" formControlName="tieneViolenciaGenero" (change)="changeViolenciaGenero($event)">Violencia de genero</mat-checkbox>
+                    <mat-checkbox class="example-margin" formControlName="tieneViolenciaGenero" (change)="changeViolenciaGenero($event)">Violencia de género</mat-checkbox>
                     <!-- <checkbox label="Violencia de genero" name="tieneViolenciaGenero"  (valueChange)="changeViolenciaGenero($event)"></checkbox> -->
                 </div>
             </div>
             <br/>
             <div class="row space" *ngIf="isImputadoVictimaDelito && isViolenciaGenero">
                 <div class="col">
-                    <h4>Violencia de genero</h4>
+                    <h4>Violencia de género</h4>
                         <div class="row">
 
                             <div class="col-md-3">
@@ -264,7 +264,7 @@
                                 </select2>
                             </div>
                             <div class="col-md-3">
-                                <select2 placeholder="Víctima de violencia de genero"
+                                <select2 placeholder="Víctima de violencia de género"
                                     name="violenciaGenero"
                                     [group]="formRelacion.violenciaGenero"
                                     [options]="optionsRelacion.matrizViolenciaGenero.violenciaGenero"
