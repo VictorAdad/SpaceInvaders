@@ -215,9 +215,43 @@ export class OnLineService {
         {
             catalogo:"clasificacion_delito_orden",
             uri:'/v1/catalogos/relacion/clasificacion-delito-orden/options'
+        },
+        {
+            catalogo:"tipo_interviniente",
+            uri:'/v1/base/tipos-intervinientes/options'
+        },
+        {
+            catalogo:"victima_querellante",
+            uri:'/v1/catalogos/solicitud-preliminar/victima-querellante/options'
+        },
+        {
+            catalogo:"denuncia_querella",
+            uri:'/v1/catalogos/solicitud-preliminar/denuncia-querella/options'
+        },
+        {
+            catalogo:"perito_materia",
+            uri:'/v1/catalogos/solicitud-preliminar/perito-materia/options'
+        },
+        {
+            catalogo:"tipo_examen",
+            uri:'/v1/catalogos/solicitud-preliminar/denuncia-querella/options'
+        },
+        {
+            catalogo:"idioma",
+            uri:'/v1/catalogos/persona/idioma/options'
+        },
+        {
+            catalogo:"adiccion",
+            uri:'/v1/catalogos/persona/adiccion/options'
+        },
+        {
+            catalogo:"nacionalidad",
+            uri:'/v1/catalogos/persona/nacionalidad/options'
+        },
+        {
+            catalogo:"tipo_domicilio",
+            uri:'/v1/catalogos/tipo-domicilio/options'
         }
-
-
     ];
 
 

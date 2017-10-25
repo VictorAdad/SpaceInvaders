@@ -66,6 +66,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         this.model = new Lugar();
         this.searchControl = new FormControl();
         this.form = this.createForm();
+        this.optionsServ.getData();
         console.log(this.optionsServ);
 
         this.route.params.subscribe(params => {
@@ -176,7 +177,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 this.http.post('/v1/base/lugares', _model).subscribe(
                     (response) => {
                         console.log('-> registro guardado', response);
-                        resolve("Se creo un nuevo lugar con éxito");
+                        resolve("Se creó un nuevo lugar con éxito");
                         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
                     },
                     (error) => {
@@ -225,10 +226,13 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             this.model.fecha = moment(this.model.fecha).format('YYYY-MM-DD');
             this.model.latitud      = this.latMarker;
             this.model.longitud     = this.lngMarker;
+            if(this.lugarServ.finded.length > 0){
+                _model.detalleLugar.id = this.lugarServ.finded[0].id;
+            }
             if(this.onLine.onLine){
                 this.http.put('/v1/base/lugares/'+this.id, _model).subscribe((response) => {
                     console.log('-> Registro acutualizado', response);
-                    resolve("Se actualizo el lugar");
+                    resolve("Se actualizó el lugar");
                 },e=>{
                     reject(e);
                 });
@@ -312,10 +316,11 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         this.lngMarker = _e.coords.lng;
     }
 
-    changePais(id){        
+    changePais(id){    
+        console.log('-------->', id);    
         if(id!=null && typeof id !='undefined'){ 
             this.optionsServ.getEstadoByPais(id);
-            this.isMexico=id==_config.optionValue.idMexico;
+            this.isMexico = (id==_config.optionValue.idMexico);
             console.log(this.optionsServ.paises);
           }
           if(id==0){
