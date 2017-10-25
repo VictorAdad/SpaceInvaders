@@ -69,6 +69,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     ngOnInit(){
+        this.options.getData();
         this.persona= new Persona();
         this.form  = LosForm.createForm();
         console.log('holaaaaa', this.form);
