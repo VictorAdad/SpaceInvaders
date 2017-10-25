@@ -1043,7 +1043,7 @@ class LosForm{
             'tipoPersona'      : new FormControl("", [Validators.required,]),
             'nombre'           : new FormControl("", []),
             'paterno'          : new FormControl("", [Validators.required,]),
-            'materno'          : new FormControl("", [Validators.required,]),
+            'materno'          : new FormControl(""),
             'razonSocial'      : new FormControl("", [Validators.required,Validators.minLength(5)]),
             'fechaNacimiento'  : new FormControl("",[]),
             'edad'             : new FormControl("",[]),

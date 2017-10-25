@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6" *ngIf="globals.tipoInterviniente=='5'" [formGroup]="globals.form">
+            <div class="col-md-6" *ngIf="globals.tipoInterviniente==globals.imputado" [formGroup]="globals.form">
                 <div  class="row" formArrayName="aliasNombrePersona" >
                     <div class="col-md-auto">
                         <button class="float-left" mat-raised-button (click)="addOtroNombre('alias')" color="accent" >Agregar alias</button>
