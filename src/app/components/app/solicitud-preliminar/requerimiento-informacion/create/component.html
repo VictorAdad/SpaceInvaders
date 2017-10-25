@@ -15,8 +15,8 @@
 <div class="row">
 	<div class="col-md-12">
 		<mat-tab-group>
-			<mat-tab label="Solicitud"><solicitud-requerimiento (idUpdate)="idUpdate($event)"></solicitud-requerimiento></mat-tab>
-			<mat-tab label="Documentos" *ngIf="solicitudId!=null"><documento-requerimiento [id]="solicitudId"></documento-requerimiento></mat-tab>
+			<mat-tab label="Solicitud"><solicitud-requerimiento (modelUpdate)="modelUpdate($event)"></solicitud-requerimiento></mat-tab>
+			<mat-tab label="Documentos" *ngIf="solicitudId!=null"><documento-requerimiento [id]="solicitudId" [object]="model"></documento-requerimiento></mat-tab>
 		</mat-tab-group>
 	</div>
 </div>

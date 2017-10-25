@@ -12,6 +12,7 @@ import { SelectsService } from '@services/selects.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { ConfirmationService } from '@jaspero/ng2-confirmations';
 
 @Component({
 	templateUrl: './component.html',
@@ -21,7 +22,8 @@ export class PeritoCreateComponent {
 	public casoId: number = null;
   public solicitudId: number = null;
   public breadcrumb = [];
-	isPericiales: boolean = false;
+  isPericiales: boolean = false;
+  public model:any=null;
 	constructor(private route: ActivatedRoute) { }
 
 	ngOnInit() {
@@ -32,13 +34,14 @@ export class PeritoCreateComponent {
 			}
 		});
 	}
-  idUpdate(event: any) {
-    this.solicitudId = event.id;
-	console.log(event.id);
+  modelUpdate(model: any) {
+    this.solicitudId= model.id;
+    this.model=model
+	  console.log(model);
   }
-  pericialesUpdate(event: any) {
-    this.isPericiales = event;
-	console.log(event);
+  pericialesUpdate(bool: any) {
+    this.isPericiales= bool;
+	  console.log(bool);
   }
 
 }
@@ -52,7 +55,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	public apiUrl: string = "/v1/base/solicitudes-pre-pericial";
 	public casoId: number = null;
 	public id: number = null;
-  @Output() idUpdate = new EventEmitter<any>();
+  @Output() modelUpdate = new EventEmitter<any>();
   @Output() isPericialesUpdate= new EventEmitter<any>();
 	public form: FormGroup;
 	public model: Perito;
@@ -83,13 +86,14 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 			console.log('casoId', this.casoId);
 			if (params['id']) {
 				this.id = +params['id'];
-				this.idUpdate.emit({id: this.id});
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
           this.fillForm(response);
 					this.isPericiales = this.form.controls.tipo.value === 'Periciales';
 					this.isPsicofisico = this.form.controls.tipo.value === 'Psicofísico';
           this.isPericialesUpdate.emit(this.isPericiales);
+          this.modelUpdate.emit(response);
+
 
         });
 			}
@@ -191,28 +195,28 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
 
   columns = ['nombre', 'procedimiento', 'fechaCreacion'];
   @Input() isPericiales:boolean=false;
-  @Input() id:boolean=false;
+  @Input() id:number=null;
 
-	data: DocumentoPerito[] = [
-		{ id: 1, nombre: 'Entrevista.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-		{ id: 2, nombre: 'Nota.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-		{ id: 3, nombre: 'Fase.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-		{ id: 4, nombre: 'Entrevista1.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-		{ id: 5, nombre: 'Fase1.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-	];
+	data= [];
 
   dataSource: TableService | null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
+  @Input() object: any;
   constructor(
-      public http: HttpService
+      public http: HttpService,
+      public confirmationService:ConfirmationService
       ){
-      super(http);
+      super(http,confirmationService);
   }
 
   ngOnInit() {
-      this.dataSource = new TableService(this.paginator, this.data);
-  }
+    console.log('-> Object ', this.object);
+    console.log('-> IsPericiales ', this.isPericiales);
+
+    if(this.object.documentos)
+    this.data = this.object.documentos;
+    this.dataSource = new TableService(this.paginator, this.data);
+}
 }
 
 export interface DocumentoPerito {

@@ -14,6 +14,9 @@ import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { SelectsService} from '@services/selects.service';
 import { Observable } from 'rxjs/Observable';
+import { ConfirmationService } from '@jaspero/ng2-confirmations';
+
+
 
 @Component({
     templateUrl: './component.html',
@@ -23,6 +26,7 @@ export class AcuerdoGeneralCreateComponent {
     public solicitudId: number = null;
     public breadcrumb = [];
     tipo:string=null;
+    model:any=null;
 
 
     constructor(private route: ActivatedRoute) { }
@@ -37,14 +41,12 @@ export class AcuerdoGeneralCreateComponent {
 
         });
     }
-  idUpdate(event: any) {
-    this.solicitudId = event.id;
-	console.log(event.id);
-  }
-  tipoUpdate(event: any) {
-    this.tipo = event;
-	console.log(event);
-  }
+    modelUpdate(model: any) {
+      this.solicitudId= model.id;
+      this.tipo = model.tipo;
+      this.model=model
+    console.log(model);
+    }
 }
 
 @Component({
@@ -55,8 +57,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
     public apiUrl = "/v1/base/solicitudes-pre-acuerdos";
     public casoId: number = null;
     public id: number = null;
-    @Output() idUpdate = new EventEmitter<any>();
-    @Output() tipoUpdate= new EventEmitter<any>();
+    @Output() modelUpdate=new EventEmitter<any>();
     public form: FormGroup;
     public model: AcuerdoGeneral;
     public isAcuerdoGral: boolean = false;
@@ -85,17 +86,14 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
                 this.casoId = +params['casoId'];
             if (params['id']) {
                 this.id = +params['id'];
-			        	this.idUpdate.emit({id: this.id});
                 this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
                     console.log(response)
                     this.fillForm(response);
-
                     this.isAcuerdoGral = (this.form.controls.tipo.value==='Acuerdo General');
                     this.isJuridico = (this.form.controls.tipo.value==='Asignación de asesor jurídico');
                     this.isAtencion = (this.form.controls.tipo.value==='Ayuda y atención a víctimas');
-                    this.tipoUpdate.emit(response.tipo);
                     this.model = response as AcuerdoGeneral;
-                    console.log(response)
+                    this.modelUpdate.emit(response);
                 });
             }
         });
@@ -229,24 +227,28 @@ export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
     @Input() tipo:string=null;
     @Input() id:number=null;
     tipo_options={
-      'Acuerdo General':[{'label':'ACUERDO GENERAL','value':'F1-006'}],
-      'Asignación de asesor jurídico':[{'label':'SOLICITUD DE ASESOR JURIDICO','value':'F1-002'}],
+      'Acuerdo General':[{'label':'ACUERDO GENERAL','value':'F1_006'}],
+      'Asignación de asesor jurídico':[{'label':'SOLICITUD DE ASESOR JURIDICO','value':'F1_002'}],
       'Ayuda y atención a víctimas':[{'label':'OFICIO PARA AYUDA Y ATENCIÓN A VÍCTIMA','value':'F1_001'}]
     }
 
 
     dataSource: TableService | null;
     @ViewChild(MatPaginator) paginator: MatPaginator;
-
+    @Input() object: any;
     constructor(
-        public http: HttpService
+        public http: HttpService,
+        public confirmationService:ConfirmationService
         ){
-        super(http);
+        super(http,confirmationService);
     }
 
     ngOnInit() {
-        this.dataSource = new TableService(this.paginator, this.data);
-    }
+      console.log('-> Object ', this.object);
+      if(this.object.documentos)
+      this.data = this.object.documentos;
+      this.dataSource = new TableService(this.paginator, this.data);
+  }
 }
 
 export interface DocumentoAcuerdoGeneral {

@@ -10,6 +10,7 @@ import { HttpService } from '@services/http.service';
 import { SelectsService } from "@services/selects.service";
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
+import { ConfirmationService } from '@jaspero/ng2-confirmations';
 
 export class PredenunciaGlobal{
   public validateMsg(form: FormGroup){
@@ -218,13 +219,15 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
-      public http: HttpService
+      public http: HttpService,
+      public confirmationService:ConfirmationService
       ){
-      super(http);
+      super(http,confirmationService);
   }
 
   ngOnInit() {
       console.log('-> Object ', this.object);
+      if(this.object.data[0].documentos)
       this.data = this.object.data[0].documentos;
       this.dataSource = new TableService(this.paginator, this.data);
   }

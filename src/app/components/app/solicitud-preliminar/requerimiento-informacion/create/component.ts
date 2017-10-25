@@ -10,14 +10,16 @@ import { HttpService } from '@services/http.service';
 import { SolicitudPreliminarGlobal } from '../../global';
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
+import { ConfirmationService } from '@jaspero/ng2-confirmations';
 
 @Component({
     templateUrl:'./component.html',
 })
 export class RequerimientoInformacionCreateComponent {
 	public casoId: number = null;
-    public solicitudId: number = null;
-    public breadcrumb = [];
+  public solicitudId: number = null;
+  public breadcrumb = [];
+  public model:any=null;
 	constructor(private route: ActivatedRoute){}
 
 	ngOnInit() {
@@ -28,10 +30,11 @@ export class RequerimientoInformacionCreateComponent {
 			}
 		});
 	}
-     idUpdate(event: any) {
-      this.solicitudId = event.id;
-	  console.log(event.id);
-    }
+  modelUpdate(model: any) {
+    this.solicitudId= model.id;
+    this.model=model
+  console.log(model);
+  }
 
 }
 
@@ -43,7 +46,7 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 	public apiUrl: string = "/v1/base/solicitudes-pre-info";
 	public casoId: number = null;
 	public id: number = null;
-	@Output() idUpdate = new EventEmitter<any>();
+  @Output() modelUpdate=new EventEmitter<any>();
 	public form: FormGroup;
 	public model: RequerimientoInformacion;
 	dataSource: TableService | null;
@@ -82,11 +85,12 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 			console.log('casoId', this.casoId);
 			if (params['id']) {
 				this.id = +params['id'];
-				this.idUpdate.emit({id: this.id});
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 					console.log('Get reg ',response),
-						this.fillForm(response);
+            this.fillForm(response);
+            this.modelUpdate.emit(response);
+
 				});
 			}
 		});
@@ -148,26 +152,25 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 export class DocumentoRequerimientoInformacionComponent extends FormatosGlobal{
 
 	displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
-	data: DocumentoRequerimientoInformacion[] = [
-		{id : 1, nombre: 'Entrevista.pdf',  	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
-		{id : 2, nombre: 'Nota.pdf',        	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
-		{id : 3, nombre: 'Fase.png',        	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
-		{id : 4, nombre: 'Entrevista1.pdf',  	procedimiento: 'N/A',     	fechaCreacion:'07/09/2017'},
-		{id : 5, nombre: 'Fase1.png',        	procedimiento: 'N/A',     	fechaCreacion:'07/09/2017'},
-  ];
+	data=[];
   @Input() id:boolean=false;
   dataSource: TableService | null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @Input() object: any;
 
   constructor(
-      public http: HttpService
-      ){
-      super(http);
-  }
+    public http: HttpService,
+    public confirmationService:ConfirmationService
+    ){
+    super(http,confirmationService);
+}
 
-  ngOnInit() {
-      this.dataSource = new TableService(this.paginator, this.data);
-  }
+ngOnInit() {
+  console.log('-> Object ', this.object);
+  if(this.object.documentos)
+  this.data = this.object.documentos;
+  this.dataSource = new TableService(this.paginator, this.data);
+}
 }
 
 export interface DocumentoRequerimientoInformacion {
