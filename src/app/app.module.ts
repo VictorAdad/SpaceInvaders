@@ -1,4 +1,4 @@
-import {MATERIAL_COMPATIBILITY_MODE} from '@angular/material';
+import {MATERIAL_COMPATIBILITY_MODE, MAT_DATE_LOCALE} from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -140,7 +140,8 @@ import {Logger} from '@services/logger.service'
     PersonaService,
     ArmaService,
     Logger,
-    {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}
+    {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true},
+    {provide: MAT_DATE_LOCALE, useValue: 'es-MX'}
   ],
   entryComponents: [
     dyanamicComponents

@@ -166,7 +166,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             _model.caso.id      = this.casoId;
             _model.latitud      = this.latMarker;
             _model.longitud     = this.lngMarker;
-            _model.fecha        = moment(_model.fecha).format('YYYY-MM-DD');
+            _model.fecha        = moment(_model.fecha).format('YYYY-MM-DD');     
             if(this.lugarServ.finded.length > 0){
                 _model.detalleLugar.id = this.lugarServ.finded[0].id;
             }
