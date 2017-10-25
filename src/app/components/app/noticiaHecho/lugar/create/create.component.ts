@@ -66,6 +66,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         this.model = new Lugar();
         this.searchControl = new FormControl();
         this.form = this.createForm();
+        this.optionsServ.getData();
         console.log(this.optionsServ);
 
         this.route.params.subscribe(params => {
@@ -225,6 +226,9 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             this.model.fecha = moment(this.model.fecha).format('YYYY-MM-DD');
             this.model.latitud      = this.latMarker;
             this.model.longitud     = this.lngMarker;
+            if(this.lugarServ.finded.length > 0){
+                _model.detalleLugar.id = this.lugarServ.finded[0].id;
+            }
             if(this.onLine.onLine){
                 this.http.put('/v1/base/lugares/'+this.id, _model).subscribe((response) => {
                     console.log('-> Registro acutualizado', response);
