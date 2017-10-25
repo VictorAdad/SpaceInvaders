@@ -53,6 +53,7 @@ import {MatTabsModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material';
 import {MatInputModule} from '@angular/material';
 import {MatCheckboxModule} from '@angular/material';
+import {MatProgressBarModule} from '@angular/material';
 // import { MaterialModule} from '@angular/material';
 
 import { AgmCoreModule } from '@agm/core';
@@ -100,6 +101,7 @@ import {Logger} from '@services/logger.service'
     MatButtonModule,
     MatInputModule,
     MatCheckboxModule,
+    MatProgressBarModule,
     // MaterialModule,
     BrowserAnimationsModule,
     AppRoutingModule,

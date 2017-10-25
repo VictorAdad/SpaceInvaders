@@ -16,7 +16,7 @@ export class SavingDirective{
 	    confirmText: "Continuar", // Default: 'Yes'
 	    declineText: "Cancelar",
     };
-	
+
 	@Input('saveFn')
 	saveFn: any;
 
@@ -45,17 +45,6 @@ export class SavingDirective{
 
 				}
          	}
-		);
-	}
-
-	savePromise(save: Promise<any>){
-		this.prepareSave(true);
-		save.then(
-			response => {
-				this.prepareSave(false);
-				this.globalService.openSnackBar('Registro guardado con éxito');
-			},
-			error => console.error('Ocurrio un error al guardar D:')
 		);
 	}
 
