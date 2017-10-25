@@ -314,9 +314,15 @@ export class SelectsService {
     }
 
     public getTipoPersona(){
-        this.http.get('/v1/catalogos/predenuncia/tipo-persona/options').subscribe((response) => {
-            this.tipoPersona = this.constructOptions(response);
-        });
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/predenuncia/tipo-persona/options').subscribe((response) => {
+                this.tipoPersona = this.constructOptions(response);
+            });
+        }else{
+            this.db.get("catalogos","tipo_persona").then(response=>{
+                this.tipoPersona = this.constructOptions(response["arreglo"]);
+            });
+        }
     }
 
     public constructOptions(_data:any){

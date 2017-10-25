@@ -9,7 +9,10 @@ import { CIndexedDB } from '@services/indexedDB';
 import { OnLineService } from '@services/onLine.service';
 import { Caso } from '@models/caso';
 import { DelitoCaso } from '@models/delitoCaso';
+import { GlobalService } from "@services/global.service";
 import { HttpService } from '@services/http.service';
+import { ConfirmationService } from '@jaspero/ng2-confirmations';
+import { ResolveEmit,ConfirmSettings} from '@utils/alert/alert.service';
 
 @Component({
     selector: 'delito',
@@ -31,7 +34,20 @@ export class DelitoComponent {
     caso: Caso;
     delitoCaso: DelitoCaso;
     private onLine: OnLineService;
-    constructor(private _tabla: CIndexedDB, _activeRoute: ActivatedRoute, _onLine: OnLineService, private http: HttpService) {
+    public settings:ConfirmSettings={
+        overlayClickToClose: false, // Default: true
+        showCloseButton: true, // Default: true
+        confirmText: "Continuar", // Default: 'Yes'
+        declineText: "Cancelar",
+    };
+    constructor(
+        private _tabla: CIndexedDB,
+        _activeRoute: ActivatedRoute,
+        _onLine: OnLineService,
+        private http: HttpService,
+        private confirmation: ConfirmationService,
+        public globalService : GlobalService
+        ){
 
         this.db = _tabla;
         this.activeRoute = _activeRoute;
@@ -95,58 +111,65 @@ export class DelitoComponent {
 
     swap(e) {
         console.log('row',e);
-        if (this.onLine.onLine){
-            this.http.get('/v1/base/delitos-casos/'+e.id+'/casos/'+this.id).subscribe((response) => {
-                var msj = response.message;
-                if(msj.indexOf('correctamente') >= 0){
-                    e.principal = true;
-                    if(this.pageIndex!=0 || this.pageSize!=0){
-                        this.page('/v1/base/delitos-casos/casos/' + this.id + '/page?p=' + this.pageIndex + '&tr=' + this.pageSize);
-                    }else{
-                        this.page('/v1/base/delitos-casos/casos/' + this.id + '/page'); 
-                    }
-                }else{
-                    e.principal = false;
-                }
-            });
-
-        }else{
-            let temId=Date.now();
-            let dato={
-                url:'/v1/base/delitos-casos/'+e.id+'/casos/'+this.id,
-                body:null,
-                options:[],
-                tipo:"get",
-                pendiente:true,
-                dependeDe:[this.id,e.id]
-            }
-            this.db.add("sincronizar",dato).then(p=>{
-                this.db.get("casos", this.id).then(
-                    casoR => {
-                        if (casoR) {
-                            this.delitoCaso = casoR as DelitoCaso;
-                            if (casoR["delitosCaso"]){
-                                e.principal = !e.principal;
-                                var lista = casoR["delitosCaso"] as any[];
-                                for (var i = 0; i < lista.length; ++i) {
-                                    if (e.principal){
-                                        lista[i].principal=false;
-                                    }
-                                    if (lista[i].id==e.id){
-                                        lista[i].principal=e.principal;
-                                        this.db.update("casos",casoR).then(casoU=>{
-                                            this.dataSource = new TableService(this.paginator, casoU["delitosCaso"]);
-                                        });
-                                    }
+        this.confirmation.create('Advertencia','¿Está seguro de asignar a este delito como el delito principal?',this.settings).subscribe(
+            (ans: ResolveEmit) => {
+                if(ans.resolved){
+                    if (this.onLine.onLine){
+                        this.http.get('/v1/base/delitos-casos/'+e.id+'/casos/'+this.id).subscribe((response) => {
+                            var msj = response.message;
+                            if(msj.indexOf('correctamente') >= 0){
+                                e.principal = true;
+                                if(this.pageIndex!=0 || this.pageSize!=0){
+                                    this.page('/v1/base/delitos-casos/casos/' + this.id + '/page?p=' + this.pageIndex + '&tr=' + this.pageSize);
+                                }else{
+                                    this.page('/v1/base/delitos-casos/casos/' + this.id + '/page'); 
                                 }
-                                
+                            }else{
+                                e.principal = false;
                             }
+                            this.globalService.openSnackBar('Nuevo delito asignado como principal');
+                        });
+
+                    }else{
+                        let temId=Date.now();
+                        let dato={
+                            url:'/v1/base/delitos-casos/'+e.id+'/casos/'+this.id,
+                            body:null,
+                            options:[],
+                            tipo:"get",
+                            pendiente:true,
+                            dependeDe:[this.id,e.id]
                         }
-                    });
-                
-            }); 
-        }
-        
+                        this.db.add("sincronizar",dato).then(p=>{
+                            this.db.get("casos", this.id).then(
+                                casoR => {
+                                    if (casoR) {
+                                        this.delitoCaso = casoR as DelitoCaso;
+                                        if (casoR["delitosCaso"]){
+                                            e.principal = !e.principal;
+                                            var lista = casoR["delitosCaso"] as any[];
+                                            for (var i = 0; i < lista.length; ++i) {
+                                                if (e.principal){
+                                                    lista[i].principal=false;
+                                                }
+                                                if (lista[i].id==e.id){
+                                                    lista[i].principal=e.principal;
+                                                    this.db.update("casos",casoR).then(casoU=>{
+                                                        this.dataSource = new TableService(this.paginator, casoU["delitosCaso"]);
+                                                    });
+                                                }
+                                            }
+                                            
+                                        }
+                                    }
+                                    this.globalService.openSnackBar('Nuevo delito asignado como principal');
+                                });
+                            
+                        }); 
+                    }
+                }
+            }
+        );
         
         //
     }

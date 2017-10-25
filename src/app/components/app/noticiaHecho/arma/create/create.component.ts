@@ -116,7 +116,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                 this.http.post('/v1/base/armas', _model).subscribe(
                     (response) => {
                         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
-                        resolve("Se agrego la arma con éxito");
+                        resolve("Se agregó la arma con éxito");
                     },
                     (error) => {
                         reject(error);
@@ -151,7 +151,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                             console.log("caso arma", caso["arma"]);
                             this.db.update("casos",caso).then(t=>{
                                 console.log("caso arma", t["arma"]);
-                                resolve("Se agrego la arma de manera local");
+                                resolve("Se agregó la arma de manera local");
                                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
                             });
                         }
@@ -179,7 +179,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                 if(this.onLine.onLine){            
                     this.http.put('/v1/base/armas/'+this.id, _model).subscribe((response) => {
                         console.log('-> Registro acutualizado', response);
-                        resolve("Se actualizo la información del arma");
+                        resolve("Se actualizó la información del arma");
                     },e=>{
                         reject(e);
                     });
@@ -204,7 +204,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                             }
                             this.db.update("casos",t).then(e=>{
                                 console.log("caso",t);
-                                resolve("Se actualizo la información del arma de manera local");    
+                                resolve("Se actualizó la información del arma de manera local");    
                             });
                             
                         });
