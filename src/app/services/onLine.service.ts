@@ -225,7 +225,7 @@ export class OnLineService {
             uri:'/v1/catalogos/solicitud-preliminar/victima-querellante/options'
         },
         {
-            catalogo:"denuncia_querella",
+            catalogo:"denuncia_querellante",
             uri:'/v1/catalogos/solicitud-preliminar/denuncia-querella/options'
         },
         {
@@ -251,6 +251,10 @@ export class OnLineService {
         {
             catalogo:"tipo_domicilio",
             uri:'/v1/catalogos/tipo-domicilio/options'
+        },
+        {
+            catalogo:"tipo_persona",
+            uri:'/v1/catalogos/predenuncia/tipo-persona/options'
         }
     ];
 
