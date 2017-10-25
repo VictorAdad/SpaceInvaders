@@ -7,6 +7,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
+import { SelectsService } from "@services/selects.service";
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 
@@ -46,7 +47,7 @@ export class PredenunciaCreateComponent {
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
             }
             if (params['casoId']){
-                this.http.get(this.apiUrl+params['casoId']).subscribe(response => {
+                this.http.get(this.apiUrl+params['casoId']+'/page').subscribe(response => {
                     if(parseInt(response.totalCount) !== 0){
                         this.hasPredenuncia = true;
                     }
@@ -82,7 +83,8 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         private onLine: OnLineService,
         private http: HttpService,
         private router: Router,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+        public optionsServ: SelectsService) {
             super();
         }
 
@@ -91,7 +93,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             if (params['casoId'])
               {  this.casoId = +params['casoId'];
                  console.log(this.casoId);
-                 this.http.get(this.apiUrl+this.casoId).subscribe(response => {
+                 this.http.get(this.apiUrl+this.casoId+'/page').subscribe(response => {
                  if(parseInt(response.totalCount) !== 0){
                     this.hasPredenuncia = true;
                     console.log("Dont have predenuncia");
@@ -138,7 +140,9 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             'cargoAutoridadOficioAsignacion' :  new FormControl(this.model.cargoAutoridadOficioAsignacion),
              // Registro presenial
             'calidadPersona'          :  new FormControl(this.model.calidadPersona),
-            'tipoPersona'          :  new FormControl(this.model.tipoPersona),
+            'tipoPersona'          :  new FormGroup({
+                 'id' : new FormControl(''),
+             }),
             'lugarHechos'          :  new FormControl(this.model.lugarHechos),
             'hechosNarrados'        :  new FormControl(this.model.hechosNarrados),
             'conclusionHechos'          :  new FormControl(this.model.conclusionHechos),
@@ -203,13 +207,7 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
   displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
   @Input() id:number=null;
 
-	data: DocumentoPredenuncia[] = [
-		{id: 1, nombre: 'Entrevista.pdf',    	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
-		{id: 2, nombre: 'Nota.pdf',         	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
-		{id: 3, nombre: 'Fase.png',         	procedimiento: 'N/A', 		fechaCreacion:'07/09/2017'},
-		{id: 4, nombre: 'Entrevista1.pdf',  	procedimiento: 'N/A',     	fechaCreacion:'07/09/2017'},
-		{id: 5, nombre: 'Fase1.png',        	procedimiento: 'N/A',     	fechaCreacion:'07/09/2017'},
-	];
+    data = [];
   dataSource: TableService | null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 

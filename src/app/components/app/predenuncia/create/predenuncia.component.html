@@ -76,7 +76,6 @@
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 				<select2 [options]="[{value: true,label: 'Si'},{value: false,label: 'No'}]"
 				placeholder="¿Se le proporcionó copia de derechos?"
-				[(value)]="model.copiaDerechos"
 				name="copiaDerechos"
 				[group]="form">
 			    </select2>
@@ -110,11 +109,10 @@
 		    	<text label="Calidad de la persona" name="calidadPersona" [(value)]="model.calidadPersona" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<select2 [options]="[{value:'Física',label: 'Física'},{value: 'Moral',label: 'Moral'}]"
+		    	<select2 [options]="optionsServ.tipoPersona"
 				placeholder="Tipo de persona"
-				[(value)]="model.tipoPersona"
-				name="tipoPersona"
-				[group]="form">
+				name="id"
+				[group]="form.controls.tipoPersona">
 			    </select2>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">

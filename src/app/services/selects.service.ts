@@ -28,6 +28,7 @@ export class SelectsService {
     public tipoExamen: MOption[] = [];
     public denunciaQuerella: MOption[] = [];
     public victimaQuerellante: MOption[] = [];
+    public tipoPersona: MOption[] = [];
 
     constructor(
         private http: HttpService,
@@ -54,6 +55,7 @@ export class SelectsService {
         this.getTipoExamen();
         this.getDenunciaQuerella();
         this.getVictimaQuerellante();
+        this.getTipoPersona();
     }
 
     public getVictimaQuerellante(){
@@ -218,6 +220,12 @@ export class SelectsService {
     public getAlfabetismo(){
         this.http.get('/v1/catalogos/persona/alfabetismo/options').subscribe((response) => {
             this.alfabetismo = this.constructOptions(response);
+        });
+    }
+
+    public getTipoPersona(){
+        this.http.get('/v1/catalogos/predenuncia/tipo-persona/options').subscribe((response) => {
+            this.tipoPersona = this.constructOptions(response);
         });
     }
 
