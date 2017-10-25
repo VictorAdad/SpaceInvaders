@@ -20,5 +20,25 @@ export class FormatosGlobal{
 
     }
 
+    public downloadFile(_object, _contentType){
+        console.log('downloadFile():', _object);
+        this.http.getFile(`/v1/documentos/documento/${_object.uuidEcm}/${_contentType}`).subscribe(
+            response => {
+                console.log('Done downloadFile()', response);
+                let blob = new Blob([response], { 
+                    type: _contentType 
+                });
+                let an  = document.createElement("a");
+                let url = window.URL.createObjectURL(response);
+                document.body.appendChild(an);
+                an.href = url;
+                an.download = 'documento.pdf';
+                an.click();
+                // window.location.assign(url);
+            }
+
+        )
+    }
+
 
 }

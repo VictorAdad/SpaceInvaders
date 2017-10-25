@@ -36,6 +36,7 @@ export class PredenunciaCreateComponent {
     public hasPredenuncia:boolean = false;
     public apiUrl:string="/v1/base/predenuncias/casos/";
     public breadcrumb = [];
+    public object: any;
     solicitudId:number=null
 
     constructor(private route: ActivatedRoute, private http: HttpService){}
@@ -50,6 +51,7 @@ export class PredenunciaCreateComponent {
                 this.http.get(this.apiUrl+params['casoId']+'/page').subscribe(response => {
                     if(parseInt(response.totalCount) !== 0){
                         this.hasPredenuncia = true;
+                        this.object = response;
                     }
                 });
             }
@@ -206,8 +208,9 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
 export class DocumentoPredenunciaComponent extends FormatosGlobal {
   displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
   @Input() id:number=null;
-
     data = [];
+    @Input()
+    object: any;
   dataSource: TableService | null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -218,6 +221,8 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
   }
 
   ngOnInit() {
+      console.log('-> Object ', this.object);
+      this.data = this.object.data[0].documentos;
       this.dataSource = new TableService(this.paginator, this.data);
   }
 }
