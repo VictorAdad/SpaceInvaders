@@ -72,8 +72,8 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             'tipoUso'               : new FormControl("", []),
             'procedencia'           : new FormControl("", [Validators.required,]),
             'pedimentoImportacion'  : new FormControl("", [Validators.required,]),
-            'llevaCarga'            : new FormControl("", [Validators.required,]),
-            'alterado'              : new FormControl("", [Validators.required,]),
+            'llevaCarga'            : new FormControl(""),
+            'alterado'              : new FormControl(""),
             'senasParticulares'     : new FormControl("", [Validators.required,]),
             'notas'                 : new FormControl("", []),
 
@@ -134,6 +134,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             this.form.controls.pedimentoImportacion.enable();
         }else{
             this.isProcedenciaExtranjera = false;
+            this.form.controls.pedimentoImportacion.disable();
         }
     }
 
