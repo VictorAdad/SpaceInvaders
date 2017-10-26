@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 @Directive({ selector: '[_saving]' })
 export class SavingDirective{
 	public el         : ElementRef;
-	public saving     : boolean = false;
+  public saving     : boolean = false;
 	public savingText : string  = '';
 	public settings:ConfirmSettings={
 	    overlayClickToClose: false, // Default: true
@@ -18,7 +18,10 @@ export class SavingDirective{
     };
 
 	@Input('saveFn')
-	saveFn: any;
+  saveFn: any;
+  @Input('isEdit')
+  public isEdit  : boolean = false;
+
 
     constructor(_el: ElementRef, public globalService : GlobalService, private _confirmation: ConfirmationService) {
     	this.el =  _el;
@@ -49,7 +52,10 @@ export class SavingDirective{
 	}
 
 	private getSaveingText(_saving : boolean): string{
-		return _saving ? 'Guardando...' : 'Guardar';
+    let saveName = 'Guardar';
+    if(this.isEdit)
+    saveName='Editar';
+		return _saving ? 'Guardando...' : saveName;
 	}
 
 	private prepareSave(save : boolean){
