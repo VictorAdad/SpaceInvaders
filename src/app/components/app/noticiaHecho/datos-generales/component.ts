@@ -54,7 +54,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
             'descripcion' : new FormControl('', [Validators.required]),
             'delito'   : new FormControl('', [Validators.required])
         });
-        this.activeRoute.params.subscribe(params => {
+        this.activeRoute.parent.params.subscribe(params => {
             if(this.hasId){
                 this.id = +params['id'];
                 if (!isNaN(this.id)){

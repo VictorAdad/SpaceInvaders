@@ -4,6 +4,7 @@ import { UsuariosComponent } from '@components-app/usuario/usuarios.component';
 import { UsuarioCreateComponent } from '@components-app/usuario/create/create.component';
 import { HomeComponent } from '@components-app/home/home.component';
 import { NoticiaHechoComponent } from '@components-app/noticiaHecho/component';
+import { DatosGeneralesComponent } from '@components-app/noticiaHecho/datos-generales/component';
 import { PersonaComponent } from '@components-app/noticiaHecho/persona/component';
 import { DelitoComponent } from '@components-app/noticiaHecho/delito/component';
 import { ArmaComponent } from '@components-app/noticiaHecho/arma/arma.component';
@@ -76,8 +77,11 @@ const routes: Routes = [
     { path : 'usuarios/edit/:id',component : UsuarioCreateComponent,data : { breadcrumb : 'Editar usuario', rutas:[{path:'/usuarios',label:"Usuarios"}] } },
 
     //Noticia de Hecho
-    { path : 'noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
+    { path : 'noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}, children: [
+        { path : 'datos-generales', component : DatosGeneralesComponent },
+    ]},
     { path : 'caso/:id/noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}, children : [
+        { path : 'datos-generales', component : DatosGeneralesComponent },
         { path : 'personas', component : PersonaComponent },
         { path : 'delitos', component : DelitoComponent },
         { path : 'lugares', component : LugarComponent },
