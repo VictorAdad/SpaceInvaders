@@ -54,6 +54,7 @@ import {MatButtonModule} from '@angular/material';
 import {MatInputModule} from '@angular/material';
 import {MatCheckboxModule} from '@angular/material';
 import {MatProgressBarModule} from '@angular/material';
+import {MatProgressSpinnerModule} from '@angular/material';
 // import { MaterialModule} from '@angular/material';
 
 import { AgmCoreModule } from '@agm/core';
@@ -102,6 +103,7 @@ import {Logger} from '@services/logger.service'
     MatInputModule,
     MatCheckboxModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     // MaterialModule,
     BrowserAnimationsModule,
     AppRoutingModule,
