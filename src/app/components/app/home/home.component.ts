@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
     public casos: Caso[] = [];
     public dataSource: TableService;
     public pag: number = 0;
+    public loadList = true;
     @ViewChild(MatPaginator) 
     paginator: MatPaginator;
     
@@ -57,6 +58,7 @@ export class HomeComponent implements OnInit {
         this.http.get(url).subscribe((response) => {
             this.casos = [];
             response.data.forEach(object => {
+                this.loadList = false;
                 this.pag = response.totalCount; 
                 this.casos.push(Object.assign(new Caso(), object));
                 this.dataSource = new TableService(this.paginator, this.casos);
