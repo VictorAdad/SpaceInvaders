@@ -1,7 +1,8 @@
 <breadcrumb></breadcrumb>
 <div class="row space">    
     <div class="col-md-12 text-right">
-        <small>NIC:{{caso.nic}} - NUC:{{caso.nuc}}</small>
+        <small *ngIf="caso.hasPredenuncia">NIC:{{caso.nic}} - NUC:{{caso.nuc}}</small>
+        <small *ngIf="!caso.hasPredenuncia">NIC: - NUC:</small>
     </div>
 </div>
 <div class="row space">
@@ -115,7 +116,7 @@
             <mat-card-content>
              <div class="d-flex justify-content-between">
                     <div class="row">
-                        <h2>Detalle pre denuncia <small>(NIC: CAI/AIN/00/UAI/255/00131/17/09)</small></h2>
+                        <h2>Detalle pre denuncia <small  *ngIf="caso.hasPredenuncia">(NIC: {{caso.nic}})</small></h2>
                     </div>
                     <div>
                         <mat-icon>more_vert</mat-icon>

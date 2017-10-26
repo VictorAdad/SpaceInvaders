@@ -1,6 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CIndexedDB } from '@services/indexedDB';
+import { OnLineService } from '@services/onLine.service';
+import { HttpService } from '@services/http.service';
 import { Caso } from '@models/caso'
 declare var componentHandler: any;
 
@@ -16,10 +18,13 @@ export class NoticiaHechoComponent implements OnInit{
 	private sub: any;
 	public returnRoute: string = '/';
 	public breadcrumb = [];
+	public object: any;
 
 	constructor(
 		private route: ActivatedRoute,
-		private _db: CIndexedDB
+		private _db: CIndexedDB,
+		private onLine: OnLineService,
+        private http: HttpService,
 		) {
 		this.db = _db;
 	}
@@ -32,7 +37,18 @@ export class NoticiaHechoComponent implements OnInit{
 	    this.route.params.subscribe(params => {
 	    	if(params['id']){
 				this.id = +params['id'];
-				this.breadcrumb.push({path:`/caso/${this.id}/detalle`,label:"Detalle del caso"})
+				this.breadcrumb.push({path:`/caso/${this.id}/detalle`,label:"Detalle del caso"});
+				if(this.onLine.onLine){
+                    this.http.get('/v1/base/casos/'+this.id).subscribe((response) => {
+                    	this.object =  response;
+                    });
+                }else{
+                    this.db.get("casos", this.id).then(object => {
+                        if (object){
+                           this.object =  object;    
+                        }
+                    });
+                }
 			}
 			this.getReturnRoute();
 	    });
