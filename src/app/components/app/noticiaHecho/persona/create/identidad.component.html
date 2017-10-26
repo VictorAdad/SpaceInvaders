@@ -135,7 +135,7 @@
 
             <div class="col-md-2" *ngIf="globals.detenido">
                 <select2 [options]="
-                    []" placeholder="Tipo de detención" ></select2>
+                    []" placeholder="Tipo de detención" name="id" [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido.controls.tipoDetenido"></select2>
             </div>
 
             <div class="col-md-2" *ngIf="globals.detenido">

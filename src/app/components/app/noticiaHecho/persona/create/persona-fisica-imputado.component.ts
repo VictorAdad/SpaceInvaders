@@ -72,9 +72,9 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         this.options.getData();
         this.persona= new Persona();
         this.form  = LosForm.createForm();
-        console.log('holaaaaa', this.form);
         this.globals = new PersonaGlobals(this.form,this.persona);
         this.globals.form.controls.razonSocial.disable();
+        this.globals.form.controls.personaCaso["controls"][0].controls.detalleDetenido.controls.tipoDetenido.disable();
         this.globals.formLocalizacion = LosForm.createFormLocalizacion();
         this.route.params.subscribe(params => {
             if(params['casoId']){
@@ -119,7 +119,10 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 }
             }
         });
-        // this.validateForm(this.form);
+        let timer = Observable.timer(1);
+        timer.subscribe(t => {
+            this.validateForm(this.form);
+        });
     }
 
     public compare(a,b) {
@@ -685,7 +688,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     selector: 'identidad',
     templateUrl : './identidad.component.html'
 })
-export class IdentidadComponent{ 
+export class IdentidadComponent extends NoticiaHechoGlobal{ 
 
     @Input()
     globals: PersonaGlobals;
@@ -693,8 +696,14 @@ export class IdentidadComponent{
     @Input()
     options: SelectsService;
     isMexico:boolean=false;
+    tabla: CIndexedDB;
 
-    constructor(public personaServ: PersonaService){
+    constructor(
+        public personaServ: PersonaService,
+        private _tabla: CIndexedDB,
+        ){
+        super();
+        this.tabla = _tabla;
         
     }
 
@@ -725,6 +734,15 @@ export class IdentidadComponent{
 
     changeDetenido(checked){
         this.globals.detenido=checked;
+        // if (checked) {
+            this.globals.form.controls.personaCaso["controls"][0].controls.detalleDetenido.controls.tipoDetenido.enable();
+        // }else{
+        //     this.globals.form.controls.personaCaso["controls"][0].controls.detalleDetenido.controls.tipoDetenido.disable(); 
+        // }
+        let timer = Observable.timer(1);
+        timer.subscribe(t => {
+            this.validateForm(this.globals.form);
+        });
     }
 
     edad(e){
@@ -1153,7 +1171,7 @@ class LosForm{
                         'fechaDeclaracion' : new FormControl(),
                         'horaDetenido'         : new FormControl("",[]),
                         'tipoDetenido' : new FormGroup({
-                            'id' : new FormControl(),
+                            'id' : new FormControl("", [Validators.required,]),
                         })
                     }),
                 })
