@@ -19,7 +19,7 @@ export class FormatosGlobal{
 
     }
 
-    public changeFormat(_format, _id, _set){
+    public changeFormat(_format, _id){
       console.log('Change format:', _format, _id);
 
       this._confirmation.create('Advertencia','¿Estás seguro de guardar este formato?',this.confirmation_settings)
