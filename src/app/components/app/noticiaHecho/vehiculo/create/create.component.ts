@@ -146,7 +146,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                 // this.model.caso.created = null;
                 this.http.post('/v1/base/vehiculos', this.model).subscribe(
                     (response) => {
-                        this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                        this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/vehiculos' ]);
                         resolve("Se creo el vehículo con éxito");
                     },
                     (error) => reject(error)
@@ -175,7 +175,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                             caso["vehiculo"].push(this.model);
                             this.db.update("casos",caso).then(t=>{
                                 resolve("Se creo el vehículo de manera local");
-                                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/vehiculos' ]);
                             });
                         }
                     });

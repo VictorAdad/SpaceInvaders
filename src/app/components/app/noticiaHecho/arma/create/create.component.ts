@@ -115,7 +115,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                 
                 this.http.post('/v1/base/armas', _model).subscribe(
                     (response) => {
-                        this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                        this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/armas' ]);
                         resolve("Se agregó la arma con éxito");
                     },
                     (error) => {
@@ -152,7 +152,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                             this.db.update("casos",caso).then(t=>{
                                 console.log("caso arma", t["arma"]);
                                 resolve("Se agregó la arma de manera local");
-                                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/armas' ]);
                             });
                         }
                     });
