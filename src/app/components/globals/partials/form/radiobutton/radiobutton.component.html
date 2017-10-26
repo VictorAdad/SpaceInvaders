@@ -9,7 +9,7 @@
 	  </div>
 	</mat-radio-group>
 </div>
-<div [formGroup]="group"  *ngIf="name!=''" >
+<div [formGroup]="group"  *ngIf="name!=''" [ngClass]="{'ROJO' : requerido}">
 	<mat-radio-group [(ngModel)]="value" (ngModelChange)="update($event)" formControlName="{{name}}" required="true">
 
 	<div class="row">
