@@ -330,7 +330,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             this.isMexico = (id==_config.optionValue.idMexico);
             console.log(this.optionsServ.paises);
           }
-          if(id==0){
+          if(id == _config.optionValue.idMExico){
               this.form.controls.estado.enable();
               this.form.controls.municipio.enable();
               this.form.controls.colonia.enable();
