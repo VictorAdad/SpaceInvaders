@@ -11,6 +11,7 @@ import { SolicitudPreliminarGlobal } from '../../global';
 import { _config} from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
+import { GlobalService } from "@services/global.service";
 
 @Component({
     templateUrl:'./component.html',
@@ -181,9 +182,10 @@ export class DocumentoInspeccionComponent extends FormatosGlobal{
 
   constructor(
       public http: HttpService,
-      public confirmationService:ConfirmationService
+      public confirmationService:ConfirmationService,
+      public globalService:GlobalService
       ){
-      super(http,confirmationService);
+      super(http, confirmationService, globalService);
   }
 
   ngOnInit() {

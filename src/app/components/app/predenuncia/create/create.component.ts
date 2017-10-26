@@ -11,6 +11,10 @@ import { SelectsService } from "@services/selects.service";
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
+import { DataSource } from '@angular/cdk/collections';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { GlobalService } from "@services/global.service";
 
 export class PredenunciaGlobal{
   public validateMsg(form: FormGroup){
@@ -130,7 +134,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         } else {
             this.form  = new FormGroup({
             //Constancia de lectura de Derechos
-            'numeroFolio'                    :  new FormControl(this.model.numeroFolio),
+            'numeroFoli'                    :  new FormControl(this.model.numeroFolio),
             'hablaEspanol'                   :  new FormControl(this.model.hablaEspanol),
             'idioma'                         :  new FormControl(this.model.idioma),
             'nombreInterprete'               :  new FormControl(this.model.nombreInterprete),
@@ -152,7 +156,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             'conclusionHechos'          :  new FormControl(this.model.conclusionHechos),
             'canalizacion'          :  new FormControl(this.model.canalizacion),
             'institucionCanalizacion'          :  new FormControl(this.model.institucionCanalizacion),
-            'motivocanalizacion'          :  new FormControl(this.model.motivocanalizacion),
+            'motivoCanalizacion'          :  new FormControl(this.model.motivocanalizacion),
             'fechaCanalizacion'          :  new FormControl(this.model.fechaCanalizacion),
             'horaCanalizacion'          :  new FormControl(this.model.horaCanalizacion),
             'personaCausohecho'          :  new FormControl(this.model.personaCausohecho),
@@ -183,8 +187,9 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                     this.http.post('/v1/base/predenuncias', this.model).subscribe(
                         (response) => {
                             console.log(response);
-                            this.router.navigate(['/caso/'+this.casoId+'/predenuncia/create' ])
+                            
                             resolve('Predenuncia creada con éxito');
+                            this.router.navigate(['/caso/'+this.casoId+'/detalle' ]);
                          },
                         (error) => {
                             console.error('Error', error);
@@ -210,32 +215,57 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
 })
 
 export class DocumentoPredenunciaComponent extends FormatosGlobal {
-  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
-  @Input() id:number=null;
-    data = [];
+    displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+    @Input() id:number=null;
     @Input()
     object: any;
-  dataSource: TableService | null;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+    dataSource: TableDataSource | null;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    public data: DocumentoPredenuncia[] = [];
+    public subject:BehaviorSubject<DocumentoPredenuncia[]> = new BehaviorSubject<DocumentoPredenuncia[]>([]);
+    public source:TableDataSource = new TableDataSource(this.subject);
 
   constructor(
       public http: HttpService,
-      public confirmationService:ConfirmationService
+      public confirmationService:ConfirmationService,
+      public globalService:GlobalService
       ){
-      super(http,confirmationService);
+      super(http, confirmationService, globalService);
   }
 
-  ngOnInit() {
+    ngOnInit() {
       console.log('-> Object ', this.object);
-      if(this.object.data[0].documentos)
-      this.data = this.object.data[0].documentos;
-      this.dataSource = new TableService(this.paginator, this.data);
+        if(this.object.data[0].documentos){
+            this.dataSource = this.source;
+            for (let object of this.object.data[0].documentos) {
+                this.data.push(object);
+                this.subject.next(this.data);
+            }
+
+        }
+    }
+
+  public setData(_object){
+      console.log('setData()');
+      this.data.push(_object);
+      this.subject.next(this.data);
   }
 }
 
 export class DocumentoPredenuncia {
 	id:number
-	nombre: string;
-	procedimiento: string;
-	fechaCreacion: string;
+	nameEcm: string;
+	contentType: string;
+	uuidEcm: string;
+}
+
+export class TableDataSource extends DataSource<any> {
+    /** Connect function called by the table to retrieve one stream containing the data to render. */
+    constructor(private data:BehaviorSubject<any[]>){super()}
+
+    connect(): Observable<any[]> {
+      return this.data.asObservable();
+    }
+  
+    disconnect() {}
 }

@@ -12,6 +12,7 @@ import { DeterminacionGlobal } from '../global';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
+import { GlobalService } from "@services/global.service";
 
 @Component({
     templateUrl: './component.html',
@@ -173,11 +174,12 @@ export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(
-        public http: HttpService,
-        public confirmation: ConfirmationService,
-        ){
-        super(http, confirmation);
-    }
+      public http: HttpService,
+      public confirmationService:ConfirmationService,
+      public globalService:GlobalService
+      ){
+      super(http, confirmationService, globalService);
+  }
 
     ngOnInit() {
         this.dataSource = new TableService(this.paginator, this.data);

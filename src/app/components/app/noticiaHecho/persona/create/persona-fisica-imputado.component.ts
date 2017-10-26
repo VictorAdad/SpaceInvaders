@@ -161,6 +161,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 localizaciones.push(formLoc);
             }
 
+
             let timer2 = Observable.timer(1);
             timer2.subscribe(t => {
                 let localizaciones = this.globals.form.get('localizacionPersona') as FormArray;
@@ -173,6 +174,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     let formLoc = localizaciones.controls[i];
                     formLoc.patchValue(_data.localizacionPersona[i]);
 
+                    this.globals.tipoResidencia.push((_data.localizacionPersona[i])["tipoRecidencia"]);
                 }
                 this.globals.form.controls.razonSocial.patchValue(_personaCaso["persona"].razonSocial);
 
@@ -875,6 +877,13 @@ export class LocalizacionComponent{
         console.log(localizaciones.value);
     }
 
+    changeTipoResida(value,i){
+        console.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i] );
+        console.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i].controls );
+        console.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i].controls.tipoResidencia );
+        this.globals.form.controls.localizacionPersona["controls"][i].controls.tipoRecidencia.patchValue(value);
+    }
+
 }
 
 @Component({
@@ -918,6 +927,7 @@ export class PersonaGlobals{
     public indexNombres:number=0;
     public formMediaFilicion=LosForm.createFormMediaFiliacion();
     public localizaciones=[];
+    public tipoResidencia=[];
 
     constructor(
         _form: FormGroup,
@@ -968,7 +978,7 @@ class LosForm{
             'fax': new FormControl(),
             'otroMedioContacto': new FormControl(),
             'correo': new FormControl("",[]),
-            'tipoResidencia': new FormControl(),
+            'tipoRecidencia': new FormControl(),
             'estadoOtro': new FormControl(),
             'municipioOtro': new FormControl(),
             'coloniaOtro': new FormControl(),

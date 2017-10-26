@@ -13,6 +13,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
+import { GlobalService } from "@services/global.service";
 
 @Component({
 	templateUrl: './component.html',
@@ -205,9 +206,10 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
   @Input() object: any;
   constructor(
       public http: HttpService,
-      public confirmationService:ConfirmationService
+      public confirmationService:ConfirmationService,
+      public globalService:GlobalService
       ){
-      super(http,confirmationService);
+      super(http, confirmationService, globalService);
   }
 
   ngOnInit() {
