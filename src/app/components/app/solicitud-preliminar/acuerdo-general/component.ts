@@ -13,7 +13,7 @@ import { CIndexedDB } from '@services/indexedDB';
 export class AcuerdoGeneralComponent {
 
     public pag: number = 0;
-	public columns = ['fundamento', 'plazo'];
+	public columns = ['fundamento', 'plazo', 'tipo'];
 	public dataSource: TableService | null;
 	public data: AcuerdoGeneral[] = [];
     public casoId: number = null;

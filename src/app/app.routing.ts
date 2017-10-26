@@ -110,12 +110,12 @@ const routes: Routes = [
     { path : 'notificaciones', component : NotificacionesComponent, data : { breadcrumb : 'Notificaciones' }},
 
     //Solicitud Preliminar
-    { path : 'acuerdos-generales', component : AcuerdoGeneralComponent, data : { breadcrumb : 'Acuerdos generales'}},
-    { path : 'acuerdos-generales/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Acuerdo general'}},    
-    { path : 'acuerdos-generales/:id/edit', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Acuerdo general'}},    
+    { path : 'acuerdos-generales', component : AcuerdoGeneralComponent, data : { breadcrumb : 'Solicitudes y acuerdos generales'}},
+    { path : 'acuerdos-generales/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Solicitudes y acuerdos generales'}},    
+    { path : 'acuerdos-generales/:id/edit', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Solicitudes y acuerdos generales'}},    
     { path : 'caso/:casoId/acuerdo-general', component : AcuerdoGeneralComponent, data : { breadcrumb : 'Solicitudes de acuerdo general'}},
-    { path : 'caso/:casoId/acuerdo-general/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Acuerdos generales'}},
-    { path : 'caso/:casoId/acuerdo-general/:id/edit', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Acuerdos generales'}},    
+    { path : 'caso/:casoId/acuerdo-general/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Solicitudes y acuerdos generales'}},
+    { path : 'caso/:casoId/acuerdo-general/:id/edit', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Solicitudes y acuerdos generales'}},    
     
     { path : 'inspecciones', component : InspeccionComponent, data : { breadcrumb : 'Solicitudes de inspección'}},
     { path : 'inspecciones/create', component : InspeccionCreateComponent, data : { breadcrumb : 'Inspecciones'}},
