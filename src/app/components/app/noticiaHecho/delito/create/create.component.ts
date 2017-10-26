@@ -149,6 +149,8 @@ export class DelitoCreateComponent{
 
                 }
                 guardaLista(0,this.listaDelitos,listaErrores);
+            }else{
+                resolve("No hay delitos para guardar");
             }
 
         });
