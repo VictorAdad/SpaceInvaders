@@ -26,6 +26,7 @@ export class FacultadNoInvestigarCreateComponent {
             if (params['casoId']){
                 this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});
+                this.breadcrumb.push({path:`/caso/${this.casoId}/facultad-no-investigar`,label:"Facultad de no investigar"});
             }
 
         });

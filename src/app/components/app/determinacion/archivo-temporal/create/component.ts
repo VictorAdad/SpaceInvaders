@@ -25,6 +25,7 @@ export class ArchivoTemporalCreateComponent {
 			if (params['casoId']){
 				this.casoId = +params['casoId'];
 				this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});
+				this.breadcrumb.push({path:`/caso/${this.casoId}/archivo-temporal`,label:"Archivo temporal"});
 			}
 		});
 	}

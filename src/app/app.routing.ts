@@ -128,7 +128,7 @@ const routes: Routes = [
     { path : 'caso/:casoId/registro-general/create', component : RegistroGeneralCreateComponent, data : { breadcrumb : 'Registro generales'}},
     { path : 'caso/:casoId/registro-general/:id/edit', component : RegistroGeneralCreateComponent, data : { breadcrumb : 'Registro generales'}},
     
-    { path : 'caso/:casoId/policia', component : PoliciaComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
+    { path : 'caso/:casoId/policia', component : PoliciaComponent, data : { breadcrumb : 'Solicitudes preliminares de Policia Ministerial'}},
     { path : 'caso/:casoId/policia/create', component : PoliciaCreateComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
     { path : 'caso/:casoId/policia/:id/edit', component : PoliciaCreateComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
     
@@ -148,7 +148,7 @@ const routes: Routes = [
     { path : 'caso/:casoId/archivo-temporal', component : ArchivoTemporalComponent, data : { breadcrumb : 'Archivo temporal' } },
     { path : 'caso/:casoId/archivo-temporal/create', component : ArchivoTemporalCreateComponent, data : { breadcrumb : 'Archivo temporal' } },
     { path : 'caso/:casoId/archivo-temporal/:id/edit', component : ArchivoTemporalCreateComponent, data : { breadcrumb : 'Archivo temporal' } },
-    { path : 'caso/:casoId/acuerdo-radicacion', component : AcuerdosRadicacionComponent, data : { breadcrumb : 'Acuerdos de radicación'}},
+    { path : 'caso/:casoId/acuerdo-radicacion', component : AcuerdosRadicacionComponent, data : { breadcrumb : 'Acuerdos de Radicación'}},
     { path : 'caso/:casoId/acuerdo-radicacion/create', component : AcuerdoRadicacionCreateComponent, data : { breadcrumb : 'Acuerdo de radicación'}},
     { path : 'caso/:casoId/acuerdo-radicacion/:id/edit', component : AcuerdoRadicacionCreateComponent, data : { breadcrumb : 'Acuerdo de radicación'}},
     { path : 'caso/:casoId/facultad-no-investigar', component : FacultadesNoInvestigarComponent, data : { breadcrumb : 'Facultad de no investigar'}},
@@ -166,8 +166,8 @@ const routes: Routes = [
 
     //Entrevista
     { path : 'caso/:casoId/entrevista', component : EntrevistaComponent, data : { breadcrumb : 'Entrevistas' } },
-    { path : 'caso/:casoId/entrevista/create', component : EntrevistaCreateComponent, data : { breadcrumb : 'Entrevistas' } },
-    { path : 'caso/:casoId/entrevista/:id/view', component : EntrevistaCreateComponent, data : { breadcrumb : 'Entrevistas' } },
+    { path : 'caso/:casoId/entrevista/create', component : EntrevistaCreateComponent, data : { breadcrumb : 'Entrevista' } },
+    { path : 'caso/:casoId/entrevista/:id/view', component : EntrevistaCreateComponent, data : { breadcrumb : 'Entrevista' } },
     //Catalogos
     { path : 'catalogos/:tipo', component : CatalogosComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogos/:tipo/create', component : CatalogosCreateComponent, data : { breadcrumb : 'Crear catálogos' } },

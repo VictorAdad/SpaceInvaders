@@ -25,6 +25,7 @@ export class AcuerdoRadicacionCreateComponent {
             if(params['casoId']){
                 this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});
+                this.breadcrumb.push({path:`/caso/${this.casoId}/acuerdo-radicacion`,label:"Acuerdos de Radicación"});
             }
 
         });

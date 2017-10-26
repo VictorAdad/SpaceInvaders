@@ -26,6 +26,7 @@ export class NoEjercicioAccionPenalCreateComponent {
 			if (params['casoId']){
 				this.casoId = +params['casoId'];
 				this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});
+				this.breadcrumb.push({path:`/caso/${this.casoId}/no-ejercicio-accion-penal`,label:"No ejercicio de la acción penal"});
 			}
 		});
 	}
