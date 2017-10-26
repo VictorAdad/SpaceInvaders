@@ -2,7 +2,7 @@
     <h4>Aceptación de remisión de UMASC</h4>
     <text label="Nombre de la persona que acepta asistir a la unidad de medios alternativos" name="nombrePersonaAcepta" [(value)]="model.nombrePersonaAcepta" [group]="form"></text>
     <h4>Acuerdo de inicio</h4>
-    <text label="Presentó o recibió llamada" name="presentoLlamada" [(value)]="model.presentoLlamada" [group]="form"></text>
+    <select2 [options]="[{label:'Sí',value:'Sí'},{label:'No',value:'No'}]" placeholder="resentó o recibió llamada" [group]="form" name="presentoLlamada" ></select2>
     <text label="Manifestó" name="manifesto" [(value)]="model.manifesto" [group]="form"></text>
     <text label="Síntesis de los hechos" name="sintesisHechos" [(value)]="model.sintesisHechos" [group]="form"></text>
     <text-area label="Observaciones/incidencias" name="observaciones" [(value)]="model.observaciones" [group]="form"></text-area>
