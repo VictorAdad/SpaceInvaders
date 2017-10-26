@@ -10,7 +10,7 @@
             <h3>Detalle de Persona</h3>
         </div>
         <div class="col-sm-4">
-            <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/noticia-hecho" color="accent">Regresar</button>
+            <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/noticia-hecho/personas" color="accent">Regresar</button>
         </div>
     </div>
     <form [formGroup]="form">
@@ -88,7 +88,7 @@
                 <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
             </div>
             <div class="col-sm-auto">
-              <button class="float-right" mat-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button> 
+              <button class="float-right" mat-button routerLink="/caso/{{casoId}}/noticia-hecho/personas">Cancelar</button> 
             </div>
         </div>
     </div>
