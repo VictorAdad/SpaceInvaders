@@ -72,7 +72,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         this.route.params.subscribe(params => {
             if(params['casoId']){
                 this.casoId = +params['casoId'];
-                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho`,label:"Detalle noticia de hechos"})
+                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho/lugares`,label:"Detalle noticia de hechos"})
              }
             if(params['id']){
                 this.id = +params['id'];

@@ -79,7 +79,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         this.route.params.subscribe(params => {
             if(params['casoId']){
                 this.casoId = +params['casoId'];
-                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho`,label:"Detalle noticia de hechos"});
+                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho/personas`,label:"Detalle noticia de hechos"});
             }
             this.globals.inicioOnline=this.onLine.onLine;
             if(!this.onLine.onLine){
@@ -734,11 +734,11 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
 
     changeDetenido(checked){
         this.globals.detenido=checked;
-        // if (checked) {
+        if (checked) {
             this.globals.form.controls.personaCaso["controls"][0].controls.detalleDetenido.controls.tipoDetenido.enable();
-        // }else{
-        //     this.globals.form.controls.personaCaso["controls"][0].controls.detalleDetenido.controls.tipoDetenido.disable(); 
-        // }
+        }else{
+            this.globals.form.controls.personaCaso["controls"][0].controls.detalleDetenido.controls.tipoDetenido.disable(); 
+        }
         let timer = Observable.timer(1);
         timer.subscribe(t => {
             this.validateForm(this.globals.form);
