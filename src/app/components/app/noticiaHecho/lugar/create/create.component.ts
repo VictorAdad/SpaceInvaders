@@ -80,6 +80,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                     this.http.get('/v1/base/lugares/'+this.id).subscribe(response =>{
                         console.log("Lugar->",response)
                         this.fillForm(response);
+                        this.form.controls.id.patchValue(this.id);
                     });
                 }else{
                   this.db.get("casos",this.casoId).then(t=>{
@@ -88,6 +89,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                         if ((lugares[i])["id"]==this.id){
                             console.log("Lugar->",t)
                             this.fillForm(lugares[i]);
+                            this.form.controls.id.patchValue(this.id);
                             break;
                         }
                     }
@@ -229,6 +231,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             this.model.fecha = moment(this.model.fecha).format('YYYY-MM-DD');
             this.model.latitud      = this.latMarker;
             this.model.longitud     = this.lngMarker;
+            _model.caso.id      = this.casoId;
             if(this.lugarServ.finded.length > 0){
                 _model.detalleLugar.id = this.lugarServ.finded[0].id;
             }
