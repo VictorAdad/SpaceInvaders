@@ -228,9 +228,9 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         return new Promise<any>((resolve, reject)=>{
             console.log('-> Lugar@edit()', _model);
             Object.assign(this.model, _model);
-            this.model.fecha = moment(this.model.fecha).format('YYYY-MM-DD');
-            this.model.latitud      = this.latMarker;
-            this.model.longitud     = this.lngMarker;
+            _model["fecha"] = moment(this.model.fecha).format('YYYY-MM-DD');
+            _model["latitud"]     = this.latMarker;
+            _model["longitud"]     = this.lngMarker;
             _model.caso.id      = this.casoId;
             if(this.lugarServ.finded.length > 0){
                 _model.detalleLugar.id = this.lugarServ.finded[0].id;
@@ -320,6 +320,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         console.log(_e);
         this.latMarker = _e.coords.lat;
         this.lngMarker = _e.coords.lng;
+        console.log(this);
     }
 
     changePais(id){    
