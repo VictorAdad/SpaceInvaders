@@ -7,12 +7,12 @@
 
         </mat-panel-description>
     </mat-expansion-panel-header>
-    <div class="row" *ngIf="globals.tipoPersona=='Moral'">
-        <div class="col-md-3">
-            <text label="Razón social" name="razonSocial"  hintStart="Campo obligatorio" [group]="globals.form" hintStart="Campo obligatorio"></text>
-        </div>
-    </div>
     <div class="container-fluid">
+        <div class="row" *ngIf="globals.tipoPersona=='Moral'">
+            <div class="col-md-3">
+                <text label="Razón social" name="razonSocial"  hintStart="Campo obligatorio" [group]="globals.form" hintStart="Campo obligatorio"></text>
+            </div>
+        </div>
         <div class="row">
             <div class="col">
                 <text label="Nombre"  hintStart="Campo obligatorio" name="nombre" [group]="globals.form"></text>
@@ -130,7 +130,7 @@
                 <date label="Fecha de detención" name="fechaDetencion" [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido"></date>
             </div>
             <div class="col-md-2" *ngIf="globals.detenido">
-                <text label="Hora de detención" ></text>
+                <time label="Hora de detención" name="horaDetenido" [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido"></time>
             </div>
 
             <div class="col-md-2" *ngIf="globals.detenido">

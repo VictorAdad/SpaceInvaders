@@ -97,7 +97,7 @@ export class DelitoCreateComponent{
                             reject(listaErrores);
                         else
                             resolve("Se agregaron los delitos");
-                        obj.router.navigate(['/caso/'+obj.casoId+'/noticia-hecho']);
+                        obj.router.navigate(['/caso/'+obj.casoId+'/noticia-hecho/delitos']);
                         return;
                     }
                     let item=lista[i];
@@ -149,6 +149,8 @@ export class DelitoCreateComponent{
 
                 }
                 guardaLista(0,this.listaDelitos,listaErrores);
+            }else{
+                resolve("No hay delitos para guardar");
             }
 
         });
