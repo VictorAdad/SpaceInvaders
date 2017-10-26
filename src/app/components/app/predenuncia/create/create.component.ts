@@ -134,7 +134,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         } else {
             this.form  = new FormGroup({
             //Constancia de lectura de Derechos
-            'numeroFolio'                    :  new FormControl(this.model.numeroFolio),
+            'numeroFoli'                    :  new FormControl(this.model.numeroFolio),
             'hablaEspanol'                   :  new FormControl(this.model.hablaEspanol),
             'idioma'                         :  new FormControl(this.model.idioma),
             'nombreInterprete'               :  new FormControl(this.model.nombreInterprete),
@@ -156,7 +156,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             'conclusionHechos'          :  new FormControl(this.model.conclusionHechos),
             'canalizacion'          :  new FormControl(this.model.canalizacion),
             'institucionCanalizacion'          :  new FormControl(this.model.institucionCanalizacion),
-            'motivocanalizacion'          :  new FormControl(this.model.motivocanalizacion),
+            'motivoCanalizacion'          :  new FormControl(this.model.motivocanalizacion),
             'fechaCanalizacion'          :  new FormControl(this.model.fechaCanalizacion),
             'horaCanalizacion'          :  new FormControl(this.model.horaCanalizacion),
             'personaCausohecho'          :  new FormControl(this.model.personaCausohecho),
