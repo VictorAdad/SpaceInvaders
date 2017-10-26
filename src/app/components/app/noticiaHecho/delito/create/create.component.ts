@@ -97,7 +97,7 @@ export class DelitoCreateComponent{
                             reject(listaErrores);
                         else
                             resolve("Se agregaron los delitos");
-                        obj.router.navigate(['/caso/'+obj.casoId+'/noticia-hecho']);
+                        obj.router.navigate(['/caso/'+obj.casoId+'/noticia-hecho/delitos']);
                         return;
                     }
                     let item=lista[i];

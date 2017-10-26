@@ -475,7 +475,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     (response) => {
                         console.log(response);
                         resolve("Se creo la persona con éxito");
-                        this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                        this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas' ]);
                     },
                     (error) => {
                         console.error('Error', error);
@@ -525,7 +525,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                                 ds=>{
                                     console.log("Se actualizo registro");
                                     resolve("Se creo la persona de manera local");
-                                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
+                                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas']);
 
                             });
                             console.log('-> Persona Guardada',p);
@@ -548,7 +548,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     (response) => {
                         console.log("Editar Persona->",response);
                         resolve("Se actualizó la persona de manera local");
-                        this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                        // this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas' ]);
                     },
                     (error) => {
                         console.error('Error', error);
@@ -586,7 +586,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                             this.tabla.update("casos",this.caso).then(
                                 ds=>{
                                     console.log("Editar Persona->",ds);
-                                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
+                                    // this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas']);
 
                             });
                             
@@ -643,7 +643,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     }
                     this.doEdit(datos).then(
                         r=>{
-                            resolve(true);
+                            resolve(r);
                         }).catch(e=>{reject(e)});
                 });
             });
@@ -1042,7 +1042,7 @@ class LosForm{
         return new FormGroup({
             'id': new FormControl("",[]),
             'tipoPersona'      : new FormControl("", [Validators.required,]),
-            'nombre'           : new FormControl("", []),
+            'nombre'           : new FormControl("", [Validators.required,]),
             'paterno'          : new FormControl("", [Validators.required,]),
             'materno'          : new FormControl(""),
             'razonSocial'      : new FormControl("", [Validators.required,Validators.minLength(5)]),
