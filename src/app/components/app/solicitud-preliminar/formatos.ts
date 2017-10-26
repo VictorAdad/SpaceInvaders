@@ -1,6 +1,6 @@
 import { HttpService} from '@services/http.service';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
-import {ResolveEmit,ConfirmSettings} from '@utils/alert/alert.service';
+import { ResolveEmit,ConfirmSettings} from '@utils/alert/alert.service';
 import { GlobalService } from "@services/global.service";
 
 
@@ -13,12 +13,13 @@ export class FormatosGlobal{
     };
     constructor(
         public http: HttpService,
-        public _confirmation:ConfirmationService
+        public _confirmation:ConfirmationService,
+        public globalService: GlobalService
         ){
 
     }
 
-    public changeFormat(_format, _id){
+    public changeFormat(_format, _id, _set){
       console.log('Change format:', _format, _id);
 
       this._confirmation.create('Advertencia','¿Estás seguro de guardar este formato?',this.confirmation_settings)
@@ -29,6 +30,8 @@ export class FormatosGlobal{
             this.http.get(`/v1/documentos/formatos/save/${_id}/${_format}`).subscribe(
                 response => {
                     console.log('Done changeFormat()', response);
+                    this.setData(response);
+                    this.globalService.openSnackBar("Formato generado con éxito");
                 }
 
             )
@@ -58,6 +61,10 @@ export class FormatosGlobal{
             }
 
         )
+    }
+
+    public setData(_object){
+
     }
 
 

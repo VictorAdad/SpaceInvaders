@@ -15,6 +15,7 @@ import { CIndexedDB } from '@services/indexedDB';
 import { SelectsService} from '@services/selects.service';
 import { Observable } from 'rxjs/Observable';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
+import { GlobalService } from "@services/global.service";
 
 
 
@@ -237,11 +238,12 @@ export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @Input() object: any;
     constructor(
-        public http: HttpService,
-        public confirmationService:ConfirmationService
-        ){
-        super(http,confirmationService);
-    }
+      public http: HttpService,
+      public confirmationService:ConfirmationService,
+      public globalService:GlobalService
+      ){
+      super(http, confirmationService, globalService);
+  }
 
     ngOnInit() {
       console.log('-> Object ', this.object);
