@@ -1151,6 +1151,7 @@ class LosForm{
                     'detalleDetenido': new FormGroup({
                         'fechaDetencion'   : new FormControl(),
                         'fechaDeclaracion' : new FormControl(),
+                        'horaDetenido'         : new FormControl("",[]),
                         'tipoDetenido' : new FormGroup({
                             'id' : new FormControl(),
                         })
