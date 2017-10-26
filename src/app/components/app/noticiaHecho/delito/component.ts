@@ -55,7 +55,7 @@ export class DelitoComponent {
     }
 
     ngOnInit() {
-        this.activeRoute.params.subscribe(params => {
+        this.activeRoute.parent.params.subscribe(params => {
             if (params['id']) {
                 if (this.onLine.onLine){
                     this.id = parseInt(params['id']);

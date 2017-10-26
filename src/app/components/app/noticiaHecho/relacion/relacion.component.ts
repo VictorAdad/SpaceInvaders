@@ -32,7 +32,7 @@ export class RelacionComponent{
 	ngOnInit() {
     	console.log('-> Data Source', this.dataSource);
 
-        this.route.params.subscribe(params => {
+        this.route.parent.params.subscribe(params => {
             if(params['id']){
                 this.casoId = +params['id'];
                 if(this.onLine.onLine){

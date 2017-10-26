@@ -24,7 +24,7 @@ export class VehiculoComponent{
     constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB) { }
 
 	ngOnInit() {
-        this.route.params.subscribe(params => {
+        this.route.parent.params.subscribe(params => {
             if(params['id']){
                 this.casoId = +params['id'];
                 if(this.onLine.onLine){

@@ -32,7 +32,7 @@ export class PersonaComponent implements OnInit{
     }
 
     ngOnInit(){
-        this.route.params.subscribe(params => {
+        this.route.parent.params.subscribe(params => {
             if(params['id']){
                 this.casoId = +params['id'];
                 if(this.onLine.onLine){

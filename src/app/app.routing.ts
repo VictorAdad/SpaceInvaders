@@ -5,6 +5,7 @@ import { UsuarioCreateComponent } from '@components-app/usuario/create/create.co
 import { HomeComponent } from '@components-app/home/home.component';
 import { NoticiaHechoComponent } from '@components-app/noticiaHecho/component';
 import { PersonaComponent } from '@components-app/noticiaHecho/persona/component';
+import { DelitoComponent } from '@components-app/noticiaHecho/delito/component';
 import { ArmaComponent } from '@components-app/noticiaHecho/arma/arma.component';
 import { ArmaCreateComponent } from '@components-app/noticiaHecho/arma/create/create.component';
 import { LoginComponent } from '@components-app/login/login.component';
@@ -15,6 +16,7 @@ import { LugarCreateComponent } from '@components-app/noticiaHecho/lugar/create/
 import { PersonaFisicaImputadoComponent } from '@components-app/noticiaHecho/persona/create/persona-fisica-imputado.component';
 import { RelacionComponent } from '@components-app/noticiaHecho/relacion/relacion.component';
 import { RelacionCreateComponent } from '@components-app/noticiaHecho/relacion/create/create.component';
+import { TitularComponent } from '@components-app/noticiaHecho/titular/component';
 import {DelitoCreateComponent } from '@components-app/noticiaHecho/delito/create/create.component';
 //Documentos
 import { DocumentoComponent } from '@components-app/noticiaHecho/documento/documento.component';
@@ -76,7 +78,14 @@ const routes: Routes = [
     //Noticia de Hecho
     { path : 'noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}},
     { path : 'caso/:id/noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}, children : [
-        { path : 'persona', component : PersonaComponent }
+        { path : 'personas', component : PersonaComponent },
+        { path : 'delitos', component : DelitoComponent },
+        { path : 'lugares', component : LugarComponent },
+        { path : 'armas', component : ArmaComponent },
+        { path : 'vehiculos', component : VehiculoComponent },
+        { path : 'relaciones', component : RelacionComponent },
+        { path : 'titulares', component : TitularComponent },
+        { path : 'documentos', component : DocumentoComponent }
     ]},
     { path : 'armas', component : ArmaComponent, data : { breadcrumb : 'Armas' } },
     { path : 'caso/:casoId/armas/create', component : ArmaCreateComponent, data : { breadcrumb : 'Nueva arma'} },

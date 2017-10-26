@@ -22,35 +22,35 @@
                     <label class="d-xs-none d-sm-none d-md-inline">Datos generales</label>
                 </a>
                 <div [class]="hasId() ? '' : 'hidden' ">
-                    <a href="#tab2-panel" class="mdl-tabs__tab disabled" [routerLink]="['persona']">
+                    <a href="#tab2-panel" class="mdl-tabs__tab disabled" [routerLink]="['personas']">
                         <mat-icon>assignment_ind</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Personas</label>
                     </a>
-                    <a href="#tab3-panel" class="mdl-tabs__tab">
+                    <a href="#tab3-panel" class="mdl-tabs__tab" [routerLink]="['delitos']">
                         <mat-icon>gavel</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Delitos</label>
                     </a>
-                    <a href="#tab4-panel" class="mdl-tabs__tab">
+                    <a href="#tab4-panel" class="mdl-tabs__tab" [routerLink]="['lugares']">
                         <mat-icon>room</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Lugares</label>
                     </a>
-                    <a href="#tab5-panel" class="mdl-tabs__tab">
+                    <a href="#tab5-panel" class="mdl-tabs__tab" [routerLink]="['armas']">
                         <mat-icon svgIcon="arma" class="arma-icon"></mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Armas</label>
                     </a>
-                    <a href="#tab6-panel" class="mdl-tabs__tab">
+                    <a href="#tab6-panel" class="mdl-tabs__tab" [routerLink]="['vehiculos']">
                         <mat-icon>directions_car</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Vehículos</label>
                     </a>
-                    <a href="#tab7-panel" class="mdl-tabs__tab">
+                    <a href="#tab7-panel" class="mdl-tabs__tab" [routerLink]="['relaciones']">
                         <mat-icon>compare_arrows</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Relaciones</label>
                     </a>
-                    <a href="#tab8-panel" class="mdl-tabs__tab">
+                    <a href="#tab8-panel" class="mdl-tabs__tab" [routerLink]="['titulares']">
                         <mat-icon>description</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Titulares</label>
                     </a>
-                    <a href="#tab9-panel" class="mdl-tabs__tab">
+                    <a href="#tab9-panel" class="mdl-tabs__tab" [routerLink]="['documentos']">
                         <mat-icon>insert_drive_file</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Documentos</label>
                     </a>
@@ -59,35 +59,7 @@
         </div>
        <div class="col-md-9 col-sm-10">
             <div class="mdl-tabs__panel is-active" id="tab1-panel">
-                 <!-- <datos-generales></datos-generales> -->
                  <router-outlet></router-outlet>
-            </div>
-            <div [class]="hasId() ? '' : 'hidden' ">
-                <div class="mdl-tabs__panel" id="tab2-panel">
-                     <!-- <persona></persona> -->
-                     <!-- <router-outlet name='noticia-hecho'></router-outlet> -->
-                </div>
-                <div class="mdl-tabs__panel" id="tab3-panel">
-                      <delito></delito>
-                </div>
-                <div class="mdl-tabs__panel" id="tab4-panel">
-                     <lugar></lugar>
-                </div>
-                <div class="mdl-tabs__panel" id="tab5-panel">
-                     <arma></arma>
-                </div>
-                <div class="mdl-tabs__panel" id="tab6-panel">
-                      <vehiculo></vehiculo>
-                </div>
-                <div class="mdl-tabs__panel" id="tab7-panel">
-                     <relacion></relacion>
-                </div>
-                <div class="mdl-tabs__panel" id="tab8-panel">
-                     <titular></titular>
-                </div>
-                <div class="mdl-tabs__panel" id="tab9-panel">
-                    <documento></documento>
-               </div>
             </div>
         </div>
     </div>
