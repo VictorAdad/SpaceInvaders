@@ -1,20 +1,33 @@
 <form [formGroup]="form">
 
+	<div class="row">
+	    <div class="col-md-4 col-sm-12 col-lg-4">
+	    	<text label="Nombre del denunciante" name="nombreDenunciante"  [group]="form"></text>  
+	    </div>
+	    <div class="col-md-4 col-sm-12 col-lg-4">
+	    	<text label="Originario de" name="originarioDenunciante"  [group]="form"></text> 
+	    </div>
+	    <div class="col-md-4 col-sm-12 col-lg-4">
+	    	<text label="Edad" name="edadDenunciante" [group]="form"></text> 
+	    </div>
+    </div>
     <div class="row">
+    	<div class="col-md-4 col-sm-12 col-lg-4">
+	    	<text label="Domicilio" name="domicilioDenunciante" [(value)]="model.sintesisHechos" [group]="form"></text>  
+	    </div>
 	    <div class="col-md-4 col-sm-12 col-lg-4">
 	    	<text label="Síntesis de los hechos" name="sintesisHechos" [(value)]="model.sintesisHechos" [group]="form"></text>  
 	    </div>
 	    <div class="col-md-4 col-sm-12 col-lg-4">
 	    	<text label="Datos de prueba" name="datosPrueba" [(value)]="model.datosPrueba" [group]="form"></text> 
 	    </div>
-	    <div class="col-md-4 col-sm-12 col-lg-4">
-	    	<text label="Motivos por los que se abstuvo de investigar" name="motivosAbstuvoInvestigar" [(value)]="model.motivosAbstuvoInvestigar" [group]="form"></text> 
-	    </div>
     </div>
     <div class="row">
-
-	    <div class="col-md-8 col-sm-12 col-lg-8">
-	    	<text label="En su caso, medio alternativo de solución de conflictos adoptado" name="medioAlternativoSolucion" [(value)]="model.medioAlternativoSolucion" [group]="form"></text> 
+    	<div class="col-md-4 col-sm-12 col-lg-4">
+	    	<text label="Motivos por los que se abstuvo de investigar" name="motivosAbstuvoInvestigar" [(value)]="model.motivosAbstuvoInvestigar" [group]="form"></text> 
+	    </div>
+	    <div class="col-md-4 col-sm-12 col-lg-4">
+	    	<text label="En su caso, el medio alternativo de solución de conflictos adoptado" name="medioAlternativoSolucion" [(value)]="model.medioAlternativoSolucion" [group]="form"></text> 
 	    </div>
 	    <div class="col-md-4 col-sm-12 col-lg-4">
 	    	<text label="A quién se remite la determinación" name="destinatarioDeterminacion" [(value)]="model.destinatarioDeterminacion" [group]="form"></text> 
@@ -23,7 +36,7 @@
 	<div class="row">
  
 	    <div class="col-md-4 col-sm-12 col-lg-4">
-	    	<text label="Nombre de superior jerárquico" name="superiorJerarquico" [(value)]="model.superiorJerarquico" [group]="form"></text> 
+	    	<text label="Nombre del superior jerárquico" name="superiorJerarquico" [(value)]="model.superiorJerarquico" [group]="form"></text> 
 	    </div>
 	</div>
 	<div class="row">

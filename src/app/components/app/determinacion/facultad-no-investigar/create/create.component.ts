@@ -68,7 +68,11 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
             'motivosAbstuvoInvestigar': new FormControl(this.model.motivosAbstuvoInvestigar),
             'medioAlternativoSolucion': new FormControl(this.model.medioAlternativoSolucion),
             'destinatarioDeterminacion': new FormControl(this.model.destinatarioDeterminacion),
-            'superiorJerarquico': new FormControl(this.model.superiorJerarquico)
+            'superiorJerarquico': new FormControl(this.model.superiorJerarquico),
+            'nombreDenunciante': new FormControl(''),
+            'originarioDenunciante': new FormControl(''),
+            'edadDenunciante': new FormControl(''),
+            'domicilioDenunciante': new FormControl(''),
         });
 
         this.route.params.subscribe(params => {
