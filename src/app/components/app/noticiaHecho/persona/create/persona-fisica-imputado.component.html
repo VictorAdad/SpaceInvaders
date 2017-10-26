@@ -37,7 +37,7 @@
                       {label:'Física',value:'Física'},
                       {label:'Moral',value:'Moral'}
                 ]" 
-                name="tipoPersona"  
+                name="tipoPersona"  requerido=true 
                 [group]="globals.form" 
                 [functionChange]="activaRazonSocial.bind(this)">    
             </radiobutton>
@@ -54,7 +54,7 @@
               </div>
               <div class="row">
               <div class="col-md-10">
-              <radiobutton class="col-md-3" [radios]="options.tipoInterviniente.sort(compare)" name="id"
+              <radiobutton class="col-md-3" [radios]="options.tipoInterviniente.sort(compare)" name="id" requerido=true 
               [group]="( ( ( (form.controls.personaCaso)['controls'])[0])['controls'])['tipoInterviniente']"
               (valueChange)="changeTipoInterviniente($event)"></radiobutton>
               </div>
