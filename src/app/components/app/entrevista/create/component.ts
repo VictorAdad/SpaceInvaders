@@ -125,6 +125,8 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 				});
 			}
 		});
+
+		this.validateForm(this.form);
 	}
 
 	public createForm() {
@@ -171,7 +173,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 			'medioTecnologicoUtilizado': new FormControl(this.model.medioTecnologicoUtilizado),
 			'medioTecnicoRegistro': new FormControl(this.model.medioTecnicoRegistro),
 			'medioTecnicoUtilizado': new FormControl(this.model.medioTecnicoUtilizado),
-			'narracionHechos': new FormControl(this.model.narracionHechos),
+			'narracionHechos': new FormControl('', [Validators.required, Validators.minLength(150)]),
 			'observaciones': new FormControl(this.model.observaciones),
 			'caso': new FormGroup({
 				'id': new FormControl("", []),
