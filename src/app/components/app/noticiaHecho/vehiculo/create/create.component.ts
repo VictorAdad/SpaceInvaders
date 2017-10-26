@@ -92,10 +92,10 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             }),
             'estadoOrigen'  : new FormGroup({
                 'id'    : new FormControl("",[]),
-            }), 
+            }),
             'motivoColorClase'       : new FormGroup({
                 'id': new FormControl("",[]),
-            })  
+            })
 
         });
 
@@ -104,7 +104,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         this.route.params.subscribe(params => {
             if(params['casoId']){
                 this.casoId = +params['casoId'];
-                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho`,label:"Detalle noticia de hechos"})
+                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho/vehiculos`,label:"Detalle noticia de hechos"})
              }
             if(params['id']){
                 this.id = +params['id'];
@@ -125,7 +125,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                         }
                     });
                 }
-                
+
             }
         });
         this.validateForm(this.form);
@@ -182,7 +182,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                             });
                         }
                     });
-                }); 
+                });
 
             }
         });
@@ -225,7 +225,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                         });
                         console.log("caso",t);
                     });
-                }); 
+                });
             }
         });
     }
@@ -239,7 +239,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                     }
                     if (typeof x[i]=="object")
                         rec(x[i]);
-                } 
+                }
             }
         }
         rec(_data);
