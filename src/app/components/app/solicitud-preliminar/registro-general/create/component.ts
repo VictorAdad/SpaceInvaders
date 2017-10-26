@@ -27,6 +27,7 @@ export class RegistroGeneralCreateComponent {
 			if (params['casoId']) {
 				this.casoId = +params['casoId'];
 				this.breadcrumb.push({ path: `/caso/${this.casoId}/detalle`, label: "Detalle del caso" })
+				this.breadcrumb.push({ path: `/caso/${this.casoId}/registro-general`, label: "Solicitudes de registro general" })
 			}
 		});
 	}

@@ -27,6 +27,7 @@ export class RequerimientoInformacionCreateComponent {
 			if (params['casoId']){
 				this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
+                this.breadcrumb.push({path:`/caso/${this.casoId}/requerimiento-informacion`,label:"Solicitudes de requerimiento de información"})
 			}
 		});
 	}
