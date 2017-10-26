@@ -166,7 +166,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
 
     public hasId(): boolean{
         let hasId = false
-        this.activeRoute.params.subscribe(params => {
+        this.activeRoute.parent.params.subscribe(params => {
             if(params['id'])
                 hasId = true;
         });
