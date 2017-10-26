@@ -174,7 +174,7 @@ export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
 
     constructor(
         public http: HttpService,
-        public confirmation: ConfirmationService
+        public confirmation: ConfirmationService,
         ){
         super(http, confirmation);
     }

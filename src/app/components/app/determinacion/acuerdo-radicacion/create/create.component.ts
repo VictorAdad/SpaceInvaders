@@ -8,6 +8,7 @@ import { AcuerdoRadicacion } from '@models/determinacion/acuerdoRadicacion';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { DeterminacionGlobal } from '../../global';
+import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { _config} from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 
@@ -148,9 +149,10 @@ export class DocumentoAcuerdoRadicacionComponent extends FormatosGlobal{
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
-      public http: HttpService
+      public http: HttpService,
+      public confirmation: ConfirmationService
       ){
-      super(http);
+      super(http, confirmation);
   }
 
   ngOnInit() {
