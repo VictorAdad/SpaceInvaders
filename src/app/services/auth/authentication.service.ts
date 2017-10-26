@@ -148,7 +148,7 @@ export var _usuarios = {
         'roles': ['callCenter'],
         'fiscalia': 'TOL',
         'agencia': 'MET',
-        'turno': 'MAT',
+        'turno': 'MA',
         'autoridad': 'CLL'
     },
     'uai' : {
@@ -157,7 +157,7 @@ export var _usuarios = {
         'roles': ['uai'],
         'fiscalia': 'TOL',
         'agencia': 'MET',
-        'turno': 'MAT',
+        'turno': 'MA',
         'autoridad': 'UAI'
     }, 
     'express' : {
@@ -166,7 +166,7 @@ export var _usuarios = {
         'roles': ['express'],
         'fiscalia': 'TOL',
         'agencia': 'MET',
-        'turno': 'MAT',
+        'turno': 'MA',
         'autoridad': 'EXP'
     },
     'mpuai' : {
@@ -175,7 +175,7 @@ export var _usuarios = {
         'roles': ['mpuai'],
         'fiscalia': 'TOL',
         'agencia': 'MET',
-        'turno': 'MAT',
+        'turno': 'MA',
         'autoridad': 'MPU'
     },
     'mpi' : {
@@ -184,7 +184,7 @@ export var _usuarios = {
         'roles': ['mpi'],
         'fiscalia': 'TOL',
         'agencia': 'MET',
-        'turno': 'MAT',
+        'turno': 'MA',
         'autoridad': 'MPI'
     } 
 }
