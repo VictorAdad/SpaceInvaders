@@ -74,7 +74,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         this.form  = LosForm.createForm();
         this.globals = new PersonaGlobals(this.form,this.persona);
         this.globals.form.controls.razonSocial.disable();
-        this.globals.form.controls.personaCaso["controls"][0].controls.detalleDetenido.controls.tipoDetenido.disable();
+        // this.globals.form.controls.personaCaso["controls"][0].controls.detalleDetenido.controls.tipoDetenido.disable();
         this.globals.formLocalizacion = LosForm.createFormLocalizacion();
         this.route.params.subscribe(params => {
             if(params['casoId']){
@@ -734,15 +734,15 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
 
     changeDetenido(checked){
         this.globals.detenido=checked;
-        if (checked) {
-            this.globals.form.controls.personaCaso["controls"][0].controls.detalleDetenido.controls.tipoDetenido.enable();
-        }else{
-            this.globals.form.controls.personaCaso["controls"][0].controls.detalleDetenido.controls.tipoDetenido.disable(); 
-        }
-        let timer = Observable.timer(1);
-        timer.subscribe(t => {
-            this.validateForm(this.globals.form);
-        });
+        // if (checked) {
+        //     this.globals.form.controls.personaCaso["controls"][0].controls.detalleDetenido.controls.tipoDetenido.enable();
+        // }else{
+        //     this.globals.form.controls.personaCaso["controls"][0].controls.detalleDetenido.controls.tipoDetenido.disable(); 
+        // }
+        // let timer = Observable.timer(1);
+        // timer.subscribe(t => {
+        //     this.validateForm(this.globals.form);
+        // });
     }
 
     edad(e){
@@ -1171,7 +1171,7 @@ class LosForm{
                         'fechaDeclaracion' : new FormControl(),
                         'horaDetenido'         : new FormControl("",[]),
                         'tipoDetenido' : new FormGroup({
-                            'id' : new FormControl("", [Validators.required,]),
+                            'id' : new FormControl("", []),
                         })
                     }),
                 })
