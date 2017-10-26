@@ -9,6 +9,7 @@ import { MOption } from '@partials/form/select2/select2.component';
 import { NoticiaHechoGlobal } from '../../global';
 import { VehiculoService } from '@services/noticia-hecho/vehiculo/vehiculo.service';
 import { SelectsService} from '@services/selects.service';
+import { Observable }  from 'rxjs/Observable';
 
 @Component({
     selector: 'vehiculo-create',
@@ -92,10 +93,10 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             }),
             'estadoOrigen'  : new FormGroup({
                 'id'    : new FormControl("",[]),
-            }), 
+            }),
             'motivoColorClase'       : new FormGroup({
                 'id': new FormControl("",[]),
-            })  
+            })
 
         });
 
@@ -104,7 +105,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         this.route.params.subscribe(params => {
             if(params['casoId']){
                 this.casoId = +params['casoId'];
-                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho`,label:"Detalle noticia de hechos"})
+                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho/vehiculos`,label:"Detalle noticia de hechos"})
              }
             if(params['id']){
                 this.id = +params['id'];
@@ -125,10 +126,13 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                         }
                     });
                 }
-                
+
             }
         });
-        this.validateForm(this.form);
+        let timer = Observable.timer(1);
+        timer.subscribe(t => {
+            this.validateForm(this.form);
+        });
     }
 
     public change(option){
@@ -182,7 +186,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                             });
                         }
                     });
-                }); 
+                });
 
             }
         });
@@ -225,7 +229,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                         });
                         console.log("caso",t);
                     });
-                }); 
+                });
             }
         });
     }
@@ -239,7 +243,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                     }
                     if (typeof x[i]=="object")
                         rec(x[i]);
-                } 
+                }
             }
         }
         rec(_data);

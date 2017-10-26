@@ -40,7 +40,7 @@ export class DelitoCreateComponent{
             console.log("params",params);
             if(params['casoId']){
                 this.casoId = +params['casoId'];
-                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho`,label:"Detalle noticia de hechos"})
+                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho/delitos`,label:"Detalle noticia de hechos"})
 
             }
             if(params['id']){

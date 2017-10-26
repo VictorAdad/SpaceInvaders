@@ -119,7 +119,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 this.casoId = params['casoId'];
                 this.optionsNoticia.setId(this.casoId);
                 this.optionsNoticia.getData();
-                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho`,label:"Detalle noticia de hechos"})
+                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho/relaciones`,label:"Detalle noticia de hechos"})
 
             }
             if(params['id']){
@@ -183,7 +183,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             form.push(
                 this.formRelacion.efectoViolenciaForm(this.optionsRelacion.matrizEfectoDetalle.finded[0].id)
             );
-    } 
+    }
 
     addTrataPersonas(_val: any){
         console.log('Add TrataPersonas', _val);
@@ -203,8 +203,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             )
         );
         let form = this.form.get('trataPersona') as FormArray;
-        form.push(this.formRelacion.trataPersonasForm); 
-    } 
+        form.push(this.formRelacion.trataPersonasForm);
+    }
 
     addHostigamiento(_val: any){
         this.colections.add('hostigamiento', 'subjectHostigamiento', _val);
@@ -216,7 +216,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 _val.testigo || null
             )
         );
-    } 
+    }
 
     save(_valid : any, _model : any){
         return new Promise((resolve,reject)=>{
@@ -258,7 +258,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 //             });
                 //         }
                 //     });
-                // }); 
+                // });
             }
         });
     }
@@ -296,7 +296,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 });
             }
         });
-        
+
     }
 
     public fillForm(_data){
@@ -449,7 +449,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 }
 
 
-  
+
   /**
    * Data source to provide what data should be rendered in the table. The observable provided
    * in connect should emit exactly the data that should be rendered by the table. If the data is
@@ -463,6 +463,6 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     connect(): Observable<any[]> {
       return Observable.of(this.data);
     }
-  
+
     disconnect() {}
   }

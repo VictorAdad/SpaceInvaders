@@ -45,14 +45,15 @@ export class DocumentoComponent{
         this.data = data;
         this.dataSource = new TableService(this.paginator, this.data);
         console.log('-> Data Source', this.dataSource);
-        this.route.params.subscribe(params => {
+        this.route.parent.params.subscribe(params => {
             if(params['id']){
-                this.casoId = +params['id'];
-                if(this.onLine.onLine){
+                // this.casoId = +params['id'];
+                // if(this.onLine.onLine){
                     
-                }else{
-                    this.cargaArchivos();
-                }                
+                // }else{
+                //     this.cargaArchivos();
+                // }       
+                this.cargaArchivos();         
             }
         });  
     }
@@ -67,12 +68,16 @@ export class DocumentoComponent{
     download(idBlob,name,type){
       console.log(idBlob,name,type);
       this.db.get("blobs",idBlob).then(t=>{
+          console.log("tho blob",t);
         var b=this.dataURItoBlob(t["blob"].split(',')[1], type );
+        console.log("blob",b);
         var a = document.createElement('a');
         a.download = name;
-        a.href=window.URL.createObjectURL( b );;
+        a.href=window.URL.createObjectURL( b );
+        console.log(a);
+        document.body.appendChild(a);
         a.click();
-        a.remove();
+        document.body.removeChild(a);
       });
     }
 

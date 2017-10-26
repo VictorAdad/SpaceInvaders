@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FileUploader, FileDropDirective, FileSelectDirective } from 'ng2-file-upload';
 import { MatDialogRef } from '@angular/material';
 import { CIndexedDB } from '@services/indexedDB';
+import { GlobalService } from "@services/global.service";
 
 @Component({
     templateUrl: './create.component.html',
@@ -13,7 +14,7 @@ export class DocumentoCreateComponent {
     private db: CIndexedDB    
 
     constructor(public dialogRef: MatDialogRef<DocumentoCreateComponent>, 
-        private _db: CIndexedDB){
+        private _db: CIndexedDB, public globalService : GlobalService){
         this.db=_db;
     }
 
@@ -41,6 +42,8 @@ export class DocumentoCreateComponent {
         //falta definir el guardado en la tabla de sincronizar
         var obj=this;
         if (i==listaArchivos.length){
+            this.close();
+            this.globalService.openSnackBar("Se guardo con éxito");
             return;
         }
         let item=listaArchivos[i];
@@ -65,7 +68,7 @@ export class DocumentoCreateComponent {
 
     guardar(){
         console.log("archivos:",this.uploader);
-        var listaFiles=this.uploader.queue;
+        var listaFiles=this.uploader.queue as any[];
         this.guardarOffLine(0,listaFiles);
         
     }
