@@ -108,7 +108,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                 _model.delitoCaso.delito.id =  this.delito.id;
                 this.http.post('/v1/base/casos', _model).subscribe((response) => {
                     resolve("Se creó con éxito el Caso");
-                    this.router.navigate(['/caso/'+response.id+'/noticia-hecho' ]);
+                    this.router.navigate(['/caso/'+response.id+'/noticia-hecho/datos-generales' ]);
                 },e=>{
                     reject(e);
                 });
