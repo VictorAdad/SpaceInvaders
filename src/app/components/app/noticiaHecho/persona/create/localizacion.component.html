@@ -180,6 +180,11 @@
                         <radiobutton [radios]="[
                             {label:'Residencia habitual',value:'Residencia habitual'},
                             {label:'Domicilio procesal',value:'Domicilio procesal'}]"
+
+                            (valueChange)="changeTipoResida($event,i)"
+
+                            [value]="globals.tipoResidencia[i]"
+
                             >
                                 
                         </radiobutton>

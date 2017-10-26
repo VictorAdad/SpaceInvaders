@@ -112,7 +112,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         }).then(copia=>{
                             this.globals.personaCaso=copia;
                         });
-                        
+
                         console.log("PERSONA_CASO -> ",persona_caso);
                         console.log('Form', this.globals);
                     });
@@ -138,12 +138,12 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         let pcaso = this.globals.form.get('personaCaso') as FormArray;
         pcaso.controls[0].patchValue(_personaCaso);
         this.globals.tipoInterviniente=""+_personaCaso["tipoInterviniente"].id;
-        
+
         let timer = Observable.timer(1);
         timer.subscribe(t => {
             let mediaF = this.globals.form.get('mediaFiliacion') as FormArray;
             if ( this.globals.tipoInterviniente==_config.optionValue.imputado){
-                for (var propName in _personaCaso["persona"].mediaFiliacion) { 
+                for (var propName in _personaCaso["persona"].mediaFiliacion) {
                     if (_personaCaso["persona"].mediaFiliacion[propName] === null || _personaCaso["persona"].mediaFiliacion[propName] === undefined) {
                       delete (_personaCaso["persona"].mediaFiliacion)[propName];
                     }
@@ -154,32 +154,34 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             this.fillForm(_personaCaso["persona"]);
             this.fillNombres(_personaCaso["persona"].aliasNombrePersona);
             var _data=_personaCaso["persona"];
-            
+
             let localizaciones = this.globals.form.get('localizacionPersona') as FormArray;
             for (let i=0; i< _data["localizacionPersona"].length; i++) {
                 let formLoc = LosForm.createFormLocalizacion();
                 localizaciones.push(formLoc);
             }
 
+
             let timer2 = Observable.timer(1);
             timer2.subscribe(t => {
                 let localizaciones = this.globals.form.get('localizacionPersona') as FormArray;
                 for (let i=0; i< _data["localizacionPersona"].length; i++) {
-                    for (var propName in (_data.localizacionPersona[i])) { 
+                    for (var propName in (_data.localizacionPersona[i])) {
                         if ((_data.localizacionPersona[i])[propName] === null || (_data.localizacionPersona[i])[propName] === undefined) {
                             delete (_data.localizacionPersona[i])[propName];
                         }
                     }
                     let formLoc = localizaciones.controls[i];
                     formLoc.patchValue(_data.localizacionPersona[i]);
-                    
+
+                    this.globals.tipoResidencia.push((_data.localizacionPersona[i])["tipoRecidencia"]);
                 }
                 this.globals.form.controls.razonSocial.patchValue(_personaCaso["persona"].razonSocial);
 
             });
-            
+
         });
-           
+
     }
 
     public fillNombres(_alias:any[]){
@@ -207,12 +209,12 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             }
 
             this.globals.indexNombres++;
-            
+
         }
-        
+
     }
 
-    
+
     activaRazonSocial(value){
         if (value=="Moral")
             this.form.controls.razonSocial.enable();
@@ -223,7 +225,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     searchCatalogos(datos:any[]){
         var obj= this;
         var encontrados={};
-        var promesa = new Promise( 
+        var promesa = new Promise(
             function(resolve,reject){
                 var recursion=function(i){
                     if (i==datos.length){
@@ -365,13 +367,13 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
         return promesa;
 
-        
+
 
     }
 
     save(valid : any, _model : any){
         return new Promise<any>((resolve, reject) => {
-        
+
             console.log('-> Form', this.form);
 
             var buscar=[];
@@ -400,7 +402,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     familiaLinguistica:this.form.controls.familiaLinguistica.value
                 }
             });
-            
+
             this.searchCatalogos(buscar).then(e=>{
                 for(let key in e){
                     if (e[key]!=null){
@@ -415,7 +417,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 });
             });
         });
-        
+
     }
     /**
     agrega al model los ids temporales para que funcione esto,
@@ -500,7 +502,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 var otrosID=[];
                 var dependeDe=this.agregaIdTemporales(_model,temId,otrosID);
                 console.log(dependeDe, otrosID);
-                
+
                 let dato={
                     url:'/v1/base/personas',
                     body:_model,
@@ -516,7 +518,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     this.tabla.get("casos",this.casoId).then(
                             casoR=>{
                         this.caso=casoR as Caso;
-           
+
                         console.log("SI");
                         _model["dependeDe"]=dependeDe;
                         this.tabla.add('personas', _model).then( p => {
@@ -532,7 +534,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
                             });
                             console.log('-> Persona Guardada',p);
-                            
+
                         });
 
                     });
@@ -580,7 +582,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         _model["persona"]={nombre:_model["nombre"]};
                         _model["alias"]=_model.aliasNombrePersona.nombre;
                         if (!_model["razonSocial"])
-                            _model["razonSocial"]="";        
+                            _model["razonSocial"]="";
                         this.tabla.update('personas', _model).then( p => {
                             console.log("SI se guardo persona",p);
                             if (!this.caso["personas"])
@@ -592,7 +594,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                                     // this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas']);
 
                             });
-                            
+
                         });
 
                     });
@@ -655,13 +657,13 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
     public fillForm(_data){
         _data.fechaNacimiento = new Date(_data.fechaNacimiento);
-        for (var propName in _data) { 
+        for (var propName in _data) {
             if (_data[propName] === null || _data[propName] === undefined) {
               delete _data[propName];
             }
           }
 
-        for (var propName in _data.mediaFiliacion) { 
+        for (var propName in _data.mediaFiliacion) {
             if (_data.mediaFiliacion[propName] === null || _data.mediaFiliacion[propName] === undefined) {
                 delete _data.mediaFiliacion[propName];
             }
@@ -670,13 +672,13 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             _data["nacionalidad"]=(_data["nacionalidadReligion"])["nacionalidad"];
             _data["religion"]=(_data["nacionalidadReligion"])["religion"];
         }
-        
+
         if (_data["idiomaIdentificacion"]){
             _data["familiaLinguistica"]=(_data["idiomaIdentificacion"])["familiaLinguistica"];
             _data["lenguaIndigena"]=(_data["idiomaIdentificacion"])["lenguaIndigena"];
             _data["hablaEspaniol"]=(_data["idiomaIdentificacion"])["hablaEspaniol"];
         }
-        
+
         console.log("datos ->",_data);
         this.form.patchValue(_data);
         console.log('After patch', this.form);
@@ -688,7 +690,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     selector: 'identidad',
     templateUrl : './identidad.component.html'
 })
-export class IdentidadComponent extends NoticiaHechoGlobal{ 
+export class IdentidadComponent extends NoticiaHechoGlobal{
 
     @Input()
     globals: PersonaGlobals;
@@ -704,7 +706,7 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
         ){
         super();
         this.tabla = _tabla;
-        
+
     }
 
     changePais(id){
@@ -718,12 +720,12 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
                 this.isMexico=true;
 
             }
-        }   
+        }
       }
-    } 
+    }
 
     changeEstado(id){
-        if(id!=null && typeof id !='undefined') 
+        if(id!=null && typeof id !='undefined')
             this.options.getMunicipiosByEstado(id);
     }
 
@@ -757,7 +759,7 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
     selector: 'identificacion',
     templateUrl : './identificacion.component.html'
 })
-export class IdentificacionComponent{ 
+export class IdentificacionComponent{
 
     @Input()
     globals: PersonaGlobals;
@@ -775,7 +777,7 @@ export class IdentificacionComponent{
         ids:number[],
         indices:number[],
     }
-    
+
     @Input()
     nombres: number = 0;
 
@@ -784,7 +786,7 @@ export class IdentificacionComponent{
     }
 
     ngOnInit(){
-        
+
     }
 
     trackByIndex(index, item){
@@ -819,7 +821,7 @@ export class IdentificacionComponent{
     selector: 'localizacion',
     templateUrl : './localizacion.component.html'
 })
-export class LocalizacionComponent{ 
+export class LocalizacionComponent{
     @Input()
     globals: PersonaGlobals;
     @Input()
@@ -835,14 +837,14 @@ export class LocalizacionComponent{
 
     changePais(id){
       if(id!=null && typeof id !='undefined'){
-      this.isMexico=id==_config.optionValue.idMexico;    
+      this.isMexico=id==_config.optionValue.idMexico;
       this.options.getEstadoByPais(id);
         for (var i = 0; i < this.options.paises.length; ++i) {
             var pais=this.options.paises[i];
             if(pais.value==id && pais.label=="MEXICO"){
                 this.isMexico=true;
             }
-        } 
+        }
        }
     }
 
@@ -875,21 +877,28 @@ export class LocalizacionComponent{
         console.log(localizaciones.value);
     }
 
+    changeTipoResida(value,i){
+        console.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i] );
+        console.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i].controls );
+        console.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i].controls.tipoResidencia );
+        this.globals.form.controls.localizacionPersona["controls"][i].controls.tipoRecidencia.patchValue(value);
+    }
+
 }
 
 @Component({
     selector: 'media-filacion',
     templateUrl : './media-filacion.component.html'
 })
-export class MediaFilacionComponent{ 
+export class MediaFilacionComponent{
     @Input()
     globals: PersonaGlobals;
     @Input()
     options: any[];
-    
+
 
     constructor(public personaServ: PersonaService){
-        
+
     }
 }
 
@@ -918,6 +927,7 @@ export class PersonaGlobals{
     public indexNombres:number=0;
     public formMediaFilicion=LosForm.createFormMediaFiliacion();
     public localizaciones=[];
+    public tipoResidencia=[];
 
     constructor(
         _form: FormGroup,
@@ -931,7 +941,7 @@ export class PersonaGlobals{
         this.otrosNombres.nombres=[];
     }
 
-    
+
 }
 
 class LosForm{
@@ -968,7 +978,7 @@ class LosForm{
             'fax': new FormControl(),
             'otroMedioContacto': new FormControl(),
             'correo': new FormControl("",[]),
-            'tipoResidencia': new FormControl(),
+            'tipoRecidencia': new FormControl(),
             'estadoOtro': new FormControl(),
             'municipioOtro': new FormControl(),
             'coloniaOtro': new FormControl(),
@@ -1065,7 +1075,7 @@ class LosForm{
             'materno'          : new FormControl(""),
             'razonSocial'      : new FormControl("", [Validators.required,Validators.minLength(5)]),
             'fechaNacimiento'  : new FormControl("",[]),
-            'edad'             : new FormControl("",[]),
+            'edad'             : new FormControl("",[Validators.required,]),
             'curp'             : new FormControl("",[]),
             'rfc'              : new FormControl("",[]),
             'numHijos'         : new FormControl("",[]),
@@ -1124,7 +1134,7 @@ class LosForm{
                 'peso': new FormControl("",[]),
             }),
             'sexo': new FormGroup({
-                'id': new FormControl("",[]),
+                'id': new FormControl("",[Validators.required,]),
             }),
             'pais': new FormGroup({
                 'id': new FormControl("",[]),
@@ -1141,7 +1151,7 @@ class LosForm{
                 'id': new FormControl("",[]),
             }),
             'ocupacion': new FormGroup({
-                'id': new FormControl("",[]),
+                'id': new FormControl("",[Validators.required,]),
             }),
             'grupoEtnico': new FormGroup({
                 'id': new FormControl("",[]),
@@ -1164,7 +1174,7 @@ class LosForm{
                         'id': new FormControl("",[]),
                     }),
                     'tipoInterviniente': new FormGroup({
-                        'id': new FormControl()
+                        'id': new FormControl("",[Validators.required,])
                     }),
                     'detalleDetenido': new FormGroup({
                         'fechaDetencion'   : new FormControl(),

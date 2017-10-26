@@ -11,6 +11,7 @@ import { DeterminacionGlobal } from '../../global';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { _config} from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
+import { GlobalService } from "@services/global.service";
 
 @Component({
     templateUrl:'./create.component.html',
@@ -151,9 +152,10 @@ export class DocumentoAcuerdoRadicacionComponent extends FormatosGlobal{
 
   constructor(
       public http: HttpService,
-      public confirmation: ConfirmationService
+      public confirmationService:ConfirmationService,
+      public globalService:GlobalService
       ){
-      super(http, confirmation);
+      super(http, confirmationService, globalService);
   }
 
   ngOnInit() {

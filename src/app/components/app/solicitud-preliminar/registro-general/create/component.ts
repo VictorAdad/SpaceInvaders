@@ -11,6 +11,7 @@ import { SolicitudPreliminarGlobal } from '../../global';
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
+import { GlobalService } from "@services/global.service";
 
 @Component({
 	templateUrl: './component.html',
@@ -152,11 +153,12 @@ export class DocumentoRegistroGeneralComponent  extends FormatosGlobal{
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @Input() id:number=null;
   constructor(
-    public http: HttpService,
-    public confirmationService:ConfirmationService
-    ){
-    super(http,confirmationService);
-}
+      public http: HttpService,
+      public confirmationService:ConfirmationService,
+      public globalService:GlobalService
+      ){
+      super(http, confirmationService, globalService);
+  }
 
 ngOnInit() {
   console.log('-> Object ', this.object);

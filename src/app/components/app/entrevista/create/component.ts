@@ -12,6 +12,7 @@ import { CIndexedDB } from '@services/indexedDB';
 import { SelectsService} from '@services/selects.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { GlobalService } from "@services/global.service";
 
 @Component({
 	templateUrl: './component.html',
@@ -257,9 +258,10 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
 
   constructor(
       public http: HttpService,
-      public confirmation: ConfirmationService
+      public confirmationService:ConfirmationService,
+      public globalService:GlobalService
       ){
-      super(http, confirmation);
+      super(http, confirmationService, globalService);
   }
 
   ngOnInit() {

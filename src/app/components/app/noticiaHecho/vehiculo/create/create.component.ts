@@ -9,6 +9,7 @@ import { MOption } from '@partials/form/select2/select2.component';
 import { NoticiaHechoGlobal } from '../../global';
 import { VehiculoService } from '@services/noticia-hecho/vehiculo/vehiculo.service';
 import { SelectsService} from '@services/selects.service';
+import { Observable }  from 'rxjs/Observable';
 
 @Component({
     selector: 'vehiculo-create',
@@ -128,7 +129,10 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
 
             }
         });
-        this.validateForm(this.form);
+        let timer = Observable.timer(1);
+        timer.subscribe(t => {
+            this.validateForm(this.form);
+        });
     }
 
     public change(option){

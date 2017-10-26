@@ -17,8 +17,8 @@
 			<text name="delito" hintStart="Campo obligatorio" readonly="true" [group]="form"> </text>
 			<div class="row justify-content-end">
 				<div class="col-sm-auto" [matTooltip]="!form.valid ? 'No se han llenado los campos requeridos' : ''" (mouseenter)="validateForm(form)">
-					<button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="hasId()">Editar</button>	
-					<button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="!hasId()">Guardar</button>
+					<button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [isEdit]="true" [disabled]="!form.valid || [saving]" *ngIf="id!=null">Editar</button>
+					<button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [isEdit]="false" [disabled]="!form.valid || [saving]" *ngIf="id==null">Guardar</button>
 				</div>
 				<div class="col-sm-auto">
 					<button mat-button routerLink="/">Cancelar</button>
