@@ -12,6 +12,8 @@ export class TextareaComponent implements OnInit{
 	@Input() name     : string  = '';
 	@Input() group    : FormGroup = new FormGroup({});
 	@Input() functionChange: Function;
+	@Input() hintStart: string="";
+	@Input() hintEnd: string="";
 
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();

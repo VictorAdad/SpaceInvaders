@@ -50,31 +50,32 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     ngOnInit() {
         this.model = new Vehiculo();
         this.form = new FormGroup({
+            'id'  : new FormControl("",[]),
             'motivoRegistro'        : new FormControl("", [Validators.required,]),
             'campoVehiculo'         : new FormControl("", [Validators.required,]),
-            'tarjetaCirculacion'    : new FormControl("", [Validators.required,]),
-            'economico'           : new FormControl("", [Validators.required,]),
-            'clase'                 : new FormControl("", [Validators.required,]),
+            'tarjetaCirculacion'    : new FormControl("", []),
+            'economico'           : new FormControl("", []),
+            'clase'                 : new FormControl("", []),
             'marca'                 : new FormControl("", [Validators.required,]),
             'submarca'              : new FormControl("", [Validators.required,]),
             'color'                 : new FormControl("", [Validators.required,]),
             'modelo'                : new FormControl("", [Validators.required,]),
             'placas'                : new FormControl("", [Validators.required,]),
-            'placasAdicionales'     : new FormControl("", [Validators.required,]),
-            'registroFederal'       : new FormControl("", [Validators.required,]),
+            'placasAdicionales'     : new FormControl("", []),
+            'registroFederal'       : new FormControl("", []),
             'serie'                 : new FormControl("", [Validators.required,]),
             'motor'                 : new FormControl("", [Validators.required,]),
-            'aseguradora'           : new FormControl("", [Validators.required,]),
-            'factura'               : new FormControl("", [Validators.required,]),
-            'datosTomados'          : new FormControl("", [Validators.required,]),
-            'poliza'                : new FormControl("", [Validators.required,]),
-            'valorEstimado'         : new FormControl("", [Validators.required,]),
+            'aseguradora'           : new FormControl("", []),
+            'factura'               : new FormControl("", []),
+            'datosTomados'          : new FormControl("", []),
+            'poliza'                : new FormControl("", []),
+            'valorEstimado'         : new FormControl("", []),
             'tipoUso'               : new FormControl("", []),
-            'procedencia'           : new FormControl("", [Validators.required,]),
-            'pedimentoImportacion'  : new FormControl("", [Validators.required,]),
+            'procedencia'           : new FormControl("", []),
+            'pedimentoImportacion'  : new FormControl("", []),
             'llevaCarga'            : new FormControl(""),
             'alterado'              : new FormControl(""),
-            'senasParticulares'     : new FormControl("", [Validators.required,]),
+            'senasParticulares'     : new FormControl("", []),
             'notas'                 : new FormControl("", []),
 
             'marcaSubmarca'         : new FormGroup({
@@ -110,6 +111,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/vehiculos/'+this.id).subscribe(response =>{
                         this.fillForm(response);
+                        this.form.controls.id.patchValue(this.id);
                     });
                 }else{
                     this.db.get("casos",this.casoId).then(t=>{
@@ -117,6 +119,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                         for (var i = 0; i < vehiculos.length; ++i) {
                             if ((vehiculos[i])["id"]==this.id){
                                 this.fillForm(vehiculos[i]);
+                                this.form.controls.id.patchValue(this.id);
                                 break;
                             }
                         }
@@ -188,6 +191,8 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     public edit(_valid : any, _model : any){
         return new Promise((resolve,reject)=>{
             console.log('-> Vechiulo@edit()', _model);
+            _model.caso.id      = this.casoId;
+            _model.id = this.id;
             if(this.onLine.onLine){
                 this.http.put('/v1/base/vehiculos/'+this.id, _model).subscribe((response) => {
                     console.log('-> Registro acutualizado', response);
@@ -226,6 +231,18 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     }
 
     public fillForm(_data){
+        var rec = function(x){
+            if (typeof x == "object"){
+                for(let i in x){
+                    if (x[i]==null || typeof x[i] =="undefined"){
+                        delete x[i];
+                    }
+                    if (typeof x[i]=="object")
+                        rec(x[i]);
+                } 
+            }
+        }
+        rec(_data);
         this.form.patchValue(_data);
     }
 

@@ -100,9 +100,9 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
             if(this.onLine.onLine){
                 Object.assign(_model, this.model);
                 console.log('Model', _model);
-                _model["agencia"]={id:1};
+                // _model["agencia"]={id:1};
                 _model["nic"]=this.generateNIC(_model);
-                _model["estatus"]={id:1};
+                // _model["estatus"]={id:1};
 
                 _model.created = null;
                 _model.delitoCaso.delito.id =  this.delito.id;
