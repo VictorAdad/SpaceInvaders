@@ -10,7 +10,7 @@
             <h2>Registrar lugar</h2>
         </div>
         <div class="col-md-2">
-            <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/noticia-hecho" color="accent">Regresar</button>
+            <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/noticia-hecho/lugares" color="accent">Regresar</button>
         </div>
     </div>
     <div class="content">
@@ -154,7 +154,7 @@
                     <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id == null">Guardar</button>
                 </div>
                 <div class="col-sm-auto">
-                    <button mat-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>
+                    <button mat-button routerLink="/caso/{{casoId}}/noticia-hecho/lugares">Cancelar</button>
                 </div>
             </div>
         </form>

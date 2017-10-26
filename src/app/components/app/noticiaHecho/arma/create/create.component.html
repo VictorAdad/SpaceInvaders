@@ -9,7 +9,7 @@
 		<h2>Registrar arma</h2>
 	</div>
 	<div class="col-md-6 space">
-		<button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/noticia-hecho" color="accent">Regresar</button>
+		<button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/noticia-hecho/armas" color="accent">Regresar</button>
 	</div>
 	<div class="col-md-12">
 		<form [formGroup]="form">
@@ -81,7 +81,7 @@
                     <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id == null">Guardar</button>
 				</div>
 				<div class="col-sm-auto">
-					<button class="float-right" mat-button routerLink="/caso/{{casoId}}/noticia-hecho">Cancelar</button>	
+					<button class="float-right" mat-button routerLink="/caso/{{casoId}}/noticia-hecho/armas">Cancelar</button>	
 				</div>
 			</div>
 		</form>
