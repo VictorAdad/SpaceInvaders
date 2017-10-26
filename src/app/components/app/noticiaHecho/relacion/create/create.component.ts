@@ -228,7 +228,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             if(this.onLine.onLine){
                 this.http.post('/v1/base/tipo-relacion-persona', _model).subscribe(
                     (response) => {
-                        this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                        this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/relaciones' ]);
                         resolve("Se creo la relación con éxito");
                     },
                     (error) => {console.error('Error', error); reject(error);}
@@ -353,6 +353,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         this.form.get('formaAccion.id').disable();
         this.form.get('formaComision.id').disable();
         this.form.get('modalidadDelito.id').disable();
+        this.form.controls.tipoRelacionPersona['controls'].lugarTipoRelacionPersona.disable();
+        console.log('H---->',this.form.get('tipoRelacionPersona'))
     }
 
     public activaCamposImputado(){
@@ -361,6 +363,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         this.form.get('formaAccion.id').enable();
         this.form.get('formaComision.id').enable();
         this.form.get('modalidadDelito.id').enable();
+        this.form.controls.tipoRelacionPersona['controls'].lugarTipoRelacionPersona.enable();
     }
 
     changeTipoRelacion(option){
