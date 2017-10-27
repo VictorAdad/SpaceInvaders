@@ -752,6 +752,7 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
         var hoy=moment();
         var edad=hoy.diff(a, 'years');
         this.globals.form.patchValue({edad:edad});
+        this.globals.form.controls.edad.disable();
     }
 }
 
