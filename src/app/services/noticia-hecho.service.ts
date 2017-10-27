@@ -114,7 +114,7 @@ export class NoticiaHechoService {
         let options: MOption[] = [];
 
         _data.forEach(object => {
-            options.push({value: object.id, label: object.claseArma.claseArma+' '+object.claseArma.tipo || ''});
+            options.push({value: object.id, label: object.claseArma != null  ? object.claseArma.claseArma  : ''});
         });
 
         return options;
