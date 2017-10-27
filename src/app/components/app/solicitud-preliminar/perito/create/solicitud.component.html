@@ -10,11 +10,10 @@
             </select2>
             <div *ngIf="isPericiales">
                 <h4>Narración de los hechos denunciados</h4>
-                <text-area label="Hechos narrados (hechos denunciados)" name="hechosDenunciados" [group]="form"></text-area>
                 <text-area label="Hechos narrados que se denuncian" name="hechosNarrados" [group]="form"></text-area>
                 <h4>Oficio solicitud de servicios periciales</h4>
                 <text label="Número de oficio" name="noOficio" [group]="form"></text>
-                <text label="Nombre del director de del instituto de servicios periciales" name="directorInstituto" [group]="form"></text>
+                <text label="Nombre del director del instituto de servicios periciales" name="directorInstituto" [group]="form"></text>
                 <select2 placeholder="Se solicita al pertio en materia de" [options]="options.peritoMateria" name="id" [group]="form.controls.peritoMateria"></select2>
                 <text label="Finalidad del requerimiento" name="finalidad" [group]="form"></text>
                 <text label="Plazo en días para cumplir el informe" name="plazoDias" [group]="form"></text>

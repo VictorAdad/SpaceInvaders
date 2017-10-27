@@ -41,6 +41,7 @@ export class PeritoCreateComponent {
 	}
   modelUpdate(model: any) {
     this.solicitudId= model.id;
+    this.isPericiales = model.tipo === 'Periciales'
     this.model=model
 	  console.log(model);
   }
@@ -109,7 +110,6 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 		return new FormGroup({
 			'tipo': new FormControl(this.model.tipo),
 			'hechosNarrados': new FormControl(this.model.hechosNarrados),
-			'hechosDenunciados': new FormControl(this.model.hechosDenunciados),
 			'noOficio': new FormControl(this.model.noOficio),
 			'directorInstituto': new FormControl(this.model.directorInstituto),
 			'peritoMateria': new FormGroup({
@@ -139,7 +139,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 					(response) => {
 						if(this.casoId!=null){
 							this.id=response.id;
-							this.router.navigate(['/caso/' + this.casoId + '/perito/'+this.id+'/edit']);
+							this.router.navigate(['/caso/' + this.casoId + '/perito']);
 						}
 						resolve('Solicitud pericial creada con éxito');
 					},
@@ -188,6 +188,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	tipoChange(_tipo): void {
 		this.isPericiales = _tipo === 'Periciales';
 		this.isPsicofisico = _tipo === 'Psicofísico';
+		console.log('P ---------->', this.isPericiales);
 	}
 
 }
