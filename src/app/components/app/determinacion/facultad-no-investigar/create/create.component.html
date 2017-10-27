@@ -15,8 +15,8 @@
 <div class="row">
 	<div class="col-md-12">
 		<mat-tab-group>
-			<mat-tab label="Determinación"><facultad-no-investigar (idUpdate)="idUpdate($event)"></facultad-no-investigar></mat-tab>
-			<mat-tab label="Documentos" *ngIf="determinacionId!=null"><documento-facultad-no-investigar [id]="determinacionId"></documento-facultad-no-investigar></mat-tab>
+			<mat-tab label="Determinación"><facultad-no-investigar (modelUpdate)="modelUpdate($event)"></facultad-no-investigar></mat-tab>
+			<mat-tab label="Documentos" *ngIf="determinacionId!=null"><documento-facultad-no-investigar [id]="determinacionId" [object]="model"></documento-facultad-no-investigar></mat-tab>
 		</mat-tab-group>
 	</div>
 </div>
