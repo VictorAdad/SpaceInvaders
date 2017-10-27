@@ -12,7 +12,10 @@ import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { GlobalService } from "@services/global.service";
-
+import { DataSource } from '@angular/cdk/collections';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { TableDataSource } from './../../../global.component';
 
 @Component({
 	templateUrl: './component.html',
@@ -150,12 +153,15 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 })
 export class DocumentoPoliciaComponent extends FormatosGlobal{
 
-	columns = ['nombre', 'procedimiento', 'fechaCreacion'];
-	data=[];
-  dataSource: TableService | null;
+  @Input() id:number=null;
+  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  @Input()
+  object: any;
+	dataSource: TableDataSource | null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @Input() id:number;
-  @Input() object: any;
+  public data: DocumentoPolicia[] = [];
+  public subject:BehaviorSubject<DocumentoPolicia[]> = new BehaviorSubject<DocumentoPolicia[]>([]);
+  public source:TableDataSource = new TableDataSource(this.subject);
 
   constructor(
       public http: HttpService,
@@ -164,11 +170,23 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
       ){
       super(http, confirmationService, globalService);
   }
+
   ngOnInit() {
     console.log('-> Object ', this.object);
-    if(this.object.documentos)
-    this.data = this.object.documentos;
-    this.dataSource = new TableService(this.paginator, this.data);
+      if(this.object.documentos){
+          this.dataSource = this.source;
+          for (let object of this.object.documentos) {
+              this.data.push(object);
+              this.subject.next(this.data);
+          }
+
+      }
+  }
+
+public setData(_object){
+    console.log('setData()');
+    this.data.push(_object);
+    this.subject.next(this.data);
 }
 }
 

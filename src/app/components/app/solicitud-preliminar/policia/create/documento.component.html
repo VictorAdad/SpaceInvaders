@@ -9,28 +9,25 @@
 		<button mat-raised-button color="accent" >Compartir</button>
 	</div>
 </div>
-<mat-table #table [dataSource]="dataSource">
-    <ng-container matColumnDef="nombre">
-        <mat-header-cell *matHeaderCellDef> Nombre</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
-    </ng-container>
+<mat-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator>
+  <mat-table #table [dataSource]="dataSource">
+      <ng-container matColumnDef="nombre">
+          <mat-header-cell *matHeaderCellDef> Nombre</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.nameEcm}} </mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="procedimiento">
-        <mat-header-cell *matHeaderCellDef> Procedimiento </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.procedimiento}} </mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="procedimiento">
+          <mat-header-cell *matHeaderCellDef> Procedimiento </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.procedimiento}} </mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="fechaCreacion">
-        <mat-header-cell *matHeaderCellDef> Fecha de creación </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.fechaCreacion}} </mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="fechaCreacion">
+          <mat-header-cell *matHeaderCellDef> Fecha de creación </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.created| date:'MM/dd/yyyy'}} </mat-cell>
+      </ng-container>
 
-    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: columns;" (click)="downloadFile(row, 'application-pdf')"></mat-row>
-</mat-table>
-<mat-paginator #paginator
-    [length]="data.length"
-    [pageIndex]="0"
-    [pageSize]="10"
-    [pageSizeOptions]="[5, 10, 25, 100]">
-</mat-paginator>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"  (click)="downloadFile(row, 'application-pdf')"></mat-row>
+  </mat-table>
+
