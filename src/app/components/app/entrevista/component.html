@@ -1,5 +1,5 @@
 <breadcrumb [rutas]="breadcrumb"></breadcrumb>
-<div class="row space">    
+<div class="row space">
     <div class="col-md-12 text-right">
         <small>NIC:CAI/AIN/00/UAI/268/00126/17/08 - NUC: CAI/AIN/00/UAI/268/00126/17/08</small>
     </div>
@@ -20,9 +20,9 @@
         <button mat-raised-button color="accent" routerLink="/caso/{{casoId}}/entrevista/create">Agregar entrevista</button>
     </div>
 </div>
-<mat-paginator #paginator 
-[length]="pag" 
-[pageIndex]="0" [pageSize]="10" 
+<mat-paginator #paginator
+[length]="pag"
+[pageIndex]="0" [pageSize]="10"
 [pageSizeOptions]="[5, 10, 25, 100]"
 (page)="changePage($event)"
   >
@@ -35,7 +35,7 @@
 
     <ng-container matColumnDef="calidadEntrevistado">
         <mat-header-cell *matHeaderCellDef> Calidad entrevistado </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.tipoInterviniente.tipo}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.tipoInterviniente? element.tipoInterviniente.tipo:''}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="creadoPor">

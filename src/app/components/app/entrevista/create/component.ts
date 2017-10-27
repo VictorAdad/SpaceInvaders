@@ -13,6 +13,10 @@ import { SelectsService} from '@services/selects.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { GlobalService } from "@services/global.service";
+import { DataSource } from '@angular/cdk/collections';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { TableDataSource } from './../../global.component';
 
 @Component({
 	templateUrl: './component.html',
@@ -20,8 +24,8 @@ import { GlobalService } from "@services/global.service";
 export class EntrevistaCreateComponent {
 	public casoId: number = null;
 	public breadcrumb = [];
-    public entrevistaId: number = null;
-
+  public entrevistaId: number = null;
+  public model:any=null;
 	constructor(private route: ActivatedRoute) { }
 
 	ngOnInit() {
@@ -34,9 +38,10 @@ export class EntrevistaCreateComponent {
 
 		});
 	}
-  idUpdate(event: any) {
-    this.entrevistaId = event.id;
-	console.log(event.id);
+  modelUpdate(_model: any) {
+    this.entrevistaId = _model.id;
+    this.model=_model;
+	  console.log(_model);
   }
 
 }
@@ -49,7 +54,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 	public apiUrl: string = "/v1/base/entrevistas";
 	public casoId: number = null;
 	public id: number = null;
-	@Output() idUpdate = new EventEmitter<any>();
+	@Output() modelUpdate = new EventEmitter<any>();
 	public form: FormGroup;
 	public model: Entrevista;
 	dataSource: TableService | null;
@@ -66,50 +71,6 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 	) { super(); }
 
 	ngOnInit() {
-
-		/*new FormGroup({
-			'autoridadRealizaEntrevista': new FormControl(this.model.autoridadRealizaEntrevista),
-			'lugarRealizaEntrevista': new FormControl(this.model.lugarRealizaEntrevista),
-			'nombreEntrevistado': new FormControl(this.model.nombreEntrevistado),
-			'sexo': new FormControl(this.model.sexo.id),
-			'fechaNacimiento': new FormControl(this.model.fechaNacimiento),
-			'edad': new FormControl(this.model.edad),
-			'nacionalidad': new FormControl(this.model.nacionalidad),
-			'originarioDe': new FormControl(this.model.originarioDe),
-			'estadoMigratorio': new FormControl(this.model.estadoMigratorio),
-			'tipoInterviniente': new FormControl(this.model.tipoInterviniente),
-			'tipoIdentificacion': new FormControl(this.model.tipoIdentificacion),
-			'emisorIdentificacion': new FormControl(this.model.emisorIdentificacion),
-			'noIdentificacion': new FormControl(this.model.noIdentificacion),
-			'curp': new FormControl(this.model.curp),
-			'rfc': new FormControl(this.model.rfc),
-			'sabeLeerEscribir': new FormControl(this.model.sabeLeerEscribir),
-			'gradoEscolaridad': new FormControl(this.model.gradoEscolaridad),
-			'ocupacion': new FormControl(this.model.ocupacion),
-			'lugarOcupacion': new FormControl(this.model.lugarOcupacion),
-			'estadoCivil': new FormControl(this.model.estadoCivil),
-			'salarioSemanal': new FormControl(this.model.salarioSemanal),
-			'relacionEntrevistado': new FormControl(this.model.relacionEntrevistado),
-			'calle': new FormControl(this.model.calle),
-			'noExterior': new FormControl(this.model.noExterior),
-			'noInterior': new FormControl(this.model.noInterior),
-			'colonia': new FormControl(this.model.colonia),
-			'cp': new FormControl(this.model.cp),
-			'municipio': new FormControl(this.model.municipio),
-			'estado': new FormControl(this.model.estado),
-			'noTelefonoParticular': new FormControl(this.model.noTelefonoParticular),
-			'noTelefonoCelular': new FormControl(this.model.noTelefonoCelular),
-			'correoElectronico': new FormControl(this.model.correoElectronico),
-			'tieneRepresentanteLegal': new FormControl(this.model.tieneRepresentanteLegal),
-			'nombreRepresentanteLegal': new FormControl(this.model.nombreRepresentanteLegal),
-			'medioTecnologicoRegistro': new FormControl(this.model.medioTecnologicoRegistro),
-			'medioTecnologicoUtilizado': new FormControl(this.model.medioTecnologicoUtilizado),
-			'medioTecnicoRegistro': new FormControl(this.model.medioTecnicoRegistro),
-			'medioTecnicoUtilizado': new FormControl(this.model.medioTecnicoUtilizado),
-			'narracionHechos': new FormControl(this.model.narracionHechos),
-			'observaciones': new FormControl(this.model.observaciones)
-		});*/
-
 		this.model = new Entrevista();
 		this.form = this.createForm();
 
@@ -119,11 +80,12 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 			console.log('casoId', this.casoId);
 			if (params['id']) {
 				this.id = +params['id'];
-				this.idUpdate.emit({id: this.id});
 				this.form.disable();
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-					this.fillForm(response);
+          this.fillForm(response);
+          this.modelUpdate.emit(response);
+
 				});
 			}
 		});
@@ -245,10 +207,14 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 export class DocumentoEntrevistaComponent extends FormatosGlobal{
 
   @Input() id:number=null;
-	displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
-	data=[];
-  dataSource: TableService | null;
+  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  @Input()
+  object: any;
+	dataSource: TableDataSource | null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  public data: DocumentoEntrevista[] = [];
+  public subject:BehaviorSubject<DocumentoEntrevista[]> = new BehaviorSubject<DocumentoEntrevista[]>([]);
+  public source:TableDataSource = new TableDataSource(this.subject);
 
   constructor(
       public http: HttpService,
@@ -259,8 +225,22 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
   }
 
   ngOnInit() {
-      this.dataSource = new TableService(this.paginator, this.data);
+    console.log('-> Object ', this.object);
+      if(this.object.documentos){
+          this.dataSource = this.source;
+          for (let object of this.object.documentos) {
+              this.data.push(object);
+              this.subject.next(this.data);
+          }
+
+      }
   }
+
+public setData(_object){
+    console.log('setData()');
+    this.data.push(_object);
+    this.subject.next(this.data);
+}
 }
 
 export interface DocumentoEntrevista {

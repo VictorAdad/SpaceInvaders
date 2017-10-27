@@ -15,6 +15,8 @@ import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { GlobalService } from "@services/global.service";
+import { TableDataSource } from './../../global.component';
+
 
 export class PredenunciaGlobal{
   public validateMsg(form: FormGroup){
@@ -187,7 +189,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                     this.http.post('/v1/base/predenuncias', this.model).subscribe(
                         (response) => {
                             console.log(response);
-                            
+
                             resolve('Predenuncia creada con éxito');
                             this.router.navigate(['/caso/'+this.casoId+'/detalle' ]);
                          },
@@ -259,13 +261,4 @@ export class DocumentoPredenuncia {
 	uuidEcm: string;
 }
 
-export class TableDataSource extends DataSource<any> {
-    /** Connect function called by the table to retrieve one stream containing the data to render. */
-    constructor(private data:BehaviorSubject<any[]>){super()}
 
-    connect(): Observable<any[]> {
-      return this.data.asObservable();
-    }
-  
-    disconnect() {}
-}
