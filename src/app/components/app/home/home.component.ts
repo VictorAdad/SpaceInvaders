@@ -57,8 +57,8 @@ export class HomeComponent implements OnInit {
     public page(url: string){
         this.http.get(url).subscribe((response) => {
             this.casos = [];
+            this.loadList = false;
             response.data.forEach(object => {
-                this.loadList = false;
                 this.pag = response.totalCount; 
                 this.casos.push(Object.assign(new Caso(), object));
                 this.dataSource = new TableService(this.paginator, this.casos);
