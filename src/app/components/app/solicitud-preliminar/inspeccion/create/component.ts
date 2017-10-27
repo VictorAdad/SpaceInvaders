@@ -103,10 +103,9 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
 
             var fechaCompleta = new Date (this.model.fechaHoraInspeccion);
             if(this.model['horaInspeccion'])
-            fechaCompleta.setMinutes(parseInt(this.model['horaInspeccion'].split(':')[1]));
-            if(this.model['horaInspeccion'])
+            {fechaCompleta.setMinutes(parseInt(this.model['horaInspeccion'].split(':')[1]));
             fechaCompleta.setHours(parseInt(this.model['horaInspeccion'].split(':')[0]));
-            console.log();
+             }
             var mes:number=fechaCompleta.getMonth()+1;
             this.model.fechaHoraInspeccion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
             console.log('lo que envio: '+  this.model.fechaHoraInspeccion);
