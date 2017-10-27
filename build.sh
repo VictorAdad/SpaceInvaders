@@ -11,4 +11,4 @@ npm run deploy
 tar cvzf builds/$BUILD_NAME dist
 
 # Upload to the TEST server (10.0.30.14)
-scp builds/$BUILD_NAME evomatik14:/home/evomatik/Downloads
+scp builds/$BUILD_NAME 10.0.30.14:/home/evomatik/Downloads
