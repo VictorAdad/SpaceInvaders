@@ -56,6 +56,11 @@ export class OnLineService {
 
         },
         {
+            catalogo:"tipo_detenido",
+            uri:'/v1/catalogos/persona/tipo-detenido'
+
+        },
+        {
             catalogo:"idioma_identificacion",
             uri:'/v1/catalogos/persona/idioma'
 

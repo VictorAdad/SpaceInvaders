@@ -134,20 +134,17 @@
             </div>
 
             <div class="col-md-2" *ngIf="globals.detenido">
-                <select2 [options]="
-                    []" placeholder="Tipo de detención" name="id" [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido.controls.tipoDetenido"></select2>
+                <select2 [options]="personaServ.tipoDetenido.tipoDetencion" placeholder="Tipo de detención" name="id" [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido.controls.tipoDetenido"></select2>
             </div>
 
             <div class="col-md-2" *ngIf="globals.detenido">
                 <date label="Fecha de declaración" name="fechaDeclaracion" [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido"></date>
             </div>
             <div class="col-md-2" *ngIf="globals.detenido">
-                <select2 [options]="
-                []" placeholder="Tipo de reincidencia" ></select2>
+                <select2 [options]="personaServ.tipoDetenido.tipoReincidencia" placeholder="Tipo de reincidencia" ></select2>
             </div>
             <div class="col-md-2" *ngIf="globals.detenido">
-                <select2 [options]="
-                []" placeholder="Cereso" ></select2>
+                <select2 [options]="personaServ.tipoDetenido.cereso" placeholder="Cereso" ></select2>
             </div>
 
         </div>
