@@ -111,7 +111,7 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
 		                console.log(response);
 						this.id=response.id;
 		                if (this.casoId) {
-		                    this.router.navigate(['/caso/' + this.casoId + '/no-ejercicio-accion-penal'+this.id+'/edit']);
+		                    this.router.navigate(['/caso/' + this.casoId + '/no-ejercicio-accion-penal/'+this.id+'/edit']);
 		                }
 		                resolve('Registro creado con éxito');
 		            },
