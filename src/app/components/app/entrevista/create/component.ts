@@ -18,6 +18,18 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../global.component';
 
+var eliminaNulos = function(x){
+            if (typeof x == "object"){
+                for(let i in x){
+                    if (x[i]==null || typeof x[i] =="undefined"){
+                        delete x[i];
+                    }
+                    if (typeof x[i]=="object")
+                        eliminaNulos(x[i]);
+                }
+            }
+        }
+
 @Component({
 	templateUrl: './component.html',
 })
@@ -190,6 +202,8 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 
 	public fillForm(_data) {
 		_data.fechaNacimiento = new Date(_data.fechaNacimiento);
+		eliminaNulos(_data);
+		console.log(_data);
 		this.form.patchValue(_data);
 		console.log(_data);
 	}
