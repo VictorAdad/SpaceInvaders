@@ -14,6 +14,9 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { GlobalService } from "@services/global.service";
+import { DataSource } from '@angular/cdk/collections';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { TableDataSource } from './../../../global.component';
 
 @Component({
 	templateUrl: './component.html',
@@ -198,12 +201,15 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
   columns = ['nombre', 'procedimiento', 'fechaCreacion'];
   @Input() isPericiales:boolean=false;
   @Input() id:number=null;
-
-	data= [];
-
-  dataSource: TableService | null;
+  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  @Input()
+  object: any;
+	dataSource: TableDataSource | null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @Input() object: any;
+  public data: DocumentoPerito[] = [];
+  public subject:BehaviorSubject<DocumentoPerito[]> = new BehaviorSubject<DocumentoPerito[]>([]);
+  public source:TableDataSource = new TableDataSource(this.subject);
+
   constructor(
       public http: HttpService,
       public confirmationService:ConfirmationService,
@@ -214,14 +220,22 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
 
   ngOnInit() {
     console.log('-> Object ', this.object);
-    console.log('-> IsPericiales ', this.isPericiales);
+      if(this.object.documentos){
+          this.dataSource = this.source;
+          for (let object of this.object.documentos) {
+              this.data.push(object);
+              this.subject.next(this.data);
+          }
 
-    if(this.object.documentos)
-    this.data = this.object.documentos;
-    this.dataSource = new TableService(this.paginator, this.data);
-}
+      }
+ }
+ public setData(_object){
+  console.log('setData()');
+  this.data.push(_object);
+  this.subject.next(this.data);
 }
 
+}
 export interface DocumentoPerito {
 	id: number
 	nombre: string;
