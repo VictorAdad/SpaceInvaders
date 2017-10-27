@@ -90,7 +90,7 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
 			if (params['id']) {
 				this.id = +params['id'];
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-					console.log(response.data),
+					  console.log(response.data),
             this.fillForm(response);
             this.modelUpdate.emit(response);
 
