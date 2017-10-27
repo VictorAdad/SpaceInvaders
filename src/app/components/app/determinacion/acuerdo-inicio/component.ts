@@ -13,6 +13,9 @@ import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { GlobalService } from "@services/global.service";
+import { DataSource } from '@angular/cdk/collections';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { TableDataSource } from './../../global.component';
 
 @Component({
     templateUrl: './component.html',
@@ -20,7 +23,7 @@ import { GlobalService } from "@services/global.service";
 export class AcuerdoInicioComponent {
     public casoId: number = null;
     public acuerdoId: number = null;
-
+    public model:any=null;
     public breadcrumb = [];
     constructor(private route: ActivatedRoute) { }
 
@@ -32,10 +35,11 @@ export class AcuerdoInicioComponent {
             }
         });
     }
-  idUpdate(event: any) {
-    this.acuerdoId = event.id;
-	  console.log(this.acuerdoId);
-  }
+    modelUpdate(model: any) {
+      this.acuerdoId= model.id;
+      this.model=model
+    console.log(model);
+    }
 
 }
 
@@ -49,7 +53,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
     public casoId: number = null;
     public hasAcuerdoInicio: boolean = false;
     public id: number = null;
-	@Output() idUpdate = new EventEmitter<any>();
+    @Output() modelUpdate=new EventEmitter<any>();
     public form: FormGroup;
     public model: AcuerdoInicio;
     dataSource: TableService | null;
@@ -86,13 +90,13 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
 				          	this.hasAcuerdoInicio = true;
                     this.form.disable();
                     this.fillForm(response.data[0]);
-                    this.idUpdate.emit({id: (response.data[0]).id});
+                    this.modelUpdate.emit(response.data[0]);
 
 			         	}
                 if(params['id']){
 					      this.id=params['id'];
-				        this.idUpdate.emit({id: this.id});
-                    this.hasAcuerdoInicio = true;
+                this.modelUpdate.emit(response.data[0]);
+                this.hasAcuerdoInicio = true;
                     this.form.disable();
                     this.fillForm(response.data[0]);
                 }
@@ -158,22 +162,17 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
 })
 export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
 
-    displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
-    data: DocumentoAcuerdoInicio[] = [
-        { id: 1, nombre: 'Entrevista.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-        { id: 2, nombre: 'Nota.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-        { id: 3, nombre: 'Fase.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-        { id: 4, nombre: 'Entrevista1.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-        { id: 5, nombre: 'Fase1.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-    ];
+  @Input() id:number=null;
+  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  @Input()
+  object: any;
+	dataSource: TableDataSource | null;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  public data: DocumentoAcuerdoInicio[] = [];
+  public subject:BehaviorSubject<DocumentoAcuerdoInicio[]> = new BehaviorSubject<DocumentoAcuerdoInicio[]>([]);
+  public source:TableDataSource = new TableDataSource(this.subject);
 
-
-    @Input() id:boolean=false;
-
-    dataSource: TableService | null;
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-
-    constructor(
+  constructor(
       public http: HttpService,
       public confirmationService:ConfirmationService,
       public globalService:GlobalService
@@ -181,9 +180,23 @@ export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
       super(http, confirmationService, globalService);
   }
 
-    ngOnInit() {
-        this.dataSource = new TableService(this.paginator, this.data);
-    }
+  ngOnInit() {
+    console.log('-> Object ', this.object);
+      if(this.object.documentos){
+          this.dataSource = this.source;
+          for (let object of this.object.documentos) {
+              this.data.push(object);
+              this.subject.next(this.data);
+          }
+
+      }
+  }
+
+public setData(_object){
+    console.log('setData()');
+    this.data.push(_object);
+    this.subject.next(this.data);
+}
 }
 
 export class DocumentoAcuerdoInicio {
