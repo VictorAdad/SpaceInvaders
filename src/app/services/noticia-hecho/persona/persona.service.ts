@@ -8,6 +8,8 @@ import { MatrizLabioOjo } from './media-filacion/labio-ojo';
 import { MatrizCabello } from './media-filacion/cabello';
 import { MatrizIdiomaIdentificacion } from './idioma-identificacion';
 import { MatrizNacionalidadReligion } from './nacionalidad-religion';
+import { MatrizTipoDetenido } from './tipo-detenido';
+
 import { CIndexedDB } from '@services/indexedDB';
 
 @Injectable()
@@ -23,6 +25,8 @@ export class PersonaService {
     public nacionalidadReligion: MatrizNacionalidadReligion;
     public idiomaIdentificacion: MatrizIdiomaIdentificacion;
 
+    public tipoDetenido: MatrizTipoDetenido;
+
     constructor(
         private db: CIndexedDB
 
@@ -37,6 +41,7 @@ export class PersonaService {
         this.cabello = new MatrizCabello(db);
         this.nacionalidadReligion= new MatrizNacionalidadReligion(db);
         this.idiomaIdentificacion= new MatrizIdiomaIdentificacion(db);
+        this.tipoDetenido = new MatrizTipoDetenido(db)
     }
     
 }
