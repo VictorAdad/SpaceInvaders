@@ -16,7 +16,9 @@ import { SelectsService} from '@services/selects.service';
 import { Observable } from 'rxjs/Observable';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { GlobalService } from "@services/global.service";
-
+import { DataSource } from '@angular/cdk/collections';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { TableDataSource } from './../../../global.component';
 
 
 @Component({
@@ -224,7 +226,6 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
 export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
 
     displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
-    data = [];
     @Input() tipo:string=null;
     @Input() id:number=null;
     tipo_options={
@@ -232,24 +233,38 @@ export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
       'Asignación de asesor jurídico':[{'label':'SOLICITUD DE ASESOR JURIDICO','value':'F1_002'}],
       'Ayuda y atención a víctimas':[{'label':'OFICIO PARA AYUDA Y ATENCIÓN A VÍCTIMA','value':'F1_001'}]
     }
-
-
-    dataSource: TableService | null;
+    @Input()
+    object: any;
+    dataSource: TableDataSource | null;
     @ViewChild(MatPaginator) paginator: MatPaginator;
-    @Input() object: any;
+    public data: DocumentoAcuerdoGeneral[] = [];
+    public subject:BehaviorSubject<DocumentoAcuerdoGeneral[]> = new BehaviorSubject<DocumentoAcuerdoGeneral[]>([]);
+    public source:TableDataSource = new TableDataSource(this.subject);
+
     constructor(
-      public http: HttpService,
-      public confirmationService:ConfirmationService,
-      public globalService:GlobalService
-      ){
-      super(http, confirmationService, globalService);
-  }
+        public http: HttpService,
+        public confirmationService:ConfirmationService,
+        public globalService:GlobalService
+        ){
+        super(http, confirmationService, globalService);
+    }
 
     ngOnInit() {
       console.log('-> Object ', this.object);
-      if(this.object.documentos)
-      this.data = this.object.documentos;
-      this.dataSource = new TableService(this.paginator, this.data);
+        if(this.object.documentos){
+            this.dataSource = this.source;
+            for (let object of this.object.documentos) {
+                this.data.push(object);
+                this.subject.next(this.data);
+            }
+
+        }
+    }
+
+  public setData(_object){
+      console.log('setData()');
+      this.data.push(_object);
+      this.subject.next(this.data);
   }
 }
 
