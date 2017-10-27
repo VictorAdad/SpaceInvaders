@@ -12,6 +12,10 @@ import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { GlobalService } from "@services/global.service";
+import { DataSource } from '@angular/cdk/collections';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { TableDataSource } from './../../../global.component';
 
 @Component({
 	templateUrl: './component.html',
@@ -19,7 +23,9 @@ import { GlobalService } from "@services/global.service";
 export class ArchivoTemporalCreateComponent {
 	public breadcrumb = [];
 	public casoId: number = null;
-    public archivoId: number = null;
+  public archivoId: number = null;
+  public model:any=null;
+
 	constructor(private route: ActivatedRoute) { }
 	ngOnInit() {
 		this.route.params.subscribe(params => {
@@ -30,9 +36,10 @@ export class ArchivoTemporalCreateComponent {
 			}
 		});
 	}
-  idUpdate(event: any) {
-    this.archivoId = event.id;
-	console.log(event.id);
+  modelUpdate(model: any) {
+    this.archivoId= model.id;
+    this.model=model
+  console.log(model);
   }
 }
 
@@ -44,7 +51,7 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 	public apiUrl: string = "/v1/base/archivos-temporales";
 	public casoId: number = null;
 	public id: number = null;
-	@Output() idUpdate = new EventEmitter<any>();
+  @Output() modelUpdate=new EventEmitter<any>();
 	public form: FormGroup;
 	public model: ArchivoTemporal;
 	dataSource: TableService | null;
@@ -70,11 +77,11 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 				this.casoId = +params['casoId'];
 			if (params['id']) {
 				this.id = +params['id'];
-				this.idUpdate.emit({id: this.id});
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 					console.log(response.data),
-						this.fillForm(response);
-				});
+            this.fillForm(response);
+            this.modelUpdate.emit(response);
+          });
 			}
 		});
 	}
@@ -132,19 +139,16 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 })
 export class DocumentoArchivoTemporalComponent extends FormatosGlobal{
 
-  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+
   @Input() id:number=null;
-
-	data: DocumentoArchivoTemporal[] = [
-		{ id: 1, nombre: 'Entrevista.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-		{ id: 2, nombre: 'Nota.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-		{ id: 3, nombre: 'Fase.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-		{ id: 4, nombre: 'Entrevista1.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-		{ id: 5, nombre: 'Fase1.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-	];
-
-  dataSource: TableService | null;
+  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  @Input()
+  object: any;
+	dataSource: TableDataSource | null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  public data: DocumentoArchivoTemporal[] = [];
+  public subject:BehaviorSubject<DocumentoArchivoTemporal[]> = new BehaviorSubject<DocumentoArchivoTemporal[]>([]);
+  public source:TableDataSource = new TableDataSource(this.subject);
 
   constructor(
       public http: HttpService,
@@ -155,8 +159,22 @@ export class DocumentoArchivoTemporalComponent extends FormatosGlobal{
   }
 
   ngOnInit() {
-      this.dataSource = new TableService(this.paginator, this.data);
+    console.log('-> Object ', this.object);
+      if(this.object.documentos){
+          this.dataSource = this.source;
+          for (let object of this.object.documentos) {
+              this.data.push(object);
+              this.subject.next(this.data);
+          }
+
+      }
   }
+
+public setData(_object){
+    console.log('setData()');
+    this.data.push(_object);
+    this.subject.next(this.data);
+}
 }
 
 export interface DocumentoArchivoTemporal {

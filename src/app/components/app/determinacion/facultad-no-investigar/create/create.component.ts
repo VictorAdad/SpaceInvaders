@@ -12,6 +12,10 @@ import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { GlobalService } from "@services/global.service";
+import { DataSource } from '@angular/cdk/collections';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { TableDataSource } from './../../../global.component';
 
 @Component({
     templateUrl: './create.component.html',
@@ -21,6 +25,8 @@ export class FacultadNoInvestigarCreateComponent {
     public breadcrumb = [];
     constructor(private route: ActivatedRoute) { }
     public determinacionId: number = null;
+    public model:any=null;
+
 
     ngOnInit() {
         this.route.params.subscribe(params => {
@@ -32,10 +38,11 @@ export class FacultadNoInvestigarCreateComponent {
 
         });
     }
-  idUpdate(event: any) {
-    this.determinacionId = event.id;
-	console.log(event.id);
-  }
+    modelUpdate(model: any) {
+      this.determinacionId= model.id;
+      this.model=model
+    console.log(model);
+    }
 }
 
 @Component({
@@ -46,7 +53,7 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
     public apiUrl = '/v1/base/facultades-no-investigar';
     public casoId: number = null;
     public id: number = null;
-	@Output() idUpdate = new EventEmitter<any>();
+    @Output() modelUpdate=new EventEmitter<any>();
     public form: FormGroup;
     public model: FacultadNoInvestigar;
     dataSource: TableService | null;
@@ -82,10 +89,11 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
                 this.casoId = +params['casoId'];
             if (params['id']) {
                 this.id = +params['id'];
-				this.idUpdate.emit({id: this.id});
                 this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
                     console.log(response.data),
                         this.fillForm(response);
+                        this.modelUpdate.emit(response);
+
                 });
             }
         });
@@ -146,20 +154,18 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
 
 export class DocumentoFacultadNoInvestigarComponent extends FormatosGlobal{
 
-    @Input() id:number=null;
-    displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
-    data: DocumentoFacultadNoInvestigar[] = [
-        { id: 1, nombre: 'Entrevista.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-        { id: 2, nombre: 'Nota.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-        { id: 3, nombre: 'Fase.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-        { id: 4, nombre: 'Entrevista1.pdf', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-        { id: 5, nombre: 'Fase1.png', procedimiento: 'N/A', fechaCreacion: '07/09/2017' },
-    ];
 
-    dataSource: TableService | null;
-    @ViewChild(MatPaginator) paginator: MatPaginator;
+  @Input() id:number=null;
+  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  @Input()
+  object: any;
+	dataSource: TableDataSource | null;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  public data: DocumentoFacultadNoInvestigar[] = [];
+  public subject:BehaviorSubject<DocumentoFacultadNoInvestigar[]> = new BehaviorSubject<DocumentoFacultadNoInvestigar[]>([]);
+  public source:TableDataSource = new TableDataSource(this.subject);
 
-    constructor(
+  constructor(
       public http: HttpService,
       public confirmationService:ConfirmationService,
       public globalService:GlobalService
@@ -167,9 +173,23 @@ export class DocumentoFacultadNoInvestigarComponent extends FormatosGlobal{
       super(http, confirmationService, globalService);
   }
 
-    ngOnInit() {
-        this.dataSource = new TableService(this.paginator, this.data);
-    }
+  ngOnInit() {
+    console.log('-> Object ', this.object);
+      if(this.object.documentos){
+          this.dataSource = this.source;
+          for (let object of this.object.documentos) {
+              this.data.push(object);
+              this.subject.next(this.data);
+          }
+
+      }
+  }
+
+public setData(_object){
+    console.log('setData()');
+    this.data.push(_object);
+    this.subject.next(this.data);
+}
 }
 
 export class DocumentoFacultadNoInvestigar {
