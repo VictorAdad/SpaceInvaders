@@ -15,8 +15,8 @@
 <div class="row">
 	<div class="col-md-12">
 		<mat-tab-group>
-			<mat-tab label="Acuerdo"><acuerdo-radicacion (idUpdate)="idUpdate($event)"></acuerdo-radicacion></mat-tab>
-			<mat-tab label="Documentos" *ngIf="acuerdoId!=null"><documento-acuerdo-radicacion [id]="acuerdoId"></documento-acuerdo-radicacion></mat-tab>
+			<mat-tab label="Acuerdo"><acuerdo-radicacion (modelUpdate)="modelUpdate($event)"></acuerdo-radicacion></mat-tab>
+			<mat-tab label="Documentos" *ngIf="acuerdoId!=null"><documento-acuerdo-radicacion [id]="acuerdoId" [object]="model"></documento-acuerdo-radicacion></mat-tab>
 		</mat-tab-group>
 	</div>
 </div>
