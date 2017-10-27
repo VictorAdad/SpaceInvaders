@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CasoService } from '@services/caso.service';
 import { HttpService} from '@services/http.service';
 
 @Component({
@@ -28,7 +27,7 @@ export class CasoNicComponent implements OnInit{
 	}
 
 	public getCaso(_id){
-        console.log('CasoService@getCaso')
+        console.log('CasoComponent@getCaso')
 		this.http.get('/v1/base/casos/'+this.id).subscribe(
 			response => {
 				console.log('Caso', response);
