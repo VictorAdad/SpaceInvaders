@@ -55,7 +55,7 @@ export class FormatosGlobal{
                 let url = window.URL.createObjectURL(response);
                 document.body.appendChild(an);
                 an.href = url;
-                an.download = 'documento.pdf';
+                an.download = _object.nameEcm+'.pdf';
                 an.click();
                 // window.location.assign(url);
             }
