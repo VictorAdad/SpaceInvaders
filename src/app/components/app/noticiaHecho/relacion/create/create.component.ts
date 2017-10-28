@@ -273,10 +273,6 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 this.http.put('/v1/base/detalle-delitos/'+_model.id, _model).subscribe((response) => {
                     console.log('-> Registro acutualizado', response);
                     resolve("Se actualizó la relación con éxito");
-<<<<<<< HEAD
-
-=======
->>>>>>> cc8ae82ba7bda2e5b04002ab47f7a1cc7bb250f2
                 });
             }else{
                 let dato={
