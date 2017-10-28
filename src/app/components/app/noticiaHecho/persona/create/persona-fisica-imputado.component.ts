@@ -133,9 +133,22 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
       return 0;
     }
 
+    eliminaNulos(x){
+                if (typeof x == "object"){
+                    for(let i in x){
+                        if (x[i]==null || typeof x[i] =="undefined"){
+                            delete x[i];
+                        }
+                        if (typeof x[i]=="object")
+                            this.eliminaNulos(x[i]);
+                    }
+                }
+            }
+
 
     public fillPersonaCaso(_personaCaso){
         let pcaso = this.globals.form.get('personaCaso') as FormArray;
+        this.eliminaNulos(_personaCaso);
         pcaso.controls[0].patchValue(_personaCaso);
         this.globals.tipoInterviniente=""+_personaCaso["tipoInterviniente"].id;
 
