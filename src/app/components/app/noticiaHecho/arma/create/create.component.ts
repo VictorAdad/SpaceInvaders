@@ -220,8 +220,11 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
     }
     public fillForm(_data){
         this.form.patchValue(_data)
-        let timer = Observable.timer(1);    
-       timer.subscribe(t => {
+        let timer = Observable.timer(1);
+        this.form.patchValue({
+            'clase': _data.claseArma.claseArma
+        });    
+        timer.subscribe(t => {
             this.form.patchValue({
             'tipo': _data.claseArma.tipo,
             'subtipo': _data.claseArma.subtipo,
