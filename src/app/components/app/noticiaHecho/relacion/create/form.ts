@@ -50,7 +50,7 @@ export class Form {
             }),
             'modalidadDelito': new FormGroup({
                 'id': new FormControl('', [Validators.required]),
-            }),  
+            }),
             'violenciaGenero': new FormGroup({
                 'id': new FormControl("",[]),
             }),
@@ -83,14 +83,14 @@ export class Form {
                 ]),
                 'armaTipoRelacionPersona': new FormArray([
                     new FormGroup({
-                        'lugar': new FormGroup({
+                        'arma': new FormGroup({
                             'id': new FormControl(''),
                         })
                     })
                 ]),
                 'vehiculoTipoRelacionPersona': new FormArray([
                     new FormGroup({
-                        'lugar': new FormGroup({
+                        'vehiculo': new FormGroup({
                             'id': new FormControl(''),
                         })
                     })

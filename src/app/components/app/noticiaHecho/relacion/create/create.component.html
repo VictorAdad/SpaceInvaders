@@ -49,7 +49,7 @@
                         name="id"
                         *ngIf="isImputadoVictimaDelito"
                         [(options)]="optionsNoticia.armas"
-                        [group]="form.controls.tipoRelacionPersona.controls.armaTipoRelacionPersona.controls[0].controls.lugar">
+                        [group]="form.controls.tipoRelacionPersona.controls.armaTipoRelacionPersona.controls[0].controls.arma">
 
                     </select2>
                 </div>
@@ -58,7 +58,7 @@
                         name="id"
                         *ngIf="isImputadoVictimaDelito"
                         [(options)]="optionsNoticia.vehiculos"
-                        [group]="form.controls.tipoRelacionPersona.controls.vehiculoTipoRelacionPersona.controls[0].controls.lugar">
+                        [group]="form.controls.tipoRelacionPersona.controls.vehiculoTipoRelacionPersona.controls[0].controls.vehiculo">
 
                     </select2>
                 </div>
@@ -429,7 +429,7 @@
                     <div class="row">
                         <div class="col">
                         <button class="float-right m-1" color="accent" mat-raised-button (click)="formRelacion.trataPersonasForm.reset()">Limpiar</button>
-                        <button class="float-right m-1" 
+                        <button class="float-right m-1"
                             mat-raised-button color="accent"
                             (click)="addTrataPersonas(formRelacion.trataPersonasForm.value)">
                             Agregar

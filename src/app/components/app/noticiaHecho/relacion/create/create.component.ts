@@ -272,6 +272,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             if(this.onLine.onLine){
                 this.http.put('/v1/base/detalle-delitos/'+_model.id, _model).subscribe((response) => {
                     console.log('-> Registro acutualizado', response);
+                    resolve("Se actualizó la relación con éxito");
+
                 });
             }else{
                 let dato={
@@ -305,11 +307,13 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 tipo: _data.tipo,
             }
         });
+        console.log('tipo persona->',this.form.controls.tipoRelacionPersona);
         let timer = Observable.timer(1);
         let timer2 = Observable.timer(1);
         timer.subscribe(t => {
-            console.log('Fill Detalle Delito');
-            this.form.patchValue({
+
+
+           this.form.patchValue({
                 tipoRelacionPersona: {
                     personaCaso: {
                         id: _data.personaCaso.id,
@@ -317,8 +321,26 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                     personaCasoRelacionada: {
                         id: _data.personaCasoRelacionada.id
                     }
+
                 }
             });
+
+            let tipoPersonaFormGroup:FormGroup=this.form.controls.tipoRelacionPersona as FormGroup;
+
+            let lugarFormArray:FormArray =tipoPersonaFormGroup.controls.lugarTipoRelacionPersona as FormArray;
+            let lugarFormGroup:FormGroup = lugarFormArray.controls[0] as FormGroup;
+            lugarFormGroup.patchValue({lugar: {id:_data.lugarTipoRelacionPersona[0].lugar.id,}});
+
+            let armasFormArray:FormArray =tipoPersonaFormGroup.controls.armaTipoRelacionPersona as FormArray;
+            let armasFormGroup:FormGroup = armasFormArray.controls[0] as FormGroup;
+            armasFormGroup.patchValue({arma: {id:_data.armaTipoRelacionPersona[0]?_data.armaTipoRelacionPersona[0].arma.id:null,}});
+
+            let vehiculoFormArray:FormArray =tipoPersonaFormGroup.controls.vehiculoTipoRelacionPersona as FormArray;
+            let vehiculoFormGroup:FormGroup = vehiculoFormArray.controls[0] as FormGroup;
+            vehiculoFormGroup.patchValue({vehiculo: {id:_data.vehiculoTipoRelacionPersona[0]?_data.vehiculoTipoRelacionPersona[0].vehiculo.id:null,}});
+
+            console.log('Fill Detalle Delito');
+
             for (var propName in _data.detalleDelito) {
                 if (_data.detalleDelito[propName] === null || _data.detalleDelito[propName] === undefined)
                     delete _data.detalleDelito[propName];
