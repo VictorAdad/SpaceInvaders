@@ -71,13 +71,13 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
     ngOnInit() {
         this.model = new FacultadNoInvestigar();
         this.form = new FormGroup({
-            'observaciones': new FormControl(this.model.observaciones),
-            'sintesisHechos': new FormControl(this.model.sintesisHechos),
-            'datosPrueba': new FormControl(this.model.datosPrueba),
-            'motivosAbstuvoInvestigar': new FormControl(this.model.motivosAbstuvoInvestigar),
-            'medioAlternativoSolucion': new FormControl(this.model.medioAlternativoSolucion),
-            'destinatarioDeterminacion': new FormControl(this.model.destinatarioDeterminacion),
-            'superiorJerarquico': new FormControl(this.model.superiorJerarquico),
+            'observaciones': new FormControl(),
+            'sintesisHechos': new FormControl(),
+            'datosPrueba': new FormControl(),
+            'motivosAbstuvoInvestigar': new FormControl(''),
+            'medioAlternativoSolucion': new FormControl(''),
+            'destinatarioDeterminacion': new FormControl(''),
+            'superiorJerarquico': new FormControl(''),
             'nombreDenunciante': new FormControl(''),
             'originarioDenunciante': new FormControl(''),
             'edadDenunciante': new FormControl(''),
@@ -90,7 +90,7 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
             if (params['id']) {
                 this.id = +params['id'];
                 this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-                    console.log(response.data),
+                        console.log('response',response),
                         this.fillForm(response);
                         this.modelUpdate.emit(response);
 
@@ -108,8 +108,8 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
             (resolve, reject) => {
                 this.http.post(this.apiUrl, this.model).subscribe(
                     (response) => {
-                        console.log(response);
-        				this.id= response.id;
+                      console.log('registro guardado',response);
+        				       this.id= response.id;
                         if (this.casoId!=null) {
                             this.router.navigate(['/caso/' + this.casoId + '/facultad-no-investigar/'+this.id+'/edit']);
                         }
