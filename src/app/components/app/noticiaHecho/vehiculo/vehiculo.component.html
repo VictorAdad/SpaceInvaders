@@ -17,17 +17,17 @@
 
     <ng-container matColumnDef="tipo">
         <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.campoVehiculo}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element?.tipoUsoTipoVehiculo?.tipoVehiculo}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="marca">
         <mat-header-cell *matHeaderCellDef> Marca </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.marca}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element?.marcaSubmarca?.marca}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="color">
         <mat-header-cell *matHeaderCellDef> Color </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.color}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element?.motivoRegistroColorClase?.color}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="modelo">
