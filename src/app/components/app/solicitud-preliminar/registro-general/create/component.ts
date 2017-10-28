@@ -72,7 +72,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 		this.model = new RegistroGeneral();
 
 		this.form = new FormGroup({
-			'constancia': new FormControl(''),
+			'contenidoConstancia': new FormControl(''),
 			'noTelefonico': new FormControl(''),
 			'atencionLlamada': new FormControl(''),
 			'observaciones': new FormControl('')
@@ -86,7 +86,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 				this.id = +params['id'];
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-          console.log(response.data),
+          console.log('registro',response);
           this.modelUpdate.emit(response);
             this.fillForm(response);
 
@@ -106,6 +106,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 				this.http.post(this.apiUrl, this.model).subscribe(
 
 					(response) => {
+            console.log('registro guardado->',response);
 						if(this.casoId!=null){
 							this.id=response.id;
 							this.router.navigate(['/caso/' + this.casoId + '/registro-general']);
