@@ -20,7 +20,7 @@ export class EntrevistaComponent {
 	@ViewChild(MatPaginator) 
     paginator: MatPaginator;
     public breadcrumb = [];
-    public apiUrl="/v1/base/entrevistas";//cambiar esta URL cuando este el servicio por caso
+    public apiUrl= '';//cambiar esta URL cuando este el servicio por caso
     public pag: number = 0;
     
 
@@ -32,6 +32,7 @@ export class EntrevistaComponent {
             	this.haveCaso=true;
                 this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
+                this.apiUrl=`/v1/base/entrevistas/casos/${this.casoId}/page`;
                 this.page(this.apiUrl);                
             }
             else{
