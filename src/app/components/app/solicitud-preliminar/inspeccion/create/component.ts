@@ -102,9 +102,10 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
             console.log('-> Inspeccion@save()', this.model);
 
             var fechaCompleta = new Date (this.model.fechaHoraInspeccion);
-            fechaCompleta.setMinutes(parseInt(this.model['horaInspeccion'].split(':')[1]));
+            if(this.model['horaInspeccion'])
+            {fechaCompleta.setMinutes(parseInt(this.model['horaInspeccion'].split(':')[1]));
             fechaCompleta.setHours(parseInt(this.model['horaInspeccion'].split(':')[0]));
-            console.log();
+             }
             var mes:number=fechaCompleta.getMonth()+1;
             this.model.fechaHoraInspeccion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
             console.log('lo que envio: '+  this.model.fechaHoraInspeccion);
@@ -115,7 +116,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
 
                     (response) => {
                         //console.log(response);
-                        //console.log('lo que recibo: '+ new Date(response.fechaHoraInspeccion));
+                      //console.log('lo que recibo: '+ new Date(response.fechaHoraInspeccion));
                       if(this.casoId!=null){
     					this.id=response.id;
                         this.router.navigate(['/caso/'+this.casoId+'/inspeccion/'+this.casoId+'/edit' ]);

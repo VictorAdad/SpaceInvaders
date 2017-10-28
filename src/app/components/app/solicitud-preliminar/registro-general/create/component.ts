@@ -72,10 +72,10 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 		this.model = new RegistroGeneral();
 
 		this.form = new FormGroup({
-			'constancia': new FormControl(this.model.constancia),
-			'noTelefonico': new FormControl(this.model.noTelefonico),
-			'atencionLlamada': new FormControl(this.model.atencionLlamada),
-			'observaciones': new FormControl(this.model.observaciones)
+			'constancia': new FormControl(''),
+			'noTelefonico': new FormControl(''),
+			'atencionLlamada': new FormControl(''),
+			'observaciones': new FormControl('')
 		});
 
 		this.route.params.subscribe(params => {
@@ -108,7 +108,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 					(response) => {
 						if(this.casoId!=null){
 							this.id=response.id;
-							this.router.navigate(['/caso/' + this.casoId + '/registro-general/'+this.id+'/edit']);
+							this.router.navigate(['/caso/' + this.casoId + '/registro-general']);
 						}
 						resolve('Solicitud de registro general creada con éxito');
 					},
@@ -123,7 +123,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 	}
 
 	public edit(_valid: any, _model: any) {
-		console.log('-> Policia@edit()', _model);
+		console.log('-> RegistroGeneral@edit()', _model);
 		return new Promise<any>(
             (resolve, reject) => {
 				this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {

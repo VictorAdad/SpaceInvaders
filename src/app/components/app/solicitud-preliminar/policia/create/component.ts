@@ -105,9 +105,9 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 					(response) => {
 						if(this.casoId!=null){
 							this.id=response.id;
-							this.router.navigate(['/caso/' + this.casoId + '/policia/'+this.id+'/edit']);
+							this.router.navigate(['/caso/' + this.casoId + '/policia']);
 						}
-						resolve('Solitud de policía creada con éxito');
+						resolve('Solicitud de policía creada con éxito');
 					},
 					(error) => {
 						console.error('Error', error);

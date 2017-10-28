@@ -272,6 +272,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             if(this.onLine.onLine){
                 this.http.put('/v1/base/detalle-delitos/'+_model.id, _model).subscribe((response) => {
                     console.log('-> Registro acutualizado', response);
+                    resolve("Se actualizó la relación con éxito");
                 });
             }else{
                 let dato={
@@ -292,6 +293,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                             }
                         }
                         console.log("caso",t);
+                        resolve("Se actualizó la relación de manera local");
                     });
                 });
             }

@@ -104,7 +104,9 @@ export class NoticiaHechoService {
         let options: MOption[] = [];
 
         _data.forEach(object => {
-            options.push({value: object.id, label: object.modelo});
+            let marca = object.marca != null  ? object.marca  : '';
+            let color = object.color != null  ? object.color  : '';
+            options.push({value: object.id, label: marca+" "+color});
         });
 
         return options;
@@ -112,9 +114,11 @@ export class NoticiaHechoService {
 
     private constructOptionsArma(_data:any){
         let options: MOption[] = [];
-
+        
         _data.forEach(object => {
-            options.push({value: object.id, label: object.claseArma != null  ? object.claseArma.claseArma  : ''});
+            let clase = object.claseArma != null  ? object.claseArma.claseArma  : '';
+            let tipo = object.claseArma != null  ? object.claseArma.tipo  : '';
+            options.push({value: object.id, label: clase+" "+tipo});
         });
 
         return options;

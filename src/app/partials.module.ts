@@ -10,6 +10,7 @@ import { BreadcrumbComponent } from '@partials/breadcrumb/breadcrumb.component';
 import { TimeComponent } from '@partials/form/time/time.component';
 import { PasswordComponent } from '@partials/form/password/component';
 import { LoaderComponent } from '@partials/loader/component';
+import { CasoNicComponent } from '@partials/caso/component';
 
 
 @NgModule()
@@ -27,4 +28,5 @@ export const partialsComponents = [
 	TimeComponent,
 	PasswordComponent,
 	LoaderComponent,
+	CasoNicComponent
 ];

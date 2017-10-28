@@ -15,8 +15,8 @@
 <div class="row">
 	<div class="col-md-12">
 		<mat-tab-group>
-			<mat-tab label="Determinación"><determinacion-archivo-temporal (idUpdate)="idUpdate($event)"></determinacion-archivo-temporal></mat-tab>
-			<mat-tab label="Documentos" *ngIf="archivoId!=null"><documento-archivo-temporal [id]="archivoId"></documento-archivo-temporal></mat-tab>
+			<mat-tab label="Determinación"><determinacion-archivo-temporal (modelUpdate)="modelUpdate($event)"></determinacion-archivo-temporal></mat-tab>
+			<mat-tab label="Documentos" *ngIf="archivoId!=null"><documento-archivo-temporal [id]="archivoId" [object]="model"></documento-archivo-temporal></mat-tab>
 		</mat-tab-group>
 	</div>
 </div>
