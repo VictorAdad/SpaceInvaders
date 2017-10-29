@@ -110,7 +110,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
             console.log('registro guardado->',response);
 						if(this.casoId!=null){
 							this.id=response.id;
-							this.router.navigate(['/caso/' + this.casoId + '/registro-general']);
+							this.router.navigate(['/caso/' + this.casoId + '/registro-general/' + this.id + '/edit']);
 						}
 						resolve('Solicitud de registro general creada con éxito');
 					},

@@ -60,6 +60,7 @@ export class PeritoCreateComponent {
 export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 
 	public apiUrl: string = "/v1/base/solicitudes-pre-pericial";
+	public apiUrlPre : string = "/v1/base/predenuncias/casos/"
 	public casoId: number = null;
 	public id: number = null;
   @Output() modelUpdate = new EventEmitter<any>();
@@ -95,6 +96,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 				this.id = +params['id'];
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
+          			delete response.hechosNarrados;
           			this.fillForm(response);
 					this.isPericiales = this.form.controls.tipo.value === 'Periciales';
 					this.isPsicofisico = this.form.controls.tipo.value === 'Psicofísico';
@@ -104,6 +106,11 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 
         		});
 			}
+		});
+		this.http.get(this.apiUrlPre+this.casoId+'/page').subscribe(response => {
+			this.form.patchValue({
+				hechosNarrados : response.data[0].hechosNarrados
+			});
 		});
 	}
 
@@ -140,7 +147,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 					(response) => {
 						if(this.casoId!=null){
 							this.id=response.id;
-							this.router.navigate(['/caso/' + this.casoId + '/perito']);
+							this.router.navigate(['/caso/' + this.casoId + '/perito/' + this.id + '/edit']);
 						}
 						resolve('Solicitud pericial creada con éxito');
 					},
@@ -189,9 +196,16 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	tipoChange(_tipo): void {
 		this.isPericiales = _tipo === 'Periciales';
 		this.isPsicofisico = _tipo === 'Psicofísico';
-		console.log('P ---------->', this.isPericiales);
-	}
 
+		let timer = Observable.timer(1);
+		timer.subscribe(t => {
+			this.http.get(this.apiUrlPre+this.casoId+'/page').subscribe(response => {
+				this.form.patchValue({
+					hechosNarrados : response.data[0].hechosNarrados
+				});
+			});
+		})
+	}
 }
 
 @Component({

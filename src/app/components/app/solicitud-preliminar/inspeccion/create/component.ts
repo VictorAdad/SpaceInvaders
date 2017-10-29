@@ -121,7 +121,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
                       //console.log('lo que recibo: '+ new Date(response.fechaHoraInspeccion));
                       if(this.casoId!=null){
     					this.id=response.id;
-                        this.router.navigate(['/caso/'+this.casoId+'/inspeccion/'+this.casoId+'/edit' ]);
+                        this.router.navigate(['/caso/'+this.casoId+'/inspeccion/'+this.id+'/edit' ]);
                       }
                       else {
                         this.router.navigate(['/inspecciones/'+this.casoId+'/edit' ]);
