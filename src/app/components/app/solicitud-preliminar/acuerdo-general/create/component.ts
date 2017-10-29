@@ -2,6 +2,7 @@ import { Caso } from './../../../../../models/personaCaso';
 import { DenunciaQuerella, VictimaQuerellante } from './../../../../../models/solicitud-preliminar/acuerdoGeneral';
 import { Component, ViewChild , Output,Input, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
@@ -245,13 +246,14 @@ export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
     constructor(
         public http: HttpService,
         public confirmationService:ConfirmationService,
-        public globalService:GlobalService
+        public globalService:GlobalService,
+        public dialog: MatDialog
         ){
-        super(http, confirmationService, globalService);
+        super(http, confirmationService, globalService, dialog);
     }
 
     ngOnInit() {
-      console.log('-> Object ', this.object);
+        console.log('-> Object ', this.object);
         if(this.object.documentos){
             this.dataSource = this.source;
             for (let object of this.object.documentos) {
