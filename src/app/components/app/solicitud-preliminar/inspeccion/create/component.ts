@@ -1,6 +1,7 @@
 import { FormatosGlobal } from './../../formatos';
 import { Component, ViewChild,EventEmitter,Output,Input} from '@angular/core';
 import { MatPaginator } from '@angular/material';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
@@ -90,6 +91,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
                         response.horaInspeccion=horas+':'+minutos;
                         this.modelUpdate.emit(response);
                         this.fillForm(response);
+                        this.form.disable();
                     });
             }
         });
@@ -119,7 +121,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
                       //console.log('lo que recibo: '+ new Date(response.fechaHoraInspeccion));
                       if(this.casoId!=null){
     					this.id=response.id;
-                        this.router.navigate(['/caso/'+this.casoId+'/inspeccion/'+this.casoId+'/edit' ]);
+                        this.router.navigate(['/caso/'+this.casoId+'/inspeccion/'+this.id+'/edit' ]);
                       }
                       else {
                         this.router.navigate(['/inspecciones/'+this.casoId+'/edit' ]);
@@ -174,7 +176,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
 })
 export class DocumentoInspeccionComponent extends FormatosGlobal{
 
-	displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+	displayedColumns = ['nombre', 'fechaCreacion'];
 	data=[];
   dataSource: TableService | null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -184,10 +186,24 @@ export class DocumentoInspeccionComponent extends FormatosGlobal{
   constructor(
       public http: HttpService,
       public confirmationService:ConfirmationService,
-      public globalService:GlobalService
+      public globalService:GlobalService,
+      public dialog: MatDialog
       ){
-      super(http, confirmationService, globalService);
+      super(http, confirmationService, globalService, dialog);
   }
+
+  // public cargaArchivos(_archivos){
+  //       for (let object of _archivos) {
+  //           let obj = {
+  //               'id': 0,
+  //               'nameEcm': object.some.name,
+  //               'created': new Date(),
+  //               'procedimiento': '',
+  //           }
+  //           this.data.push(obj);
+  //           this.subject.next(this.data);
+  //       } 
+  //   }
 
   ngOnInit() {
     console.log('-> Object ', this.object);
@@ -198,8 +214,8 @@ export class DocumentoInspeccionComponent extends FormatosGlobal{
 }
 
 export interface DocumentoInspeccion {
-	id:number
-	nombre: string;
-	procedimiento: string;
-	fechaCreacion: string;
+	id: number
+    nameEcm: string;
+    procedimiento: string;
+    created: Date;
 }
