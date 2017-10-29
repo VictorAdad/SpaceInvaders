@@ -63,7 +63,7 @@ export class AppComponent {
         localStorage.setItem("initDB","false");
         localStorage.setItem("sincronizacion","false");
         window.indexedDB.deleteDatabase("SIGI");
-        // location.reload(true);
-        window.location.assign("/")
+        location.reload(true);
+        // window.location.assign("../")
     }
 }
