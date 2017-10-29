@@ -3,7 +3,7 @@
 		<select2 placeholder= "Formatos" (valueChange)="changeFormat($event, id)"></select2>
 	</div>
 	<div class="col-md-auto">
-		<button mat-raised-button color="accent" >Adjuntar</button>
+		<button mat-raised-button color="accent" (click)="openDocDialog()">Adjuntar</button>
 	</div>
 	<div class="col-md-auto">
 		<button mat-raised-button color="accent" >Compartir</button>

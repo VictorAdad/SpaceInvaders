@@ -185,6 +185,19 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
       }
   }
 
+  public cargaArchivos(_archivos){
+        for (let object of _archivos) {
+        	let obj = {
+        		'id': 0,
+				'nameEcm': object.some.name,
+				'created': new Date(),
+				'procedimiento': '',
+			}
+			this.data.push(obj);
+			this.subject.next(this.data);
+        } 
+    }
+
 public setData(_object){
     console.log('setData()');
     this.data.push(_object);
@@ -194,7 +207,7 @@ public setData(_object){
 
 export interface DocumentoPolicia {
 	id: number
-	nombre: string;
+	nameEcm: string;
 	procedimiento: string;
-	fechaCreacion: string;
+	created: Date;
 }

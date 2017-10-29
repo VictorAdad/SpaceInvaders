@@ -192,6 +192,19 @@ export class DocumentoInspeccionComponent extends FormatosGlobal{
       super(http, confirmationService, globalService, dialog);
   }
 
+  // public cargaArchivos(_archivos){
+  //       for (let object of _archivos) {
+  //           let obj = {
+  //               'id': 0,
+  //               'nameEcm': object.some.name,
+  //               'created': new Date(),
+  //               'procedimiento': '',
+  //           }
+  //           this.data.push(obj);
+  //           this.subject.next(this.data);
+  //       } 
+  //   }
+
   ngOnInit() {
     console.log('-> Object ', this.object);
     if(this.object.documentos)
@@ -201,8 +214,8 @@ export class DocumentoInspeccionComponent extends FormatosGlobal{
 }
 
 export interface DocumentoInspeccion {
-	id:number
-	nombre: string;
-	procedimiento: string;
-	fechaCreacion: string;
+	id: number
+    nameEcm: string;
+    procedimiento: string;
+    created: Date;
 }
