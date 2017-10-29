@@ -154,7 +154,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 export class DocumentoPoliciaComponent extends FormatosGlobal{
 
   @Input() id:number=null;
-  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  displayedColumns = ['nombre', 'fechaCreacion'];
   @Input()
   object: any;
 	dataSource: TableDataSource | null;

@@ -175,7 +175,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
 })
 export class DocumentoInspeccionComponent extends FormatosGlobal{
 
-	displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+	displayedColumns = ['nombre', 'fechaCreacion'];
 	data=[];
   dataSource: TableService | null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
