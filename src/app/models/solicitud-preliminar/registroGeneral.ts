@@ -1,7 +1,7 @@
 export class RegistroGeneral {
     id: number;
     //Constancia general
-    constancia: string;
+    contenidoConstancia: string;
     //Constancia de llamada
     noTelefonico: string;
     atencionLlamada: string;
