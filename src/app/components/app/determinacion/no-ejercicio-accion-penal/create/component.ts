@@ -152,7 +152,7 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
 export class DocumentoNoEjercicioAccionPenalComponent extends FormatosGlobal {
 
   @Input() id:number=null;
-  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  displayedColumns = ['nombre', 'fechaCreacion'];
   @Input()
   object: any;
 	dataSource: TableDataSource | null;
