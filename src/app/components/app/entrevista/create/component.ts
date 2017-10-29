@@ -1,6 +1,7 @@
 import { FormatosGlobal } from './../../solicitud-preliminar/formatos';
 import { Component, ViewChild , Output,Input, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Entrevista } from '@models/entrevista/entrevista';
 import { OnLineService } from '@services/onLine.service';
@@ -231,12 +232,13 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
   public source:TableDataSource = new TableDataSource(this.subject);
 
   constructor(
-      public http: HttpService,
-      public confirmationService:ConfirmationService,
-      public globalService:GlobalService
-      ){
-      super(http, confirmationService, globalService);
-  }
+        public http: HttpService,
+        public confirmationService:ConfirmationService,
+        public globalService:GlobalService,
+        public dialog: MatDialog
+        ){
+        super(http, confirmationService, globalService, dialog);
+    }
 
   ngOnInit() {
     console.log('-> Object ', this.object);

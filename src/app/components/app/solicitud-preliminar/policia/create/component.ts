@@ -1,6 +1,7 @@
 import { FormatosGlobal } from './../../formatos';
 import { Component, ViewChild, Output, Input, EventEmitter} from '@angular/core';
 import { MatPaginator } from '@angular/material';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
@@ -84,9 +85,9 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 				  	console.log(response.data),
-            this.fillForm(response);
-            this.modelUpdate.emit(response);
-
+            		this.fillForm(response);
+					this.modelUpdate.emit(response);
+					this.form.disable();
 				});
 			}
 		});
@@ -105,7 +106,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 					(response) => {
 						if(this.casoId!=null){
 							this.id=response.id;
-							this.router.navigate(['/caso/' + this.casoId + '/policia']);
+							this.router.navigate(['/caso/' + this.casoId + '/policia/' + this.id + '/edit']);
 						}
 						resolve('Solicitud de policía creada con éxito');
 					},
@@ -154,7 +155,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 export class DocumentoPoliciaComponent extends FormatosGlobal{
 
   @Input() id:number=null;
-  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  displayedColumns = ['nombre', 'fechaCreacion'];
   @Input()
   object: any;
 	dataSource: TableDataSource | null;
@@ -166,9 +167,10 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
   constructor(
       public http: HttpService,
       public confirmationService:ConfirmationService,
-      public globalService:GlobalService
+      public globalService:GlobalService,
+      public dialog: MatDialog
       ){
-      super(http, confirmationService, globalService);
+      super(http, confirmationService, globalService, dialog);
   }
 
   ngOnInit() {
@@ -183,6 +185,19 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
       }
   }
 
+  public cargaArchivos(_archivos){
+        for (let object of _archivos) {
+        	let obj = {
+        		'id': 0,
+				'nameEcm': object.some.name,
+				'created': new Date(),
+				'procedimiento': '',
+			}
+			this.data.push(obj);
+			this.subject.next(this.data);
+        } 
+    }
+
 public setData(_object){
     console.log('setData()');
     this.data.push(_object);
@@ -192,7 +207,7 @@ public setData(_object){
 
 export interface DocumentoPolicia {
 	id: number
-	nombre: string;
+	nameEcm: string;
 	procedimiento: string;
-	fechaCreacion: string;
+	created: Date;
 }

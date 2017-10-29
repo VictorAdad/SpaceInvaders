@@ -5,7 +5,7 @@
   </div>
 
 	<div class="col-md-auto">
-		<button mat-raised-button color="accent" >Adjuntar</button>
+		<button mat-raised-button color="accent" (click)="openDocDialog()">Adjuntar</button>
 	</div>
 	<div class="col-md-auto">
 		<button mat-raised-button color="accent" >Compartir</button>
@@ -17,11 +17,6 @@
       <ng-container matColumnDef="nombre">
           <mat-header-cell *matHeaderCellDef> Nombre</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.nameEcm}} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="procedimiento">
-          <mat-header-cell *matHeaderCellDef> Procedimiento </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.procedimiento}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="fechaCreacion">

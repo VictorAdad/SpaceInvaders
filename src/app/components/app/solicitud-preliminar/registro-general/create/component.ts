@@ -1,6 +1,7 @@
 import { FormatosGlobal } from './../../formatos';
 import { Component, ViewChild , Output,Input, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
@@ -72,7 +73,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 		this.model = new RegistroGeneral();
 
 		this.form = new FormGroup({
-			'constancia': new FormControl(''),
+			'contenidoConstancia': new FormControl(''),
 			'noTelefonico': new FormControl(''),
 			'atencionLlamada': new FormControl(''),
 			'observaciones': new FormControl('')
@@ -86,10 +87,10 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 				this.id = +params['id'];
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-          console.log(response.data),
-          this.modelUpdate.emit(response);
-            this.fillForm(response);
-
+					console.log(response.data),
+					this.modelUpdate.emit(response);
+					this.fillForm(response);
+					this.form.disable();
 				});
 			}
 		});
@@ -106,9 +107,10 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 				this.http.post(this.apiUrl, this.model).subscribe(
 
 					(response) => {
+            console.log('registro guardado->',response);
 						if(this.casoId!=null){
 							this.id=response.id;
-							this.router.navigate(['/caso/' + this.casoId + '/registro-general']);
+							this.router.navigate(['/caso/' + this.casoId + '/registro-general/' + this.id + '/edit']);
 						}
 						resolve('Solicitud de registro general creada con éxito');
 					},
@@ -150,7 +152,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 })
 export class DocumentoRegistroGeneralComponent  extends FormatosGlobal{
   @Input() id:number=null;
-  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  displayedColumns = ['nombre', 'fechaCreacion'];
   @Input()
   object: any;
 	dataSource: TableDataSource | null;
@@ -162,9 +164,10 @@ export class DocumentoRegistroGeneralComponent  extends FormatosGlobal{
   constructor(
       public http: HttpService,
       public confirmationService:ConfirmationService,
-      public globalService:GlobalService
+      public globalService:GlobalService,
+      public dialog: MatDialog
       ){
-      super(http, confirmationService, globalService);
+      super(http, confirmationService, globalService, dialog);
   }
 
   ngOnInit() {
@@ -179,6 +182,19 @@ export class DocumentoRegistroGeneralComponent  extends FormatosGlobal{
       }
   }
 
+  public cargaArchivos(_archivos){
+        for (let object of _archivos) {
+        	let obj = {
+        		'id': 0,
+				'nameEcm': object.some.name,
+				'created': new Date(),
+				'procedimiento': '',
+			}
+			this.data.push(obj);
+			this.subject.next(this.data);
+        } 
+    }
+
 public setData(_object){
     console.log('setData()');
     this.data.push(_object);
@@ -188,7 +204,7 @@ public setData(_object){
 
 export interface DocumentoRegistroGeneral {
 	id: number
-	nombre: string;
+	nameEcm: string;
 	procedimiento: string;
-	fechaCreacion: string;
+	created: Date;
 }

@@ -2,6 +2,7 @@ import { Caso } from './../../../../../models/personaCaso';
 import { DenunciaQuerella, VictimaQuerellante } from './../../../../../models/solicitud-preliminar/acuerdoGeneral';
 import { Component, ViewChild , Output,Input, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
@@ -97,6 +98,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
                     this.isAtencion = (this.form.controls.tipo.value==='Ayuda y atención a víctimas');
                     this.model = response as AcuerdoGeneral;
                     this.modelUpdate.emit(response);
+                    this.form.disable();
                 });
             }
         });
@@ -225,7 +227,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
 })
 export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
 
-    displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+    displayedColumns = ['nombre', 'fechaCreacion'];
     @Input() tipo:string=null;
     @Input() id:number=null;
     tipo_options={
@@ -244,13 +246,14 @@ export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
     constructor(
         public http: HttpService,
         public confirmationService:ConfirmationService,
-        public globalService:GlobalService
+        public globalService:GlobalService,
+        public dialog: MatDialog
         ){
-        super(http, confirmationService, globalService);
+        super(http, confirmationService, globalService, dialog);
     }
 
     ngOnInit() {
-      console.log('-> Object ', this.object);
+        console.log('-> Object ', this.object);
         if(this.object.documentos){
             this.dataSource = this.source;
             for (let object of this.object.documentos) {
@@ -259,6 +262,19 @@ export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
             }
 
         }
+    }
+
+    public cargaArchivos(_archivos){
+        for (let object of _archivos) {
+            let obj = {
+                'id': 0,
+                'nameEcm': object.some.name,
+                'created': new Date(),
+                'procedimiento': '',
+            }
+            this.data.push(obj);
+            this.subject.next(this.data);
+        } 
     }
 
   public setData(_object){
@@ -270,7 +286,7 @@ export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
 
 export interface DocumentoAcuerdoGeneral {
     id: number
-    nombre: string;
+    nameEcm: string;
     procedimiento: string;
-    fechaCreacion: string;
+    created: Date;
 }

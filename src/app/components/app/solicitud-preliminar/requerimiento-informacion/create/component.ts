@@ -1,6 +1,7 @@
 import { FormatosGlobal } from './../../formatos';
 import { Component, ViewChild, Output, Input, EventEmitter} from '@angular/core';
 import { MatPaginator } from '@angular/material';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
@@ -94,9 +95,9 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 					console.log('Get reg ',response),
-            this.fillForm(response);
-            this.modelUpdate.emit(response);
-
+					this.fillForm(response);
+					this.modelUpdate.emit(response);
+					this.form.disable();
 				});
 			}
 		});
@@ -115,7 +116,7 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 						console.log(response);
 						console.log('here');
 						this.id=response.id;
-						this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion']);
+						this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion/' + this.id + '/edit']);
 						resolve('Solicitud de requerimiento de información creada con éxito');
 
 					},
@@ -158,7 +159,7 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 export class DocumentoRequerimientoInformacionComponent extends FormatosGlobal{
 
   @Input() id:number=null;
-  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  displayedColumns = ['nombre', 'fechaCreacion'];
   @Input()
   object: any;
 	dataSource: TableDataSource | null;
@@ -170,9 +171,10 @@ export class DocumentoRequerimientoInformacionComponent extends FormatosGlobal{
   constructor(
       public http: HttpService,
       public confirmationService:ConfirmationService,
-      public globalService:GlobalService
+      public globalService:GlobalService,
+      public dialog: MatDialog
       ){
-      super(http, confirmationService, globalService);
+      super(http, confirmationService, globalService, dialog);
   }
 
   ngOnInit() {
@@ -187,6 +189,19 @@ export class DocumentoRequerimientoInformacionComponent extends FormatosGlobal{
       }
   }
 
+  public cargaArchivos(_archivos){
+        for (let object of _archivos) {
+        	let obj = {
+        		'id': 0,
+				'nameEcm': object.some.name,
+				'created': new Date(),
+				'procedimiento': '',
+			}
+			this.data.push(obj);
+			this.subject.next(this.data);
+        } 
+    }
+
 public setData(_object){
     console.log('setData()');
     this.data.push(_object);
@@ -195,8 +210,8 @@ public setData(_object){
 }
 
 export interface DocumentoRequerimientoInformacion {
-	id:number
-	nombre: string;
+	id: number
+	nameEcm: string;
 	procedimiento: string;
-	fechaCreacion: string;
+	created: Date;
 }

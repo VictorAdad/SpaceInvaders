@@ -1,6 +1,7 @@
 import { FormatosGlobal } from './../../formatos';
 import { Component, ViewChild, Output,Input, EventEmitter  } from '@angular/core';
 import { MatPaginator } from '@angular/material';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Perito } from '@models/solicitud-preliminar/perito';
 import { OnLineService } from '@services/onLine.service';
@@ -59,6 +60,7 @@ export class PeritoCreateComponent {
 export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 
 	public apiUrl: string = "/v1/base/solicitudes-pre-pericial";
+	public apiUrlPre : string = "/v1/base/predenuncias/casos/"
 	public casoId: number = null;
 	public id: number = null;
   @Output() modelUpdate = new EventEmitter<any>();
@@ -94,15 +96,21 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 				this.id = +params['id'];
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-          this.fillForm(response);
+          			delete response.hechosNarrados;
+          			this.fillForm(response);
 					this.isPericiales = this.form.controls.tipo.value === 'Periciales';
 					this.isPsicofisico = this.form.controls.tipo.value === 'Psicofísico';
-          this.isPericialesUpdate.emit(this.isPericiales);
-          this.modelUpdate.emit(response);
+          			this.isPericialesUpdate.emit(this.isPericiales);
+          			this.modelUpdate.emit(response);
+          			this.form.disable();
 
-
-        });
+        		});
 			}
+		});
+		this.http.get(this.apiUrlPre+this.casoId+'/page').subscribe(response => {
+			this.form.patchValue({
+				hechosNarrados : response.data[0].hechosNarrados
+			});
 		});
 	}
 
@@ -139,7 +147,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 					(response) => {
 						if(this.casoId!=null){
 							this.id=response.id;
-							this.router.navigate(['/caso/' + this.casoId + '/perito']);
+							this.router.navigate(['/caso/' + this.casoId + '/perito/' + this.id + '/edit']);
 						}
 						resolve('Solicitud pericial creada con éxito');
 					},
@@ -188,9 +196,16 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	tipoChange(_tipo): void {
 		this.isPericiales = _tipo === 'Periciales';
 		this.isPsicofisico = _tipo === 'Psicofísico';
-		console.log('P ---------->', this.isPericiales);
-	}
 
+		let timer = Observable.timer(1);
+		timer.subscribe(t => {
+			this.http.get(this.apiUrlPre+this.casoId+'/page').subscribe(response => {
+				this.form.patchValue({
+					hechosNarrados : response.data[0].hechosNarrados
+				});
+			});
+		})
+	}
 }
 
 @Component({
@@ -199,10 +214,10 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 })
 export class DocumentoPeritoComponent extends FormatosGlobal {
 
-  columns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  columns = ['nombre', 'fechaCreacion'];
   @Input() isPericiales:boolean=false;
   @Input() id:number=null;
-  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  displayedColumns = ['nombre', 'fechaCreacion'];
   @Input()
   object: any;
 	dataSource: TableDataSource | null;
@@ -214,9 +229,10 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
   constructor(
       public http: HttpService,
       public confirmationService:ConfirmationService,
-      public globalService:GlobalService
+      public globalService:GlobalService,
+      public dialog: MatDialog
       ){
-      super(http, confirmationService, globalService);
+      super(http, confirmationService, globalService, dialog);
   }
 
   ngOnInit() {
@@ -230,6 +246,20 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
 
       }
  }
+
+ 	public cargaArchivos(_archivos){
+        for (let object of _archivos) {
+        	let obj = {
+        		'id': 0,
+				'nameEcm': object.some.name,
+				'created': new Date(),
+				'procedimiento': '',
+			}
+			this.data.push(obj);
+			this.subject.next(this.data);
+        } 
+    }
+ 
  public setData(_object){
   console.log('setData()');
   this.data.push(_object);
@@ -239,7 +269,7 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
 }
 export interface DocumentoPerito {
 	id: number
-	nombre: string;
+	nameEcm: string;
 	procedimiento: string;
-	fechaCreacion: string;
+	created: Date;
 }
