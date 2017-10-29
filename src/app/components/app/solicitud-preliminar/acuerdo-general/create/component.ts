@@ -112,7 +112,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
             'finalidad': new FormControl(this.model.finalidad),
             'apercibimiento': new FormControl(this.model.apercibimiento),
             'plazo': new FormControl(this.model.plazo),
-            'senialarSolicitud': new FormControl(this.model.senialarSolicitud),
+            'senialar': new FormControl(this.model.senialar),
             'observaciones': new FormControl(this.model.observaciones),
             'noOficioAtencion': new FormControl(this.model.noOficioAtencion),
             'autoridadAtencion': new FormControl(this.model.autoridadAtencion),
@@ -150,6 +150,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
                             console.log('-> registro guardado',response);
                             this.router.navigate(['/acuerdos'+this.id+'/edit' ]);
                         }
+                        resolve('Solicitud de acuerdo general creada con éxito');
                     },
                     (error) => {
                         console.error('Error', error);
@@ -190,7 +191,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
            'finalidad':model.finalidad,
            'apercibimiento': model.apercibimiento,
            'plazo': model.plazo,
-           'senialarSolicitud': model.senialarSolicitud,
+           'senialar': model.senialar,
            'observaciones': model.observaciones,
            'noOficioAtencion': model.noOficioAtencion,
            'autoridadAtencion': model.autoridadAtencion,

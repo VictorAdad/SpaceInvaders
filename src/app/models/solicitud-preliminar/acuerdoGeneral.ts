@@ -8,7 +8,7 @@ export class AcuerdoGeneral {
     finalidad: string;
     plazo: string;
     apercibimiento: string;
-    senialarSolicitud: string;
+    senialar: string;
     observaciones: string;
     noOficioAtencion: string;
     autoridadAtencion: string;
