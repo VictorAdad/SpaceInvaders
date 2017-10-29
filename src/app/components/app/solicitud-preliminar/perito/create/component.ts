@@ -59,6 +59,7 @@ export class PeritoCreateComponent {
 export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 
 	public apiUrl: string = "/v1/base/solicitudes-pre-pericial";
+	public apiUrlPre : string = "/v1/base/predenuncias/casos/"
 	public casoId: number = null;
 	public id: number = null;
   @Output() modelUpdate = new EventEmitter<any>();
@@ -103,6 +104,11 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 
         });
 			}
+		});
+		this.http.get(this.apiUrlPre+this.id+'/page').subscribe(response => {
+			this.form.patchValue({
+				hechosNarrados : response.data[0].hechosNarrados
+			});
 		});
 	}
 
