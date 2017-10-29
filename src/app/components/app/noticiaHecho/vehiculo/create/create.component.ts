@@ -64,12 +64,12 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             'placas'                : new FormControl("", [Validators.required,]),
             'placasAdicionales'     : new FormControl("", []),
             'registroFederal'       : new FormControl("", []),
-            'serie'                 : new FormControl("", [Validators.required,]),
-            'motor'                 : new FormControl("", [Validators.required,]),
+            'noSerie'                 : new FormControl("", [Validators.required,]),
+            'noMotor'                 : new FormControl("", [Validators.required,]),
             'aseguradora'           : new FormControl("", []),
             'factura'               : new FormControl("", []),
             'datosTomados'          : new FormControl("", []),
-            'poliza'                : new FormControl("", []),
+            'noPoliza'                : new FormControl("", []),
             'valorEstimado'         : new FormControl("", []),
             'tipoUso'               : new FormControl("", []),
             'procedencia'           : new FormControl("", []),
@@ -85,7 +85,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             'procedenciaAseguradora': new FormGroup({
                 'id'  : new FormControl("",[])
             }),
-            'tipoUsoVehiculo'       : new FormGroup({
+            'tipoUsoTipoVehiculo'       : new FormGroup({
                 'id'    : new FormControl("",[])
             }),
             'caso'                  : new  FormGroup({
@@ -94,7 +94,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             'estadoOrigen'  : new FormGroup({
                 'id'    : new FormControl("",[]),
             }),
-            'motivoColorClase'       : new FormGroup({
+            'motivoRegistroColorClase'       : new FormGroup({
                 'id': new FormControl("",[]),
             })
 
@@ -135,6 +135,10 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         });
     }
 
+    public changeSelect(matrix, value){
+
+    }
+
     public change(option){
         if (option == "cdmx") {
             this.isProcedenciaExtranjera = true;
@@ -146,6 +150,18 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     }
 
     public save(valid : any, _model : any){
+        console.log("SI",this.vehiculoServ.tipoUsoTipoVehiculo.finded);
+        if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0]){
+            _model.tipoUsoTipoVehiculo.id=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].id;
+        }
+        if (this.vehiculoServ.marcaSubmarca.finded[0])
+            _model.marcaSubmarca.id=this.vehiculoServ.marcaSubmarca.finded[0].id;
+        if (this.vehiculoServ.procedenciaAseguradora.finded[0])
+            _model.procedenciaAseguradora.id=this.vehiculoServ.procedenciaAseguradora.finded[0].id;
+        if (this.vehiculoServ.motivoColorClase.finded[0])
+            _model.motivoRegistroColorClase.id=this.vehiculoServ.motivoColorClase.finded[0].id;
+        console.log("MODEL@SAVE=>",_model);
+        console.log(this.vehiculoServ);
         return new Promise<any>((resolve, reject)=>{
             if(this.onLine.onLine){
                 Object.assign(this.model, _model);
@@ -193,6 +209,15 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
 	}
 
     public edit(_valid : any, _model : any){
+        if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0])
+            _model.tipoUsoTipoVehiculo.id=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].id;
+        if (this.vehiculoServ.marcaSubmarca.finded[0])
+            _model.marcaSubmarca.id=this.vehiculoServ.marcaSubmarca.finded[0].id;
+        if (this.vehiculoServ.procedenciaAseguradora.finded[0])
+            _model.procedenciaAseguradora.id=this.vehiculoServ.procedenciaAseguradora.finded[0].id;
+        if (this.vehiculoServ.motivoColorClase.finded[0])
+            _model.motivoRegistroColorClase.id=this.vehiculoServ.motivoColorClase.finded[0].id;
+        console.log("MODEL@EDIT=>",_model);
         return new Promise((resolve,reject)=>{
             console.log('-> Vechiulo@edit()', _model);
             _model.caso.id      = this.casoId;
@@ -247,6 +272,26 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             }
         }
         rec(_data);
+        if(this.onLine.onLine){
+            if (_data.marcaSubmarca){
+                _data["marca"]=_data.marcaSubmarca.marca;
+                _data["submarca"]=_data.marcaSubmarca.submarca;
+            }
+            if (_data.motivoRegistroColorClase){
+                _data["clase"]=_data.motivoRegistroColorClase.clase;
+                _data["color"]=_data.motivoRegistroColorClase.color;
+                _data["motivoRegistro"]=_data.motivoRegistroColorClase.motivoRegistro;
+            }
+            if (_data.procedenciaAseguradora){
+                _data["aseguradora"]=_data.procedenciaAseguradora.aseguradora;
+                _data["procedencia"]=_data.procedenciaAseguradora.procedencia;
+            }
+            if (_data.tipoUsoTipoVehiculo){
+                _data["tipoUso"]=_data.tipoUsoTipoVehiculo.tipoUso;
+                _data["campoVehiculo"]=_data.tipoUsoTipoVehiculo.tipoVehiculo;            
+                _data["datosTomados"]=_data.tipoUsoTipoVehiculo.datosTomadosDe;
+            }
+        }
         this.form.patchValue(_data);
     }
 

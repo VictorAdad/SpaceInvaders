@@ -19,7 +19,8 @@
                 <select2 placeholder="Motivo por el que se registra"
                     [options]="vehiculoServ.motivoColorClase.motivoRegistro"
                     name="motivoRegistro"
-                    [group]="form">
+                    [group]="form"
+                    (valueChange)="vehiculoServ.motivoColorClase.find($event, 'motivoRegistro')">
 
                 </select2>
             </div>
@@ -27,7 +28,8 @@
                 <select2 placeholder="Vehículo"
                     name="campoVehiculo"
                     [options]="vehiculoServ.tipoUsoTipoVehiculo.tipoVehiculo"
-                    [group]="form">
+                    [group]="form"
+                    (valueChange)="vehiculoServ.tipoUsoTipoVehiculo.find($event, 'tipoVehiculo')">
 
                 </select2>
             </div>
@@ -43,7 +45,8 @@
                 <select2 placeholder="Clase"
                 name="clase"
                 [options]="vehiculoServ.motivoColorClase.clase"
-                [group]="form">
+                [group]="form"
+                (valueChange)="vehiculoServ.motivoColorClase.find($event, 'clase')">
 
             </select2>
             </div>
@@ -51,7 +54,8 @@
                 <select2 placeholder="Marca"
                     [options]="vehiculoServ.marcaSubmarca.marca"
                     name="marca"
-                    [group]="form">
+                    [group]="form"
+                    (valueChange)="vehiculoServ.marcaSubmarca.find($event, 'marca')">
 
                 </select2>
             </div>
@@ -59,7 +63,8 @@
                 <select2 placeholder="Submarca"
                     name="submarca"
                     [options]="vehiculoServ.marcaSubmarca.submarca"
-                    [group]="form">
+                    [group]="form"
+                    (valueChange)="vehiculoServ.marcaSubmarca.find($event, 'submarca')">
 
                 </select2>
             </div>
@@ -67,7 +72,8 @@
                 <select2 placeholder="Color"
                     name="color"
                     [options]="vehiculoServ.motivoColorClase.color"
-                    [group]="form">
+                    [group]="form"
+                    (valueChange)="vehiculoServ.motivoColorClase.find($event, 'color')">
 
                 </select2>
             </div>
@@ -96,17 +102,18 @@
                 <text label="Registro federal del vehículo (RFV)" name="registroFederal" [group]="form"></text>
             </div>
             <div class="col-md-3">
-                <text label="Nº serie (VIN)" name="serie" [group]="form"></text>
+                <text label="Nº serie (VIN)" name="noSerie" [group]="form"></text>
             </div>
             <div class="col-md-3">
-                <text label="Nº motor" name="motor" [group]="form"></text>
+                <text label="Nº motor" name="noMotor" [group]="form"></text>
             </div>
 
             <div class="col-md-3">
                 <select2 placeholder="Aseguradora"
                     name="aseguradora"
                     [options]="vehiculoServ.procedenciaAseguradora.aseguradora" 
-                    [group]="form">
+                    [group]="form"
+                    (valueChange)="vehiculoServ.procedenciaAseguradora.find($event, 'aseguradora')">
                 </select2>
             </div>
         </div>
@@ -118,11 +125,13 @@
                 <select2 placeholder="Datos tomados de"
                     name="datosTomados"
                     [options]="vehiculoServ.tipoUsoTipoVehiculo.datosTomadosDe"
-                    [group]="form">
+                    [group]="form"
+                    (valueChange)="vehiculoServ.tipoUsoTipoVehiculo.find($event, 'datosTomadosDe')"
+                    >
                 </select2>
             </div>
             <div class="col-md-3">
-                <text label="Nº póliza" name="poliza" [group]="form"></text>
+                <text label="Nº póliza" name="noPoliza" [group]="form"></text>
             </div>
             <div class="col-md-3">
                 <text label="Valor estimado" name="valorEstimado" [group]="form"></text>
@@ -134,7 +143,8 @@
                     <div class="col">
                         <select2 placeholder="Tipo de uso" name="tipoUso"
                             [options]="vehiculoServ.tipoUsoTipoVehiculo.tipoUso"
-                            [group]="form">
+                            [group]="form"
+                            (valueChange)="vehiculoServ.tipoUsoTipoVehiculo.find($event, 'tipoUso')">
                         </select2>
                     </div>
                     <div class="col">
@@ -142,7 +152,8 @@
                             [options]="vehiculoServ.procedenciaAseguradora.procedencia"
                             name="procedencia"
                             [group]="form"
-                            (valueChange)="change($event)">
+                            (valueChange)="change($event)"
+                            (valueChange)="vehiculoServ.procedenciaAseguradora.find($event, 'procedencia')">
                         </select2>
                     </div>
                     <div class="col" *ngIf="isProcedenciaExtranjera==true">
