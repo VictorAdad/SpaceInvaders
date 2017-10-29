@@ -2,6 +2,7 @@ import { FormatosGlobal } from './../../solicitud-preliminar/formatos';
 import { Predenuncia } from '@models/predenuncia';
 import { Component, ViewChild,Output,Input,EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
@@ -249,9 +250,10 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
   constructor(
       public http: HttpService,
       public confirmationService:ConfirmationService,
-      public globalService:GlobalService
+      public globalService:GlobalService,
+      public dialog: MatDialog
       ){
-      super(http, confirmationService, globalService);
+      super(http, confirmationService, globalService, dialog);
   }
 
     ngOnInit() {

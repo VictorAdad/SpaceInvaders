@@ -1,6 +1,7 @@
 import { FormatosGlobal } from './../../formatos';
 import { Component, ViewChild, Output,Input, EventEmitter  } from '@angular/core';
 import { MatPaginator } from '@angular/material';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Perito } from '@models/solicitud-preliminar/perito';
 import { OnLineService } from '@services/onLine.service';
@@ -214,9 +215,10 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
   constructor(
       public http: HttpService,
       public confirmationService:ConfirmationService,
-      public globalService:GlobalService
+      public globalService:GlobalService,
+      public dialog: MatDialog
       ){
-      super(http, confirmationService, globalService);
+      super(http, confirmationService, globalService, dialog);
   }
 
   ngOnInit() {
@@ -230,6 +232,20 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
 
       }
  }
+
+ 	public cargaArchivos(_archivos){
+        for (let object of _archivos) {
+        	let obj = {
+        		'id': 0,
+				'nameEcm': object.some.name,
+				'created': new Date(),
+				'procedimiento': '',
+			}
+			this.data.push(obj);
+			this.subject.next(this.data);
+        } 
+    }
+ 
  public setData(_object){
   console.log('setData()');
   this.data.push(_object);
@@ -239,7 +255,7 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
 }
 export interface DocumentoPerito {
 	id: number
-	nombre: string;
+	nameEcm: string;
 	procedimiento: string;
-	fechaCreacion: string;
+	created: Date;
 }
