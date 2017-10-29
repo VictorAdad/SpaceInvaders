@@ -47,18 +47,18 @@
 		<div class="row space"> <h2>Constancia de lectura de derechos a la víctima u ofendido</h2></div>
 	    <div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Número de folio" name="numeroFoli" [(value)]="model.numeroFolio" [group]="form"></text>
+		    	<text label="Número de folio" name="noFolioConstancia" [(value)]="model.numeroFolio" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 				<select2 [options]="[{value: true,label: 'Si'},{value: false,label: 'No'}]"
 				placeholder="¿Habla español?"
 				[(value)]="model.hablaEspanol"
-				name="hablaEspanol"
+				name="hablaEspaniol"
 				[group]="form">
 			    </select2>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="En caso negativo, especificar idioma o lengua" name="idioma" [(value)]="model.idioma" [group]="form"></text>
+		    	<text label="En caso negativo, especificar idioma o lengua" name="lenguaIdioma" [(value)]="model.idioma" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text label="Nombre del interprete" name="nombreInterprete" [(value)]="model.nombreInterprete" [group]="form"></text>
@@ -69,14 +69,14 @@
 				<select2 [options]="[{value: true,label: 'Si'},{value: false,label: 'No'}]"
 				placeholder="¿Comprendió la víctima u ofendido sus derechos?"
 				[(value)]="model.comprendioDerechos"
-				name="comprendioDerechos"
+				name="compredioDerechos"
 				[group]="form">
 			    </select2>
 			</div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-				<select2 [options]="[{value: 'Sí',label: 'Si'},{value: 'No',label: 'No'}]"
+				<select2 [options]="[{value: true, label: 'Si'},{value: false, label: 'No'}]"
 				placeholder="¿Se le proporcionó copia de derechos?"
-				name="copiaDerechos"
+				name="proporcionoCopia"
 				[group]="form">
 			    </select2>
 			</div>
@@ -124,7 +124,7 @@
 		</div>
 		<div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Conclusión en base a los hechos denunciados" name="conclusionHechos" [(value)]="model.conclusionHechos" [group]="form"></text>
+		    	<text label="Conclusión en base a los hechos denunciados" name="conclusion" [(value)]="model.conclusionHechos" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<select2 [options]="[{value: true,label: 'Si'},{value: false,label: 'No'}]"
@@ -135,7 +135,7 @@
 			    </select2>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="En su caso, institución a que se canaliza" name="institucionCanalizacion" [group]="form"></text>
+		    	<text label="En su caso, institución a que se canaliza" name="institucion" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text label="¿Motivo del por qué se canaliza a esa institución?" name="motivoCanalizacion" [(value)]="model.motivocanalizacion" [group]="form"></text>
@@ -146,18 +146,18 @@
             <date label="Fecha en la que se canaliza" name="fechaCanalizacion" [group]="form" [(value)]="model.fechaCanalizacion" ></date>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-          <time label="Hora en la que se canaliza" name="horaCanalizacion" [(value)]="model.horaCanalizacion" [group]="form"></time>
+		    	<time label="Hora en la que se canaliza" name="horaCanalizacion" [(value)]="model.horaCanalizacion" [group]="form"></time>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Si lo sabe, nombre de quien causó el hecho" name="personaCausohecho" [(value)]="model.personaCausohecho" [group]="form"></text>
+		    	<text label="Si lo sabe, nombre de quien causó el hecho" name="nombreCausante" [(value)]="model.personaCausohecho" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Si lo sabe, domicilio de quien causó el hecho" name="domicilioQuienCauso" [(value)]="model.domicilioQuienCauso" [group]="form"></text>
+		    	<text label="Si lo sabe, domicilio de quien causó el hecho" name="domicilioCausante" [(value)]="model.domicilioQuienCauso" [group]="form"></text>
 		    </div>
 		</div>
 		<div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Nombre de persona que llevó a cabo el registro" name="personaRegistro" [(value)]="model.personaRegistro" [group]="form"></text>
+		    	<text label="Nombre de persona que llevó a cabo el registro" name="quienRegistro" [(value)]="model.personaRegistro" [group]="form"></text>
 		    </div>
 		</div>
 

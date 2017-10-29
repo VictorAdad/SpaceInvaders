@@ -21,13 +21,13 @@
     <!-- Arma Column -->
     <ng-container matColumnDef="Arma">
         <mat-header-cell *matHeaderCellDef> Arma</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.clase}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element?.claseArma?.claseArma}} </mat-cell>
     </ng-container>
 
     <!-- Tipo Column -->
     <ng-container matColumnDef="Tipo">
         <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.tipo}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element?.claseArma?.tipo}} </mat-cell>
     </ng-container>
 
     <!-- Marca Column -->
