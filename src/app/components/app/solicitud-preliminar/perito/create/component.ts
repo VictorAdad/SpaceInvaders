@@ -94,14 +94,14 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 				this.id = +params['id'];
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-          this.fillForm(response);
+          			this.fillForm(response);
 					this.isPericiales = this.form.controls.tipo.value === 'Periciales';
 					this.isPsicofisico = this.form.controls.tipo.value === 'Psicofísico';
-          this.isPericialesUpdate.emit(this.isPericiales);
-          this.modelUpdate.emit(response);
+          			this.isPericialesUpdate.emit(this.isPericiales);
+          			this.modelUpdate.emit(response);
+          			this.form.disable();
 
-
-        });
+        		});
 			}
 		});
 	}

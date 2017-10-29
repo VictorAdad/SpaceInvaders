@@ -94,9 +94,9 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 					console.log('Get reg ',response),
-            this.fillForm(response);
-            this.modelUpdate.emit(response);
-
+					this.fillForm(response);
+					this.modelUpdate.emit(response);
+					this.form.disable();
 				});
 			}
 		});

@@ -90,6 +90,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
                         response.horaInspeccion=horas+':'+minutos;
                         this.modelUpdate.emit(response);
                         this.fillForm(response);
+                        this.form.disable();
                     });
             }
         });

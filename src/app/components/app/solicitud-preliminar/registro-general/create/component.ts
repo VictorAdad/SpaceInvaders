@@ -86,10 +86,10 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 				this.id = +params['id'];
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-          console.log(response.data),
-          this.modelUpdate.emit(response);
-            this.fillForm(response);
-
+					console.log(response.data),
+					this.modelUpdate.emit(response);
+					this.fillForm(response);
+					this.form.disable();
 				});
 			}
 		});
