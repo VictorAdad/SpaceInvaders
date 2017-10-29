@@ -136,12 +136,12 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         } else {
             this.form  = new FormGroup({
             //Constancia de lectura de Derechos
-            'numeroFoli'                    :  new FormControl(this.model.numeroFolio),
-            'hablaEspanol'                   :  new FormControl(this.model.hablaEspanol),
-            'idioma'                         :  new FormControl(this.model.idioma),
+            'noFolioConstancia'              :  new FormControl(this.model.numeroFolio),
+            'hablaEspaniol'                   :  new FormControl(this.model.hablaEspanol),
+            'lenguaIdioma'                         :  new FormControl(this.model.idioma),
             'nombreInterprete'               :  new FormControl(this.model.nombreInterprete),
-            'comprendioDerechos'             :  new FormControl(this.model.comprendioDerechos),
-            'copiaDerechos'                  :  new FormControl(this.model.copiaDerechos),
+            'compredioDerechos'             :  new FormControl(this.model.comprendioDerechos),
+            'proporcionoCopia'                  :  new FormControl(this.model.copiaDerechos),
             //Oficio de asignación de asesor jurídico
             'autoridadOficioAsignacion'      :  new FormControl(this.model.autoridadOficioAsignacion),
             'denunciaQuerella'               :  new FormControl(this.model.denunciaQuerella),
@@ -155,15 +155,15 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
              }),
             'lugarHechos'          :  new FormControl(this.model.lugarHechos),
             'hechosNarrados'        :  new FormControl(this.model.hechosNarrados),
-            'conclusionHechos'          :  new FormControl(this.model.conclusionHechos),
+            'conclusion'          :  new FormControl(this.model.conclusionHechos),
             'canalizacion'          :  new FormControl(this.model.canalizacion),
-            'institucionCanalizacion'          :  new FormControl(this.model.institucionCanalizacion),
+            'institucion'          :  new FormControl(this.model.institucionCanalizacion),
             'motivoCanalizacion'          :  new FormControl(this.model.motivocanalizacion),
             'fechaCanalizacion'          :  new FormControl(this.model.fechaCanalizacion),
-            'horaCanalizacion'          :  new FormControl(this.model.horaCanalizacion),
-            'personaCausohecho'          :  new FormControl(this.model.personaCausohecho),
-            'domicilioQuienCauso'          :  new FormControl(this.model.domicilioQuienCauso),
-            'personaRegistro'          :  new FormControl(this.model.personaRegistro),
+            'horaConclusionLlamada'          :  new FormControl(this.model.horaCanalizacion),
+            'nombreCausante'          :  new FormControl(this.model.personaCausohecho),
+            'domicilioCausante'          :  new FormControl(this.model.domicilioQuienCauso),
+            'quienRegistro'          :  new FormControl(this.model.personaRegistro),
              // Oficio Ayuda atencion victima
 
             'oficio'                         :  new FormControl(this.model.victimaOfendidoQuerellante),
