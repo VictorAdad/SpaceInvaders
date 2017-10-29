@@ -150,6 +150,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
                             console.log('-> registro guardado',response);
                             this.router.navigate(['/acuerdos'+this.id+'/edit' ]);
                         }
+                        resolve('Solicitud de acuerdo general creada con éxito');
                     },
                     (error) => {
                         console.error('Error', error);
