@@ -115,7 +115,7 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 						console.log(response);
 						console.log('here');
 						this.id=response.id;
-						this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion']);
+						this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion/' + this.id + '/edit']);
 						resolve('Solicitud de requerimiento de información creada con éxito');
 
 					},
