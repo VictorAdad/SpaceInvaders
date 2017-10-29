@@ -57,4 +57,13 @@ export class AppComponent {
 	logout(){
 		this.authService.logout();
 	}
+
+    cleanDB(){
+        console.log('cleanDB()');
+        localStorage.setItem("initDB","false");
+        localStorage.setItem("sincronizacion","false");
+        window.indexedDB.deleteDatabase("SIGI");
+        // location.reload(true);
+        window.location.assign("/")
+    }
 }
