@@ -94,9 +94,9 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 					console.log('Get reg ',response),
-            this.fillForm(response);
-            this.modelUpdate.emit(response);
-
+					this.fillForm(response);
+					this.modelUpdate.emit(response);
+					this.form.disable();
 				});
 			}
 		});
@@ -115,7 +115,7 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 						console.log(response);
 						console.log('here');
 						this.id=response.id;
-						this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion/'+this.id+'/edit']);
+						this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion']);
 						resolve('Solicitud de requerimiento de información creada con éxito');
 
 					},
@@ -158,7 +158,7 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 export class DocumentoRequerimientoInformacionComponent extends FormatosGlobal{
 
   @Input() id:number=null;
-  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  displayedColumns = ['nombre', 'fechaCreacion'];
   @Input()
   object: any;
 	dataSource: TableDataSource | null;

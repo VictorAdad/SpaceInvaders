@@ -90,6 +90,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
                         response.horaInspeccion=horas+':'+minutos;
                         this.modelUpdate.emit(response);
                         this.fillForm(response);
+                        this.form.disable();
                     });
             }
         });
@@ -174,7 +175,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
 })
 export class DocumentoInspeccionComponent extends FormatosGlobal{
 
-	displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+	displayedColumns = ['nombre', 'fechaCreacion'];
 	data=[];
   dataSource: TableService | null;
   @ViewChild(MatPaginator) paginator: MatPaginator;

@@ -97,6 +97,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
                     this.isAtencion = (this.form.controls.tipo.value==='Ayuda y atención a víctimas');
                     this.model = response as AcuerdoGeneral;
                     this.modelUpdate.emit(response);
+                    this.form.disable();
                 });
             }
         });
@@ -225,7 +226,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
 })
 export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
 
-    displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+    displayedColumns = ['nombre', 'fechaCreacion'];
     @Input() tipo:string=null;
     @Input() id:number=null;
     tipo_options={

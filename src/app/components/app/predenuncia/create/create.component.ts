@@ -109,9 +109,15 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                     console.log("Dont have predenuncia");
                     this.form.disable();
                     this.model= response.data[0] as Predenuncia;
+                    var fechaCompleta:Date= new Date(response.fechaHoraInspeccion);
+                    this.model.fechaCanalizacion=fechaCompleta;
+                    var horas: string=(String(fechaCompleta.getHours()).length==1)?'0'+fechaCompleta.getHours():String(fechaCompleta.getHours());
+                    var minutos: string=(String(fechaCompleta.getMinutes()).length==1)?'0'+fechaCompleta.getMinutes():String(fechaCompleta.getMinutes());;
+                    this.model.horaConlcusionLlamada=horas+':'+minutos;
+
                     console.log("Emitiendo id..",this.model.id)
                     this.idEmitter.emit({id: this.model.id});
-                    this.fillForm(response.data[0]);
+                    this.fillForm(this.model);
                 }
              });
             }
@@ -186,6 +192,19 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                     this.model.caso.id = this.casoId;
                     console.log(this.model);
                     this.model.tipo="Predenuncia";// temporalmente
+                    if(this.model.fechaCanalizacion){
+                      var fechaCompleta = new Date (this.model.fechaCanalizacion);
+                      if(this.model.horaConlcusionLlamada)
+                      { fechaCompleta.setMinutes(parseInt(this.model.horaConlcusionLlamada.split(':')[1]));
+                        fechaCompleta.setHours(parseInt(this.model.horaConlcusionLlamada.split(':')[0]));
+                      }
+                      var mes:number=fechaCompleta.getMonth()+1;
+                      this.model.fechaCanalizacion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
+                      console.log('lo que envio: '+  this.model.fechaCanalizacion);
+                     }
+
+
+
                     this.http.post('/v1/base/predenuncias', this.model).subscribe(
                         (response) => {
                             console.log(response);

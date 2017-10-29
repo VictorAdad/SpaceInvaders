@@ -95,14 +95,14 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 				this.id = +params['id'];
 				console.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-          this.fillForm(response);
+          			this.fillForm(response);
 					this.isPericiales = this.form.controls.tipo.value === 'Periciales';
 					this.isPsicofisico = this.form.controls.tipo.value === 'Psicofísico';
-          this.isPericialesUpdate.emit(this.isPericiales);
-          this.modelUpdate.emit(response);
+          			this.isPericialesUpdate.emit(this.isPericiales);
+          			this.modelUpdate.emit(response);
+          			this.form.disable();
 
-
-        });
+        		});
 			}
 		});
 		this.http.get(this.apiUrlPre+this.id+'/page').subscribe(response => {
@@ -205,10 +205,10 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 })
 export class DocumentoPeritoComponent extends FormatosGlobal {
 
-  columns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  columns = ['nombre', 'fechaCreacion'];
   @Input() isPericiales:boolean=false;
   @Input() id:number=null;
-  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  displayedColumns = ['nombre', 'fechaCreacion'];
   @Input()
   object: any;
 	dataSource: TableDataSource | null;
