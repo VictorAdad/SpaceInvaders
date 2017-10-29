@@ -205,6 +205,8 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 				});
 			});
 		})
+		this.form.controls.hechosNarrados.disable();
+
 	}
 }
 
