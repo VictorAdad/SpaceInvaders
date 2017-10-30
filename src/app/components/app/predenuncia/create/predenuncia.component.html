@@ -1,10 +1,10 @@
 <!-- Fromulario para usuario 1-->
 
 <form [formGroup]="form">
-	<div id="f1" *ngIf="isUserX">
+	<div id="f1" *ngIf="authen.user.hasRoles(authen.roles.callCenter)">
 	    <div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Calidad del usuario" name="calidadUsuario" [(value)]="model.calidadUsuario" [group]="form"></text>
+		    	<text label="Calidad del usuario" name="calidadPersona" [(value)]="model.calidadPersona" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text label="Número telefónico del que se está llamando" name="numeroTelefono" [(value)]="model.numeroTelefono" [group]="form"></text>
@@ -25,10 +25,10 @@
 		    	<text label="En base a los hechos se le comunica al usuario" name="usuario" [(value)]="model.usuario" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Hora de conclusión de la llamada" name="horaConlcusionLlamada" [(value)]="model.horaConlcusionLlamada" [group]="form"></text>
+		    	<time label="Hora de conclusión de la llamada" name="horaConlcusionLlamada" [(value)]="model.horaConlcusionLlamada" [group]="form"></time>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Duración de la llamada" name="usuario" [(value)]="model.duracionLlamada" [group]="form"></text>
+		    	<text label="Duración de la llamada" name="duracionLlamada" [(value)]="model.duracionLlamada" [group]="form"></text>
 		    </div>
 		</div>
 		<div class="row">
@@ -43,7 +43,7 @@
 		</div>
 	</div>
 
-	<div id="f2" *ngIf="!isUserX">
+	<div id="f2" *ngIf="!authen.user.hasRoles(authen.roles.callCenter)">
 		<div class="row space"> <h2>Constancia de lectura de derechos a la víctima u ofendido</h2></div>
 	    <div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
