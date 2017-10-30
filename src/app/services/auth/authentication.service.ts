@@ -106,6 +106,8 @@ export class Usuario {
     public agencia: string;
     public turno: string;
     public autoridad: string;
+    public distrito: string;
+    public municipio: string;
     
     constructor(_usuario: any) {
         this.nombreCompleto = _usuario.nombreCompleto;
@@ -115,6 +117,8 @@ export class Usuario {
         this.agencia = _usuario.agencia;
         this.autoridad = _usuario.autoridad;
         this.turno = _usuario.turno;
+        this.distrito = _usuario.distrito;
+        this.municipio = _usuario.municipio;
     }
 
     public setRoles(_roles: string[]): string[]{
@@ -146,15 +150,18 @@ export var _usuarios = {
         'nombreCompleto': 'Call Center',
         'username': 'callCEnter', 
         'roles': ['callCenter'],
+        'distrito': 'TOL',
         'fiscalia': 'TOL',
         'agencia': 'MET',
         'turno': 'MA',
+        'municipio': '057',
         'autoridad': 'CLL'
     },
     'uai' : {
         'nombreCompleto': 'Orientador Jurídico',
         'username': 'uai', 
         'roles': ['uai'],
+        'distrito': 'TOL',
         'fiscalia': 'TOL',
         'agencia': 'MET',
         'turno': 'MA',
@@ -164,27 +171,33 @@ export var _usuarios = {
         'nombreCompleto': 'Módulo Express',
         'username': 'express', 
         'roles': ['express'],
+        'distrito': 'TOL',
         'fiscalia': 'TOL',
         'agencia': 'MET',
         'turno': 'MA',
+        'municipio': '057',
         'autoridad': 'EXP'
     },
     'mpuai' : {
         'nombreCompleto': 'MP de UAI',
         'username': 'mpuai', 
         'roles': ['mpuai'],
+        'distrito': 'TOL',
         'fiscalia': 'TOL',
         'agencia': 'MET',
         'turno': 'MA',
+        'municipio': '057',
         'autoridad': 'MPU'
     },
     'mpi' : {
         'nombreCompleto': 'MPI',
         'username': 'mpi', 
         'roles': ['mpi'],
+        'distrito': 'TOL',
         'fiscalia': 'TOL',
         'agencia': 'MET',
         'turno': 'MA',
+        'municipio': '057',
         'autoridad': 'MPI'
     } 
 }

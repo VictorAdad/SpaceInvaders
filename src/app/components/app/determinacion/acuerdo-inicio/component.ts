@@ -8,6 +8,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { AcuerdoInicio } from '@models/determinacion/acuerdoInicio';
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
+import { AuthenticationService } from '@services/auth/authentication.service';
 import { Observable }  from 'rxjs/Observable';
 import { DeterminacionGlobal } from '../global';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
@@ -66,7 +67,8 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
         private onLine: OnLineService,
         private http: HttpService,
         private router: Router,
-        private db: CIndexedDB
+        private db: CIndexedDB,
+        private auth: AuthenticationService
     ) { super(); }
 
 
@@ -80,28 +82,33 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
             'sintesisHechos': new FormControl(this.model.sintesisHechos),
             'observaciones': new FormControl(this.model.observaciones),
             'tipo': new FormControl('Acuerdo Inicio'),
+            'caso': new FormGroup({
+                'nuc': new FormControl(this.generateNUC())
+            })
         });
 
         this.route.params.subscribe(params => {
-            if (params['casoId'])
+            if (params['casoId']){
+                let tipo = 'Acuerdo Inicio';
                 this.casoId = +params['casoId'];
                 this.apiUrl=this.apiUrl.replace("{id}",String(this.casoId));
-                 this.http.get(this.apiUrl).subscribe(response => {
-                if(response.totalCount!=0){
-				          	this.hasAcuerdoInicio = true;
-                    this.form.disable();
-                    this.fillForm(response.data[0]);
-                    this.modelUpdate.emit(response.data[0]);
+                 this.http.get(`/v1/base/acuerdos/casos/${this.casoId}/tipos?tipo=${tipo}`).subscribe(response => {
+                    if(response.length!=0){
+    				    this.hasAcuerdoInicio = true;
+                        this.form.disable();
+                        this.fillForm(response[0]);
+                        this.modelUpdate.emit(response[0]);
 
-			         	}
-                if(params['id']){
-					      this.id=params['id'];
-                this.modelUpdate.emit(response.data[0]);
-                this.hasAcuerdoInicio = true;
-                    this.form.disable();
-                    this.fillForm(response.data[0]);
-                }
-            });
+    			    }
+                    if(params['id']){
+                        this.id=params['id'];
+                        this.modelUpdate.emit(response[0]);
+                        this.hasAcuerdoInicio = true;
+                        this.form.disable();
+                        this.fillForm(response[0]);
+                    }
+                });
+            }
 
         });
     }
@@ -153,6 +160,20 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
     public fillForm(_data) {
         this.form.patchValue(_data);
         console.log(_data);
+    }
+
+    public generateNUC(): string{
+        let nuc: string = '';
+        let user = this.auth.user;
+        nuc=`${user.distrito}/${user.fiscalia}/${user.agencia}/${user.municipio}/00126/${(new Date()).getFullYear().toString().substr(-2)}/${this.pad((new Date()).getMonth(), 2)}`
+
+        return nuc;
+    }
+
+    private pad(num:number, size:number): string {
+        let s = num+"";
+        while (s.length < size) s = "0" + s;
+        return s;
     }
 
 }
