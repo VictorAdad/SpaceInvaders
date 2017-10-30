@@ -143,6 +143,7 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
 
     public fillForm(_data) {
         this.form.patchValue(_data);
+        this.form.disable();
         console.log(_data);
     }
 
