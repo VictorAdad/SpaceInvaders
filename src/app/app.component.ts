@@ -8,6 +8,7 @@ import { OnLineService } from "@services/onLine.service";
 import { SelectsService } from "@services/selects.service";
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
+import { _config} from '@app/app.config';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ import {MatIconRegistry} from '@angular/material';
 export class AppComponent {
 	public isAuthenticated : boolean;
     public _SIDEBAR        : boolean;
+    public _CONFIG: any = _config;
 
 	constructor(
 		public authService: AuthenticationService,
