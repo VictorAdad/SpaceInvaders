@@ -32,6 +32,7 @@ export class CasoNicComponent implements OnInit{
 			response => {
 				console.log('Caso', response);
             	this.nic = response.nic
+            	this.nuc = response.nuc
         	}
         );
 	}
