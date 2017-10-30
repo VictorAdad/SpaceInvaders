@@ -17,6 +17,8 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { GlobalService } from "@services/global.service";
 import { TableDataSource } from './../../global.component';
+import { AuthenticationService } from '@services/auth/authentication.service.ts';
+
 
 
 export class PredenunciaGlobal{
@@ -95,6 +97,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         private http: HttpService,
         private router: Router,
         private route: ActivatedRoute,
+        public authen: AuthenticationService,
         public optionsServ: SelectsService) {
             super();
         }
@@ -126,64 +129,61 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         });
 
         this.model = new Predenuncia();
-        if (this.isUserX) {
-            this.form  = new FormGroup({
-            'calidadUsuario'        :  new FormControl(this.model.calidadUsuario),
-            'numeroTelefono'        :  new FormControl(this.model.numeroTelefono),
-            'tipoLineaTelefonica'   :  new FormControl(this.model.tipoLineaTelefonica),
-            'lugarLlamada'          :  new FormControl(this.model.lugarLlamada),
-            'hechosNarrados'        :  new FormControl(this.model.hechosNarrados),
-            'usuario'               :  new FormControl(this.model.usuario),
-            'horaConlcusionLlamada' :  new FormControl(this.model.horaConlcusionLlamada),
-            'duracionLlamada'       :  new FormControl(this.model.duracionLlamada),
-            'nombreServidorPublico' :  new FormControl(this.model.nombreServidorPublico),
-            'observaciones'         :  new FormControl(this.model.observaciones),
+        let timer = Observable.timer(1);
+        //timer.subscribe(t => {
+            //if (this.authen.user.hasRoles(this.authen.roles.callCenter)) {
+                this.form  = new FormGroup({
+                // 'calidadUsuario'        :  new FormControl(this.model.calidadUsuario),
+                'numeroTelefono'        :  new FormControl(this.model.numeroTelefono),
+                'tipoLineaTelefonica'   :  new FormControl(this.model.tipoLineaTelefonica),
+                'lugarLlamada'          :  new FormControl(this.model.lugarLlamada),
+                'hechosNarrados'        :  new FormControl(this.model.hechosNarrados),
+                'usuario'               :  new FormControl(this.model.usuario),
+                'horaConlcusionLlamada' :  new FormControl(this.model.horaConlcusionLlamada),
+                'duracionLlamada'       :  new FormControl(this.model.duracionLlamada),
+                'nombreServidorPublico' :  new FormControl(this.model.nombreServidorPublico),
+                'observaciones'         :  new FormControl(this.model.observaciones),
+                //Constancia de lectura de Derechos
+                'noFolioConstancia'              :  new FormControl(this.model.numeroFolio),
+                'hablaEspaniol'                   :  new FormControl(this.model.hablaEspanol),
+                'lenguaIdioma'                         :  new FormControl(this.model.idioma),
+                'nombreInterprete'               :  new FormControl(this.model.nombreInterprete),
+                'compredioDerechos'             :  new FormControl(this.model.comprendioDerechos),
+                'proporcionoCopia'                  :  new FormControl(this.model.copiaDerechos),
+                //Oficio de asignación de asesor jurídico
+                'autoridadOficioAsignacion'      :  new FormControl(this.model.autoridadOficioAsignacion),
+                'denunciaQuerella'               :  new FormControl(this.model.denunciaQuerella),
+                'ubicacionUnidadInmediata'       :  new FormControl(this.model.ubicacionUnidadInmediata),
+                'victimaOfendidoQuerellante'     :  new FormControl(this.model.victimaOfendidoQuerellante),
+                'cargoAutoridadOficioAsignacion' :  new FormControl(this.model.cargoAutoridadOficioAsignacion),
+                 // Registro presenial
+                'calidadPersona'          :  new FormControl(this.model.calidadPersona),
+                'tipoPersona'          :  new FormGroup({
+                     'id' : new FormControl(''),
+                 }),
+                'lugarHechos'          :  new FormControl(this.model.lugarHechos),
+                'conclusion'          :  new FormControl(this.model.conclusionHechos),
+                'canalizacion'          :  new FormControl(this.model.canalizacion),
+                'institucion'          :  new FormControl(this.model.institucionCanalizacion),
+                'motivoCanalizacion'          :  new FormControl(this.model.motivocanalizacion),
+                'fechaCanalizacion'          :  new FormControl(this.model.fechaCanalizacion),
+                'horaCanalizacion'          :  new FormControl(this.model.horaCanalizacion),
+                'horaConclusionLlamada'          :  new FormControl(''),
+                'nombreCausante'          :  new FormControl(this.model.personaCausohecho),
+                'domicilioCausante'          :  new FormControl(this.model.domicilioQuienCauso),
+                'quienRegistro'          :  new FormControl(this.model.personaRegistro),
+                 // Oficio Ayuda atencion victima
 
-          });
-        } else {
-            this.form  = new FormGroup({
-            //Constancia de lectura de Derechos
-            'noFolioConstancia'              :  new FormControl(this.model.numeroFolio),
-            'hablaEspaniol'                   :  new FormControl(this.model.hablaEspanol),
-            'lenguaIdioma'                         :  new FormControl(this.model.idioma),
-            'nombreInterprete'               :  new FormControl(this.model.nombreInterprete),
-            'compredioDerechos'             :  new FormControl(this.model.comprendioDerechos),
-            'proporcionoCopia'                  :  new FormControl(this.model.copiaDerechos),
-            //Oficio de asignación de asesor jurídico
-            'autoridadOficioAsignacion'      :  new FormControl(this.model.autoridadOficioAsignacion),
-            'denunciaQuerella'               :  new FormControl(this.model.denunciaQuerella),
-            'ubicacionUnidadInmediata'       :  new FormControl(this.model.ubicacionUnidadInmediata),
-            'victimaOfendidoQuerellante'     :  new FormControl(this.model.victimaOfendidoQuerellante),
-            'cargoAutoridadOficioAsignacion' :  new FormControl(this.model.cargoAutoridadOficioAsignacion),
-             // Registro presenial
-            'calidadPersona'          :  new FormControl(this.model.calidadPersona),
-            'tipoPersona'          :  new FormGroup({
-                 'id' : new FormControl(''),
-             }),
-            'lugarHechos'          :  new FormControl(this.model.lugarHechos),
-            'hechosNarrados'        :  new FormControl(this.model.hechosNarrados),
-            'conclusion'          :  new FormControl(this.model.conclusionHechos),
-            'canalizacion'          :  new FormControl(this.model.canalizacion),
-            'institucion'          :  new FormControl(this.model.institucionCanalizacion),
-            'motivoCanalizacion'          :  new FormControl(this.model.motivocanalizacion),
-            'fechaCanalizacion'          :  new FormControl(this.model.fechaCanalizacion),
-            'horaCanalizacion'          :  new FormControl(this.model.horaCanalizacion),
-            'horaConclusionLlamada'          :  new FormControl(''),
-            'nombreCausante'          :  new FormControl(this.model.personaCausohecho),
-            'domicilioCausante'          :  new FormControl(this.model.domicilioQuienCauso),
-            'quienRegistro'          :  new FormControl(this.model.personaRegistro),
-             // Oficio Ayuda atencion victima
+                'oficio'                         :  new FormControl(this.model.victimaOfendidoQuerellante),
+                'nombreAutoridadDirigeOficio'    :  new FormControl(this.model.victimaOfendidoQuerellante),
+                'necesidadesCubrir'              :  new FormControl(this.model.victimaOfendidoQuerellante),
+                'ubicacionUnidadInmediataVictima':  new FormControl(this.model.victimaOfendidoQuerellante),
+                'cargoAutoridadVictima'          :  new FormControl(this.model.victimaOfendidoQuerellante),
+                // 'observaciones'         :  new FormControl(this.model.observaciones),
+              });
 
-            'oficio'                         :  new FormControl(this.model.victimaOfendidoQuerellante),
-            'nombreAutoridadDirigeOficio'    :  new FormControl(this.model.victimaOfendidoQuerellante),
-            'necesidadesCubrir'              :  new FormControl(this.model.victimaOfendidoQuerellante),
-            'ubicacionUnidadInmediataVictima':  new FormControl(this.model.victimaOfendidoQuerellante),
-            'cargoAutoridadVictima'          :  new FormControl(this.model.victimaOfendidoQuerellante),
-            'observaciones'         :  new FormControl(this.model.observaciones),
-          });
-
-        }
-
+            //}
+        //});
     }
 
     public save(valid : any, _model : any){
