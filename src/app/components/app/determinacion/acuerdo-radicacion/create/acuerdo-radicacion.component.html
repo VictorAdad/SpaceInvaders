@@ -3,8 +3,7 @@
 	<text-area label="Observaciones/Incidencias" name="observaciones" [(value)]="model.observaciones" [group]="form"></text-area>  
 
      <div class="row justify-content-end" >
-         <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
-            <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid" *ngIf="id != null">Editar</button>    
+         <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">    
             <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
          </div>
          <div class="col-sm-auto">

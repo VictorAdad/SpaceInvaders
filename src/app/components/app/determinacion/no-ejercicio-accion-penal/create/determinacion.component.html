@@ -3,7 +3,7 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-3">
-                <text label="Naracción de los hechos" name="narracionHechos" [(value)]="model.narracionHechos" [group]="form"></text>
+                <text label="Narración de los hechos" name="narracionHechos" [(value)]="model.narracionHechos" [group]="form"></text>
             </div>
             <div class="col-md-3">
                 <text label="Datos de prueba" name="datosPrueba" [(value)]="model.datosPrueba" [group]="form"></text>
@@ -74,7 +74,7 @@
 </div>
 <div class="row justify-content-end" >
     <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
-       <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid" *ngIf="id != null">Editar</button>    
+       <!-- <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid" *ngIf="id != null">Editar</button> -->    
        <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
     </div>
     <div class="col-sm-auto">

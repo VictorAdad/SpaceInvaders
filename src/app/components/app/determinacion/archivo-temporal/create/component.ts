@@ -130,6 +130,7 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 
 	public fillForm(_data) {
 		this.form.patchValue(_data);
+		this.form.controls.observaciones.disable();
 		console.log(_data);
 	}
 }

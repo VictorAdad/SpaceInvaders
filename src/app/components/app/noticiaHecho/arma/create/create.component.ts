@@ -48,7 +48,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
             'subtipo'         : new FormControl(''),
             'calibre'         : new FormControl(''),
             'mecanismo' : new FormControl(''),
-            'serie'           : new FormControl(''),
+            'serie'           : new FormControl(null),
             'notas'           : new FormControl(''),
             'matricula'       : new FormControl(''),
             'caso'            : new FormGroup({
