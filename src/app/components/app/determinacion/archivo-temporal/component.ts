@@ -13,7 +13,7 @@ import { CIndexedDB } from '@services/indexedDB';
 export class ArchivoTemporalComponent {
 	public breadcrumb = [];
 	public apiUrl = '/v1/base/archivos-temporales';
-	columns = ['creadoPor', 'fechaCreacion'];
+	columns = ['fechaCreacion'];
 	public dataSource: TableService | null;
 	public data: ArchivoTemporal[] = [];
 	public casoId: number = null;
