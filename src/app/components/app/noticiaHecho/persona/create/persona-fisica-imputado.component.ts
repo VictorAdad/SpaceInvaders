@@ -114,6 +114,30 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         });
 
                         console.log("PERSONA_CASO -> ",persona_caso);
+
+                        let localizaciones = this.globals.form.get('localizacionPersona') as FormArray;
+                        for (let i=0; i< t["localizacionPersona"].length; i++) {
+                            let formLoc = LosForm.createFormLocalizacion();
+                            localizaciones.push(formLoc);
+                        }
+
+                        let timer2 = Observable.timer(1);
+                        timer2.subscribe(tiempo => {
+                            let localizaciones = this.globals.form.get('localizacionPersona') as FormArray;
+                            for (let i=0; i< t["localizacionPersona"].length; i++) {
+                                for (var propName in ((t["localizacionPersona"])[i])) {
+                                    if (( (t["localizacionPersona"])[i])[propName] === null || ( (t["localizacionPersona"])[i])[propName] === undefined) {
+                                        delete ( (t["localizacionPersona"])[i]) [propName];
+                                    }
+                                }
+                                let formLoc = localizaciones.controls[i];
+                                formLoc.patchValue( (t["localizacionPersona"])[i]);
+
+                                this.globals.tipoResidencia.push(( (t["localizacionPersona"])[i] )["tipoRecidencia"]);
+                            }
+
+                        });
+
                         console.log('Form', this.globals);
                     });
                 }
@@ -436,14 +460,16 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     agrega al model los ids temporales para que funcione esto,
     en otros id se guardan los ids que se tienen que crear
     */
-    agregaIdTemporales(_model, temId,otrosID){
+    agregaIdTemporales(_model, temId,otrosID,putID=false){
         var dependeDe=[this.casoId];
         (_model.personaCaso[0])["personaId"]=temId;
         otrosID.push({personaCaso:{0: {personaId:temId} } });
         dependeDe.push(temId);
         temId++;
-        _model["id"]=temId;
-        (_model.personaCaso[0])["id"]=temId;
+        if(putID)
+            _model["id"]=temId;
+        if(putID)
+            (_model.personaCaso[0])["id"]=temId;
         dependeDe.push(temId);
         otrosID.push({personaCaso:{0: {id:temId} } });
         //las localizaciones
@@ -453,7 +479,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 temId++;
                 var obj={};
                     obj[i]={id:temId};
-                ((_model["localizacionPersona"])[i])["id"]=temId;
+                if(putID)
+                    ((_model["localizacionPersona"])[i])["id"]=temId;
                 otrosID.push({localizacionPersona:{obj} });
                 dependeDe.push(temId);
             }
@@ -463,7 +490,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             if (_model["mediaFiliacion"])
             {
                 temId++;
-                (_model["mediaFiliacion"])["id"]=temId;
+                if(putID)
+                    (_model["mediaFiliacion"])["id"]=temId;
                 otrosID.push({mediaFiliacion:{ id:temId}});
                 dependeDe.push(temId);
             }
@@ -475,9 +503,72 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     temId++;
                     var obj={};
                     obj[i]={id:temId};
-                    ((_model["aliasNombrePersona"])[i])["id"]=temId;
+                    if(putID)
+                        ((_model["aliasNombrePersona"])[i])["id"]=temId;
                     otrosID.push({aliasNombrePersona:{obj} });
                     dependeDe.push(temId);
+                }
+            }
+        }
+        return dependeDe;
+    }
+     /**
+    agrega al model los ids temporales para que funcione esto,
+    en otros id se guardan los ids que se tienen que crear
+    */
+    agregaIdTemporalesEdit(_model, temId,otrosID,putID=false){
+        var dependeDe=[this.casoId,this.id];
+        
+        //las localizaciones
+        if (_model["localizacionPersona"])
+        {
+            for (var i = 0; i < _model["localizacionPersona"].length; ++i) {
+                var obj={};
+                    obj[i]={id:temId};
+                //elemento nuevo    
+                if (!Number.isInteger( ((_model["localizacionPersona"])[i])["id"] )){
+                    if(putID){
+                        ((_model["localizacionPersona"])[i])["id"]=temId;    
+                    }   
+                    otrosID.push({localizacionPersona:{obj} });
+                    dependeDe.push(temId);
+                    temId++;
+                }else{
+                    dependeDe.push( ((_model["localizacionPersona"])[i])["id"] );
+                }
+                
+            }
+        }
+        //los mediafiliacion
+        if (this.globals.tipoInterviniente==_config.optionValue.imputado){
+            if (_model["mediaFiliacion"]){
+                if (!Number.isInteger( (_model["mediaFiliacion"])["id"] ) ){
+                    if(putID)
+                        (_model["mediaFiliacion"])["id"]=temId;
+                    otrosID.push({mediaFiliacion:{ id:temId}});
+                    dependeDe.push(temId);
+                    temId++;
+                }else{
+                    dependeDe.push( (_model["mediaFiliacion"])["id"] );
+                }
+            }
+        }
+        //los aliasnombres
+        if(_model["aliasNombrePersona"]){
+            for (var i = 0; i < _model["aliasNombrePersona"].length; ++i) {
+                if (((_model["aliasNombrePersona"])[i])["nombre"]!=null){
+                    var obj={};
+                    obj[i]={id:temId};
+                    if (!Number.isInteger( ((_model["aliasNombrePersona"])[i])["id"] )){
+                        if(putID)
+                            ((_model["aliasNombrePersona"])[i])["id"]=temId;
+                        otrosID.push({aliasNombrePersona:{obj} });
+                        dependeDe.push(temId);
+                        temId++;
+                    }else{
+                        dependeDe.push(((_model["aliasNombrePersona"])[i])["id"]);
+                    }
+                    
                 }
             }
         }
@@ -512,6 +603,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     }
                 }
                 let temId=Date.now();
+                let copia=temId;
                 var otrosID=[];
                 var dependeDe=this.agregaIdTemporales(_model,temId,otrosID);
                 console.log(dependeDe, otrosID);
@@ -533,6 +625,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         this.caso=casoR as Caso;
 
                         console.log("SI");
+                        this.agregaIdTemporales(_model,copia,otrosID,true);
                         _model["dependeDe"]=dependeDe;
                         this.tabla.add('personas', _model).then( p => {
                             console.log("SI");
@@ -565,7 +658,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 this.http.put('/v1/base/personas/'+this.globals.personaCaso["id"], _model).subscribe(
                     (response) => {
                         console.log("Editar Persona->",response);
-                        resolve("Se actualizó la persona de manera local");
+                        resolve("Se actualizó la persona con éxito");
                         // this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas' ]);
                     },
                     (error) => {
@@ -580,22 +673,35 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 (_model.personaCaso[0])["personaId"]=_model["id"];
                 _model["id"]=this.id;
                 console.log("->PERSONA",this.globals.personaCaso);
+                var lista=this.options.tipoInterviniente as any[];
+                for (var i = 0; i < lista.length; ++i) {
+                    if((lista[i])["value"]==_model.personaCaso[0].tipoInterviniente["id"])
+                    {
+                        _model.personaCaso[0].tipoInterviniente["tipo"] = (lista[i])["label"];
+                        break;
+                    }
+                }
+                let temId=Date.now();
+                let copia=temId;
+                var otrosID=[];
+                var dependeDe=this.agregaIdTemporalesEdit(_model,temId,otrosID);
+                console.log(dependeDe, otrosID);
+
                 let dato={
                     url:'/v1/base/personas/'+this.globals.personaCaso["id"] ,
                     body:_model,
                     options:[],
-                    tipo:"post",
+                    tipo:"update",
                     pendiente:true,
-                    dependeDe:(this.globals.personaCaso)["dependeDe"],
+                    dependeDe:dependeDe,
                 }
                 this.tabla.add("sincronizar",dato).then(response=>{
                     this.tabla.get("casos",this.casoId).then(
                             casoR=>{
                         this.caso=casoR as Caso;
-                        _model["persona"]={nombre:_model["nombre"]};
-                        _model["alias"]=_model.aliasNombrePersona.nombre;
-                        if (!_model["razonSocial"])
-                            _model["razonSocial"]="";
+
+                        this.agregaIdTemporalesEdit(_model,temId,otrosID,true);
+                        
                         this.tabla.update('personas', _model).then( p => {
                             console.log("SI se guardo persona",p);
                             if (!this.caso["personas"])
@@ -604,6 +710,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                             this.tabla.update("casos",this.caso).then(
                                 ds=>{
                                     console.log("Editar Persona->",ds);
+                                    resolve("Se actualizó la persona de manera local");
                                     // this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas']);
 
                             });
