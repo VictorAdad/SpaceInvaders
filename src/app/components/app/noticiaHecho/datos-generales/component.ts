@@ -123,6 +123,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                 });
             }else{
                 delete _model["created"];
+                let temId=Date.now();
                 console.log("MODEL",_model);
                 let dato={
                     url:'/v1/base/casos',
@@ -130,11 +131,12 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                     options:[],
                     tipo:"post",
                     pendiente:true,
-                    newId:0
+                    newId:0,
+                    temId:temId
                 }
-                this.db.add('casos', _model).then(object => {
-                    dato["temId"]=object["id"];
-                    this.db.add("sincronizar",dato).then(p=>{
+                this.db.add("sincronizar",dato).then(p=>{
+                    _model["id"]=temId;
+                    this.db.add('casos', _model).then(object => {
                         resolve("Se creó el caso de manera local");
                         this.router.navigate(['/caso/'+object['id']+'/noticia-hecho' ]);
                     });
