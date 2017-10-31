@@ -1,14 +1,14 @@
 export class Vehiculo {
-    motivoRegistro: string;
+    motivoRegistroColorClase: string;
     campoVehiculo: string;
     tarjetaCirculacion: string;
-    economico: string;
+    noEconomico: string;
     clase: string;
     marca: string;
     submarca: string;
     color: string;
     modelo: string;
-    estado_origen_placas: string;
+    estadoOrigenPlacas: string;
     placas: string;
     placas_adicionales: string;
     rfv: string;
@@ -21,10 +21,11 @@ export class Vehiculo {
     valor_estimado: string;
     tipoUso: string;
     procedencia: string;
-    pedimento_de_importacion: string;
+    pedimentoImportancia: string;
     lleva_carga: boolean;
     alterado: boolean;
-    señas_particulares: string;
+    seniasParticulares: string;
+    registroFederalVehiculo:string;
 
     caso: Caso = new Caso();
 }

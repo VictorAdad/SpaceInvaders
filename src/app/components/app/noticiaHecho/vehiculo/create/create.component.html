@@ -37,7 +37,7 @@
                 <text label="Nº tarjeta de circulación" name="tarjetaCirculacion" [group]="form"></text>
             </div>
             <div class="col-md-3">
-                <text label="Nº económico" name="economico" [group]="form"></text>
+                <text label="Nº económico" name="noEconomico" [group]="form"></text>
             </div>
         </div>
         <div class="row">
@@ -99,7 +99,7 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                <text label="Registro federal del vehículo (RFV)" name="registroFederal" [group]="form"></text>
+                <text label="Registro federal del vehículo (RFV)" name="registroFederalVehiculo" [group]="form"></text>
             </div>
             <div class="col-md-3">
                 <text label="Nº serie (VIN)" name="noSerie" [group]="form"></text>
@@ -111,7 +111,7 @@
             <div class="col-md-3">
                 <select2 placeholder="Aseguradora"
                     name="aseguradora"
-                    [options]="vehiculoServ.procedenciaAseguradora.aseguradora" 
+                    [options]="vehiculoServ.procedenciaAseguradora.aseguradora"
                     [group]="form"
                     (valueChange)="vehiculoServ.procedenciaAseguradora.find($event, 'aseguradora')">
                 </select2>
@@ -134,7 +134,7 @@
                 <text label="Nº póliza" name="noPoliza" [group]="form"></text>
             </div>
             <div class="col-md-3">
-                <text label="Valor estimado" name="valorEstimado" [group]="form"></text>
+                <number label="Valor estimado" name="valorEstimado" [group]="form"></number>
             </div>
         </div>
         <div class="row">
@@ -174,7 +174,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <text label="Señas particulares"  name="senasParticulares" [group]="form"></text>
+                <text label="Señas particulares"  name="seniasParticulares" [group]="form"></text>
             </div>
         </div>
         <div class="row">
@@ -185,7 +185,7 @@
         </div>
         <div class="row justify-content-end space">
             <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" matTooltipPosition="above">
-                <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id != null">Editar</button>    
+                <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id != null">Editar</button>
                 <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id == null">Guardar</button>
             </div>
             <div class="col-sm-auto">
