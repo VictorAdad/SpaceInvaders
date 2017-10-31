@@ -2,11 +2,13 @@ import { Component, ViewChild, Inject} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenticationService } from '@services/auth/authentication.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { HttpService } from '@services/http.service';
 import { OnLineService} from '@services/onLine.service';
 import { TableService} from '@utils/table/table.service';
 import { MOption } from '@partials/form/select2/select2.component'
+import { _usuarios } from '@services/auth/usuarios';
 
 @Component({
     templateUrl:'tranferir.component.html'
@@ -21,12 +23,15 @@ export class TransferirComponent{
         public dialogRef: MatDialogRef<TransferirComponent>,
         @Inject(MAT_DIALOG_DATA) private data: {casoId:any},
         private http: HttpService,
-        private router: Router
+        private router: Router,
+        private auth: AuthenticationService
        ){}
 
     ngOnInit() {
+        let users = Object.keys(_usuarios);
         this.form =  new FormGroup({
-            'usuario': new FormControl(''),
+            'userNameAsignado': new FormControl(''),
+            'userNameAsignacion': new FormControl(this.auth.user.username),
             'fechaAsignacion': new FormControl(new Date()),
             'caso': new FormGroup({
                 'id':new FormControl(''),
@@ -38,7 +43,11 @@ export class TransferirComponent{
                     this.agencias.push({value: object.name, label: object.name});
                 }
             }
-        )
+        );
+        console.log(users);
+        for (let usuario of users) {
+            this.usuarios.push({value: _usuarios[usuario].username, label: _usuarios[usuario].nombreCompleto});
+        }
     }
 
     close(){
@@ -48,9 +57,9 @@ export class TransferirComponent{
     public findByAgencia(_agencia: string){
         this.http.get(`/v1/administration/ldap/usuarios?f=${_agencia}`).subscribe(
             response => {
-                for (let object of response) {
-                    this.usuarios.push({value: object.name, label: object.name});
-                }
+                // for (let object of response) {
+                //     this.usuarios.push({value: object.name, label: object.name});
+                // }
             }
         )
     }

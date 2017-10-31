@@ -1,3 +1,5 @@
+import { _usuarios } from '@services/auth/usuarios';
+
 export class Caso {
     public id       : number;
     public titulo   : string;
@@ -19,9 +21,9 @@ export class Caso {
        var mes = date.getMonth();
        var year = date.getFullYear();
 
-       var user = 'Administrador del sistema'; //Necesita recibir el usuario 
+       var user = _usuarios['']; //Necesita recibir el usuario 
 
-       var x = 'Creado el '+ dia + ' de ' + meses[mes] + ' de ' + year + ' por el ' + user;
+       var x = 'Creado el '+ dia + ' de ' + meses[mes] + ' de ' + year;
        return x;  
     }
 
