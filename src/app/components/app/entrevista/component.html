@@ -37,12 +37,12 @@
         <mat-header-cell *matHeaderCellDef> Calidad entrevistado </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element?.tipoInterviniente?.tipo || "No tiene"}} </mat-cell>
     </ng-container>
-
+<!--
     <ng-container matColumnDef="creadoPor">
         <mat-header-cell *matHeaderCellDef> Creado por </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element?.createdBy || "No tiene"}} </mat-cell>
     </ng-container>
-
+-->
     <ng-container matColumnDef="fechaCreacion">
         <mat-header-cell *matHeaderCellDef> Fecha de creación </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element?.created | date:'MM/dd/yyyy'}} </mat-cell>

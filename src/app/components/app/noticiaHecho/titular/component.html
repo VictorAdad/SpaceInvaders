@@ -4,7 +4,7 @@
     </div>
 </div>
 <div class="">
-    <mat-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+    <mat-paginator #paginator [length]="pag" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
     </mat-paginator>
     <mat-table #table [dataSource]="dataSource">
 
@@ -25,12 +25,12 @@
 
         <ng-container matColumnDef="asignacion">
             <mat-header-cell *matHeaderCellDef> Fecha de asignación de titular </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.asignacion}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.fechaAsignacion | date:'MM/dd/yyyy'}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="nic">
             <mat-header-cell *matHeaderCellDef> NIC </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.nic}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.caso.hasPredenuncia ? element.caso.nic : ''}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="transferir">

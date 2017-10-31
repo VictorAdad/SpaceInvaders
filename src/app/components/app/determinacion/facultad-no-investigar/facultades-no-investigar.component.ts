@@ -15,7 +15,7 @@ import { CIndexedDB } from '@services/indexedDB';
 export class FacultadesNoInvestigarComponent {
   public breadcrumb = [];
   public apiUrl = '/v1/base/facultades-no-investigar';
-  displayedColumns = ['Remitente', 'Motivos', 'Creado por', 'Fecha'];
+  displayedColumns = ['Remitente', 'Motivos', 'Fecha'];
   public dataSource: TableService | null;
   public data: FacultadNoInvestigar[];
   public casoId: number = null;

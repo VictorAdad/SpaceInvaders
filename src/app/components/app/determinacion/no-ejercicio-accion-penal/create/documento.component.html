@@ -3,7 +3,7 @@
 		<select2 placeholder= "Formatos" (valueChange)="changeFormat($event, id)" [options]="[{label:'DETERMINACIÓN DE NO EJERCICIO DE LA ACCIÓN PENAL',value:'F1_014'}]"  ></select2>
 	</div>
 	<div class="col-md-auto">
-		<button mat-raised-button color="accent" >Adjuntar</button>
+		<button mat-raised-button color="accent"  (click)="openDocDialog()">Adjuntar</button>
 	</div>
 	<div class="col-md-auto">
 		<button mat-raised-button color="accent" >Compartir</button>
@@ -16,7 +16,7 @@
           <mat-header-cell *matHeaderCellDef> Nombre</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.nameEcm}} </mat-cell>
       </ng-container>
-      
+
       <ng-container matColumnDef="fechaCreacion">
           <mat-header-cell *matHeaderCellDef> Fecha de creación </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.created| date:'MM/dd/yyyy'}} </mat-cell>

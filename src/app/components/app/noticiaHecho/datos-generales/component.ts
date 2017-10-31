@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, Input} from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { Http, Response } from '@angular/http';
@@ -52,7 +52,12 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         this.form  = new FormGroup({
             'titulo'   : new FormControl('', [Validators.required]),
             'descripcion' : new FormControl('', [Validators.required]),
-            'delito'   : new FormControl('', [Validators.required])
+            'delito'   : new FormControl('', [Validators.required]),
+            'titulares': new FormArray([
+                new FormGroup({
+                    'fechaAsignacion': new FormControl(new Date()),
+                })
+            ]),
         });
         this.activeRoute.parent.params.subscribe(params => {
             if(this.hasId){
