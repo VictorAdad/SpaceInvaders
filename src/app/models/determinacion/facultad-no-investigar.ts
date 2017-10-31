@@ -6,7 +6,11 @@ export class FacultadNoInvestigar {
     medioAlternativoSolucion: string;
     destinatarioDeterminacion: string;
     superiorJerarquico: string;
-    creadoPor: string;
+    createdBy: string;
+    nombreDenunciante
+    domicilioDenunciante: string;
+    edadDenunciante: string;
+    originarioDenunciante: string;
     observaciones: string;
     caso: Caso = new Caso();
 }

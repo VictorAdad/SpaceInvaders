@@ -16,12 +16,12 @@ export class AcuerdosRadicacionComponent{
 
    public breadcrumb = [];
    public apiUrl:string="/v1/base/acuerdos/casos/{id}/page";
-   columns = ['Titulo', 'Fecha'];
+   columns = ['Fecha'];
    public dataSource: TableService | null;
    public data: AcuerdoRadicacion[];
    public casoId: number = null;
    public haveCaso: boolean=false;
-   @ViewChild(MatPaginator) 
+   @ViewChild(MatPaginator)
    paginator: MatPaginator;
    public pag: number = 0;
 
@@ -36,7 +36,7 @@ export class AcuerdosRadicacionComponent{
                 this.page(this.apiUrl);
             }
 
-        });  
+        });
     }
 
     public changePage(_e) {

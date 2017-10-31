@@ -11,9 +11,9 @@ import { CIndexedDB } from '@services/indexedDB';
 	templateUrl: './component.html',
 })
 export class NoEjercicioAccionPenalComponent {
-	public apiUrl: string = "/v1/base/no-ejercicio-accion/casos/{idCaso}/page"; 
+	public apiUrl: string = "/v1/base/no-ejercicio-accion/casos/{idCaso}/page";
 	public breadcrumb = [];
-	columns = ['ambito', 'creadoPor', 'fechaCreacion'];
+	columns = ['ambito','fechaCreacion'];
 	public dataSource: TableService | null;
 	public data: NoEjercicioAccionPenal[];
 	public casoId: number = null;
@@ -21,7 +21,7 @@ export class NoEjercicioAccionPenalComponent {
 	@ViewChild(MatPaginator)
 	paginator: MatPaginator;
     public pag: number = 0;
-	
+
 	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db: CIndexedDB) { }
 
 	ngOnInit() {
@@ -39,11 +39,11 @@ export class NoEjercicioAccionPenalComponent {
 
 	public changePage(_e){
         if(this.onLine.onLine){
-			console.log(this.apiUrl) 
+			console.log(this.apiUrl)
             this.page(this.apiUrl+'?p='+_e.pageIndex+'&tr='+_e.pageSize);
-            
+
         }
-    }  
+    }
 
     public page(url: string){
         this.http.get(url).subscribe((response) => {

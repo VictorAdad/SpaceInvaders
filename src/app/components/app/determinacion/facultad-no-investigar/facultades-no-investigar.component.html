@@ -14,7 +14,7 @@
 <div class="row space justify-content-end">
     <div class="col-md-auto">
         <search></search>
-    </div>    
+    </div>
     <div class="col-md-auto">
         <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/facultad-no-investigar/create" color="accent">Agregar determinación</button>
     </div>
@@ -31,11 +31,6 @@
     </mat-paginator>
     <mat-table #table [dataSource]="dataSource">
 
-        <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-
-        <!-- Position Column    displayedColumns = ['Remitente','Motivos','Creado por' 'Fecha'];
--->
         <ng-container matColumnDef="Remitente">
             <mat-header-cell *matHeaderCellDef>A quien se remite la determinación </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.destinatarioDeterminacion}} </mat-cell>
@@ -45,12 +40,12 @@
             <mat-header-cell *matHeaderCellDef> Motivos por los que se abstuvo de investigar</mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.motivosAbstuvoInvestigar}} </mat-cell>
         </ng-container>
-
+      <!---
         <ng-container matColumnDef="Creado por">
             <mat-header-cell *matHeaderCellDef> Creado por</mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.creadoPor}} </mat-cell>
         </ng-container>
-
+      -->
         <ng-container matColumnDef="Fecha">
             <mat-header-cell *matHeaderCellDef> Fecha de creación</mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.created | date:'MM/dd/yyyy'}} </mat-cell>

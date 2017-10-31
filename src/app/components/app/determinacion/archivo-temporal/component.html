@@ -19,10 +19,12 @@
 <mat-paginator #paginator [length]="pag" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="changePage($event)">
 </mat-paginator>
 <mat-table #table [dataSource]="dataSource">
+  <!--
     <ng-container matColumnDef="creadoPor">
         <mat-header-cell *matHeaderCellDef> Creado por </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.createdBy}} </mat-cell>
     </ng-container>
+  -->
 
     <ng-container matColumnDef="fechaCreacion">
         <mat-header-cell *matHeaderCellDef> Fecha de creación </mat-header-cell>
