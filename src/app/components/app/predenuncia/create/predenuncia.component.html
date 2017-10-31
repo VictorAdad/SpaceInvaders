@@ -7,10 +7,14 @@
 		    	<text label="Calidad del usuario" name="calidadPersona" [(value)]="model.calidadPersona" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Número telefónico del que se está llamando" name="numeroTelefono" [(value)]="model.numeroTelefono" [group]="form"></text>
+		    	<text label="Número telefónico del que se está llamando" name="noTelefonico" [(value)]="model.numeroTelefono" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Tipo de línea telefónica" name="tipoLineaTelefonica" [(value)]="model.tipoLineaTelefonica" [group]="form"></text>
+		    	<select2 [options]="optionsServ.tipoLinea"
+					placeholder="Tipo de línea teléfonica"
+					name="id"
+					[group]="form.controls.tipoLinea">
+			    </select2>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text label="Lugar de donde se llama" name="lugarLlamada" [(value)]="model.lugarLlamada" [group]="form"></text>
@@ -22,10 +26,10 @@
 		    	<text label="Hechos narrados que se denuncian" name="hechosNarrados" [(value)]="model.hechosNarrados" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="En base a los hechos se le comunica al usuario" name="usuario" [(value)]="model.usuario" [group]="form"></text>
+		    	<text label="En base a los hechos se le comunica al usuario" name="comunicado" [(value)]="model.usuario" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<time label="Hora de conclusión de la llamada" name="horaConlcusionLlamada" [(value)]="model.horaConlcusionLlamada" [group]="form"></time>
+		    	<time label="Hora de conclusión de la llamada" name="horaConclusionLlamada" [(value)]="model.horaConlcusionLlamada" [group]="form"></time>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text label="Duración de la llamada" name="duracionLlamada" [(value)]="model.duracionLlamada" [group]="form"></text>
@@ -33,7 +37,7 @@
 		</div>
 		<div class="row">
 		    <div class="col-md-4 col-sm-12 col-lg-4">
-		    	<text label="Nombre del servidor público que registra" name="nombreServidorPublico" [(value)]="model.nombreServidorPublico" [group]="form"></text>
+		    	<text label="Nombre del servidor público que registra" name="quienRegistro" [(value)]="model.nombreServidorPublico" [group]="form"></text>
 		    </div>
 		</div>
 		<div class="row">

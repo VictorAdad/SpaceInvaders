@@ -134,11 +134,13 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             //if (this.authen.user.hasRoles(this.authen.roles.callCenter)) {
                 this.form  = new FormGroup({
                 // 'calidadUsuario'        :  new FormControl(this.model.calidadUsuario),
-                'numeroTelefono'        :  new FormControl(this.model.numeroTelefono),
-                'tipoLineaTelefonica'   :  new FormControl(this.model.tipoLineaTelefonica),
+                'noTelefonico'        :  new FormControl(this.model.numeroTelefono),
+                'tipoLinea'   :  new FormGroup({
+                    'id': new FormControl(null),
+                }),
                 'lugarLlamada'          :  new FormControl(this.model.lugarLlamada),
                 'hechosNarrados'        :  new FormControl(this.model.hechosNarrados),
-                'usuario'               :  new FormControl(this.model.usuario),
+                'comunicado'               :  new FormControl(this.model.usuario),
                 'horaConlcusionLlamada' :  new FormControl(this.model.horaConlcusionLlamada),
                 'duracionLlamada'       :  new FormControl(this.model.duracionLlamada),
                 'nombreServidorPublico' :  new FormControl(this.model.nombreServidorPublico),
@@ -171,7 +173,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                 'horaConclusionLlamada'          :  new FormControl(''),
                 'nombreCausante'          :  new FormControl(this.model.personaCausohecho),
                 'domicilioCausante'          :  new FormControl(this.model.domicilioQuienCauso),
-                'quienRegistro'          :  new FormControl(this.model.personaRegistro),
+                'quienRegistro'          :  new FormControl(''),
                  // Oficio Ayuda atencion victima
 
                 'oficio'                         :  new FormControl(this.model.victimaOfendidoQuerellante),
@@ -225,6 +227,11 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
     }
 
     public fillForm(_data) {
+        for (var propName in _data) {
+            if (_data[propName] === null || _data[propName] === undefined) {
+              delete (_data)[propName];
+            }
+        }
         _data.fechaCanalizacion = new Date(_data.fechaCanalizacion);
         this.form.patchValue(_data);
         console.log(_data);
