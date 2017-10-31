@@ -51,7 +51,7 @@ export class VehiculoComponent{
         console.log('Page size', _e.pageSize);
         console.log('Id caso', this.casoId);
         this.vehiculos = [];
-        this.page('/v1/base/casos/' + this.casoId + '/vehiculos?p=' + _e.pageIndex + '&tr=' + _e.pageSize);
+        this.page('/v1/base/vehiculos/casos/' + this.casoId + '/page?p=' + _e.pageIndex + '&tr=' + _e.pageSize);
     }
 
     public page(url: string) {

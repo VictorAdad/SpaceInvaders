@@ -49,7 +49,7 @@ export class ArmaComponent{
 
     public changePage(_e){
         if(this.onLine.onLine){
-            this.page('/v1/base/casos/'+this.casoId+'/armas?p='+_e.pageIndex+'&tr='+_e.pageSize);
+            this.page('/v1/base/armas/casos/'+this.casoId+'/page?p='+_e.pageIndex+'&tr='+_e.pageSize);
             
         }
     }  

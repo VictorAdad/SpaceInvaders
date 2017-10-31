@@ -1,10 +1,15 @@
 <div class="row space justify-content-end">
 	<div class="col-md-2">
-    <select2 placeholder= "Formatos" (valueChange)="changeFormat($event, id)" [options]="[
+    <select2 placeholder= "Formatos" *ngIf="!isCallCenter" (valueChange)="changeFormat($event, id)" [options]="[
     {label:'LECTURA DE DERECHOS DE LA VÍCTIMA',value:'F1_003'},
     {label:'REGISTRO PRESENCIAL',value:'F1_004'},
     {label:'REGISTRO DE RECEPCIÓN DE LLAMADA',value:'F1_005'}
-    ]"></select2>
+    ]">
+   </select2>
+   <select2 placeholder= "Formatos" *ngIf="isCallCenter" (valueChange)="changeFormat($event, id)" [options]="[
+   {label:'REGISTRO DE RECEPCIÓN DE LLAMADA',value:'F1_005'}
+   ]">
+  </select2>
 	</div>
 	<div class="col-md-auto">
         <div class="form-group">
