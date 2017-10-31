@@ -118,7 +118,6 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                     var horas: string=(String(fechaCompleta.getHours()).length==1)?'0'+fechaCompleta.getHours():String(fechaCompleta.getHours());
                     var minutos: string=(String(fechaCompleta.getMinutes()).length==1)?'0'+fechaCompleta.getMinutes():String(fechaCompleta.getMinutes());;
                     this.model.horaConlcusionLlamada=horas+':'+minutos;
-
                     console.log("Emitiendo id..",this.model.id)
                     this.idEmitter.emit({id: this.model.id});
                     this.fillForm(this.model);
@@ -254,12 +253,15 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
     public data: DocumentoPredenuncia[] = [];
     public subject:BehaviorSubject<DocumentoPredenuncia[]> = new BehaviorSubject<DocumentoPredenuncia[]>([]);
     public source:TableDataSource = new TableDataSource(this.subject);
+    public isCallCenter:boolean=false;
 
   constructor(
       public http: HttpService,
       public confirmationService:ConfirmationService,
       public globalService:GlobalService,
-      public dialog: MatDialog
+      public dialog: MatDialog,
+      public authen: AuthenticationService,
+
       ){
       super(http, confirmationService, globalService, dialog);
   }
@@ -274,6 +276,12 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
             }
 
         }
+      for (let role of this.authen.user.roles) {
+        if(role===this.authen.roles.callCenter){
+            this.isCallCenter=true;
+           console.log(this.isCallCenter)
+         }
+      }
     }
 
   public setData(_object){
