@@ -29,6 +29,7 @@ export class SelectsService {
     public denunciaQuerella: MOption[] = [];
     public victimaQuerellante: MOption[] = [];
     public tipoPersona: MOption[] = [];
+    public tipoLinea: MOption[] = [];
 
     constructor(
         private http: HttpService,
@@ -56,6 +57,7 @@ export class SelectsService {
         this.getDenunciaQuerella();
         this.getVictimaQuerellante();
         this.getTipoPersona();
+        this.getTipoLinea();
     }
 
     public getVictimaQuerellante(){
@@ -322,6 +324,18 @@ export class SelectsService {
             this.db.get("catalogos","tipo_persona").then(response=>{
                 this.tipoPersona = this.constructOptions(response["arreglo"]);
             });
+        }
+    }
+
+    public getTipoLinea(){
+        if(this.onLine.onLine){
+            this.http.get('/v1/catalogos/predenuncia/tipo-linea/options').subscribe((response) => {
+                this.tipoLinea = this.constructOptions(response);
+            });
+        }else{
+            // this.db.get("catalogos","tipo_persona").then(response=>{
+            //     this.tipoPersona = this.constructOptions(response["arreglo"]);
+            // });
         }
     }
 
