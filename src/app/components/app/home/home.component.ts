@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { ActivatedRoute }    from '@angular/router';
+import { AuthenticationService } from '@services/auth/authentication.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
@@ -28,7 +29,8 @@ export class HomeComponent implements OnInit {
         private route: ActivatedRoute,
         private _db: CIndexedDB,
         private _onLine: OnLineService,
-        private _http: HttpService
+        private _http: HttpService,
+        public auth: AuthenticationService
         ) {
         this.db     = _db;
         this.onLine = _onLine;
@@ -37,7 +39,7 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(){
         if(this.onLine.onLine){
-            this.page('/v1/base/casos');
+            this.page(`/v1/base/casos/titulares/${this.auth.user.username}/page`);
         }else{
             this.db.list('casos').then(list => {
                 for(let object in list){

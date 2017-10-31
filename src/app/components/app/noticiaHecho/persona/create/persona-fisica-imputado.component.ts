@@ -776,7 +776,13 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     public fillForm(_data){
-        _data.fechaNacimiento = new Date(_data.fechaNacimiento);
+        console.log('---------------->', _data)
+        var z = new Date(_data.fechaNacimiento);
+        if (isNaN(z.getTime())) {
+            _data.fechaNacimiento = null;
+        }else{
+            _data.fechaNacimiento = z;    
+        }
         for (var propName in _data) {
             if (_data[propName] === null || _data[propName] === undefined) {
               delete _data[propName];
@@ -868,11 +874,19 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
     }
 
     edad(e){
-        var a=moment(e);
-        var hoy=moment();
-        var edad=hoy.diff(a, 'years');
-        this.globals.form.patchValue({edad:edad});
-        this.globals.form.controls.edad.disable();
+        
+        var m = moment(e);
+        console.log(typeof e,m.isValid());
+        if (m.isValid()){
+            var a=moment(e);
+            var hoy=moment();
+            var edad=hoy.diff(a, 'years');
+            this.globals.form.patchValue({edad:edad});
+            this.globals.form.controls.edad.disable();
+        }else{
+            this.globals.form.controls.edad.enable();
+        }
+        
     }
 }
 

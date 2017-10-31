@@ -59,7 +59,7 @@ export class PersonaComponent implements OnInit{
     }
 
     public changePage(_e) {
-        this.page('/v1/base/casos/'+this.casoId+'/personas-casos?p='+_e.pageIndex+'&tr='+_e.pageSize)
+        this.page('/v1/base/personas-casos/casos/'+this.casoId+'/page?p='+_e.pageIndex+'&tr='+_e.pageSize)
     }
 
     public page(url:string){

@@ -6,7 +6,7 @@
         <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/lugares/create" color="accent">Agregar lugar</button>
     </div>
 </div>
-<mat-paginator #paginator [length]="pag" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" >
+<mat-paginator #paginator [length]="pag" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="changePage($event)" >
 </mat-paginator>
 <mat-table #table [dataSource]="dataSource">
 

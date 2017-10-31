@@ -17,6 +17,7 @@ permanezca conectado entre actualizaciones o sesiones, el comportamiento podría
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs';
+import { _usuarios } from './usuarios';
 import 'rxjs/add/operator/map'
 
 @Injectable()
@@ -143,63 +144,6 @@ export class Role {
     constructor(_role: string) {
         this.nombre = _role;
     }
-}
-
-export var _usuarios = {
-    'callCenter' : {
-        'nombreCompleto': 'Call Center',
-        'username': 'callCEnter', 
-        'roles': ['callCenter'],
-        'distrito': 'TOL',
-        'fiscalia': 'TOL',
-        'agencia': 'MET',
-        'turno': 'MA',
-        'municipio': '057',
-        'autoridad': 'CLL'
-    },
-    'uai' : {
-        'nombreCompleto': 'Orientador Jurídico',
-        'username': 'uai', 
-        'roles': ['uai'],
-        'distrito': 'TOL',
-        'fiscalia': 'TOL',
-        'agencia': 'MET',
-        'turno': 'MA',
-        'autoridad': 'UAI'
-    }, 
-    'express' : {
-        'nombreCompleto': 'Módulo Express',
-        'username': 'express', 
-        'roles': ['express'],
-        'distrito': 'TOL',
-        'fiscalia': 'TOL',
-        'agencia': 'MET',
-        'turno': 'MA',
-        'municipio': '057',
-        'autoridad': 'EXP'
-    },
-    'mpuai' : {
-        'nombreCompleto': 'MP de UAI',
-        'username': 'mpuai', 
-        'roles': ['mpuai'],
-        'distrito': 'TOL',
-        'fiscalia': 'TOL',
-        'agencia': 'MET',
-        'turno': 'MA',
-        'municipio': '057',
-        'autoridad': 'MPU'
-    },
-    'mpi' : {
-        'nombreCompleto': 'MPI',
-        'username': 'mpi', 
-        'roles': ['mpi'],
-        'distrito': 'TOL',
-        'fiscalia': 'TOL',
-        'agencia': 'MET',
-        'turno': 'MA',
-        'municipio': '057',
-        'autoridad': 'MPI'
-    } 
 }
 
 

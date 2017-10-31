@@ -56,6 +56,9 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
             'titulares': new FormArray([
                 new FormGroup({
                     'fechaAsignacion': new FormControl(new Date()),
+                    'userNamePropietario': new FormControl(this.auth.user.username),
+                    'userNameAsignado': new FormControl(this.auth.user.username),
+                    'vigente': new FormControl(true),
                 })
             ]),
         });
