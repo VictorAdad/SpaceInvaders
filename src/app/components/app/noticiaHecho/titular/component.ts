@@ -55,7 +55,7 @@ export class TransferirComponent{
     }
 
     public findByAgencia(_agencia: string){
-        this.http.get(`/v1/administration/ldap/usuarios?f=${_agencia}`).subscribe(
+        this.http.get(`/v1/administration/ldap/fiscalias/agencias/usuarios?f=${_agencia}`).subscribe(
             response => {
                 // for (let object of response) {
                 //     this.usuarios.push({value: object.name, label: object.name});
