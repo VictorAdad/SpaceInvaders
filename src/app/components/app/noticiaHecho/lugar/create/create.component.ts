@@ -95,7 +95,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                     }
                    });
                 }
-                
+
             }
         });
         this.mapsAPILoader.load().then(() => {
@@ -103,7 +103,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 types: ["address"]
             });
             autocomplete.addListener("place_changed", () => {
-                this.ngZone.run(() => {    
+                this.ngZone.run(() => {
                 //get the place result
                 let place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
@@ -147,7 +147,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             'noInterior'     : new FormControl('', []),
             'refeGeograficas' : new FormControl('', []),
             'detalleLugar' : new FormGroup({
-                'id': new FormControl("",[])                
+                'id': new FormControl("",[])
             }),
             'pais': new FormGroup({
                 'id': new FormControl("",[Validators.required,]),
@@ -176,7 +176,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             if(this.lugarServ.finded.length > 0){
                 _model.detalleLugar.id = this.lugarServ.finded[0].id;
             }
-            
+
             if(this.onLine.onLine){
                 console.log("MODELO",_model);
                 this.http.post('/v1/base/lugares', _model).subscribe(
@@ -211,7 +211,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                             _model.detalleLugar["dia"]=_model["dia"];
                             _model.detalleLugar["tipoLugar"]=_model["tipo"];
                             _model.detalleLugar["tipoZona"]=_model["tipoZona"];
-                            
+
                             caso["lugar"].push(_model);
                             this.db.update("casos",caso).then(t=>{
                                 resolve("Se creo un nuevo lugar con éxito");
@@ -219,7 +219,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                             });
                         }
                     });
-                }); 
+                });
             }
         });
     }
@@ -269,7 +269,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                         });
                         console.log("caso",t);
                     });
-                }); 
+                });
             }
         });
     }
@@ -299,8 +299,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 "notas"           :_data.notas,
                 "refeGeograficas" :_data.refeGeograficas,
                 "calle"           :_data.calle,
-                "numExterior"     :_data.numExterior,
-                "numInterior"     :_data.numInterior,
+                "noExterior"      :_data.noExterior,
+                "noInterior"      :_data.noInterior,
                 "pais"            :_data.pais,
                 "referencias"     :_data.referencias,
                 "colonia"         :_data.colonia? _data.colonia:new Colonia(),
@@ -308,12 +308,12 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 "municipio"       :_data.municipio? _data.municipio:new Municipio(),
                 "detalleLugar"    :_data.detalleLugar? _data.detalleLugar:{},
                 "caso"            :_data.caso? _data.caso:new Caso(),
-                
+
             }
 
           );
     //  this.form.patchValue(_data);
-        
+
     }
 
     public changeLocation(_e){
@@ -323,9 +323,9 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         console.log(this);
     }
 
-    changePais(id){    
-        console.log('-------->', id);    
-        if(id!=null && typeof id !='undefined'){ 
+    changePais(id){
+        console.log('-------->', id);
+        if(id!=null && typeof id !='undefined'){
             this.optionsServ.getEstadoByPais(id);
             this.isMexico = (id==_config.optionValue.idMexico);
             console.log(this.optionsServ.paises);
@@ -345,12 +345,12 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
               this.form.controls.coloniaOtro.enable();
               this.form.controls.municipioOtro.enable();
           }
-          
-          
-    }  
+
+
+    }
 
     changeEstado(id){
-        if(id!=null && typeof id !='undefined'){ 
+        if(id!=null && typeof id !='undefined'){
             this.optionsServ.getMunicipiosByEstado(id);
             this.form.controls.estado.patchValue(id);
             console.log(this.form.controls)

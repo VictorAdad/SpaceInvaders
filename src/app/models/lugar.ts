@@ -2,8 +2,8 @@ export class Lugar{
     tipo: string;
     tipo_zona: string;
     calle: string;
-    n_exterior: string;
-    n_interior: string;
+    noExterior: string;
+    noInterior: string;
     referencias: string;
     pais: string;
     estado: string;
