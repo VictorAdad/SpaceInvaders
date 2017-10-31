@@ -462,8 +462,9 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     */
     agregaIdTemporales(_model, temId,otrosID,putID=false){
         var dependeDe=[this.casoId];
-        (_model.personaCaso[0])["personaId"]=temId;
-        otrosID.push({personaCaso:{0: {personaId:temId} } });
+        if(putID)
+            (_model.personaCaso[0])["personaId"]=temId;
+        otrosID.push({id:temId});
         dependeDe.push(temId);
         temId++;
         if(putID)
@@ -471,7 +472,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         if(putID)
             (_model.personaCaso[0])["id"]=temId;
         dependeDe.push(temId);
-        otrosID.push({personaCaso:{0: {id:temId} } });
+        otrosID.push({personaCasoId:temId });
         //las localizaciones
         if (_model["localizacionPersona"])
         {
@@ -481,7 +482,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     obj[i]={id:temId};
                 if(putID)
                     ((_model["localizacionPersona"])[i])["id"]=temId;
-                otrosID.push({localizacionPersona:{obj} });
+                var jason = JSON.parse('{"localizacionPersona":{ "'+i+'":{"id":'+temId+'} } }');
+                otrosID.push(jason);
                 dependeDe.push(temId);
             }
         }
@@ -505,7 +507,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     obj[i]={id:temId};
                     if(putID)
                         ((_model["aliasNombrePersona"])[i])["id"]=temId;
-                    otrosID.push({aliasNombrePersona:{obj} });
+                    var jason = JSON.parse('{"aliasNombrePersona":{ "'+i+'":{"id":'+temId+'} } }');
+                    otrosID.push(jason);
                     dependeDe.push(temId);
                 }
             }
@@ -517,7 +520,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     en otros id se guardan los ids que se tienen que crear
     */
     agregaIdTemporalesEdit(_model, temId,otrosID,putID=false){
-        var dependeDe=[this.casoId,this.id];
+        var dependeDe=[this.casoId,this.id,(_model["personaCaso"])[0].personaId];
         
         //las localizaciones
         if (_model["localizacionPersona"])
@@ -530,7 +533,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     if(putID){
                         ((_model["localizacionPersona"])[i])["id"]=temId;    
                     }   
-                    otrosID.push({localizacionPersona:{obj} });
+                    var jason = JSON.parse('{"localizacionPersona":{ "'+i+'":{"id":'+temId+'} } }');
+                    otrosID.push(jason);
                     dependeDe.push(temId);
                     temId++;
                 }else{
@@ -562,7 +566,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     if (!Number.isInteger( ((_model["aliasNombrePersona"])[i])["id"] )){
                         if(putID)
                             ((_model["aliasNombrePersona"])[i])["id"]=temId;
-                        otrosID.push({aliasNombrePersona:{obj} });
+                        var jason = JSON.parse('{"aliasNombrePersona":{ "'+i+'":{"id":'+temId+'} } }');
+                        otrosID.push(jason);
                         dependeDe.push(temId);
                         temId++;
                     }else{
@@ -618,16 +623,18 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     temId: temId,
                     otrosID: otrosID
                 }
-                console.log("SI");
+                _model["id"]="";
+                console.log("MODEL",_model);
                 this.tabla.add("sincronizar",dato).then(response=>{
                     this.tabla.get("casos",this.casoId).then(
                             casoR=>{
                         this.caso=casoR as Caso;
 
-                        console.log("SI");
+                        console.log("MODEL",_model);
                         this.agregaIdTemporales(_model,copia,otrosID,true);
+                        console.log("MODEL",copia,_model);
                         _model["dependeDe"]=dependeDe;
-                        this.tabla.add('personas', _model).then( p => {
+                        this.tabla.update('personas', _model).then( p => {
                             console.log("SI");
                             if (!this.caso["personas"])
                                 this.caso["personas"]=[];
@@ -711,7 +718,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                                 ds=>{
                                     console.log("Editar Persona->",ds);
                                     resolve("Se actualizó la persona de manera local");
-                                    // this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas']);
+                                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas']);
 
                             });
 
