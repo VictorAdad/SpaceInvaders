@@ -47,4 +47,21 @@ export class LugarComponent{
         });
     }
 
+    public changePage(_e){
+        if(this.onLine.onLine){
+            this.page('/v1/base/lugares/casos/'+this.casoId+'/page?p='+_e.pageIndex+'&tr='+_e.pageSize);
+            
+        }
+    }  
+
+    public page(url: string){
+        this.http.get(url).subscribe((response) => {
+            this.pag = response.totalCount;
+            this.data = response.data as Lugar[];
+            console.log("Loading Lugares..");
+            console.log(this.data);
+            this.dataSource = new TableService(this.paginator, this.data);
+        });
+    }
+
 }
