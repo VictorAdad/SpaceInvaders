@@ -42,6 +42,7 @@ export class HomeComponent implements OnInit {
             this.page(`/v1/base/casos/titulares/${this.auth.user.username}/page`);
         }else{
             this.db.list('casos').then(list => {
+                this.loadList = false;
                 for(let object in list){
                     let caso = new Caso();
                     Object.assign(caso, list[object]);

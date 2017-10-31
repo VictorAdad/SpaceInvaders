@@ -46,14 +46,29 @@ export class TrataPersonas {
         _municipiosDestino,
         _optionsRelacion
         ){
-        this.paisOrigen      = _options.find('paises', _object.paisOrigen.id).label;
-        this.estadoOrigen    = _estadosOrigen[_object.estadoOrigen.id].label;
-        this.municipioOrigen = _municipiosOrigen[_object.municipioOrigen.id].label;
-        this.paisDestino     = _options.find('paises', _object.paisDestino.id).label;
-        this.estadoDestino   = _estadosDestino[_object.estadoDestino.id].label;
-        this.municipioDestino= _municipiosDestino[_object.municipioDestino.id].label;
-        this.tipo            = _optionsRelacion.matrizTipoTransportacion.finded[0].tipo;
-        this.transportacion  = _optionsRelacion.matrizTipoTransportacion.finded[0].transportacion;
+        this.paisOrigen      =
+            _options.find('paises', _object.paisOrigen.id).label;
+
+        this.estadoOrigen    = 
+            typeof _estadosOrigen[_object.estadoOrigen.id] !== 'undefined' ? _estadosOrigen[_object.estadoOrigen.id].label : '';
+
+        this.municipioOrigen = 
+            typeof _municipiosOrigen[_object.municipioOrigen.id] !== 'undefined' ? _municipiosOrigen[_object.municipioOrigen.id].label : '';
+
+        this.paisDestino     =
+            _options.find('paises', _object.paisDestino.id).label;
+
+        this.estadoDestino   =
+            typeof _estadosDestino[_object.estadoDestino.id] !== 'undefined' ? _estadosDestino[_object.estadoDestino.id].label : '';
+
+        this.municipioDestino=
+            typeof _municipiosDestino[_object.municipioDestino.id] !== 'undefined' ? _municipiosDestino[_object.municipioDestino.id].label : '';
+
+        this.tipo            =
+            _optionsRelacion.matrizTipoTransportacion.finded[0].tipo;
+
+        this.transportacion  =
+            _optionsRelacion.matrizTipoTransportacion.finded[0].transportacion;
 
     }
 

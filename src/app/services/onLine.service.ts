@@ -33,7 +33,7 @@ export class OnLineService {
             let message="Se perdio la conexión";
             if(this.onLine){
                 message="Se extablecio la conexión";
-                //this.startSincronizacion();
+                this.startSincronizacion();
             }
 
             if (this.anterior!=this.onLine){
@@ -146,6 +146,7 @@ export class OnLineService {
         //me conviene bajar todo el diccionario de newId y buscar ahi
         this.db.list("newId").then(diccionario=>{
             var listNewId = diccionario as any[];
+            console.log("ARREGLO DEPENDENCIAS",dependencias);
             for (var k = 0; k < dependencias.length; ++k) {
                 for (var j = 0; j < listNewId.length; ++j) {
                     if (dependencias[k]==(listNewId[j])["id"] ){
@@ -173,21 +174,70 @@ export class OnLineService {
         });
     }
 
+    buscarValores(original, model){
+        console.log("ORIGINAL",original,"MODEL",model);
+        if (typeof model=="object"){
+            for (let x in model){
+                if (original[x]){
+                    return this.buscarValores(original[x],model[x]);
+                }
+                else
+                    return null;
+            }
+        }else{
+            return{    
+                id:model,
+                newId:original
+            };
+        }
+    }
+
     doPost(_url, item, i, lista){
         this.http.post(_url, item.body).subscribe(
             respuesta=>{
-                console.log("repuesta",respuesta);
+                console.log("RESPONSE POST",respuesta);
                 item.pendiente=false;
                 if (item["temId"] && respuesta){
                     //convertimos la cadena en json
                     var json = respuesta;
-                    //esto es necesario para actualizar las llaves de las peticiones
-                    this.db.update("newId",{id:item["temId"],newId:json["id"]}).then(p=>{
-                        this.db.update("sincronizar",item).then( respuesta =>{
-                            this.seActualizoAlmenosUnRegistro=true;
-                            this.sincroniza(i+1,lista);
+                    var obj=this;
+
+                    var agregaOtrosId=function(arrId:any[],original) {
+                        return new Promise((resolve,reject)=>{
+                            if (arrId.length<1)
+                                resolve(true);
+                            var cont =0;
+                            for (var k = 0; k < arrId.length; ++k) {
+                                var model=arrId[k];
+                                var ids=obj.buscarValores(original,model);
+                                if (ids)
+                                    obj.db.update("newId",{id:ids.id,newId:ids.newId}).then(p=>{
+                                        cont++;
+                                        if(cont==arrId.length)
+                                            resolve(true);
+                                    });
+                                else
+                                    cont++;
+                            }
                         });
-                    });
+                    }//si hay otros ids
+                    if (item["otrosID"]){
+                        agregaOtrosId(item["otrosID"],json).then(p=>{
+                            console.log("NUNCALLEGO",item);
+                            this.db.update("sincronizar",item).then( respuesta =>{
+                                this.seActualizoAlmenosUnRegistro=true;
+                                this.sincroniza(i+1,lista);
+                            });
+                        });
+                    }else{
+                        //esto es necesario para actualizar las llaves de las peticiones
+                        this.db.update("newId",{id:item["temId"],newId:json["id"]}).then(p=>{
+                            this.db.update("sincronizar",item).then( respuesta =>{
+                                this.seActualizoAlmenosUnRegistro=true;
+                                this.sincroniza(i+1,lista);
+                            });
+                        });
+                    }
                 }else{
                     this.db.update("sincronizar",item).then( respuesta =>{
                         this.seActualizoAlmenosUnRegistro=true;
@@ -203,18 +253,47 @@ export class OnLineService {
     }
 
     doPut(_url, item, i, lista){
-        this.http.put(_url, item.body).subscribe(
-            respuesta=>{
-                item.pendiente=false;
-                this.db.update("sincronizar",item).then( respuesta =>{
-                    this.seActualizoAlmenosUnRegistro=true;
+        this.db.list("newId").then(listaNewId=>{
+            console.log("URL",_url,"MODELO",item.body);
+            this.sustituyeHojasPorNewId(item.body,listaNewId);
+            var lista=listaNewId as any[];
+            for (var i = 0; i < lista.length; ++i) {
+                _url=_url.replace(""+lista[i].id,""+lista[i].newId);
+            }
+            console.log("URL",_url,"MODELO",item.body);
+            this.http.put(_url,item.body).subscribe(
+                respuesta=>{
+                    console.log("RESPONSE EDIT=>",respuesta);
+                    item.pendiente=false;
+                    this.db.update("sincronizar",item).then( respuesta =>{
+                        this.seActualizoAlmenosUnRegistro=true;
+                        this.sincroniza(i+1,lista);
+                    });
+            },
+                error=>{
+                    console.log("Error:",error);
                     this.sincroniza(i+1,lista);
-                });
-        },
-            error=>{
-                console.log("Error:",error);
-                this.sincroniza(i+1,lista);
+            });
         });
+        
+    }
+
+    sustituyeHojasPorNewId(json,listNewId){
+        if (typeof json=="object"){
+            for (var key in json){//si es objecto
+                if (typeof json[key]=="object")
+                    this.sustituyeHojasPorNewId(json[key],listNewId);
+                else{// si es hoja
+                    for (var i = 0; i < listNewId.length; ++i) {
+                        if (json[key]==listNewId[i].id){
+                            json[key]=listNewId[i].newId;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
     

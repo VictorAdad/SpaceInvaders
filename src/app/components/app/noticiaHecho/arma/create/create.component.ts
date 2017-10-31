@@ -74,8 +74,8 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/armas/'+this.id).subscribe(response =>{
                         this.model = response as Arma;
-                        console.log("La arma",this.model);
-                        this.isArmaFuego=this.model.claseArma.claseArma==="fuego";
+                        console.log("Arma->",this.model);
+                        this.isArmaFuego=this.model.claseArma.claseArma===_config.optionValue.armaFuego;
                         this.fillForm(response);
                     });
                 }else{
@@ -112,7 +112,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                     if(this.armaServ.calibreMecanismo.finded[0])
                         _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id
                 }
-                
+
                 this.http.post('/v1/base/armas', _model).subscribe(
                     (response) => {
                         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/armas' ]);
@@ -156,7 +156,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                             });
                         }
                     });
-                }); 
+                });
             }
         });
     }
@@ -174,9 +174,9 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                     if(!this.onLine.onLine)
                         _model.calibreMecanismo = this.armaServ.calibreMecanismo.finded[0];
                 }
-        
+
                 console.log('-> Arma@edit()', _model);
-                if(this.onLine.onLine){            
+                if(this.onLine.onLine){
                     this.http.put('/v1/base/armas/'+this.id, _model).subscribe((response) => {
                         console.log('-> Registro acutualizado', response);
                         resolve("Se actualizó la información del arma");
@@ -204,14 +204,14 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                             }
                             this.db.update("casos",t).then(e=>{
                                 console.log("caso",t);
-                                resolve("Se actualizó la información del arma de manera local");    
+                                resolve("Se actualizó la información del arma de manera local");
                             });
-                            
+
                         });
                         //this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
-                    }); 
+                    });
                 }
-                
+
             }else{
                 console.log("No se ha encontrado combinación clase de arma, tipo, subtipo o calibre mecanismo")
             }
@@ -223,7 +223,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         let timer = Observable.timer(1);
         this.form.patchValue({
             'clase': _data.claseArma.claseArma
-        });    
+        });
         timer.subscribe(t => {
             this.form.patchValue({
             'tipo': _data.claseArma.tipo,
@@ -235,7 +235,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
             'claseArma' : _data.claseArma.claseArma,
             'calibreMecanismo' : _data.calibreMecanismo
             })
-            
+
         });
 
     }
@@ -243,7 +243,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
 
 
     public claseChange(option){
-        
+
         if(option == _config.optionValue.armaFuego){
            this.isArmaFuego=true;
            this.form.controls.tipo.enable();
@@ -259,10 +259,10 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         else{
            this.isArmaBlanca=false;
         }
-        
+
         this.armaServ.claseArma.find(option, 'claseArma');
         console.log(this.armaServ.claseArma)
-        
+
     }
 
     }

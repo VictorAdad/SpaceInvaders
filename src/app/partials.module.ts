@@ -8,6 +8,7 @@ import { Select2Component } from '@partials/form/select2/select2.component';
 import { TokenInputComponent } from '@partials/form/tokeninput/tokeninput.component';
 import { BreadcrumbComponent } from '@partials/breadcrumb/breadcrumb.component';
 import { TimeComponent } from '@partials/form/time/time.component';
+import { NumberComponent } from '@partials/form/number/component';
 import { PasswordComponent } from '@partials/form/password/component';
 import { LoaderComponent } from '@partials/loader/component';
 import { CasoNicComponent } from '@partials/caso/component';
@@ -28,5 +29,6 @@ export const partialsComponents = [
 	TimeComponent,
 	PasswordComponent,
 	LoaderComponent,
-	CasoNicComponent
+	CasoNicComponent,
+	NumberComponent
 ];

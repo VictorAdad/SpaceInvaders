@@ -104,16 +104,17 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
     }
 
     public save(_valid : boolean, _model : any):Promise<any>{
+        Object.assign(_model, this.model);
+        console.log('Model', _model);
+        // _model["agencia"]={id:1};
+        _model["nic"]=this.generateNIC(_model);
+        // _model["estatus"]={id:1};
+
+        _model.created = null;
+        _model.delitoCaso.delito.id =  this.delito.id;
         return new Promise((resolve,reject)=>{
             if(this.onLine.onLine){
-                Object.assign(_model, this.model);
-                console.log('Model', _model);
-                // _model["agencia"]={id:1};
-                _model["nic"]=this.generateNIC(_model);
-                // _model["estatus"]={id:1};
-
-                _model.created = null;
-                _model.delitoCaso.delito.id =  this.delito.id;
+                
                 this.http.post('/v1/base/casos', _model).subscribe((response) => {
                     resolve("Se creó con éxito el Caso");
                     this.router.navigate(['/caso/'+response.id+'/noticia-hecho/datos-generales' ]);
@@ -121,22 +122,21 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                     reject(e);
                 });
             }else{
+                delete _model["created"];
+                let temId=Date.now();
+                console.log("MODEL",_model);
                 let dato={
                     url:'/v1/base/casos',
-                    body:{
-                        titulo:_model.titulo,
-                        sintesis:_model.sintesis,
-                        delito:_model.delito
-                    },
+                    body:_model,
                     options:[],
                     tipo:"post",
                     pendiente:true,
-                    newId:0
+                    newId:0,
+                    temId:temId
                 }
-                _model.created = new Date();
-                this.db.add('casos', _model).then(object => {
-                    dato["temId"]=object["id"];
-                    this.db.add("sincronizar",dato).then(p=>{
+                this.db.add("sincronizar",dato).then(p=>{
+                    _model["id"]=temId;
+                    this.db.add('casos', _model).then(object => {
                         resolve("Se creó el caso de manera local");
                         this.router.navigate(['/caso/'+object['id']+'/noticia-hecho' ]);
                     });

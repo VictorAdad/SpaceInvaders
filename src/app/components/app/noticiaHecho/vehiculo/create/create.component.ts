@@ -55,7 +55,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             'motivoRegistro'        : new FormControl("", [Validators.required,]),
             'campoVehiculo'         : new FormControl("", [Validators.required,]),
             'tarjetaCirculacion'    : new FormControl("", []),
-            'economico'           : new FormControl("", []),
+            'noEconomico'           : new FormControl("", []),
             'clase'                 : new FormControl("", []),
             'marca'                 : new FormControl("", [Validators.required,]),
             'submarca'              : new FormControl("", [Validators.required,]),
@@ -63,20 +63,20 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             'modelo'                : new FormControl("", [Validators.required,]),
             'placas'                : new FormControl("", [Validators.required,]),
             'placasAdicionales'     : new FormControl("", []),
-            'registroFederal'       : new FormControl("", []),
-            'noSerie'                 : new FormControl("", [Validators.required,]),
-            'noMotor'                 : new FormControl("", [Validators.required,]),
+            'registroFederalVehiculo': new FormControl("", []),
+            'noSerie'               : new FormControl("", [Validators.required,]),
+            'noMotor'               : new FormControl("", [Validators.required,]),
             'aseguradora'           : new FormControl("", []),
             'factura'               : new FormControl("", []),
             'datosTomados'          : new FormControl("", []),
-            'noPoliza'                : new FormControl("", []),
+            'noPoliza'              : new FormControl("", []),
             'valorEstimado'         : new FormControl("", []),
             'tipoUso'               : new FormControl("", []),
             'procedencia'           : new FormControl("", []),
             'pedimentoImportacion'  : new FormControl("", []),
             'llevaCarga'            : new FormControl(""),
             'alterado'              : new FormControl(""),
-            'senasParticulares'     : new FormControl("", []),
+            'seniasParticulares'     : new FormControl("", []),
             'notas'                 : new FormControl("", []),
 
             'marcaSubmarca'         : new FormGroup({
@@ -288,7 +288,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             }
             if (_data.tipoUsoTipoVehiculo){
                 _data["tipoUso"]=_data.tipoUsoTipoVehiculo.tipoUso;
-                _data["campoVehiculo"]=_data.tipoUsoTipoVehiculo.tipoVehiculo;            
+                _data["campoVehiculo"]=_data.tipoUsoTipoVehiculo.tipoVehiculo;
                 _data["datosTomados"]=_data.tipoUsoTipoVehiculo.datosTomadosDe;
             }
         }

@@ -26,7 +26,11 @@ export class MatrizGlobal {
                     && String(attr) !== 'getUnique'
                     && String(attr) !== 'constructor'
                     && String(attr) !== 'find'
-                    && String(attr) !== 'validate'){
+                    && String(attr) !== 'validate'
+                    && String(attr) !== 'getMatriz'
+                    && String(attr) !== 'db'
+                    && String(attr) !== 'catalogo'
+                    && String(attr) !== 'superDb'){
                     this[String(attr)] = this.getUniques(this.objects, attr);
                 }
             }
@@ -48,8 +52,9 @@ export class MatrizGlobal {
         let uniques: string[] = [];
 
         for(let i = 0; i< _data.length; i++){
-            if(uniques.indexOf(_data[i][_unique]) === -1)
-                uniques.push(_data[i][_unique]);
+            if(_data[i][_unique] !== null)
+                if(uniques.indexOf(_data[i][_unique]) === -1)
+                    uniques.push(_data[i][_unique]);
         }
 
         return uniques;
