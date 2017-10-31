@@ -33,7 +33,7 @@ export class OnLineService {
             let message="Se perdio la conexión";
             if(this.onLine){
                 message="Se extablecio la conexión";
-                //this.startSincronizacion();
+                this.startSincronizacion();
             }
 
             if (this.anterior!=this.onLine){
