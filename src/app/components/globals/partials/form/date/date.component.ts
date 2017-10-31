@@ -10,7 +10,8 @@ export class DateComponent{
 	@Input() label : string = 'Seleccione una fecha';
 	@Input() value : string;
 	@Input() name  : string  = '';
-	@Input() group : FormGroup = new FormGroup({});
+  @Input() group : FormGroup = new FormGroup({});
+  @Input() disabled: boolean=false;
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
 	update(value) {
 		this.valueChange.emit(value);

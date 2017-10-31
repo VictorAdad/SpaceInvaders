@@ -281,13 +281,26 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
       this.data.push(_object);
       this.subject.next(this.data);
   }
+  public cargaArchivos(_archivos){
+    for (let object of _archivos) {
+      let obj = {
+        'id': 0,
+        'nameEcm': object.some.name,
+        'created': new Date(),
+        'procedimiento': '',
+      }
+      this.data.push(obj);
+      this.subject.next(this.data);
+        }
+}
+
 }
 
 export class DocumentoPredenuncia {
 	id:number
 	nameEcm: string;
-	contentType: string;
-	uuidEcm: string;
+	procedimiento: string;
+	created: Date;
 }
 
 
