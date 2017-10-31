@@ -61,10 +61,10 @@
                         <text label="RFC" name="rfc" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <select2 placeholder="¿Sabe leer y escribir?" 
+                        <select2 placeholder="¿Sabe leer y escribir?"
                         [options]="
                         [
-                             {label:'Si',value:true}, 
+                             {label:'Si',value:true},
                              {label:'No',value:false}
                         ]" name="sabeLeerEscribir" [group]="form"></select2>
                     </div>
@@ -108,7 +108,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        <text label="CP" name="cp" [group]="form"></text>
+                        <number label="CP" name="cp" [group]="form"></number>
                     </div>
                     <div class="col-md-3">
                         <text label="Municipio" name="municipio" [group]="form"></text>
@@ -135,7 +135,7 @@
                     <div class="col-md-4">
                         <select2 [options]="
                         [
-                             {label:'Si',value:true}, 
+                             {label:'Si',value:true},
                              {label:'No',value:false}
                         ]" placeholder="¿Cuenta con representante legal?" [group]="form"
                         name="tieneRepresentanteLegal">
@@ -147,7 +147,7 @@
                     <div class="col-md-4">
                         <select2 [options]="
                         [
-                             {label:'Si',value:true}, 
+                             {label:'Si',value:true},
                              {label:'No',value:false}
                         ]" placeholder="¿Se utilizó medio tecnológico para el registro de la entrevista?" [group]="form"
                         name="medioTecnologicoRegistro">
@@ -161,7 +161,7 @@
                     <div class="col-md-4">
                         <select2 [options]="
                         [
-                             {label:'Si',value:true}, 
+                             {label:'Si',value:true},
                              {label:'No',value:false}
                         ]" placeholder="¿Se utilizó medio técnico para el registro de la entrevista?" [group]="form"
                         name="medioTecnicoRegistro">
