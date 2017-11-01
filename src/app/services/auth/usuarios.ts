@@ -1,4 +1,15 @@
 export var _usuarios = {
+    'admin' : {
+        'nombreCompleto': 'Administrador del sistema',
+        'username': 'admin', 
+        'roles': ['admin'],
+        'distrito': 'TOL',
+        'fiscalia': 'TOL',
+        'agencia': 'MET',
+        'turno': 'MA',
+        'municipio': '057',
+        'autoridad': 'CLL'
+    },
     'callCenter' : {
         'nombreCompleto': 'Call Center',
         'username': 'callCenter', 
@@ -162,5 +173,71 @@ export var _usuarios = {
         'turno': 'MA',
         'municipio': '057',
         'autoridad': 'MPI'
+    },
+    'call.center.demo' : {
+        'nombreCompleto': 'Call Center Demo',
+        'username': 'call.center.demo', 
+        'roles': ['callCenter'],
+        'distrito': 'TOL',
+        'fiscalia': 'TOL',
+        'agencia': 'MET',
+        'turno': 'MA',
+        'municipio': '057',
+        'autoridad': 'MPU'
+    }, 
+    'modulo.express.demo' : {
+        'nombreCompleto': 'Express Demo',
+        'username': 'modulo.express.demo', 
+        'roles': ['express'],
+        'distrito': 'TOL',
+        'fiscalia': 'TOL',
+        'agencia': 'MET',
+        'turno': 'MA',
+        'municipio': '057',
+        'autoridad': 'MPU'
+    }, 
+    'mp.uai.demo' : {
+        'nombreCompleto': 'MP de UAI Demo',
+        'username': 'mp.uai.demo', 
+        'roles': ['mpuai'],
+        'distrito': 'TOL',
+        'fiscalia': 'TOL',
+        'agencia': 'MET',
+        'turno': 'MA',
+        'municipio': '057',
+        'autoridad': 'MPU'
+    },
+    'mpi.demo' : {
+        'nombreCompleto': 'MPI Demo',
+        'username': 'mpi.demo', 
+        'roles': ['mpi'],
+        'distrito': 'MET',
+        'fiscalia': 'MET',
+        'agencia': 'MET',
+        'turno': 'MA',
+        'municipio': '057',
+        'autoridad': 'MPU'
+    },
+    'admin.demo' : {
+        'nombreCompleto': 'Administrador Demo',
+        'username': 'admin.demo', 
+        'roles': ['admin'],
+        'distrito': 'TOL',
+        'fiscalia': 'TOL',
+        'agencia': 'MET',
+        'turno': 'VE',
+        'municipio': '057',
+        'autoridad': 'MPU'
+    },
+    'orientador.demo' : {
+        'nombreCompleto': 'Orientador Jurídico Demo',
+        'username': 'orientador.demo', 
+        'roles': ['uai'],
+        'distrito': 'MET',
+        'fiscalia': 'MET',
+        'agencia': 'MET',
+        'turno': 'VE',
+        'municipio': '057',
+        'autoridad': 'MPU'
     }   
 }
