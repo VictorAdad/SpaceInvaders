@@ -26,7 +26,7 @@ export class AppComponent {
 		private router : Router,
 		private titleService: Title,
     	public globalService : GlobalService,
-    	private servicio: OnLineService,
+    	public servicio: OnLineService,
     	private activeRoute: ActivatedRoute,
         private mdIconRegistry: MatIconRegistry, 
         private sanitizer: DomSanitizer,
