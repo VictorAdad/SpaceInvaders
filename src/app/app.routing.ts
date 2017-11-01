@@ -181,6 +181,7 @@ const routes: Routes = [
     //prueba catalogos
     { path : 'catalogos/estado', component : estadosCatalogosComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogos/estado/create', component : estadosCreateComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/estado/:id', component : estadosCreateComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogos/colonias', component : ColoniaComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogos/colonias/create', component : ColoniaCreateComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogos/colonias/:id', component : ColoniaCreateComponent, data : { breadcrumb : 'Catálogos' } },

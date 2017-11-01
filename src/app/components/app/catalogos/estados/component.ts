@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { CIndexedDB } from '@services/indexedDB';
-import { _catalogos } from '../catalogos';
+
 
 @Component({
     templateUrl: 'estado.component.html',
@@ -32,30 +32,16 @@ export class estadosCatalogosComponent {
         private db:CIndexedDB
         ) {}
 
-    setClickedRow(row) {
-        this.selectedRow = row.id;
-        switch(row.id){
-            case 1:{
-                this.router.navigate(['/catalogo-armas']);
-                break;
-            }
-        }
-    }
-
     ngOnInit() {
         this._activeRoute.params.subscribe(params => {
-            if(params['tipo']){
-                this.tipo = params['tipo'];
-                this.catalogo = _catalogos[this.tipo];
-                if(this.onLine.onLine)
-                    this.page(this.catalogo.url+'/page');
-            }
+            if(this.onLine.onLine)
+                this.page('/v1/catalogos/estado/page');
         });
     }
 
     public changePage(_e){
         if(this.onLine.onLine){
-            this.page(this.catalogo.url+'/page?p='+_e.pageIndex+'&tr='+_e.pageSize);
+            this.page('/v1/catalogos/estado/page?p='+_e.pageIndex+'&tr='+_e.pageSize);
             
         }
     }  
@@ -66,24 +52,4 @@ export class estadosCatalogosComponent {
             this.dataSource = new TableService(this.paginator, response.data);
         });
     }
-}
-
-const data: Catalogo[] = [
-    { id: 1, nombre: 'Armas', descripcion: 'Descripción 1' },
-    { id: 2, nombre: 'Vehículos', descripcion: 'Descripción 2' },
-];
-
-export interface Catalogo {
-    id: number
-    nombre: string;
-    descripcion: string;
-}
-
-export class ExampleDataSource extends DataSource<any> {
-    /** Connect function called by the table to retrieve one stream containing the data to render. */
-    connect(): Observable<Catalogo[]> {
-        return Observable.of(data);
-    }
-
-    disconnect() { }
 }
