@@ -27,6 +27,7 @@
     "@angular/router": "^4.4.6",
     "@jaspero/ng2-confirmations": "^0.3.3",
     "angular2-moment": "^1.7.0",
+    "angular2-notifications": "^0.7.8",
     "core-js": "^2.5.1",
     "eslint": "^4.9.0",
     "hammerjs": "^2.0.8",
