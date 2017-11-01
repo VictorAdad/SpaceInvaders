@@ -41,8 +41,8 @@ export class OnLineService {
             }
 
             if (this.anterior!=this.onLine){
-                this.snackBar.open(message, "Cerrar", {
-                  duration: 2000,
+                this.snackBar.open(message, "", {
+                  duration: 10000,
                 });
             }
         });
