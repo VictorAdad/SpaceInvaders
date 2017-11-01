@@ -41,8 +41,8 @@ export class OnLineService {
             }
 
             if (this.anterior!=this.onLine){
-                this.snackBar.open(message, "Cerrar", {
-                  duration: 2000,
+                this.snackBar.open(message, "", {
+                  duration: 10000,
                 });
             }
         });
@@ -85,7 +85,6 @@ export class OnLineService {
     startSincronizacion(){
 
         if (!this.sincronizando){
-            this.sincronizando=true;
             this.seActualizoAlmenosUnRegistro=false;
             this.db.list("sincronizar").then(lista=>{
                 let datos = lista as any[];
@@ -98,6 +97,7 @@ export class OnLineService {
                       clickToClose: false,
                       maxLength: 10
                     });
+                    this.sincronizando=true;
                     this.sincroniza(0,lista as any[]);
                     this.notificationService.remove();
                 }else{
