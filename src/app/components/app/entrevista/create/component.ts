@@ -92,14 +92,34 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 				this.casoId = +params['casoId'];
 			console.log('casoId', this.casoId);
 			if (params['id']) {
-				this.id = +params['id'];
+				this.id = + params['id'];
 				this.form.disable();
 				console.log('id', this.id);
-				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-          this.fillForm(response);
-          this.modelUpdate.emit(response);
 
-				});
+				if(this.onLine.onLine){
+					this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
+						this.fillForm(response);
+						this.modelUpdate.emit(response);
+
+					});
+				}else{
+					this.db.get("casos", this.casoId).then(t=>{
+                        let entrevistas = t["entrevistas"] as any[];
+                        for (var i = 0; i < entrevistas.length; ++i) {
+                            if ((entrevistas[i])["id"]==this.id){
+                                var entrevista = entrevistas[i];
+                                // (arma["claseArma"])["claseArma"]=arma["clase"];
+                                // if (arma["subtipo"])
+                                //     (arma["claseArma"])["subtipo"]=arma["subtipo"];
+                                // if (arma["tipo"])
+                                //     (arma["claseArma"])["tipo"]=arma["tipo"];
+
+                                this.fillForm(entrevistas[i]);
+                                break;
+                            }
+                        }
+                    });
+				}
 			}
 		});
 
@@ -180,6 +200,33 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 							reject(error);
 						}
 					);
+				}else{
+					let temId=Date.now();
+	                let dato={
+	                    url: this.apiUrl,
+	                    body:_model,
+	                    options:[],
+	                    tipo:"post",
+	                    pendiente:true,
+	                    dependeDe:[this.casoId],
+	                    temId: temId
+	                }
+	                this.db.add("sincronizar",dato).then(p=>{
+	                    this.db.get("casos", this.casoId).then(caso=>{
+	                        if (caso){
+	                            if(!caso["entrevistas"]){
+                        			caso["entrevistas"]=[];
+	                            }
+	                            _model["id"]=temId;
+	                            this.id= _model['id'];
+	                            caso["entrevistas"].push(_model);
+	                            this.db.update("casos",caso).then(t=>{
+	                                resolve("Se agregó la entrevista de manera local");
+	                                this.router.navigate(['/caso/' + this.casoId + '/entrevista/'+this.id+'/view']);
+	                            });
+	                        }
+	                    });
+	                });
 				}
 			}
 		);
