@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '@services/http.service';
+
 import { MOption } from '@partials/form/select2/select2.component';
 import { _config} from '@app/app.config';
+import { OnLineService} from '@services/onLine.service';
+import { CIndexedDB } from '@services/indexedDB';
+
 
 @Injectable()
 export class NoticiaHechoService {
@@ -24,78 +28,162 @@ export class NoticiaHechoService {
     asesoresPrivados  = [];
     ofendidos  = [];
     policias  = [];
+    caso=null;
 
     constructor(
-        private http: HttpService
+        private http: HttpService,
+        private db:CIndexedDB,
+        private onLine:OnLineService
         ) {
     }
 
-    public setId(_id: number){
+    public setId(_id: number, _caso){
         this.id = _id;
+        this.caso= _caso;
     }
 
-    public getData(){
+    //crea una copia identica al json original
+    public copiaJson(original){
+        if (typeof original=="object"){
+            var obj={};
+            for(let item in original)
+                obj[item]=this.copiaJson(original[item]);
+            return obj;
+        }else
+            return original;
+    }
+    //busca todos los elementos de la lista que coincidan con el item 
+    public buscaTodosLosElementosEnLista(lista, _item){
+        var rec=function(e,y) {
+            if((typeof e)=="object"){
+                let igual=true;
+                for (var element in e){
+                    igual=igual&&rec(e[element],y[element]);
+                }
+                return igual;
+            }
+            return e==y;
+        }
+        var coincidencias=[];
+        for (let item in lista){
+            if (rec(_item,lista[item]))
+                coincidencias.push(this.copiaJson(lista[item])); 
+        }
+        return coincidencias;
+
+    }
+    
+    public llamaDatos(){
+        console.log("CASO->",this.caso);
         this.getLugares();
         this.getVehiculos();
         this.getArmas();
         // this.getPersonas();
         this.getDelitos()
-        this.getInterviniente('apoderadosLegales', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.apoderadoLegal}`, this.constructOptionsPersona);
-        this.getInterviniente('defensoresPublicos', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.defensorPublico}`, this.constructOptionsPersona);
-        this.getInterviniente('representantesLegales', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.representanteLegal}`, this.constructOptionsPersona);
-        this.getInterviniente('asesoresPrivados', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.asesorPrivado}`, this.constructOptionsPersona);
-        this.getInterviniente('imputados', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.imputado}`, this.constructOptionsPersona);
-        this.getInterviniente('testigos', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.testigo}`, this.constructOptionsPersona);
-        this.getInterviniente('asesoresPublicos', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.asesorPublico}`, this.constructOptionsPersona);
-        this.getInterviniente('ofendidos', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.ofendido}`, this.constructOptionsPersona);
-        this.getInterviniente('victimas', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.victima}`, this.constructOptionsPersona);
-        this.getInterviniente('defensoresPrivados', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.defensorPrivado}`, this.constructOptionsPersona);
-        this.getInterviniente('policias', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/1${_config.optionValue.tipoInterviniente.policia}`, this.constructOptionsPersona);
+        this.getInterviniente('apoderadosLegales', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.apoderadoLegal}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.apoderadoLegal);
+        this.getInterviniente('defensoresPublicos', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.defensorPublico}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.defensorPublico);
+        this.getInterviniente('representantesLegales', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.representanteLegal}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.representanteLegal);
+        this.getInterviniente('asesoresPrivados', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.asesorPrivado}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.asesorPrivado);
+        this.getInterviniente('imputados', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.imputado}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.imputado);
+        this.getInterviniente('testigos', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.testigo}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.testigo);
+        this.getInterviniente('asesoresPublicos', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.asesorPublico}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.asesorPublico);
+        this.getInterviniente('ofendidos', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.ofendido}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.ofendido);
+        this.getInterviniente('victimas', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.victima}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.victima);
+        this.getInterviniente('defensoresPrivados', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.defensorPrivado}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.defensorPrivado);
+        this.getInterviniente('policias', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.policia}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.policia);
+    }
+
+    public getData(){
+       this.llamaDatos();
     }
 
     public getLugares(){
-        this.http.get('/v1/base/lugares/casos/'+this.id).subscribe((response) => {
-            this.lugares = this.constructOptionsLugar(response);
-        });
+        if (this.onLine.onLine)
+            this.http.get('/v1/base/lugares/casos/'+this.id).subscribe((response) => {
+                this.lugares = this.constructOptionsLugar(response);
+            });
+        else
+            if (this.caso["lugar"])
+                this.lugares = this.constructOptionsLugar(this.caso["lugar"]);
+
     }    
 
     public getVehiculos(){
-        this.http.get('/v1/base/vehiculos/casos/'+this.id).subscribe((response) => {
-            this.vehiculos = this.constructOptionsVehiculo(response);
-        });
+        if (this.onLine.onLine)
+            this.http.get('/v1/base/vehiculos/casos/'+this.id).subscribe((response) => {
+                this.vehiculos = this.constructOptionsVehiculo(response);
+            });
+        else
+            if (this.caso["vehiculo"])
+                this.vehiculos = this.constructOptionsVehiculo(this.caso["vehiculo"]);
     }
 
     public getArmas(){
-        this.http.get('/v1/base/armas/casos/'+this.id).subscribe((response) => {
-            this.armas = this.constructOptionsArma(response);
-        });
+        if (this.onLine.onLine)
+            this.http.get('/v1/base/armas/casos/'+this.id).subscribe((response) => {
+                this.armas = this.constructOptionsArma(response);
+            });
+        else
+            if (this.caso["arma"])
+                this.armas = this.constructOptionsArma(this.caso["arma"]);
     }
 
     public getPersonas(){
-        this.http.get('/v1/base/personas-casos/casos/'+this.id).subscribe((response) => {
-            this.personas = this.constructOptionsPersona(response);
-        });
+        if (this.onLine.onLine)
+            this.http.get('/v1/base/personas-casos/casos/'+this.id).subscribe((response) => {
+                this.personas = this.constructOptionsPersona(response);
+            });
+        else
+            this.db.list("personas").then(p=>{
+                this.personas = this.constructOptionsPersona(this.buscaTodosLosElementosEnLista(p,{personaCaso:{0:{caso:{id:this.id}}}}));
+            })
     }
 
     public getDelitos(){
-        this.http.get('/v1/base/delitos-casos/casos/'+this.id).subscribe((response) => {
-            this.delitos = this.constructOptionsDelito(response);
-        });
+        if (this.onLine.onLine)
+            this.http.get('/v1/base/delitos-casos/casos/'+this.id).subscribe((response) => {
+                this.delitos = this.constructOptionsDelito(response);
+            });
+        else
+            if (this.caso["delitosCaso"])
+                this.delitos = this.constructOptionsDelito(this.caso["delitosCaso"]);
     }
 
-    public getInterviniente(_attr:string, _url:string, _call:any){
-        this.http.get(_url).subscribe((response) => {
-            this[_attr] = _call(response);
-        });
+    public getInterviniente(_attr:string, _url:string, _call:any, idInterviniente:number=null){
+        if (this.onLine.onLine)
+            this.http.get(_url).subscribe((response) => {
+                this[_attr] = _call(response);
+            });
+        else
+            this.db.list("personas").then(p=>{
+                var itemABuscar={
+                    personaCaso:{
+                        0:{
+                            caso:{
+                                id:this.id
+                            },
+                            tipoInterviniente:{
+                                id:idInterviniente
+                            }
+                        }
+                    }
+                };
+                var pp= this.buscaTodosLosElementosEnLista(p,itemABuscar);
+                var arr=[];
+                for (var i = 0; i <pp.length; ++i) {
+                    arr.push({id:pp[i].personaCaso[0].id, persona:{nombre:pp[i].nombre}});
+                }
+                this[_attr] = this.constructOptionsPersona(arr);
+            });
     }
 
     private constructOptionsLugar(_data:any){
         let options: MOption[] = [];
-
-
-        _data.forEach(object => {
-            options.push({value: object.id, label: object.calle});
-        });
+        if (_data)
+            for (var i in _data){      // code...
+                let object=_data[i];
+                options.push({value: object.id, label: object.calle});
+            }
 
         return options;
     }
@@ -103,43 +191,50 @@ export class NoticiaHechoService {
     private constructOptionsVehiculo(_data:any){
         let options: MOption[] = [];
 
-        _data.forEach(object => {
-            let marca = object.marca != null  ? object.marca  : '';
-            let color = object.color != null  ? object.color  : '';
-            options.push({value: object.id, label: marca+" "+color});
-        });
+        if (_data)
+            for (var i in _data){      // code...
+                let object=_data[i];
+                let marca = object.marca != null  ? object.marca  : '';
+                let color = object.color != null  ? object.color  : '';
+                options.push({value: object.id, label: marca+" "+color});
+            }
 
         return options;
     }
 
     private constructOptionsArma(_data:any){
+        let coco = _data as any[];
         let options: MOption[] = [];
-        
-        _data.forEach(object => {
-            let clase = object.claseArma != null  ? object.claseArma.claseArma  : '';
-            let tipo = object.claseArma != null  ? object.claseArma.tipo  : '';
-            options.push({value: object.id, label: clase+" "+tipo});
-        });
 
+        if (_data){
+            for (var i in _data){      // code...
+                let object=_data[i];
+                let clase = object.claseArma != null  ? object.claseArma.claseArma  : '';
+                let tipo = object.claseArma != null  ? object.claseArma.tipo  : '';
+                options.push({value: object.id, label: clase+" "+tipo});
+            }
+        }
         return options;
     }
 
     private constructOptionsPersona(_data:any){
         let options: MOption[] = [];
-
-        _data.forEach(object => {
-            options.push({value: object.id, label: object.persona.nombre});
-        });
+        if (_data)
+            for (var i in _data){      // code...
+                let object=_data[i];
+                options.push({value: object.id, label: object.persona.nombre});
+            }
 
         return options;
     }
 
     private constructOptionsDelito(_data:any){
         let options: MOption[] = [];
-
-        _data.forEach(object => {
-            options.push({value: object.id, label: object.delito.nombre});
-        });
+        if (_data)
+            for (var i in _data){      // code...
+                let object=_data[i];
+                options.push({value: object.id, label: object.delito.nombre});
+            }
 
         return options;
     }

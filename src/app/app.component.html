@@ -12,6 +12,10 @@
             <mat-icon class="button-menu">autorenew</mat-icon>
         </button>
 
+        <button mat-icon-button *ngIf="!servicio.onLine && !servicio.sincronizando">
+            <mat-icon class="button-menu">signal_wifi_off</mat-icon>
+        </button>
+
         <button mat-icon-button [matMenuTriggerFor]="notify">
             <mat-icon class="button-menu">notifications</mat-icon>
         </button>
@@ -122,6 +126,9 @@
             </button>
             <button mat-menu-item>
                 <mat-icon fxHide="false" fxHide.gt-sm>build</mat-icon>Configuración
+            </button>
+            <button mat-menu-item (click)="redireccionSigi()">
+                <mat-icon fxHide="false" fxHide.gt-sm>launch</mat-icon>SIGIPPEM consulta 
             </button>
             <button mat-menu-item>
                 <mat-icon fxHide="false" fxHide.gt-sm>help_outline</mat-icon>Ayuda

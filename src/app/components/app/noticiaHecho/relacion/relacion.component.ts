@@ -44,8 +44,8 @@ export class RelacionComponent{
                 }else{
                     this.db.get("casos",this.casoId).then(caso=>{
                         if (caso){
-                            if(caso["relacion"]){
-                                this.dataSource = new TableService(this.paginator, caso["relacion"]);
+                            if(caso["relaciones"]){
+                                this.dataSource = new TableService(this.paginator, caso["relaciones"]);
                             }
                         }
                     });

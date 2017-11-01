@@ -8,6 +8,7 @@ import {MatrizEfectoDetalle} from '@services/noticia-hecho/relacion/efectoDetall
 import {MatrizViolenciaGenero} from '@services/noticia-hecho/relacion/violenciaGenero';
 import {MatrizModalidadAmbito} from '@services/noticia-hecho/relacion/modalidadAmbito';
 import {MatrizDesaparicionConsumacion} from '@services/noticia-hecho/relacion/desaparicionConsumacion';
+import { OnLineService} from '@services/onLine.service';
 
 export class Options {
 
@@ -30,21 +31,21 @@ export class Options {
 
     constructor(
         private http: HttpService,
-        private db:CIndexedDB
+        private db:CIndexedDB,
+        private onLine:OnLineService
         ) {
-        this.getData();
     }
 
     public getData(){
-        this.getOptions('gradoParticipacion', '/v1/catalogos/relacion/grado-participacion/options');
-        this.getOptions('formaAccion', '/v1/catalogos/relacion/forma-accion/options');
-        this.getOptions('concursoDelito', '/v1/catalogos/relacion/concurso-delito/options');
-        this.getOptions('clasifiacionDelitoOrden', '/v1/catalogos/relacion/clasificacion-delito-orden/options');
-        this.getOptions('modalidadDelito', '/v1/catalogos/relacion/modalidad-delito/options');
-        this.getOptions('formaComision', '/v1/catalogos/relacion/forma-comision/options');
-        this.getOptions('clasificacionDelito', '/v1/catalogos/relacion/clasificacion-delito/options');
-        this.getOptions('elementoComision', '/v1/catalogos/relacion/elemento-comision/options');
-        this.getOptions('formaConducta', '/v1/catalogos/relacion/forma-conducta/options');
+        this.getOptions('gradoParticipacion', '/v1/catalogos/relacion/grado-participacion/options',"grado_participacion");
+        this.getOptions('formaAccion', '/v1/catalogos/relacion/forma-accion/options',"forma_accion");
+        this.getOptions('concursoDelito', '/v1/catalogos/relacion/concurso-delito/options',"concurso_delito");
+        this.getOptions('clasificacionDelitoOrden', '/v1/catalogos/relacion/clasificacion-delito-orden/options',"clasificacion_delito_orden");
+        this.getOptions('modalidadDelito', '/v1/catalogos/relacion/modalidad-delito/options',"modalidad_delito");
+        this.getOptions('formaComision', '/v1/catalogos/relacion/forma-comision/options',"forma_comision");
+        this.getOptions('clasificacionDelito', '/v1/catalogos/relacion/clasificacion-delito/options',"clasificacion_delito");
+        this.getOptions('elementoComision', '/v1/catalogos/relacion/elemento-comision/options',"elemento_comision");
+        this.getOptions('formaConducta', '/v1/catalogos/relacion/forma-conducta/options',"forma_conducta");
         this.matrizTipoTransportacion=new MatrizTipoTransportacion(this.db);
         this.matrizConductaDetalle=new MatrizConductaDetalle(this.db);
         this.matrizEfectoDetalle=new MatrizEfectoDetalle(this.db);
@@ -54,15 +55,20 @@ export class Options {
 
     }
 
-    public getOptions(_attr: string, _url: string){
-        this.http.get(_url).subscribe((response) => {
-            this[_attr] = this.constructOptions(response);
-        });
+    public getOptions(_attr: string, _url: string, _catalogo:string){
+        if (this.onLine.onLine){ 
+            this.http.get(_url).subscribe((response) => {
+                this[_attr] = this.constructOptions(response);
+            });   
+        }else{
+            this.db.get("catalogos",_catalogo).then(cata=>{
+                this[_attr] = this.constructOptions( cata["arreglo"] );
+            });
+        }
     }
 
     public constructOptions(_data:any){
         let options: MOption[] = [];
-
         for (var key in _data) {
             options.push({value: parseInt(key), label: _data[key]});
         }

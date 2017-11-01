@@ -132,7 +132,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <div class="md-custom-search">
+                        <div class="md-custom-search" *ngIf="onLine.onLine">
                             <input type="search" placeholder="Buscar ubicación" #search [formControl]="searchControl">
                             <mat-icon  class="suffix" *ngIf="search.value === ''">search</mat-icon>
                             <mat-icon  class="suffix" *ngIf="search.value !== ''" (click)="search.value=''">close</mat-icon>
@@ -140,7 +140,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" *ngIf="onLine.onLine">
                 <div class="col-md-6">
                     <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="changeLocation($event)" [zoom]="zoom" style="height: 400px; width: 100%;" >
                          <agm-marker [latitude]="latMarker" [longitude]="lngMarker"></agm-marker>

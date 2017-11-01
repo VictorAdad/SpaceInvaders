@@ -381,7 +381,7 @@ export class CIndexedDB {
                 return e==y;
             if(e=="")
                 return true;
-            return y.indexOf(e)>0;
+            return y.toUpperCase().indexOf(e)>0;
             
         }
         var obj= this;
