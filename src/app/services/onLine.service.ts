@@ -159,25 +159,26 @@ export class OnLineService {
     buscaDependenciasYDoPost(dependencias: any[], item, i , lista){
         //me conviene bajar todo el diccionario de newId y buscar ahi
         this.db.list("newId").then(diccionario=>{
-            var listNewId = diccionario as any[];
-            console.log("ARREGLO DEPENDENCIAS",dependencias);
-            for (var k = 0; k < dependencias.length; ++k) {
-                for (var j = 0; j < listNewId.length; ++j) {
-                    if (dependencias[k]==(listNewId[j])["id"] ){
-                        if ((item["body"])["caso"]){//existe el caso
-                            if ( ((item["body"])["caso"])["id"]==dependencias[k]){
-                                ((item["body"])["caso"])["id"]=(listNewId[j])["newId"];
-                                console.log("asignacion: ",((item["body"])["caso"])["id"],(listNewId[j])["newId"]);
-                            }
-                        }
-                        if ((item["body"])["id"]==dependencias[k]){
-                            (item["body"])["id"]=(listNewId[j])["newId"];
-                        }
-                        console.log(""+dependencias[k],""+(listNewId[j])["newId"]);
-                        item["url"]=item["url"].replace(""+dependencias[k],""+(listNewId[j])["newId"]);
-                    }
-                }
-            }
+            this.sustituyeHojasPorNewId(item,diccionario);
+            // var listNewId = diccionario as any[];
+            // console.log("ARREGLO DEPENDENCIAS",dependencias);
+            // for (var k = 0; k < dependencias.length; ++k) {
+            //     for (var j = 0; j < listNewId.length; ++j) {
+            //         if (dependencias[k]==(listNewId[j])["id"] ){
+            //             if ((item["body"])["caso"]){//existe el caso
+            //                 if ( ((item["body"])["caso"])["id"]==dependencias[k]){
+            //                     ((item["body"])["caso"])["id"]=(listNewId[j])["newId"];
+            //                     console.log("asignacion: ",((item["body"])["caso"])["id"],(listNewId[j])["newId"]);
+            //                 }
+            //             }
+            //             if ((item["body"])["id"]==dependencias[k]){
+            //                 (item["body"])["id"]=(listNewId[j])["newId"];
+            //             }
+            //             console.log(""+dependencias[k],""+([j])["newId"]);
+            //             item["url"]=item["url"].replace(""+dependencias[k],""+(listNewId[j])["newId"]);
+            //         }
+            //     }
+            // }
             console.log("Item",item);
             let tipo=item["tipo"];
             if (tipo=="post")
