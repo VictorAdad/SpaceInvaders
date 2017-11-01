@@ -1,6 +1,7 @@
 export var _config = {
 	api : {
-		host : 'http://10.0.2.21:9000'
+    // host : 'http://10.0.30.14:9001'
+		host : 'http://xalapa.evomatik.net:9010'
 	},
 	develop:true,
 	sede:"Xalapa, Veracruz",
