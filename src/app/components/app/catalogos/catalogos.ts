@@ -44,7 +44,7 @@ export var _catalogos = {
 	'forma-accion'				: new Catalogos('Forma acción','/v1/catalogos/relacion/forma-accion'),
 
 	//No tiene servicios
-	'turno'						: new Catalogos('Turno',''),
+	'turno'						: new Catalogos('Turno','/v1/catalogos/usuario/turno'),
 	
 	//problema al guardar
 	'distrito'					: new Catalogos('Distrito','/v1/catalogos/usuario/distrito'),
