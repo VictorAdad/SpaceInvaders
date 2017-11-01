@@ -99,9 +99,10 @@ export class OnLineService {
                       maxLength: 10
                     });
                     this.sincroniza(0,lista as any[]);
+                    this.notificationService.remove();
                 }else{
                     this.sincronizando=false;
-                    this.notificationService.remove()
+                    this.notificationService.remove();
                 }
             });
         }
