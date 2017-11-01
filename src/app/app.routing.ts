@@ -68,6 +68,9 @@ import { CalibreArmaComponent } from '@components-app/catalogos/armas/calibre/co
 import { CreateArmaComponent } from '@components-app/catalogos/armas/create/create.component';
 import { MecanismoAccionComponent } from '@components-app/catalogos/armas/mecanismo/component';
 
+import { estadosCreateComponent } from '@components-app/catalogos/estados/create/create.component';
+import { estadosCatalogosComponent } from '@components-app/catalogos/estados/component';
+
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
     { path : '', component: HomeComponent, data : { breadcrumb : 'Noticia de hechos'}},
@@ -169,6 +172,11 @@ const routes: Routes = [
     { path : 'caso/:casoId/entrevista/create', component : EntrevistaCreateComponent, data : { breadcrumb : 'Entrevista' } },
     { path : 'caso/:casoId/entrevista/:id/view', component : EntrevistaCreateComponent, data : { breadcrumb : 'Entrevista' } },
     //Catalogos
+
+    //prueba catalogos
+    { path : 'catalogos/estado', component : estadosCatalogosComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/estado/create', component : estadosCreateComponent, data : { breadcrumb : 'Catálogos' } },
+
     { path : 'catalogos/:tipo', component : CatalogosComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogos/:tipo/create', component : CatalogosCreateComponent, data : { breadcrumb : 'Crear catálogos' } },
     { path : 'catalogos/:tipo/:id', component : CatalogosCreateComponent, data : { breadcrumb : 'Crear catálogos' } },
@@ -240,6 +248,10 @@ export const routingComponents = [
   EntrevistaCreateComponent,
 
   //Catalogos
+
+  estadosCatalogosComponent,
+  estadosCreateComponent,
+
   CatalogosComponent,
   CatalogosCreateComponent,
   CatalogoArmasComponent,
