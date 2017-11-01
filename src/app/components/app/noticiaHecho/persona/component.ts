@@ -49,7 +49,8 @@ export class PersonaComponent implements OnInit{
                             let tipo = (item["personaCaso"])[0].tipoInterviniente["tipo"]?(item["personaCaso"])[0].tipoInterviniente["tipo"]:"";
                             let nombre = item["nombre"];
                             let razonSocial = item["razonSocial"];
-                            data.push({tipoInterviniente:{tipo:tipo}, persona:{nombre:nombre}, razonSocial:razonSocial, alias:"", id:item["id"]});
+                            if ( (item["personaCaso"])[0].caso.id==this.casoId )
+                                data.push({tipoInterviniente:{tipo:tipo}, persona:{nombre:nombre}, razonSocial:razonSocial, alias:"", id:item["id"]});
                         }
                         this.dataSource = new TableService(this.paginator, data);
                     });
