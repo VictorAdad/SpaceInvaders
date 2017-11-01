@@ -12,6 +12,10 @@
             <mat-icon class="button-menu">autorenew</mat-icon>
         </button>
 
+        <button mat-icon-button *ngIf="!servicio.onLine && !servicio.sincronizando">
+            <mat-icon class="button-menu">signal_wifi_off</mat-icon>
+        </button>
+
         <button mat-icon-button [matMenuTriggerFor]="notify">
             <mat-icon class="button-menu">notifications</mat-icon>
         </button>

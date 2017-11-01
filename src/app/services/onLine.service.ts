@@ -89,7 +89,6 @@ export class OnLineService {
             this.db.list("sincronizar").then(lista=>{
                 let datos = lista as any[];
                 if (datos.length>0){
-                    console.log("Coomienzaa...");
                     this.notificationService.create("Sincronizando",'Sincronizando', 'info', {
                       timeOut: 5000,
                       showProgressBar: true,
