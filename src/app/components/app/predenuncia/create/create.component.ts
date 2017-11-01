@@ -49,7 +49,11 @@ export class PredenunciaCreateComponent {
     public object: any;
     solicitudId:number=null
 
-    constructor(private route: ActivatedRoute, private http: HttpService){}
+    constructor(
+        private route: ActivatedRoute,
+        private http: HttpService,
+        private onLine: OnLineService,
+        public db: CIndexedDB){}
 
     ngOnInit(){
         this.route.params.subscribe(params => {
@@ -59,12 +63,23 @@ export class PredenunciaCreateComponent {
             }
             if (params['casoId']){
                 this.casoId = +params['casoId'];
-                this.http.get(this.apiUrl+params['casoId']+'/page').subscribe(response => {
-                    if(parseInt(response.totalCount) !== 0){
-                        this.hasPredenuncia = true;
-                        this.object = response;
-                    }
-                });
+                if(this.onLine.onLine){
+                    this.http.get(this.apiUrl+params['casoId']+'/page').subscribe(response => {
+                        if(parseInt(response.totalCount) !== 0){
+                            this.hasPredenuncia = true;
+                            this.object = response;
+                        }
+                    });
+                }else{
+                    this.db.get("casos",this.casoId).then(caso=>{
+                        if (caso){
+                            if(caso["predenuncia"]){
+                                this.hasPredenuncia = true;
+                                this.object = caso["predenuncia"];
+                            }
+                        }
+                    });
+                }
             }
 
         });
@@ -98,31 +113,56 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         private router: Router,
         private route: ActivatedRoute,
         public authen: AuthenticationService,
-        public optionsServ: SelectsService) {
+        public optionsServ: SelectsService,
+        public db: CIndexedDB) {
             super();
         }
 
     ngOnInit(){
         this.route.params.subscribe(params => {
-            if (params['casoId'])
-              {  this.casoId = +params['casoId'];
-                 console.log(this.casoId);
-                 this.http.get(this.apiUrl+this.casoId+'/page').subscribe(response => {
-                 if(parseInt(response.totalCount) !== 0){
-                    this.hasPredenuncia = true;
-                    console.log("Dont have predenuncia");
-                    this.form.disable();
-                    this.model= response.data[0] as Predenuncia;
-                    var fechaCompleta:Date= new Date(response.fechaHoraInspeccion);
-                    this.model.fechaCanalizacion=fechaCompleta;
-                    var horas: string=(String(fechaCompleta.getHours()).length==1)?'0'+fechaCompleta.getHours():String(fechaCompleta.getHours());
-                    var minutos: string=(String(fechaCompleta.getMinutes()).length==1)?'0'+fechaCompleta.getMinutes():String(fechaCompleta.getMinutes());;
-                    this.model.horaConlcusionLlamada=horas+':'+minutos;
-                    console.log("Emitiendo id..",this.model.id)
-                    this.idEmitter.emit({id: this.model.id});
-                    this.fillForm(this.model);
+            if (params['casoId']){  
+                this.casoId = +params['casoId'];
+                console.log(this.casoId);
+                if(this.onLine.onLine){
+                    this.http.get(this.apiUrl+this.casoId+'/page').subscribe(response => {
+                         if(parseInt(response.totalCount) !== 0){
+                            this.hasPredenuncia = true;
+                            console.log("Dont have predenuncia");
+                            this.form.disable();
+                            this.model= response.data[0] as Predenuncia;
+                            var fechaCompleta:Date= new Date(response.fechaHoraInspeccion);
+                            this.model.fechaCanalizacion=fechaCompleta;
+                            var horas: string=(String(fechaCompleta.getHours()).length==1)?'0'+fechaCompleta.getHours():String(fechaCompleta.getHours());
+                            var minutos: string=(String(fechaCompleta.getMinutes()).length==1)?'0'+fechaCompleta.getMinutes():String(fechaCompleta.getMinutes());;
+                            this.model.horaConlcusionLlamada=horas+':'+minutos;
+                            console.log("Emitiendo id..",this.model.id)
+                            this.idEmitter.emit({id: this.model.id});
+                            this.fillForm(this.model);
+                        }
+                    });
+                }else{
+                    this.db.get("casos",this.casoId).then(caso=>{
+                        console.log("Caso en armas ->",caso);
+                        if (caso){
+                            if(caso["predenuncia"]){
+                                if(caso['predenuncia'].length > 0){
+                                    this.hasPredenuncia = true;
+                                    console.log("Dont have predenuncia");
+                                    this.form.disable();
+                                    let model = caso['predenuncia'][0];
+                                    var fechaCompleta: Date = new Date(model.fechaHoraInspeccion);
+                                    this.model.fechaCanalizacion=fechaCompleta;
+                                    var horas: string=(String(fechaCompleta.getHours()).length==1)?'0'+fechaCompleta.getHours():String(fechaCompleta.getHours());
+                                    var minutos: string=(String(fechaCompleta.getMinutes()).length==1)?'0'+fechaCompleta.getMinutes():String(fechaCompleta.getMinutes());;
+                                    this.model.horaConlcusionLlamada=horas+':'+minutos;
+                                    console.log("Emitiendo id..",this.model.id)
+                                    this.idEmitter.emit({id: this.model.id});
+                                    this.fillForm(model);
+                                }
+                            }
+                        }
+                    });
                 }
-             });
             }
 
         });
@@ -220,6 +260,34 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                             reject(error);
                         }
                     );
+                }else{
+                    let temId = Date.now();
+                    let dato = {
+                        url:'/v1/base/predenuncias',
+                        body:_model,
+                        options:[],
+                        tipo:"post",
+                        pendiente:true,
+                        dependeDe:[this.casoId],
+                        temId: temId
+                    }
+                    this.db.add("sincronizar", dato).then(p=>{
+                        this.db.get("casos",this.casoId).then(caso=>{
+                            if (caso){
+                                if(!caso["predenuncia"]){
+                                    caso["predenuncia"]=[];
+                                }
+                                _model["id"]=temId;
+                                caso["predenuncia"].push(_model);
+                                console.log("caso arma", caso["predenuncia"]);
+                                this.db.update("casos",caso).then(t=>{
+                                    console.log("caso arma", t["arma"]);
+                                    resolve("Se agregó la arma de manera local");
+                                    this.router.navigate(['/caso/'+this.casoId+'/detalle']);
+                                });
+                            }
+                        });
+                    });
                 }
             }
         );
@@ -255,33 +323,34 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
     public source:TableDataSource = new TableDataSource(this.subject);
     public isCallCenter:boolean=false;
 
-  constructor(
-      public http: HttpService,
-      public confirmationService:ConfirmationService,
-      public globalService:GlobalService,
-      public dialog: MatDialog,
-      public authen: AuthenticationService,
-
-      ){
-      super(http, confirmationService, globalService, dialog);
-  }
+    constructor(
+        public http: HttpService,
+        public confirmationService:ConfirmationService,
+        public globalService:GlobalService,
+        public dialog: MatDialog,
+        public authen: AuthenticationService,
+        private onLine: OnLineService
+    ){
+        super(http, confirmationService, globalService, dialog);
+    }
 
     ngOnInit() {
-      console.log('-> Object ', this.object);
-        if(this.object.data[0].documentos){
-            this.dataSource = this.source;
-            for (let object of this.object.data[0].documentos) {
-                this.data.push(object);
-                this.subject.next(this.data);
-            }
+        if(this.onLine.onLine){
+            if(this.object.data[0].documentos){
+                this.dataSource = this.source;
+                for (let object of this.object.data[0].documentos) {
+                    this.data.push(object);
+                    this.subject.next(this.data);
+                }
 
+            }
         }
-      for (let role of this.authen.user.roles) {
-        if(role===this.authen.roles.callCenter){
-            this.isCallCenter=true;
-           console.log(this.isCallCenter)
-         }
-      }
+        for (let role of this.authen.user.roles) {
+            if(role===this.authen.roles.callCenter){
+                this.isCallCenter=true;
+                console.log(this.isCallCenter)
+            }
+        }
     }
 
   public setData(_object){

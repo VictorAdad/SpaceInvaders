@@ -138,7 +138,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                     _model["id"]=temId;
                     this.db.add('casos', _model).then(object => {
                         resolve("Se creó el caso de manera local");
-                        this.router.navigate(['/caso/'+object['id']+'/noticia-hecho' ]);
+                        this.router.navigate(['/caso/'+object['id']+'/noticia-hecho/datos-generales' ]);
                     });
                 });
                 
