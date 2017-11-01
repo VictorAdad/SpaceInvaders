@@ -181,6 +181,7 @@ const routes: Routes = [
     { path : 'catalogos/estado/create', component : estadosCreateComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogos/colonias', component : ColoniaComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogos/colonias/create', component : ColoniaCreateComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/colonias/:id', component : ColoniaCreateComponent, data : { breadcrumb : 'Catálogos' } },
 
     { path : 'catalogos/:tipo', component : CatalogosComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogos/:tipo/create', component : CatalogosCreateComponent, data : { breadcrumb : 'Crear catálogos' } },
