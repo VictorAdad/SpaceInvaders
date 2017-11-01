@@ -23,6 +23,10 @@ export class LocalidadCreateComponent extends NoticiaHechoGlobal{
     public tipo: string = 'localidades';
     public url: string = '/v1/catalogos/localidad';
     public id: number = null;
+    public totalCount: number = 0;
+    public dataSource: TableService;
+
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(
         private router: Router,
@@ -104,5 +108,12 @@ export class LocalidadCreateComponent extends NoticiaHechoGlobal{
     public changeEstado(_event){
         if(_event)
             this.optionsServ.getMunicipiosByEstado(_event);
+    }
+
+    public page(url: string){
+        this.http.get(url).subscribe((response) => {
+            this.totalCount = response.totalCount;
+            this.dataSource = new TableService(this.paginator, response.data);
+        });
     }
 }

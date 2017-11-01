@@ -23,6 +23,8 @@
     <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: columns;" routerLink="/catalogos/{{ tipo }}/{{ row.id }}" [class.active]="row.id == selectedRow"></mat-row>
 </mat-table>
+<mat-paginator #paginator [length]="totalCount" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="changePage($event)" >
+</mat-paginator>
 <div class="row space"></div>
 <div class="row space">
     <div class="col-md-12">
