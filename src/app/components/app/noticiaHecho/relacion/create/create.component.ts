@@ -326,9 +326,9 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                       console.log("NO",this.casoOffline);
                         if (this.casoOffline){
                             let caso=this.casoOffline;
-                            if(!caso["relacion"]){
+                            if(!caso["relaciones"]){
                                 let x:Array<any>=[];
-                                caso["relacion"]=x;
+                                caso["relaciones"]=x;
                             }
                             _model["id"]=copia;
                             for (var i = 0; i < _model["hostigamientoAcoso"].length; ++i) {
@@ -346,14 +346,14 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                                 let item = (_model["efectoViolencia"])[i];
                                 item["id"]=copia;
                             }
-                            console.log(caso["relacion"]);
-                            caso["relacion"].push(_model);
+                            console.log(caso["relaciones"]);
+                            caso["relaciones"].push(_model);
                             console.log("NO");
                             console.log("MODELO",_model, caso);
                             this.db.update("casos",caso).then(t=>{
                                 console.log("NO",t);
                                 resolve("Se creo la relación con éxito");
-                                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
+                                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/relaciones' ]);
                             });
                         }
                     
