@@ -125,11 +125,12 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
             }else{
                 _model.caso.id             = this.casoId;
                 if(this.armaServ.claseArma.finded[0])
-                    _model.claseArma        = this.armaServ.claseArma.finded[0]
+                    _model.claseArma.id        = this.armaServ.claseArma.finded[0].id
                 if(this.isArmaFuego){
                     if(this.armaServ.calibreMecanismo.finded[0])
-                        _model.calibreMecanismo = this.armaServ.calibreMecanismo.finded[0]
+                        _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id
                 }
+                console.log("MODEL",_model);
                 let temId=Date.now();
                 let dato={
                     url:'/v1/base/armas',
