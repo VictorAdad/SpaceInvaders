@@ -7,6 +7,7 @@ import { Persona } from '@models/persona';
 import { DelitoCaso } from '@models/delitoCaso';
 import { Predenuncia } from '@models/predenuncia';
 import { AuthenticationService } from '@services/auth/authentication.service';
+import { CIndexedDB } from '@services/indexedDB';
 
 
 @Component({
@@ -30,7 +31,8 @@ export class DetalleCasoComponent implements OnInit{
 		_route: ActivatedRoute,
 		private _onLine: OnLineService,
 		private _http: HttpService,
-		public auth: AuthenticationService
+		public auth: AuthenticationService,
+		private db:CIndexedDB
 		){
 		this.route = _route;
 		this.onLine = _onLine;
@@ -65,6 +67,18 @@ export class DetalleCasoComponent implements OnInit{
                 console.log(this.predenuncia)
             });  */
 
+        }else{
+        	this.db.get("casos", this.id).then(
+        		t => {
+        			console.log('T', t);
+        			let relaciones = t['relaciones'].filter(object => object.tipo === 'Imputado');
+            		this.caso = t as Caso;
+					this.hasPredenuncia = (typeof t['predenuncia'] !== 'undefined');
+					this.hasRelacionVictimaImputado = (relaciones.length > 0);
+
+					console.log('Predenuncia', this.hasPredenuncia);
+                }
+            );
         }    
  
 	}

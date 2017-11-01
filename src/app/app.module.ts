@@ -55,6 +55,8 @@ import {MatInputModule} from '@angular/material';
 import {MatCheckboxModule} from '@angular/material';
 import {MatProgressBarModule} from '@angular/material';
 import {MatProgressSpinnerModule} from '@angular/material';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+
 // import { MaterialModule} from '@angular/material';
 
 import { AgmCoreModule } from '@agm/core';
@@ -73,8 +75,8 @@ import {Logger} from '@services/logger.service'
     SolicitudPreliminarComponents,
     DeterminacionComponents,
 
-    PredenunciaComponent, 
-    DocumentoPredenunciaComponent, 
+    PredenunciaComponent,
+    DocumentoPredenunciaComponent,
     PredenunciaCreateComponent,
 
     EntrevistaComponents,
@@ -120,7 +122,7 @@ import {Logger} from '@services/logger.service'
     MomentModule,
     EntrevistaModule,
     JasperoConfirmationsModule,
-
+    SimpleNotificationsModule,
     CatalogosModule,
 
     AgmCoreModule.forRoot({

@@ -12,16 +12,16 @@ import { CIndexedDB } from '@services/indexedDB';
 })
 export class EntrevistaComponent {
 
-	public columns = [ 'entrevistado', 'calidadEntrevistado', 'fechaCreacion'];
-	public dataSource: TableService | null;
-	public data: Entrevista[] = [];
-  public casoId: number = null;
-  public haveCaso: boolean=false;
-  @ViewChild(MatPaginator)
-  paginator: MatPaginator;
-  public breadcrumb = [];
-  public apiUrl= '';//cambiar esta URL cuando este el servicio por caso
-  public pag: number = 0;
+    public columns = [ 'entrevistado', 'calidadEntrevistado', 'fechaCreacion'];
+    public dataSource: TableService | null;
+    public data: Entrevista[] = [];
+    public casoId: number = null;
+    public haveCaso: boolean=false;
+    @ViewChild(MatPaginator)
+    paginator: MatPaginator;
+    public breadcrumb = [];
+    public apiUrl= '';//cambiar esta URL cuando este el servicio por caso
+    public pag: number = 0;
 
 
 	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
@@ -33,20 +33,31 @@ export class EntrevistaComponent {
                 this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
                 this.apiUrl=`/v1/base/entrevistas/casos/${this.casoId}/page`;
-                this.page(this.apiUrl);
+
+                if(this.onLine.onLine){
+                    this.page(this.apiUrl);
+                }else{
+                    this.db.get("casos", this.casoId).then(caso=>{
+                        if (caso){
+                            if(caso["entrevistas"]){
+                                this.dataSource = new TableService(this.paginator, caso["entrevistas"] as Entrevista[]);
+                            }
+                        }
+                    });
+                }
             }
             else{
-            	 this.http.get(this.apiUrl).subscribe((response) => {
-	                 this.data = response.data as Entrevista[];
-	                 console.log(this.data)
-	                 this.dataSource = new TableService(this.paginator, this.data);
-	                });
+                this.http.get(this.apiUrl).subscribe((response) => {
+                    this.data = response.data as Entrevista[];
+                    console.log(this.data)
+                    this.dataSource = new TableService(this.paginator, this.data);
+                });
             }
         });
 
       }
 
-      public changePage(_e){
+    public changePage(_e){
         if(this.onLine.onLine){
             this.page(this.apiUrl+'?p='+_e.pageIndex+'&tr='+_e.pageSize);
         }

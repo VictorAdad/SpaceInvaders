@@ -7,6 +7,9 @@ import {MatSnackBar} from '@angular/material';
 import { CIndexedDB } from '@services/indexedDB';
 import { HttpService} from '@services/http.service';
 import {CatalogosACargar} from "@services/onLine/CatalogosACargar";
+import { SimpleNotificationsComponent } from 'angular2-notifications';
+import { NotificationsService } from 'angular2-notifications';
+import { Notification } from 'angular2-notifications';
 
 
 @Injectable()
@@ -24,8 +27,9 @@ export class OnLineService {
     constructor(
         public snackBar: MatSnackBar,
         private db:CIndexedDB,
-        private http:HttpService
-    ) { 
+        private http:HttpService,
+        private notificationService: NotificationsService
+    ) {
         // timer = Observable.timer(2000,1000);
         this.timer.subscribe(t=>{
             this.anterior=this.onLine;
@@ -79,19 +83,30 @@ export class OnLineService {
     }
 
     startSincronizacion(){
+
         if (!this.sincronizando){
             this.sincronizando=true;
             this.seActualizoAlmenosUnRegistro=false;
             this.db.list("sincronizar").then(lista=>{
                 let datos = lista as any[];
                 if (datos.length>0){
-                    this.sincroniza(0,lista as any[]);    
+                    console.log("Coomienzaa...");
+                    this.notificationService.create("Sincronizando",'Sincronizando', 'info', {
+                      timeOut: 5000,
+                      showProgressBar: true,
+                      pauseOnHover: false,
+                      clickToClose: false,
+                      maxLength: 10
+                    });
+                    this.sincroniza(0,lista as any[]);
+                    this.notificationService.remove();
                 }else{
                     this.sincronizando=false;
+                    this.notificationService.remove();
                 }
-            });    
+            });
         }
-        
+
     }
 
     sincroniza(i, lista:any[]){
@@ -105,7 +120,7 @@ export class OnLineService {
                 //     this.router.navigate([newUrl]);
                 // }
             }
-            
+
             //console.log("->Finalizo sincronizacion");
             return;
         }
@@ -114,7 +129,7 @@ export class OnLineService {
             //
             if (i<lista.length){
                 let item = lista[i];
-                
+
                 if (item.pendiente==false){
                     this.sincroniza(i+1,lista);
                 }
@@ -137,9 +152,9 @@ export class OnLineService {
                     //si no encuentra ninguno de los tipos validos
                     this.sincroniza(i+1,lista);
                 }
-            }    
+            }
         }
-        
+
     }
     //funcion que busca todas las coincidencias y despues llama a la funcion de dopost
     buscaDependenciasYDoPost(dependencias: any[], item, i , lista){
@@ -185,7 +200,7 @@ export class OnLineService {
                     return null;
             }
         }else{
-            return{    
+            return{
                 id:model,
                 newId:original
             };
@@ -244,7 +259,7 @@ export class OnLineService {
                         this.sincroniza(i+1,lista);
                     });
                 }
-                
+
         },
             error=>{
                 console.log("Error:",error);
@@ -275,7 +290,7 @@ export class OnLineService {
                     this.sincroniza(i+1,lista);
             });
         });
-        
+
     }
 
     sustituyeHojasPorNewId(json,listNewId){
@@ -296,5 +311,5 @@ export class OnLineService {
 
     }
 
-    
+
 }
