@@ -72,6 +72,8 @@ import { estadosCreateComponent } from '@components-app/catalogos/estados/create
 import { estadosCatalogosComponent } from '@components-app/catalogos/estados/component';
 import { ColoniaComponent } from '@components-app/catalogos/colonias/component';
 import { ColoniaCreateComponent } from '@components-app/catalogos/colonias/create/create.component';
+import { LocalidadComponent } from '@components-app/catalogos/localidades/component';
+import { LocalidadCreateComponent } from '@components-app/catalogos/localidades/create/create.component';
 
 
 const routes: Routes = [
@@ -182,6 +184,9 @@ const routes: Routes = [
     { path : 'catalogos/colonias', component : ColoniaComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogos/colonias/create', component : ColoniaCreateComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogos/colonias/:id', component : ColoniaCreateComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/localidades', component : LocalidadComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/localidades/create', component : LocalidadCreateComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/localidades/:id', component : LocalidadCreateComponent, data : { breadcrumb : 'Catálogos' } },
 
     { path : 'catalogos/:tipo', component : CatalogosComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogos/:tipo/create', component : CatalogosCreateComponent, data : { breadcrumb : 'Crear catálogos' } },
@@ -259,6 +264,8 @@ export const routingComponents = [
   estadosCreateComponent,
   ColoniaComponent,
   ColoniaCreateComponent,
+  LocalidadComponent,
+  LocalidadCreateComponent,
 
   CatalogosComponent,
   CatalogosCreateComponent,
