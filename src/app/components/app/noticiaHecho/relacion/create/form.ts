@@ -52,7 +52,7 @@ export class Form {
                 'id': new FormControl('', [Validators.required]),
             }),
             'violenciaGenero': new FormGroup({
-                'id': new FormControl("",[]),
+                'id': new FormControl(null,[]),
             }),
             'hostigamientoAcoso': new FormArray([
                 // this.hostigamientoForm(),
@@ -122,6 +122,7 @@ export class Form {
 
     public getTrataPersonasForm(){
         return new FormGroup({
+            'id': new FormControl('', []),
             'paisOrigen': new FormGroup({
                 'id': new FormControl('', []),
              }),
@@ -156,6 +157,7 @@ export class Form {
 
     public efectoViolenciaForm(_val: any){
         return new FormGroup({
+            'id': new FormControl(),
             'efectoDetalle': new FormGroup({
                 'id': new FormControl(_val, [Validators.required,]),
              }),
@@ -173,6 +175,7 @@ export class Form {
 
     public trataForm(){
         return new FormGroup({
+            'id': new FormControl('', []),
             'paisOrigen': new FormControl(),
             'estadoOrigen': new FormControl(),
             'municipioOrigen': new FormControl(),
@@ -186,6 +189,7 @@ export class Form {
 
     public hostForm(){
         return new FormGroup({
+            'id': new FormControl('', []),
             'modalidad': new FormControl('', [Validators.required]),
             'ambito': new FormControl('', [Validators.required]),
             'conducta': new FormControl('', [Validators.required]),
@@ -196,6 +200,7 @@ export class Form {
 
     public getViolenciaGeneroForm(){
         return new FormGroup({
+            'id': new FormControl('', []),
             'delincuenciaOrganizada': new FormControl('', [Validators.required]),
             'violenciaGenero': new FormControl('', [Validators.required]),
             'victimaTrata': new FormControl('', [Validators.required]),
