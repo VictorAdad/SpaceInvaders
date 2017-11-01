@@ -1,0 +1,29 @@
+<breadcrumb></breadcrumb>
+<div class="row space">
+    <div class="col-md-6">
+        <h2>Crear Turno</h2>
+    </div>
+    <div class="col-md-6">
+        <button class="float-right" mat-raised-button routerLink="/catalogos/{{ tipo }}" color="accent">Regresar</button>
+    </div>
+</div>
+<hr>
+<div class="row space"></div>
+<div class="row  justify-content-md-center">
+    <div class="col-md-10">
+        <form>
+            <text label="Nombre" name="nombre" [group]="form"></text>
+            <text label="Clave" name="clave" [group]="form"></text>
+
+        </form>
+    </div>
+</div>
+<div class="row justify-content-end">
+    <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
+        <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this,form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id != null">Editar</button>    
+        <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this,form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id == null">Guardar</button>
+    </div>
+    <div class="col-sm-auto">
+        <button class="float-right" mat-button routerLink="/catalogos/{{ tipo }}">Cancelar</button> 
+    </div>
+</div>
