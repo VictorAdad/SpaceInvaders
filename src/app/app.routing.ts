@@ -70,6 +70,9 @@ import { MecanismoAccionComponent } from '@components-app/catalogos/armas/mecani
 
 import { estadosCreateComponent } from '@components-app/catalogos/estados/create/create.component';
 import { estadosCatalogosComponent } from '@components-app/catalogos/estados/component';
+import { ColoniaComponent } from '@components-app/catalogos/colonias/component';
+import { ColoniaCreateComponent } from '@components-app/catalogos/colonias/create/create.component';
+
 
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
@@ -176,6 +179,8 @@ const routes: Routes = [
     //prueba catalogos
     { path : 'catalogos/estado', component : estadosCatalogosComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogos/estado/create', component : estadosCreateComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/colonias', component : ColoniaComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/colonias/create', component : ColoniaCreateComponent, data : { breadcrumb : 'Catálogos' } },
 
     { path : 'catalogos/:tipo', component : CatalogosComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogos/:tipo/create', component : CatalogosCreateComponent, data : { breadcrumb : 'Crear catálogos' } },
@@ -251,6 +256,8 @@ export const routingComponents = [
 
   estadosCatalogosComponent,
   estadosCreateComponent,
+  ColoniaComponent,
+  ColoniaCreateComponent,
 
   CatalogosComponent,
   CatalogosCreateComponent,
