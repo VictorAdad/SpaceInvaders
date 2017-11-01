@@ -8,6 +8,10 @@
         </span>
         <span class="spacer"></span>
 
+        <button mat-icon-button class="rotation" *ngIf="sincronizando">
+            <mat-icon class="button-menu">autorenew</mat-icon>
+        </button>
+
         <button mat-icon-button [matMenuTriggerFor]="notify">
             <mat-icon class="button-menu">notifications</mat-icon>
         </button>
