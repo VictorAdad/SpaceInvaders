@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { ActivatedRoute }    from '@angular/router';
 import { AuthenticationService } from '@services/auth/authentication.service';
@@ -7,6 +7,7 @@ import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
 import { TableService } from '@utils/table/table.service';
 import { Caso } from '@models/caso';
+import { _catalogos } from '@components-app/catalogos/catalogos';
 
 @Component({
     templateUrl: './home.component.html',
@@ -21,6 +22,8 @@ export class HomeComponent implements OnInit {
     public dataSource: TableService;
     public pag: number = 0;
     public loadList = true;
+    public catalogos:any;
+    public catalogosKeys:any[];
     @ViewChild(MatPaginator) 
     paginator: MatPaginator;
     
@@ -50,6 +53,11 @@ export class HomeComponent implements OnInit {
                     this.dataSource = new TableService(this.paginator, this.casos);
                 }
             });
+        }
+
+        if(this.auth.user.hasRoles(this.auth.roles.admin)){
+            this.catalogos = _catalogos;
+            this.catalogosKeys = Object.keys(this.catalogos);
         }
     }
 

@@ -45,6 +45,7 @@ export class AuthenticationService {
             'express': 'express',
             'mpuai': 'mpuai',
             'mpi': 'mpi',
+            'admin': 'admin',
         }
     }
 

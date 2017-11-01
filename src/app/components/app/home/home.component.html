@@ -1,48 +1,71 @@
-<breadcrumb></breadcrumb>   
-<div class="row justify-content-md-center">
-    <div class="col-md-10">
-        <div class="row space">
-            <div class="col-sm-6">
-                <h2>Mis casos</h2>
+<div *ngIf="!auth.user.hasRoles(auth.roles.admin)">    
+    <breadcrumb></breadcrumb>   
+    <div class="row justify-content-md-center">
+        <div class="col-md-10">
+            <div class="row space">
+                <div class="col-sm-6">
+                    <h2>Mis casos</h2>
+                </div>
+                <div class="col-sm-6">
+                    <button class="float-right" mat-raised-button color="accent" routerLink="/noticia-hecho/datos-generales">Nuevo caso</button>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <button class="float-right" mat-raised-button color="accent" routerLink="/noticia-hecho/datos-generales">Nuevo caso</button>
+            <div class="row">
+                <div class="col-md-12">
+                    <search></search>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <search></search>
+            <div class="row justify-content-center align-items-center" *ngIf="loadList" style="height: 200px;">
+                <div class="col-auto">
+                    <mat-spinner></mat-spinner>
+                </div>
             </div>
-        </div>
-        <div class="row justify-content-center align-items-center" *ngIf="loadList" style="height: 200px;">
-            <div class="col-auto">
-                <mat-spinner></mat-spinner>
-            </div>
-        </div>
-        <mat-list *ngIf="dataSource != null">
-            <mat-list-item *ngFor="let caso of dataSource.data">
-                <mat-icon mat-list-icon>folder</mat-icon>
-                <h4 matLine>{{caso.nombre()}}</h4>
-                <h4 class="text-muted" matLine md-subheade>{{caso.titulo}}</h4>
-                <h4 class="text-muted" matLine md-subheade>{{caso.sintesis}}</h4>
-                <p matLine>{{caso.fecha()}}</p>
-                <button mat-icon-button [matMenuTriggerFor]="menuCaso">
-                    <mat-icon>more_horiz</mat-icon>
-                </button>
-                <mat-menu #menuCaso="matMenu">
-                    <button mat-menu-item routerLink="/caso/{{caso.id}}/detalle" (click)="guardarCaso(caso)">
-                        <mat-icon fxHide="false" fxHide.gt-sm>remove_red_eye</mat-icon>Ver
+            <mat-list *ngIf="dataSource != null">
+                <mat-list-item *ngFor="let caso of dataSource.data">
+                    <mat-icon mat-list-icon>folder</mat-icon>
+                    <h4 matLine>{{caso.nombre()}}</h4>
+                    <h4 class="text-muted" matLine md-subheade>{{caso.titulo}}</h4>
+                    <h4 class="text-muted" matLine md-subheade>{{caso.sintesis}}</h4>
+                    <p matLine>{{caso.fecha()}}</p>
+                    <button mat-icon-button [matMenuTriggerFor]="menuCaso">
+                        <mat-icon>more_horiz</mat-icon>
                     </button>
-                </mat-menu>
-                <mat-divider></mat-divider>
-            </mat-list-item>
-        </mat-list>
-        <mat-paginator #paginator
-            [length]="pag"
-            [pageIndex]="0"
-            [pageSize]="10"
-            [pageSizeOptions]="[5, 10, 25, 100]"
-            (page)="changePage($event)">
-        </mat-paginator>
+                    <mat-menu #menuCaso="matMenu">
+                        <button mat-menu-item routerLink="/caso/{{caso.id}}/detalle" (click)="guardarCaso(caso)">
+                            <mat-icon fxHide="false" fxHide.gt-sm>remove_red_eye</mat-icon>Ver
+                        </button>
+                    </mat-menu>
+                    <mat-divider></mat-divider>
+                </mat-list-item>
+            </mat-list>
+            <mat-paginator #paginator
+                [length]="pag"
+                [pageIndex]="0"
+                [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 25, 100]"
+                (page)="changePage($event)">
+            </mat-paginator>
+        </div>
     </div>
 </div>
+<div *ngIf="auth.user.hasRoles(auth.roles.admin)">
+    <div class="row justify-content-md-center">
+        <div class="col-md-10">
+            <div class="row space">
+                <div class="col-sm-6">
+                    <h2>Catálogos</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <mat-list class="full-width" #shoes>
+                        <mat-list-item class="list-row" *ngFor="let catalogo of catalogosKeys" routerLink="/catalogos/{{catalogo}}">
+                            {{catalogos[catalogo].title}}
+                            <mat-divider></mat-divider>
+                        </mat-list-item>
+                    </mat-list>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
