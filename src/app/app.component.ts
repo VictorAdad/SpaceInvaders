@@ -59,6 +59,9 @@ export class AppComponent {
 	logout(){
 		this.authService.logout();
 	}
+    redireccionSigi(){
+        location.href ="http://pgjemsigi.edomex.gob.mx:3002/#/login";
+    }
 
     cleanDB(){
         console.log('cleanDB()');
