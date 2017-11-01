@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService} from '@services/http.service';
+import { OnLineService} from '@services/onLine.service';
+import { CIndexedDB } from '@services/indexedDB';
 
 @Component({
 	selector    : 'caso-nic',
@@ -18,7 +20,9 @@ export class CasoNicComponent implements OnInit{
 	
 	constructor(
 		public route: ActivatedRoute,
-		public http: HttpService
+		public http: HttpService,
+		public  onLine: OnLineService,
+		public db:CIndexedDB
 		){
 	}
 
@@ -27,15 +31,24 @@ export class CasoNicComponent implements OnInit{
 	}
 
 	public getCaso(_id){
-        console.log('CasoComponent@getCaso')
-		this.http.get('/v1/base/casos/'+this.id).subscribe(
-			response => {
-				console.log('Caso', response);
-            	this.nic = response.nic
-            	this.nuc = response.nuc
-        	}
-        );
-	}
+        console.log('CasoComponent@getCaso');
+        if (this.onLine.onLine){
+        	this.http.get('/v1/base/casos/'+this.id).subscribe(
+				response => {
+					console.log('Caso', response);
+	            	this.nic = response.nic
+	            	this.nuc = response.nuc
+	        	}
+	        );
+        }else{
+			this.db.get("casos",this.id).then(caso=>{
+				//console.log("CASO",caso);
+				this.nic=caso["nic"];
+				this.nuc=caso["nuc"];
+			});
+		}
+		console.log(this);
+    }
 }
 
 

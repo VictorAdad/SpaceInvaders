@@ -185,7 +185,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         //     })
         // }
         // this.initForm();
-        // this.validateForm(this.form);
+        this.validateForm(this.form);
     }
 
     addEfectoDetalle(_val: any){

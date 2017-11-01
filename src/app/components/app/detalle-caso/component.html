@@ -1,10 +1,5 @@
 <breadcrumb></breadcrumb>
-<div class="row space">    
-    <div class="col-md-12 text-right">
-        <small *ngIf="caso.hasPredenuncia">NIC:{{caso.nic}} - NUC:{{caso.nuc}}</small>
-        <small *ngIf="!caso.hasPredenuncia">NIC: - NUC:</small>
-    </div>
-</div>
+<caso-nic [id]="id"></caso-nic>
 <div class="row space">
     <div class="col-md-12">
         <mat-card>
@@ -214,14 +209,14 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img [style.opacity]="hasPredenuncia? 1 : 0.2" src="./assets/images/Solicitudes-preliminares/contratos.svg">
+                                                    <img [style.opacity]="hasPredenuncia && onLine.onLine ? 1 : 0.2" src="./assets/images/Solicitudes-preliminares/contratos.svg">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row space"></div>
                                     <div class="row">
-                                        <button mat-button [disabled]="!hasPredenuncia" routerLink="/caso/{{id}}/acuerdo-general">Ver ahora</button>
+                                        <button mat-button [disabled]="!hasPredenuncia || !onLine.onLine" routerLink="/caso/{{id}}/acuerdo-general">Ver ahora</button>
                                     </div>
                                 </mat-card-content>
                             </mat-card>
@@ -244,14 +239,14 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img [style.opacity]="hasPredenuncia? 1 : 0.2" src="./assets/images/Solicitudes-preliminares/letter.svg">
+                                                    <img [style.opacity]="hasPredenuncia && onLine.onLine? 1 : 0.2" src="./assets/images/Solicitudes-preliminares/letter.svg">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row space"></div>
                                     <div class="row">
-                                        <button mat-button [disabled]="!hasPredenuncia" routerLink="/caso/{{id}}/registro-general">Ver ahora</button>
+                                        <button mat-button [disabled]="!hasPredenuncia || !onLine.onLine" routerLink="/caso/{{id}}/registro-general">Ver ahora</button>
                                     </div>
                                 </mat-card-content>
                             </mat-card>
@@ -271,14 +266,14 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img [style.opacity]="hasPredenuncia? 1 : 0.2" src="./assets/images/Solicitudes-preliminares/fingerprint.svg">
+                                                    <img [style.opacity]="hasPredenuncia && onLine.onLine ? 1 : 0.2" src="./assets/images/Solicitudes-preliminares/fingerprint.svg">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row space"></div>
                                     <div class="row">
-                                        <button mat-button [disabled]="!hasPredenuncia" routerLink="/caso/{{id}}/inspeccion">Ver ahora</button>
+                                        <button mat-button [disabled]="!hasPredenuncia || !onLine.onLine" routerLink="/caso/{{id}}/inspeccion">Ver ahora</button>
                                     </div>
                                 </mat-card-content>
                             </mat-card>
@@ -298,14 +293,14 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img [style.opacity]="hasPredenuncia? 1 : 0.2" src="./assets/images/Solicitudes-preliminares/evidence.svg">
+                                                    <img [style.opacity]="hasPredenuncia && onLine.onLine? 1 : 0.2" src="./assets/images/Solicitudes-preliminares/evidence.svg">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row space"></div>
                                     <div class="row">
-                                        <button mat-button [disabled]="!hasPredenuncia" routerLink="/caso/{{id}}/requerimiento-informacion">Ver ahora</button>
+                                        <button mat-button [disabled]="!hasPredenuncia || !onLine.onLine" routerLink="/caso/{{id}}/requerimiento-informacion">Ver ahora</button>
                                     </div>
                                 </mat-card-content>
                             </mat-card>
@@ -340,14 +335,14 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img [style.opacity]="hasPredenuncia? 1 : 0.2" src="./assets/images/Acuerdos/acuerdo.svg">
+                                                    <img [style.opacity]="hasPredenuncia && onLine.onLine ? 1 : 0.2" src="./assets/images/Acuerdos/acuerdo.svg">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row space"></div>
                                     <div class="row">
-                                        <button mat-button [disabled]="!hasPredenuncia" routerLink="/caso/{{id}}/acuerdo-inicio">Ver ahora</button>
+                                        <button mat-button [disabled]="!hasPredenuncia || !onLine.onLine" routerLink="/caso/{{id}}/acuerdo-inicio">Ver ahora</button>
                                     </div>
                                 </mat-card-content>
                             </mat-card>
@@ -367,14 +362,14 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img [style.opacity]="hasPredenuncia? 1 : 0.2" src="./assets/images/Acuerdos/acuerdoRadicacion.svg">
+                                                    <img [style.opacity]="hasPredenuncia && onLine.onLine? 1 : 0.2" src="./assets/images/Acuerdos/acuerdoRadicacion.svg">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row space"></div>
                                     <div class="row">
-                                        <button mat-button [disabled]="!hasPredenuncia" routerLink="/caso/{{id}}/acuerdo-radicacion">Ver ahora</button>
+                                        <button mat-button [disabled]="!hasPredenuncia || !onLine.onLine" routerLink="/caso/{{id}}/acuerdo-radicacion">Ver ahora</button>
                                     </div>
                                 </mat-card-content>
                             </mat-card>
@@ -445,14 +440,14 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img [style.opacity]="hasPredenuncia? 1 : 0.2" src="./assets/images/Conclusiones/folder.svg">
+                                                    <img [style.opacity]="hasPredenuncia && onLine.onLine? 1 : 0.2" src="./assets/images/Conclusiones/folder.svg">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row space"></div>
                                     <div class="row">
-                                        <button mat-button [disabled]="!hasPredenuncia" routerLink="/caso/{{id}}/archivo-temporal">Ver ahora</button>
+                                        <button mat-button [disabled]="!hasPredenuncia || !onLine.onLine" routerLink="/caso/{{id}}/archivo-temporal">Ver ahora</button>
                                     </div>
                                 </mat-card-content>
                             </mat-card>
@@ -472,14 +467,14 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img [style.opacity]="hasPredenuncia? 1 : 0.2" src="./assets/images/Conclusiones/lawyer.svg">
+                                                    <img [style.opacity]="hasPredenuncia && onLine.onLine? 1 : 0.2" src="./assets/images/Conclusiones/lawyer.svg">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row space"></div>
                                     <div class="row">
-                                        <button mat-button [disabled]="!hasPredenuncia" routerLink="/caso/{{id}}/no-ejercicio-accion-penal">Ver ahora</button>
+                                        <button mat-button [disabled]="!hasPredenuncia || !onLine.onLine" routerLink="/caso/{{id}}/no-ejercicio-accion-penal">Ver ahora</button>
                                     </div>
                                 </mat-card-content>
                             </mat-card>
@@ -499,14 +494,14 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img [style.opacity]="hasPredenuncia? 1 : 0.2" src="./assets/images/Conclusiones/quill.svg">
+                                                    <img [style.opacity]="hasPredenuncia && onLine.onLine ? 1 : 0.2" src="./assets/images/Conclusiones/quill.svg">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row space"></div>
                                     <div class="row">
-                                        <button mat-button [disabled]="!hasPredenuncia" routerLink="/caso/{{id}}/facultad-no-investigar">Ver ahora</button>
+                                        <button mat-button [disabled]="!hasPredenuncia || !onLine.onLine" routerLink="/caso/{{id}}/facultad-no-investigar">Ver ahora</button>
                                     </div>
                                 </mat-card-content>
                             </mat-card>

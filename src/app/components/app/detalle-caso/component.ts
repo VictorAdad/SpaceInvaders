@@ -18,7 +18,7 @@ export class DetalleCasoComponent implements OnInit{
 	
 	public id: number = null;
 	private route: ActivatedRoute;
-	private onLine: OnLineService;
+	public onLine: OnLineService;
 	private http: HttpService;
 	public caso: Caso;
 	public involucrados:Persona[];
@@ -29,7 +29,7 @@ export class DetalleCasoComponent implements OnInit{
 
 	constructor(
 		_route: ActivatedRoute,
-		private _onLine: OnLineService,
+		public _onLine: OnLineService,
 		private _http: HttpService,
 		public auth: AuthenticationService,
 		private db:CIndexedDB
