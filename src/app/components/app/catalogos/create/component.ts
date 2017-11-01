@@ -54,26 +54,38 @@ export class CatalogosCreateComponent extends NoticiaHechoGlobal{
     }
 
     public save(_valid: boolean, _form:any){
-        if(_valid)
-            this.http.post(this.catalogo.url, _form).subscribe(
-                response => {
-                    this.router.navigate(['/catalogos/'+this.tipo]);
-                },
-                error => {
-                    console.error('Error', error);
-                }
-            );
+        return new Promise( (resolve, reject) => {
+            if(_valid)
+                this.http.post(this.catalogo.url, _form).subscribe(
+                    response => {
+                        this.router.navigate(['/catalogos/'+this.tipo]);
+                        resolve('Registro creado con éxito');
+                    },
+                    error => {
+                        console.error('Error', error);
+                        reject('Ocurrió un error al guardar la información');
+                    }
+                );
+            else
+                reject('El formulario no pasó la validación');
+        });
     }
 
     public edit(_valid: boolean, _form:any){
-        if(_valid)
-            this.http.put(this.catalogo.url+'/'+this.id, _form).subscribe(
-                response => {
-                    this.router.navigate(['/catalogos/'+this.tipo]);
-                },
-                error => {
-                    console.error('Error', error);
-                }
-            );
+        return new Promise( (resolve, reject) => {
+            if(_valid)
+                this.http.put(this.catalogo.url+'/'+this.id, _form).subscribe(
+                    response => {
+                        this.router.navigate(['/catalogos/'+this.tipo]);
+                        resolve('Registro editado con éxito');
+                    },
+                    error => {
+                        console.error('Error', error);
+                        reject('Ocurrió un error al guardar la información');
+                    }
+                );
+            else
+                reject('El formulario no pasó la validación');
+        });
     }
 }
