@@ -29,7 +29,7 @@ export class municipioCreateComponent extends Catalogos{
         private http: HttpService,
         private onLine: OnLineService,
         private db:CIndexedDB,
-        private options: SelectsService,
+        public options: SelectsService,
 
         ) {
           super();
