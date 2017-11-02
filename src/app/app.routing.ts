@@ -70,6 +70,8 @@ import { MecanismoAccionComponent } from '@components-app/catalogos/armas/mecani
 
 import { estadosCreateComponent } from '@components-app/catalogos/estados/create/create.component';
 import { estadosCatalogosComponent } from '@components-app/catalogos/estados/component';
+import { municipioCatalogosComponent } from '@components-app/catalogos/municipios/component';
+import { municipioCreateComponent } from '@components-app/catalogos/municipios/create/create.component';
 
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
@@ -114,31 +116,31 @@ const routes: Routes = [
 
     //Solicitud Preliminar
     { path : 'acuerdos-generales', component : AcuerdoGeneralComponent, data : { breadcrumb : 'Solicitudes y acuerdos generales'}},
-    { path : 'acuerdos-generales/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Solicitudes y acuerdos generales'}},    
-    { path : 'acuerdos-generales/:id/edit', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Solicitudes y acuerdos generales'}},    
+    { path : 'acuerdos-generales/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Solicitudes y acuerdos generales'}},
+    { path : 'acuerdos-generales/:id/edit', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Solicitudes y acuerdos generales'}},
     { path : 'caso/:casoId/acuerdo-general', component : AcuerdoGeneralComponent, data : { breadcrumb : 'Solicitudes de acuerdo general'}},
     { path : 'caso/:casoId/acuerdo-general/create', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Solicitudes y acuerdos generales'}},
-    { path : 'caso/:casoId/acuerdo-general/:id/edit', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Solicitudes y acuerdos generales'}},    
-    
+    { path : 'caso/:casoId/acuerdo-general/:id/edit', component : AcuerdoGeneralCreateComponent, data : { breadcrumb : 'Solicitudes y acuerdos generales'}},
+
     { path : 'inspecciones', component : InspeccionComponent, data : { breadcrumb : 'Solicitudes de inspección'}},
     { path : 'inspecciones/create', component : InspeccionCreateComponent, data : { breadcrumb : 'Inspecciones'}},
     { path : 'inspecciones/:id/edit', component : InspeccionCreateComponent, data : { breadcrumb : 'Inspecciones'}},
     { path : 'caso/:casoId/inspeccion', component : InspeccionComponent, data : { breadcrumb : 'Solicitudes de inspección'}},
     { path : 'caso/:casoId/inspeccion/create', component : InspeccionCreateComponent, data : { breadcrumb : 'Inspecciones'}},
     { path : 'caso/:casoId/inspeccion/:id/edit', component : InspeccionCreateComponent, data : { breadcrumb : 'Inspecciones'}},
-   
+
     { path : 'caso/:casoId/registro-general', component : RegistroGeneralComponent, data : { breadcrumb : 'Solicitudes de registro general'}},
     { path : 'caso/:casoId/registro-general/create', component : RegistroGeneralCreateComponent, data : { breadcrumb : 'Registro general'}},
     { path : 'caso/:casoId/registro-general/:id/edit', component : RegistroGeneralCreateComponent, data : { breadcrumb : 'Registro general'}},
-    
+
     { path : 'caso/:casoId/policia', component : PoliciaComponent, data : { breadcrumb : 'Solicitudes preliminares de Policia Ministerial'}},
     { path : 'caso/:casoId/policia/create', component : PoliciaCreateComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
     { path : 'caso/:casoId/policia/:id/edit', component : PoliciaCreateComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
-    
+
     { path : 'caso/:casoId/perito', component : PeritoComponent, data : { breadcrumb : 'Solicitudes preliminares a peritos'}},
     { path : 'caso/:casoId/perito/create', component : PeritoCreateComponent, data : { breadcrumb : 'Solicitudes de servicios periciales'}},
     { path : 'caso/:casoId/perito/:id/edit', component : PeritoCreateComponent, data : { breadcrumb : 'Solicitudes de servicios periciales'}},
-    
+
     { path : 'caso/:casoId/requerimiento-informacion', component : RequerimientoInformacionComponent, data : { breadcrumb : 'Solicitudes de requerimiento de información' } },
     { path : 'caso/:casoId/requerimiento-informacion/create', component : RequerimientoInformacionCreateComponent, data : { breadcrumb : 'Requerimiento de información' } },
     { path : 'caso/:casoId/requerimiento-informacion/:id/edit', component : RequerimientoInformacionCreateComponent, data : { breadcrumb : 'Requerimiento de información' } },
@@ -165,7 +167,7 @@ const routes: Routes = [
     { path : 'caso/:casoId/no-ejercicio-accion-penal/:id/edit', component : NoEjercicioAccionPenalCreateComponent, data : { breadcrumb : 'No ejercicio de la acción penal' } },
 
     //Detalle del Caso
-    { path : 'caso/:id/detalle', component : DetalleCasoComponent, data : { breadcrumb : 'Detalle del caso' } },    
+    { path : 'caso/:id/detalle', component : DetalleCasoComponent, data : { breadcrumb : 'Detalle del caso' } },
 
     //Entrevista
     { path : 'caso/:casoId/entrevista', component : EntrevistaComponent, data : { breadcrumb : 'Entrevistas' } },
@@ -176,6 +178,11 @@ const routes: Routes = [
     //prueba catalogos
     { path : 'catalogos/estado', component : estadosCatalogosComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogos/estado/create', component : estadosCreateComponent, data : { breadcrumb : 'Catálogos' } },
+
+    { path : 'catalogos/municipios', component : municipioCatalogosComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/municipios/create', component : municipioCreateComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/municipios/:id/edit', component : municipioCreateComponent, data : { breadcrumb : 'Catálogos' } },
+
 
     { path : 'catalogos/:tipo', component : CatalogosComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogos/:tipo/create', component : CatalogosCreateComponent, data : { breadcrumb : 'Crear catálogos' } },
@@ -222,7 +229,7 @@ export const routingComponents = [
   InspeccionComponent,
   InspeccionCreateComponent,
   RegistroGeneralComponent,
-  RegistroGeneralCreateComponent,  
+  RegistroGeneralCreateComponent,
   PoliciaComponent,
   PoliciaCreateComponent,
   PeritoComponent,

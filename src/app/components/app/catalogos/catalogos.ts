@@ -1,12 +1,41 @@
+
+import { FormGroup, FormControl, FormArray } from '@angular/forms';
+
 export class Catalogos {
 
 	public title: string;
 	public url: string;
 
-	constructor(_title: string, _url: string) {
+	constructor(_title: string=null, _url: string=null) {
 		this.title = _title;
 		this.url   = _url;
-	}
+  }
+
+      public validateMsg(form: FormGroup){
+        return !form.valid ? 'No se han llenado los campos requeridos' : '';
+    }
+
+	public validateForm(form: FormGroup) {
+        Object.keys(form.controls).forEach(field => {
+            const control = form.get(field);
+            if (control instanceof FormControl) {
+                control.markAsTouched({ onlySelf: true });
+            } else if (control instanceof FormGroup) {
+                this.validateForm(control);
+            } else if (control instanceof FormArray){
+                Object.keys(control.controls).forEach(fieldArray => {
+                    const controlArray = control.controls[fieldArray];
+                    if (controlArray instanceof FormControl) {
+                        controlArray.markAsTouched({ onlySelf: true });
+                    } else if (controlArray instanceof FormGroup) {
+                        this.validateForm(controlArray);
+                    }
+                });
+            }
+        });
+    }
+
+
 }
 
 export var _catalogos = {
@@ -45,13 +74,13 @@ export var _catalogos = {
 
 	//No tiene servicios
 	'turno'						: new Catalogos('Turno',''),
-	
+
 	//problema al guardar
 	'distrito'					: new Catalogos('Distrito','/v1/catalogos/usuario/distrito'),
 	'fiscalia'					: new Catalogos('Fiscalía','/v1/catalogos/usuario/fiscalia'),
 	'agencia'					: new Catalogos('Agencia','/v1/catalogos/usuario/agencia'),
 	'base'						: new Catalogos('Base','/v1/catalogos/usuario/base'),
-	
+
 
 
 }

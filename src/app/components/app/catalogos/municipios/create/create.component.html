@@ -1,0 +1,73 @@
+<breadcrumb></breadcrumb>
+<div class="row space">
+    <div class="col-md-6">
+        <h2>Crear municipio</h2>
+    </div>
+    <div class="col-md-6">
+        <button class="float-right" mat-raised-button routerLink="/catalogos/municipios" color="accent">Regresar</button>
+    </div>
+</div>
+<hr>
+<div class="row space"></div>
+<div class="row  justify-content-md-center">
+    <div class="col-md-10">
+        <form>
+          <div class="row">
+            <div class="col-md-3">
+                <select2 [options]="options.paises"
+                    placeholder="País"
+                    (valueChange)="changePais($event)"
+                     name="id"
+                    [group]="form.controls.pais"
+                    >
+                </select2>
+            </div>
+            <div class="col-md-3">
+                <select2 [options]="options.estados"
+                    placeholder="Estado"
+                    name="id"
+                    [group]="form.controls.estado"
+                >
+                </select2>
+            </div>
+            <div class="col-md-3">
+
+            <text label="Nombre" name="nombre" [group]="form"></text>
+          </div>
+           </div>
+           <!--
+           <div class="row">
+              <div class="col-md-3">
+                  <select2 [options]="options.bases"
+                      placeholder="Bases"
+                      name="id"
+                      [group]="form.controls.base"
+                  >
+                  </select2>
+              </div>
+              <div class="col-md-3">
+                  <select2 [options]="options.agencias"
+                      placeholder="Agencia"
+                      name="id"
+                      [group]="form.controls.agencia"
+                  >
+                  </select2>
+              </div>
+             </div>
+            -->
+
+            </form>
+
+
+
+          </div>
+</div>
+<div class="row justify-content-end">
+    <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
+        <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id != null">Editar</button>
+        <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id == null">Guardar</button>
+    </div>
+    <div class="col-sm-auto">
+        <button class="float-right" mat-button routerLink="/catalogos/municipios">Cancelar</button>
+    </div>
+</div>
