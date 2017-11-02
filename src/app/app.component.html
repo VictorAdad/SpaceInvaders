@@ -130,7 +130,7 @@
             <button mat-menu-item (click)="redireccionSigi()">
                 <mat-icon fxHide="false" fxHide.gt-sm>launch</mat-icon>SIGIPPEM consulta 
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item routerLink="ayuda">
                 <mat-icon fxHide="false" fxHide.gt-sm>help_outline</mat-icon>Ayuda
             </button>
             <button mat-menu-item (click)="cleanDB()" *ngIf="_CONFIG.develop">

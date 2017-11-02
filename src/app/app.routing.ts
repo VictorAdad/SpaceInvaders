@@ -76,10 +76,10 @@ import { ColoniaComponent } from '@components-app/catalogos/colonias/component';
 import { ColoniaCreateComponent } from '@components-app/catalogos/colonias/create/create.component';
 import { LocalidadComponent } from '@components-app/catalogos/localidades/component';
 import { LocalidadCreateComponent } from '@components-app/catalogos/localidades/create/create.component';
-
-
 import {TurnoCatalogosComponent} from '@components-app/catalogos/turno/turno.component';
 import {TurnoCatalogosCreateComponent} from '@components-app/catalogos/turno/create/create.component';
+
+import {AyudaComponent} from '@components-app/ayuda/component';
 
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
@@ -207,6 +207,10 @@ const routes: Routes = [
     { path : 'catalogos/:tipo/create', component : CatalogosCreateComponent, data : { breadcrumb : 'Crear catálogos' } },
     { path : 'catalogos/:tipo/:id', component : CatalogosCreateComponent, data : { breadcrumb : 'Crear catálogos' } },
     { path : 'catalogo-armas', component : CatalogoArmasComponent, data : { breadcrumb : 'Catálogo de Armas', rutas:[{path:'/catalogos',label:"Catálogos"}]  } },
+
+    { path : 'ayuda', component : AyudaComponent, data : { breadcrumb : 'Catálogo de Armas', rutas:[{path:'/catalogos',label:"Catálogos"}]  } },
+
+
     { path : 'tipo-arma', component : TipoArmaComponent, data : { breadcrumb : 'Tipo de arma', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"}] } },
     { path : 'tipo-arma/create', component : CreateArmaComponent, data : { breadcrumb : 'Agregar Tipo de Arma', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Tipo de arma"}] }  },
     { path : 'tipo-arma/:id/edit', component : CreateArmaComponent, data : { breadcrumb : 'Editar Tipo de Arma', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Editor Tipo de arma"}] }  },
@@ -287,6 +291,10 @@ export const routingComponents = [
   CatalogosComponent,
   CatalogosCreateComponent,
   CatalogoArmasComponent,
+
+  AyudaComponent,
+
+
   TipoArmaComponent,
   CreateArmaComponent,
   CalibreArmaComponent,

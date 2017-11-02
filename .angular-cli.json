@@ -20,6 +20,7 @@
       "prefix": "app",
       "styles": [
         "styles.css",
+        "../node_modules/videogular2/fonts/videogular.css",
         "./assets/css/bootstrap-grid.css",
         "./assets/css/mdl/material.css",
         "./assets/sass/custom-material/custom-material.scss",
