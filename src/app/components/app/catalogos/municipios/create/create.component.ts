@@ -87,6 +87,7 @@ export class municipioCreateComponent extends Catalogos{
             this.http.post(this.url, _form).subscribe(
                 response => {
                     console.log('MUNICIPIO SALVADO->',response);
+                    resolve("Se actualizó la información del arma");
                     this.router.navigate(['/catalogos/municipios']);
                 },
                 error => {
@@ -101,6 +102,7 @@ export class municipioCreateComponent extends Catalogos{
       if(_valid)
             this.http.put(this.url+'/'+this.id, _form).subscribe(
                 response => {
+                  resolve("Se actualizó la información del arma");
                     this.router.navigate(['/catalogos/municipios']);
                 },
                 error => {
