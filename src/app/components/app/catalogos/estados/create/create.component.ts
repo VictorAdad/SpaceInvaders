@@ -9,7 +9,6 @@ import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { NoticiaHechoGlobal } from '../../../noticiaHecho/global';
-import { _catalogos } from '../../catalogos';
 import { SelectsService} from '@services/selects.service';
 import 'rxjs/add/observable/of';
 
@@ -17,36 +16,39 @@ import 'rxjs/add/observable/of';
     templateUrl: 'create.component.html'
 })
 export class estadosCreateComponent extends NoticiaHechoGlobal{
-    public options: SelectsService;
     public catalogo: any;
     public form: FormGroup;
     public tipo: string;
     public id: number = null;
+    public url: string = '/v1/catalogos/estado';
 
     constructor(
         private router: Router,
         private _activeRoute: ActivatedRoute,
         private http: HttpService,
         private onLine: OnLineService,
-        private db:CIndexedDB
+        private db:CIndexedDB,
+        public options: SelectsService 
         ) {
         super();
     }
 
     ngOnInit() {
+        this.options.getPaises();
+
         this.form = new FormGroup({
             'nombre': new FormControl('', [Validators.required]),
+            'pais' : new FormGroup({
+                'id' : new FormControl (null, [Validators.required]),
+            })
         })
         this._activeRoute.params.subscribe(
             params => {
-                if(params['tipo']){
-                    this.tipo = params['tipo'];
-                    this.catalogo = _catalogos[params['tipo']];
-                }
+                this.tipo = 'estado';
 
                 if(params['id']){
                     this.id = params['id']
-                    this.http.get(this.catalogo.url+'/'+this.id).subscribe(response =>{                      
+                    this.http.get(this.url+'/'+this.id).subscribe(response =>{                      
                         this.form.patchValue(response);
                     });
                 }
@@ -55,26 +57,40 @@ export class estadosCreateComponent extends NoticiaHechoGlobal{
     }
 
     public save(_valid: boolean, _form:any){
-        if(_valid)
-            this.http.post(this.catalogo.url, _form).subscribe(
-                response => {
-                    this.router.navigate(['/catalogos/'+this.tipo]);
-                },
-                error => {
-                    console.error('Error', error);
-                }
-            );
+        return new Promise( (resolve, reject) => {
+            if(_valid)
+                this.http.post(this.url, _form).subscribe(
+                    response => {
+                        this.router.navigate(['/catalogos/'+this.tipo]);
+                        resolve('Registro editado con éxito');
+                    },
+                    error => {
+                        console.error('Error', error);
+                        reject('Ocurrió un error al guardar la información');
+                    }
+                );
+            else{
+                reject('El formulario no pasó la validación');
+            }
+        });    
     }
 
     public edit(_valid: boolean, _form:any){
-        if(_valid)
-            this.http.put(this.catalogo.url+'/'+this.id, _form).subscribe(
-                response => {
-                    this.router.navigate(['/catalogos/'+this.tipo]);
-                },
-                error => {
-                    console.error('Error', error);
-                }
-            );
-    }
+        return new Promise( (resolve, reject) => {
+            if(_valid)
+                this.http.post(this.url, _form).subscribe(
+                    response => {
+                        this.router.navigate(['/catalogos/'+this.tipo]);
+                        resolve('Registro editado con éxito');
+                    },
+                    error => {
+                        console.error('Error', error);
+                        reject('Ocurrió un error al editar la información');
+                    }
+                );
+            else{
+                reject('El formulario no pasó la validación');
+            }
+        });
+    }        
 }

@@ -72,6 +72,14 @@ import { estadosCreateComponent } from '@components-app/catalogos/estados/create
 import { estadosCatalogosComponent } from '@components-app/catalogos/estados/component';
 import { municipioCatalogosComponent } from '@components-app/catalogos/municipios/component';
 import { municipioCreateComponent } from '@components-app/catalogos/municipios/create/create.component';
+import { ColoniaComponent } from '@components-app/catalogos/colonias/component';
+import { ColoniaCreateComponent } from '@components-app/catalogos/colonias/create/create.component';
+import { LocalidadComponent } from '@components-app/catalogos/localidades/component';
+import { LocalidadCreateComponent } from '@components-app/catalogos/localidades/create/create.component';
+
+
+import {TurnoCatalogosComponent} from '@components-app/catalogos/turno/turno.component';
+import {TurnoCatalogosCreateComponent} from '@components-app/catalogos/turno/create/create.component';
 
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
@@ -176,8 +184,19 @@ const routes: Routes = [
     //Catalogos
 
     //prueba catalogos
+    { path : 'catalogos/turno', component : TurnoCatalogosComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/turno/create', component : TurnoCatalogosCreateComponent, data : { breadcrumb : 'Crear catálogos' } },
+    { path : 'catalogos/turno/:id', component : TurnoCatalogosCreateComponent, data : { breadcrumb : 'Crear catálogos' } },
+
     { path : 'catalogos/estado', component : estadosCatalogosComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogos/estado/create', component : estadosCreateComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/estado/:id', component : estadosCreateComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/colonias', component : ColoniaComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/colonias/create', component : ColoniaCreateComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/colonias/:id', component : ColoniaCreateComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/localidades', component : LocalidadComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/localidades/create', component : LocalidadCreateComponent, data : { breadcrumb : 'Catálogos' } },
+    { path : 'catalogos/localidades/:id', component : LocalidadCreateComponent, data : { breadcrumb : 'Catálogos' } },
 
     { path : 'catalogos/municipios', component : municipioCatalogosComponent, data : { breadcrumb : 'Catálogos' } },
     { path : 'catalogos/municipios/create', component : municipioCreateComponent, data : { breadcrumb : 'Catálogos' } },
@@ -258,6 +277,12 @@ export const routingComponents = [
 
   estadosCatalogosComponent,
   estadosCreateComponent,
+  ColoniaComponent,
+  ColoniaCreateComponent,
+  LocalidadComponent,
+  LocalidadCreateComponent,
+  TurnoCatalogosComponent,
+  TurnoCatalogosCreateComponent,
 
   CatalogosComponent,
   CatalogosCreateComponent,

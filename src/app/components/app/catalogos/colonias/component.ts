@@ -8,18 +8,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { CIndexedDB } from '@services/indexedDB';
-
+import { _catalogos } from '../catalogos';
 
 @Component({
-    templateUrl: 'estado.component.html',
+    templateUrl: 'component.html',
 })
-export class estadosCatalogosComponent {
+export class ColoniaComponent {
     columns = ['nombre'];
     dataSource: TableService;
     hidePaginator: boolean = false;
     selectedRow: Number;
     catalogo: any;
-    tipo: string;
+    tipo: string = 'colonias';
+    url: string = '/v1/catalogos/colonia';
     public totalCount: number = 0;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -32,16 +33,15 @@ export class estadosCatalogosComponent {
         private db:CIndexedDB
         ) {}
 
+
     ngOnInit() {
-        this._activeRoute.params.subscribe(params => {
-            if(this.onLine.onLine)
-                this.page('/v1/catalogos/estado/page');
-        });
+        if(this.onLine.onLine)
+            this.page(this.url+'/page');
     }
 
     public changePage(_e){
         if(this.onLine.onLine){
-            this.page('/v1/catalogos/estado/page?p='+_e.pageIndex+'&tr='+_e.pageSize);
+            this.page(this.url+'/page?p='+_e.pageIndex+'&tr='+_e.pageSize);
             
         }
     }  

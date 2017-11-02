@@ -58,7 +58,7 @@ export var _catalogos = {
 	'victima-querellante'		: new Catalogos('Victima querellante','/v1/catalogos/solicitud-preliminar/victima-querellante'),
 	'perito-materia'			: new Catalogos('Perito materia','/v1/catalogos/solicitud-preliminar/perito-materia'),
 	'tipo-examen'				: new Catalogos('Tipo examen','/v1/catalogos/solicitud-preliminar/tipo-examen'),
-	'estados'					: new Catalogos('Estados', '/v1/catalogos/estado'),
+	'estado'					: new Catalogos('Estados', '/v1/catalogos/estado'),
 	'municipio'					: new Catalogos('Municipio','/v1/catalogos/municipio'),
 	'colonia'					: new Catalogos('Colonia','/v1/catalogos/colonia'),
 	'localidad'					: new Catalogos('Localidad','/v1/catalogos/localidad'),
@@ -73,7 +73,7 @@ export var _catalogos = {
 	'forma-accion'				: new Catalogos('Forma acción','/v1/catalogos/relacion/forma-accion'),
 
 	//No tiene servicios
-	'turno'						: new Catalogos('Turno',''),
+	'turno'						: new Catalogos('Turno','/v1/catalogos/usuario/turno'),
 
 	//problema al guardar
 	'distrito'					: new Catalogos('Distrito','/v1/catalogos/usuario/distrito'),
