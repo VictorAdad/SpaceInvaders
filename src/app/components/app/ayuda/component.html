@@ -18,8 +18,8 @@
 			<mat-tab label="Video tutoriales">
 				<div  style="height: 500px;">
 					<vg-player>
-					    <video [vgMedia]="media" #media id="singleVideo" preload="auto" controls>
-					        <source src={{currentVideo.src}}" type="video/mp4">
+					    <video [vgMedia]="media" #media id="singleVideo" preload="auto" controls [src]="currentVideo.src">
+
 					    </video>
 					</vg-player>
 				</div>
