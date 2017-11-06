@@ -19,6 +19,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../global.component';
 import { Validation } from '@services/validation/validation.service';
+import * as moment from 'moment';
 
 
 var eliminaNulos = function(x){
@@ -137,7 +138,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 				'id': new FormControl("", []),
 			}),
 			'fechaNacimiento': new FormControl(""),
-			'edad': new FormControl(""),
+			'edad': new FormControl("",[Validators.min(0),]),
 			'nacionalidad': new FormControl(""),
 			'originarioDe': new FormControl(""),
 			'estadoMigratorio': new FormControl(""),
@@ -154,7 +155,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 			'ocupacion': new FormControl(""),
 			'lugarOcupacion': new FormControl(""),
 			'estadoCivil': new FormControl(""),
-			'salarioSemanal': new FormControl("", [Validation.validationMax(99999)]),
+			'salarioSemanal': new FormControl("", [Validation.validationMax(99999),Validators.min(0)]),
 			'relacionEntrevistado': new FormControl(""),
 			'calle': new FormControl(""),
 			'noExterior': new FormControl(""),
@@ -260,7 +261,22 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 
 	tipoChange(_tipo): void {
 		console.log('valor', _tipo);
-	}
+  }
+  calculateAge(e){
+
+            var m = moment(e);
+            console.log(typeof e,m.isValid());
+            if (m.isValid()){
+                var a=moment(e);
+                var hoy=moment();
+                var edad=hoy.diff(a, 'years');
+                this.form.patchValue({edad:edad});
+                this.form.controls.edad.disable();
+            }else{
+                this.form.controls.edad.enable();
+            }
+
+        }
 
 }
 

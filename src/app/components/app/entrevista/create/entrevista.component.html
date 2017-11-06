@@ -22,10 +22,10 @@
                         </select2>
                     </div>
                     <div class="col-md-3">
-                        <date label="Fecha de nacimiento" name="fechaNacimiento" [group]="form"></date>
+                        <date label="Fecha de nacimiento" name="fechaNacimiento" (valueChange)="calculateAge($event)"[group]="form"></date>
                     </div>
                     <div class="col-md-3">
-                        <text label="Edad" name="edad" [group]="form"></text>
+                        <number label="Edad" name="edad" [group]="form"></number>
                     </div>
                 </div>
                 <div class="row">
