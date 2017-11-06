@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Inject } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { CIndexedDB } from '@services/indexedDB';
 import { HttpService} from '@services/http.service';
@@ -15,6 +15,9 @@ export class FormatosGlobal{
         confirmText: "Continuar", // Default: 'Yes'
         declineText: "Cancelar",
     };
+    public formData: FormData;
+    public urlUpload: string;
+
     constructor(
         public http: HttpService,
         public _confirmation:ConfirmationService,
@@ -71,7 +74,11 @@ export class FormatosGlobal{
     public openDocDialog() {
         var dialog = this.dialog.open(SolPreDocComponent, {
             height: 'auto',
-            width: 'auto'
+            width: 'auto',
+            data: {
+                urlUpload: this.urlUpload,
+                formData: this.formData
+            }
         });
 
         dialog.componentInstance.emitter.subscribe((archivos) => {
@@ -102,8 +109,12 @@ export class SolPreDocComponent {
     @Output()
     emitter = new EventEmitter();    
 
-    constructor(public dialogRef: MatDialogRef<SolPreDocComponent>, 
-        private _db: CIndexedDB, public globalService : GlobalService){
+    constructor(
+        public dialogRef: MatDialogRef<SolPreDocComponent>, 
+        private _db: CIndexedDB,
+        public globalService : GlobalService,
+        private http: HttpService,
+        @Inject(MAT_DIALOG_DATA) private data:any,){
         this.db=_db;
     }
 
@@ -157,11 +168,23 @@ export class SolPreDocComponent {
         reader.readAsDataURL(item["some"]);
     }
 
-    guardar(){
-        console.log("archivos:",this.uploader);
-        var listaFiles=this.uploader.queue as any[];
-        this.guardarOffLine(0,listaFiles);
-        this.emitter.emit(listaFiles);
+    public guardar(){
+        console.log("-> Archivos:", this.uploader);
+        console.log("-> Data:", this.data);
+        var listaFiles = this.uploader.queue as any[];
+        console.log('-> Files: ', listaFiles);
+
+        for (let file of listaFiles) {
+            this.data.formData.append('files', file['some']);
+        }
+            
+        this.http.post(this.data.urlUpload, this.data.formData).subscribe(
+            response => {
+                console.log('Done guardar()', response);
+                this.emitter.emit(response);
+            }
+        )
+        // this.guardarOffLine(0,listaFiles);
         
     }
 
