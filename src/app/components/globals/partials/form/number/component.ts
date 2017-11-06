@@ -20,13 +20,16 @@ export class NumberComponent implements OnInit{
 	@Input() hintEnd: string="";
 	@Input() readonly: string="";
 	@Input() functionChange: Function;
-	@Input() max :number = 5;
+  @Input() max :number = 9999999999;
+  @Input() min :number = 0;
+
 
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
 
 	ngOnInit(){
-		// console.log(this);
+    console.log(this);
+
 	}
 
 	update(value) {
