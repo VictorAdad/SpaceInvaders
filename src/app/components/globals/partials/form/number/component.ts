@@ -20,6 +20,7 @@ export class NumberComponent implements OnInit{
 	@Input() hintEnd: string="";
 	@Input() readonly: string="";
 	@Input() functionChange: Function;
+	@Input() max :number = 5;
 
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
@@ -34,7 +35,9 @@ export class NumberComponent implements OnInit{
 			this.functionChange(value);
 		}
 	}
+
 }
+
 
 
 
