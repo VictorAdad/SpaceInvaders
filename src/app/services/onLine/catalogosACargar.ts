@@ -206,7 +206,7 @@ export class CatalogosACargar {
         },
         {
             catalogo:"tipo_interviniente",
-            uri:'/v1/base/tipos-intervinientes/options'
+            uri:'/v1/catalogos/tipos-intervinientes/options'
         },
         {//60
             catalogo:"victima_querellante",

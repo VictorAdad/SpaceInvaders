@@ -134,7 +134,7 @@ export class SelectsService {
 
     public getTipoInterviniente(){
         if(this.onLine.onLine){
-            this.http.get('/v1/base/tipos-intervinientes/options').subscribe((response) => {
+            this.http.get('/v1/catalogos/tipos-intervinientes/options').subscribe((response) => {
                 this.tipoInterviniente = this.constructOptions(response);
             });
         }else{
