@@ -6,7 +6,7 @@ import {Observable} from 'rxjs/Rx';
 import {MatSnackBar} from '@angular/material';
 import { CIndexedDB } from '@services/indexedDB';
 import { HttpService} from '@services/http.service';
-import {CatalogosACargar} from "@services/onLine/CatalogosACargar";
+import {SincronizaCatalogos} from "@services/onLine/sincronizaCatalogos";
 import { SimpleNotificationsComponent } from 'angular2-notifications';
 import { NotificationsService } from 'angular2-notifications';
 import { Notification } from 'angular2-notifications';
@@ -23,6 +23,8 @@ export class OnLineService {
     sincronizando:boolean=false;
     seActualizoAlmenosUnRegistro:boolean;
 
+    sincronizarCatalogos:SincronizaCatalogos
+
 
     constructor(
         public snackBar: MatSnackBar,
@@ -30,6 +32,7 @@ export class OnLineService {
         private http:HttpService,
         private notificationService: NotificationsService
     ) {
+        this.sincronizarCatalogos=new SincronizaCatalogos(db,http);
         // timer = Observable.timer(2000,1000);
         this.timer.subscribe(t=>{
             this.anterior=this.onLine;
@@ -48,38 +51,11 @@ export class OnLineService {
         });
         if(localStorage.getItem('sincronizacion') !== 'true')
             this.timerSincronizarMatrices.subscribe(t=>{
-                this.sincronizaCatalogos(0,CatalogosACargar.matricesASincronizar,"matrices");
-                this.sincronizaCatalogos(0,CatalogosACargar.catalogosASincronizar,"catalogos");
+                this.sincronizarCatalogos.nuevo();
                 localStorage.setItem('sincronizacion', 'true')
             });
         else
             console.log('Ya existen catalogos sincroinzados');
-    }
-
-    private sincronizaCatalogos(i,arr:any[],titulo:string=""){
-        if (i==0){
-            console.time(titulo);
-            console.log("%c" + "-> Iniciando Sincronizacion de "+titulo, "color: black;font-weight:bold;");
-        }
-        if (i==arr.length){
-            console.log("%c" + "-> "+titulo+" sincronizadas", "color: blue;font-weight:bold;");
-            console.timeEnd(titulo);
-            return;
-        }
-        this.sincronizaMatrix(i,arr[i],arr,titulo);
-
-    }
-
-    private sincronizaMatrix(i,item,arr,titulo:string=""){
-        this.http.get(item["uri"]).subscribe((response) => {
-            this.db.update("catalogos",{id:item["catalogo"], arreglo:response}).then(e=>{
-                    this.sincronizaCatalogos(i+1,arr,titulo);
-                });
-        },
-        (error)=>{
-            console.log("Fallo el servicio "+item["uri"]);
-            this.sincronizaCatalogos(i+1,arr,titulo);
-        });
     }
 
     startSincronizacion(){
@@ -87,6 +63,7 @@ export class OnLineService {
         if (!this.sincronizando){
             this.seActualizoAlmenosUnRegistro=false;
             this.db.list("sincronizar").then(lista=>{
+
                 let datos = lista as any[];
                 if (datos.length>0){
                     this.notificationService.create("Sincronizando",'Sincronizando', 'info', {
@@ -123,15 +100,18 @@ export class OnLineService {
             //console.log("->Finalizo sincronizacion");
             return;
         }
+        //console.log("Iteracion",i);
         //mientras exista conexion
         if (this.onLine){
             //
             if (i<lista.length){
+                //console.log("ITEM",lista[i]);
                 let item = lista[i];
 
                 if (item.pendiente==false){
                     this.sincroniza(i+1,lista);
                 }
+
                 else if (item.tipo=="post"){
                     if (item["dependeDe"]){
                         var dependencias=item["dependeDe"] as any[];
@@ -208,6 +188,7 @@ export class OnLineService {
     }
 
     doPost(_url, item, i, lista){
+        console.log(_url,item,i,lista);
         this.http.post(_url, item.body).subscribe(
             respuesta=>{
                 console.log("RESPONSE POST",respuesta);
