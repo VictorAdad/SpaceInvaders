@@ -243,12 +243,16 @@ export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
     public data: DocumentoAcuerdoGeneral[] = [];
     public subject:BehaviorSubject<DocumentoAcuerdoGeneral[]> = new BehaviorSubject<DocumentoAcuerdoGeneral[]>([]);
     public source:TableDataSource = new TableDataSource(this.subject);
+    public casoId: number = null;
+    public formData:FormData = new FormData();
+    public urlUpload: string;
 
     constructor(
         public http: HttpService,
         public confirmationService:ConfirmationService,
         public globalService:GlobalService,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        private route: ActivatedRoute,
         ){
         super(http, confirmationService, globalService, dialog);
     }
@@ -263,6 +267,14 @@ export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
             }
 
         }
+
+        this.route.params.subscribe(params => {
+            if (params['casoId'])
+                this.urlUpload = '/v1/documentos/solicitudes-pre-acuerdos/save/'+params['casoId'];
+
+        });
+
+        this.formData.append('solicitudPreAcuerdo.id', this.id.toString());
     }
 
     public cargaArchivos(_archivos){
@@ -278,11 +290,11 @@ export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
         } 
     }
 
-  public setData(_object){
-      console.log('setData()');
-      this.data.push(_object);
-      this.subject.next(this.data);
-  }
+    public setData(_object){
+        console.log('setData()');
+        this.data.push(_object);
+        this.subject.next(this.data);
+    }
 }
 
 export interface DocumentoAcuerdoGeneral {

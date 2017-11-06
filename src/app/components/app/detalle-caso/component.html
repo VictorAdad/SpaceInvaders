@@ -18,22 +18,22 @@
                     <div class="row space"></div>
                     <mat-card-content>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <strong>Información general</strong>
                                 <p>{{caso.titulo}}</p>
                                 <p class="text-justify">{{caso.sintesis}}</p>
                             </div>
                             <div class="col-md-4">
                                 <strong>Involucrados</strong>
-                                <mat-list>
+                                <mat-list dense>
                                     <mat-list-item *ngFor="let involucrado of involucrados">
                                      {{involucrado.persona.nombre}} {{involucrado.persona.paterno}} {{involucrado.persona.materno}} 
                                     </mat-list-item>
                                 </mat-list>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <strong>Delito</strong>
-                                <mat-list>
+                                <mat-list dense>
                                     <mat-list-item *ngFor="let delitoCaso of delitos">
                                      {{delitoCaso.delito.nombre}} 
                                     </mat-list-item>
