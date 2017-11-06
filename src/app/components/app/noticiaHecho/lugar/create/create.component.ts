@@ -17,6 +17,8 @@ import { SelectsService} from '@services/selects.service';
 import { LugarService} from '@services/noticia-hecho/lugar.service';
 import { Observable } from 'rxjs';
 import { _config} from '@app/app.config';
+import { Validation } from '@services/validation/validation.service';
+
 
 @Component({
     selector: 'lugar-create',
@@ -139,7 +141,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             'coloniaOtro'     : new FormControl('', [Validators.required,]),
             'fecha'           : new FormControl('', [Validators.required,]),
             'hora'            : new FormControl('', [Validators.required,]),
-            'cp'              : new FormControl('', []),
+            'cp'              : new FormControl('',  [Validation.validationMax(999999999)]),
             'dia'             : new FormControl('', []),
             'descripcionLugar'     : new FormControl('', []),
             'notas'           : new FormControl('', []),
