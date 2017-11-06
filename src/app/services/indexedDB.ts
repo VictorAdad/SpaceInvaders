@@ -64,6 +64,8 @@ export class CIndexedDB {
                 db.createObjectStore("sincronizar", {keyPath: "id"});
                 db.createObjectStore("newId", {keyPath: "id"});
                 db.createObjectStore("blobs", {keyPath: "id"});
+                db.createObjectStore("catalogoLlave", {keyPath: "id"});
+
 
                 this.init = true;
                 console.log(" -> Se crearon las tablas");

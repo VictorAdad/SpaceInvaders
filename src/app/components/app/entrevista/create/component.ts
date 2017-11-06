@@ -18,6 +18,8 @@ import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../global.component';
+import { Validation } from '@services/validation/validation.service';
+
 
 var eliminaNulos = function(x){
             if (typeof x == "object"){
@@ -152,7 +154,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 			'ocupacion': new FormControl(""),
 			'lugarOcupacion': new FormControl(""),
 			'estadoCivil': new FormControl(""),
-			'salarioSemanal': new FormControl(""),
+			'salarioSemanal': new FormControl("", [Validation.validationMax(99999)]),
 			'relacionEntrevistado': new FormControl(""),
 			'calle': new FormControl(""),
 			'noExterior': new FormControl(""),
