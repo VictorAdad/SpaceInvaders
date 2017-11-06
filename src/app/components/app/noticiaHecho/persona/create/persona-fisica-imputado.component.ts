@@ -521,18 +521,18 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     */
     agregaIdTemporalesEdit(_model, temId,otrosID,putID=false){
         var dependeDe=[this.casoId,this.id,(_model["personaCaso"])[0].personaId];
-        
+
         //las localizaciones
         if (_model["localizacionPersona"])
         {
             for (var i = 0; i < _model["localizacionPersona"].length; ++i) {
                 var obj={};
                     obj[i]={id:temId};
-                //elemento nuevo    
+                //elemento nuevo
                 if (!Number.isInteger( ((_model["localizacionPersona"])[i])["id"] )){
                     if(putID){
-                        ((_model["localizacionPersona"])[i])["id"]=temId;    
-                    }   
+                        ((_model["localizacionPersona"])[i])["id"]=temId;
+                    }
                     var jason = JSON.parse('{"localizacionPersona":{ "'+i+'":{"id":'+temId+'} } }');
                     otrosID.push(jason);
                     dependeDe.push(temId);
@@ -540,7 +540,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 }else{
                     dependeDe.push( ((_model["localizacionPersona"])[i])["id"] );
                 }
-                
+
             }
         }
         //los mediafiliacion
@@ -573,7 +573,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     }else{
                         dependeDe.push(((_model["aliasNombrePersona"])[i])["id"]);
                     }
-                    
+
                 }
             }
         }
@@ -708,7 +708,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         this.caso=casoR as Caso;
 
                         this.agregaIdTemporalesEdit(_model,temId,otrosID,true);
-                        
+
                         this.tabla.update('personas', _model).then( p => {
                             console.log("SI se guardo persona",p);
                             if (!this.caso["personas"])
@@ -788,7 +788,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         if (isNaN(z.getTime())) {
             _data.fechaNacimiento = null;
         }else{
-            _data.fechaNacimiento = z;    
+            _data.fechaNacimiento = z;
         }
         for (var propName in _data) {
             if (_data[propName] === null || _data[propName] === undefined) {
@@ -872,7 +872,7 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
         // if (checked) {
         //     this.globals.form.controls.personaCaso["controls"][0].controls.detalleDetenido.controls.tipoDetenido.enable();
         // }else{
-        //     this.globals.form.controls.personaCaso["controls"][0].controls.detalleDetenido.controls.tipoDetenido.disable(); 
+        //     this.globals.form.controls.personaCaso["controls"][0].controls.detalleDetenido.controls.tipoDetenido.disable();
         // }
         // let timer = Observable.timer(1);
         // timer.subscribe(t => {
@@ -881,7 +881,7 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
     }
 
     edad(e){
-        
+
         var m = moment(e);
         console.log(typeof e,m.isValid());
         if (m.isValid()){
@@ -893,7 +893,7 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
         }else{
             this.globals.form.controls.edad.enable();
         }
-        
+
     }
 }
 
@@ -1217,10 +1217,10 @@ class LosForm{
             'materno'          : new FormControl(""),
             'razonSocial'      : new FormControl("", [Validators.required,Validators.minLength(5)]),
             'fechaNacimiento'  : new FormControl("",[]),
-            'edad'             : new FormControl("",[Validators.required,]),
+            'edad'             : new FormControl("",[Validators.required,Validators.min(0),]),
             'curp'             : new FormControl("",[]),
             'rfc'              : new FormControl("",[]),
-            'numHijos'         : new FormControl("",[]),
+            'numHijos'         : new FormControl("",[Validators.min(0),]),
             'lugarTrabajo'     : new FormControl("",[]),
             'ingresoMensual'   : new FormControl("",[]),
             'detenido'         : new FormControl("",[]),
