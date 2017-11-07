@@ -24,15 +24,17 @@ import {arrNACIONALIDAD_RELIGION}      from '@models/datos/nacionalidadReligion'
 import {arrIDIOMA_IDENTIFICACION} from '@models/datos/idiomaIdentificacion';
 import {SincronizaCatalogos} from "@services/onLine/sincronizaCatalogos";
 import { HttpService} from '@services/http.service';
+import { MatDialog } from '@angular/material';
 @Injectable()
 export class CIndexedDB {
     nameDB:string = "SIGI";
     init: boolean = (localStorage.getItem('initDB') === 'true');
     sincronizarCatalogos:SincronizaCatalogos;
 
-    constructor(private http:HttpService) {
+    constructor(private http:HttpService, 
+        public dialog: MatDialog) {
         var obj=this;
-        this.sincronizarCatalogos=new SincronizaCatalogos(this,http);
+        this.sincronizarCatalogos=new SincronizaCatalogos(this,http,dialog);
         if(!this.init){
             console.log("Creando tablas para la BD");
             var indexedDB = window.indexedDB ;

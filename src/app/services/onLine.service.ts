@@ -10,6 +10,7 @@ import {SincronizaCatalogos} from "@services/onLine/sincronizaCatalogos";
 import { SimpleNotificationsComponent } from 'angular2-notifications';
 import { NotificationsService } from 'angular2-notifications';
 import { Notification } from 'angular2-notifications';
+import { MatDialog } from '@angular/material';
 
 
 @Injectable()
@@ -17,7 +18,7 @@ export class OnLineService {
     onLine: boolean = true;
     timer = Observable.timer(2000,1000);
     //este timer se executa cada hora, la primera se sera a los 14s de iniciar la app
-    timerSincronizarMatrices = Observable.timer(7000,1000*60*60);
+    timerSincronizarMatrices = Observable.timer(7000,1000*60*2);
     anterior: boolean= true;
 
     sincronizando:boolean=false;
@@ -30,9 +31,10 @@ export class OnLineService {
         public snackBar: MatSnackBar,
         private db:CIndexedDB,
         private http:HttpService,
-        private notificationService: NotificationsService
+        private notificationService: NotificationsService,
+        public dialog: MatDialog
     ) {
-        this.sincronizarCatalogos=new SincronizaCatalogos(db,http);
+        this.sincronizarCatalogos=new SincronizaCatalogos(db,http,dialog);
         // timer = Observable.timer(2000,1000);
         this.timer.subscribe(t=>{
             this.anterior=this.onLine;
@@ -40,7 +42,7 @@ export class OnLineService {
             let message="Se perdio la conexión";
             if(this.onLine){
                 message="Se extablecio la conexión";
-                this.startSincronizacion();
+                //this.startSincronizacion();
             }
 
             if (this.anterior!=this.onLine){
@@ -51,7 +53,8 @@ export class OnLineService {
         });
         // if(localStorage.getItem('sincronizacion') !== 'true')
             this.timerSincronizarMatrices.subscribe(t=>{
-                this.sincronizarCatalogos.searchChange();
+                if (this.onLine)
+                    this.sincronizarCatalogos.searchChange();
                 localStorage.setItem('sincronizacion', 'true')
             });
         // else
