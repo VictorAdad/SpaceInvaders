@@ -268,6 +268,10 @@ export class CatalogosACargar {
             catalogo:"turno",
             uri:"/v1/catalogos/usuario/turno/options"
         },
+        {
+            catalogo:"tipo_linea",
+            uri:"/v1/catalogos/predenuncia/tipo-linea/options"
+        }
 
     ];
 }

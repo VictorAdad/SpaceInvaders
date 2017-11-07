@@ -333,9 +333,9 @@ export class SelectsService {
                 this.tipoLinea = this.constructOptions(response);
             });
         }else{
-            // this.db.get("catalogos","tipo_persona").then(response=>{
-            //     this.tipoPersona = this.constructOptions(response["arreglo"]);
-            // });
+            this.db.get("catalogos","tipo_linea").then(response=>{
+                this.tipoLinea = this.constructOptions(response["arreglo"]);
+            });
         }
     }
 

@@ -1,15 +1,29 @@
 import {CatalogosACargar} from "@services/onLine/CatalogosACargar";
 import { CIndexedDB } from '@services/indexedDB';
 import { HttpService} from '@services/http.service';
-
+import { ConfirmationService } from '@jaspero/ng2-confirmations';
+import { MatDialog } from '@angular/material';
+import {ProgressDialog} from '@components-app/onLine/progressDialog.component';
 export class SincronizaCatalogos {
 
 
     public static sincronizando:boolean;
 
+    settings={
+        overlayClickToClose: false, // Default: true
+        showCloseButton: false, // Default: true
+        confirmText: "Continuar", // Default: 'Yes'
+        declineText: "Cancelar",
+    };
+
+    dialogo=null;
+    catalogo="algun catalogo";
+
     constructor(
         private db:CIndexedDB,
         private http:HttpService,
+        //private confirmation: ConfirmationService,
+        public dialog: MatDialog
         ){
     }
 
@@ -58,6 +72,14 @@ export class SincronizaCatalogos {
     }
 
     public nuevo(){
+        this.dialogo=this.dialog.open(
+            ProgressDialog,{
+            height: 'auto',
+            width: 'auto',
+            disableClose:true,
+            data:{catalogo:"",}
+            }
+        );
         SincronizaCatalogos.sincronizando=true;
         this.bajaCatalogoLlave();
         this.sincronizaCatalogos(0,CatalogosACargar.matricesASincronizar,"matrices");
@@ -81,13 +103,22 @@ export class SincronizaCatalogos {
     }
 
     public actualizaCatalogo(item){
+        this.dialogo=this.dialog.open(
+            ProgressDialog,{
+            height: 'auto',
+            width: 'auto',
+            disableClose:true,
+            data:{catalogo:item["catalogo"]}
+            }
+        );
         this.http.get(item["uri"]).subscribe((response) => {
             this.db.update("catalogos",{id:item["catalogo"], arreglo:response}).then(e=>{
-                    
+                    this.dialogo.close();
                 });
         },
         (error)=>{
             console.log("Fallo el servicio "+item["uri"]);
+            this.dialogo.close();
         });
     }
 
@@ -95,6 +126,7 @@ export class SincronizaCatalogos {
         //si se esta sincronizando los catalogos por primera vez
         if (SincronizaCatalogos.sincronizando)
             return;
+
         var obj=this;
         console.time("BuscarCambios");
         this.http.get("/v1/catalogos/sincronizacion").subscribe(listaRemota=>{
@@ -128,6 +160,7 @@ export class SincronizaCatalogos {
                 if(cambio)
                     obj.bajaCatalogoLlave();
                 console.timeEnd("BuscarCambios");
+                // dialog.close();
             });
         });
     }
@@ -155,8 +188,10 @@ export class SincronizaCatalogos {
         }
         if (i==arr.length){
             //dejamos de sincronizar hasta que las matrices se bajen
-            if (titulo=="matrices")
+            if (titulo=="matrices"){
                 SincronizaCatalogos.sincronizando=false;
+                this.dialogo.close();
+            }
             console.log("%c" + "-> "+titulo+" sincronizadas", "color: blue;font-weight:bold;");
             console.timeEnd(titulo);
             return;
@@ -166,6 +201,8 @@ export class SincronizaCatalogos {
     }
 
     private sincronizaMatrix(i,item,arr,titulo:string=""){
+        this.catalogo=item["catalogo"];
+        console.log(this.catalogo);
         this.http.get(item["uri"]).subscribe((response) => {
             this.db.update("catalogos",{id:item["catalogo"], arreglo:response}).then(e=>{
                     this.sincronizaCatalogos(i+1,arr,titulo);
