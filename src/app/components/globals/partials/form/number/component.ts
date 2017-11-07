@@ -1,6 +1,5 @@
-import { Component, Input, Output, EventEmitter , OnInit} from '@angular/core';
+import { Component, Input, Output, EventEmitter , OnInit, AfterViewInit, ViewChild, Renderer} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-
 
 @Component({
 	selector    : 'number',
@@ -20,16 +19,24 @@ export class NumberComponent implements OnInit{
 	@Input() hintEnd: string="";
 	@Input() readonly: string="";
 	@Input() functionChange: Function;
-  @Input() max :number = 9999999999;
-  @Input() min :number = 0;
-
-
+  	@Input() max :number = 12;
+  	@ViewChild('numberComponent') numberComponent;
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
 
-	ngOnInit(){
-    console.log(this);
+	constructor(private renderer: Renderer){
+	}
 
+	ngOnInit(){
+    console.log('-------------> ',this);
+
+	}
+
+	ngAfterViewInit(){
+		console.log('-> Number component', this.numberComponent);
+		console.log('------------> ',this.renderer);
+		this.renderer.listen(
+			this.numberComponent.nativeElement, 'keyup', (event) => { this.inputSlice(); });
 	}
 
 	update(value) {
@@ -38,6 +45,15 @@ export class NumberComponent implements OnInit{
 			this.functionChange(value);
 		}
 	}
+
+	inputSlice(){
+		console.log('enter inputSlice()', this.value.toString().length, this.max);
+		if (this.value.toString().length > this.max) {
+			this.value = this.value.toString().slice(0,this.max);
+		}
+	}
+
+
 
 }
 
