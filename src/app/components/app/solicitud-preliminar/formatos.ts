@@ -28,25 +28,25 @@ export class FormatosGlobal{
     }
 
     public changeFormat(_format, _id){
-      console.log('Change format:', _format, _id);
+        console.log('Change format:', _format, _id);
 
-      this._confirmation.create('Advertencia','¿Estás seguro de guardar este formato?',this.confirmation_settings)
-      .subscribe(
-        (ans: ResolveEmit) => {
-          console.log("respueta",ans);
-          if(ans.resolved){
-            this.http.get(`/v1/documentos/formatos/save/${_id}/${_format}`).subscribe(
-                response => {
-                    console.log('Done changeFormat()', response);
-                    this.setData(response);
-                    this.globalService.openSnackBar("Formato generado con éxito");
+        this._confirmation.create('Advertencia','¿Estás seguro de guardar este formato?',this.confirmation_settings)
+        .subscribe(
+            (ans: ResolveEmit) => {
+                console.log("respueta",ans);
+                if(ans.resolved){
+                    this.http.get(`/v1/documentos/formatos/save/${_id}/${_format}`).subscribe(
+                        response => {
+                            console.log('Done changeFormat()', response);
+                            this.setData(response);
+                            this.globalService.openSnackBar("Formato generado con éxito");
+                        }
+
+                    )
+
                 }
-
-            )
-
-          }
-        }
-       );
+            }
+        );
 
     }
 
@@ -181,7 +181,9 @@ export class SolPreDocComponent {
         this.http.post(this.data.urlUpload, this.data.formData).subscribe(
             response => {
                 console.log('Done guardar()', response);
+                this.uploader.clearQueue();
                 this.emitter.emit(response);
+                this.close();
             }
         )
         // this.guardarOffLine(0,listaFiles);
