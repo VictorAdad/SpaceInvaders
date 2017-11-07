@@ -281,9 +281,10 @@ export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
         for (let object of _archivos) {
             let obj = {
                 'id': 0,
-                'nameEcm': object.some.name,
+                'nameEcm': object.nameEcm,
                 'created': new Date(),
                 'procedimiento': '',
+                'uuidEcm': object.uuidEcm
             }
             this.data.push(obj);
             this.subject.next(this.data);
