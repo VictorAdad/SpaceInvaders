@@ -22,12 +22,17 @@ import {arrCONDUCTA_DETALLE}           from '@models/datos/conductaDetalle';
 import {arrMODALIDAD_AMBITO}           from '@models/datos/modalidadAmbito';
 import {arrNACIONALIDAD_RELIGION}      from '@models/datos/nacionalidadReligion';
 import {arrIDIOMA_IDENTIFICACION} from '@models/datos/idiomaIdentificacion';
+import {SincronizaCatalogos} from "@services/onLine/sincronizaCatalogos";
+import { HttpService} from '@services/http.service';
 @Injectable()
 export class CIndexedDB {
     nameDB:string = "SIGI";
     init: boolean = (localStorage.getItem('initDB') === 'true');
+    sincronizarCatalogos:SincronizaCatalogos;
 
-    constructor() {
+    constructor(private http:HttpService) {
+        var obj=this;
+        this.sincronizarCatalogos=new SincronizaCatalogos(this,http);
         if(!this.init){
             console.log("Creando tablas para la BD");
             var indexedDB = window.indexedDB ;
@@ -71,10 +76,10 @@ export class CIndexedDB {
                 console.log(" -> Se crearon las tablas");
                 localStorage.setItem('initDB', 'true');
                 newDB=true;
+                obj.sincronizarCatalogos.nuevo();
             };
             open.onsuccess=function(){
-                // if (newDB)
-                //     obj.inicialiazaCatalogos();
+                
             }
         }else{
             console.log("La BD ya se encuentra inicializada ;)");

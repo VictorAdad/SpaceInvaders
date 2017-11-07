@@ -23,7 +23,7 @@ export class OnLineService {
     sincronizando:boolean=false;
     seActualizoAlmenosUnRegistro:boolean;
 
-    sincronizarCatalogos:SincronizaCatalogos
+    sincronizarCatalogos:SincronizaCatalogos;
 
 
     constructor(
@@ -49,13 +49,13 @@ export class OnLineService {
                 });
             }
         });
-        if(localStorage.getItem('sincronizacion') !== 'true')
+        // if(localStorage.getItem('sincronizacion') !== 'true')
             this.timerSincronizarMatrices.subscribe(t=>{
-                this.sincronizarCatalogos.nuevo();
+                this.sincronizarCatalogos.searchChange();
                 localStorage.setItem('sincronizacion', 'true')
             });
-        else
-            console.log('Ya existen catalogos sincroinzados');
+        // else
+        //     console.log('Ya existen catalogos sincroinzados');
     }
 
     startSincronizacion(){
