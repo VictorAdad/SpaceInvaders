@@ -76,7 +76,8 @@ export class SincronizaCatalogos {
             ProgressDialog,{
             height: 'auto',
             width: 'auto',
-            data:{catalogo:this.catalogo}
+            disableClose:true,
+            data:{catalogo:"",}
             }
         );
         SincronizaCatalogos.sincronizando=true;
@@ -102,13 +103,22 @@ export class SincronizaCatalogos {
     }
 
     public actualizaCatalogo(item){
+        this.dialogo=this.dialog.open(
+            ProgressDialog,{
+            height: 'auto',
+            width: 'auto',
+            disableClose:true,
+            data:{catalogo:item["catalogo"]}
+            }
+        );
         this.http.get(item["uri"]).subscribe((response) => {
             this.db.update("catalogos",{id:item["catalogo"], arreglo:response}).then(e=>{
-                    
+                    this.dialogo.close();
                 });
         },
         (error)=>{
             console.log("Fallo el servicio "+item["uri"]);
+            this.dialogo.close();
         });
     }
 
