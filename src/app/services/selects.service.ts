@@ -78,7 +78,7 @@ export class SelectsService {
                 this.denunciaQuerella = this.constructOptions(response);
             });
         }else{
-            this.db.get("catalogos","denuncia_querellante").then(response=>{
+            this.db.get("catalogos","denuncia_querella").then(response=>{
                 this.denunciaQuerella = this.constructOptions(response["arreglo"]);
             });
         }
@@ -181,15 +181,15 @@ export class SelectsService {
     }
 
     public getIdioma(){
-        if(this.onLine.onLine){
-            this.http.get('/v1/catalogos/persona/idioma/options').subscribe((response) => {
-                this.idioma = this.constructOptions(response);
-            });
-        }else{
-            this.db.get("catalogos","idioma").then(response=>{
-                this.idioma = this.constructOptions(response["arreglo"]);
-            });
-        }
+        // if(this.onLine.onLine){
+        //     this.http.get('/v1/catalogos/persona/idioma/options').subscribe((response) => {
+        //         this.idioma = this.constructOptions(response);
+        //     });
+        // }else{
+        //     this.db.get("catalogos","idioma").then(response=>{//este carga de las matrices de idiomaIdentificacion
+        //         //this.idioma = this.constructOptions(response["arreglo"]);
+        //     });
+        // }
     }
 
     public getGrupoEtnico(){
@@ -198,7 +198,7 @@ export class SelectsService {
                 this.grupoEtnico = this.constructOptions(response);
             });
         }else{
-            this.db.get("catalogos","idioma").then(response=>{
+            this.db.get("catalogos","grupo_etnico").then(response=>{
                 this.grupoEtnico = this.constructOptions(response["arreglo"]);
             });
         }
@@ -229,15 +229,15 @@ export class SelectsService {
     }
 
     public getNacionalidad(){
-        if(this.onLine.onLine){
-            this.http.get('/v1/catalogos/persona/nacionalidad/options').subscribe((response) => {
-                this.nacionalidad = this.constructOptions(response);
-            });
-        }else{
-            this.db.get("catalogos","nacionalidad").then(response=>{
-                this.nacionalidad = this.constructOptions(response["arreglo"]);
-            });
-        }
+        // if(this.onLine.onLine){
+        //     this.http.get('/v1/catalogos/persona/nacionalidad/options').subscribe((response) => {
+        //         this.nacionalidad = this.constructOptions(response);
+        //     });
+        // }else{
+            // this.db.get("catalogos","nacionalidad").then(response=>{
+            //     this.nacionalidad = this.constructOptions(response["arreglo"]);
+            // });
+        // }
     }
 
     public getTipoDomicilio(){
