@@ -103,22 +103,16 @@ export class SincronizaCatalogos {
     }
 
     public actualizaCatalogo(item){
-        this.dialogo=this.dialog.open(
-            ProgressDialog,{
-            height: 'auto',
-            width: 'auto',
-            disableClose:true,
-            data:{catalogo:item["catalogo"]}
-            }
-        );
         this.http.get(item["uri"]).subscribe((response) => {
             this.db.update("catalogos",{id:item["catalogo"], arreglo:response}).then(e=>{
-                    this.dialogo.close();
+                    
+                }).catch((e)=>{
+                    
                 });
         },
         (error)=>{
             console.log("Fallo el servicio "+item["uri"]);
-            this.dialogo.close();
+            
         });
     }
 
@@ -126,6 +120,14 @@ export class SincronizaCatalogos {
         //si se esta sincronizando los catalogos por primera vez
         if (SincronizaCatalogos.sincronizando)
             return;
+        this.dialogo=this.dialog.open(
+            ProgressDialog,{
+            height: 'auto',
+            width: 'auto',
+            disableClose:true,
+            data:{catalogo:""}
+            }
+        );
 
         var obj=this;
         console.time("BuscarCambios");
@@ -160,8 +162,11 @@ export class SincronizaCatalogos {
                 if(cambio)
                     obj.bajaCatalogoLlave();
                 console.timeEnd("BuscarCambios");
-                // dialog.close();
+                obj.dialogo.close();
             });
+        },error=>{
+            obj.dialogo.close();
+            console.log(error);
         });
     }
 
