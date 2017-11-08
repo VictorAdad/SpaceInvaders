@@ -18,6 +18,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { GlobalService } from "@services/global.service";
 import { TableDataSource } from './../../global.component';
 import { AuthenticationService } from '@services/auth/authentication.service.ts';
+import * as JSZip from 'jszip';
+import * as docxtemplater from 'docxtemplater';
 
 
 
@@ -353,23 +355,75 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
         }
     }
 
-  public setData(_object){
-      console.log('setData()');
-      this.data.push(_object);
-      this.subject.next(this.data);
-  }
-  public cargaArchivos(_archivos){
-    for (let object of _archivos) {
-      let obj = {
-        'id': 0,
-        'nameEcm': object.some.name,
-        'created': new Date(),
-        'procedimiento': '',
-      }
-      this.data.push(obj);
-      this.subject.next(this.data);
+    public setData(_object){
+        console.log('setData()');
+        this.data.push(_object);
+        this.subject.next(this.data);
+    }
+
+    public cargaArchivos(_archivos){
+        for (let object of _archivos) {
+            let obj = {
+                'id': 0,
+                'nameEcm': object.some.name,
+                'created': new Date(),
+                'procedimiento': '',
+            }
+            this.data.push(obj);
+            this.subject.next(this.data);
         }
-}
+    }
+
+    public makeFormat(_event, _val){
+        this.http.getLocal('../../../../../assets/formatos/F1-004 REGISTRO PRESENCIAL.docx').subscribe(
+            response =>{
+                console.log('-> Response', response);
+                let doc = new docxtemplater();
+                let reader = new FileReader();
+                reader.onloadend = (file => {
+                    console.log('-> Binary ', file);
+                    let zip = new JSZip(file.target['result']);
+                    doc.loadZip(zip);
+                    doc.setData({
+                        'xNombreUsuario': 'Ulises',
+                    });
+                    try {
+                        // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
+                        doc.render()
+                    }
+                    catch (error) {
+                        var e = {
+                            message: error.message,
+                            name: error.name,
+                            stack: error.stack,
+                            properties: error.properties,
+                        }
+                        console.log(JSON.stringify({error: e}));
+                        // The error thrown here contains additional information when logged with JSON.stringify (it contains a property object).
+                        throw error;
+                    }
+
+                    var out = doc.getZip().generate({
+                        type:"blob",
+                        mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    });
+                    let an  = document.createElement("a");
+                    let url = window.URL.createObjectURL(out);
+                    document.body.appendChild(an);
+                    an.href = url;
+                    an.download = 'file.docx';
+                    an.click(); 
+                 });
+                reader.readAsBinaryString(response);
+
+            }
+        );
+        // let docx = new docxtemplater();
+        // let content = fs.readFileSync("@assets/formatos/F1-004 REGISTRO PRESENCIAL.docx", 'binary'); 
+        // // .loadFromFile("@assets/formatos/F1-004 REGISTRO PRESENCIAL.docx");
+        // console.log(content);
+        // console.log(docx);
+    }
 
 }
 
