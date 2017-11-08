@@ -12,14 +12,15 @@
 			<input
 				#numberComponent
 				type="number"
+				min="0"
 				matInput
 				placeholder="{{label}}"
 				[(ngModel)]="value"
 				(ngModelChange)="update($event)"
 				formControlName="{{name}}"
-        name="{{name}}"
-        [min]="min"
-        [max]="max"
+        		name="{{name}}"
+        		[min]="min"
+        		[max]="max"
 				[readonly]="readonly ? readonly : false ">
 			<mat-icon matSuffix *ngIf="sufix">{{ sufix }}</mat-icon>
 			<mat-hint align="start" *ngIf="hintStart">{{hintStart}} </mat-hint>

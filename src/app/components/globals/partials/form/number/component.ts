@@ -33,8 +33,6 @@ export class NumberComponent implements OnInit{
 	}
 
 	ngAfterViewInit(){
-		console.log('-> Number component', this.numberComponent);
-		console.log('------------> ',this.renderer);
 		this.renderer.listen(
 			this.numberComponent.nativeElement, 'keyup', (event) => { this.inputSlice(); });
 	}
@@ -47,7 +45,6 @@ export class NumberComponent implements OnInit{
 	}
 
 	inputSlice(){
-		console.log('enter inputSlice()', this.value.toString().length, this.max);
 		if (this.value.toString().length > this.max) {
 			this.value = this.value.toString().slice(0,this.max);
 		}

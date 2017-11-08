@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter , OnInit} from '@angular/core';
+import { Component, Input, Output, EventEmitter , OnInit, Renderer} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { TextComponent } from '../text/text.component';
 
@@ -9,8 +9,8 @@ import { TextComponent } from '../text/text.component';
 })
 export class PasswordComponent extends TextComponent{
 
-	constructor(){
-		super()
+	constructor(renderer : Renderer){
+		super(renderer)
 	}
 }
 

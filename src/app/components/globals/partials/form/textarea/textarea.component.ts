@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter , OnInit} from '@angular/core';
+import { Component, Input, Output, EventEmitter , OnInit, AfterViewInit, ViewChild, Renderer} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 
@@ -14,17 +14,34 @@ export class TextareaComponent implements OnInit{
 	@Input() functionChange: Function;
 	@Input() hintStart: string="";
 	@Input() hintEnd: string="";
-
+	@Input() max :number = 2000;
+	@ViewChild('textAreaComponent') textAreaComponent;
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
+
+	constructor(private renderer : Renderer){
+
+	}
 
 	ngOnInit(){
 		// console.log(this);
 	}
+
+	ngAfterViewInit(){
+		this.renderer.listen(
+			this.textAreaComponent.nativeElement, 'keyup', (event) => { this.inputSlice(); });
+	}
+
 	update(value) {
 		this.valueChange.emit(value);
 		if(this.functionChange){
 			this.functionChange(value);
+		}
+	}
+
+	inputSlice(){
+		if (this.value.toString().length > this.max) {
+			this.value = this.value.toString().slice(0,this.max);
 		}
 	}
 }
