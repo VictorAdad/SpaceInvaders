@@ -120,7 +120,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
 
     ngOnInit(){
         this.route.params.subscribe(params => {
-            if (params['casoId']){
+            if (params['casoId']){  
                 this.casoId = +params['casoId'];
                 console.log(this.casoId);
                 if(this.onLine.onLine){
@@ -322,8 +322,6 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
     public subject:BehaviorSubject<DocumentoPredenuncia[]> = new BehaviorSubject<DocumentoPredenuncia[]>([]);
     public source:TableDataSource = new TableDataSource(this.subject);
     public isCallCenter:boolean=false;
-    public formData:FormData = new FormData();
-    public urlUpload: string;
 
     constructor(
         public http: HttpService,
@@ -331,9 +329,7 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
         public globalService:GlobalService,
         public dialog: MatDialog,
         public authen: AuthenticationService,
-        public onLine: OnLineService,
-        public route: ActivatedRoute
-
+        private onLine: OnLineService
     ){
         super(http, confirmationService, globalService, dialog);
     }
@@ -355,34 +351,25 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
                 console.log(this.isCallCenter)
             }
         }
-
-      this.route.params.subscribe(params => {
-          if (params['casoId'])
-              this.urlUpload = '/v1/documentos/predenuncias/save/'+params['casoId'];
-      });
-
-      this.formData.append('predenuncia.id', this.object.data[0].id.toString());
     }
-
-    public cargaArchivos(_archivos){
-      for (let object of _archivos) {
-          let obj = {
-              'id': 0,
-              'nameEcm': object.nameEcm,
-              'created': new Date(),
-              'procedimiento': '',
-              'uuidEcm': object.uuidEcm
-          }
-          this.data.push(obj);
-          this.subject.next(this.data);
-      }
-  }
 
   public setData(_object){
       console.log('setData()');
       this.data.push(_object);
       this.subject.next(this.data);
   }
+  public cargaArchivos(_archivos){
+    for (let object of _archivos) {
+      let obj = {
+        'id': 0,
+        'nameEcm': object.some.name,
+        'created': new Date(),
+        'procedimiento': '',
+      }
+      this.data.push(obj);
+      this.subject.next(this.data);
+        }
+}
 
 }
 
@@ -392,3 +379,5 @@ export class DocumentoPredenuncia {
 	procedimiento: string;
 	created: Date;
 }
+
+

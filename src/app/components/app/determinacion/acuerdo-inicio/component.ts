@@ -193,21 +193,18 @@ export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
   public data: DocumentoAcuerdoInicio[] = [];
   public subject:BehaviorSubject<DocumentoAcuerdoInicio[]> = new BehaviorSubject<DocumentoAcuerdoInicio[]>([]);
   public source:TableDataSource = new TableDataSource(this.subject);
-  public formData:FormData = new FormData();
-  public urlUpload: string;
 
   constructor(
-      public http: HttpService,
-      public confirmationService:ConfirmationService,
-      public globalService:GlobalService,
-      public dialog: MatDialog,
-      private route: ActivatedRoute,
-      ){
-      super(http, confirmationService, globalService, dialog);
-  }
+        public http: HttpService,
+        public confirmationService:ConfirmationService,
+        public globalService:GlobalService,
+        public dialog: MatDialog
+        ){
+        super(http, confirmationService, globalService, dialog);
+    }
 
   ngOnInit() {
-      console.log('-> Object ', this.object);
+    console.log('-> Object ', this.object);
       if(this.object.documentos){
           this.dataSource = this.source;
           for (let object of this.object.documentos) {
@@ -216,35 +213,24 @@ export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
           }
 
       }
-
-      this.route.params.subscribe(params => {
-          if (params['casoId'])
-              this.urlUpload = '/v1/documentos/acuerdos/save/'+params['casoId'];
-
-      });
-
-      this.formData.append('solicitudPreAcuerdo.id', this.id.toString());
   }
-
-  public cargaArchivos(_archivos){
-      for (let object of _archivos) {
-          let obj = {
-              'id': 0,
-              'nameEcm': object.nameEcm,
-              'created': new Date(),
-              'procedimiento': '',
-              'uuidEcm': object.uuidEcm
-          }
-          this.data.push(obj);
-          this.subject.next(this.data);
-      }
+public setData(_object){
+    console.log('setData()');
+    this.data.push(_object);
+    this.subject.next(this.data);
+}
+public cargaArchivos(_archivos){
+  for (let object of _archivos) {
+    let obj = {
+      'id': 0,
+  'nameEcm': object.some.name,
+  'created': new Date(),
+  'procedimiento': '',
+}
+this.data.push(obj);
+this.subject.next(this.data);
   }
-
-  public setData(_object){
-      console.log('setData()');
-      this.data.push(_object);
-      this.subject.next(this.data);
-  }
+}
 
 }
 

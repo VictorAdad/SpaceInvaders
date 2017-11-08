@@ -192,7 +192,7 @@ export class DocumentoRegistroGeneralComponent  extends FormatosGlobal{
 			}
 			this.data.push(obj);
 			this.subject.next(this.data);
-        }
+        } 
     }
 
 public setData(_object){
