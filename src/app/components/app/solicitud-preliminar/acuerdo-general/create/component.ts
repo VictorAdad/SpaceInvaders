@@ -271,14 +271,14 @@ export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
         this.route.params.subscribe(params => {
             if (params['casoId'])
                 this.urlUpload = '/v1/documentos/solicitudes-pre-acuerdos/save/'+params['casoId'];
-
         });
 
         this.formData.append('solicitudPreAcuerdo.id', this.id.toString());
     }
 
     public cargaArchivos(_archivos){
-        for (let object of _archivos) {
+      let archivos=_archivos.saved
+        for (let object of archivos) {
             let obj = {
                 'id': 0,
                 'nameEcm': object.nameEcm,
@@ -288,7 +288,7 @@ export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
             }
             this.data.push(obj);
             this.subject.next(this.data);
-        } 
+        }
     }
 
     public setData(_object){

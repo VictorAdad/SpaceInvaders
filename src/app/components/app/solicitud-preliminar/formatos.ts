@@ -63,7 +63,7 @@ export class FormatosGlobal{
                 let url = window.URL.createObjectURL(response);
                 document.body.appendChild(an);
                 an.href = url;
-                an.download = _object.nameEcm+'.pdf';
+                an.download = _object.nameEcm+'.'+_object.extension;
                 an.click();
                 // window.location.assign(url);
             }
@@ -83,7 +83,7 @@ export class FormatosGlobal{
 
         dialog.componentInstance.emitter.subscribe((archivos) => {
             console.log(archivos);
-           this.cargaArchivos(archivos); 
+           this.cargaArchivos(archivos);
         });
 
     }
@@ -93,7 +93,7 @@ export class FormatosGlobal{
     }
 
     public cargaArchivos(_archivos){
-      
+
     }
 
 
@@ -107,10 +107,10 @@ export class SolPreDocComponent {
 
     private db: CIndexedDB
     @Output()
-    emitter = new EventEmitter();    
+    emitter = new EventEmitter();
 
     constructor(
-        public dialogRef: MatDialogRef<SolPreDocComponent>, 
+        public dialogRef: MatDialogRef<SolPreDocComponent>,
         private _db: CIndexedDB,
         public globalService : GlobalService,
         private http: HttpService,
@@ -124,7 +124,7 @@ export class SolPreDocComponent {
     public isUploading: boolean = false;
 
     public archivos:any;
-   
+
     public fileOverBase(e:any):void {
       this.hasBaseDropZoneOver = e;
       console.log("->",e);
@@ -135,7 +135,7 @@ export class SolPreDocComponent {
     }
 
     fileEvent(e){
-        
+
     }
 
     guardarOffLine(i:number,listaArchivos:any[]){
@@ -149,7 +149,7 @@ export class SolPreDocComponent {
         let item=listaArchivos[i];
         var reader = new FileReader();
         reader.onload = function(){
-            obj.db.add("blobs",{blob:reader.result}).then( 
+            obj.db.add("blobs",{blob:reader.result}).then(
                 t => {
                     var dato={
                         nombre:(item["some"])["name"],
@@ -177,7 +177,7 @@ export class SolPreDocComponent {
         for (let file of listaFiles) {
             this.data.formData.append('files', file['some']);
         }
-            
+
         this.http.post(this.data.urlUpload, this.data.formData).subscribe(
             response => {
                 console.log('Done guardar()', response);
@@ -187,7 +187,7 @@ export class SolPreDocComponent {
             }
         )
         // this.guardarOffLine(0,listaFiles);
-        
+
     }
 
     uploadFiles(){
@@ -201,7 +201,7 @@ export class SolPreDocComponent {
             console.log('inNotUploading');
           }
     }
-   
+
     public fileOverAnother(e:any):void {
       this.hasAnotherDropZoneOver = e;
     }
