@@ -133,7 +133,13 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 //this.optionsNoticia.getData();
                 this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho/relaciones`,label:"Detalle noticia de hechos"})
 
-                this.db.list("casos").then(caso=>{
+                if(this.onLine.onLine){
+                    this.optionsNoticia.setId(this.casoId, this.casoOffline);
+                    this.optionsNoticia.getData();
+                    this.optionsService.getData();
+                    this.optionsRelacion.getData();
+                }else{
+                    this.db.list("casos").then(caso=>{
                         var lista = caso as any[];
                         for (var i = 0; i < lista.length; ++i) {
                             if ((lista[i])["id"]==this.casoId){
@@ -147,6 +153,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                             }
                         }
                     });
+                }
             }
             if(params['id']){
                 this.id = +params['id'];
