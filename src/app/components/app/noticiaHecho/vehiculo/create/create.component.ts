@@ -153,13 +153,18 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         console.log("SI",this.vehiculoServ.tipoUsoTipoVehiculo.finded);
         if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0]){
             _model.tipoUsoTipoVehiculo.id=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].id;
+            _model.tipoUsoTipoVehiculo["tipoVehiculo"]=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].tipoVehiculo;
         }
-        if (this.vehiculoServ.marcaSubmarca.finded[0])
+        if (this.vehiculoServ.marcaSubmarca.finded[0]){
             _model.marcaSubmarca.id=this.vehiculoServ.marcaSubmarca.finded[0].id;
+            _model.marcaSubmarca["marca"]=this.vehiculoServ.marcaSubmarca.finded[0].marca;
+        }
         if (this.vehiculoServ.procedenciaAseguradora.finded[0])
             _model.procedenciaAseguradora.id=this.vehiculoServ.procedenciaAseguradora.finded[0].id;
-        if (this.vehiculoServ.motivoColorClase.finded[0])
+        if (this.vehiculoServ.motivoColorClase.finded[0]){
             _model.motivoRegistroColorClase.id=this.vehiculoServ.motivoColorClase.finded[0].id;
+            _model.motivoRegistroColorClase["color"]=this.vehiculoServ.motivoColorClase.finded[0].color;
+        }
         console.log("MODEL@SAVE=>",_model);
         console.log(this.vehiculoServ);
         return new Promise<any>((resolve, reject)=>{
@@ -171,6 +176,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                     (response) => {
                         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/vehiculos' ]);
                         resolve("Se creo el vehículo con éxito");
+                        this.vehiculoServ.reset();
                     },
                     (error) => reject(error)
                 );
@@ -199,6 +205,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                             this.db.update("casos",caso).then(t=>{
                                 resolve("Se creo el vehículo de manera local");
                                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/vehiculos' ]);
+                                this.vehiculoServ.reset();
                             });
                         }
                     });
@@ -209,14 +216,21 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
 	}
 
     public edit(_valid : any, _model : any){
-        if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0])
+        var obj=this;
+        if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0]){
             _model.tipoUsoTipoVehiculo.id=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].id;
-        if (this.vehiculoServ.marcaSubmarca.finded[0])
+            _model.tipoUsoTipoVehiculo["tipoVehiculo"]=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].tipoVehiculo;
+        }
+        if (this.vehiculoServ.marcaSubmarca.finded[0]){
             _model.marcaSubmarca.id=this.vehiculoServ.marcaSubmarca.finded[0].id;
+            _model.marcaSubmarca["marca"]=this.vehiculoServ.marcaSubmarca.finded[0].marca;
+        }
         if (this.vehiculoServ.procedenciaAseguradora.finded[0])
             _model.procedenciaAseguradora.id=this.vehiculoServ.procedenciaAseguradora.finded[0].id;
-        if (this.vehiculoServ.motivoColorClase.finded[0])
+        if (this.vehiculoServ.motivoColorClase.finded[0]){
             _model.motivoRegistroColorClase.id=this.vehiculoServ.motivoColorClase.finded[0].id;
+            _model.motivoRegistroColorClase["color"]=this.vehiculoServ.motivoColorClase.finded[0].color;
+        }
         console.log("MODEL@EDIT=>",_model);
         return new Promise((resolve,reject)=>{
             console.log('-> Vechiulo@edit()', _model);
@@ -226,6 +240,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                 this.http.put('/v1/base/vehiculos/'+this.id, _model).subscribe((response) => {
                     console.log('-> Registro acutualizado', response);
                     resolve("Se actualizo el vehiculo");
+                    obj.vehiculoServ.reset();
                 },e=>{
                     reject(e);
                 });
@@ -250,6 +265,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                         }
                         this.db.update("casos", t).then(r=>{
                             resolve("vehiculo actualizado");
+                            this.vehiculoServ.reset();
                             console.log('-> Registro acutualizado');
                         });
                         console.log("caso",t);

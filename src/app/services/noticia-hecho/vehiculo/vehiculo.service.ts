@@ -22,4 +22,11 @@ export class VehiculoService{
         this.tipoUsoTipoVehiculo = new MatrizTipoUsoTipoVehiculo(db);
     }
 
+    public reset(){
+        this.marcaSubmarca.finded=[]; 
+        this.procedenciaAseguradora.finded=[];
+        this.motivoColorClase.finded=[];
+        this.tipoUsoTipoVehiculo.finded=[];
+    }
+
 }

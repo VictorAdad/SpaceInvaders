@@ -15,13 +15,10 @@ export class MatrizMotivoColorClase extends MatrizGlobal{
         this.getMatriz();
     }
 
-    public findClaseArma(_e, _tipo:string){
-        this.selected[_tipo] = _e;
-        this.finded = this.objects.filter(object => {
-            return object.motivoRegistro === this.selected.motivoRegistro
-                && object.clase === this.selected.clase
-                && object.color === this.selected.color;
-        });
+    public validate(_object: any, _selected: any): boolean{
+        return _object.motivoRegistro === _selected.motivoRegistro
+                && _object.clase === _selected.clase
+                && _object.color === _selected.color;
     }
 
 }
