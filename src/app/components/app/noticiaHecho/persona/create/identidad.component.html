@@ -34,7 +34,7 @@
                       <date label="Fecha de nacimiento" name="fechaNacimiento" [group]="globals.form" (valueChange)="edad($event)"></date>
                     </div>
                     <div class="col">
-                      <number label="Edad" name="edad" [max]="3" [group]="globals.form"></number>
+                      <number label="Edad" name="edad" [maxValue]="999" [max]="3" [group]="globals.form"></number>
                     </div>
 
                     <div class="col">
@@ -77,7 +77,7 @@
             </div>
 
             <div class="col">
-              <number label="Ingresos mensuales"  name="ingresoMensual" [max]="10" [group]="globals.form"></number>
+              <number label="Ingresos mensuales"  name="ingresoMensual" [maxValue]="9999999999" [max]="10" [group]="globals.form"></number>
             </div>
 
             <div class="col">
@@ -89,7 +89,7 @@
               <select2 [options]="options.estadoCivil" placeholder="Estado civil"  name="id" [group]="globals.form.controls.estadoCivil"></select2>
             </div>
             <div class="col-md-2">
-               <number label="Número de hijos" name="numHijos" [max]="2" [group]="globals.form"></number>
+               <number label="Número de hijos" name="numHijos" [maxValue]="99" [max]="2" [group]="globals.form"></number>
             </div>
 
             <div class="col-md-2">

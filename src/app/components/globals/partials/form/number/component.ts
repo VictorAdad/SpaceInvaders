@@ -20,6 +20,7 @@ export class NumberComponent implements OnInit{
 	@Input() readonly: string="";
 	@Input() functionChange: Function;
   	@Input() max :number = 12;
+  	@Input() maxValue :number = 12;
   	@ViewChild('numberComponent') numberComponent;
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
