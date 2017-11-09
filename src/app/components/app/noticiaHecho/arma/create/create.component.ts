@@ -75,7 +75,8 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                     this.http.get('/v1/base/armas/'+this.id).subscribe(response =>{
                         this.model = response as Arma;
                         console.log("Arma->",this.model);
-                        this.isArmaFuego=this.model.claseArma.claseArma===_config.optionValue.armaFuego;
+                        if (this.model.claseArma)
+                            this.isArmaFuego=this.model.claseArma.claseArma===_config.optionValue.armaFuego;
                         this.fillForm(response);
                     });
                 }else{
@@ -248,9 +249,10 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         this.eliminaNulos(_data);
         this.form.patchValue(_data)
         let timer = Observable.timer(1);
-        this.form.patchValue({
-            'clase': _data.claseArma.claseArma
-        });
+        if (_data.claseArma)
+            this.form.patchValue({
+                'clase': _data.claseArma.claseArma
+            });
         timer.subscribe(t => {
             this.form.patchValue({
                 'serie': _data.serie,
