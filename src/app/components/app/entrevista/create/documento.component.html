@@ -30,5 +30,5 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"  (click)="downloadFile(row, 'application-pdf')"></mat-row>
-</mat-table>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"  (click)="downloadFile(row, row.contentType)"></mat-row>
+  </mat-table>

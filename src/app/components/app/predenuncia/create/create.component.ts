@@ -349,7 +349,7 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
 
         this.route.params.subscribe(params => {
             if (params['casoId'])
-                this.urlUpload = '/v1/documentos/predenuncia/save/'+params['casoId'];
+                this.urlUpload = '/v1/documentos/predenuncias/save/'+params['casoId'];
 
         });
 
