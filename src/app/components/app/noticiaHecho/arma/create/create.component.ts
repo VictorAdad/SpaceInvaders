@@ -124,11 +124,18 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                 );
             }else{
                 _model.caso.id             = this.casoId;
-                if(this.armaServ.claseArma.finded[0])
-                    _model.claseArma.id        = this.armaServ.claseArma.finded[0].id
+                if(this.armaServ.claseArma.finded[0]){
+                    _model.claseArma.id        = this.armaServ.claseArma.finded[0].id;
+                    _model.claseArma["claseArma"]=this.armaServ.claseArma.finded[0].claseArma;
+                    _model.claseArma["subTipo"]=this.armaServ.claseArma.finded[0].subtipo;
+                    _model.claseArma["tipo"]=this.armaServ.claseArma.finded[0].tipo;
+                }
                 if(this.isArmaFuego){
-                    if(this.armaServ.calibreMecanismo.finded[0])
+                    if(this.armaServ.calibreMecanismo.finded[0]){
                         _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id
+                        _model.calibreMecanismo["calibre"]=this.armaServ.calibreMecanismo.finded[0].calibre;
+                        _model.calibreMecanismo["mecanismo"]=this.armaServ.calibreMecanismo.finded[0].mecanismo;
+                    }
                 }
                 console.log("MODEL",_model);
                 let temId=Date.now();
@@ -166,14 +173,19 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         return new Promise<any>((resolve, reject) => {
             console.log('Arma Serv', this.armaServ);
             _model.caso.id             = this.casoId;
-            if(this.armaServ.claseArma.finded.length>0 && this.armaServ.calibreMecanismo.finded.length>0){
-                _model.claseArma.id        = this.armaServ.claseArma.finded[0].id;
-                if(!this.onLine.onLine)
-                    _model.claseArma        = this.armaServ.claseArma.finded[0];
+            //if(this.armaServ.claseArma.finded.length>0 && this.armaServ.calibreMecanismo.finded.length>0){
+                if(this.armaServ.claseArma.finded[0]){
+                    _model.claseArma.id        = this.armaServ.claseArma.finded[0].id;
+                    _model.claseArma["claseArma"]=this.armaServ.claseArma.finded[0].claseArma;
+                    _model.claseArma["subTipo"]=this.armaServ.claseArma.finded[0].subtipo;
+                    _model.claseArma["tipo"]=this.armaServ.claseArma.finded[0].tipo;
+                }
                 if(this.isArmaFuego){
-                    _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id;
-                    if(!this.onLine.onLine)
-                        _model.calibreMecanismo = this.armaServ.calibreMecanismo.finded[0];
+                    if(this.armaServ.calibreMecanismo.finded[0]){
+                        _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id
+                        _model.calibreMecanismo["calibre"]=this.armaServ.calibreMecanismo.finded[0].calibre;
+                        _model.calibreMecanismo["mecanismo"]=this.armaServ.calibreMecanismo.finded[0].mecanismo;
+                    }
                 }
 
                 console.log('-> Arma@edit()', _model);
@@ -213,9 +225,10 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                     });
                 }
 
-            }else{
-                console.log("No se ha encontrado combinación clase de arma, tipo, subtipo o calibre mecanismo")
-            }
+            // }else{
+            //     reject("Se actualizó la información del arma de manera local");
+            //     console.log("No se ha encontrado combinación clase de arma, tipo, subtipo o calibre mecanismo")
+            // }
         });
 
     }
