@@ -222,7 +222,7 @@ export class CatalogosACargar {
         },
         {//54
             catalogo:"tipo_examen",
-            uri:'/v1/catalogos/solicitud-preliminar/denuncia-querella/options'
+            uri:'/v1/catalogos/solicitud-preliminar/tipo-examen/options'
         },
         {//1
             catalogo:"adiccion",
@@ -271,6 +271,10 @@ export class CatalogosACargar {
         {
             catalogo:"tipo_linea",
             uri:"/v1/catalogos/predenuncia/tipo-linea/options"
+        },
+        {
+            catalogo:"colonia",
+            uri:"/v1/catalogos/colonia"
         }
 
     ];

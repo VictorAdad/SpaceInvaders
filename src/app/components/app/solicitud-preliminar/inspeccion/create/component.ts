@@ -13,6 +13,8 @@ import { _config} from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { GlobalService } from "@services/global.service";
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { TableDataSource } from './../../../global.component';
 
 @Component({
     templateUrl:'./component.html',
@@ -176,41 +178,75 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
 })
 export class DocumentoInspeccionComponent extends FormatosGlobal{
 
-	displayedColumns = ['nombre', 'fechaCreacion'];
-	data=[];
-  dataSource: TableService | null;
+
+  displayedColumns = ['nombre', 'fechaCreacion'];
+  @Input() tipo:string=null;
+  @Input() id:number=null;
+  tipo_options={
+    'Acuerdo General':[{'label':'ACUERDO GENERAL','value':'F1_006'}],
+    'Asignación de asesor jurídico':[{'label':'SOLICITUD DE ASESOR JURIDICO','value':'F1_002'}],
+    'Ayuda y atención a víctimas':[{'label':'OFICIO PARA AYUDA Y ATENCIÓN A VÍCTIMA','value':'F1_001'}]
+  }
+  @Input()
+  object: any;
+  dataSource: TableDataSource | null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @Input() id:boolean=false;
-  @Input() object: any;
+  public data: DocumentoInspeccion[] = [];
+  public subject:BehaviorSubject<DocumentoInspeccion[]> = new BehaviorSubject<DocumentoInspeccion[]>([]);
+  public source:TableDataSource = new TableDataSource(this.subject);
+  public casoId: number = null;
+  public formData:FormData = new FormData();
+  public urlUpload: string;
 
   constructor(
       public http: HttpService,
       public confirmationService:ConfirmationService,
       public globalService:GlobalService,
-      public dialog: MatDialog
+      public dialog: MatDialog,
+      private route: ActivatedRoute,
       ){
       super(http, confirmationService, globalService, dialog);
   }
 
-  // public cargaArchivos(_archivos){
-  //       for (let object of _archivos) {
-  //           let obj = {
-  //               'id': 0,
-  //               'nameEcm': object.some.name,
-  //               'created': new Date(),
-  //               'procedimiento': '',
-  //           }
-  //           this.data.push(obj);
-  //           this.subject.next(this.data);
-  //       } 
-  //   }
-
   ngOnInit() {
-    console.log('-> Object ', this.object);
-    if(this.object.documentos)
-    this.data = this.object.documentos;
-    this.dataSource = new TableService(this.paginator, this.data);
-}
+      console.log('-> Object ', this.object);
+      if(this.object.documentos){
+          this.dataSource = this.source;
+          for (let object of this.object.documentos) {
+              this.data.push(object);
+              this.subject.next(this.data);
+          }
+
+      }
+
+      this.route.params.subscribe(params => {
+          if (params['casoId'])
+              this.urlUpload = '/v1/documentos/solicitudes-pre-inspecciones/save/'+params['casoId'];
+
+      });
+
+      this.formData.append('solicitudPreInspeccion.id', this.id.toString());
+  }
+
+  public cargaArchivos(_archivos){
+      for (let object of _archivos) {
+          let obj = {
+              'id': 0,
+              'nameEcm': object.nameEcm,
+              'created': new Date(),
+              'procedimiento': '',
+              'uuidEcm': object.uuidEcm
+          }
+          this.data.push(obj);
+          this.subject.next(this.data);
+      }
+  }
+
+  public setData(_object){
+      console.log('setData()');
+      this.data.push(_object);
+      this.subject.next(this.data);
+  }
 }
 
 export interface DocumentoInspeccion {

@@ -15,7 +15,7 @@
 <mat-table #table [dataSource]="dataSource">
     <ng-container matColumnDef="nombre">
         <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.nombre + element.clave }} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.nombre  }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="clave">

@@ -47,7 +47,7 @@ export class TextComponent implements OnInit{
 	}
 
 	inputSlice(){
-		if (this.value.toString().length > this.max) {
+		if (this.value!=null && this.value.toString().length > this.max) {
 			this.value = this.value.toString().slice(0,this.max);
 		}
 	}

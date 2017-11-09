@@ -2,7 +2,7 @@
 	<mat-form-field class="full-width" *ngIf="name==''">
 			<mat-icon matPrefix *ngIf="prefixIcon">{{ prefixIcon }}</mat-icon>
 			<span *ngIf="prefix" matPrefix>{{ prefix }}&nbsp;</span>
-			<input matInput placeholder="{{label}}" [(ngModel)]="value" (ngModelChange)="update($event)" name="{{name}}">
+			<input  #textComponent matInput placeholder="{{label}}" [(ngModel)]="value" (ngModelChange)="update($event)" name="{{name}}">
 			<mat-icon matSuffix *ngIf="sufix">{{ sufix }}</mat-icon>
 			<mat-hint align="start" *ngIf="hintStart">{{hintStart}} </mat-hint>
 		    <mat-hint align="end" *ngIf="hintEnd">{{hintEnd}}</mat-hint>
