@@ -1,6 +1,6 @@
 <div class="row space justify-content-end">
 	<div class="col-md-2">
-		<select2 placeholder= "Formatos"[options]="tipo_options[tipo]" (valueChange)="changeFormat($event, id)"></select2>
+		<select2 placeholder= "Formatos"[options]="tipo_options[tipo]" (valueChange)="changeFormat($event, object.id)"></select2>
 	</div>
 	<div class="col-md-auto">
 		<button mat-raised-button color="accent" (click)="openDocDialog()">Adjuntar</button>

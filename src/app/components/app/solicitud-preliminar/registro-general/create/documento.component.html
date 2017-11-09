@@ -1,6 +1,6 @@
 <div class="row space justify-content-end">
 	<div class="col-md-2">
-		<select2 placeholder= "Formatos" (valueChange)="changeFormat($event, id)"  [options]="[{label:'REGISTRO DE DERIVACION A LA UNIDAD DE MECANISMOS ALTERNATIVOS',value:'F2_117'}]"></select2>
+		<select2 placeholder= "Formatos" (valueChange)="changeFormat($event, object.id)"  [options]="[{label:'REGISTRO DE DERIVACION A LA UNIDAD DE MECANISMOS ALTERNATIVOS',value:'F2_117'}]"></select2>
 	</div>
 	<div class="col-md-auto">
 		<button mat-raised-button color="accent" (click)="openDocDialog()">Adjuntar</button>
