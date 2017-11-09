@@ -38,13 +38,13 @@
                     </select2>
                 </div>
                 <div class="col-md-4">
-                    <text label="Calle" name="calle" [group]="form" hintStart="Campo obligatorio"></text>
+                    <text label="Calle" name="calle" [max]="500" [group]="form" hintStart="Campo obligatorio"></text>
                 </div>
                 <div class="col-md-2">
-                    <text label="Nº exterior" name="noExterior" [group]="form"></text>
+                    <text label="Nº exterior" name="noExterior" [max]="15" [group]="form"></text>
                 </div>
                 <div class="col-md-2">
-                    <text label="Nº interior" name="noInterior" [group]="form"></text>
+                    <text label="Nº interior" name="noInterior" [max]="15" [group]="form"></text>
                 </div>
             </div>
             <div class="row">
@@ -66,13 +66,13 @@
                     </select2>
                 </div>
                 <div class="col-md-3" *ngIf="!isMexico">
-                    <text label="Estado" name="estadoOtro" [group]="form"hintStart="Campo obligatorio"></text>
+                    <text label="Estado" name="estadoOtro" [max]="50" [group]="form"hintStart="Campo obligatorio"></text>
                 </div>
                 <div class="col-md-3" *ngIf="!isMexico">
-                    <text label="Municipio/Delegación" name="municipioOtro" [group]="form" hintStart="Campo obligatorio"></text>
+                    <text label="Municipio/Delegación" name="municipioOtro" [max]="50" [group]="form" hintStart="Campo obligatorio"></text>
                 </div>
                 <div class="col-md-3" *ngIf="!isMexico">
-                    <text label="Colonia/Asentamiento" name="coloniaOtro" [group]="form" hintStart="Campo obligatorio"></text>
+                    <text label="Colonia/Asentamiento" name="coloniaOtro" [max]="50" [group]="form" hintStart="Campo obligatorio"></text>
                 </div>
                 <div class="col-md-3" *ngIf="isMexico">
                     <select2
@@ -104,7 +104,7 @@
             </div>
             <div class="row">
                 <div class="col-md-3">
-                    <number label="C.P." name="cp" [group]="form" [hintEnd]="'9 dígitos máximo'"></number>
+                    <number label="C.P." name="cp" [group]="form" [maxValue]="99999" [max]="5" [hintEnd]="'5 dígitos máximo'"></number>
                 </div>
                 <div class="col-md-3">
                     <date label="Fecha" name="fecha" [group]="form" hintStart="Campo obligatorio"></date>
