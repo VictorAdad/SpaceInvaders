@@ -18,7 +18,7 @@ export class OnLineService {
     onLine: boolean = true;
     timer = Observable.timer(2000,1000);
     //este timer se executa cada hora, la primera se sera a los 14s de iniciar la app
-    timerSincronizarMatrices = Observable.timer(7000,1000*60*2);
+    timerSincronizarMatrices = Observable.timer(7000,1000*60*20);
     anterior: boolean= true;
 
     sincronizando:boolean=false;

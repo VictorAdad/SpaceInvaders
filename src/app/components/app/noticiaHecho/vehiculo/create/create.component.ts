@@ -140,7 +140,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     }
 
     public change(option){
-        if (option == "cdmx") {
+        if (option == "EXTRANJERO") {
             this.isProcedenciaExtranjera = true;
             this.form.controls.pedimentoImportacion.enable();
         }else{

@@ -34,10 +34,10 @@
                 </select2>
             </div>
             <div class="col-md-3">
-                <text label="Nº tarjeta de circulación" name="tarjetaCirculacion" [group]="form"></text>
+                <text label="Nº tarjeta de circulación" name="tarjetaCirculacion" [max]="50" [group]="form"></text>
             </div>
             <div class="col-md-3">
-                <text label="Nº económico" name="noEconomico" [group]="form"></text>
+                <text label="Nº económico" name="noEconomico" [max]="50" [group]="form"></text>
             </div>
         </div>
         <div class="row">
@@ -80,7 +80,7 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                <text label="Modelo" name="modelo" [group]="form"></text>
+                <number label="Modelo" name="modelo" [maxValue]="9999" [max]="4" [group]="form"></number>
             </div>
             <div class="col-md-3">
                 <select2 placeholder="Estado de origen de las placas"
@@ -91,21 +91,21 @@
                 </select2>
             </div>
             <div class="col-md-3">
-                <text label="Placas" name="placas" [group]="form"></text>
+                <text label="Placas" name="placas" [max]="15" [group]="form"></text>
             </div>
             <div class="col-md-3">
-                <text label="Placas adicionales" name="placasAdicionales" [group]="form"></text>
+                <text label="Placas adicionales" name="placasAdicionales" [max]="15" [group]="form"></text>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3">
-                <text label="Registro federal del vehículo (RFV)" name="registroFederalVehiculo" [group]="form"></text>
+                <text label="Registro federal del vehículo (RFV)" name="registroFederalVehiculo" [max]="30" [group]="form"></text>
             </div>
             <div class="col-md-3">
-                <text label="Nº serie (VIN)" name="noSerie" [group]="form"></text>
+                <text label="Nº serie (VIN)" name="noSerie" [max]="30" [group]="form"></text>
             </div>
             <div class="col-md-3">
-                <text label="Nº motor" name="noMotor" [group]="form"></text>
+                <text label="Nº motor" name="noMotor" [max]="40" [group]="form"></text>
             </div>
 
             <div class="col-md-3">
@@ -119,7 +119,7 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                <text label="Factura" name="factura" [group]="form"></text>
+                <text label="Factura" name="factura" [max]="40" [group]="form"></text>
             </div>
             <div class="col-md-3">
                 <select2 placeholder="Datos tomados de"
@@ -131,10 +131,10 @@
                 </select2>
             </div>
             <div class="col-md-3">
-                <text label="Nº póliza" name="noPoliza" [group]="form"></text>
+                <text label="Nº póliza" name="noPoliza" [max]="40" [group]="form"></text>
             </div>
             <div class="col-md-3">
-                <number label="Valor estimado" name="valorEstimado" [group]="form"></number>
+                <number label="Valor estimado" name="valorEstimado" [maxValue]="99999" [max]="5" [group]="form"></number>
             </div>
         </div>
         <div class="row">
@@ -157,7 +157,7 @@
                         </select2>
                     </div>
                     <div class="col" *ngIf="isProcedenciaExtranjera==true">
-                        <text label="Pedimento de importación" name="pedimentoImportacion" [group]="form"></text>
+                        <text label="Pedimento de importación" name="pedimentoImportacion" [max]="40" [group]="form"></text>
                     </div>
                 </div>
             </div>
@@ -174,7 +174,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <text label="Señas particulares"  name="seniasParticulares" [group]="form"></text>
+                <text-area label="Señas particulares"  name="seniasParticulares" [group]="form"></text-area>
             </div>
         </div>
         <div class="row">
