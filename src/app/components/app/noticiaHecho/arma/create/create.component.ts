@@ -232,7 +232,20 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         });
 
     }
+
+     eliminaNulos(x){
+                if (typeof x == "object"){
+                    for(let i in x){
+                        if (x[i]==null || typeof x[i] =="undefined"){
+                            delete x[i];
+                        }
+                        if (typeof x[i]=="object")
+                            this.eliminaNulos(x[i]);
+                    }
+                }
+            } 
     public fillForm(_data){
+        this.eliminaNulos(_data);
         this.form.patchValue(_data)
         let timer = Observable.timer(1);
         this.form.patchValue({
@@ -240,15 +253,21 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         });
         timer.subscribe(t => {
             this.form.patchValue({
-            'tipo': _data.claseArma.tipo,
-            'subtipo': _data.claseArma.subtipo,
-            'calibre': _data.calibreMecanismo.calibre,
-            'mecanismo': _data.calibreMecanismo.mecanismo,
-            'serie': _data.serie,
-            'matricula': _data.matricula,
-            'claseArma' : _data.claseArma.claseArma,
-            'calibreMecanismo' : _data.calibreMecanismo
-            })
+                'serie': _data.serie,
+                'matricula': _data.matricula,
+                })
+            if (_data.claseArma)
+                this.form.patchValue({
+                'tipo': _data.claseArma.tipo,
+                'subtipo': _data.claseArma.subtipo,
+                'claseArma' : _data.claseArma.claseArma,
+                })
+            if (_data.calibreMecanismo)
+                this.form.patchValue({
+                'calibre': _data.calibreMecanismo.calibre,
+                'mecanismo': _data.calibreMecanismo.mecanismo,
+                'calibreMecanismo' : _data.calibreMecanismo
+                })
 
         });
 
