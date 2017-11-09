@@ -82,7 +82,7 @@ export class FormatosGlobal{
         });
 
         dialog.componentInstance.emitter.subscribe((archivos) => {
-            console.log(archivos);
+           console.log(archivos);
            this.cargaArchivos(archivos);
         });
 

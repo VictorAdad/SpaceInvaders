@@ -185,7 +185,8 @@ export class DocumentoArchivoTemporalComponent extends FormatosGlobal{
   }
 
   public cargaArchivos(_archivos){
-      for (let object of _archivos) {
+    let archivos=_archivos.saved
+      for (let object of archivos) {
           let obj = {
               'id': 0,
               'nameEcm': object.nameEcm,

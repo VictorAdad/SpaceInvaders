@@ -241,7 +241,7 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
   }
 
   ngOnInit() {
-      console.log('-> Data source ', this.object.documentos);
+      console.log('-> Data source ', this.object);
       if(this.object.documentos){
           this.dataSource = this.source;
           for (let object of this.object.documentos) {
@@ -261,7 +261,8 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
   }
 
   public cargaArchivos(_archivos){
-      for (let object of _archivos) {
+    let archivos=_archivos.saved
+      for (let object of archivos) {
           let obj = {
               'id': 0,
               'nameEcm': object.nameEcm,

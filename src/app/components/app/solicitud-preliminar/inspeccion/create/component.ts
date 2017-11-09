@@ -225,11 +225,12 @@ export class DocumentoInspeccionComponent extends FormatosGlobal{
 
       });
 
-      this.formData.append('solicitudPreInspeccion.id', this.id.toString());
+      this.formData.append('solicitudPreInspeccion.id', this.object.id.toString());
   }
 
   public cargaArchivos(_archivos){
-      for (let object of _archivos) {
+    let archivos=_archivos.saved
+      for (let object of archivos) {
           let obj = {
               'id': 0,
               'nameEcm': object.nameEcm,
