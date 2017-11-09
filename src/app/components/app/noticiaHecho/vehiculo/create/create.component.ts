@@ -91,7 +91,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             'caso'                  : new  FormGroup({
                 'id'    : new FormControl("",[])
             }),
-            'estadoOrigen'  : new FormGroup({
+            'estadoOrigenPlacas'  : new FormGroup({
                 'id'    : new FormControl("",[]),
             }),
             'motivoRegistroColorClase'       : new FormGroup({
