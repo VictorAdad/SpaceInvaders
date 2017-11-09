@@ -17,11 +17,8 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { GlobalService } from "@services/global.service";
 import { TableDataSource } from './../../global.component';
-import { AuthenticationService } from '@services/auth/authentication.service.ts';
-import * as JSZip from 'jszip';
-import * as docxtemplater from 'docxtemplater';
-
-
+import { AuthenticationService } from '@services/auth/authentication.service';
+import { FormatosService } from '@services/formatos/formatos.service';
 
 export class PredenunciaGlobal{
   public validateMsg(form: FormGroup){
@@ -331,7 +328,8 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
         public globalService:GlobalService,
         public dialog: MatDialog,
         public authen: AuthenticationService,
-        private onLine: OnLineService
+        private onLine: OnLineService,
+        private formatos: FormatosService
     ){
         super(http, confirmationService, globalService, dialog);
     }
@@ -375,54 +373,13 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
     }
 
     public makeFormat(_event, _val){
-        this.http.getLocal('../../../../../assets/formatos/F1-004 REGISTRO PRESENCIAL.docx').subscribe(
-            response =>{
-                console.log('-> Response', response);
-                let doc = new docxtemplater();
-                let reader = new FileReader();
-                reader.onloadend = (file => {
-                    console.log('-> Binary ', file);
-                    let zip = new JSZip(file.target['result']);
-                    doc.loadZip(zip);
-                    doc.setData({
-                        'xNombreUsuario': 'Ulises',
-                    });
-                    try {
-                        // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
-                        doc.render()
-                    }
-                    catch (error) {
-                        var e = {
-                            message: error.message,
-                            name: error.name,
-                            stack: error.stack,
-                            properties: error.properties,
-                        }
-                        console.log(JSON.stringify({error: e}));
-                        // The error thrown here contains additional information when logged with JSON.stringify (it contains a property object).
-                        throw error;
-                    }
-
-                    var out = doc.getZip().generate({
-                        type:"blob",
-                        mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                    });
-                    let an  = document.createElement("a");
-                    let url = window.URL.createObjectURL(out);
-                    document.body.appendChild(an);
-                    an.href = url;
-                    an.download = 'file.docx';
-                    an.click(); 
-                 });
-                reader.readAsBinaryString(response);
-
+        this.formatos.replaceWord(
+            'F1-004 REGISTRO PRESENCIAL.docx',
+            '../../../../../assets/formatos/F1-004 REGISTRO PRESENCIAL.docx',
+            {
+                'xNombreUsuario': 'Hola',
             }
-        );
-        // let docx = new docxtemplater();
-        // let content = fs.readFileSync("@assets/formatos/F1-004 REGISTRO PRESENCIAL.docx", 'binary'); 
-        // // .loadFromFile("@assets/formatos/F1-004 REGISTRO PRESENCIAL.docx");
-        // console.log(content);
-        // console.log(docx);
+        )
     }
 
 }
