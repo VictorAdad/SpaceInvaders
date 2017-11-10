@@ -21,22 +21,27 @@ export class CasoService{
 			this.id = _id;
 			if(this.onLine.onLine){
 				this.http.get(`/v1/base/casos/${this.id}/all`).subscribe(
-					response => {
-						this.caso = response;
-						this.db.clear("casos").then( t =>{
-		                    this.db.update("casos",this.caso).then( t =>{
-		                    	console.log('Indexed Caso actualizado');
-		                    });
-		                });
-					}
+					this.setOnlineCaso.bind(this)
 				)
 			}else{
 				this.db.get("casos", this.id).then(
-	        		response => {
-	        			this.caso = response;
-	                }
+	        		this.setCaso.bind(this)
 	            );
 			}
 		}
+	}
+
+	public setOnlineCaso(response){
+		console.log('Caso@setOnlineCaso')
+		this.caso = response;
+		this.db.clear("casos").then( t =>{
+            this.db.update("casos",this.caso).then( t =>{
+            	console.log('Indexed Caso actualizado');
+            });
+        });
+	}
+
+	public setCaso(caso){
+		this.caso = caso;
 	}
 }
