@@ -321,6 +321,7 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
     public subject:BehaviorSubject<DocumentoPredenuncia[]> = new BehaviorSubject<DocumentoPredenuncia[]>([]);
     public source:TableDataSource = new TableDataSource(this.subject);
     public isCallCenter:boolean=false;
+    public dataFormato: any;
 
     constructor(
         public http: HttpService,
@@ -328,10 +329,17 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
         public globalService:GlobalService,
         public dialog: MatDialog,
         public authen: AuthenticationService,
-        private onLine: OnLineService,
-        private formatos: FormatosService
+        public onLine: OnLineService,
+        public formatos: FormatosService
     ){
-        super(http, confirmationService, globalService, dialog);
+        super(
+            http,
+            confirmationService,
+            globalService,
+            dialog,
+            onLine,
+            formatos
+        );
     }
 
     ngOnInit() {
@@ -345,12 +353,18 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
 
             }
         }
+
         for (let role of this.authen.user.roles) {
             if(role===this.authen.roles.callCenter){
                 this.isCallCenter=true;
                 console.log(this.isCallCenter)
             }
         }
+
+        this.dataFormato = {
+            'xNombreUsuario': 'Hola',
+        }
+
     }
 
     public setData(_object){
@@ -370,16 +384,6 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
             this.data.push(obj);
             this.subject.next(this.data);
         }
-    }
-
-    public makeFormat(_event, _val){
-        this.formatos.replaceWord(
-            'F1-004 REGISTRO PRESENCIAL.docx',
-            '../../../../../assets/formatos/F1-004 REGISTRO PRESENCIAL.docx',
-            {
-                'xNombreUsuario': 'Hola',
-            }
-        )
     }
 
 }

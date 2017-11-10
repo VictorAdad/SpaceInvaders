@@ -6,6 +6,7 @@ import { GlobalService } from '@services/global.service';
 
 import { OnLineService } from "@services/onLine.service";
 import { SelectsService } from "@services/selects.service";
+import { FormatosService } from '@services/formatos/formatos.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
 import { _config} from '@app/app.config';
@@ -30,15 +31,21 @@ export class AppComponent {
     	private activeRoute: ActivatedRoute,
         private mdIconRegistry: MatIconRegistry, 
         private sanitizer: DomSanitizer,
-        private selects: SelectsService
+        private selects: SelectsService,
+        private formatos: FormatosService
 	) {
         mdIconRegistry.addSvgIcon('arma',sanitizer.bypassSecurityTrustResourceUrl('./assets/images/iconos/arma.svg'));
         this._SIDEBAR = false;
         this.selects.getData();
+        this.formatos.getFormatos();
     }
 
 	ngOnInit(){
 		this.titleService.setTitle(this.createTitle());
+        window.onbeforeunload = function(event) {
+            // event.preventDefault();
+            return false;
+        }
 	}
 
     private createTitle() {
