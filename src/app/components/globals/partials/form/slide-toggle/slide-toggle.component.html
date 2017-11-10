@@ -1,0 +1,11 @@
+  <div class="p-2">
+  <mat-slide-toggle
+      [color]="color"
+      [checked]="checked"
+      [disabled]="disabled"
+      (ngModelChange)="update($event)"
+      [labelPosition]="labelPosition"
+      >
+   {{label}}
+  </mat-slide-toggle>
+</div>

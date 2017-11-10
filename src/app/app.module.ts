@@ -56,7 +56,7 @@ import {MatCheckboxModule} from '@angular/material';
 import {MatProgressBarModule} from '@angular/material';
 import {MatProgressSpinnerModule} from '@angular/material';
 import { SimpleNotificationsModule } from 'angular2-notifications';
-
+import {MatSlideToggleModule} from '@angular/material';
 import {VgCoreModule} from 'videogular2/core';
 import {VgControlsModule} from 'videogular2/controls';
 import {VgOverlayPlayModule} from 'videogular2/overlay-play';
@@ -66,6 +66,7 @@ import {VgBufferingModule} from 'videogular2/buffering';
 
 import { AgmCoreModule } from '@agm/core';
 import {Logger} from '@services/logger.service'
+import 'hammerjs';
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import {Logger} from '@services/logger.service'
     MatExpansionModule,
     MatDatepickerModule,
     MatRadioModule,
+    MatRadioModule,
     MatAutocompleteModule,
     MatSelectModule,
     MatTooltipModule,
@@ -109,6 +111,7 @@ import {Logger} from '@services/logger.service'
     MatButtonModule,
     MatInputModule,
     MatCheckboxModule,
+    MatSlideToggleModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
     // MaterialModule,
