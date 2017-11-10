@@ -116,7 +116,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                     });
                 }else{
                     this.db.get("casos",this.casoId).then(t=>{
-                        let vehiculos=t["vehiculo"] as any[];
+                        let vehiculos=t["vehiculos"] as any[];
                         for (var i = 0; i < vehiculos.length; ++i) {
                             if ((vehiculos[i])["id"]==this.id){
                                 this.fillForm(vehiculos[i]);
@@ -197,11 +197,11 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                 this.db.add("sincronizar",dato).then(p=>{
                     this.db.get("casos",this.casoId).then(caso=>{
                         if (caso){
-                            if(!caso["vehiculo"]){
-                                caso["vehiculo"]=[];
+                            if(!caso["vehiculos"]){
+                                caso["vehiculos"]=[];
                             }
                             this.model["id"]=temId;
-                            caso["vehiculo"].push(this.model);
+                            caso["vehiculos"].push(this.model);
                             this.db.update("casos",caso).then(t=>{
                                 resolve("Se creo el vehículo de manera local");
                                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/vehiculos' ]);
@@ -255,7 +255,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                 }
                 this.db.add("sincronizar",dato).then(p=>{
                     this.db.get("casos",this.casoId).then(t=>{
-                        let vehiculos=t["vehiculo"] as any[];
+                        let vehiculos=t["vehiculos"] as any[];
                         _model["id"]=this.id;
                         for (var i = 0; i < vehiculos.length; ++i) {
                             if ((vehiculos[i])["id"]==this.id){

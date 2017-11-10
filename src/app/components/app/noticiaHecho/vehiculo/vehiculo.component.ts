@@ -36,8 +36,8 @@ export class VehiculoComponent{
                 }else{
                     this.db.get("casos",this.casoId).then(caso=>{
                         if (caso){
-                            if(caso["vehiculo"]){
-                                this.dataSource = new TableService(this.paginator, caso["vehiculo"]);
+                            if(caso["vehiculos"]){
+                                this.dataSource = new TableService(this.paginator, caso["vehiculos"]);
                             }
                         }
                     });
