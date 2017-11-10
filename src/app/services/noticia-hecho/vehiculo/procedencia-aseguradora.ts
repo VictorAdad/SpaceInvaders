@@ -14,6 +14,11 @@ export class MatrizProcedenciaAseguradora extends MatrizGlobal{
         this.getMatriz();
     }
 
+    public validate(_object: any, _selected: any): boolean{
+        return _object.procedencia === _selected.procedencia
+                && _object.aseguradora === _selected.aseguradora;
+    }
+
 }
 
 export class ProcedenciaAseguradora {

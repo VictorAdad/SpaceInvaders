@@ -75,7 +75,8 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                     this.http.get('/v1/base/armas/'+this.id).subscribe(response =>{
                         this.model = response as Arma;
                         console.log("Arma->",this.model);
-                        this.isArmaFuego=this.model.claseArma.claseArma===_config.optionValue.armaFuego;
+                        if (this.model.claseArma)
+                            this.isArmaFuego=this.model.claseArma.claseArma===_config.optionValue.armaFuego;
                         this.fillForm(response);
                     });
                 }else{
@@ -124,11 +125,18 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                 );
             }else{
                 _model.caso.id             = this.casoId;
-                if(this.armaServ.claseArma.finded[0])
-                    _model.claseArma.id        = this.armaServ.claseArma.finded[0].id
+                if(this.armaServ.claseArma.finded[0]){
+                    _model.claseArma.id        = this.armaServ.claseArma.finded[0].id;
+                    _model.claseArma["claseArma"]=this.armaServ.claseArma.finded[0].claseArma;
+                    _model.claseArma["subTipo"]=this.armaServ.claseArma.finded[0].subtipo;
+                    _model.claseArma["tipo"]=this.armaServ.claseArma.finded[0].tipo;
+                }
                 if(this.isArmaFuego){
-                    if(this.armaServ.calibreMecanismo.finded[0])
+                    if(this.armaServ.calibreMecanismo.finded[0]){
                         _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id
+                        _model.calibreMecanismo["calibre"]=this.armaServ.calibreMecanismo.finded[0].calibre;
+                        _model.calibreMecanismo["mecanismo"]=this.armaServ.calibreMecanismo.finded[0].mecanismo;
+                    }
                 }
                 console.log("MODEL",_model);
                 let temId=Date.now();
@@ -166,14 +174,19 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         return new Promise<any>((resolve, reject) => {
             console.log('Arma Serv', this.armaServ);
             _model.caso.id             = this.casoId;
-            if(this.armaServ.claseArma.finded.length>0 && this.armaServ.calibreMecanismo.finded.length>0){
-                _model.claseArma.id        = this.armaServ.claseArma.finded[0].id;
-                if(!this.onLine.onLine)
-                    _model.claseArma        = this.armaServ.claseArma.finded[0];
+            //if(this.armaServ.claseArma.finded.length>0 && this.armaServ.calibreMecanismo.finded.length>0){
+                if(this.armaServ.claseArma.finded[0]){
+                    _model.claseArma.id        = this.armaServ.claseArma.finded[0].id;
+                    _model.claseArma["claseArma"]=this.armaServ.claseArma.finded[0].claseArma;
+                    _model.claseArma["subTipo"]=this.armaServ.claseArma.finded[0].subtipo;
+                    _model.claseArma["tipo"]=this.armaServ.claseArma.finded[0].tipo;
+                }
                 if(this.isArmaFuego){
-                    _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id;
-                    if(!this.onLine.onLine)
-                        _model.calibreMecanismo = this.armaServ.calibreMecanismo.finded[0];
+                    if(this.armaServ.calibreMecanismo.finded[0]){
+                        _model.calibreMecanismo.id = this.armaServ.calibreMecanismo.finded[0].id
+                        _model.calibreMecanismo["calibre"]=this.armaServ.calibreMecanismo.finded[0].calibre;
+                        _model.calibreMecanismo["mecanismo"]=this.armaServ.calibreMecanismo.finded[0].mecanismo;
+                    }
                 }
 
                 console.log('-> Arma@edit()', _model);
@@ -213,29 +226,50 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                     });
                 }
 
-            }else{
-                console.log("No se ha encontrado combinación clase de arma, tipo, subtipo o calibre mecanismo")
-            }
+            // }else{
+            //     reject("Se actualizó la información del arma de manera local");
+            //     console.log("No se ha encontrado combinación clase de arma, tipo, subtipo o calibre mecanismo")
+            // }
         });
 
     }
+
+     eliminaNulos(x){
+                if (typeof x == "object"){
+                    for(let i in x){
+                        if (x[i]==null || typeof x[i] =="undefined"){
+                            delete x[i];
+                        }
+                        if (typeof x[i]=="object")
+                            this.eliminaNulos(x[i]);
+                    }
+                }
+            } 
     public fillForm(_data){
+        this.eliminaNulos(_data);
         this.form.patchValue(_data)
         let timer = Observable.timer(1);
-        this.form.patchValue({
-            'clase': _data.claseArma.claseArma
-        });
+        if (_data.claseArma)
+            this.form.patchValue({
+                'clase': _data.claseArma.claseArma
+            });
         timer.subscribe(t => {
             this.form.patchValue({
-            'tipo': _data.claseArma.tipo,
-            'subtipo': _data.claseArma.subtipo,
-            'calibre': _data.calibreMecanismo.calibre,
-            'mecanismo': _data.calibreMecanismo.mecanismo,
-            'serie': _data.serie,
-            'matricula': _data.matricula,
-            'claseArma' : _data.claseArma.claseArma,
-            'calibreMecanismo' : _data.calibreMecanismo
-            })
+                'serie': _data.serie,
+                'matricula': _data.matricula,
+                })
+            if (_data.claseArma)
+                this.form.patchValue({
+                'tipo': _data.claseArma.tipo,
+                'subtipo': _data.claseArma.subtipo,
+                'claseArma' : _data.claseArma.claseArma,
+                })
+            if (_data.calibreMecanismo)
+                this.form.patchValue({
+                'calibre': _data.calibreMecanismo.calibre,
+                'mecanismo': _data.calibreMecanismo.mecanismo,
+                'calibreMecanismo' : _data.calibreMecanismo
+                })
 
         });
 

@@ -150,6 +150,8 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                 console.log("MODEL",_model);
                 this.db.add('casos', _model).then(object => {
                     console.log('object', object);
+                    var id=object["id"];
+                    _model["id"]="";
                     let dato={
                         url:'/v1/base/casos',
                         body:_model,
@@ -157,13 +159,13 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                         tipo:"post",
                         pendiente:true,
                         newId:0,
-                        temId:object['id']
+                        temId:id
                     }
                     this.db.add("sincronizar",dato).then(p=>{
                         console.log('p', p);
                         // _model["id"] = temId;
                         resolve("Se creó el caso de manera local");
-                        this.router.navigate(['/caso/'+object['id']+'/noticia-hecho/datos-generales' ]);
+                        this.router.navigate(['/caso/'+id+'/noticia-hecho/datos-generales' ]);
                     });
 
                 });

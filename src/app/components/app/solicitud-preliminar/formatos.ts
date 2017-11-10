@@ -53,7 +53,8 @@ export class FormatosGlobal{
 
     public downloadFile(_object, _contentType){
         console.log('downloadFile():', _object);
-        this.http.getFile(`/v1/documentos/documento/${_object.uuidEcm}/${_contentType}`).subscribe(
+        _contentType=_contentType.replace("/", "-");
+        this.http.getFile(`/v1/documentos/documento/${_object.uuidEcm}/${_contentType}/${_object.tipo}`).subscribe(
             response => {
                 console.log('Done downloadFile()', response);
                 let blob = new Blob([response], {
@@ -82,7 +83,7 @@ export class FormatosGlobal{
         });
 
         dialog.componentInstance.emitter.subscribe((archivos) => {
-            console.log(archivos);
+           console.log(archivos);
            this.cargaArchivos(archivos);
         });
 

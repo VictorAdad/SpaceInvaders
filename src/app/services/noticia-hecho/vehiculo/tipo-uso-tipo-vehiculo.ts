@@ -15,6 +15,12 @@ export class MatrizTipoUsoTipoVehiculo extends MatrizGlobal{
         this.getMatriz();
     }
 
+    public validate(_object: any, _selected: any): boolean{
+        return _object.tipoUso === _selected.tipoUso
+                && _object.datosTomadosDe === _selected.datosTomadosDe
+                && _object.tipoVehiculo === _selected.tipoVehiculo;
+    }
+
 }
 
 export class TipoUsoTipoVehiculo {

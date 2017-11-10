@@ -1,6 +1,6 @@
 <div class="row space justify-content-end">
 	<div class="col-md-2">
-    <select2 placeholder= "Formatos" *ngIf="!isCallCenter" (valueChange)="changeFormat($event, id)" [options]="[
+    <select2 placeholder= "Formatos" *ngIf="!isCallCenter" (valueChange)="changeFormat($event, object.id)" [options]="[
     {label:'LECTURA DE DERECHOS DE LA VÍCTIMA',value:'F1_003'},
     {label:'REGISTRO PRESENCIAL',value:'F1_004'},
     {label:'REGISTRO DE RECEPCIÓN DE LLAMADA',value:'F1_005'}
@@ -44,5 +44,5 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="downloadFile(row, 'application-pdf')"></mat-row>
-</mat-table>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"  (click)="downloadFile(row, row.contentType)"></mat-row>
+  </mat-table>

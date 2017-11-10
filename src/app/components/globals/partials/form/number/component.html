@@ -2,7 +2,7 @@
 	<mat-form-field class="full-width" *ngIf="name==''">
 			<mat-icon matPrefix *ngIf="prefixIcon">{{ prefixIcon }}</mat-icon>
 			<span *ngIf="prefix" matPrefix>{{ prefix }}&nbsp;</span>
-			<input type="number" [min]="min" [max]="max" matInput placeholder="{{label}}" [(ngModel)]="value" (ngModelChange)="update($event)" name="{{name}}">
+			<input type="number" [min]="0" [max]="max" matInput placeholder="{{label}}" [(ngModel)]="value" (ngModelChange)="update($event)" name="{{name}}">
 			<mat-icon matSuffix *ngIf="sufix">{{ sufix }}</mat-icon>
 			<mat-hint align="start" *ngIf="hintStart">{{hintStart}} </mat-hint>
 		    <mat-hint align="end" *ngIf="hintEnd">{{hintEnd}}</mat-hint>
@@ -12,15 +12,14 @@
 			<input
 				#numberComponent
 				type="number"
-				min="0"
 				matInput
 				placeholder="{{label}}"
 				[(ngModel)]="value"
 				(ngModelChange)="update($event)"
 				formControlName="{{name}}"
         		name="{{name}}"
-        		[min]="min"
-        		[max]="max"
+        		[min]="0"
+        		[max]="maxValue"
 				[readonly]="readonly ? readonly : false ">
 			<mat-icon matSuffix *ngIf="sufix">{{ sufix }}</mat-icon>
 			<mat-hint align="start" *ngIf="hintStart">{{hintStart}} </mat-hint>

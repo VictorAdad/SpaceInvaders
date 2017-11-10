@@ -1,6 +1,6 @@
 <div class="row space justify-content-end">
 	<div class="col-md-2">
-		<select2 placeholder= "Formatos" (valueChange)="changeFormat($event, id)" [options]="[{label:'SOLICITUD DE INFORMACION',value:'F2_039'}]"></select2>
+		<select2 placeholder= "Formatos" (valueChange)="changeFormat($event, object.id)" [options]="[{label:'SOLICITUD DE INFORMACION',value:'F2_039'}]"></select2>
 	</div>
 	<div class="col-md-auto">
 		<button mat-raised-button color="accent" (click)="openDocDialog()">Adjuntar</button>
@@ -23,5 +23,5 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"  (click)="downloadFile(row, 'application-pdf')"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"  (click)="downloadFile(row, row.contentType)"></mat-row>
   </mat-table>
