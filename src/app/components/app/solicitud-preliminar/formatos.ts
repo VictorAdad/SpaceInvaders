@@ -31,7 +31,7 @@ export class FormatosGlobal{
 
     }
 
-    public changeFormat(_format, _id, _data: any = null){
+    public changeFormat(_format, _id, _data: any = {}){
         console.log('Change format:', _format, _id);
 
         this._confirmation.create('Advertencia','¿Estás seguro de guardar este formato?',this.confirmation_settings)
@@ -51,8 +51,7 @@ export class FormatosGlobal{
                     }else{
                         this.formatos.replaceWord(
                             'F1-004 REGISTRO PRESENCIAL.docx',
-                            _format,
-                            _data
+                            _format
                         )
                     }
 
@@ -223,9 +222,3 @@ export class SolPreDocComponent {
 // const URL = '/api/';
 const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 
-export const formatosOffline = {
-    'F1_004': {
-        'name': 'F1-004 REGISTRO PRESENCIAL.docx',
-        'path': '../../../../../assets/formatos/F1-004 REGISTRO PRESENCIAL.docx'
-    }
-}

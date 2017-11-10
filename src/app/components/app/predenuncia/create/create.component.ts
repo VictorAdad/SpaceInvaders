@@ -334,6 +334,7 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
         private route: ActivatedRoute,
         public onLine: OnLineService,
         public formatos: FormatosService,
+        public db: CIndexedDB
         ){
         super(
             http,
@@ -358,15 +359,20 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
         }
 
         this.route.params.subscribe(params => {
-            if (params['casoId'])
+            if (params['casoId']){
                 this.urlUpload = '/v1/documentos/predenuncias/save/'+params['casoId'];
+                // if(!this.onLine.onLine){
+                    this.db.get("casos", +params['casoId']).then(
+                        caso => {
+                            this.updateDataFormatos(caso);
+                        }
+                    );
+                // }
+            }
 
         });
 
         this.formData.append('predenuncia.id', this.object.id.toString());
-        this.formatos.formatos.F1_004['data']('F1_004');
-
-        console.log(this.formatos);
     }
 
     public cargaArchivos(_archivos){
@@ -388,6 +394,10 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
         console.log('setData()');
         this.data.push(_object);
         this.subject.next(this.data);
+    }
+
+    public updateDataFormatos(_object){
+        this.formatos.formatos.F1_004['data'] = this.formatos.formatos.setDataF1004(_object);
     }
 
 }
