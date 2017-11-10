@@ -103,8 +103,8 @@ export class NoticiaHechoService {
                 this.lugares = this.constructOptionsLugar(response);
             });
         else
-            if (this.caso["lugar"])
-                this.lugares = this.constructOptionsLugar(this.caso["lugar"]);
+            if (this.caso["lugares"])
+                this.lugares = this.constructOptionsLugar(this.caso["lugares"]);
 
     }    
 
@@ -114,8 +114,8 @@ export class NoticiaHechoService {
                 this.vehiculos = this.constructOptionsVehiculo(response);
             });
         else
-            if (this.caso["vehiculo"])
-                this.vehiculos = this.constructOptionsVehiculo(this.caso["vehiculo"]);
+            if (this.caso["vehiculos"])
+                this.vehiculos = this.constructOptionsVehiculo(this.caso["vehiculos"]);
     }
 
     public getArmas(){
@@ -124,8 +124,8 @@ export class NoticiaHechoService {
                 this.armas = this.constructOptionsArma(response);
             });
         else
-            if (this.caso["arma"])
-                this.armas = this.constructOptionsArma(this.caso["arma"]);
+            if (this.caso["armas"])
+                this.armas = this.constructOptionsArma(this.caso["armas"]);
     }
 
     public getPersonas(){

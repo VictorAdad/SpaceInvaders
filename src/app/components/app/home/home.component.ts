@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { ActivatedRoute }    from '@angular/router';
 import { AuthenticationService } from '@services/auth/authentication.service';
+import { CasoService } from '@services/caso/caso.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
@@ -33,7 +34,8 @@ export class HomeComponent implements OnInit {
         private _db: CIndexedDB,
         private _onLine: OnLineService,
         private _http: HttpService,
-        public auth: AuthenticationService
+        public auth: AuthenticationService,
+        public caso: CasoService
         ) {
         this.db     = _db;
         this.onLine = _onLine;
@@ -78,15 +80,7 @@ export class HomeComponent implements OnInit {
     }
 
     guardarCaso(caso){
-        if(this.onLine.onLine){
-            this.db.clear("casos").then(t=>{
-                this.http.get(`/v1/base/casos/${caso.id}/all`).subscribe((response) => {
-                    this.db.update("casos",response).then(t=>{
-                        console.log(response);
-                    });
-                });
-            });
-        }
+        this.caso.find(caso.id)
         
     }
 }
