@@ -176,18 +176,19 @@ export class SolPreDocComponent {
         console.log('-> Files: ', listaFiles);
 
         for (let file of listaFiles) {
+          console.log('file',file)
             this.data.formData.append('files', file['some']);
         }
 
         this.http.post(this.data.urlUpload, this.data.formData).subscribe(
             response => {
                 console.log('Done guardar()', response);
+                this.archivos=response;
                 this.uploader.clearQueue();
-                this.emitter.emit(response);
+                this.emitter.emit(this.archivos);
                 this.close();
             }
         )
-        // this.guardarOffLine(0,listaFiles);
 
     }
 
