@@ -18,6 +18,7 @@ import { GlobalService } from "@services/global.service";
 import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../global.component';
+import { Options } from './option';
 
 @Component({
     templateUrl: './component.html',
@@ -61,6 +62,8 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
     dataSource: TableService | null;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
+    public options: Options;
+
     constructor(
         private _fbuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -69,11 +72,14 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
         private router: Router,
         private db: CIndexedDB,
         private auth: AuthenticationService
-    ) { super(); }
+    ) { super(); 
+      this.options = new Options(http,db,onLine);
+    }
 
 
     ngOnInit() {
         this.model = new AcuerdoInicio();
+        this.options.getData();
 
         this.form = new FormGroup({
             'nombrePersonaAcepta': new FormControl(this.model.nombrePersonaAcepta),
