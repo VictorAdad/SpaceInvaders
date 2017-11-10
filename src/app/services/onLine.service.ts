@@ -39,9 +39,9 @@ export class OnLineService {
         this.timer.subscribe(t=>{
             this.anterior=this.onLine;
             this.onLine=navigator.onLine;
-            let message="Se perdio la conexión";
+            let message="Se perdió la conexión";
             if(this.onLine){
-                message="Se extablecio la conexión";
+                message="Se estableció la conexión";
                 //this.startSincronizacion();
             }
 
