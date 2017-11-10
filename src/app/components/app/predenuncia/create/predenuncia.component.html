@@ -4,10 +4,10 @@
 	<div id="f1" *ngIf="authen.user.hasRoles(authen.roles.callCenter)">
 	    <div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Calidad del usuario" name="calidadPersona" [(value)]="model.calidadPersona" [group]="form"></text>
+		    	<text label="Calidad del usuario" name="calidadPersona" [max]="200" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Número telefónico del que se está llamando" name="noTelefonico" [(value)]="model.numeroTelefono" [group]="form"></text>
+		    	<text label="Número telefónico del que se está llamando" name="noTelefonico" [max]="20" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<select2 [options]="optionsServ.tipoLinea"
@@ -17,27 +17,27 @@
 			    </select2>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Lugar de donde se llama" name="lugarLlamada" [(value)]="model.lugarLlamada" [group]="form"></text>
+		    	<text label="Lugar de donde se llama" name="lugarLlamada" [max]="200" [group]="form"></text>
 		    </div>
 	    </div>
 	    <div class="row">
 
-		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Hechos narrados que se denuncian" name="hechosNarrados" [(value)]="model.hechosNarrados" [group]="form"></text>
+		    <div class="col-md-12 col-sm-12 col-lg-12">
+		    	<text-area label="Hechos narrados que se denuncian" name="hechosNarrados" [group]="form"></text-area>
 		    </div>
-		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="En base a los hechos se le comunica al usuario" name="comunicado" [(value)]="model.usuario" [group]="form"></text>
-		    </div>
-		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<time label="Hora de conclusión de la llamada" name="horaConclusionLlamada" [(value)]="model.horaConlcusionLlamada" [group]="form"></time>
-		    </div>
-		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Duración de la llamada" name="duracionLlamada" [(value)]="model.duracionLlamada" [group]="form"></text>
+		    <div class="col-md-12 col-sm-12 col-lg-12">
+		    	<text-area label="En base a los hechos se le comunica al usuario" name="comunicado" [group]="form"></text-area>
 		    </div>
 		</div>
 		<div class="row">
 		    <div class="col-md-4 col-sm-12 col-lg-4">
-		    	<text label="Nombre del servidor público que registra" name="quienRegistro" [(value)]="model.nombreServidorPublico" [group]="form"></text>
+		    	<time label="Hora de conclusión de la llamada" name="horaConclusionLlamada" [(value)]="model.horaConlcusionLlamada" [group]="form"></time>
+		    </div>
+		    <div class="col-md-4 col-sm-12 col-lg-4">
+		    	<text label="Duración de la llamada" name="duracionLlamada" [max]="20" [group]="form"></text>
+		    </div>
+		    <div class="col-md-4 col-sm-12 col-lg-4">
+		    	<text label="Nombre del servidor público que registra" name="quienRegistro" [max]="150" [group]="form"></text>
 		    </div>
 		</div>
 		<div class="row">
@@ -51,7 +51,7 @@
 		<div class="row space"> <h2>Constancia de lectura de derechos a la víctima u ofendido</h2></div>
 	    <div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Número de folio" name="noFolioConstancia" [(value)]="model.numeroFolio" [group]="form"></text>
+		    	<text label="Número de folio" name="noFolioConstancia" [max]="50" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 				<select2 [options]="[{value: true,label: 'Si'},{value: false,label: 'No'}]"
@@ -62,10 +62,10 @@
 			    </select2>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="En caso negativo, especificar idioma o lengua" name="lenguaIdioma" [(value)]="model.idioma" [group]="form"></text>
+		    	<text label="En caso negativo, especificar idioma o lengua" name="lenguaIdioma" [max]="50" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Nombre del interprete" name="nombreInterprete" [(value)]="model.nombreInterprete" [group]="form"></text>
+		    	<text label="Nombre del interprete" name="nombreInterprete" [max]="150" [group]="form"></text>
 		    </div>
 	    </div>
 	    <div class="row">
@@ -110,7 +110,7 @@
 		<div class="row space"> <h2>Registro presencial</h2></div>
 		<div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Calidad de la persona" name="calidadPersona" [(value)]="model.calidadPersona" [group]="form"></text>
+		    	<text label="Calidad de la persona" name="calidadPersona" [max]="200" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<select2 [options]="optionsServ.tipoPersona"
@@ -119,18 +119,20 @@
 				[group]="form.controls.tipoPersona">
 			    </select2>
 		    </div>
-		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Lugar en donde ocurrieron los hechos" name="lugarHechos" [(value)]="model.lugarHechos" [group]="form"></text>
+		</div>
+		<div class="row">
+		    <div class="col-md-12 col-sm-12 col-lg-12">
+		    	<text-area label="Lugar en donde ocurrieron los hechos" name="lugarHechos" [group]="form"></text-area>
 		    </div>
-		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Hechos narrados (hechos denunciados)" name="hechosNarrados" [(value)]="model.hechosNarrados" [group]="form"></text>
+		    <div class="col-md-12 col-sm-12 col-lg-12">
+		    	<text-area label="Hechos narrados (hechos denunciados)" name="hechosNarrados" [group]="form"></text-area>
+		    </div>
+		    <div class="col-md-12 col-sm-12 col-lg-12">
+		    	<text-area label="Conclusión en base a los hechos denunciados" name="conclusion" [group]="form"></text-area>
 		    </div>
 		</div>
 		<div class="row">
-		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Conclusión en base a los hechos denunciados" name="conclusion" [(value)]="model.conclusionHechos" [group]="form"></text>
-		    </div>
-		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    <div class="col-md-4 col-sm-12 col-lg-4">
 		    	<select2 [options]="[{value: true,label: 'Si'},{value: false,label: 'No'}]"
 				placeholder="¿Se canaliza a otra área o institución?"
 				[(value)]="model.canalizacion"
@@ -138,30 +140,30 @@
 				[group]="form">
 			    </select2>
 		    </div>
-		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="En su caso, institución a que se canaliza" name="institucion" [group]="form"></text>
+		    <div class="col-md-4 col-sm-12 col-lg-4">
+		    	<text label="En su caso, institución a que se canaliza" name="institucion" [max]="200" [group]="form"></text>
 		    </div>
-		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="¿Motivo del por qué se canaliza a esa institución?" name="motivoCanalizacion" [(value)]="model.motivocanalizacion" [group]="form"></text>
+		    <div class="col-md-4 col-sm-12 col-lg-4">
+            <date label="Fecha en la que se canaliza" [disabled]="hasPredenuncia" name="fechaCanalizacion" [group]="form" [(value)]="model.fechaCanalizacion" ></date>
 		    </div>
 		</div>
 		<div class="row">
-		    <div class="col-md-3 col-sm-12 col-lg-3">
-            <date label="Fecha en la que se canaliza" [disabled]="hasPredenuncia" name="fechaCanalizacion" [group]="form" [(value)]="model.fechaCanalizacion" ></date>
+		    <div class="col-md-12 col-sm-12 col-lg-12">
+		    	<text-area label="¿Motivo del por qué se canaliza a esa institución?" name="motivoCanalizacion" [group]="form"></text-area>
 		    </div>
+		</div>
+		<div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<time label="Hora en la que se canaliza" name="horaCanalizacion" [(value)]="model.horaCanalizacion" [group]="form"></time>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Si lo sabe, nombre de quien causó el hecho" name="nombreCausante" [(value)]="model.personaCausohecho" [group]="form"></text>
+		    	<text label="Si lo sabe, nombre de quien causó el hecho" name="nombreCausante" [max]="150" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Si lo sabe, domicilio de quien causó el hecho" name="domicilioCausante" [(value)]="model.domicilioQuienCauso" [group]="form"></text>
+		    	<text label="Si lo sabe, domicilio de quien causó el hecho" name="domicilioCausante" [max]="200" [group]="form"></text>
 		    </div>
-		</div>
-		<div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Nombre de persona que llevó a cabo el registro" name="quienRegistro" [(value)]="model.personaRegistro" [group]="form"></text>
+		    	<text label="Nombre de persona que llevó a cabo el registro" name="quienRegistro" [max]="150" [group]="form"></text>
 		    </div>
 		</div>
 

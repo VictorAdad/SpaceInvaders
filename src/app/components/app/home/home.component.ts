@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
     }
 
     public changePage(_e){
-        this.page('/v1/base/casos?p='+_e.pageIndex+'&tr='+_e.pageSize);
+        this.page(`/v1/base/casos/titulares/${this.auth.user.username}/page?p=`+_e.pageIndex+'&tr='+_e.pageSize);
     }
 
     public page(url: string){
@@ -80,8 +80,10 @@ export class HomeComponent implements OnInit {
     guardarCaso(caso){
         if(this.onLine.onLine){
             this.db.clear("casos").then(t=>{
-                this.db.update("casos",caso).then(t=>{
-                    console.log(caso);
+                this.http.get(`/v1/base/casos/${caso.id}/all`).subscribe((response) => {
+                    this.db.update("casos",response).then(t=>{
+                        console.log(response);
+                    });
                 });
             });
         }

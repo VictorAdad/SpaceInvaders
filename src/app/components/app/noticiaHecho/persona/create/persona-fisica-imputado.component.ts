@@ -752,6 +752,9 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             this.personaServ.nacionalidadReligion.find(this.form.controls.religion.value,"religion");
             if (this.personaServ.nacionalidadReligion.finded[0])
                 _model["nacionalidadReligion"]={id:this.personaServ.nacionalidadReligion.finded[0].id};
+            if (this.personaServ.tipoDetenido.finded[0]){
+                (_model["personaCaso"])[0].detalleDetenido["tipoDetenido"].id=this.personaServ.tipoDetenido.finded[0].id
+            }
 
             buscar.push({
                 catalogo:"idioma_identificacion",

@@ -9,6 +9,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
 import { SelectsService } from "@services/selects.service";
+import { FormatosService } from '@services/formatos/formatos.service';
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
@@ -17,8 +18,9 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { GlobalService } from "@services/global.service";
 import { TableDataSource } from './../../global.component';
-import { AuthenticationService } from '@services/auth/authentication.service';
-import { FormatosService } from '@services/formatos/formatos.service';
+import { AuthenticationService } from '@services/auth/authentication.service.ts';
+
+
 
 export class PredenunciaGlobal{
   public validateMsg(form: FormGroup){
@@ -119,7 +121,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
 
     ngOnInit(){
         this.route.params.subscribe(params => {
-            if (params['casoId']){  
+            if (params['casoId']){
                 this.casoId = +params['casoId'];
                 console.log(this.casoId);
                 if(this.onLine.onLine){
@@ -321,17 +323,18 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
     public subject:BehaviorSubject<DocumentoPredenuncia[]> = new BehaviorSubject<DocumentoPredenuncia[]>([]);
     public source:TableDataSource = new TableDataSource(this.subject);
     public isCallCenter:boolean=false;
-    public dataFormato: any;
+    public formData:FormData = new FormData();
+    public urlUpload: string;
 
     constructor(
         public http: HttpService,
         public confirmationService:ConfirmationService,
         public globalService:GlobalService,
         public dialog: MatDialog,
-        public authen: AuthenticationService,
+        private route: ActivatedRoute,
         public onLine: OnLineService,
-        public formatos: FormatosService
-    ){
+        public formatos: FormatosService,
+        ){
         super(
             http,
             confirmationService,
@@ -339,85 +342,52 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
             dialog,
             onLine,
             formatos
-        );
+            );
     }
 
     ngOnInit() {
-        if(this.onLine.onLine){
-            if(this.object.data[0].documentos){
-                this.dataSource = this.source;
-                for (let object of this.object.data[0].documentos) {
-                    this.data.push(object);
-                    this.subject.next(this.data);
-                }
-
+        console.log('-> Object ', this.object.data[0]);
+        this.object=this.object.data[0]
+        if(this.object.documentos){
+            this.dataSource = this.source;
+            for (let object of this.object.documentos) {
+                this.data.push(object);
+                this.subject.next(this.data);
             }
+
         }
 
-        for (let role of this.authen.user.roles) {
-            if(role===this.authen.roles.callCenter){
-                this.isCallCenter=true;
-                console.log(this.isCallCenter)
+        this.route.params.subscribe(params => {
+            if (params['casoId'])
+                this.urlUpload = '/v1/documentos/predenuncias/save/'+params['casoId'];
+
+        });
+
+        this.formData.append('predenuncia.id', this.object.id.toString());
+        this.formatos.formatos.F1_004['data']('F1_004');
+
+        console.log(this.formatos);
+    }
+
+    public cargaArchivos(_archivos){
+      let archivos=_archivos.saved
+        for (let object of archivos) {
+            let obj = {
+                'id': 0,
+                'nameEcm': object.nameEcm,
+                'created': new Date(),
+                'procedimiento': '',
+                'uuidEcm': object.uuidEcm
             }
+            this.data.push(obj);
+            this.subject.next(this.data);
         }
-
-        this.dataFormato = {
-            'xNUC': 'Hola',
-            'xNIC': 'Hola',
-            'xFechaAtencion': 'Hola',
-            'xHoraAtencion': 'Hola',
-            'xNombreUsuario': 'Hola',
-            'xOriginario': 'Hola',
-            'xEdad': 'Hola',
-            'xSexo': 'Hola',
-            'xDomicilio': 'Hola',
-            'xCalidadUsuarioPersona': 'Hola',
-            'xTipoPersona': 'Hola',
-            'xFechaNacimiento': 'Hola',
-            'xRFC': 'Hola',
-            'xCURP': 'Hola',
-            'xEstadoCivil': 'Hola',
-            'xOcupacion': 'Hola',
-            'xEscolaridad': 'Hola',
-            'xReligion': 'Hola',
-            'xNacionalidad': 'Hola',
-            'xNumeroTelefonico': 'Hola',
-            'xNumeroMovil': 'Hola',
-            'xSeIdentificaCon': 'Hola',
-            'xFolioIdentificacion': 'Hola',
-            'xHechosNarrados': 'Hola',
-            'xConclusionHechos': 'Hola',
-            'xLugarHechos': 'Hola',
-            'xCanalizacion': 'Hola',
-            'xInstitucionCanalizacion': 'Hola',
-            'xMotivoCanalizacion': 'Hola',
-            'xFechaCanalizacion': 'Hola',
-            'xHoraCanalizacion': 'Hola',
-            'xNombreCausoHecho': 'Hola',
-            'xDomicilioHechos': 'Hola',
-            'xObservaciones': 'Hola',
-            'xPersonaRegistro': 'Hola',
-        }
-
     }
 
     public setData(_object){
         console.log('setData()');
         this.data.push(_object);
         this.subject.next(this.data);
-    }
-
-    public cargaArchivos(_archivos){
-        for (let object of _archivos) {
-            let obj = {
-                'id': 0,
-                'nameEcm': object.some.name,
-                'created': new Date(),
-                'procedimiento': '',
-            }
-            this.data.push(obj);
-            this.subject.next(this.data);
-        }
     }
 
 }

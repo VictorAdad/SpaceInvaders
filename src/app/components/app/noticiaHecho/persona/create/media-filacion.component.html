@@ -211,10 +211,10 @@
               Talla
               <div class="row">
                 <div class="col-md-2">
-                  <text label="Estatura" ></text>
+                  <text label="Estatura" [max]="30" ></text>
                 </div>
                 <div class="col-md-2">
-                  <text label="Peso" ></text>
+                  <text label="Peso" [max]="30" ></text>
                 </div>
               </div>
               Señas Particulares
@@ -229,40 +229,43 @@
               </div>
 
               <div class="row">
-                <div class="col-md-8">
-                    <text label="Cicatrices"
+                <div class="col-md-12">
+                    <text-area label="Cicatrices"
                         name="cicatrices" 
-                        [group]="globals.form.controls.mediaFiliacion">
-                            
-                    </text>
+                        [group]="globals.form.controls.mediaFiliacion">        
+                    </text-area>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-8">
-                  <text label="Tatuajes"
+                <div class="col-md-12">
+                  <text-area label="Tatuajes"
                     name="tatuajes" 
-                        [group]="globals.form.controls.mediaFiliacion"></text>
+                        [group]="globals.form.controls.mediaFiliacion">       
+                  </text-area>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-8">
-                  <text label="Lunares"
+                <div class="col-md-12">
+                  <text-area label="Lunares"
                     name="lunares" 
-                        [group]="globals.form.controls.mediaFiliacion"></text>
+                        [group]="globals.form.controls.mediaFiliacion">        
+                  </text-area>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-8">
-                  <text label="Prótesis"
+                <div class="col-md-12">
+                  <text-area label="Prótesis"
                     name="protesis" 
-                        [group]="globals.form.controls.mediaFiliacion"></text>
+                        [group]="globals.form.controls.mediaFiliacion">        
+                  </text-area>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-8">
-                  <text label="Otras"
+                <div class="col-md-12">
+                  <text-area label="Otras"
                     name="otras" 
-                        [group]="globals.form.controls.mediaFiliacion"></text>
+                        [group]="globals.form.controls.mediaFiliacion">        
+                  </text-area>
                 </div>
               </div>
               <div [formGroup]="globals.form.controls.mediaFiliacion" >

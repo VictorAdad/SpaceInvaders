@@ -19,7 +19,7 @@ export class TextComponent implements OnInit{
 	@Input() hintStart: string="";
 	@Input() hintEnd: string="";
 	@Input() readonly: string="";
-	@Input() max :number = 200;
+	@Input() max :number = 100;
 	@Input() functionChange: Function;
 	@ViewChild('textComponent') textComponent;
 

@@ -1,7 +1,7 @@
 <div class="row space justify-content-end">
 	<div class="col-md-2">
-    <select2 placeholder= "Formatos" (valueChange)="changeFormat($event, id)" *ngIf="isPericiales" [options]="[{label:'OFICIO SOLICITUD A SERVICIOS PERICIALES',value:'F1_009'}]"></select2>
-    <select2 placeholder= "Formatos" (valueChange)="changeFormat($event, id)" *ngIf="!isPericiales" [options]="[{label:'SOLICITUD EXAMEN PSICOFÍSICO',value:'F1_010'}]"></select2>
+    <select2 placeholder= "Formatos" (valueChange)="changeFormat($event, object.id)" *ngIf="isPericiales" [options]="[{label:'OFICIO SOLICITUD A SERVICIOS PERICIALES',value:'F1_009'}]"></select2>
+    <select2 placeholder= "Formatos" (valueChange)="changeFormat($event, object.id)" *ngIf="!isPericiales" [options]="[{label:'SOLICITUD EXAMEN PSICOFÍSICO',value:'F1_010'}]"></select2>
   </div>
 
 	<div class="col-md-auto">
@@ -25,6 +25,6 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"  (click)="downloadFile(row, 'application-pdf')"></mat-row>
-  </mat-table>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"  (click)="downloadFile(row, row.contentType)"></mat-row>
+    </mat-table>
 
