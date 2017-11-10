@@ -40,19 +40,19 @@ export class PersonaComponent implements OnInit{
                 }else{
                     //Nota: si marca error es por que ya existe la base de datos y no se le puede agregar una nueva tabla
                     //para solucionarlo borra la base evomatik
-                    this.tabla.list("personas").then(lista => {
-                        console.log("Personas ->",lista);
-                        var data=[];
-                        for (var i = 0; i < lista["length"]; ++i) {
-                            let item = lista[i];
-                            let tipoInterviniente=(item["personaCaso"])[0].tipoInterviniente["id"];
-                            let tipo = (item["personaCaso"])[0].tipoInterviniente["tipo"]?(item["personaCaso"])[0].tipoInterviniente["tipo"]:"";
-                            let nombre = item["nombre"];
-                            let razonSocial = item["razonSocial"];
-                            if ( (item["personaCaso"])[0].caso.id==this.casoId )
-                                data.push({tipoInterviniente:{tipo:tipo}, persona:{nombre:nombre}, razonSocial:razonSocial, alias:"", id:item["id"]});
-                        }
-                        this.dataSource = new TableService(this.paginator, data);
+                    this.tabla.get("casos",this.casoId).then(caso => {
+                        console.log("CASO ->",caso);
+                        // var data=[];
+                        // for (var i = 0; i < lista["length"]; ++i) {
+                        //     let item = lista[i];
+                        //     let tipoInterviniente=(item["personaCaso"])[0].tipoInterviniente["id"];
+                        //     let tipo = (item["personaCaso"])[0].tipoInterviniente["tipo"]?(item["personaCaso"])[0].tipoInterviniente["tipo"]:"";
+                        //     let nombre = item["nombre"];
+                        //     let razonSocial = item["razonSocial"];
+                        //     if ( (item["personaCaso"])[0].caso.id==this.casoId )
+                        //         data.push({tipoInterviniente:{tipo:tipo}, persona:{nombre:nombre}, razonSocial:razonSocial, alias:"", id:item["id"]});
+                        // }
+                        this.dataSource = new TableService(this.paginator, caso["personaCasos"]);
                     });
                 } 
             }

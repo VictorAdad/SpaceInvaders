@@ -100,46 +100,60 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         console.log('Form', this.globals);
                     });
                 }else{
-                    this._tabla.get("personas",this.id).then(t=>{
-                        console.log("Persona->",t);
-                        let persona_caso=(t["personaCaso"])[0];
-                        persona_caso["persona"]=t;
-                        (persona_caso["persona"])["id"]=persona_caso["personaId"];
-                        this.globals.form.patchValue(persona_caso["persona"]);
-                        this.fillNombres(t["aliasNombrePersona"]);
-                        var promesa=new Promise((resolve)=>{
-                            resolve(persona_caso["persona"]);
-                        }).then(copia=>{
-                            this.globals.personaCaso=copia;
-                        });
-
-                        console.log("PERSONA_CASO -> ",persona_caso);
-
-                        let localizaciones = this.globals.form.get('localizacionPersona') as FormArray;
-                        for (let i=0; i< t["localizacionPersona"].length; i++) {
-                            let formLoc = LosForm.createFormLocalizacion();
-                            localizaciones.push(formLoc);
-                        }
-
-                        let timer2 = Observable.timer(1);
-                        timer2.subscribe(tiempo => {
-                            let localizaciones = this.globals.form.get('localizacionPersona') as FormArray;
-                            for (let i=0; i< t["localizacionPersona"].length; i++) {
-                                for (var propName in ((t["localizacionPersona"])[i])) {
-                                    if (( (t["localizacionPersona"])[i])[propName] === null || ( (t["localizacionPersona"])[i])[propName] === undefined) {
-                                        delete ( (t["localizacionPersona"])[i]) [propName];
-                                    }
-                                }
-                                let formLoc = localizaciones.controls[i];
-                                formLoc.patchValue( (t["localizacionPersona"])[i]);
-
-                                this.globals.tipoResidencia.push(( (t["localizacionPersona"])[i] )["tipoRecidencia"]);
+                    this.tabla.get("casos",this.casoId).then(caso => {
+                        console.log("CASO ->",caso);
+                        var lista = caso["personaCasos"] as any[];
+                        var personaCaso;
+                        for (var i = 0; i < lista["length"]; ++i) {
+                            if (lista[i].id == this.id){
+                                personaCaso=lista[i];
+                                break;
                             }
-
-                        });
-
+                        }
+                        this.globals.personaCaso=personaCaso["persona"];
+                        this.fillPersonaCaso(personaCaso);
                         console.log('Form', this.globals);
                     });
+                    // this._tabla.get("personas",this.id).then(t=>{
+                    //     console.log("Persona->",t);
+                    //     let persona_caso=(t["personaCaso"])[0];
+                    //     persona_caso["persona"]=t;
+                    //     (persona_caso["persona"])["id"]=persona_caso["personaId"];
+                    //     this.globals.form.patchValue(persona_caso["persona"]);
+                    //     this.fillNombres(t["aliasNombrePersona"]);
+                    //     var promesa=new Promise((resolve)=>{
+                    //         resolve(persona_caso["persona"]);
+                    //     }).then(copia=>{
+                    //         this.globals.personaCaso=copia;
+                    //     });
+
+                    //     console.log("PERSONA_CASO -> ",persona_caso);
+
+                    //     let localizaciones = this.globals.form.get('localizacionPersona') as FormArray;
+                    //     for (let i=0; i< t["localizacionPersona"].length; i++) {
+                    //         let formLoc = LosForm.createFormLocalizacion();
+                    //         localizaciones.push(formLoc);
+                    //     }
+
+                    //     let timer2 = Observable.timer(1);
+                    //     timer2.subscribe(tiempo => {
+                    //         let localizaciones = this.globals.form.get('localizacionPersona') as FormArray;
+                    //         for (let i=0; i< t["localizacionPersona"].length; i++) {
+                    //             for (var propName in ((t["localizacionPersona"])[i])) {
+                    //                 if (( (t["localizacionPersona"])[i])[propName] === null || ( (t["localizacionPersona"])[i])[propName] === undefined) {
+                    //                     delete ( (t["localizacionPersona"])[i]) [propName];
+                    //                 }
+                    //             }
+                    //             let formLoc = localizaciones.controls[i];
+                    //             formLoc.patchValue( (t["localizacionPersona"])[i]);
+
+                    //             this.globals.tipoResidencia.push(( (t["localizacionPersona"])[i] )["tipoRecidencia"]);
+                    //         }
+
+                    //     });
+
+                    //     console.log('Form', this.globals);
+                    // });
                 }
             }
         });
@@ -636,24 +650,31 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         this.agregaIdTemporales(_model,copia,otrosID,true);
                         console.log("MODEL",copia,_model);
                         _model["dependeDe"]=dependeDe;
-                        this.tabla.update('personas', _model).then( p => {
-                            console.log("SI");
-                            if (!this.caso["personas"])
-                                this.caso["personas"]=[];
-                            this.caso["personas"].push({id:p["id"]});
+
+                        let personaCaso={
+                            tipoInterviniente:_model.personaCaso[0].tipoInterviniente,
+                            caso:_model.personaCaso[0].caso,
+                            id:_model.personaCaso[0].id,
+                            persona:_model,
+                        }
+                        // this.tabla.update('personas', _model).then( p => {
+                        //     console.log("SI");
+                            if (!this.caso["personaCasos"])
+                                this.caso["personaCasos"]=[];
+                            this.caso["personaCasos"].push(personaCaso);
                             this.tabla.update("casos",this.caso).then(
                                 ds=>{
-                                    console.log("Se actualizo registro");
+                                    console.log("Se actualizo registro",ds);
                                     resolve("Se creo la persona de manera local");
                                     this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas']);
 
                             });
-                            console.log('-> Persona Guardada',p);
+                            //console.log('-> Persona Guardada',);
 
-                        });
+                        // });
 
                     });
-                });
+                });//sincronizar
             }
         });
     }
@@ -711,20 +732,44 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
                         this.agregaIdTemporalesEdit(_model,temId,otrosID,true);
 
-                        this.tabla.update('personas', _model).then( p => {
-                            console.log("SI se guardo persona",p);
-                            if (!this.caso["personas"])
-                                this.caso["personas"]=[];
-                            this.caso["personas"].push({id:p["id"]});
-                            this.tabla.update("casos",this.caso).then(
-                                ds=>{
-                                    console.log("Editar Persona->",ds);
-                                    resolve("Se actualizó la persona de manera local");
-                                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas']);
+                        let personaCaso={
+                            tipoInterviniente:_model.personaCaso[0].tipoInterviniente,
+                            caso:_model.personaCaso[0].caso,
+                            id:_model.personaCaso[0].id,
+                            persona:_model,
+                        }
 
-                            });
+                        if (!this.caso["personaCasos"])
+                                this.caso["personaCasos"]=[];
+                        var lista = this.caso["personaCasos"] as any[];
+                        for (var i = 0; i < lista["length"]; ++i) {
+                            if (lista[i].id == this.id){
+                                lista[i]=personaCaso;
+                                break;
+                            }
+                        }
+                        this.tabla.update("casos",this.caso).then(
+                            ds=>{
+                                console.log("Se actualizo registro",ds);
+                                resolve("Se creo la persona de manera local");
+                                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas']);
 
                         });
+
+                        // this.tabla.update('personas', _model).then( p => {
+                        //     console.log("SI se guardo persona",p);
+                        //     if (!this.caso["personas"])
+                        //         this.caso["personas"]=[];
+                        //     this.caso["personas"].push({id:p["id"]});
+                        //     this.tabla.update("casos",this.caso).then(
+                        //         ds=>{
+                        //             console.log("Editar Persona->",ds);
+                        //             resolve("Se actualizó la persona de manera local");
+                        //             this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas']);
+
+                        //     });
+
+                        // });
 
                     });
                 });
