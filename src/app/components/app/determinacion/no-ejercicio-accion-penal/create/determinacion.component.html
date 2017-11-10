@@ -2,25 +2,27 @@
 <div class="row">
     <div class="col-md-12">
         <div class="row">
-            <div class="col-md-3">
-                <text label="Narración de los hechos" name="narracionHechos" [(value)]="model.narracionHechos" [group]="form"></text>
+            <div class="col-md-12">
+                <text-area label="Narración de los hechos" name="narracionHechos" [group]="form"></text-area>
             </div>
-            <div class="col-md-3">
-                <text label="Datos de prueba" name="datosPrueba" [(value)]="model.datosPrueba" [group]="form"></text>
+            <div class="col-md-12">
+                <text-area label="Datos de prueba" name="datosPrueba" [group]="form"></text-area>
             </div>
-            <div class="col-md-3">
-                <date label="Fecha del hecho delictivo" name="fechaHechoDelictivo" [(value)]="model.fechaHechoDelictivo" [group]="form"></date>
+            <div class="col-md-4">
+                <date label="Fecha del hecho delictivo" name="fechaHechoDelictivo" [group]="form"></date>
             </div>
-            <div class="col-md-3">
-                <text label="Artículo del CPEM que sanciona y prevé el delito" name="articuloCpem" [(value)]="model.articuloCpem" [group]="form"></text>
+            <div class="col-md-4">
+                <text label="Artículo del CPEM que sanciona y prevé el delito" name="articuloCpem" [max]="500" [group]="form"></text>
+            </div>
+        </div>
+        <div class="row">    
+            <div class="col-md-12">
+                <text-area label="Referir, fundar y motivar la actualización de la hipótesis del artículo 327 del CNPP" name="hipotesisCnpp" [group]="form"></text-area>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
-                <text label="Referir, fundar y motivar la actualización de la hipótesis del artículo 327 del CNPP" name="hipotesisCnpp" [(value)]="model.hipotesisCnpp" [group]="form"></text>
-            </div>
             <div class="col-md-3">
-                <text label="Fracción que corresponda del artículo 327" name="fraccionArticulo" [(value)]="model.fraccionArticulo" [group]="form"></text>
+                <text label="Fracción que corresponda del artículo 327" name="fraccionArticulo" [max]="500" [group]="form"></text>
             </div>
             <div class="col-md-3">
                 <select2 placeholder="Hipótesis de sobreseímiento que se actualiza" [options]="
@@ -35,10 +37,8 @@
                 {label:'IX. Por muestre del imputado',value:'IX'}]" name="hipotesisSobreseimiento" [(value)]="model.hipotesisSobreseimiento" [group]="form"></select2>
                 
             </div>
-        </div>
-        <div class="row">
             <div class="col-md-6">
-                <text label="Nombre del fiscal de justicia del Estado de México" name="nombreProcurador" [(value)]="model.nombreProcurador" [group]="form"></text>
+                <text label="Nombre del fiscal de justicia del Estado de México" name="nombreProcurador" [max]="150" [group]="form"></text>
             </div>
         </div>
     </div>
@@ -48,26 +48,28 @@
 <div class="row">
     <div class="col-md-12">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <select2 placeholder="Los hechos son del ámbito de" [options]="
                 [{label:'Competencia',value:'competencia'},
                 {label:'Jurisdicción',value:'jurisdicción'}]" name="ambitoHechos" [(value)]="model.ambitoHechos" [group]="form"></select2>
             </div>
-            <div class="col-md-4">
-                <text label="Nombre de la autoridad competente" name="autoridadCompetente" [(value)]="model.autoridadCompetente" [group]="form"></text>
+            <div class="col-md-6">
+                <text label="Nombre de la autoridad competente" name="autoridadCompetente" [max]="150" [group]="form"></text>
             </div>
-            <div class="col-md-4">
-                <text label="Causa de la incompetencia" name="causaIncompetencia" [(value)]="model.causaIncompetencia" [group]="form"></text>
+        </div>
+        <div class="row">    
+            <div class="col-md-12">
+                <text-area label="Causa de la incompetencia" name="causaIncompetencia" [group]="form"></text-area>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <text-area label="Cargo, turno y adscripción de la autoridad competente" name="cargoAutoridadCompetente" [(value)]="model.cargoAutoridadCompetente" [group]="form"></text-area>
+                <text-area label="Cargo, turno y adscripción de la autoridad competente" name="cargoAutoridadCompetente" [group]="form"></text-area>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <text-area label="Observaciones/Incidencias" name="observaciones" [(value)]="model.observaciones" [group]="form"></text-area>
+                <text-area label="Observaciones/Incidencias" name="observaciones" [group]="form"></text-area>
             </div>
         </div>
     </div>

@@ -4,10 +4,10 @@
             <div class="">
                 <div class="row justify-content-start">
                     <div class="col-md-3">
-                        <text label="Nombre de la autoridad que realiza la entrevista" name="autoridadRealizaEntrevista" [group]="form"></text>
+                        <text label="Nombre de la autoridad que realiza la entrevista" name="autoridadRealizaEntrevista" [max]="150" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Lugar donde se realiza la entrevista" name="lugarRealizaEntrevista" [group]="form"></text>
+                        <text label="Lugar donde se realiza la entrevista" name="lugarRealizaEntrevista" [max]="150" [group]="form"></text>
                     </div>
                 </div>
             </div>
@@ -15,7 +15,7 @@
                 <h4>Datos del entrevistado</h4>
                 <div class="row">
                     <div class="col-md-3">
-                        <text label="Nombre del entrevistado" name="nombreEntrevistado" [group]="form"></text>
+                        <text label="Nombre del entrevistado" name="nombreEntrevistado" [max]="150" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
                         <select2 placeholder="Sexo" [options]="options.sexo" name="id" [group]="form.controls.sexo">
@@ -25,7 +25,7 @@
                         <date label="Fecha de nacimiento" name="fechaNacimiento" (valueChange)="calculateAge($event)"[group]="form"></date>
                     </div>
                     <div class="col-md-3">
-                        <number label="Edad" name="edad" [group]="form"></number>
+                        <number label="Edad" name="edad" [max]="3" [maxValue]="999" [group]="form"></number>
                     </div>
                 </div>
                 <div class="row">
@@ -53,12 +53,12 @@
                         <text label="Nº de la identificación" name="noIdentificacion" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="CURP" name="curp" [group]="form"></text>
+                        <text label="CURP" name="curp" [max]="18" [group]="form"></text>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        <text label="RFC" name="rfc" [group]="form"></text>
+                        <text label="RFC" name="rfc" [max]="30" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
                         <select2 placeholder="¿Sabe leer y escribir?"
@@ -69,24 +69,24 @@
                         ]" name="sabeLeerEscribir" [group]="form"></select2>
                     </div>
                     <div class="col-md-3">
-                        <text label="Grado de escolaridad" name="gradoEscolaridad" [group]="form"></text>
+                        <text label="Grado de escolaridad" name="gradoEscolaridad" [max]="50" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Ocupación" name="ocupacion" [group]="form"></text>
+                        <text label="Ocupación" name="ocupacion" [max]="50" [group]="form"></text>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        <text label="Lugar de ocupación o negocios" name="lugarOcupacion" [group]="form"></text>
+                        <text label="Lugar de ocupación o negocios" name="lugarOcupacion" [max]="50" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Estado civil" name="estadoCivil" [group]="form"></text>
+                        <text label="Estado civil" name="estadoCivil" [max]="50" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <number label="Salario semanal" name="salarioSemanal" [group]="form" [hintEnd]="'5 dígitos máximo'"></number>
+                        <number label="Salario semanal" name="salarioSemanal" [maxValue]="99999" [max]="5" [group]="form" [hintEnd]="'5 dígitos máximo'"></number>
                     </div>
                     <div class="col-md-3">
-                        <text label="Relación del entrevistado con alguna de las partes" name="relacionEntrevistado" [group]="form"></text>
+                        <text label="Relación del entrevistado con alguna de las partes" name="relacionEntrevistado" [max]="50" [group]="form"></text>
                     </div>
                 </div>
             </div>
@@ -97,18 +97,18 @@
                         <text label="Calle" name="calle" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Nº Exterior" name="noExterior" [group]="form"></text>
+                        <text label="Nº Exterior" name="noExterior" [max]="15" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Nº Interior" name="noInterior" [group]="form"></text>
+                        <text label="Nº Interior" name="noInterior" [max]="15" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Colonia" name="colonia" [group]="form"></text>
+                        <text label="Colonia" name="colonia" [max]="50" [group]="form"></text>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        <number label="CP" name="cp" [group]="form"></number>
+                        <number label="CP" name="cp" [maxValue]="99999" [max]="5" [group]="form"></number>
                     </div>
                     <div class="col-md-3">
                         <text label="Municipio" name="municipio" [group]="form"></text>
@@ -117,15 +117,15 @@
                         <text label="Estado" name="estado" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Nº telefónico particular" name="noTelefonoParticular" [group]="form"></text>
+                        <text label="Nº telefónico particular" name="noTelefonoParticular" [max]="20" [group]="form"></text>
                     </div>
                 </div>
                 <div class="row justify-content-start">
                     <div class="col-md-3">
-                        <text label="Nº telefónico celular" name="noTelefonoCelular" [group]="form"></text>
+                        <text label="Nº telefónico celular" name="noTelefonoCelular" [max]="20" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Correo electrónico" name="correoElectronico" [group]="form"></text>
+                        <text label="Correo electrónico" name="correoElectronico" [max]="40" [group]="form"></text>
                     </div>
                 </div>
             </div>
@@ -142,7 +142,7 @@
                         </select2>
                     </div>
                     <div class="col-md-4">
-                        <text label="En su caso, nombre del representante legal" name="nombreRepresentanteLegal" [group]="form"></text>
+                        <text label="En su caso, nombre del representante legal" name="nombreRepresentanteLegal" [max]="150" [group]="form"></text>
                     </div>
                     <div class="col-md-4">
                         <select2 [options]="
@@ -156,7 +156,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <text label="Medio tecnológico" name="medioTecnologicoUtilizado" [group]="form"></text>
+                        <text label="Medio tecnológico" name="medioTecnologicoUtilizado" [max]="30" [group]="form"></text>
                     </div>
                     <div class="col-md-4">
                         <select2 [options]="
@@ -168,7 +168,7 @@
                         </select2>
                     </div>
                     <div class="col-md-4">
-                        <text label="Medio técnico utilizado" name="medioTecnicoUtilizado" [group]="form"></text>
+                        <text label="Medio técnico utilizado" name="medioTecnicoUtilizado" [max]="30" [group]="form"></text>
                     </div>
                 </div>
             </div>
