@@ -11,9 +11,10 @@ export class SlideToggleComponent{
   @Input() label:string=null;
   @Input() color:string = 'accent';
   @Input() labelPosition:string='before';
-	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>()
+	@Output() valueChange:EventEmitter<boolean> = new EventEmitter<Boolean>()
 
 	update(value) {
+    console.log('togle value change')
 		this.valueChange.emit(value);
 	}
 
