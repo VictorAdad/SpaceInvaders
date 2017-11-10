@@ -152,14 +152,14 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                 this.db.add("sincronizar",dato).then(p=>{
                     this.db.get("casos",this.casoId).then(caso=>{
                         if (caso){
-                            if(!caso["arma"]){
-                                caso["arma"]=[];
+                            if(!caso["armas"]){
+                                caso["armas"]=[];
                             }
                             _model["id"]=temId;
-                            caso["arma"].push(_model);
-                            console.log("caso arma", caso["arma"]);
+                            caso["armas"].push(_model);
+                            console.log("caso arma", caso["armas"]);
                             this.db.update("casos",caso).then(t=>{
-                                console.log("caso arma", t["arma"]);
+                                console.log("caso arma", t["armas"]);
                                 resolve("Se agregó la arma de manera local");
                                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/armas' ]);
                             });
@@ -209,7 +209,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                     }
                     this.db.add("sincronizar",dato).then(p=>{
                         this.db.get("casos",this.casoId).then(t=>{
-                            let armas=t["arma"] as any[];
+                            let armas=t["armas"] as any[];
                             for (var i = 0; i < armas.length; ++i) {
                                 if ((armas[i])["id"]==this.id){
                                     armas[i]=_model;
