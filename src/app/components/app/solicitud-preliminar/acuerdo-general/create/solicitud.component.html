@@ -16,21 +16,21 @@
                         <text label="Fundamento legal" name="fundamentoLegal" [group]="form"></text>
                     </div>
                     <div class="col">
-                        <text label="Contenido del acuerdo" name="contenidoAcuerdo" [group]="form"></text>
+                        <text label="Contenido del acuerdo" name="contenidoAcuerdo" [max]="150" [group]="form"></text>
                     </div>
                     <div class="col">
-                        <text label="Con la finalidad de" name="finalidad" [group]="form"></text>
+                        <text label="Con la finalidad de" name="finalidad" [max]="150" [group]="form"></text>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <text label="Plazo en el que debe ser complementado" name="plazo" [group]="form"></text>
+                        <text label="Plazo en el que debe ser complementado" name="plazo" [max]="150" [group]="form"></text>
                     </div>
                     <div class="col">
-                        <text label="Apercibimientos" name="apercibimiento" [group]="form"></text>
+                        <text label="Apercibimientos" name="apercibimiento" [max]="150" [group]="form"></text>
                     </div>
                     <div class="col">
-                        <text label="Señalar que se solicita" name="senialar" [group]="form"></text>
+                        <text label="Señalar que se solicita" name="senialar" [max]="150" [group]="form"></text>
                     </div>
                 </div>
                 <div class="row">
@@ -43,13 +43,13 @@
                 <h4>Oficio de asignación de asesor jurídico</h4>
                 <div class="row">
                     <div class="col">
-                        <text label="Nombre de la autoridad a quien se dirige el oficio" name="autoridadJuridico" [group]="form"></text>
+                        <text label="Nombre de la autoridad a quien se dirige el oficio" name="autoridadJuridico" [max]="150" [group]="form"></text>
                     </div>
                     <div class="col">
                         <select2 placeholder="¿Denuncia o querella?" [options]="options.denunciaQuerella" name="id" [group]="form.controls.denunciaQuerella"></select2>
                     </div>
                     <div class="col">
-                        <text label="Ubicación de la unidad inmediata" name="ubicacionJuridico" [group]="form"></text>
+                        <text label="Ubicación de la unidad inmediata" name="ubicacionJuridico" [max]="150" [group]="form"></text>
                     </div>
                     <div class="col">
                         <select2 placeholder="¿Víctima, ofendido o querellante?" [options]="options.victimaQuerellante" name="id" [group]="form.controls.victimaQuerellante"></select2>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <text label="Cargo y adscripción de la autoridad a la que se dirige el oficio" name="cargoAdscripcionJuridico" [group]="form"></text>
+                        <text label="Cargo y adscripción de la autoridad a la que se dirige el oficio" name="cargoAdscripcionJuridico" [max]="200" [group]="form"></text>
                     </div>
                 </div>
             </div>
@@ -65,24 +65,26 @@
                 <h4>Oficio para ayuda y atención a víctima</h4>
                 <div class="row">
                     <div class="col">
-                        <text label="Oficio" name="noOficioAtencion" [group]="form"></text>
+                        <text label="Oficio" name="noOficioAtencion" [max]="150" [group]="form"></text>
                     </div>
                     <div class="col">
-                        <text label="Nombre de la autoridad a quien se dirige el oficio" name="autoridadJuridico" [group]="form"></text>
+                        <text label="Nombre de la autoridad a quien se dirige el oficio" name="autoridadJuridico" [max]="150" [group]="form"></text>
                     </div>
                     <div class="col">
-                        <text label="Necesidades que se ayudarán a cubrir" name="necesidades" [group]="form"></text>
+                        <text label="Necesidades que se ayudarán a cubrir" name="necesidades" [max]="150" [group]="form"></text>
                     </div>
                     <div class="col">
-                        <text label="Ubicación de la unidad inmediata" name="ubicacionAtencion" [group]="form"></text>
+                        <text label="Ubicación de la unidad inmediata" name="ubicacionAtencion" [max]="150" [group]="form"></text>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <text label="Cargo y adscripción de la autoridad a la que se dirige el oficio" name="cargoAdscripcionAtencion" [group]="form"></text>
+                        <text label="Cargo y adscripción de la autoridad a la que se dirige el oficio" name="cargoAdscripcionAtencion" [max]="200" [group]="form"></text>
                     </div>
-                    <div class="col-md-8">
-                        <text label="Observaciones/Incidencias" name="observaciones" [group]="form"></text>
+                </div>
+                <div class="row">    
+                    <div class="col-md-12">
+                        <text-area label="Observaciones/Incidencias" name="observaciones" [group]="form"></text-area>
                     </div>
                 </div>
             </div>

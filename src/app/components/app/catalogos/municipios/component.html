@@ -6,13 +6,6 @@
         <button mat-raised-button routerLink="create" color="accent">nuevo</button>
     </div>
 </div>
-<mat-paginator #paginator
-    [length]="pag"
-    [pageIndex]="0"
-    [pageSize]="10"
-    [pageSizeOptions]="[5, 10, 25, 100]"
-    (page)="changePage($event)">
-  </mat-paginator>
 <mat-table #table [dataSource]="dataSource">
     <!--- Note that these columns can be defined in any order.
       The actual rendered columns are set as a property on the row definition" -->
@@ -27,3 +20,16 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;" routerLink="{{row.id}}/edit"></mat-row>
 </mat-table>
+<mat-paginator #paginator
+    [length]="pag"
+    [pageIndex]="0"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="changePage($event)">
+  </mat-paginator>
+
+<div class="row space">
+    <div class="col-md-12">
+        <button class="float-right" mat-raised-button routerLink="/" color="accent">Regresar</button>
+    </div>
+</div>

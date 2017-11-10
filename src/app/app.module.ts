@@ -34,6 +34,7 @@ import { VehiculoService } from '@services/noticia-hecho/vehiculo/vehiculo.servi
 import { ArmaService } from '@services/noticia-hecho/arma/arma.service';
 import { PersonaService } from '@services/noticia-hecho/persona/persona.service';
 import { FormatosService } from '@services/formatos/formatos.service';
+import { CasoService } from '@services/caso/caso.service';
 import { JasperoConfirmationsModule } from '@jaspero/ng2-confirmations';
 
 import { MatNativeDateModule, MatIconModule} from '@angular/material';
@@ -154,6 +155,7 @@ import {Logger} from '@services/logger.service'
     PersonaService,
     ArmaService,
     FormatosService,
+    CasoService,
     Logger,
     {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true},
     {provide: MAT_DATE_LOCALE, useValue: 'es-MX'}

@@ -231,14 +231,7 @@ export class DocumentoInspeccionComponent extends FormatosGlobal{
   public cargaArchivos(_archivos){
     let archivos=_archivos.saved
       for (let object of archivos) {
-          let obj = {
-              'id': 0,
-              'nameEcm': object.nameEcm,
-              'created': new Date(),
-              'procedimiento': '',
-              'uuidEcm': object.uuidEcm
-          }
-          this.data.push(obj);
+          this.data.push(object);
           this.subject.next(this.data);
       }
   }

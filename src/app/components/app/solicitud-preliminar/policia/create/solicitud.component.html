@@ -2,11 +2,9 @@
     <h3>Oficio de solicitud de Policia Ministerial </h3>
     <div class="col-md-12">
         <form>
-            <text label="Número de oficio" name="noOficio" [(value)]="model.noOficio" [group]="form"></text>
-            <text label="Nombre del comisario de la policía de investigación" name="nombreComisario" [(value)]="model.nombreComisario"
-                [group]="form"></text>
-            <text label="Actuaciones de investigación solicitadas" name="actuacionesSolicitadas" [(value)]="model.actuacionesSolicitadas"
-                [group]="form"></text>
+            <text label="Número de oficio" name="noOficio" [group]="form"></text>
+            <text label="Nombre del comisario de la policía de investigación" name="nombreComisario" [max]="150" [group]="form"></text>
+            <text-area label="Actuaciones de investigación solicitadas" name="actuacionesSolicitadas" [group]="form"></text-area>
             <div class="row space"></div>
             <div class="row justify-content-end">
                 <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">

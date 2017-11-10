@@ -86,7 +86,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                     });
                 }else{
                   this.db.get("casos",this.casoId).then(t=>{
-                    let lugares=t["lugar"] as any[];
+                    let lugares=t["lugares"] as any[];
                     for (var i = 0; i < lugares.length; ++i) {
                         if ((lugares[i])["id"]==this.id){
                             console.log("Lugar->",t)
@@ -206,15 +206,15 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 this.db.add("sincronizar",dato).then(p=>{
                     this.db.get("casos",this.casoId).then(caso=>{
                         if (caso){
-                            if(!caso["lugar"]){
-                                caso["lugar"]=[];
+                            if(!caso["lugares"]){
+                                caso["lugares"]=[];
                             }
                             _model["id"]=temId;
                             _model.detalleLugar["dia"]=_model["dia"];
                             _model.detalleLugar["tipoLugar"]=_model["tipo"];
                             _model.detalleLugar["tipoZona"]=_model["tipoZona"];
 
-                            caso["lugar"].push(_model);
+                            caso["lugares"].push(_model);
                             this.db.update("casos",caso).then(t=>{
                                 resolve("Se creo un nuevo lugar con éxito");
                                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/lugares' ]);
@@ -255,7 +255,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 }
                 this.db.add("sincronizar",dato).then(p=>{
                     this.db.get("casos",this.casoId).then(t=>{
-                        let lugares=t["lugar"] as any[];
+                        let lugares=t["lugares"] as any[];
                         _model["id"]=this.id;
                         _model.detalleLugar["dia"]=_model["dia"];
                         _model.detalleLugar["tipoLugar"]=_model["tipo"];

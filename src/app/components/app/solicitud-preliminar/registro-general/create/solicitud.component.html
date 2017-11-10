@@ -7,8 +7,8 @@
     <div class="col-md-12">
         <form>
             <div class="row">
-                <div class="col-md-4">
-                    <text label="Contenido de la constancia" name="contenidoConstancia" [group]="form"></text>
+                <div class="col-md-12">
+                    <text-area label="Contenido de la constancia" name="contenidoConstancia" [group]="form"></text-area>
                 </div>
             </div>
             <div class="row">
@@ -18,10 +18,10 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <text label="Especificar número teléfonico" name="noTelefonico" [group]="form"></text>
+                    <text label="Especificar número teléfonico" name="noTelefonico" [max]="20" [group]="form"></text>
                 </div>
                 <div class="col">
-                    <text label="Nombre de la persona que atiende la llamada telefónica" name="atencionLlamada" [group]="form"></text>
+                    <text label="Nombre de la persona que atiende la llamada telefónica" name="atencionLlamada" [max]="150" [group]="form"></text>
                 </div>
             </div>
             <div class="row">
