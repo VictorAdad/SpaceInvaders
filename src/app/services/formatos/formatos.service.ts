@@ -154,6 +154,7 @@ export class FormatosLocal {
         this.data['xComprendioDerechos'] = _data.predenuncias.compredioDerechos ? 'Sí' : 'No';
         this.data['xCopiaDerechos']      = _data.predenuncias.proporcionoCopia ? 'Sí' : 'No';
         this.data['xFolioVictima']       = victima.persona.folioIdentificacion ? victima.persona.folioIdentificacion : '';
+        this.data['xSeIdentificaCon']    = _data.getAlias(victima);
         this.data['xCargoEmisor']        = '';
         this.data['xNombreEmisor']       = '';
         this.data['xAdscripcionEmisor']  = '';

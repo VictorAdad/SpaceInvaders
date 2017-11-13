@@ -90,4 +90,14 @@ export class Caso{
 		);
 		return personas[0];
 	}
+
+	public getAlias(_persona){
+		console.log('Caso@getAlias()', _persona);
+		if(_persona.persona.aliasNombrePersona.length > 0){
+			let nombres =  _persona.persona.aliasNombrePersona.map(object => { return object.nombre });
+			return nombres.toString();
+		}else{
+			return '';
+		}
+	}
 }
