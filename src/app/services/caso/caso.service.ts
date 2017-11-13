@@ -18,19 +18,19 @@ export class CasoService{
 
 	public find(_id){
 		return new Promise<any>(
-			(resolve, reject){
+			(resolve, reject) => {
 				if(this.id !== _id){
 					this.id = _id;
 					if(this.onLine.onLine){
 						this.http.get(`/v1/base/casos/${this.id}/all`).subscribe(
 							response => {
-								resolve(this.setOnlineCaso());
+								resolve(this.setOnlineCaso(response));
 							}
 						)
 					}else{
 						this.db.get("casos", this.id).then(
 							response => {
-			        			resolve(this.setCaso());
+			        			resolve(this.setCaso(response));
 		        			}
 			            );
 					}

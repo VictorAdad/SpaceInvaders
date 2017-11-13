@@ -86,13 +86,13 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                             let timer = Observable.timer(1);
                             timer.subscribe(t => {
                                 if (this.casoService.caso){
-                                    this.model = this.casoService.caso as Caso;
-                                    console.log(this.model);
-                                    this.form.patchValue(this.model); 
-                                    if (this.model["delitoPrincipal"] != null) {
+                                    let model = this.casoService.caso;
+                                    console.log(model);
+                                    this.form.patchValue(model); 
+                                    if (model["delitoPrincipal"] != null) {
                                         console.log("DELITO principal");
                                         this.form.patchValue({
-                                            'delito' : this.model["delitoPrincipal"].nombre
+                                            'delito' : model["delitoPrincipal"].nombre
                                         });
                                     }   
                                 }
