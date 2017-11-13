@@ -139,19 +139,24 @@ export class FormatosLocal {
 
     public setDataF1003(_data){
         console.log('Formatos@setDataF1003', _data);
-        this.data['xNUC']               = _data.nuc;
-        this.data['xNIC']               = _data.nic;
-        this.data['xFechaAtencion']     = _data.created;
-        this.data['xHoraAtencion']      = _data.created;
-        this.data['xFolioDocumento']    = _data.predenuncias.noFolioConstancia ? _data.predenuncias.noFolioConstancia  : '';
-        this.data['xVictima']           = '';
-        this.data['xHablaEspaniol']     = _data.predenuncias.hablaEspaniol ? _data.predenuncias.hablaEspaniol  : '';
-        this.data['xIdiomaLengua']      = _data.predenuncias.lenguaIdioma ? _data.predenuncias.lenguaIdioma  : '';
-        this.data['xInterprete']        = _data.predenuncias.nombreInterprete ? _data.predenuncias.nombreInterprete  : '';
-        this.data['xFolioVictima']      = '';
-        this.data['xCargoEmisor']       = '';
-        this.data['xNombreEmisor']      = '';
-        this.data['xAdscripcionEmisor'] = '';
+        let victima = _data.findVictima();
+        let nombreVictima = 
+            `${victima.persona.nombre} ${victima.persona.paterno} ${victima.persona.materno ? victima.persona.materno :'' }`;
+        this.data['xNUC']                = _data.nuc ? _data.nuc : '';
+        this.data['xNIC']                = _data.nic ? _data.nic : '';
+        this.data['xFechaAtencion']      = _data.created;
+        this.data['xHoraAtencion']       = _data.created;
+        this.data['xFolioDocumento']     = _data.predenuncias.noFolioConstancia ? _data.predenuncias.noFolioConstancia  : '';
+        this.data['xVictima']            = nombreVictima;
+        this.data['xHablaEspaniol']      = _data.predenuncias.hablaEspaniol ? 'Sí' : 'No';
+        this.data['xIdiomaLengua']       = _data.predenuncias.hablaEspaniol ? '' : _data.predenuncias.lenguaIdioma;
+        this.data['xInterprete']         = _data.predenuncias.nombreInterprete ? _data.predenuncias.nombreInterprete  : '';
+        this.data['xComprendioDerechos'] = _data.predenuncias.compredioDerechos ? 'Sí' : 'No';
+        this.data['xCopiaDerechos']      = _data.predenuncias.proporcionoCopia ? 'Sí' : 'No';
+        this.data['xFolioVictima']       = victima.persona.folioIdentificacion ? victima.persona.folioIdentificacion : '';
+        this.data['xCargoEmisor']        = '';
+        this.data['xNombreEmisor']       = '';
+        this.data['xAdscripcionEmisor']  = '';
     }
 
     public setDataF1004(_data){

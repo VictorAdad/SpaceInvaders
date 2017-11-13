@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { HttpService} from '@services/http.service';
 import { OnLineService } from '@services/onLine.service';
@@ -78,5 +79,15 @@ export class Caso{
 
 	public getNic(){
 		return this.nic;
+	}
+
+	public findVictima(){
+		console.log('Caso@findVictima', this.personaCasos);
+		let personas = this.personaCasos.filter(
+			object => { 
+				return object.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victima
+			}
+		);
+		return personas[0];
 	}
 }
