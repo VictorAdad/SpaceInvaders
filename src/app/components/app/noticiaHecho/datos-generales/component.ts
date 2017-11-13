@@ -13,6 +13,8 @@ import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
 import { NoticiaHechoGlobal } from '../global';
 import { _config} from '@app/app.config';
+import { CasoService } from '@services/caso/caso.service'
+import { Observable }                  from 'rxjs/Observable';
 
 @Component({
     selector : 'datos-generales',
@@ -38,7 +40,8 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         _activeRoute: ActivatedRoute,
         _onLine: OnLineService,
         private http: HttpService,
-        private auth: AuthenticationService
+        private auth: AuthenticationService,
+        private casoService: CasoService
     ) { 
         super();
         this.db = _db;
@@ -65,6 +68,8 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         this.activeRoute.parent.params.subscribe(params => {
             if(this.hasId){
                 this.id = +params['id'];
+                this.casoService.find(this.id);
+                console.log(this.casoService);
                 if (!isNaN(this.id)){
                     if(this.onLine.onLine){
                         this.http.get('/v1/base/casos/'+this.id).subscribe((response) => {
@@ -77,12 +82,23 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                             
                         });
                     }else{
-                        this.db.get("casos", this.id).then(object => {
-                            if (object){
-                                this.model = object as Caso;
-                                this.form.patchValue(this.model);    
-                            }
-                        });
+                        //this.db.get("casos", this.id).then(object => {
+                            let timer = Observable.timer(1);
+                            timer.subscribe(t => {
+                                if (this.casoService.caso){
+                                    let model = this.casoService.caso;
+                                    console.log(model);
+                                    this.form.patchValue(model); 
+                                    if (model["delitoPrincipal"] != null) {
+                                        console.log("DELITO principal");
+                                        this.form.patchValue({
+                                            'delito' : model["delitoPrincipal"].nombre
+                                        });
+                                    }   
+                                }
+                            });
+                           
+                        //});
                     }
                 }
                 

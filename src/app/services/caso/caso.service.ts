@@ -7,7 +7,7 @@ import { OnLineService } from '@services/onLine.service';
 export class CasoService{
 
 	public id: any;
-	public caso: any;
+	public caso: Caso = new Caso();
 
 	constructor(
 		private db: CIndexedDB,
@@ -17,31 +17,66 @@ export class CasoService{
 
 
 	public find(_id){
-		if(this.id !== _id){
-			this.id = _id;
-			if(this.onLine.onLine){
-				this.http.get(`/v1/base/casos/${this.id}/all`).subscribe(
-					this.setOnlineCaso.bind(this)
-				)
-			}else{
-				this.db.get("casos", this.id).then(
-	        		this.setCaso.bind(this)
-	            );
+		return new Promise<any>(
+			(resolve, reject) => {
+				if(this.id !== _id){
+					this.id = _id;
+					if(this.onLine.onLine){
+						this.http.get(`/v1/base/casos/${this.id}/all`).subscribe(
+							response => {
+								resolve(this.setOnlineCaso(response));
+							}
+						)
+					}else{
+						this.db.get("casos", this.id).then(
+							response => {
+			        			resolve(this.setCaso(response));
+		        			}
+			            );
+					}
+				}
 			}
-		}
+		);
 	}
 
 	public setOnlineCaso(response){
 		console.log('Caso@setOnlineCaso')
-		this.caso = response;
+		this.setCaso(response);
 		this.db.clear("casos").then( t =>{
             this.db.update("casos",this.caso).then( t =>{
             	console.log('Indexed Caso actualizado');
             });
         });
+        console.log(this.caso);
 	}
 
 	public setCaso(caso){
-		this.caso = caso;
+		Object.assign(this.caso, caso)
+	}
+}
+
+export class Caso{
+	
+	public armas: any[];
+	public descripcion: string
+	public hasRelacionVictimaImputado: boolean
+	public hasPredenuncia: boolean
+	public entrevistas: any[];
+	public created: number;
+	public titulo: string;
+	public nic: string;
+	public vehiculos: any[];
+	public estatus: string;
+	public personaCasos: any[];
+	public delitoPrincipal: any;
+	public predenuncias: any;
+	public delitoCaso: any[];
+	public id: number;
+	public lugares: any[];
+	public nuc: string
+	public tipoRelacionPersonas: any[];
+
+	public getNic(){
+		return this.nic;
 	}
 }
