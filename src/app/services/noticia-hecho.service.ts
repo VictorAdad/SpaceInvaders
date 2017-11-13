@@ -184,7 +184,13 @@ export class NoticiaHechoService {
                 let object=_data[i];
                 options.push({value: object.id, label: object.calle});
             }
-
+        options.sort((a,b)=>{
+            if (a.label>b.label) 
+                return 1; 
+            if (a.label<b.label)
+                return -1;
+            return 0;
+        });
         return options;
     }
 
@@ -198,7 +204,13 @@ export class NoticiaHechoService {
                 let color = object.color != null  ? object.color  : '';
                 options.push({value: object.id, label: marca+" "+color});
             }
-
+        options.sort((a,b)=>{
+            if (a.label>b.label) 
+                return 1; 
+            if (a.label<b.label)
+                return -1;
+            return 0;
+        });
         return options;
     }
 
@@ -214,6 +226,13 @@ export class NoticiaHechoService {
                 options.push({value: object.id, label: clase+" "+tipo});
             }
         }
+        options.sort((a,b)=>{
+            if (a.label>b.label) 
+                return 1; 
+            if (a.label<b.label)
+                return -1;
+            return 0;
+        });
         return options;
     }
 
@@ -224,7 +243,13 @@ export class NoticiaHechoService {
                 let object=_data[i];
                 options.push({value: object.id, label: object.persona.nombre});
             }
-
+        options.sort((a,b)=>{
+            if (a.label>b.label) 
+                return 1; 
+            if (a.label<b.label)
+                return -1;
+            return 0;
+        });
         return options;
     }
 
@@ -235,7 +260,13 @@ export class NoticiaHechoService {
                 let object=_data[i];
                 options.push({value: object.id, label: object.delito.nombre});
             }
-
+        options.sort((a,b)=>{
+            if (a.label>b.label) 
+                return 1; 
+            if (a.label<b.label)
+                return -1;
+            return 0;
+        });
         return options;
     }
 

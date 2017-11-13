@@ -36,7 +36,13 @@ export class Options {
         for (var key in _data) {
             options.push({value: parseInt(key), label: _data[key]});
         }
-
+        options.sort((a,b)=>{
+            if (a.label>b.label) 
+                return 1; 
+            if (a.label<b.label)
+                return -1;
+            return 0;
+        });
         return options;
     }
 
