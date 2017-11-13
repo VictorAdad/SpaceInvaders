@@ -10,6 +10,7 @@ import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
 import { SelectsService } from "@services/selects.service";
 import { FormatosService } from '@services/formatos/formatos.service';
+import { CasoService } from '@services/caso/caso.service';
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
@@ -334,7 +335,8 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
         private route: ActivatedRoute,
         public onLine: OnLineService,
         public formatos: FormatosService,
-        public db: CIndexedDB
+        public db: CIndexedDB,
+        public caso: CasoService
         ){
         super(
             http,
@@ -362,9 +364,9 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
             if (params['casoId']){
                 this.urlUpload = '/v1/documentos/predenuncias/save/'+params['casoId'];
                 // if(!this.onLine.onLine){
-                    this.db.get("casos", +params['casoId']).then(
-                        caso => {
-                            this.updateDataFormatos(caso);
+                    this.caso.find(params['casoId']).then(
+                        response => {
+                            this.updateDataFormatos(this.caso.caso);
                         }
                     );
                 // }
@@ -390,7 +392,8 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
     }
 
     public updateDataFormatos(_object){
-        this.formatos.formatos.F1_004['data'] = this.formatos.formatos.setDataF1004(_object);
+        this.formatos.formatos.setDataF1004(_object);
+        this.formatos.formatos.setDataF1003(_object);
     }
 
 }

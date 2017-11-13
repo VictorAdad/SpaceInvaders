@@ -67,21 +67,35 @@ export class FormatosService {
 export class FormatosLocal {
     
     public F1_003 = {
-        'path': '../../../../../assets/formatos/F1-004 REGISTRO PRESENCIAL.docx',
+        'path': '../../../../../assets/formatos/F1-003 LECTURA DE DERECHOS DE LA VÍCTIMA.docx',
+        'nombre': 'F1-003 LECTURA DE DERECHOS DE LA VÍCTIMA.docx',
         'file': null,
         'data': null
     };
     public F1_004= {
         'path': '../../../../../assets/formatos/F1-004 REGISTRO PRESENCIAL.docx',
+        'nombre': 'F1-004 REGISTRO PRESENCIAL.docx',
         'file': null,
         'data': null
     };
     public F1_005 = {
-        'path': '../../../../../assets/formatos/F1-004 REGISTRO PRESENCIAL.docx',
+        'path': '../../../../../assets/formatos/F1-005 REGISTRO DE RECEPCIÓN DE LLAMADA.docx',
+        'nombre': 'F1-005 REGISTRO DE RECEPCIÓN DE LLAMADA.docx',
         'file': null,
         'data': null
     };
     public data = {
+        //F1003
+        'xFolioDocumento': '',
+        'xVictima': '',
+        'xHablaEspaniol': '',
+        'xIdiomaLengua': '',
+        'xInterprete': '',
+        'xFolioVictima': '',
+        'xCargoEmisor': '',
+        'xNombreEmisor': '',
+        'xAdscripcionEmisor': '',
+        //F1004
         'xNUC': '',
         'xNIC': '',
         'xFechaAtencion': '',
@@ -123,6 +137,23 @@ export class FormatosLocal {
         
     }
 
+    public setDataF1003(_data){
+        console.log('Formatos@setDataF1003', _data);
+        this.data['xNUC']               = _data.nuc;
+        this.data['xNIC']               = _data.nic;
+        this.data['xFechaAtencion']     = _data.created;
+        this.data['xHoraAtencion']      = _data.created;
+        this.data['xFolioDocumento']    = _data.predenuncias.noFolioConstancia ? _data.predenuncias.noFolioConstancia  : '';
+        this.data['xVictima']           = '';
+        this.data['xHablaEspaniol']     = _data.predenuncias.hablaEspaniol ? _data.predenuncias.hablaEspaniol  : '';
+        this.data['xIdiomaLengua']      = _data.predenuncias.lenguaIdioma ? _data.predenuncias.lenguaIdioma  : '';
+        this.data['xInterprete']        = _data.predenuncias.nombreInterprete ? _data.predenuncias.nombreInterprete  : '';
+        this.data['xFolioVictima']      = '';
+        this.data['xCargoEmisor']       = '';
+        this.data['xNombreEmisor']      = '';
+        this.data['xAdscripcionEmisor'] = '';
+    }
+
     public setDataF1004(_data){
         console.log('Formatos@setDataF1004', _data);
         this.data['xNUC']                     = _data.nuc;
@@ -144,21 +175,22 @@ export class FormatosLocal {
         // this.data['xEscolaridad']             = _data.
         // this.data['xReligion']                = _data.
         // this.data['xNacionalidad']            = _data.
-        // this.data['xNumeroTelefonico']        = _data.
+        this.data['xNumeroTelefonico']        = _data.noTelefonico;
         // this.data['xNumeroMovil']             = _data.
         // this.data['xSeIdentificaCon']         = _data.
-        // this.data['xFolioIdentificacion']     = _data.
-        // this.data['xHechosNarrados']          = _data.
-        // this.data['xConclusionHechos']        = _data.
-        // this.data['xLugarHechos']             = _data.
-        // this.data['xCanalizacion']            = _data.
-        // this.data['xInstitucionCanalizacion'] = _data.
-        // this.data['xMotivoCanalizacion']      = _data.
-        // this.data['xFechaCanalizacion']       = _data.
-        // this.data['xHoraCanalizacion']        = _data.
-        // this.data['xNombreCausoHecho']        = _data.
-        // this.data['xDomicilioHechos']         = _data.
-        // this.data['xObservaciones']           = _data.
+        this.data['xFolioIdentificacion']     = _data.predenuncias.noFolioConstancia ? _data.predenuncias.noFolioConstancia  : '';
+        this.data['xHechosNarrados']          = _data.predenuncias.hechosNarrados ? _data.predenuncias.hechosNarrados  : '';
+        this.data['xConclusionHechos']        = _data.predenuncias.conclusion ? _data.predenuncias.conclusion  : '';
+        this.data['xLugarHechos']             = _data.predenuncias.lugarHechos ? _data.predenuncias.lugarHechos  : '';
+        this.data['xCanalizacion']            = _data.predenuncias.canalizacion ? _data.predenuncias.canalizacion  : '';
+        this.data['xInstitucionCanalizacion'] = _data.predenuncias.institucion ? _data.predenuncias.institucion  : '';
+        this.data['xMotivoCanalizacion']      = _data.predenuncias.motivoCanalizacion ? _data.predenuncias.motivoCanalizacion  : '';
+        this.data['xFechaCanalizacion']       = _data.predenuncias.fechaCanalizacion ? _data.predenuncias.fechaCanalizacion  : '';
+        this.data['xHoraCanalizacion']        = _data.predenuncias.horaCanalizacion ? _data.predenuncias.horaCanalizacion  : '';
+        this.data['xNombreCausoHecho']        = _data.predenuncias.nombreCausante ? _data.predenuncias.nombreCausante  : '';
+        this.data['xDomicilioHechos']         = _data.predenuncias.domicilioCausante ? _data.predenuncias.domicilioCausante  : '';
+        this.data['xObservaciones']           = _data.predenuncias.observaciones ? _data.predenuncias.observaciones  : '';
         // this.data['xPersonaRegistro']         = _data.
     }
+
 }

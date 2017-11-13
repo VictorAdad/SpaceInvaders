@@ -39,21 +39,21 @@ export class FormatosGlobal{
             (ans: ResolveEmit) => {
                 console.log("respueta",ans);
                 if(ans.resolved){
-                    if(this.onLine.onLine){
-                        this.http.get(`/v1/documentos/formatos/save/${_id}/${_format}`).subscribe(
-                            response => {
-                                console.log('Done changeFormat()', response);
-                                this.setData(response);
-                                this.globalService.openSnackBar("Formato generado con éxito");
-                            }
+                    // if(this.onLine.onLine){
+                    //     this.http.get(`/v1/documentos/formatos/save/${_id}/${_format}`).subscribe(
+                    //         response => {
+                    //             console.log('Done changeFormat()', response);
+                    //             this.setData(response);
+                    //             this.globalService.openSnackBar("Formato generado con éxito");
+                    //         }
 
-                        );
-                    }else{
+                    //     );
+                    // }else{
                         this.formatos.replaceWord(
-                            'F1-004 REGISTRO PRESENCIAL.docx',
+                            this.formatos.formatos[_format].nombre,
                             _format
                         )
-                    }
+                    // }
 
                 }
             }
