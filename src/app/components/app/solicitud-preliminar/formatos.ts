@@ -73,6 +73,7 @@ export class FormatosGlobal{
     }
 
     public openDocDialog() {
+      console.log(this.urlUpload)
         var dialog = this.dialog.open(SolPreDocComponent, {
             height: 'auto',
             width: 'auto',
@@ -179,7 +180,6 @@ export class SolPreDocComponent {
           console.log('file',file)
             this.data.formData.append('files', file['some']);
         }
-
         this.http.post(this.data.urlUpload, this.data.formData).subscribe(
             response => {
                 console.log('Done guardar()', response);

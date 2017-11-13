@@ -1,103 +1,108 @@
-import { Component,ViewChild, Inject } from '@angular/core';
-
+import { Http } from '@angular/http';
+import { FormatosGlobal } from './../../solicitud-preliminar/formatos';
+import { Component, ViewChild, Output, Input, EventEmitter} from '@angular/core';
 import { MatPaginator } from '@angular/material';
-import { TableService} from '@utils/table/table.service';
-import { MiservicioService,MDato } from '@services/miservicio.service';
-
-import {DataSource} from '@angular/cdk/collections';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
-import { DocumentoCreateComponent } from './create/create.component';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
+import { TableService } from '@utils/table/table.service';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { SolicitudServicioPolicial } from '@models/solicitud-preliminar/solicitudServicioPolicial';
+import { OnLineService } from '@services/onLine.service';
+import { HttpService } from '@services/http.service';
+import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
-import { ActivatedRoute } from '@angular/router';
-import { OnLineService} from '@services/onLine.service';
+import { ConfirmationService } from '@jaspero/ng2-confirmations';
+import { GlobalService } from "@services/global.service";
+import { DataSource } from '@angular/cdk/collections';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { TableDataSource } from './../../global.component';
+
 
 @Component({
-    selector: 'documento',
-    templateUrl: './documento.component.html'
+	selector: 'documento',
+	templateUrl: './documento.component.html',
 })
+export class DocumentoComponent extends FormatosGlobal{
 
-export class DocumentoComponent{
-    private db: CIndexedDB 
-    constructor(public dialog: MatDialog,private _db: CIndexedDB, private onLine: OnLineService, private route:ActivatedRoute){
-      this.db=_db;
-    }
+  id:number=null;
+  displayedColumns = ['nombre','procedimiento', 'fechaCreacion'];
+  object: any;
+	dataSource: TableDataSource | null;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  public data: DocumentoPolicia[] = [];
+  public subject:BehaviorSubject<DocumentoPolicia[]> = new BehaviorSubject<DocumentoPolicia[]>([]);
+  public source:TableDataSource = new TableDataSource(this.subject);
+  public formData:FormData = new FormData();
+  public urlUpload: string;
 
-    displayedColumns = ['nombre', 'procedimiento', 'fecha'];
-    data: Documento[];
-    dataSource: TableService | null;
-    casoId:number;
+  constructor(
+      public http: HttpService,
+      public confirmationService:ConfirmationService,
+      public globalService:GlobalService,
+      public dialog: MatDialog,
+      private route: ActivatedRoute,
+      ){
+      super(http, confirmationService, globalService, dialog);
+  }
 
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-
-    dataURItoBlob(dataURI, type) {
-        var binary = atob(dataURI);
-        var array = [];
-        for(var i = 0; i < binary.length; i++) {
-            array.push(binary.charCodeAt(i));
-        }
-        return new Blob([new Uint8Array(array)], {type: type});
-    }
-    
-    ngOnInit(){
-        this.data = data;
-        this.dataSource = new TableService(this.paginator, this.data);
-        console.log('-> Data Source', this.dataSource);
-        this.route.parent.params.subscribe(params => {
+  ngOnInit() {
+    console.log('-> Object ', this.object);
+    this.route.parent.params.subscribe(params => {
+      console.log('id',params['id']);
             if(params['id']){
-                // this.casoId = +params['id'];
-                // if(this.onLine.onLine){
-                    
-                // }else{
-                //     this.cargaArchivos();
-                // }       
-                this.cargaArchivos();         
+              console.log('iffff')
+              this.id=params['id'];
+              this.urlUpload = '/v1/documentos/casos/save/'+this.id;
+              this.http.get('/v1/base/casos/'+this.id).subscribe(response=>{
+                this.object=response;
+                console.log('-> Object ', this.object);
+
+                if(this.object.documentos){
+                    this.dataSource = this.source;
+                    for (let object of this.object.documentos) {
+                        this.data.push(object);
+                        this.subject.next(this.data);
+                    }
+
+                }
+                this.formData.append('caso.id', this.id.toString());
+
+
+              });
             }
-        });  
-    }
-
-    cargaArchivos(){
-      this.db.list("documentos").then(archivos=>{
-        var lista=archivos as any[];
-        this.dataSource = new TableService(this.paginator, lista);
       });
-    }
 
-    download(idBlob,name,type){
-      console.log(idBlob,name,type);
-      this.db.get("blobs",idBlob).then(t=>{
-          console.log("tho blob",t);
-        var b=this.dataURItoBlob(t["blob"].split(',')[1], type );
-        console.log("blob",b);
-        var a = document.createElement('a');
-        a.download = name;
-        a.href=window.URL.createObjectURL( b );
-        console.log(a);
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      });
-    }
+  }
 
-    openDialog() {
-        var dialog=this.dialog.open(DocumentoCreateComponent, {
-            height: 'auto',
-            width: 'auto'
-        });
-        dialog.afterClosed().subscribe(() => {
-            this.cargaArchivos();
-        });
+  public cargaArchivos(_archivos){
+    let archivos=_archivos.saved
+
+      for (let object of archivos) {
+          this.data.push(object);
+          this.subject.next(this.data);
       }
+  }
+
+  public setData(_object){
+      console.log('setData()');
+      this.data.push(_object);
+      this.subject.next(this.data);
+  }
+  public mostrarOcultarFormatos(mostrar){
+    if(mostrar){
+      console.log("Mostrar formatos aquí")
+    }
+    else{
+      console.log("Ocultar formatos aquí")
+
+    }
+  }
 }
 
-export interface Documento {
-    nombre: string;
-    procedimiento: string;
-    fecha: string;
-  }
-  
-  const data: Documento[] = [
-      {nombre: 'Entrevista.pdf', procedimiento: '7.3.1 ENTREVISTA', fecha: 'ayer a las 11:30'}
-  ];
+export interface DocumentoPolicia {
+	id: number
+	nameEcm: string;
+	procedimiento: string;
+	created: Date;
+}
