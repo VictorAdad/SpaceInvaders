@@ -174,12 +174,13 @@ export class SolPreDocComponent {
         console.log("-> Archivos:", this.uploader);
         console.log("-> Data:", this.data);
         var listaFiles = this.uploader.queue as any[];
-        console.log('-> Files: ', listaFiles);
-
+        console.log('-> Files to saves: ', listaFiles);
+        this.data.formData.set('files',[]);
         for (let file of listaFiles) {
-          console.log('file',file)
+            console.log('file',file)
             this.data.formData.append('files', file['some']);
         }
+        console.log(' A guardar!!', this.data.formData)
         this.http.post(this.data.urlUpload, this.data.formData).subscribe(
             response => {
                 console.log('Done guardar()', response);

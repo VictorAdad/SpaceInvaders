@@ -68,9 +68,9 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         this.activeRoute.parent.params.subscribe(params => {
             if(this.hasId){
                 this.id = +params['id'];
-                this.casoService.find(this.id);
                 console.log(this.casoService);
                 if (!isNaN(this.id)){
+                    this.casoService.find(this.id);
                     if(this.onLine.onLine){
                         this.http.get('/v1/base/casos/'+this.id).subscribe((response) => {
                             this.form.patchValue(response);

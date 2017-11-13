@@ -21,6 +21,9 @@ export class NumberComponent implements OnInit{
 	@Input() functionChange: Function;
   	@Input() max :number = 12;
   	@Input() maxValue :number = 999999999999;
+  	@Input() sinDecimales : boolean = false; 
+	backupValue : string;
+
   	@ViewChild('numberComponent') numberComponent;
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
@@ -35,7 +38,7 @@ export class NumberComponent implements OnInit{
 
 	ngAfterViewInit(){
 		this.renderer.listen(
-			this.numberComponent.nativeElement, 'keyup', (event) => { this.inputSlice(); });
+			this.numberComponent.nativeElement, 'keyup', (event) => { this.inputSlice(event); });
 	}
 
 	update(value) {
@@ -45,10 +48,23 @@ export class NumberComponent implements OnInit{
 		}
 	}
 
-	inputSlice(){
+	//69 189
+
+	inputSlice(event){
+		console.log('HH------------>', event);
+
+		if (event.keyCode == 189 || event.keyCode == 69) {
+			if(this.backupValue == null){
+				this.value = '0';	
+			}else{
+				this.value = this.backupValue;
+			}
+			return
+		}
 		if (this.value!=null && this.value.toString().length > this.max) {
 			this.value = this.value.toString().slice(0,this.max);
 		}
+		this.backupValue = this.value;
 	}
 
 
