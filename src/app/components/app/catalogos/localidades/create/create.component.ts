@@ -57,11 +57,31 @@ export class LocalidadCreateComponent extends NoticiaHechoGlobal{
                 if(params['id']){
                     this.id = params['id']
                     this.http.get(this.url+'/'+this.id).subscribe(response =>{                      
-                        this.form.patchValue(response);
+                        this.fillForm(response);
                     });
                 }
             }
         );
+    }
+
+    public fillForm(_data){
+        this.form.patchValue(_data)
+        let timer = Observable.timer(1);
+        this.form.patchValue({
+          'pais': _data.municipio.estado.pais
+        });
+        timer.subscribe(t => {
+            this.form.patchValue({
+                'estado': _data.municipio.estado
+            })
+            let timer2 = Observable.timer(1);
+            timer2.subscribe(t2 => {
+                this.form.patchValue({
+                    'municipio': _data.municipio
+                });
+            });
+
+        });
     }
 
     public save(_valid: boolean, _form:any){
@@ -101,8 +121,12 @@ export class LocalidadCreateComponent extends NoticiaHechoGlobal{
     }
 
     public changePais(_event){
-        if(_event)
+        if(_event){
             this.optionsServ.getEstadoByPais(_event);
+            this.form.patchValue({
+                    'municipio': {id:""}
+                });
+        }
     }
 
     public changeEstado(_event){
