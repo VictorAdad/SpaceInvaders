@@ -240,12 +240,12 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         this.globals.indexNombres=0;
         for(var i=0;i<_alias.length;i++){
             var item=_alias[i];
-            if(item["tipo"]=="Otro nombre"){
+            if(item["tipo"]=="Otro"){
                 this.globals.otrosNombres.nombres.push(item["nombre"]);
                 this.globals.otrosNombres.ids.push(item["id"]);
                 this.globals.otrosNombres.indices.push(this.globals.indexNombres);
-                let form = LosForm.nombreForm('Otro nombre');
-                form.patchValue({tipo:'Otro nombre',id:item["id"],nombre:item["nombre"]});
+                let form = LosForm.nombreForm('Otro');
+                form.patchValue({tipo:'Otro',id:item["id"],nombre:item["nombre"]});
                 let otrosNombres = this.globals.form.get('aliasNombrePersona') as FormArray;
                 otrosNombres.push(form);
             }
@@ -987,11 +987,11 @@ export class IdentificacionComponent{
 
     public addOtroNombre(_tipo: string){
         if(_tipo === 'otroNombre'){
-            let form = LosForm.nombreForm('Otro nombre');
+            let form = LosForm.nombreForm('Otro');
             this.otrosNombres.nombres.unshift(null);
             this.otrosNombres.ids.unshift(null);
             this.otrosNombres.indices.unshift(this.nombres);
-            form.patchValue({tipo:'Otro nombre'});
+            form.patchValue({tipo:'Otro'});
             let otrosNombres = this.globals.form.get('aliasNombrePersona') as FormArray;
             otrosNombres.push(form);
         }
