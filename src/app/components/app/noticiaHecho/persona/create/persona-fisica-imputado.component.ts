@@ -1067,13 +1067,15 @@ export class LocalizacionComponent{
     }
 
     changeMunicipio(id){
-        if(id!=null && typeof id !='undefined')
+        if(id!=null && typeof id !='undefined'){
             this.options.getColoniasByMunicipio(id);
+            this.options.getLocalidadByMunicipio(id);
+        }
     }
 
     changeColonia(id){
-        if(id!=null && typeof id !='undefined')
-            this.options.getLocalidadByColonias(id);
+        // if(id!=null && typeof id !='undefined')
+        //     this.options.getLocalidadByColonias(id);
     }
 
 

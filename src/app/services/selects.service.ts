@@ -297,8 +297,8 @@ export class SelectsService {
         });
     }
 
-    public getLocalidadByColonias(idColonia: number){
-        this.http.get('/v1/catalogos/localidad/colonia/'+idColonia+'/options').subscribe((response) => {
+    public getLocalidadByMunicipio(idColonia: number){
+        this.http.get('/v1/catalogos/localidad/municipio/'+idColonia+'/options').subscribe((response) => {
             this.localidad = this.constructOptions(response);
         });
     }
