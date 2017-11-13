@@ -89,7 +89,7 @@
               <select2 [options]="options.estadoCivil" placeholder="Estado civil"  name="id" [group]="globals.form.controls.estadoCivil"></select2>
             </div>
             <div class="col-md-2">
-               <number label="Número de hijos" name="numHijos" [maxValue]="99" [max]="2" [group]="globals.form"></number>
+               <number label="Número de hijos" name="numHijos" [maxValue]="99" [max]="2" [sinDecimales]="true" [group]="globals.form"></number>
             </div>
 
             <div class="col-md-2">
