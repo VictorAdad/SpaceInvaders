@@ -597,6 +597,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     doSave(_model:any){
+        console.log(this.globals);
         return new Promise((resolve,reject)=>{
             if(this.onLine.onLine){
                 _model.personaCaso[0].caso.id = this.casoId;
@@ -1005,6 +1006,22 @@ export class IdentificacionComponent{
             otrosNombres.push(form);
         }
         this.nombres++;
+    }
+    /*
+    i es el indice del form
+    j es el indice del arreglo alias o otroNombre
+    id es el id guardado
+    tipo indica el tipo de campo(otroNombre o alias)
+    */
+    setForm(_event,_i,_j,_id,_tipo){
+        if(_tipo === 'otroNombre'){
+            this.otrosNombres.nombres[_j]=(<HTMLInputElement>_event.target).value;
+        }else{
+            this.alias.nombres[_j]=(<HTMLInputElement>_event.target).value;
+        }
+        let otrosNombres = this.globals.form.get('aliasNombrePersona') as FormArray;
+        ((otrosNombres.controls[_i])["controls"])["nombre"].patchValue( (<HTMLInputElement>_event.target).value );
+        ((otrosNombres.controls[_i])["controls"])["id"].patchValue(_id);
     }
 
 }

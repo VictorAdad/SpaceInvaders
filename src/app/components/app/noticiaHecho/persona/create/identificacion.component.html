@@ -40,7 +40,7 @@
                     </div>
                     <div class="col-md-12" *ngFor="let nombre of alias.nombres;let i=index; trackBy:trackByIndex " [formGroupName]="alias.indices[i]">
                         <mat-form-field class="full-width">
-                            <input matInput placeholder="Alias" formControlName="nombre"value="{{nombre}}">
+                            <input matInput placeholder="Alias" value="{{nombre}}" (keyup)="setForm($event,alias.indices[i],i,alias.ids[i],'alias')">
                         </mat-form-field>
                         <input type="hidden" value="Alias" formControlName="tipo">
                         <input type="hidden" value="{{alias.ids[i]}}" formControlName="id">
@@ -54,7 +54,7 @@
                     </div>
                     <div class="col-md-12" *ngFor="let nombre of otrosNombres.nombres;let i=index; trackBy:trackByIndex " [formGroupName]="otrosNombres.indices[i]">
                         <mat-form-field class="full-width">
-                            <input matInput placeholder="Otro nombre" formControlName="nombre"value="{{nombre}}">
+                            <input matInput placeholder="Otro nombre" value="{{nombre}}" (keyup)="setForm($event,otrosNombres.indices[i],i,otrosNombres.ids[i],'otroNombre')">
                         </mat-form-field>
                         <input type="hidden" value="Otro nombre" formControlName="tipo">
                         <input type="hidden" value="{{otrosNombres.ids[i]}}" formControlName="id">
