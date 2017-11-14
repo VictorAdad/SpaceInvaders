@@ -11,7 +11,7 @@ import { _config} from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { ArmaService } from '@services/noticia-hecho/arma/arma.service';
 import { Observable } from 'rxjs';
-
+import { CasoService } from '@services/caso/caso.service';
 @Component({
   selector: 'arma-create',
   templateUrl: 'create.component.html',
@@ -33,7 +33,8 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         private http: HttpService,
         private router: Router,
         private db:CIndexedDB,
-        public armaServ: ArmaService
+        public armaServ: ArmaService,
+        private casoService: CasoService
         ) {
         super();
         console.log(this.armaServ);
@@ -68,6 +69,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
             if(params['casoId']){
                 this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho/armas`,label:"Detalle noticia de hechos"})
+                this.casoService.find(this.casoId);
             }
             if(params['id']){
                 this.id = +params['id'];
@@ -80,8 +82,10 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                         this.fillForm(response);
                     });
                 }else{
-                    this.db.get("casos",this.casoId).then(t=>{
-                        let armas=t["arma"] as any[];
+                    //this.db.get("casos",this.casoId).then(t=>{
+                    this.casoService.find(this.casoId).then(r=>{
+                        var t=this.casoService.caso;
+                        let armas=t["armas"] as any[];
                         for (var i = 0; i < armas.length; ++i) {
                             if ((armas[i])["id"]==this.id){
                                 var arma=armas[i];
@@ -150,7 +154,8 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                     temId: temId
                 }
                 this.db.add("sincronizar",dato).then(p=>{
-                    this.db.get("casos",this.casoId).then(caso=>{
+                    //this.db.get("casos",this.casoId).then(caso=>{
+                        var caso=this.casoService.caso;
                         if (caso){
                             if(!caso["armas"]){
                                 caso["armas"]=[];
@@ -164,7 +169,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/armas' ]);
                             });
                         }
-                    });
+                    //});
                 });
             }
         });
@@ -208,7 +213,8 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                         dependeDe:[this.casoId, this.id]
                     }
                     this.db.add("sincronizar",dato).then(p=>{
-                        this.db.get("casos",this.casoId).then(t=>{
+                        //this.db.get("casos",this.casoId).then(t=>{
+                            var t=this.casoService.caso;
                             let armas=t["armas"] as any[];
                             for (var i = 0; i < armas.length; ++i) {
                                 if ((armas[i])["id"]==this.id){
@@ -221,7 +227,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                                 resolve("Se actualizó la información del arma de manera local");
                             });
 
-                        });
+                        //});
                         //this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho' ]);
                     });
                 }
