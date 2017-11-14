@@ -871,6 +871,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             _data["familiaLinguistica"]=(_data["idiomaIdentificacion"])["familiaLinguistica"];
             _data["lenguaIndigena"]=(_data["idiomaIdentificacion"])["lenguaIndigena"];
             _data["hablaEspaniol"]=(_data["idiomaIdentificacion"])["hablaEspaniol"];
+            _data["identificacion"]=(_data["idiomaIdentificacion"])["identificacion"];;
         }
 
         console.log("datos ->",_data);
