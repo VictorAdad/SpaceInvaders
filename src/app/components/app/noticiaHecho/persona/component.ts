@@ -46,19 +46,22 @@ export class PersonaComponent implements OnInit{
                     //this.tabla.get("casos",this.casoId).then(caso => {
                     this.casoService.find(this.casoId).then(r=>{
                         var caso = this.casoService.caso;
-                        this.pag = caso["personaCasos"].length;
-                        console.log("CASO ->",caso);
-                        // var data=[];
-                        // for (var i = 0; i < lista["length"]; ++i) {
-                        //     let item = lista[i];
-                        //     let tipoInterviniente=(item["personaCaso"])[0].tipoInterviniente["id"];
-                        //     let tipo = (item["personaCaso"])[0].tipoInterviniente["tipo"]?(item["personaCaso"])[0].tipoInterviniente["tipo"]:"";
-                        //     let nombre = item["nombre"];
-                        //     let razonSocial = item["razonSocial"];
-                        //     if ( (item["personaCaso"])[0].caso.id==this.casoId )
-                        //         data.push({tipoInterviniente:{tipo:tipo}, persona:{nombre:nombre}, razonSocial:razonSocial, alias:"", id:item["id"]});
-                        // }
-                        this.dataSource = new TableService(this.paginator, caso["personaCasos"]);
+                        if (caso["personaCasos"]){
+                            this.pag = caso["personaCasos"].length;
+                            console.log("CASO ->",caso);
+                            // var data=[];
+                            // for (var i = 0; i < lista["length"]; ++i) {
+                            //     let item = lista[i];
+                            //     let tipoInterviniente=(item["personaCaso"])[0].tipoInterviniente["id"];
+                            //     let tipo = (item["personaCaso"])[0].tipoInterviniente["tipo"]?(item["personaCaso"])[0].tipoInterviniente["tipo"]:"";
+                            //     let nombre = item["nombre"];
+                            //     let razonSocial = item["razonSocial"];
+                            //     if ( (item["personaCaso"])[0].caso.id==this.casoId )
+                            //         data.push({tipoInterviniente:{tipo:tipo}, persona:{nombre:nombre}, razonSocial:razonSocial, alias:"", id:item["id"]});
+                            // }
+                            this.dataSource = new TableService(this.paginator, caso["personaCasos"]);
+                        }
+                        
                     });
                 } 
             }

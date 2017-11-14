@@ -16,7 +16,7 @@
 <mat-table #table [dataSource]="dataSource">
     <ng-container matColumnDef="nombre">
         <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
-        <mat-cell *matCellDef="let element">{{element.delito.nombre}}</mat-cell>
+        <mat-cell *matCellDef="let element">{{element?.delito?.nombre}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="principal">

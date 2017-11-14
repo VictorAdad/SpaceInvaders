@@ -119,6 +119,16 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         });
     }
 
+    public copiaJson(original){
+        if (typeof original=="object"){
+            var obj={};
+            for(let item in original)
+                obj[item]=this.copiaJson(original[item]);
+            return obj;
+        }else
+            return original;
+    }
+
     public save(_valid : boolean, _model : any):Promise<any>{
         Object.assign(_model, this.model);
         console.log('Model', _model);
@@ -181,7 +191,18 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                         console.log('p', p);
                         // _model["id"] = temId;
                         resolve("Se creó el caso de manera local");
-                        this.router.navigate(['/caso/'+id+'/noticia-hecho/datos-generales' ]);
+                        var copiaModel = this.copiaJson(_model);
+                        copiaModel["id"]=id;
+                        copiaModel["delitoCaso"]=[{id:id+1, principal:true, delito:{id: copiaModel["delitoCaso"].delito.id,nombre:this.delito.nombre}  }];
+                        copiaModel["titulares"]=[{a:0}];
+                        copiaModel["titulares"].pop();
+                        copiaModel["titulares"].push((_model["titulares"])["0"]);
+                        this.db.update('casos', copiaModel).then(p=>{
+                            console.log("actualizacion",p);
+                            this.casoService.caso=copiaModel;
+                            this.casoService.id=copiaModel["id"];
+                            this.router.navigate(['/caso/'+id+'/noticia-hecho/datos-generales' ]);
+                        });
                     });
 
                 });
