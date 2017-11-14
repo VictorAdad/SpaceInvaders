@@ -139,22 +139,16 @@ export class FormatosLocal {
 
     public setDataF1003(_data){
         console.log('Formatos@setDataF1003', _data);
-        let victima = _data.findVictima();
-        let nombreVictima = 
-            `${victima.persona.nombre} ${victima.persona.paterno} ${victima.persona.materno ? victima.persona.materno :'' }`;
-        this.data['xNUC']                = _data.nuc ? _data.nuc : '';
-        this.data['xNIC']                = _data.nic ? _data.nic : '';
-        this.data['xFechaAtencion']      = _data.created;
-        this.data['xHoraAtencion']       = _data.created;
+        this.setCasoInfo(_data);
+        this.setVictimaInfo(_data);
         this.data['xFolioDocumento']     = _data.predenuncias.noFolioConstancia ? _data.predenuncias.noFolioConstancia  : '';
-        this.data['xVictima']            = nombreVictima;
+        
         this.data['xHablaEspaniol']      = _data.predenuncias.hablaEspaniol ? 'Sí' : 'No';
         this.data['xIdiomaLengua']       = _data.predenuncias.hablaEspaniol ? '' : _data.predenuncias.lenguaIdioma;
         this.data['xInterprete']         = _data.predenuncias.nombreInterprete ? _data.predenuncias.nombreInterprete  : '';
         this.data['xComprendioDerechos'] = _data.predenuncias.compredioDerechos ? 'Sí' : 'No';
         this.data['xCopiaDerechos']      = _data.predenuncias.proporcionoCopia ? 'Sí' : 'No';
-        this.data['xFolioVictima']       = victima.persona.folioIdentificacion ? victima.persona.folioIdentificacion : '';
-        this.data['xSeIdentificaCon']    = _data.getAlias(victima);
+        
         this.data['xCargoEmisor']        = '';
         this.data['xNombreEmisor']       = '';
         this.data['xAdscripcionEmisor']  = '';
@@ -162,28 +156,12 @@ export class FormatosLocal {
 
     public setDataF1004(_data){
         console.log('Formatos@setDataF1004', _data);
-        this.data['xNUC']                     = _data.nuc;
-        this.data['xNIC']                     = _data.nic;
-        this.data['xFechaAtencion']           = _data.created;
-        this.data['xHoraAtencion']            = _data.created;
+        this.setCasoInfo(_data);
         // this.data['xNombreUsuario']           = _data.
-        // this.data['xOriginario']              = _data.
-        // this.data['xEdad']                    = _data.
-        // this.data['xSexo']                    = _data.
-        // this.data['xDomicilio']               = _data.
+        
         this.data['xCalidadUsuarioPersona']   = _data.predenuncias.calidadPersona;
         this.data['xTipoPersona']             = _data.tipoPersona ? _data.tipoPersona.nombre : '';
-        // this.data['xFechaNacimiento']         = _data.
-        // this.data['xRFC']                     = _data.
-        // this.data['xCURP']                    = _data.
-        // this.data['xEstadoCivil']             = _data.
-        // this.data['xOcupacion']               = _data.
-        // this.data['xEscolaridad']             = _data.
-        // this.data['xReligion']                = _data.
-        // this.data['xNacionalidad']            = _data.
         this.data['xNumeroTelefonico']        = _data.noTelefonico;
-        // this.data['xNumeroMovil']             = _data.
-        // this.data['xSeIdentificaCon']         = _data.
         this.data['xFolioIdentificacion']     = _data.predenuncias.noFolioConstancia ? _data.predenuncias.noFolioConstancia  : '';
         this.data['xHechosNarrados']          = _data.predenuncias.hechosNarrados ? _data.predenuncias.hechosNarrados  : '';
         this.data['xConclusionHechos']        = _data.predenuncias.conclusion ? _data.predenuncias.conclusion  : '';
@@ -198,5 +176,36 @@ export class FormatosLocal {
         this.data['xObservaciones']           = _data.predenuncias.observaciones ? _data.predenuncias.observaciones  : '';
         // this.data['xPersonaRegistro']         = _data.
     }
+
+    public setCasoInfo(_caso){
+        this.data['xNUC']           = _caso.nuc ? _caso.nuc : '';
+        this.data['xNIC']           = _caso.nic ? _caso.nic : '';
+        this.data['xFechaAtencion'] = _caso.formatCreated();
+        this.data['xHoraAtencion']  = _caso.formatHoraCreated();
+    }
+
+    public setVictimaInfo(_caso){
+        let victima = _caso.findVictima();
+        let nombreVictima = 
+            `${victima.persona.nombre} ${victima.persona.paterno} ${victima.persona.materno ? victima.persona.materno :'' }`;
+        this.data['xVictima']         = nombreVictima;
+        this.data['xFolioVictima']    = victima.persona.folioIdentificacion ? victima.persona.folioIdentificacion : '';
+        this.data['xSeIdentificaCon'] = _caso.getAlias(victima);
+        this.data['xDomicilio']       = _caso.getDomicilios(victima);
+        this.data['xOriginario']      = victima.persona.pais ? victima.persona.pais.nombre : '';
+        this.data['xEdad']            = victima.persona.edad;
+        this.data['xSexo']            = victima.persona.sexo.nombre;
+        this.data['xFechaNacimiento'] = _caso.formatFecha(victima.personafechaNacimiento);
+        this.data['xRFC']             = victima.persona.rfc ? victima.persona.rfc : '';
+        this.data['xCURP']            = victima.persona.curp ? victima.persona.curp : '';
+        this.data['xEstadoCivil']     = victima.persona.estadoCivil ? victima.persona.estadoCivil.nombre : '';
+        this.data['xOcupacion']       = victima.persona.ocupacion ? victima.persona.ocupacion.nombre : ''    ;
+        this.data['xEscolaridad']     = victima.persona.escolaridad ? victima.persona.escolaridad.nombre : '';
+        this.data['xReligion']        = victima.persona.nacionalidadReligion ? victima.persona.nacionalidadReligion.religion : '';
+        this.data['xNacionalidad']    = victima.persona.nacionalidadReligion ? victima.persona.nacionalidadReligion.nacionalidad : '';
+        this.data['xNumeroMovil']     = ''
+    }
+
+
 
 }
