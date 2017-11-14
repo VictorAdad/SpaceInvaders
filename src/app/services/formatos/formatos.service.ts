@@ -72,7 +72,7 @@ export class FormatosService {
 }
 
 export class FormatosLocal {
-    
+
     public F1_003 = {
         'path': '../../../../../assets/formatos/F1-003 LECTURA DE DERECHOS DE LA VÍCTIMA.docx',
         'nombre': 'F1-003 LECTURA DE DERECHOS DE LA VÍCTIMA.docx',
@@ -91,6 +91,13 @@ export class FormatosLocal {
         'file': null,
         'data': null
     };
+  // Formato de entrevista
+  public F1_008 = {
+    'path': '../../../../../assets/formatos/F1-008 ENTREVISTA.docx',
+    'nombre': 'F1-008 ENTREVISTA.docx',
+    'file': null,
+    'data': null
+   };
     public data = {
         //F1003
         'xFolioDocumento': '',
@@ -147,10 +154,41 @@ export class FormatosLocal {
         'xHoraConclusionLlamada': '',
         'xDuracionLlamada': '',
         'xOrientadorJuridico': '',
+
+         //F1008
+        'xNombreAutoridadEntrevista': '',
+        'xLugarEntrevista': '',
+        'xNombreEntrevistado': '',
+        'xEstadoMigratorio': '',
+        'xTipoIdentificacion': '',
+        'xEmisorIdentificacion': '',
+        'xNumeroIdentificacion': '',
+        'xSabeLeerEscribir': '',
+        'xLugarOcupacion': '',
+        'xSalarioSemanal': '',
+        'xRelacionEntrevistadoPartes': '',
+        'xCalle': '',
+        'xNumExterior': '',
+        'xNumInterior': '',
+        'xColonia': '',
+        'xCP': '',
+        'xPoblacion': '',
+        'xEstado': '',
+        'xCorreoElectronico': '',
+        'xRepresentanteLegal': '',
+        'xNombreRepresentanteLegal': '',
+        'xUsoMedioTecnologico': '',
+        'xMedioTecnologico': '',
+        'xUsoMedioTecnico': '',
+        'xMedioTecnico': '',
+        'xNombreEntrevistadoFirma': '',
+        'xCargoEmisorFirma': '',
+        'xNombreEmisorFirma': '',
+        'xAdscripcionEmisorFirma': '',
     }
 
     constructor() {
-        
+
     }
 
     public setDataF1003(_data){
@@ -158,13 +196,13 @@ export class FormatosLocal {
         this.setCasoInfo(_data);
         this.setVictimaInfo(_data);
         this.data['xFolioDocumento']     = _data.predenuncias.noFolioConstancia ? _data.predenuncias.noFolioConstancia  : '';
-        
+
         this.data['xHablaEspaniol']      = _data.predenuncias.hablaEspaniol ? 'Sí' : 'No';
         this.data['xIdiomaLengua']       = _data.predenuncias.hablaEspaniol ? '' : _data.predenuncias.lenguaIdioma;
         this.data['xInterprete']         = _data.predenuncias.nombreInterprete ? _data.predenuncias.nombreInterprete  : '';
         this.data['xComprendioDerechos'] = _data.predenuncias.compredioDerechos ? 'Sí' : 'No';
         this.data['xCopiaDerechos']      = _data.predenuncias.proporcionoCopia ? 'Sí' : 'No';
-        
+
         this.data['xCargoEmisor']        = '';
         this.data['xNombreEmisor']       = '';
         this.data['xAdscripcionEmisor']  = '';
@@ -174,7 +212,7 @@ export class FormatosLocal {
         console.log('Formatos@setDataF1004', _data);
         this.setCasoInfo(_data);
         // this.data['xNombreUsuario']           = _data.
-        
+
         this.data['xCalidadUsuarioPersona']   = _data.predenuncias.calidadPersona;
         this.data['xTipoPersona']             = _data.tipoPersona ? _data.tipoPersona.nombre : '';
         this.data['xNumeroTelefonico']        = _data.noTelefonico;
@@ -217,7 +255,7 @@ export class FormatosLocal {
 
     public setVictimaInfo(_caso){
         let victima = _caso.findVictima();
-        let nombreVictima = 
+        let nombreVictima =
             `${victima.persona.nombre} ${victima.persona.paterno} ${victima.persona.materno ? victima.persona.materno :'' }`;
         this.data['xVictima']         = nombreVictima;
         this.data['xFolioVictima']    = victima.persona.folioIdentificacion ? victima.persona.folioIdentificacion : '';
@@ -237,6 +275,60 @@ export class FormatosLocal {
         this.data['xNumeroMovil']     = ''
         this.data['xNumeroTelefonico']     = ''
     }
+
+
+
+public setDataF1008(_data){
+  this.data['xNUC']= _data.nuc;
+  this.data['xNIC']= _data.nic;
+  this.data['xFechaAtencion']=_data.created;
+  this.data['xHoraAtencion']= _data.created;
+  this.data['xNombreAutoridadEntrevista']= _data.autoridadRealizaEntrevista;
+  this.data['xLugarEntrevista']= _data.lugarRealizaEntrevista;
+  this.data['xNombreEntrevistado']= _data.nombreEntrevistado;
+  this.data['xSexo']= _data.sexo;
+  this.data['xFechaNacimiento']= _data.fechaNacimiento;
+  this.data['xNacionalidad']= _data.nacionalidad;
+  this.data['xOriginario']= _data.originarioDe;
+  this.data['xEstadoMigratorio']= _data.estadoMigratorio;
+  this.data['xCalidadUsuarioPersona']= '';
+  this.data['xTipoIdentificacion']= _data.tipoIdentificacion;
+  this.data['xEmisorIdentificacion']= _data.emisorIdentificacion;
+  this.data['xNumeroIdentificacion']= _data.noIdentificacion;
+  this.data['xCURP']= _data.curp;
+  this.data['xRFC']= _data.rfc;
+  this.data['xSabeLeerEscribir']= _data.sabeLeerEscribir;
+  this.data['xEscolaridad']= _data.gradoEscolaridad;
+  this.data['xOcupacion']= _data.ocupacion;
+  this.data['xLugarOcupacion']= _data.lugarOcupacion;
+  this.data['xEstadoCivil']= _data.estadoCivil;
+  this.data['xSalarioSemanal']= _data.salarioSemanal;
+  this.data['xRelacionEntrevistadoPartes']=_data.relacionEntrevistado;
+  this.data['xCalle']= _data.calle
+  this.data['xNumExterior']= _data.noExterior;
+  this.data['xNumInterior']= _data.noInterior;
+  this.data['xColonia']= _data.colonia;
+  this.data['xCP']= _data.cp;
+  this.data['xPoblacion']= _data.municipio;
+  this.data['xEstado']=_data.estado;
+  this.data['xNumeroTelefonico']= _data.noTelefonoParticular;
+  this.data['xNumeroMovil']= _data.noTelefonoParticular;
+  this.data['xCorreoElectronico']= _data.correoElectronico;
+  this.data['xRepresentanteLegal']= _data.tieneRepresentanteLegal?'Si':'No';
+  this.data['xNombreRepresentanteLegal']= _data.nombreRepresentanteLegal;
+  this.data['xUsoMedioTecnologico']= _data.medioTecnologicoUtilizado?'Si':'No';
+  this.data['xMedioTecnologico']= _data.medioTecnologicoRegistro;
+  this.data['xUsoMedioTecnico']= _data.medioTecnicoUtilizado?'Si':'No';
+  this.data['xMedioTecnico']= _data.medioTecnicoRegistro;
+  this.data['xNarracionHechos']= _data.narracionHechos;
+  this.data['xNombreEntrevistadoFirma']=  _data.nombreEntrevistado;
+
+  this.data['xCargoEmisorFirma']= '';
+  this.data['xNombreEmisorFirma']= '';
+  this.data['xAdscripcionEmisorFirma']= '';
+}
+
+
 
 
 
