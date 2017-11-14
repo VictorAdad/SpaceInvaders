@@ -46,6 +46,7 @@ export class TrataPersonas {
         _municipiosDestino,
         _optionsRelacion
         ){
+        console.log('MatrizTipoTransportacion', _optionsRelacion.matrizTipoTransportacion);
         this.paisOrigen      =
             _options.find('paises', _object.paisOrigen.id).label;
 
