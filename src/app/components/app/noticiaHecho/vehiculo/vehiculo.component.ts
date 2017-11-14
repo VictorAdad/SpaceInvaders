@@ -6,7 +6,7 @@ import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { Vehiculo } from '@models/vehiculo';
 import { CIndexedDB } from '@services/indexedDB';
-
+import { CasoService } from '@services/caso/caso.service';
 @Component({
     selector: 'vehiculo',
     templateUrl:'./vehiculo.component.html'
@@ -21,7 +21,7 @@ export class VehiculoComponent{
     public pag: number = 0;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
-    constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB) { }
+    constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB, private casoService:CasoService) { }
 
 	ngOnInit() {
         this.route.parent.params.subscribe(params => {
@@ -33,10 +33,14 @@ export class VehiculoComponent{
                         this.vehiculos = response.data as Vehiculo[];
                         this.dataSource = new TableService(this.paginator, this.vehiculos);
                     });
+                    this.casoService.find(this.casoId);
                 }else{
-                    this.db.get("casos",this.casoId).then(caso=>{
+                    //this.db.get("casos",this.casoId).then(caso=>{
+                    this.casoService.find(this.casoId).then(r=>{
+                        var caso = this.casoService.caso;
                         if (caso){
                             if(caso["vehiculos"]){
+                                this.pag = caso["vehiculos"].length;
                                 this.dataSource = new TableService(this.paginator, caso["vehiculos"]);
                             }
                         }

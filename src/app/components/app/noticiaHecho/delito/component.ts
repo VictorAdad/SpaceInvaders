@@ -68,8 +68,10 @@ export class DelitoComponent {
                     this.casoService.find(this.id).then(r=>{
                         this.delitoCaso=this.casoService.caso;
                         if (this.casoService.caso)
-                            if (this.casoService.caso["delitoCaso"])
+                            if (this.casoService.caso["delitoCaso"]){
+                                this.pag = this.casoService.caso["delitoCaso"].length;
                                 this.dataSource = new TableService(this.paginator, this.casoService.caso["delitoCaso"]);
+                            }
                     });
                     // this.db.get("casos", this.id).then(
                     // casoR => {
