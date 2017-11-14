@@ -394,6 +394,7 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
     public updateDataFormatos(_object){
         this.formatos.formatos.setDataF1004(_object);
         this.formatos.formatos.setDataF1003(_object);
+        this.formatos.formatos.setDataF1005(_object);
     }
 
 }

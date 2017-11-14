@@ -15,14 +15,21 @@ export class FormatosService {
     public getFormatos(){
         console.log('Formatos@getFormatos()');
         for(let attr in this.formatos){
+            console.log(attr);
             if(
                 String(attr) !== 'constructor',
                 String(attr) !== 'data',
-                String(attr) !== 'setDataF1004'
+                String(attr) !== 'setDataF1003',
+                String(attr) !== 'setDataF1004',
+                String(attr) !== 'setDataF1005',
+                String(attr) !== 'setCasoInfo',
+                String(attr) !== 'setVictimaInfo'
                 ){
-                JSZipUtils.getBinaryContent(this.formatos[attr].path, (error, response) => {
-                    this.formatos[attr].file = new JSZip(response);
-                });
+                if(this.formatos[attr].path){
+                    JSZipUtils.getBinaryContent(this.formatos[attr].path, (error, response) => {
+                        this.formatos[attr].file = new JSZip(response);
+                    });
+                }
             }
         }
         console.log(this.formatos);
@@ -131,6 +138,15 @@ export class FormatosLocal {
         'xDomicilioHechos': '',
         'xObservaciones': '',
         'xPersonaRegistro': '',
+        //F1005
+        'xTipoLineaTelefonica': '',
+        'xTelefonoLlamando': '',
+        'xLugarLlamada': '',
+        'xNarracionHechos': '',
+        'xAsesoria': '',
+        'xHoraConclusionLlamada': '',
+        'xDuracionLlamada': '',
+        'xOrientadorJuridico': '',
     }
 
     constructor() {
@@ -177,6 +193,21 @@ export class FormatosLocal {
         // this.data['xPersonaRegistro']         = _data.
     }
 
+    public setDataF1005(_data){
+        this.setCasoInfo(_data);
+        this.setVictimaInfo(_data);
+        this.data['xTelefonoLlamando']      = _data.predenuncias.noTelefonico ? _data.predenuncias.noTelefonico  : '';
+        this.data['xTipoLineaTelefonica']   = _data.predenuncias.tipoLinea ? _data.predenuncias.tipoLinea  : '';
+        this.data['xLugarLlamada']          = _data.predenuncias.lugarLlamada ? _data.predenuncias.lugarLlamada  : '';
+        this.data['xNarracionHechos']       = _data.predenuncias.hechosNarrados ? _data.predenuncias.hechosNarrados  : '';
+        this.data['xAsesoria']              = _data.predenuncias.comunicado ? _data.predenuncias.comunicado  : '';
+        this.data['xHoraConclusionLlamada'] = _data.predenuncias.horaConclusionLlamada ? _data.predenuncias.horaConclusionLlamada  : '';
+        this.data['xDuracionLlamada']       = _data.predenuncias.duracionLlamada ? _data.predenuncias.duracionLlamada  : '';
+        this.data['xObservaciones']         = _data.predenuncias.observaciones ? _data.predenuncias.observaciones  : '';
+        this.data['xAdscripcionEmisor']     = ''
+        this.data['xOrientadorJuridico']    = ''
+    }
+
     public setCasoInfo(_caso){
         this.data['xNUC']           = _caso.nuc ? _caso.nuc : '';
         this.data['xNIC']           = _caso.nic ? _caso.nic : '';
@@ -204,6 +235,7 @@ export class FormatosLocal {
         this.data['xReligion']        = victima.persona.nacionalidadReligion ? victima.persona.nacionalidadReligion.religion : '';
         this.data['xNacionalidad']    = victima.persona.nacionalidadReligion ? victima.persona.nacionalidadReligion.nacionalidad : '';
         this.data['xNumeroMovil']     = ''
+        this.data['xNumeroTelefonico']     = ''
     }
 
 
