@@ -6,6 +6,7 @@ import { CIndexedDB } from '@services/indexedDB';
 import { Persona } from '@models/persona';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
+import { CasoService } from '@services/caso/caso.service';
 
 @Component({
     selector : 'persona',
@@ -27,7 +28,8 @@ export class PersonaComponent implements OnInit{
         private _tabla: CIndexedDB,
         private route: ActivatedRoute,
         private http: HttpService,
-        private onLine: OnLineService){
+        private onLine: OnLineService,
+        private casoService:CasoService){
         this.tabla = _tabla;
     }
 
@@ -37,10 +39,14 @@ export class PersonaComponent implements OnInit{
                 this.casoId = +params['id'];
                 if(this.onLine.onLine){
                     this.page('/v1/base/personas-casos/casos/'+this.casoId+'/page');
+                    this.casoService.find(this.casoId);
                 }else{
                     //Nota: si marca error es por que ya existe la base de datos y no se le puede agregar una nueva tabla
                     //para solucionarlo borra la base evomatik
-                    this.tabla.get("casos",this.casoId).then(caso => {
+                    //this.tabla.get("casos",this.casoId).then(caso => {
+                    this.casoService.find(this.casoId).then(r=>{
+                        var caso = this.casoService.caso;
+                        this.pag = caso["personaCasos"].length;
                         console.log("CASO ->",caso);
                         // var data=[];
                         // for (var i = 0; i < lista["length"]; ++i) {
