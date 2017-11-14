@@ -7,6 +7,8 @@ import {Router} from '@angular/router';
 import {Caso} from '@models/caso';
 import { HttpService } from '@services/http.service';
 import { OnLineService} from '@services/onLine.service';
+import { CasoService } from '@services/caso/caso.service';
+
 @Component({
     templateUrl: 'create.component.html',
     styles:[`
@@ -32,7 +34,7 @@ export class DelitoCreateComponent{
     tabla:CIndexedDB;
     
 
-    constructor(public dialog: MatDialog, private _tabla: CIndexedDB, private router:Router, private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService) { 
+    constructor(public dialog: MatDialog, private _tabla: CIndexedDB, private router:Router, private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private casoService:CasoService) { 
         this.tabla=_tabla;
     }
     ngOnInit(){
@@ -41,7 +43,7 @@ export class DelitoCreateComponent{
             if(params['casoId']){
                 this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho/delitos`,label:"Detalle noticia de hechos"})
-
+                this.casoService.find(this.casoId);
             }
             if(params['id']){
                 this.id = +params['id'];
@@ -131,19 +133,20 @@ export class DelitoCreateComponent{
                             temId: temId
                         }
                         obj.tabla.add("sincronizar",dato).then(p=>{
-                            obj.tabla.get("casos",obj.casoId).then(caso=>{
+                            //obj.tabla.get("casos",obj.casoId).then(caso=>{
+                                var caso = obj.casoService.caso;
                                 if (caso){
-                                    if(!caso["delitosCaso"]){
-                                        caso["delitosCaso"]=[];
+                                    if(!caso["delitoCaso"]){
+                                        caso["delitoCaso"]=[];
                                         console.log("ITEM",item)
                                     }
                                     var dat={id:temId,delito:item, principal:false}
-                                    caso["delitosCaso"].push(dat);
+                                    caso["delitoCaso"].push(dat);
                                     obj.tabla.update("casos",caso).then(t=>{
                                         guardaLista(i+1,obj.listaDelitos, listaErrores);
                                     });
                                 }
-                            });
+                            //});
                         }); 
                     }
 

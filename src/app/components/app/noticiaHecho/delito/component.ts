@@ -13,6 +13,7 @@ import { GlobalService } from "@services/global.service";
 import { HttpService } from '@services/http.service';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { ResolveEmit,ConfirmSettings} from '@utils/alert/alert.service';
+import { CasoService } from '@services/caso/caso.service';
 
 @Component({
     selector: 'delito',
@@ -32,7 +33,7 @@ export class DelitoComponent {
     id: number;
 
     caso: Caso;
-    delitoCaso: DelitoCaso;
+    delitoCaso: any;
     private onLine: OnLineService;
     public settings:ConfirmSettings={
         overlayClickToClose: false, // Default: true
@@ -46,7 +47,8 @@ export class DelitoComponent {
         _onLine: OnLineService,
         private http: HttpService,
         private confirmation: ConfirmationService,
-        public globalService : GlobalService
+        public globalService : GlobalService,
+        private casoService:CasoService
         ){
 
         this.db = _tabla;
@@ -60,16 +62,23 @@ export class DelitoComponent {
                 if (this.onLine.onLine){
                     this.id = parseInt(params['id']);
                     this.page('/v1/base/delitos-casos/casos/' + this.id + '/page');   
+                    this.casoService.find(this.id);
                 }else{
                     this.id = parseInt(params['id']);
-                    this.db.get("casos", this.id).then(
-                    casoR => {
-                        if (casoR) {
-                            this.delitoCaso = casoR as DelitoCaso;
-                            if (casoR["delitosCaso"])
-                                this.dataSource = new TableService(this.paginator, casoR["delitosCaso"]);
-                        }
+                    this.casoService.find(this.id).then(r=>{
+                        this.delitoCaso=this.casoService.caso;
+                        if (this.casoService.caso)
+                            if (this.casoService.caso["delitoCaso"])
+                                this.dataSource = new TableService(this.paginator, this.casoService.caso["delitoCaso"]);
                     });
+                    // this.db.get("casos", this.id).then(
+                    // casoR => {
+                    //     if (casoR) {
+                    //         this.delitoCaso = casoR as DelitoCaso;
+                    //         if (casoR["delitosCaso"])
+                    //             this.dataSource = new TableService(this.paginator, casoR["delitoCaso"]);
+                    //     }
+                    // });
                 }    
             } 
         });
