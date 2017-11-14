@@ -111,12 +111,6 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                         for (var i = 0; i < entrevistas.length; ++i) {
                             if ((entrevistas[i])["id"]==this.id){
                                 var entrevista = entrevistas[i];
-                                // (arma["claseArma"])["claseArma"]=arma["clase"];
-                                // if (arma["subtipo"])
-                                //     (arma["claseArma"])["subtipo"]=arma["subtipo"];
-                                // if (arma["tipo"])
-                                //     (arma["claseArma"])["tipo"]=arma["tipo"];
-
                                 this.fillForm(entrevistas[i]);
                                 break;
                             }

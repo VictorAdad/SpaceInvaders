@@ -95,16 +95,28 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 			if (params['id']) {
 				this.id = +params['id'];
 				console.log('id', this.id);
-				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-          			delete response.hechosNarrados;
-          			this.fillForm(response);
-					this.isPericiales = this.form.controls.tipo.value === 'Periciales';
-					this.isPsicofisico = this.form.controls.tipo.value === 'Psicofísico';
-          			this.isPericialesUpdate.emit(this.isPericiales);
-          			this.modelUpdate.emit(response);
-          			this.form.disable();
+				if(this.onLine.onLine){
+					this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
+	          			delete response.hechosNarrados;
+	          			this.fillForm(response);
+						this.isPericiales = this.form.controls.tipo.value === 'Periciales';
+						this.isPsicofisico = this.form.controls.tipo.value === 'Psicofísico';
+	          			this.isPericialesUpdate.emit(this.isPericiales);
+	          			this.modelUpdate.emit(response);
+	          			this.form.disable();
 
-        		});
+	        		});
+        		}else{
+        			this.db.get("casos", this.casoId).then(t=>{
+                        let sol = t["solicitudPrePeritos"] as any[];
+                        for (var i = 0; i < sol.length; ++i) {
+                            if ((sol[i])["id"]==this.id){
+                                this.fillForm(sol[i]);
+                                break;
+                            }
+                        }
+                    });
+        		}
 			}
 		});
 		this.http.get(this.apiUrlPre+this.casoId+'/page').subscribe(response => {
@@ -145,11 +157,41 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 				console.log('-> Perito@save()', _model);
 				this.http.post(this.apiUrl, _model).subscribe(
 					(response) => {
-						if(this.casoId!=null){
-							this.id=response.id;
-							this.router.navigate(['/caso/' + this.casoId + '/perito/' + this.id + '/edit']);
+						if (this.onLine.onLine) {
+							if(this.casoId!=null){
+								this.id=response.id;
+								this.router.navigate(['/caso/' + this.casoId + '/perito/' + this.id + '/edit']);
+							}
+							resolve('Solicitud pericial creada con éxito');
+						}else{
+							let temId=Date.now();
+			                let dato={
+			                    url: this.apiUrl,
+			                    body:_model,
+			                    options:[],
+			                    tipo:"post",
+			                    pendiente:true,
+			                    dependeDe:[this.casoId],
+			                    temId: temId
+			                }
+			                this.db.add("sincronizar",dato).then(p=>{
+			                    this.db.get("casos", this.casoId).then(caso=>{
+			                        if (caso){
+			                            if(!caso["solicitudPrePeritos"]){
+		                        			caso["solicitudPrePeritos"]=[];
+			                            }
+			                            _model["id"]=temId;
+			                            this.id= _model['id'];
+			                            caso["solicitudPrePeritos"].push(_model);
+			                            this.db.update("casos",caso).then(t=>{
+			                                resolve('Solicitud pericial creada con éxito');
+			                                this.router.navigate(['/caso/' + this.casoId + '/perito/' + this.id + '/edit']);
+			                            });
+			                        }
+			                    });
+			                });
+
 						}
-						resolve('Solicitud pericial creada con éxito');
 					},
 					(error) => {
 						console.error('Error', error);
