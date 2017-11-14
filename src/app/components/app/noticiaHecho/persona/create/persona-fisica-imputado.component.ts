@@ -208,6 +208,25 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 this.globals.formMediaFilicion.patchValue(_personaCaso["persona"].mediaFiliacion);
             }
             this.fillForm(_personaCaso["persona"]);
+            let timer3 = Observable.timer(1);
+            timer3.subscribe(t => {
+                if(_personaCaso["persona"]['estado']){
+                    this.form.patchValue({
+                        'estado': {
+                            'id': _personaCaso["persona"]['estado']['id'],
+                        }
+                    });
+                    let timer4 = Observable.timer(1);
+                    timer4.subscribe(t => {
+                        if(_personaCaso["persona"]['municipio'])
+                            this.form.patchValue({
+                                'municipio': {
+                                    'id': _personaCaso["persona"]['municipio']['id'],
+                                }
+                            })
+                    });
+                }
+            });
             this.fillNombres(_personaCaso["persona"].aliasNombrePersona);
             var _data=_personaCaso["persona"];
 
