@@ -234,11 +234,19 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     }
 
     addHostigamiento(_val: any){
+        console.log("HOSTIGAMIENTO",_val);
+        if (_val["ambito"]){
+            _val["conductaDetalle"]=this.optionsRelacion.matrizConductaDetalle.finded[0];
+            _val["modalidadAmbito"]=this.optionsRelacion.matrizModalidadAmbito.finded[0];
+        }
         this.colections.add('hostigamiento', 'subjectHostigamiento', _val);
         let form = this.form.get('hostigamientoAcoso') as FormArray;
         var idModalidadAmbito=this.optionsRelacion.matrizModalidadAmbito.finded[0]?this.optionsRelacion.matrizModalidadAmbito.finded[0].id:null;
         var idConductaDetalle=this.optionsRelacion.matrizConductaDetalle.finded[0]?this.optionsRelacion.matrizConductaDetalle.finded[0].id:null;
         var idTestigo=_val.testigo?_val.testigo.id:null;
+        if (_val["ambito"]){
+            idTestigo=_val.testigo;
+        }
         form.push(
             this.formRelacion.setHostigamientoForm(
                 idModalidadAmbito,
