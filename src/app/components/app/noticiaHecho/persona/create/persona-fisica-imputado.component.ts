@@ -97,6 +97,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         console.log("PERSONACASO->",response);
                         this.globals.personaCaso=response["persona"];
                         this.fillPersonaCaso(response);
+                        // this.form.controls.tipoPersona.disable();
+                        // this.form.controls.tipoInterviniente.disable();
                         console.log('Form', this.globals);
                     });
                 }else{

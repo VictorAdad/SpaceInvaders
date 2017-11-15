@@ -2,10 +2,11 @@ import { Component, Input, Output, EventEmitter , OnInit, AfterViewInit, ViewChi
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-	selector    : 'number',
-  	templateUrl : './component.html'
+	selector    : 'email',
+  	templateUrl : './email.component.html'
 })
-export class NumberComponent implements OnInit{
+
+export class EmailComponent implements OnInit{
 	@Input() label    : string;
 	@Input() value    : string;
 	@Input() prefix   : string;
@@ -18,27 +19,24 @@ export class NumberComponent implements OnInit{
 	@Input() hintStart: string="";
 	@Input() hintEnd: string="";
 	@Input() readonly: string="";
+	@Input() max :number = 100;
 	@Input() functionChange: Function;
-  	@Input() max :number = 12;
-  	@Input() maxValue :number = 999999999999;
-  	@Input() decimal: boolean = false; 
-	backupValue : string;
+	@ViewChild('emailComponent') emailComponent;
 
-  	@ViewChild('numberComponent') numberComponent;
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
 
-	constructor(private renderer: Renderer){
+	constructor(private renderer : Renderer){
+
 	}
 
 	ngOnInit(){
-    console.log('-------------> ',this);
-
+		// console.log(this);
 	}
 
 	ngAfterViewInit(){
 		this.renderer.listen(
-			this.numberComponent.nativeElement, 'keyup', (event) => { this.inputSlice(event); });
+			this.emailComponent.nativeElement, 'keyup', (event) => { this.inputSlice(); });
 	}
 
 	update(value) {
@@ -48,35 +46,21 @@ export class NumberComponent implements OnInit{
 		}
 	}
 
-	//69 189
+	inputSlice(){
+		var rejex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	inputSlice(event){
-		if (this.decimal == true && event.keyCode == 189 || event.keyCode == 69 || event.keyCode == 190) {
-			if(this.backupValue == null){
-				this.value = '0';	
-			}else{
-				this.value = this.backupValue;
-			}
-			return
-		}
-		if (event.keyCode == 189 || event.keyCode == 69 || event.keyCode == 190) {
-			if(this.backupValue == null){
-				this.value = '0';	
-			}else{
-				this.value = this.backupValue;
-			}
-			return
-		}
 		if (this.value!=null && this.value.toString().length > this.max) {
 			this.value = this.value.toString().slice(0,this.max);
 		}
-		this.backupValue = this.value;
+		if (this.value == null || this.value == "" || rejex.test(this.value)) {
+			console.log('-----------> uno',this.value);
+			this.hintEnd = ""
+			this.group.controls[this.name].setErrors(null);
+		}else{	
+			this.hintEnd = "Este correo no es valido"
+			this.group.controls[this.name].setErrors({'incorrect': true});
+			console.log('-----------> dos',this.value);
+		}
 	}
-
-
-
 }
-
-
-
 

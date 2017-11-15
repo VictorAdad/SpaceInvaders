@@ -22,7 +22,7 @@ export class RadioButtonComponent{
 	update(value) {
 		this.valueChange.emit(value);
 		if (value==null || typeof value=="undefined" || value=="" || value==" ")
-			console.log("MOCO#",value,"#");
+				console.log();
 		else{
 			this.requerido=false;
 		}

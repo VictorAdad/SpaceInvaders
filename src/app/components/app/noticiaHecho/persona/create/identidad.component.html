@@ -21,12 +21,12 @@
                 <text label="Apellido paterno"   hintStart="Campo obligatorio" name="paterno" [group]="globals.form"></text>
             </div>
             <div class="col">
-                <text label="Apellido materno"   hintStart="Campo obligatorio" name="materno" [group]="globals.form"></text>
+                <text label="Apellido materno" name="materno" [group]="globals.form"></text>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3">
-              <select2 [options]="options.sexo" placeholder="Sexo" name="id" [group]="globals.form.controls.sexo"></select2>
+              <select2 [options]="options.sexo" placeholder="Sexo" name="id" hintStart="Campo obligatorio" [group]="globals.form.controls.sexo"></select2>
             </div>
             <div class="col-md-6">
                 <div class="row">
@@ -34,7 +34,7 @@
                       <date label="Fecha de nacimiento" name="fechaNacimiento" [group]="globals.form" (valueChange)="edad($event)"></date>
                     </div>
                     <div class="col">
-                      <number label="Edad" name="edad" [maxValue]="999" [max]="3" [group]="globals.form"></number>
+                      <number label="Edad" name="edad" hintStart="Campo obligatorio" [maxValue]="99" [max]="2" [group]="globals.form"></number>
                     </div>
 
                     <div class="col">
@@ -70,18 +70,18 @@
               <select2 [options]="options.escolaridad" placeholder="Escolaridad" name="id" [group]="globals.form.controls.escolaridad" ></select2>
             </div>
             <div class="col">
-              <select2 [options]="options.ocupacion" placeholder="Ocupación"  name="id" [group]="globals.form.controls.ocupacion"></select2>
+              <select2 [options]="options.ocupacion" placeholder="Ocupación" hintStart="Campo obligatorio" name="id" [group]="globals.form.controls.ocupacion"></select2>
             </div>
             <div class="col">
               <text label="Lugar de trabajo"  name="lugarTrabajo" [group]="globals.form"></text>
             </div>
 
             <div class="col">
-              <number label="Ingresos mensuales"  name="ingresoMensual" [maxValue]="9999999999" [max]="10" [group]="globals.form"></number>
+              <number label="Ingresos mensuales"  name="ingresoMensual" [maxValue]="9999999999" [max]="10" [decimal]="true" [group]="globals.form"></number>
             </div>
 
             <div class="col">
-             <text label='RFC' name="rfc" [max]="15" [group]="globals.form"></text>
+             <text label='RFC' name="rfc" [max]="13" [group]="globals.form"></text>
             </div>
         </div>
         <div class="row">
@@ -89,7 +89,7 @@
               <select2 [options]="options.estadoCivil" placeholder="Estado civil"  name="id" [group]="globals.form.controls.estadoCivil"></select2>
             </div>
             <div class="col-md-2">
-               <number label="Número de hijos" name="numHijos" [maxValue]="99" [max]="2" [sinDecimales]="true" [group]="globals.form"></number>
+               <number label="Número de hijos" name="numHijos" [maxValue]="99" [max]="2" [group]="globals.form"></number>
             </div>
 
             <div class="col-md-2">

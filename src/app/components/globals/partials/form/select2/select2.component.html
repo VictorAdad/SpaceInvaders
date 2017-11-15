@@ -5,6 +5,8 @@
 		    {{ option.label }}
 		  </mat-option>
 		</mat-select>
+		<mat-hint align="start" *ngIf="hintStart">{{hintStart}} </mat-hint>
+		<mat-hint align="end" *ngIf="hintEnd">{{hintEnd}}</mat-hint>
 	</mat-form-field>
 </div>
 
@@ -15,7 +17,8 @@
 		    {{ option.label }}
 		  </mat-option>
 		</mat-select>
-		 <mat-hint align="end">{{startHint}}</mat-hint>
+		<mat-hint align="start" *ngIf="hintStart">{{hintStart}} </mat-hint>
+		<mat-hint align="end" *ngIf="hintEnd">{{hintEnd}}</mat-hint>
 	</mat-form-field>
 </div>
 

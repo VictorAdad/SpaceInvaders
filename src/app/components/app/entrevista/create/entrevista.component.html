@@ -25,7 +25,7 @@
                         <date label="Fecha de nacimiento" name="fechaNacimiento" (valueChange)="calculateAge($event)"[group]="form"></date>
                     </div>
                     <div class="col-md-3">
-                        <number label="Edad" name="edad" [max]="3" [maxValue]="999" [group]="form"></number>
+                        <number label="Edad" name="edad" [max]="2" [maxValue]="99" [group]="form"></number>
                     </div>
                 </div>
                 <div class="row">
@@ -58,7 +58,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        <text label="RFC" name="rfc" [max]="30" [group]="form"></text>
+                        <text label="RFC" name="rfc" [max]="13" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
                         <select2 placeholder="¿Sabe leer y escribir?"

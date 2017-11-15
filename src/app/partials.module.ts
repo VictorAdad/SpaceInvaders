@@ -13,6 +13,7 @@ import { PasswordComponent } from '@partials/form/password/component';
 import { LoaderComponent } from '@partials/loader/component';
 import { CasoNicComponent } from '@partials/caso/component';
 import { SlideToggleComponent} from '@partials/form/slide-toggle/slide-toggle.component';
+import { EmailComponent } from '@partials/form/email/email.component';
 
 
 @NgModule()
@@ -32,5 +33,6 @@ export const partialsComponents = [
 	LoaderComponent,
 	CasoNicComponent,
   NumberComponent,
-  SlideToggleComponent
+  SlideToggleComponent,
+  EmailComponent
 ];

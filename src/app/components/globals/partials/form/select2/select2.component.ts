@@ -14,8 +14,8 @@ export class Select2Component{
 	@Input() name     : string  = '';
 	@Input() required : boolean = false;
 	@Input() group    : FormGroup = new FormGroup({});
-	@Input() startHint: string ;
-	@Input() endHint  : string ;
+	@Input() hintStart: string="";
+	@Input() hintEnd: string="";
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>()
 
