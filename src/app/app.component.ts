@@ -65,6 +65,7 @@ export class AppComponent {
 
     cleanDB(){
         console.log('cleanDB()');
+        this.router.navigate(['/']);
         localStorage.setItem("initDB","false");
         localStorage.setItem("sincronizacion","false");
         window.indexedDB.deleteDatabase("SIGI");
