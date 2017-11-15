@@ -34,7 +34,9 @@ export class CasoService{
 		        			}
 			            );
 					}
-				}
+				}else{
+                    resolve("El caso ya esta");
+                }
 			}
 		);
 	}

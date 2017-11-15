@@ -10,6 +10,7 @@ import { NoticiaHechoGlobal } from '../../global';
 import { VehiculoService } from '@services/noticia-hecho/vehiculo/vehiculo.service';
 import { SelectsService} from '@services/selects.service';
 import { Observable }  from 'rxjs/Observable';
+import { CasoService } from '@services/caso/caso.service';
 
 @Component({
     selector: 'vehiculo-create',
@@ -34,7 +35,8 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         private http: HttpService,
         private router: Router,
         private db:CIndexedDB,
-        public vehiculoServ: VehiculoService
+        public vehiculoServ: VehiculoService,
+        public casoService:CasoService
         ) {
         super();
         console.log('vehiculoserv', this.vehiculoServ);
@@ -106,6 +108,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             if(params['casoId']){
                 this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho/vehiculos`,label:"Detalle noticia de hechos"})
+                this.casoService.find(this.casoId);
              }
             if(params['id']){
                 this.id = +params['id'];
@@ -115,7 +118,9 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                         this.form.controls.id.patchValue(this.id);
                     });
                 }else{
-                    this.db.get("casos",this.casoId).then(t=>{
+                    //this.db.get("casos",this.casoId).then(t=>{
+                    this.casoService.find(this.casoId).then(r=>{
+                        var t=this.casoService.caso;
                         let vehiculos=t["vehiculos"] as any[];
                         for (var i = 0; i < vehiculos.length; ++i) {
                             if ((vehiculos[i])["id"]==this.id){
@@ -195,7 +200,8 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                     temId: temId
                 }
                 this.db.add("sincronizar",dato).then(p=>{
-                    this.db.get("casos",this.casoId).then(caso=>{
+                    //this.db.get("casos",this.casoId).then(caso=>{
+                        var caso=this.casoService.caso;
                         if (caso){
                             if(!caso["vehiculos"]){
                                 caso["vehiculos"]=[];
@@ -208,7 +214,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                                 this.vehiculoServ.reset();
                             });
                         }
-                    });
+                    //});
                 });
 
             }
@@ -254,7 +260,8 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                     dependeDe:[this.casoId, this.id]
                 }
                 this.db.add("sincronizar",dato).then(p=>{
-                    this.db.get("casos",this.casoId).then(t=>{
+                    //this.db.get("casos",this.casoId).then(t=>{
+                        var t=this.casoService.caso;
                         let vehiculos=t["vehiculos"] as any[];
                         _model["id"]=this.id;
                         for (var i = 0; i < vehiculos.length; ++i) {
@@ -269,7 +276,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                             console.log('-> Registro acutualizado');
                         });
                         console.log("caso",t);
-                    });
+                    //});
                 });
             }
         });

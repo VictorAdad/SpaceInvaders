@@ -71,9 +71,9 @@ export class DetalleCasoComponent implements OnInit{
         	this.db.get("casos", this.id).then(
         		t => {
         			console.log('T', t);
-        			let relaciones = t['relaciones'].filter(object => object['tipoRelacionPersona']['tipo'] === 'Imputado');
+        			let relaciones = t['tipoRelacionPersonas'].filter(object => object['tipo'] === 'Imputado');
             		this.caso = t as Caso;
-					this.hasPredenuncia = (typeof t['predenuncia'] !== 'undefined');
+					this.hasPredenuncia = (typeof t['predenuncias'] !== 'undefined');
 					this.hasRelacionVictimaImputado = (relaciones.length > 0);
 
 					console.log('Predenuncia', this.hasPredenuncia);

@@ -18,6 +18,7 @@ import { LugarService} from '@services/noticia-hecho/lugar.service';
 import { Observable } from 'rxjs';
 import { _config} from '@app/app.config';
 import { Validation } from '@services/validation/validation.service';
+import { CasoService } from '@services/caso/caso.service';
 
 
 @Component({
@@ -52,7 +53,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         private mapsAPILoader: MapsAPILoader,
         private ngZone: NgZone,
         public optionsServ: SelectsService,
-        public lugarServ: LugarService
+        public lugarServ: LugarService,
+        private casoService:CasoService
         ) {
         super();
         lugarServ.getData();
@@ -74,7 +76,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         this.route.params.subscribe(params => {
             if(params['casoId']){
                 this.casoId = +params['casoId'];
-                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho/lugares`,label:"Detalle noticia de hechos"})
+                this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho/lugares`,label:"Detalle noticia de hechos"});
+                this.casoService.find(this.casoId);
              }
             if(params['id']){
                 this.id = +params['id'];
@@ -85,7 +88,9 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                         this.form.controls.id.patchValue(this.id);
                     });
                 }else{
-                  this.db.get("casos",this.casoId).then(t=>{
+                  //this.db.get("casos",this.casoId).then(t=>{
+                  this.casoService.find(this.casoId).then(r=>{
+                    var t=this.casoService.caso;
                     let lugares=t["lugares"] as any[];
                     for (var i = 0; i < lugares.length; ++i) {
                         if ((lugares[i])["id"]==this.id){
@@ -204,7 +209,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                     temId: temId
                 }
                 this.db.add("sincronizar",dato).then(p=>{
-                    this.db.get("casos",this.casoId).then(caso=>{
+                    //this.db.get("casos",this.casoId).then(caso=>{
+                        var caso = this.casoService.caso;
                         if (caso){
                             if(!caso["lugares"]){
                                 caso["lugares"]=[];
@@ -220,7 +226,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/lugares' ]);
                             });
                         }
-                    });
+                    //});
                 });
             }
         });
@@ -254,7 +260,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                     dependeDe:[this.casoId, this.id]
                 }
                 this.db.add("sincronizar",dato).then(p=>{
-                    this.db.get("casos",this.casoId).then(t=>{
+                    //this.db.get("casos",this.casoId).then(t=>{
+                        var t=this.casoService.caso;
                         let lugares=t["lugares"] as any[];
                         _model["id"]=this.id;
                         _model.detalleLugar["dia"]=_model["dia"];
@@ -270,7 +277,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                             resolve("Se actualizo el lugar de manera local");
                         });
                         console.log("caso",t);
-                    });
+                    //});
                 });
             }
         });
