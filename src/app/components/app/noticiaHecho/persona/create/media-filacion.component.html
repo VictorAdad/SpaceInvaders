@@ -7,15 +7,22 @@
 
         </mat-panel-description>
               </mat-expansion-panel-header>
+              Complexión
               <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="personaServ.complexionPielSangre.tipoComplexion" placeholder="Complexión" [group]="globals.formMediaFilicion.controls.complexionPielSangre" name="tipoComplexion"></select2>
+                  <select2 [options]="personaServ.complexionPielSangre.tipoComplexion" placeholder="Tipo" [group]="globals.formMediaFilicion.controls.complexionPielSangre" name="tipoComplexion"></select2>
                 </div>
+              </div>
+              Piel
+              <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="personaServ.complexionPielSangre.colorPiel" placeholder="Piel" [group]="globals.formMediaFilicion.controls.complexionPielSangre" name="colorPiel"></select2>
+                  <select2 [options]="personaServ.complexionPielSangre.colorPiel" placeholder="Color" [group]="globals.formMediaFilicion.controls.complexionPielSangre" name="colorPiel"></select2>
                 </div>
+              </div>
+              Cara
+              <div class="row">
                 <div class="col-md-2">
-                  <select2 [options]="personaServ.caraNariz.formaCara" placeholder="Cara" [group]="globals.formMediaFilicion.controls.caraNariz" name="formaCara"></select2>
+                  <select2 [options]="personaServ.caraNariz.formaCara" placeholder="Forma" [group]="globals.formMediaFilicion.controls.caraNariz" name="formaCara"></select2>
                 </div>
               </div>
               Cabello
@@ -112,7 +119,7 @@
                   <select2 [options]="personaServ.labioOjo.espesorLabio" placeholder="Espesor" [group]="globals.formMediaFilicion.controls.labioOjo" name="espesorLabio" ></select2>
                 </div>
                 <div class="col-md-2">
-                  <select2 [options]="personaServ.labioOjo.alturaNasoLabialLabio" placeholder="Altura del naso labial" [group]="globals.formMediaFilicion.controls.labioOjo" name="alturaNasoLabialLabio" ></select2>
+                  <select2 [options]="personaServ.labioOjo.alturaNasoLabialLabio" placeholder="Altura de naso labial" [group]="globals.formMediaFilicion.controls.labioOjo" name="alturaNasoLabialLabio" ></select2>
                 </div>
                 <div class="col-md-2">
                   <select2 [options]="personaServ.labioOjo.prominenciaLabio" placeholder="Prominencia" [group]="globals.formMediaFilicion.controls.labioOjo" name="prominenciaLabio" ></select2>
@@ -248,6 +255,14 @@
                 <div class="col-md-12">
                   <text-area label="Lunares"
                     name="lunares" 
+                        [group]="globals.form.controls.mediaFiliacion">        
+                  </text-area>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <text-area label="Disminuciones físicas"
+                    name="disminucionesFisicas" 
                         [group]="globals.form.controls.mediaFiliacion">        
                   </text-area>
                 </div>

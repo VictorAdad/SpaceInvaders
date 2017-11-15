@@ -51,7 +51,8 @@ export class NumberComponent implements OnInit{
 	//69 189
 
 	inputSlice(event){
-		if (this.decimal == true && event.keyCode == 189 || event.keyCode == 69 || event.keyCode == 190) {
+		if (this.decimal == true && (event.keyCode == 189 || event.keyCode == 69)) {
+			console.log('Primera opcion');
 			if(this.backupValue == null){
 				this.value = '0';	
 			}else{
@@ -59,7 +60,8 @@ export class NumberComponent implements OnInit{
 			}
 			return
 		}
-		if (event.keyCode == 189 || event.keyCode == 69 || event.keyCode == 190) {
+		if (this.decimal == false && (event.keyCode == 189 || event.keyCode == 69 || event.keyCode == 190)) {
+			console.log('Segunda opcion');
 			if(this.backupValue == null){
 				this.value = '0';	
 			}else{

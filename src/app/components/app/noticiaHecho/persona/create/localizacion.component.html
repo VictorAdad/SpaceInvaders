@@ -122,47 +122,47 @@
             </div>
             <div class="row">
                 <div class="col-md-3">
-                    <text label="Tel. particular"
+                    <number [decimal]="false" label="Tel. particular"
                         name="telParticular"
                         [max]="20"
                         [group]="globals.form.controls.localizacionPersona.controls[i]">
                             
-                    </text>
+                    </number>
                 </div>
                 <div class="col-md-3">
-                    <text label="Tel. del trabajo"
+                    <number label="Tel. del trabajo"
                         name="telTrabajo"
                         [max]="20"
                         [group]="globals.form.controls.localizacionPersona.controls[i]">
                             
-                    </text>
+                    </number>
                 </div>
                 <div class="col-md-3">
-                    <text label="Extensión"
+                    <number label="Extensión"
                         name="extension"
                         [max]="5"
                         [group]="globals.form.controls.localizacionPersona.controls[i]">
                             
-                    </text>
+                    </number>
                 </div>
                 <div class="col-md-3">
-                    <text label="Tel. móvil"
+                    <number label="Tel. móvil"
                         name="telMovil"
                         [max]="20"
                         [group]="globals.form.controls.localizacionPersona.controls[i]">
                             
-                    </text>
+                    </number>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-3">
-                    <text label="Fax"
+                    <number label="Fax"
                         name="fax"
                         [max]="20"
                         [group]="globals.form.controls.localizacionPersona.controls[i]">
                             
-                    </text>
+                    </number>
                 </div>
                 <div class="col-md-3">
                     <text label="Otro medio de contacto"
@@ -183,23 +183,23 @@
             </div>
 
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-auto">
                     <label class="Naranja">Tipo de residencia</label>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <radiobutton [radios]="[
-                            {label:'Residencia habitual',value:'Residencia habitual'},
-                            {label:'Domicilio procesal',value:'Domicilio procesal'}]"
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <radiobutton class="col-md-auto" [radios]="[
+                        {label:'Residencia habitual',value:'Residencia habitual'},
+                        {label:'Domicilio procesal',value:'Domicilio procesal'}]"
 
-                            (valueChange)="changeTipoResida($event,i)"
+                        (valueChange)="changeTipoResida($event,i)"
 
-                            [value]="globals.tipoResidencia[i]"
+                        [value]="globals.tipoResidencia[i]"
 
-                            >
-                                
-                        </radiobutton>
-                    </div>
+                        >
+                            
+                    </radiobutton>
                 </div>
             </div>
         </div>
