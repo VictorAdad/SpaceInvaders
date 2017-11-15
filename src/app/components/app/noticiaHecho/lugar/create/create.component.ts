@@ -41,6 +41,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
     @ViewChild("search")
     public searchElementRef: ElementRef;
     public breadcrumb = [];
+    public colonia: any;
 
 
     constructor(
@@ -332,7 +333,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         console.log(this);
     }
 
-    changePais(id){
+    public changePais(id){
         console.log('-------->', id);
         if(id!=null && typeof id !='undefined'){
             this.optionsServ.getEstadoByPais(id);
@@ -358,7 +359,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
 
     }
 
-    changeEstado(id){
+    public changeEstado(id){
         if(id!=null && typeof id !='undefined'){
             this.optionsServ.getMunicipiosByEstado(id);
             this.form.controls.estado.patchValue(id);
@@ -367,10 +368,26 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
 
     }
 
-    changeMunicipio(id){
+    public changeMunicipio(id){
         if(id!=null && typeof id !='undefined')
             this.optionsServ.getColoniasByMunicipio(id);
 
+    }
+
+    public changeColonia(id){
+        if(id){
+            this.http.get(`/v1/catalogos/colonia/${id}`).subscribe(
+                response => {
+                    console.log('done changeColonia()', response);
+                    this.form.patchValue({
+                        'cp': response.cp
+                    })
+                },
+                error => {
+                    console.log(`No se encontró una colonia con el id = ${id}`);
+                }
+            )
+        }
     }
 
 }
