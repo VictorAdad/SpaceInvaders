@@ -7,6 +7,7 @@ import { HttpService} from '@services/http.service';
 import { Relacion } from '@models/relacion'
 import { CIndexedDB } from '@services/indexedDB';
 import { NoticiaHechoService } from '@services/noticia-hecho.service';
+import { CasoService } from '@services/caso/caso.service';
 
 @Component({
     templateUrl:'./relacion.component.html',
@@ -27,6 +28,7 @@ export class RelacionComponent{
         private http: HttpService,
         private onLine: OnLineService,
         private db:CIndexedDB,
+        private casoService:CasoService
         ){}
 
 	ngOnInit() {
@@ -41,11 +43,14 @@ export class RelacionComponent{
                         this.relaciones = response.data as Relacion[];
                         this.dataSource = new TableService(this.paginator, this.relaciones);
                     });
+                    this.casoService.find(this.casoId);
                 }else{
-                    this.db.get("casos",this.casoId).then(caso=>{
+                    //this.db.get("casos",this.casoId).then(caso=>{
+                    this.casoService.find(this.casoId).then(r=>{
+                        var caso=this.casoService.caso;
                         if (caso){
-                            if(caso["relaciones"]){
-                                this.dataSource = new TableService(this.paginator, caso["relaciones"]);
+                            if(caso["tipoRelacionPersonas"]){
+                                this.dataSource = new TableService(this.paginator, caso["tipoRelacionPersonas"]);
                             }
                         }
                     });

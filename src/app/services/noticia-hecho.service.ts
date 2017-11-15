@@ -6,7 +6,6 @@ import { _config} from '@app/app.config';
 import { OnLineService} from '@services/onLine.service';
 import { CIndexedDB } from '@services/indexedDB';
 
-
 @Injectable()
 export class NoticiaHechoService {
 
@@ -134,9 +133,14 @@ export class NoticiaHechoService {
                 this.personas = this.constructOptionsPersona(response);
             });
         else
-            this.db.list("personas").then(p=>{
-                this.personas = this.constructOptionsPersona(this.buscaTodosLosElementosEnLista(p,{personaCaso:{0:{caso:{id:this.id}}}}));
-            })
+            if (this.caso["personaCasos"]){
+                var arr=[];
+                for (var i = 0; i < this.caso["personaCasos"].length; ++i) {
+                    arr.push({id:this.caso["personaCasos"][i]["persona"]["id"], persona:{nombre:this.caso["personaCasos"][i]["persona"]["nombre"]}});
+                }
+                this.personas = this.constructOptionsPersona(arr);
+                console.log("PERSONAS",arr);
+            }
     }
 
     public getDelitos(){
@@ -154,27 +158,17 @@ export class NoticiaHechoService {
             this.http.get(_url).subscribe((response) => {
                 this[_attr] = _call(response);
             });
-        else
-            this.db.list("personas").then(p=>{
-                var itemABuscar={
-                    personaCaso:{
-                        0:{
-                            caso:{
-                                id:this.id
-                            },
-                            tipoInterviniente:{
-                                id:idInterviniente
-                            }
-                        }
-                    }
-                };
-                var pp= this.buscaTodosLosElementosEnLista(p,itemABuscar);
+        else{
+            if (this.caso["personaCasos"]){
                 var arr=[];
-                for (var i = 0; i <pp.length; ++i) {
-                    arr.push({id:pp[i].personaCaso[0].id, persona:{nombre:pp[i].nombre}});
+                for (var i = 0; i < this.caso["personaCasos"].length; ++i) {
+                    if (idInterviniente==this.caso["personaCasos"][i]["tipoInterviniente"]["id"]){
+                        arr.push({id:this.caso["personaCasos"][i]["persona"]["id"], persona:{nombre:this.caso["personaCasos"][i]["persona"]["nombre"]}});
+                    }
                 }
                 this[_attr] = this.constructOptionsPersona(arr);
-            });
+            }
+        }
     }
 
     private constructOptionsLugar(_data:any){
@@ -200,8 +194,8 @@ export class NoticiaHechoService {
         if (_data)
             for (var i in _data){      // code...
                 let object=_data[i];
-                let marca = object.marca != null  ? object.marca  : '';
-                let color = object.color != null  ? object.color  : '';
+                let marca = object.marcaSubmarca.marca != null  ? object.marcaSubmarca.marca  : '';
+                let color = object.motivoRegistroColorClase.color != null  ? object.motivoRegistroColorClase.color  : '';
                 options.push({value: object.id, label: marca+" "+color});
             }
         options.sort((a,b)=>{
