@@ -197,10 +197,10 @@
 
                 <div class="col">
                     <select2 placeholder="Consumación"
-                        name=""
+                        name="consumacion"
                         [(options)]="optionsRelacion.matrizDesaparicionConsumacion.consumacion"
-                        [group]=""
-                        (valueChange)="set('desaparicionConsumada','consumacion',$event,'desaparicion_consumacion')">
+                        [group]="form.controls.desaparicionConsumacion"
+                        (valueChange)="optionsRelacion.matrizDesaparicionConsumacion.find($event,'consumacion')">
 
                     </select2>
                 </div>
@@ -217,10 +217,10 @@
 
                 <div class="col">
                     <select2 placeholder="Relación entre acusado y ofendido"
-                        name=""
-                        [(options)]="optionsRelacion.matrizDesaparicionConsumacion.relacionAcusadoOfendido"
-                        [group]=""
-                        (valueChange)="set('desaparicionConsumada','relacionAcusadoOfendido',$event,'desaparicion_consumacion')">
+                        name="relacionAcusado"
+                        [(options)]="optionsRelacion.matrizDesaparicionConsumacion.relacionAcusado"
+                        [group]="form.controls.desaparicionConsumacion"
+                        (valueChange)="optionsRelacion.matrizDesaparicionConsumacion.find($event,'relacionAcusado')">
 
                     </select2>
                 </div>
@@ -235,10 +235,10 @@
 
                 <div class="col">
                     <select2 placeholder="Tipo de desaparición"
-                        name=""
+                        name="tipoDesaparicion"
                         [(options)]="optionsRelacion.matrizDesaparicionConsumacion.tipoDesaparicion"
-                        [group]=""
-                        (valueChange)="set('desaparicionConsumada','tipoDesaparicion',$event,'desaparicion_consumacion')">
+                        [group]="form.controls.desaparicionConsumacion"
+                        (valueChange)="optionsRelacion.matrizDesaparicionConsumacion.find($event,'tipoDesaparicion')">
 
                     </select2>
                 </div>
@@ -565,24 +565,24 @@
 
                                     <ng-container matColumnDef="Modalidad">
                                         <mat-header-cell *matHeaderCellDef> Modalidad </mat-header-cell>
-                                        <mat-cell *matCellDef="let element"> {{element.modalidad}} </mat-cell>
+                                        <mat-cell *matCellDef="let element"> {{element?.modalidadAmbito?.modalidad}} </mat-cell>
                                     </ng-container>
                                     <ng-container matColumnDef="Ámbito">
                                         <mat-header-cell *matHeaderCellDef> Ámbito </mat-header-cell>
-                                        <mat-cell *matCellDef="let element"> {{element.ambito}} </mat-cell>
+                                        <mat-cell *matCellDef="let element"> {{element?.modalidadAmbito?.ambito}} </mat-cell>
                                     </ng-container>
                                     <ng-container matColumnDef="Conducta">
                                         <mat-header-cell *matHeaderCellDef> Conducta </mat-header-cell>
-                                        <mat-cell *matCellDef="let element"> {{element.conducta}} </mat-cell>
+                                        <mat-cell *matCellDef="let element"> {{element?.conductaDetalle?.conducta}} </mat-cell>
                                     </ng-container>
 
                                     <ng-container matColumnDef="Detalle">
                                         <mat-header-cell *matHeaderCellDef> Detalle </mat-header-cell>
-                                        <mat-cell *matCellDef="let element"> {{element.detalle}} </mat-cell>
+                                        <mat-cell *matCellDef="let element"> {{element?.conductaDetalle?.detalle}} </mat-cell>
                                     </ng-container>
                                     <ng-container matColumnDef="Testigo">
                                         <mat-header-cell *matHeaderCellDef> Testigo </mat-header-cell>
-                                        <mat-cell *matCellDef="let element"> {{element.testigo}} </mat-cell>
+                                        <mat-cell *matCellDef="let element"> {{element?.testigo?.nombre}} </mat-cell>
                                     </ng-container>
 
                                     <mat-header-row *matHeaderRowDef="hostigamientoDisplayedColumns"></mat-header-row>

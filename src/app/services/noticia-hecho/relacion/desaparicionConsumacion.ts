@@ -5,7 +5,7 @@ export class MatrizDesaparicionConsumacion extends MatrizGlobal{
 
     public consumacion= [];
     public tipoDesaparicion       = [];
-    public relacionAcusadoOfendido          =[];
+    public relacionAcusado          =[];
 
     
     constructor(
@@ -20,12 +20,12 @@ export class MatrizDesaparicionConsumacion extends MatrizGlobal{
         return (
             _object.consumacion === _selected.consumacion 
             && _object.tipoDesaparicion === _selected.tipoDesaparicion 
-            && _object.relacionAcusadoOfendido === _selected.relacionAcusadoOfendido );
+            && _object.relacionAcusado === _selected.relacionAcusado );
     }
 }
 
 export class DesaparicionConsumacion {
     public consumacion: string = null;
     public tipoDesaparicion       : string = null;
-    public relacionAcusadoOfendido          : string = null;
+    public relacionAcusado          : string = null;
 }

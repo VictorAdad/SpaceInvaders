@@ -50,6 +50,7 @@ export class RelacionComponent{
                         var caso=this.casoService.caso;
                         if (caso){
                             if(caso["tipoRelacionPersonas"]){
+                                this.pag = caso["tipoRelacionPersonas"].length;
                                 this.dataSource = new TableService(this.paginator, caso["tipoRelacionPersonas"]);
                             }
                         }
@@ -60,11 +61,13 @@ export class RelacionComponent{
   	}
 
     public changePage(_e) {
-        console.log('Page index', _e.pageIndex);
-        console.log('Page size', _e.pageSize);
-        console.log('Id caso', this.casoId);
-        this.relaciones = [];
-        this.page('/v1/base/casos/' + this.casoId + '/relaciones?p=' + _e.pageIndex + '&tr=' + _e.pageSize);
+        if(this.onLine.onLine){
+            console.log('Page index', _e.pageIndex);
+            console.log('Page size', _e.pageSize);
+            console.log('Id caso', this.casoId);
+            this.relaciones = [];
+            this.page('/v1/base/tipo-relacion-persona/casos/' + this.casoId + '/page?p=' + _e.pageIndex + '&tr=' + _e.pageSize);
+        }
     }
 
     public page(url: string) {

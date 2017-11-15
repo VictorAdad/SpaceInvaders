@@ -30,8 +30,11 @@ export class Form {
             'delitoCaso': new FormGroup({
                 'id': new FormControl('', [Validators.required]),
             }),
-            'desaparicionConsumada': new FormGroup({
+            'desaparicionConsumacion': new FormGroup({
                 'id': new FormControl("",[]),
+                'consumacion': new FormControl("",[]),
+                'tipoDesaparicion': new FormControl("",[]),
+                'relacionAcusado': new FormControl("",[])
             }),
             'elementoComision'        : new FormGroup({
                 'id': new FormControl('',[Validators.required]),

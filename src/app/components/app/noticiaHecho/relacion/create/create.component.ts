@@ -19,6 +19,7 @@ import { Form } from './form';
 import { Options } from './options';
 import { Colections } from './colections';
 import { TrataPersonas } from './colections';
+import { CasoService } from '@services/caso/caso.service';
 
 
 @Component({
@@ -103,6 +104,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         private db               : CIndexedDB,
         private optionsNoticia   : NoticiaHechoService,
         private optionsService   : SelectsService,
+        private casoService:CasoService
         ) {
         super();
         this.optionsRelacion = new Options(http,db,onLine);
@@ -132,6 +134,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 //this.optionsNoticia.setId(this.casoId);
                 //this.optionsNoticia.getData();
                 this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho/relaciones`,label:"Detalle noticia de hechos"})
+                this.casoService.find(this.casoId);
 
                 if(this.onLine.onLine){
                     this.optionsNoticia.setId(this.casoId, this.casoOffline);
@@ -139,19 +142,14 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                     this.optionsService.getData();
                     this.optionsRelacion.getData();
                 }else{
-                    this.db.list("casos").then(caso=>{
-                        var lista = caso as any[];
-                        for (var i = 0; i < lista.length; ++i) {
-                            if ((lista[i])["id"]==this.casoId){
-                                this.casoOffline=this.copiaJson(lista[i]);
-                                this.optionsNoticia.setId(this.casoId, this.casoOffline);
-                                this.optionsNoticia.getData();
-                                this.optionsService.getData();
-                                this.optionsRelacion.getData();
-                                console.log("TODA LA VISTA",this);
-                                break;
-                            }
-                        }
+                    //this.db.list("casos").then(caso=>{
+                    this.casoService.find(this.casoId).then(r=>{
+                        this.casoOffline=this.casoService.caso;
+                        this.optionsNoticia.setId(this.casoId, this.casoOffline);
+                        this.optionsNoticia.getData();
+                        this.optionsService.getData();
+                        this.optionsRelacion.getData();
+                        console.log("TODA LA VISTA",this);
                     });
                 }
             }
@@ -162,8 +160,18 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                       this.fillForm(response);
                   });
                 }else{
-                    this.db.get("casos",this.casoId).then(caso=>{
-                        console.log("Caso Relacion3",caso);
+                    //this.db.get("casos",this.casoId).then(caso=>{
+                    this.casoService.find(this.casoId).then(r=>{
+                        var caso= this.casoService.caso;
+                        if (caso["tipoRelacionPersonas"]){
+                            for (var i = 0; i < caso["tipoRelacionPersonas"].length; ++i) {
+                                if (caso["tipoRelacionPersonas"][i]["id"]==this.id){
+                                    this.fillForm(caso["tipoRelacionPersonas"][i]);
+                                    break;
+                                }
+                            }
+                        }
+                        console.log(this.casoOffline);
                     });
                   // this.db.get("casos",this.casoId).then(t=>{
                   //   let relaciones=t["relacion"] as any[];
@@ -226,13 +234,24 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     }
 
     addHostigamiento(_val: any){
+        console.log("HOSTIGAMIENTO",_val);
+        if (_val["ambito"]){
+            _val["conductaDetalle"]=this.optionsRelacion.matrizConductaDetalle.finded[0];
+            _val["modalidadAmbito"]=this.optionsRelacion.matrizModalidadAmbito.finded[0];
+        }
         this.colections.add('hostigamiento', 'subjectHostigamiento', _val);
         let form = this.form.get('hostigamientoAcoso') as FormArray;
+        var idModalidadAmbito=this.optionsRelacion.matrizModalidadAmbito.finded[0]?this.optionsRelacion.matrizModalidadAmbito.finded[0].id:null;
+        var idConductaDetalle=this.optionsRelacion.matrizConductaDetalle.finded[0]?this.optionsRelacion.matrizConductaDetalle.finded[0].id:null;
+        var idTestigo=_val.testigo?_val.testigo.id:null;
+        if (_val["ambito"]){
+            idTestigo=_val.testigo;
+        }
         form.push(
             this.formRelacion.setHostigamientoForm(
-                this.optionsRelacion.matrizModalidadAmbito.finded[0].id || null,
-                this.optionsRelacion.matrizConductaDetalle.finded[0].id || null,
-                _val.testigo || null
+                idModalidadAmbito,
+                idConductaDetalle,
+                idTestigo
             )
         );
     }
@@ -244,7 +263,10 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             if(_model.tieneViolenciaGenero)
                 if(this.optionsRelacion.matrizViolenciaGenero.finded[0])
                     _model.violenciaGenero.id = this.optionsRelacion.matrizViolenciaGenero.finded[0].id;
-            console.log("MODELO",_model);
+            if (this.optionsRelacion.matrizDesaparicionConsumacion.finded[0]){
+                _model["desaparicionConsumacion"]["id"]=this.optionsRelacion.matrizDesaparicionConsumacion.finded[0].id;
+            }
+            console.log("MODELO",_model,this.optionsRelacion.matrizDesaparicionConsumacion);
             if(this.onLine.onLine){
                 this.http.post('/v1/base/tipo-relacion-persona', _model).subscribe(
                     (response) => {
@@ -333,9 +355,9 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                       console.log("NO",this.casoOffline);
                         if (this.casoOffline){
                             let caso=this.casoOffline;
-                            if(!caso["relaciones"]){
+                            if(!caso["tipoRelacionPersonas"]){
                                 let x:Array<any>=[];
-                                caso["relaciones"]=x;
+                                caso["tipoRelacionPersonas"]=x;
                             }
                             _model["id"]=copia;
                             for (var i = 0; i < _model["hostigamientoAcoso"].length; ++i) {
@@ -353,8 +375,35 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                                 let item = (_model["efectoViolencia"])[i];
                                 item["id"]=copia;
                             }
-                            console.log(caso["relaciones"]);
-                            caso["relaciones"].push(_model);
+                            console.log(caso["tipoRelacionPersonas"]);
+                            var relacion={
+                                armaTipoRelacionPersona:_model["tipoRelacionPersona"]["armaTipoRelacionPersona"],
+                                detalleDelito:{
+                                    clasificacionDelito:_model["clasificacionDelito"],
+                                    clasificacionDelitoOrden:_model["clasificacionDelitoOrden"],
+                                    concursoDelito:_model["concursoDelito"],
+                                    delitoCaso:_model["delitoCaso"],
+                                    desaparicionConsumacion:_model["desaparicionConsumacion"],
+                                    efectoViolencia:_model["efectoViolencia"],
+                                    elementoComision:_model["elementoComision"],
+                                    flagrancia:_model["flagrancia"],
+                                    formaAccion:_model["formaAccion"],
+                                    formaComision:_model["formaComision"],
+                                    formaConducta:_model["formaConducta"],
+                                    hostigamientoAcoso:_model["hostigamientoAcoso"],
+                                    id:_model["id"],
+                                    modalidadDelito:_model["modalidadDelito"],
+                                    tieneViolenciaGenero:_model["tieneViolenciaGenero"],
+                                    trataPersona:_model["trataPersona"],
+                                    violnciaGenero:_model["violnciaGenero"]
+                                },
+                                lugarTipoRelacionPersona:_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"],
+                                personaCaso:_model["tipoRelacionPersona"]["personaCaso"],
+                                personaCasoRelacionada:_model["tipoRelacionPersona"]["personaCasoRelacionada"],
+                                tipo:_model["tipoRelacionPersona"]["tipo"],
+                                vehiculoTipoRelacion:_model["tipoRelacionPersona"]["vehiculoTipoRelacionPersona"]
+                            }
+                            caso["tipoRelacionPersonas"].push(relacion);
                             console.log("NO");
                             console.log("MODELO",_model, caso);
                             this.db.update("casos",caso).then(t=>{
@@ -467,8 +516,12 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                         this.addTrataPersonas(object);
                     }
                     for (var object of _data.detalleDelito.hostigamientoAcoso) {
-                        this.optionsRelacion.matrizModalidadAmbito.finded.push(_data.detalleDelito.hostigamientoAcoso.modalidad)
-                        this.optionsRelacion.matrizConductaDetalle.finded.push(_data.detalleDelito.hostigamientoAcoso.ambito)
+                        if (object.modalidadAmbito){
+                            this.optionsRelacion.matrizModalidadAmbito.finded.push(object.modalidadAmbito)
+                        }
+                        if (object.modalidadAmbito){
+                            this.optionsRelacion.matrizConductaDetalle.finded.push(object.conductaDetalle)
+                        }
                         this.addHostigamiento(object);
                     }
                 });
