@@ -11,6 +11,7 @@ export class Options {
     public municipios: MOption[]  = [];
     public colonias: MOption[]    = [];
     public localidades: MOption[] = [];
+    public tipoDomicilio: MOption[]= [];
 
 
     constructor(
@@ -24,6 +25,7 @@ export class Options {
         this.municipios  = this.select.municipios;
         this.colonias    = this.select.colonias;
         this.localidades = this.select.localidad;
+        this.tipoDomicilio = this.select.tipoDomicilio;
     }
 
     public getEstadoByPais(idPais: number){
