@@ -56,10 +56,11 @@ export class Select2Component{
    			let timer = Observable.timer(1,1000);
    			let subs = timer.subscribe( 
    				t =>{
-					if(this.options.length > 0){
-						// console.log('-> Tiene options');
-						subs.unsubscribe();
-					}
+   					if(this.options)
+						if(this.options.length > 0){
+							// console.log('-> Tiene options');
+							subs.unsubscribe();
+						}
 					this.filteredOptions = this.options;
 				}
 			);
