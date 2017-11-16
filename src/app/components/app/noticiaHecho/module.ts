@@ -4,7 +4,8 @@ import { PersonaComponent } from './persona/component';
 import { PersonaFisicaImputadoComponent } from './persona/create/persona-fisica-imputado.component';
 import { IdentificacionComponent } from './persona/create/persona-fisica-imputado.component';
 import { IdentidadComponent } from './persona/create/persona-fisica-imputado.component';
-import { LocalizacionComponent } from './persona/create/persona-fisica-imputado.component';
+import { LocalizacionComponent } from './persona/create/localizacion.component';
+import { LocalizacionFormComponent } from './persona/create/localizacion.component';
 import { MediaFilacionComponent } from './persona/create/persona-fisica-imputado.component';
 import { DelitoComponent } from './delito/component';
 import { TitularComponent, TransferirComponent } from './titular/component';
@@ -20,6 +21,7 @@ export const noticiaHechoComponents = [
     IdentidadComponent,
     IdentificacionComponent,
     LocalizacionComponent,
+    LocalizacionFormComponent,
     MediaFilacionComponent,
     DelitoComponent,
     TitularComponent,

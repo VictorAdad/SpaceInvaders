@@ -3,11 +3,7 @@ import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@ang
 import { ActivatedRoute } from '@angular/router';
 import { CIndexedDB } from '@services/indexedDB';
 import { Persona} from '@models/persona';
-import { Pais} from '@models/catalogo/pais';
-import { Estado} from '@models/catalogo/estado';
-
 import { Router} from '@angular/router';
-import { Caso} from '@models/caso'
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { SelectsService} from '@services/selects.service';
@@ -31,7 +27,6 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     public globals: PersonaGlobals;
     public isMexico: boolean=false;
     persona:Persona;
-    caso:Caso;
     tabla: CIndexedDB;
     public breadcrumb = [];
     public tipoInter = [];
@@ -900,9 +895,12 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
     constructor(
         public personaServ: PersonaService,
         private _tabla: CIndexedDB,
+        private http: HttpService,
+        private onLine: OnLineService,
         ){
         super();
         this.tabla = _tabla;
+        this.options =  new SelectsService(this.http, this.onLine, this._tabla);
 
     }
 
@@ -1040,77 +1038,6 @@ export class IdentificacionComponent{
 }
 
 @Component({
-    selector: 'localizacion',
-    templateUrl : './localizacion.component.html'
-})
-export class LocalizacionComponent{
-    @Input()
-    globals: PersonaGlobals;
-    @Input()
-    options: SelectsService;
-    isMexico:boolean=false;
-    @Input()
-    localizaciones: string[] = [];
-    public localizacionIndex: number = 0;
-
-    constructor(public personaServ: PersonaService){
-        this.localizaciones.unshift(null);
-    }
-
-    changePais(id){
-      if(id!=null && typeof id !='undefined'){
-      this.isMexico=id==_config.optionValue.idMexico;
-      this.options.getEstadoByPais(id);
-        for (var i = 0; i < this.options.paises.length; ++i) {
-            var pais=this.options.paises[i];
-            if(pais.value==id && pais.label=="MEXICO"){
-                this.isMexico=true;
-            }
-        }
-       }
-    }
-
-    trackByIndex(index, item){
-        return index;
-    }
-
-    changeEstado(id){
-        if(id!=null && typeof id !='undefined')
-        this.options.getMunicipiosByEstado(id);
-    }
-
-    changeMunicipio(id){
-        if(id!=null && typeof id !='undefined'){
-            this.options.getColoniasByMunicipio(id);
-            this.options.getLocalidadByMunicipio(id);
-        }
-    }
-
-    changeColonia(id){
-        // if(id!=null && typeof id !='undefined')
-        //     this.options.getLocalidadByColonias(id);
-    }
-
-
-    addLocalizacion(_e){
-        console.log(this.globals.form.value);
-        let form = LosForm.createFormLocalizacion();
-        this.localizaciones.push(null);
-        let localizaciones = this.globals.form.get('localizacionPersona') as FormArray;
-        localizaciones.push(form);
-        console.log(localizaciones.value);
-    }
-
-    changeTipoResida(value,i){
-        console.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i] );
-        console.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i].controls );
-        console.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i].controls.tipoResidencia );
-        this.globals.form.controls.localizacionPersona["controls"][i].controls.tipoRecidencia.patchValue(value);
-    }
-
-}
-
-@Component({
     selector: 'media-filacion',
     templateUrl : './media-filacion.component.html'
 })
@@ -1168,7 +1095,7 @@ export class PersonaGlobals{
 
 }
 
-class LosForm{
+export class LosForm{
     public static createFormLocalizacion(){
         return new FormGroup({
             'id': new FormControl(),

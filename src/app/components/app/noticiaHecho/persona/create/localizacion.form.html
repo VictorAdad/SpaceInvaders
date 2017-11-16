@@ -1,0 +1,198 @@
+<div [formGroup]="globals.form">
+    <div formArrayName="localizacionPersona">
+        <div [formGroupName]="indexForm">
+            <div class="row" >
+                <div class="col-md-3">
+                    <select2 [options]="options.paises"
+                        placeholder="País"
+                        name="id"
+                        [group]="globals.form.controls.localizacionPersona.controls[indexForm].controls.pais" 
+                        (valueChange)="changePais($event)">
+                    </select2>
+                </div>
+                <div class="col-md-3" *ngIf="isMexico">
+                    <select2 [options]="options.estados"
+                        placeholder="Estado"
+                        name="id"
+                        [group]="globals.form.controls.localizacionPersona.controls[indexForm].controls.estado"
+                        (valueChange)="changeEstado($event)">
+                    </select2>
+                </div>
+                <div class="col-md-3" *ngIf="isMexico">
+                    <select2 [options]="options.municipios"
+                        placeholder="Municipio/Delegación"
+                        name="id"
+                        [group]="globals.form.controls.localizacionPersona.controls[indexForm].controls.municipio"
+                        (valueChange)="changeMunicipio($event)">
+                    </select2>
+                </div>
+                <div class="col-md-3" *ngIf="isMexico">
+                    <select2 [options]="options.colonias"
+                        placeholder="Colonia/Asentamiento"
+                        name="id"
+                        [group]="globals.form.controls.localizacionPersona.controls[indexForm].controls.colonia"
+                        (valueChange)="changeColonia($event)">
+                    </select2>
+                </div>
+                <div class="col-md-3" *ngIf="isMexico">
+                    <select2 [options]="options.localidades"
+                        placeholder="Localidad"
+                        name="id"
+                        [group]="globals.form.controls.localizacionPersona.controls[indexForm].controls.localidad">
+                    </select2>
+                </div>
+                <div class="col-md-3" *ngIf="!isMexico">
+                    <text label="Estado"
+                        name="estadoOtro"
+                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                        [max]="50"   
+                    </text>
+                </div>
+
+                <div class="col-md-3" *ngIf="!isMexico">
+                    <text label="Municipio/Delegación"
+                        name="municipioOtro"
+                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                        [max]="50"        
+                    </text>
+                </div>
+                <div class="col-md-3" *ngIf="!isMexico">
+                    <text label="Colonia/Asentamiento"
+                        name="coloniaOtro"
+                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                        [max]="50"
+                    </text>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-3" *ngIf="!isMexico">
+                    <text label="Localidad"
+                        name="localidadOtro"
+                        [max]="50"
+                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                    </text>
+                </div>
+                <div class="col-md-3">
+                    <text label="Calle" name="calle" [group]="globals.form.controls.localizacionPersona.controls[indexForm]"></text>
+                </div>
+                <div class="col-md-3">
+                    <text label="No. exterior" name="noExterior" [max]="15" [group]="globals.form.controls.localizacionPersona.controls[indexForm]"></text>
+                </div>
+                <div class="col-md-3">
+                    <text label="No. interior" name="noInterior" [max]="15" [group]="globals.form.controls.localizacionPersona.controls[indexForm]"></text>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <number label="CP"
+                        name="cp"
+                        [maxValue]="99999"
+                        [max]="5"
+                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+
+                    </number>
+                </div>
+                <div class="col-md-3">
+                    <select2 placeholder="Tipo de domicilio"
+                        [options]="options.tipoDomicilio"
+                        name="id"
+                        [group]="globals.form.controls.localizacionPersona.controls[indexForm].controls.tipoDomicilio">
+                    </select2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <text-area label="Referencias"
+                        name="referencias"
+                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">        
+                    </text-area>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <number [decimal]="false" label="Tel. particular"
+                        name="telParticular"
+                        [max]="20"
+                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                            
+                    </number>
+                </div>
+                <div class="col-md-3">
+                    <number label="Tel. del trabajo"
+                        name="telTrabajo"
+                        [max]="20"
+                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                            
+                    </number>
+                </div>
+                <div class="col-md-3">
+                    <number label="Extensión"
+                        name="extension"
+                        [max]="5"
+                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                            
+                    </number>
+                </div>
+                <div class="col-md-3">
+                    <number label="Tel. móvil"
+                        name="telMovil"
+                        [max]="20"
+                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                            
+                    </number>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <number label="Fax"
+                        name="fax"
+                        [max]="20"
+                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                            
+                    </number>
+                </div>
+                <div class="col-md-3">
+                    <text label="Otro medio de contacto"
+                        name="otroMedioContacto"
+                        [max]="20"
+                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                            
+                    </text>
+                </div>
+                <div class="col-md-3">
+                    <email label="Correo"
+                        name="correo"
+                        [max]="25"
+                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                            
+                    </email>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-auto">
+                    <label class="Naranja">Tipo de residencia</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <radiobutton class="col-md-auto" [radios]="[
+                        {label:'Residencia habitual',value:'Residencia habitual'},
+                        {label:'Domicilio procesal',value:'Domicilio procesal'}]"
+
+                        (valueChange)="changeTipoResida($event,indexForm)"
+
+                        [value]="globals.tipoResidencia[indexForm]"
+
+                        >
+                            
+                    </radiobutton>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

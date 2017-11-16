@@ -46,18 +46,18 @@ export class Select2Component{
 	}
 
 	public filter(val: any) {
-		console.log('Select@filter()', val);
+		// console.log('Select@filter()', val);
   		this.filteredOptions =  this.options.filter(option => option.label.toLowerCase().indexOf(val.target.value.toLowerCase()) === 0 );
    	}
 
    	public setFilterList(){
    		if(this.search){
-   			console.log(this.options)
+   			// console.log(this.options)
    			let timer = Observable.timer(1,1000);
    			let subs = timer.subscribe( 
    				t =>{
 					if(this.options.length > 0){
-						console.log('-> Tiene options');
+						// console.log('-> Tiene options');
 						subs.unsubscribe();
 					}
 					this.filteredOptions = this.options;

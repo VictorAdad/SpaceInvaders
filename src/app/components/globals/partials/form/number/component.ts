@@ -32,7 +32,7 @@ export class NumberComponent implements OnInit{
 	}
 
 	ngOnInit(){
-    console.log('-------------> ',this);
+    // console.log('-------------> ',this);
 
 	}
 
@@ -52,7 +52,7 @@ export class NumberComponent implements OnInit{
 
 	inputSlice(event){
 		if (this.decimal == true && (event.keyCode == 189 || event.keyCode == 69)) {
-			console.log('Primera opcion');
+			// console.log('Primera opcion');
 			if(this.backupValue == null){
 				this.value = '0';	
 			}else{
@@ -61,7 +61,7 @@ export class NumberComponent implements OnInit{
 			return
 		}
 		if (this.decimal == false && (event.keyCode == 189 || event.keyCode == 69 || event.keyCode == 190)) {
-			console.log('Segunda opcion');
+			// console.log('Segunda opcion');
 			if(this.backupValue == null){
 				this.value = '0';	
 			}else{
