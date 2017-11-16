@@ -1,4 +1,4 @@
-<mat-expansion-panel [formGroup]="globals.form" expanded="true">
+<mat-expansion-panel expanded="true">
     <mat-expansion-panel-header>
         <mat-panel-title>
             <mat-icon>room</mat-icon> Datos de Localización
@@ -8,7 +8,6 @@
         </mat-panel-description>
     </mat-expansion-panel-header>
     <div class="container-fluid">
-    <div formArrayName="localizacionPersona">
         <localizacion-form 
             *ngFor="let localizacion of (globals.form.controls.localizacionPersona)['controls']; let i=index; trackBy:trackByIndex"
             [indexForm]="i"
@@ -17,7 +16,6 @@
             >
             form
         </localizacion-form>
-    </div>
     <div class="row">
         <div class="col-md-12">
             <button mat-raised-button color="accent" (click)="addLocalizacion($event)">Agregar localización</button>

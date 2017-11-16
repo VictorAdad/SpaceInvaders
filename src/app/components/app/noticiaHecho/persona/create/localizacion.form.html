@@ -1,12 +1,12 @@
 <div [formGroup]="globals.form">
     <div formArrayName="localizacionPersona">
-        <!-- <div [formGroupName]="indexForm"> -->
+        <div [formGroupName]="indexForm">
             <div class="row" >
                 <div class="col-md-3">
                     <select2 [options]="options.paises"
                         placeholder="País"
                         name="id"
-                        [group]="globals.form.controls.localizacionPersona.controls[indexForm].controls.pais" 
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.pais" 
                         (valueChange)="changePais($event)">
                     </select2>
                 </div>
@@ -14,7 +14,7 @@
                     <select2 [options]="options.estados"
                         placeholder="Estado"
                         name="id"
-                        [group]="globals.form.controls.localizacionPersona.controls[indexForm].controls.estado"
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.estado"
                         (valueChange)="changeEstado($event)">
                     </select2>
                 </div>
@@ -22,7 +22,7 @@
                     <select2 [options]="options.municipios"
                         placeholder="Municipio/Delegación"
                         name="id"
-                        [group]="globals.form.controls.localizacionPersona.controls[indexForm].controls.municipio"
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.municipio"
                         (valueChange)="changeMunicipio($event)">
                     </select2>
                 </div>
@@ -30,7 +30,7 @@
                     <select2 [options]="options.colonias"
                         placeholder="Colonia/Asentamiento"
                         name="id"
-                        [group]="globals.form.controls.localizacionPersona.controls[indexForm].controls.colonia"
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.colonia"
                         (valueChange)="changeColonia($event)">
                     </select2>
                 </div>
@@ -38,13 +38,13 @@
                     <select2 [options]="options.localidades"
                         placeholder="Localidad"
                         name="id"
-                        [group]="globals.form.controls.localizacionPersona.controls[indexForm].controls.localidad">
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.localidad">
                     </select2>
                 </div>
                 <div class="col-md-3" *ngIf="!isMexico">
                     <text label="Estado"
                         name="estadoOtro"
-                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
                         [max]="50"   
                     </text>
                 </div>
@@ -52,14 +52,14 @@
                 <div class="col-md-3" *ngIf="!isMexico">
                     <text label="Municipio/Delegación"
                         name="municipioOtro"
-                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
                         [max]="50"        
                     </text>
                 </div>
                 <div class="col-md-3" *ngIf="!isMexico">
                     <text label="Colonia/Asentamiento"
                         name="coloniaOtro"
-                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
                         [max]="50"
                     </text>
                 </div>
@@ -71,17 +71,17 @@
                     <text label="Localidad"
                         name="localidadOtro"
                         [max]="50"
-                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
                     </text>
                 </div>
                 <div class="col-md-3">
-                    <text label="Calle" name="calle" [group]="globals.form.controls.localizacionPersona.controls[indexForm]"></text>
+                    <text label="Calle" name="calle" [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]"></text>
                 </div>
                 <div class="col-md-3">
-                    <text label="No. exterior" name="noExterior" [max]="15" [group]="globals.form.controls.localizacionPersona.controls[indexForm]"></text>
+                    <text label="No. exterior" name="noExterior" [max]="15" [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]"></text>
                 </div>
                 <div class="col-md-3">
-                    <text label="No. interior" name="noInterior" [max]="15" [group]="globals.form.controls.localizacionPersona.controls[indexForm]"></text>
+                    <text label="No. interior" name="noInterior" [max]="15" [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]"></text>
                 </div>
             </div>
 
@@ -91,7 +91,7 @@
                         name="cp"
                         [maxValue]="99999"
                         [max]="5"
-                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
 
                     </number>
                 </div>
@@ -99,7 +99,7 @@
                     <select2 placeholder="Tipo de domicilio"
                         [options]="options.tipoDomicilio"
                         name="id"
-                        [group]="globals.form.controls.localizacionPersona.controls[indexForm].controls.tipoDomicilio">
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.tipoDomicilio">
                     </select2>
                 </div>
             </div>
@@ -107,7 +107,7 @@
                 <div class="col-md-12">
                     <text-area label="Referencias"
                         name="referencias"
-                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">        
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">        
                     </text-area>
                 </div>
             </div>
@@ -116,7 +116,7 @@
                     <number [decimal]="false" label="Tel. particular"
                         name="telParticular"
                         [max]="20"
-                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
                             
                     </number>
                 </div>
@@ -124,7 +124,7 @@
                     <number label="Tel. del trabajo"
                         name="telTrabajo"
                         [max]="20"
-                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
                             
                     </number>
                 </div>
@@ -132,7 +132,7 @@
                     <number label="Extensión"
                         name="extension"
                         [max]="5"
-                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
                             
                     </number>
                 </div>
@@ -140,7 +140,7 @@
                     <number label="Tel. móvil"
                         name="telMovil"
                         [max]="20"
-                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
                             
                     </number>
                 </div>
@@ -151,7 +151,7 @@
                     <number label="Fax"
                         name="fax"
                         [max]="20"
-                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
                             
                     </number>
                 </div>
@@ -159,7 +159,7 @@
                     <text label="Otro medio de contacto"
                         name="otroMedioContacto"
                         [max]="20"
-                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
                             
                     </text>
                 </div>
@@ -167,7 +167,7 @@
                     <email label="Correo"
                         name="correo"
                         [max]="25"
-                        [group]="globals.form.controls.localizacionPersona.controls[indexForm]">
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
                             
                     </email>
                 </div>
@@ -193,6 +193,6 @@
                     </radiobutton>
                 </div>
             </div>
-        <!-- </div> -->
+        </div>
     </div>
 </div>
