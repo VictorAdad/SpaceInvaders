@@ -380,7 +380,7 @@ public setDataF1009(_data,_id_solicitud){
   let imputado;
   let victima = _data.findVictima();
   let nombreVictima =`${victima.persona.nombre} ${victima.persona.paterno} ${victima.persona.materno ? victima.persona.materno :'' }`;
-  let lugar=_data.lugares[0];
+  let lugar:any={};//por definir
   let pericial;
 
   _data.personaCasos.forEach(persona => {
@@ -421,7 +421,7 @@ public setDataF1010(_data,_id_solicitud){
   let imputado;
   let victima = _data.findVictima();
   let nombreVictima =`${victima.persona.nombre} ${victima.persona.paterno} ${victima.persona.materno ? victima.persona.materno :'' }`;
-  let lugar=_data.lugares[0];
+  let lugar:any={};//por definir
   let examen;
 
   _data.personaCasos.forEach(persona => {
@@ -465,7 +465,7 @@ public setDataF1011(_data,_id_solicitud){
   let imputado;
   let victima = _data.findVictima();
   let nombreVictima =`${victima.persona.nombre} ${victima.persona.paterno} ${victima.persona.materno ? victima.persona.materno :'' }`;
-  let lugar=_data.lugares[0];
+  let lugar:any={};//por definir
   let policia;
 
   _data.personaCasos.forEach(persona => {
