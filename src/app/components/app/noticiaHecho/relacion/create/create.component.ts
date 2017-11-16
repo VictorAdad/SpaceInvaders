@@ -295,14 +295,23 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                     //depende del arma del caso
                     if (item["armaTipoRelacionPersona"] && item["armaTipoRelacionPersona"][0].arma.id){
                         dependeDe.push(item["armaTipoRelacionPersona"][0].arma.id);
+                        temId++;
+                        var jason = JSON.parse('{"armaTipoRelacionPersona":{ "'+0+'":{"id":'+temId+'} } }');
+                        otrosID.push(jason);
                     }
                     //depende del lugar del caso
                     if (item["lugarTipoRelacionPersona"] && item["lugarTipoRelacionPersona"][0].lugar.id){
                         dependeDe.push(item["lugarTipoRelacionPersona"][0].lugar.id);
+                        temId++;
+                        var jason = JSON.parse('{"lugarTipoRelacionPersona":{ "'+0+'":{"id":'+temId+'} } }');
+                        otrosID.push(jason);
                     }
                     //depende del lugar del vehiculo
                     if (item["vehiculoTipoRelacionPersona"] && item["vehiculoTipoRelacionPersona"][0].vehiculo.id){
                         dependeDe.push(item["vehiculoTipoRelacionPersona"][0].vehiculo.id);
+                        temId++;
+                        var jason = JSON.parse('{"vehiculoTipoRelacionPersona":{ "'+0+'":{"id":'+temId+'} } }');
+                        otrosID.push(jason);
                     }
                     //depende de la persona
                     if (item["personaCaso"].id){
@@ -314,30 +323,30 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                     }
                        
                 }
-                // console.log("SI");
-                // for (var i = 0; i < _model["hostigamientoAcoso"].length; ++i) {
-                //     console.log(_model["hostigamientoAcoso"][i]);
-                //     temId++;
-                //     var jason = JSON.parse('{"hostigamientoAcoso":{ "'+i+'":{"id":'+temId+'} } }');
-                //     otrosID.push(jason);
-                //     //depende de la persona
-                //     if (_model["hostigamientoAcoso"][i].testigo.id){
-                //         dependeDe.push(_model["hostigamientoAcoso"].testigo.id);
-                //     }
-                // }
-                // console.log("SI");
-                // for (var i = 0; i < _model["trataPersona"].length; ++i) {
-                //     temId++;
-                //     var jason = JSON.parse('{"trataPersona":{ "'+i+'":{"id":'+temId+'} } }');
-                //     otrosID.push(jason);
-                // }
-                // console.log("SI");
-                // for (var i = 0; i < _model["efectoViolencia"].length; ++i) {
-                //     temId++;
-                //     var jason = JSON.parse('{"efectoViolencia":{ "'+i+'":{"id":'+temId+'} } }');
-                //     otrosID.push(jason);
-                // }
-                // console.log("SI");
+                console.log("SI");
+                for (var i = 0; i < _model["hostigamientoAcoso"].length; ++i) {
+                    console.log(_model["hostigamientoAcoso"][i]);
+                    temId++;
+                    var jason = JSON.parse('{"detalleDelito":{"hostigamientoAcoso":{ "'+i+'":{"id":'+temId+'} } } }');
+                    otrosID.push(jason);
+                    //depende de la persona
+                    if (_model["hostigamientoAcoso"][i].testigo.id){
+                        dependeDe.push(_model["hostigamientoAcoso"][i].testigo.id);
+                    }
+                }
+                console.log("SI");
+                for (var i = 0; i < _model["trataPersona"].length; ++i) {
+                    temId++;
+                    var jason = JSON.parse('{"detalleDelito":{"trataPersona":{ "'+i+'":{"id":'+temId+'} } } }');
+                    otrosID.push(jason);
+                }
+                console.log("SI");
+                for (var i = 0; i < _model["efectoViolencia"].length; ++i) {
+                    temId++;
+                    var jason = JSON.parse('{"detalleDelito":{"efectoViolencia":{ "'+i+'":{"id":'+temId+'} } } }');
+                    otrosID.push(jason);
+                }
+                console.log("SI");
                 let dato={
                     url:'/v1/base/tipo-relacion-persona',
                     body:_model,
@@ -346,7 +355,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                     pendiente:true,
                     temId: temId,
                     dependeDe:dependeDe,
-                    //otrosID:otrosID
+                    otrosID:otrosID
 
                 }
                 console.log("MODELO",_model);
@@ -496,7 +505,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
             let vehiculoFormArray:FormArray =tipoPersonaFormGroup.controls.vehiculoTipoRelacionPersona as FormArray;
             let vehiculoFormGroup:FormGroup = vehiculoFormArray.controls[0] as FormGroup;
-            if (_data.vehiculoTipoRelacionPersona[0] && _data.vehiculoTipoRelacionPersona[0].vehiculo)
+            if (_data.vehiculoTipoRelacionPersona && _data.vehiculoTipoRelacionPersona[0] && _data.vehiculoTipoRelacionPersona[0].vehiculo)
                 vehiculoFormGroup.patchValue({vehiculo: {id:_data.vehiculoTipoRelacionPersona[0]?_data.vehiculoTipoRelacionPersona[0].vehiculo.id:null,}});
 
             console.log('Fill Detalle Delito');
