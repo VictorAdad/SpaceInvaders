@@ -101,6 +101,7 @@ export class FormatosLocal {
     'file': null,
     'data': null
    };
+    // Formato de solicitud pericial
    public F1_009 = {
     'path': '../../../../../assets/formatos/F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES.docx',
     'nombre': 'F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES.docx',
@@ -113,6 +114,16 @@ export class FormatosLocal {
     'file': null,
     'data': null
    };
+    // Formato de solicitud policia ministerial
+   public F1_011 = {
+    'path': '../../../../../assets/formatos/F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
+    'nombre': 'F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
+    'file': null,
+    'data': null
+   };
+
+
+
     public data = {
         //F1003
         'xFolioDocumento': '',
@@ -215,6 +226,9 @@ export class FormatosLocal {
         'xMedicoLegistaMayus':'',
         'xSolicitaExamen':'',
         'xRealizaraExamen':'',
+       //F1011
+         'xActuacionesSolicitadas':'',
+
 
       }
 
@@ -366,20 +380,16 @@ public setDataF1009(_data,_id_solicitud){
   let imputado;
   let victima = _data.findVictima();
   let nombreVictima =`${victima.persona.nombre} ${victima.persona.paterno} ${victima.persona.materno ? victima.persona.materno :'' }`;
+  let lugar=_data.lugares[0];
+  let pericial;
 
   _data.personaCasos.forEach(persona => {
     if(persona.tipoInterviniente.tipo==='Imputado'){
         imputado=persona;
         console.log(imputado)
     }
-    //if(persona.tipoInterviniente.tipo==='Victima')
-      // victima=persona;
+
   });
-  let lugar=_data.lugares[0];
-  console.log(lugar);
-  let pericial;
-  console.log('Tipos interviniente->',_data.solicitudPrePericiales)
-  console.log('Id sol',_id_solicitud);
   _data.solicitudPrePericiales.forEach(solicitud => {
      if(solicitud.id===_id_solicitud){
          pericial=solicitud;
@@ -387,24 +397,22 @@ public setDataF1009(_data,_id_solicitud){
   });
   let nombreImputado=imputado.persona.nombre+' '+imputado.persona.paterno+' '+imputado.persona.materno;
   let date= new Date(pericial.created);
-  this.data['xNUC']= _data.nuc? _data.nuc:'';
-  this.data['xNIC']= _data.nic? _data.nic:'';
-  this.data['xHechoDelictivo']     = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
-  this.data['xVictima']       = nombreVictima;
-  this.data['xImputado']      = nombreImputado;
-  this.data['xOficio']        = pericial.hechosDenunciados ? _data.hechosDenunciados : '';
-  this.data['xEstado']        =lugar.estado?lugar.estado:lugar.estadoOtro?lugar.estadoOtro:'';
-  this.data['xPoblacion']     = lugar.municipio? lugar.municipio:lugar.municipioOtro?lugar.municipioOtro:'';
-
-  this.data['xDia'] = date? date.getDay()+'' : '';
-  this.data['xMes']      = date? date.getMonth()+'' : '';
-  this.data['xAnio']        = date? date.getFullYear()+'' : '';
-  this.data['xSolicitaPerito']        = pericial.peritoMateria ? pericial.peritoMateria: '';
-  this.data['xFinalidadRequerimiento']        = pericial.finalidad?pericial.finalidad:'';
-  this.data['xPlazoRendirInformes']        = pericial.plazoDias? pericial.plazoDias: '';
-  this.data['xApercibimiento'] =  pericial.apercibimiento ? pericial.apercibimiento: '';
-  this.data['xAdscripcionEmisor']  = '';
-  console.log('formato',this.data)
+  this.data['xNUC']                     = _data.nuc? _data.nuc:'';
+  this.data['xNIC']                     = _data.nic? _data.nic:'';
+  this.data['xHechoDelictivo']          = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
+  this.data['xVictima']                 = nombreVictima;
+  this.data['xImputado']                = nombreImputado;
+  this.data['xOficio']                  = pericial.hechosDenunciados ? _data.hechosDenunciados : '';
+  this.data['xEstado']                  = lugar.estado?lugar.estado:lugar.estadoOtro?lugar.estadoOtro:'';
+  this.data['xPoblacion']               = lugar.municipio? lugar.municipio:lugar.municipioOtro?lugar.municipioOtro:'';
+  this.data['xDia']                     = date? date.getDay()+'' : '';
+  this.data['xMes']                     = date? date.getMonth()+'' : '';
+  this.data['xAnio']                    = date? date.getFullYear()+'' : '';
+  this.data['xSolicitaPerito']          = pericial.peritoMateria ? pericial.peritoMateria: '';
+  this.data['xFinalidadRequerimiento']  = pericial.finalidad?pericial.finalidad:'';
+  this.data['xPlazoRendirInformes']     = pericial.plazoDias? pericial.plazoDias: '';
+  this.data['xApercibimiento']          =  pericial.apercibimiento ? pericial.apercibimiento: '';
+  this.data['xAdscripcionEmisor']        = '';
 
 }
 
@@ -413,20 +421,16 @@ public setDataF1010(_data,_id_solicitud){
   let imputado;
   let victima = _data.findVictima();
   let nombreVictima =`${victima.persona.nombre} ${victima.persona.paterno} ${victima.persona.materno ? victima.persona.materno :'' }`;
+  let lugar=_data.lugares[0];
+  let examen;
 
   _data.personaCasos.forEach(persona => {
     if(persona.tipoInterviniente.tipo==='Imputado'){
         imputado=persona;
         console.log(imputado)
     }
-    //if(persona.tipoInterviniente.tipo==='Victima')
-      // victima=persona;
   });
-  let lugar=_data.lugares[0];
-  console.log(lugar);
-  let examen;
-  console.log('Tipos interviniente->',_data.solicitudPrePericiales)
-  console.log('Id sol',_id_solicitud);
+
   _data.solicitudPrePericiales.forEach(solicitud => {
      if(solicitud.id===_id_solicitud){
          examen=solicitud;
@@ -451,10 +455,48 @@ public setDataF1010(_data,_id_solicitud){
   this.data['xSolicitaExamen']        = examen.tipo? examen.tipo: '';
   this.data['xRealizaraExamen'] =  examen.realizadoA ? examen.realizadoA: '';
   this.data['xAdscripcionEmisor']  = '';
-  console.log('formato',this.data)
 
 }
 
+
+
+public setDataF1011(_data,_id_solicitud){
+  console.log('Formatos@setDataF1010', _data);
+  let imputado;
+  let victima = _data.findVictima();
+  let nombreVictima =`${victima.persona.nombre} ${victima.persona.paterno} ${victima.persona.materno ? victima.persona.materno :'' }`;
+  let lugar=_data.lugares[0];
+  let policia;
+
+  _data.personaCasos.forEach(persona => {
+    if(persona.tipoInterviniente.tipo==='Imputado'){
+        imputado=persona;
+        console.log(imputado)
+    }
+  });
+  _data.solicitudPrePolicias.forEach(solicitud => {
+     if(solicitud.id===_id_solicitud){
+      policia=solicitud;
+     }
+  });
+  let nombreImputado=imputado.persona.nombre+' '+imputado.persona.paterno+' '+imputado.persona.materno;
+  let date= new Date(policia.created);
+  this.data['xNUC']                    = _data.nuc? _data.nuc:'';
+  this.data['xNIC']                    = _data.nic? _data.nic:'';
+  this.data['xHechoDelictivo']         = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
+  this.data['xVictima']                = nombreVictima;
+  this.data['xImputado']               = nombreImputado;
+  this.data['xOficio']                 = policia.hechosDenunciados ? _data.hechosDenunciados : '';
+  this.data['xEstado']                 =lugar.estado?lugar.estado:lugar.estadoOtro?lugar.estadoOtro:'';
+  this.data['xPoblacion']              = lugar.municipio? lugar.municipio:lugar.municipioOtro?lugar.municipioOtro:'';
+  this.data['xDia']                    = date? date.getDay()+'' : '';
+  this.data['xMes']                    = date? date.getMonth()+'' : '';
+  this.data['xAnio']                   = date? date.getFullYear()+'' : '';
+  this.data['xActuacionesSolicitadas'] =  policia.actuacionesSolicitadas ? policia.actuacionesSolicitadas: '';
+  this.data['xAdscripcionEmisor']      = '';
+  console.log('formato',this.data)
+
+}
 
 
 }
