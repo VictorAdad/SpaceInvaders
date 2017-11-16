@@ -1,8 +1,11 @@
+import { TipoInterviniente } from './../../models/catalogo/tipoInterviniente';
+import { PersonaFisicaImputadoComponent } from './../../components/app/noticiaHecho/persona/create/persona-fisica-imputado.component';
 import { Injectable } from '@angular/core';
 import { HttpService} from '@services/http.service';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from 'jszip-utils';
 import * as docxtemplater from 'docxtemplater';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Injectable()
 export class FormatosService {
@@ -98,6 +101,18 @@ export class FormatosLocal {
     'file': null,
     'data': null
    };
+   public F1_009 = {
+    'path': '../../../../../assets/formatos/F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES.docx',
+    'nombre': 'F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES.docx',
+    'file': null,
+    'data': null
+   };
+   public F1_010 = {
+    'path': '../../../../../assets/formatos/F1-010 SOLICITUD EXAMEN PSICOFÍSICO.docx',
+    'nombre': 'F1-010 SOLICITUD EXAMEN PSICOFÍSICO.docx',
+    'file': null,
+    'data': null
+   };
     public data = {
         //F1003
         'xFolioDocumento': '',
@@ -185,7 +200,23 @@ export class FormatosLocal {
         'xCargoEmisorFirma': '',
         'xNombreEmisorFirma': '',
         'xAdscripcionEmisorFirma': '',
-    }
+        //F1009
+        'xHechoDelictivo':'',
+        'xOficio':'',
+        'xImputado':'',
+        'xMes':'',
+        'xAnio':'',
+        'xDia':'',
+        'xSolicitaPerito':'',
+        'xFinalidadRequerimiento':'',
+        'xPlazoRendirInformes':'',
+        'xApercibimiento':'',
+        //F1010
+        'xMedicoLegistaMayus':'',
+        'xSolicitaExamen':'',
+        'xRealizaraExamen':'',
+
+      }
 
     constructor() {
 
@@ -279,6 +310,8 @@ export class FormatosLocal {
 
 
 public setDataF1008(_data){
+  console.log('Formatos@setDataF1008', _data);
+
   this.data['xNUC']= _data.nuc? _data.nuc:'';
   this.data['xNIC']= _data.nic? _data.nic:'';
   this.data['xFechaAtencion']=_data.created? _data.created:'';
@@ -328,7 +361,99 @@ public setDataF1008(_data){
   this.data['xAdscripcionEmisorFirma']= '';
 }
 
+public setDataF1009(_data,_id_solicitud){
+  console.log('Formatos@setDataF1009', _data);
+  let imputado;
+  let victima = _data.findVictima();
+  let nombreVictima =`${victima.persona.nombre} ${victima.persona.paterno} ${victima.persona.materno ? victima.persona.materno :'' }`;
 
+  _data.personaCasos.forEach(persona => {
+    if(persona.tipoInterviniente.tipo==='Imputado'){
+        imputado=persona;
+        console.log(imputado)
+    }
+    //if(persona.tipoInterviniente.tipo==='Victima')
+      // victima=persona;
+  });
+  let lugar=_data.lugares[0];
+  console.log(lugar);
+  let pericial;
+  console.log('Tipos interviniente->',_data.solicitudPrePericiales)
+  console.log('Id sol',_id_solicitud);
+  _data.solicitudPrePericiales.forEach(solicitud => {
+     if(solicitud.id===_id_solicitud){
+         pericial=solicitud;
+     }
+  });
+  let nombreImputado=imputado.persona.nombre+' '+imputado.persona.paterno+' '+imputado.persona.materno;
+  let date= new Date(pericial.created);
+  this.data['xNUC']= _data.nuc? _data.nuc:'';
+  this.data['xNIC']= _data.nic? _data.nic:'';
+  this.data['xHechoDelictivo']     = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
+  this.data['xVictima']       = nombreVictima;
+  this.data['xImputado']      = nombreImputado;
+  this.data['xOficio']        = pericial.hechosDenunciados ? _data.hechosDenunciados : '';
+  this.data['xEstado']        =lugar.estado?lugar.estado:lugar.estadoOtro?lugar.estadoOtro:'';
+  this.data['xPoblacion']     = lugar.municipio? lugar.municipio:lugar.municipioOtro?lugar.municipioOtro:'';
+
+  this.data['xDia'] = date? date.getDay()+'' : '';
+  this.data['xMes']      = date? date.getMonth()+'' : '';
+  this.data['xAnio']        = date? date.getFullYear()+'' : '';
+  this.data['xSolicitaPerito']        = pericial.peritoMateria ? pericial.peritoMateria: '';
+  this.data['xFinalidadRequerimiento']        = pericial.finalidad?pericial.finalidad:'';
+  this.data['xPlazoRendirInformes']        = pericial.plazoDias? pericial.plazoDias: '';
+  this.data['xApercibimiento'] =  pericial.apercibimiento ? pericial.apercibimiento: '';
+  this.data['xAdscripcionEmisor']  = '';
+  console.log('formato',this.data)
+
+}
+
+public setDataF1010(_data,_id_solicitud){
+  console.log('Formatos@setDataF1010', _data);
+  let imputado;
+  let victima = _data.findVictima();
+  let nombreVictima =`${victima.persona.nombre} ${victima.persona.paterno} ${victima.persona.materno ? victima.persona.materno :'' }`;
+
+  _data.personaCasos.forEach(persona => {
+    if(persona.tipoInterviniente.tipo==='Imputado'){
+        imputado=persona;
+        console.log(imputado)
+    }
+    //if(persona.tipoInterviniente.tipo==='Victima')
+      // victima=persona;
+  });
+  let lugar=_data.lugares[0];
+  console.log(lugar);
+  let examen;
+  console.log('Tipos interviniente->',_data.solicitudPrePericiales)
+  console.log('Id sol',_id_solicitud);
+  _data.solicitudPrePericiales.forEach(solicitud => {
+     if(solicitud.id===_id_solicitud){
+         examen=solicitud;
+     }
+  });
+  let nombreImputado=imputado.persona.nombre+' '+imputado.persona.paterno+' '+imputado.persona.materno;
+  let date= new Date(examen.created);
+  this.data['xNUC']= _data.nuc? _data.nuc:'';
+  this.data['xNIC']= _data.nic? _data.nic:'';
+  this.data['xHechoDelictivo']     = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
+  this.data['xVictima']       = nombreVictima;
+  this.data['xImputado']      = nombreImputado;
+  this.data['xOficio']        = examen.hechosDenunciados ? _data.hechosDenunciados : '';
+  this.data['xEstado']        =lugar.estado?lugar.estado:lugar.estadoOtro?lugar.estadoOtro:'';
+  this.data['xPoblacion']     = lugar.municipio? lugar.municipio:lugar.municipioOtro?lugar.municipioOtro:'';
+
+  this.data['xDia'] = date? date.getDay()+'' : '';
+  this.data['xMes']      = date? date.getMonth()+'' : '';
+  this.data['xAnio']        = date? date.getFullYear()+'' : '';
+  this.data['xApercibimiento'] =  examen.apercibimiento ? examen.apercibimiento: '';
+  this.data['xMedicoLegistaMayus']        = examen.medicoLegista?examen.medicoLegista:'';
+  this.data['xSolicitaExamen']        = examen.tipo? examen.tipo: '';
+  this.data['xRealizaraExamen'] =  examen.realizadoA ? examen.realizadoA: '';
+  this.data['xAdscripcionEmisor']  = '';
+  console.log('formato',this.data)
+
+}
 
 
 
