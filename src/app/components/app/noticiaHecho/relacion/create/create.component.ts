@@ -134,7 +134,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 //this.optionsNoticia.setId(this.casoId);
                 //this.optionsNoticia.getData();
                 this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho/relaciones`,label:"Detalle noticia de hechos"})
-                this.casoService.find(this.casoId);
+                this.casoService.find(this.casoId).then(r=>{this.casoOffline=this.casoService.caso;});
 
                 if(this.onLine.onLine){
                     this.optionsNoticia.setId(this.casoId, this.casoOffline);
@@ -285,22 +285,23 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 //solo se depende del caso cuando se crea
                 dependeDe.push(this.casoId);
                 //depende del delito del caso
-                dependeDe.push(_model["delitoCaso"].id);
+                if (_model["delitoCaso"])
+                    dependeDe.push(_model["delitoCaso"].id);
 
 
                 if (_model["tipoRelacionPersona"]){
                     let item=_model["tipoRelacionPersona"];
                     console.log("ITEM",item);
                     //depende del arma del caso
-                    if (item["armaTipoRelacionPersona"][0].arma.id){
+                    if (item["armaTipoRelacionPersona"] && item["armaTipoRelacionPersona"][0].arma.id){
                         dependeDe.push(item["armaTipoRelacionPersona"][0].arma.id);
                     }
                     //depende del lugar del caso
-                    if (item["lugarTipoRelacionPersona"][0].lugar.id){
+                    if (item["lugarTipoRelacionPersona"] && item["lugarTipoRelacionPersona"][0].lugar.id){
                         dependeDe.push(item["lugarTipoRelacionPersona"][0].lugar.id);
                     }
                     //depende del lugar del vehiculo
-                    if (item["vehiculoTipoRelacionPersona"][0].vehiculo.id){
+                    if (item["vehiculoTipoRelacionPersona"] && item["vehiculoTipoRelacionPersona"][0].vehiculo.id){
                         dependeDe.push(item["vehiculoTipoRelacionPersona"][0].vehiculo.id);
                     }
                     //depende de la persona
@@ -391,12 +392,13 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                                     formaComision:_model["formaComision"],
                                     formaConducta:_model["formaConducta"],
                                     hostigamientoAcoso:_model["hostigamientoAcoso"],
-                                    id:_model["id"],
+                                    id:copia,
                                     modalidadDelito:_model["modalidadDelito"],
                                     tieneViolenciaGenero:_model["tieneViolenciaGenero"],
                                     trataPersona:_model["trataPersona"],
                                     violnciaGenero:_model["violnciaGenero"]
                                 },
+                                id:copia,
                                 lugarTipoRelacionPersona:_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"],
                                 personaCaso:_model["tipoRelacionPersona"]["personaCaso"],
                                 personaCasoRelacionada:_model["tipoRelacionPersona"]["personaCasoRelacionada"],
@@ -484,15 +486,18 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
             let lugarFormArray:FormArray =tipoPersonaFormGroup.controls.lugarTipoRelacionPersona as FormArray;
             let lugarFormGroup:FormGroup = lugarFormArray.controls[0] as FormGroup;
-            lugarFormGroup.patchValue({lugar: {id:_data.lugarTipoRelacionPersona[0].lugar.id,}});
+            if (_data.lugarTipoRelacionPersona[0])
+                lugarFormGroup.patchValue({lugar: {id:_data.lugarTipoRelacionPersona[0].lugar.id,}});
 
             let armasFormArray:FormArray =tipoPersonaFormGroup.controls.armaTipoRelacionPersona as FormArray;
             let armasFormGroup:FormGroup = armasFormArray.controls[0] as FormGroup;
-            armasFormGroup.patchValue({arma: {id:_data.armaTipoRelacionPersona[0]?_data.armaTipoRelacionPersona[0].arma.id:null,}});
+            if (_data.armaTipoRelacionPersona[0] && _data.armaTipoRelacionPersona[0].arma)
+                armasFormGroup.patchValue({arma: {id:_data.armaTipoRelacionPersona[0]?_data.armaTipoRelacionPersona[0].arma.id:null,}});
 
             let vehiculoFormArray:FormArray =tipoPersonaFormGroup.controls.vehiculoTipoRelacionPersona as FormArray;
             let vehiculoFormGroup:FormGroup = vehiculoFormArray.controls[0] as FormGroup;
-            vehiculoFormGroup.patchValue({vehiculo: {id:_data.vehiculoTipoRelacionPersona[0]?_data.vehiculoTipoRelacionPersona[0].vehiculo.id:null,}});
+            if (_data.vehiculoTipoRelacionPersona[0] && _data.vehiculoTipoRelacionPersona[0].vehiculo)
+                vehiculoFormGroup.patchValue({vehiculo: {id:_data.vehiculoTipoRelacionPersona[0]?_data.vehiculoTipoRelacionPersona[0].vehiculo.id:null,}});
 
             console.log('Fill Detalle Delito');
 
