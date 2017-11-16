@@ -149,8 +149,8 @@ export class NoticiaHechoService {
                 this.delitos = this.constructOptionsDelito(response);
             });
         else
-            if (this.caso["delitosCaso"])
-                this.delitos = this.constructOptionsDelito(this.caso["delitosCaso"]);
+            if (this.caso["delitoCaso"])
+                this.delitos = this.constructOptionsDelito(this.caso["delitoCaso"]);
     }
 
     public getInterviniente(_attr:string, _url:string, _call:any, idInterviniente:number=null){

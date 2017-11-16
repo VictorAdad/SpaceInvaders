@@ -48,24 +48,25 @@ export class TextComponent implements OnInit{
 	}
 
 	inputSlice(){
-		console.log('------P--->', this.value.length);
-		if (this.valRfCurp == true){
-			if (this.value.length == 18 || this.value == null || this.value == "") {
-				this.hintEnd = ""
-				this.group.controls[this.name].setErrors(null);
-			}else{
-				this.hintEnd = "Este CURP no es valido"
-				this.group.controls[this.name].setErrors({'incorrect': true});	
-			}	
-		}
-		if (this.valRfCurp == false){
-			if (this.value.length >= 12 || this.value == null || this.value == "") {
-				this.hintEnd = ""
-				this.group.controls[this.name].setErrors(null);
-			}else{
-				this.hintEnd = "Este RFC no es valido"
-				this.group.controls[this.name].setErrors({'incorrect': true});	
-			}	
+		if (this.value!=null) {
+			if (this.valRfCurp == true){
+				if (this.value.length == 18 || this.value == null || this.value == "") {
+					this.hintEnd = ""
+					this.group.controls[this.name].setErrors(null);
+				}else{
+					this.hintEnd = "Este CURP no es valido"
+					this.group.controls[this.name].setErrors({'incorrect': true});	
+				}	
+			}
+			if (this.valRfCurp == false){
+				if (this.value.length >= 12 || this.value == null || this.value == "") {
+					this.hintEnd = ""
+					this.group.controls[this.name].setErrors(null);
+				}else{
+					this.hintEnd = "Este RFC no es valido"
+					this.group.controls[this.name].setErrors({'incorrect': true});	
+				}	
+			}
 		}
 
 		if (this.value!=null && this.value.toString().length > this.max) {

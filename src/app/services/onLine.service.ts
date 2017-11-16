@@ -42,7 +42,7 @@ export class OnLineService {
             let message="Se perdió la conexión";
             if(this.onLine){
                 message="Se estableció la conexión";
-                //this.startSincronizacion();
+                this.startSincronizacion();
             }
 
             if (this.anterior!=this.onLine){
@@ -251,13 +251,13 @@ export class OnLineService {
         });
     }
 
-    doPut(_url, item, i, lista){
+    doPut(_url, item, i, lista2){
         this.db.list("newId").then(listaNewId=>{
             console.log("URL",_url,"MODELO",item.body);
             this.sustituyeHojasPorNewId(item.body,listaNewId);
             var lista=listaNewId as any[];
-            for (var i = 0; i < lista.length; ++i) {
-                _url=_url.replace(""+lista[i].id,""+lista[i].newId);
+            for (var k = 0; k < lista.length; ++k) {
+                _url=_url.replace(""+lista[k].id,""+lista[k].newId);
             }
             console.log("URL",_url,"MODELO",item.body);
             this.http.put(_url,item.body).subscribe(
@@ -266,12 +266,12 @@ export class OnLineService {
                     item.pendiente=false;
                     this.db.update("sincronizar",item).then( respuesta =>{
                         this.seActualizoAlmenosUnRegistro=true;
-                        this.sincroniza(i+1,lista);
+                        this.sincroniza(i+1,lista2);
                     });
             },
                 error=>{
                     console.log("Error:",error);
-                    this.sincroniza(i+1,lista);
+                    this.sincroniza(i+1,lista2);
             });
         });
 
