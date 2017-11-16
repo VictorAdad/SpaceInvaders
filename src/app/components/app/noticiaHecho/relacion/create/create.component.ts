@@ -45,10 +45,10 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
 
     tiposRelacion:MOption[] = [
-        { value:'Defensor', label:'Defensor del imputado' },
-        { value:'Imputado', label:'Imputado-Víctima-Delito' },
-        { value:'Asesor', label:'Asesor jurídico de la víctima' },
-        { value:'Representante', label:'Representante de la víctima' }
+        { value:'Defensor del imputado', label:'Defensor del imputado' },
+        { value:'Imputado víctima delito', label:'Imputado víctima delito' },
+        { value:'Asesor jurídico de la víctima', label:'Asesor jurídico de la víctima' },
+        { value:'Representante de la víctima', label:'Representante de la víctima' }
     ];
 
     isDefensorImputado: boolean = false;
@@ -556,22 +556,22 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
       console.log('--> '+option);
       this.resetValues();
       switch(option){
-        case 'Defensor':{
+        case 'Defensor del imputado':{
           this.isDefensorImputado = true;
           this.initForm();
           break;
         }
-        case 'Imputado':{
+        case 'Imputado víctima delito':{
           this.isImputadoVictimaDelito = true;
           this.activaCamposImputado();
           break;
         }
-        case 'Asesor':{
+        case 'Asesor jurídico de la víctima':{
           this.isAsesorJuridicoVictima = true;
           this.initForm();
           break;
         }
-        case 'Representante':{
+        case 'Representante de la víctima':{
           this.isRepresentanteVictima = true;
           this.initForm();
           break;
