@@ -21,7 +21,8 @@
       "@components-app/*": ["./app/components/app/*"],
       "@services/*": ["./app/services/*"],
       "@models/*": ["./app/models/*"],
-      "@app/*": ["./app/*"]
+      "@app/*": ["./app/*"],
+      "@providers/*": ["./app/providers/*"]
     }
   }
 }

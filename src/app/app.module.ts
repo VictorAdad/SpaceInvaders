@@ -57,6 +57,7 @@ import {MatInputModule} from '@angular/material';
 import {MatCheckboxModule} from '@angular/material';
 import {MatProgressBarModule} from '@angular/material';
 import {MatProgressSpinnerModule} from '@angular/material';
+import {MatPaginatorIntl} from '@angular/material';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import {MatSlideToggleModule} from '@angular/material';
 import {VgCoreModule} from 'videogular2/core';
@@ -67,7 +68,8 @@ import {VgBufferingModule} from 'videogular2/buffering';
 // import { MaterialModule} from '@angular/material';
 
 import { AgmCoreModule } from '@agm/core';
-import {Logger} from '@services/logger.service'
+import {Logger} from '@services/logger.service';
+import { MatPaginatorIntlEsp } from '@providers/paginator.provider';
 import 'hammerjs';
 
 @NgModule({
@@ -161,7 +163,8 @@ import 'hammerjs';
     CasoService,
     Logger,
     {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true},
-    {provide: MAT_DATE_LOCALE, useValue: 'es-MX'}
+    {provide: MAT_DATE_LOCALE, useValue: 'es-MX'},
+    {provide: MatPaginatorIntl, useClass: MatPaginatorIntlEsp}
   ],
   entryComponents: [
     dyanamicComponents
