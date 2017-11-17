@@ -14,7 +14,7 @@ import { LoaderComponent } from '@partials/loader/component';
 import { CasoNicComponent } from '@partials/caso/component';
 import { SlideToggleComponent} from '@partials/form/slide-toggle/slide-toggle.component';
 import { EmailComponent } from '@partials/form/email/email.component';
-
+import { DatePicker } from '@partials/form/fecha/datepicker.component';
 
 @NgModule()
 export class PartialsModule {}
@@ -34,5 +34,6 @@ export const partialsComponents = [
 	CasoNicComponent,
   NumberComponent,
   SlideToggleComponent,
-  EmailComponent
+  EmailComponent,
+  DatePicker
 ];
