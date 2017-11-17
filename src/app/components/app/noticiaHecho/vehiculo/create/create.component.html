@@ -18,6 +18,7 @@
             <div class="col-md-3">
                 <select2 placeholder="Motivo por el que se registra"
                     [options]="vehiculoServ.motivoColorClase.motivoRegistro"
+                    hintStart="Campo obligatorio"
                     name="motivoRegistro"
                     [group]="form"
                     (valueChange)="vehiculoServ.motivoColorClase.find($event, 'motivoRegistro')">
@@ -28,6 +29,7 @@
                 <select2 placeholder="Vehículo"
                     name="campoVehiculo"
                     [options]="vehiculoServ.tipoUsoTipoVehiculo.tipoVehiculo"
+                    hintStart="Campo obligatorio"
                     [group]="form"
                     (valueChange)="vehiculoServ.tipoUsoTipoVehiculo.find($event, 'tipoVehiculo')">
 
@@ -53,6 +55,7 @@
             <div class="col-md-3">
                 <select2 placeholder="Marca"
                     [options]="vehiculoServ.marcaSubmarca.marca"
+                    hintStart="Campo obligatorio"
                     name="marca"
                     [group]="form"
                     (valueChange)="vehiculoServ.marcaSubmarca.find($event, 'marca')">
@@ -62,6 +65,7 @@
             <div class="col-md-3">
                 <select2 placeholder="Submarca"
                     name="submarca"
+                    hintStart="Campo obligatorio"
                     [options]="vehiculoServ.marcaSubmarca.submarca"
                     [group]="form"
                     (valueChange)="vehiculoServ.marcaSubmarca.find($event, 'submarca')">
@@ -71,6 +75,7 @@
             <div class="col-md-3">
                 <select2 placeholder="Color"
                     name="color"
+                    hintStart="Campo obligatorio"
                     [options]="vehiculoServ.motivoColorClase.color"
                     [group]="form"
                     (valueChange)="vehiculoServ.motivoColorClase.find($event, 'color')">
@@ -80,7 +85,15 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                <number label="Modelo" name="modelo" [maxValue]="9999" [max]="4" [group]="form"></number>
+                <number
+                    label="Modelo"
+                    name="modelo"
+                    hintStart="Campo obligatorio"
+                    [maxValue]="9999"
+                    [max]="4"
+                    [group]="form">
+                        
+                </number>
             </div>
             <div class="col-md-3">
                 <select2 placeholder="Estado de origen de las placas"
@@ -91,7 +104,14 @@
                 </select2>
             </div>
             <div class="col-md-3">
-                <text label="Placas" name="placas" [max]="15" [group]="form"></text>
+                <text 
+                    label="Placas"
+                    name="placas"
+                    hintStart="Campo obligatorio"
+                    [max]="15"
+                    [group]="form">
+                    
+            </text>
             </div>
             <div class="col-md-3">
                 <text label="Placas adicionales" name="placasAdicionales" [max]="15" [group]="form"></text>
@@ -102,10 +122,24 @@
                 <text label="Registro federal del vehículo (RFV)" name="registroFederalVehiculo" [max]="30" [group]="form"></text>
             </div>
             <div class="col-md-3">
-                <text label="Nº serie (VIN)" name="noSerie" [max]="30" [group]="form"></text>
+                <text
+                    label="Nº serie (VIN)"
+                    name="noSerie"
+                    hintStart="Campo obligatorio"
+                    [max]="30"
+                    [group]="form">
+                        
+                </text>
             </div>
             <div class="col-md-3">
-                <text label="Nº motor" name="noMotor" [max]="40" [group]="form"></text>
+                <text
+                    label="Nº motor"
+                    name="noMotor"
+                    hintStart="Campo obligatorio"
+                    [max]="40"
+                    [group]="form">
+                        
+                </text>
             </div>
 
             <div class="col-md-3">

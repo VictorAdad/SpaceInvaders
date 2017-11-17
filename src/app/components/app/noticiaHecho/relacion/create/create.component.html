@@ -17,8 +17,10 @@
         <form [formGroup]="form">
             <div class="row" >
                 <div class="col">
-                    <select2 placeholder="Tipo de relación"
+                    <select2
+                        placeholder="Tipo de relación"
                         name="tipo"
+                        hintStart="Campo obligatorio"
                         [(options)]="tiposRelacion"
                         (valueChange)="changeTipoRelacion($event)"
                         [group]="form.controls.tipoRelacionPersona">
@@ -27,8 +29,10 @@
                 </div>
 
                 <div class="col">
-                    <select2 placeholder="Modalidad"
+                    <select2
+                        placeholder="Modalidad"
                         name="id"
+                        hintStart="Campo obligatorio"
                         *ngIf="isImputadoVictimaDelito"
                         [(options)]="optionsRelacion.modalidadDelito"
                         [group]="form.controls.modalidadDelito">
@@ -36,8 +40,10 @@
                     </select2>
                 </div>
                 <div class="col">
-                    <select2 placeholder="Delito"
+                    <select2
+                        placeholder="Delito"
                         name="id"
+                        hintStart="Campo obligatorio"
                         *ngIf="isImputadoVictimaDelito"
                         [(options)]="optionsNoticia.delitos"
                         [group]="form.controls.delitoCaso" >
@@ -65,17 +71,21 @@
             </div>
             <div class="row" *ngIf="isAsesorJuridicoVictima">
                 <div class="col">
-                    <select2 placeholder="Víctima u ofendido"
+                    <select2
+                        placeholder="Víctima u ofendido"
                         name="id"
+                        hintStart="Campo obligatorio"
                         [(options)]="optionsNoticia.victimas"
                         [group]="form.controls.tipoRelacionPersona.controls.personaCaso">
 
                     </select2>
                 </div>
                 <div class="col">
-                    <select2 placeholder="Asesor legal"
+                    <select2
+                        placeholder="Asesor legal"
                         [(options)]="optionsNoticia.asesoresPublicos"
                         name="id"
+                        hintStart="Campo obligatorio"
                         [group]="form.controls.tipoRelacionPersona.controls.personaCasoRelacionada">
 
                     </select2>
@@ -83,17 +93,21 @@
             </div>
             <div class="row" *ngIf="isDefensorImputado">
                 <div class="col">
-                    <select2 placeholder="Víctima u ofendido"
+                    <select2
+                        placeholder="Víctima u ofendido"
                         name="id"
+                        hintStart="Campo obligatorio"
                         [(options)]="optionsNoticia.victimas"
                         [group]="form.controls.tipoRelacionPersona.controls.personaCaso">
 
                     </select2>
                 </div>
                 <div class="col">
-                    <select2 placeholder="Defensor"
+                    <select2
+                        placeholder="Defensor"
                         [(options)]="optionsNoticia.defensoresPublicos"
                         name="id"
+                        hintStart="Campo obligatorio"
                         [group]="form.controls.tipoRelacionPersona.controls.personaCasoRelacionada">
 
                     </select2>
@@ -101,17 +115,21 @@
             </div>
             <div class="row" *ngIf="isRepresentanteVictima">
                 <div class="col">
-                    <select2 placeholder="Víctima u ofendido"
+                    <select2
+                        placeholder="Víctima u ofendido"
                         name="id"
+                        hintStart="Campo obligatorio"
                         [(options)]="optionsNoticia.victimas"
                         [group]="form.controls.tipoRelacionPersona.controls.personaCaso">
 
                     </select2>
                 </div>
                 <div class="col">
-                    <select2 placeholder="Representante"
+                    <select2
+                        placeholder="Representante"
                         [(options)]="optionsNoticia.representantesLegales"
                         name="id"
+                        hintStart="Campo obligatorio"
                         [group]="form.controls.tipoRelacionPersona.controls.personaCasoRelacionada">
 
                     </select2>
@@ -119,8 +137,10 @@
             </div>
             <div class="row" *ngIf="isImputadoVictimaDelito">
                 <div class="col">
-                    <select2 placeholder="Forma de comisión"
+                    <select2
+                        placeholder="Forma de comisión"
                         name="id"
+                        hintStart="Campo obligatorio"
                         *ngIf="isImputadoVictimaDelito"
                         [(options)]="optionsRelacion.formaComision"
                         [group]="form.controls.formaComision">
@@ -128,8 +148,10 @@
                     </select2>
                 </div>
                 <div class="col" >
-                    <select2 placeholder="Imputado"
+                    <select2
+                        placeholder="Imputado"
                         name="id"
+                        hintStart="Campo obligatorio"
                         *ngIf="isImputadoVictimaDelito"
                         [(options)]="optionsNoticia.imputados"
                         [group]="form.controls.tipoRelacionPersona.controls.personaCasoRelacionada">
@@ -137,16 +159,20 @@
                     </select2>
                 </div>
                 <div class="col">
-                    <select2 placeholder="Víctima u ofendido"
+                    <select2
+                        placeholder="Víctima u ofendido"
                         name="id"
+                        hintStart="Campo obligatorio"
                         [(options)]="optionsNoticia.victimas"
                         [group]="form.controls.tipoRelacionPersona.controls.personaCaso">
 
                     </select2>
                 </div>
                 <div class="col">
-                    <select2 placeholder="Lugar"
+                    <select2
+                        placeholder="Lugar"
                         name="id"
+                        hintStart="Campo obligatorio"
                         [(options)]="optionsNoticia.lugares"
                         [group]="form.controls.tipoRelacionPersona.controls.lugarTipoRelacionPersona.controls[0].controls.lugar">
 
@@ -171,8 +197,10 @@
                     </select2>
                 </div>
                 <div class="col">
-                    <select2 placeholder="Elementos de comisión"
+                    <select2
+                        placeholder="Elementos de comisión"
                         name="id"
+                        hintStart="Campo obligatorio"
                         [(options)]="optionsRelacion.elementoComision"
                         [group]="form.controls.elementoComision">
 
@@ -187,8 +215,10 @@
                     </select2>
                 </div>
                 <div class="col">
-                    <select2 placeholder="Forma de acción"
+                    <select2
+                        placeholder="Forma de acción"
                         name="id"
+                        hintStart="Campo obligatorio"
                         [(options)]="optionsRelacion.formaAccion"
                         [group]="form.controls.formaAccion">
 
