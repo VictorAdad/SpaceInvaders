@@ -139,7 +139,8 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
     }
 
     public fillForm(_data) {
-		_data.fechaHechoDelictivo = new Date(_data.fechaHechoDelictivo);
+		if(_data.fechaHechoDelictivo)
+			_data.fechaHechoDelictivo = new Date(_data.fechaHechoDelictivo);
         this.form.patchValue(_data);
         this.form.disable();
         console.log(_data);

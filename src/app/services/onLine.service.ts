@@ -110,8 +110,10 @@ export class OnLineService {
             if (i<lista.length){
                 //console.log("ITEM",lista[i]);
                 let item = lista[i];
-
-                if (item.pendiente==false){
+                if (!item["numItentos"]){
+                    item["numItentos"]=0;
+                }
+                if (item.pendiente==false || item["numItentos"]>3){
                     this.sincroniza(i+1,lista);
                 }
 
@@ -192,6 +194,7 @@ export class OnLineService {
 
     doPost(_url, item, i, lista){
         console.log(_url,item,i,lista);
+        item["numItentos"]++;
         this.http.post(_url, item.body).subscribe(
             respuesta=>{
                 console.log("RESPONSE POST",respuesta);
@@ -209,14 +212,18 @@ export class OnLineService {
                             for (var k = 0; k < arrId.length; ++k) {
                                 var model=arrId[k];
                                 var ids=obj.buscarValores(original,model);
-                                if (ids)
+                                if (ids){
+                                    cont++;
                                     obj.db.update("newId",{id:ids.id,newId:ids.newId}).then(p=>{
-                                        cont++;
+                                        console.log(cont);
                                         if(cont==arrId.length)
                                             resolve(true);
                                     });
-                                else
-                                    cont++;
+                                }
+                            }
+                            //si no se encontraron todos los ids hay un error
+                            if (cont!=arrId.length){
+                                reject({enontrados:cont,total:arrId.length});
                             }
                         });
                     }//si hay otros ids
@@ -227,6 +234,11 @@ export class OnLineService {
                                 this.seActualizoAlmenosUnRegistro=true;
                                 this.sincroniza(i+1,lista);
                             });
+                        }).catch(r=>{
+                            console.log("ERROR numeros de ids Enontrados",r,item);
+                            item.pendiente=true;
+                            this.db.update("sincronizar",item);
+                            this.sincroniza(i+1,lista);
                         });
                     }else{
                         //esto es necesario para actualizar las llaves de las peticiones
@@ -247,11 +259,14 @@ export class OnLineService {
         },
             error=>{
                 console.log("Error:",error);
+                item.pendiente=true;
+                this.db.update("sincronizar",item)
                 this.sincroniza(i+1,lista);
         });
     }
 
     doPut(_url, item, i, lista2){
+        item["numItentos"]++;
         this.db.list("newId").then(listaNewId=>{
             console.log("URL",_url,"MODELO",item.body);
             this.sustituyeHojasPorNewId(item.body,listaNewId);
@@ -271,6 +286,8 @@ export class OnLineService {
             },
                 error=>{
                     console.log("Error:",error);
+                    item.pendiente=true;
+                    this.db.update("sincronizar",item);
                     this.sincroniza(i+1,lista2);
             });
         });
