@@ -72,6 +72,11 @@ export class Select2Component{
 		}
    	}
 
+   	public setCursor(){
+   		if(this.searchInput)
+   			this.searchInput.nativeElement.focus();
+   	}
+
 }
 
 export class MOption{
