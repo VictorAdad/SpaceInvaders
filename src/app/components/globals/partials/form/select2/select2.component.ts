@@ -57,7 +57,12 @@ export class Select2Component{
    			let subs = timer.subscribe( 
    				t =>{
    					if(this.options)
-						if(this.options.length > 0){
+							if(this.options.length > 0){
+								this.options = this.options.sort(function(a, b){
+						            if(a.label < b.label) return -1;
+						            if(a.label > b.label) return 1;
+						            return 0;
+						        });
 							// console.log('-> Tiene options');
 							subs.unsubscribe();
 						}
