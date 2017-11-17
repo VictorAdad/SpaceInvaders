@@ -1,3 +1,5 @@
+import { CasoService } from '@services/caso/caso.service';
+import { FormatosService } from '@services/formatos/formatos.service';
 import { FormatosGlobal } from './../../formatos';
 import { Component, ViewChild, Output,Input, EventEmitter  } from '@angular/core';
 import { MatPaginator } from '@angular/material';
@@ -272,15 +274,27 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
   public formData:FormData = new FormData();
   public urlUpload: string;
 
+
   constructor(
-      public http: HttpService,
-      public confirmationService:ConfirmationService,
-      public globalService:GlobalService,
-      public dialog: MatDialog,
-      private route: ActivatedRoute,
-      ){
-      super(http, confirmationService, globalService, dialog);
-  }
+    public http: HttpService,
+    public confirmationService:ConfirmationService,
+    public globalService:GlobalService,
+    public dialog: MatDialog,
+    private route: ActivatedRoute,
+    public onLine: OnLineService,
+    public formatos: FormatosService,
+    public db: CIndexedDB,
+    public caso: CasoService
+    ){
+    super(
+        http,
+        confirmationService,
+        globalService,
+        dialog,
+        onLine,
+        formatos
+        );
+}
 
   ngOnInit() {
       console.log('-> Data source ', this.object);
@@ -294,9 +308,15 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
       }
 
       this.route.params.subscribe(params => {
-          if (params['casoId'])
+          if (params['casoId']){
               this.urlUpload = '/v1/documentos/solicitudes-pre-pericial/save/'+params['casoId'];
+              this.caso.find(params['casoId']).then(
+                response => {
+                    this.updateDataFormatos(this.caso.caso);
+                }
+            );
 
+            }
       });
 
       this.formData.append('solicitudPrePericial.id', this.id.toString());
@@ -315,6 +335,14 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
       this.data.push(_object);
       this.subject.next(this.data);
   }
+  public updateDataFormatos(_object){
+    if(this.isPericiales)
+    this.formatos.formatos.setDataF1009(_object,this.id);
+    else
+    this.formatos.formatos.setDataF1010(_object,this.id);
+
+}
+
 
 }
 export interface DocumentoPerito {
