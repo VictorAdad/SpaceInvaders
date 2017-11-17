@@ -20,6 +20,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../global.component';
 import { Validation } from '@services/validation/validation.service';
 import * as moment from 'moment';
+import { CasoService } from '@services/caso/caso.service';
+import { FormatosService } from '@services/formatos/formatos.service';
 
 
 var eliminaNulos = function(x){
@@ -289,19 +291,29 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
   public data: DocumentoEntrevista[] = [];
   public subject:BehaviorSubject<DocumentoEntrevista[]> = new BehaviorSubject<DocumentoEntrevista[]>([]);
   public source:TableDataSource = new TableDataSource(this.subject);
-
   public formData:FormData = new FormData();
   public urlUpload: string;
 
   constructor(
-      public http: HttpService,
-      public confirmationService:ConfirmationService,
-      public globalService:GlobalService,
-      public dialog: MatDialog,
-      private route: ActivatedRoute,
-      ){
-      super(http, confirmationService, globalService, dialog);
-  }
+    public http: HttpService,
+    public confirmationService:ConfirmationService,
+    public globalService:GlobalService,
+    public dialog: MatDialog,
+    private route: ActivatedRoute,
+    public onLine: OnLineService,
+    public formatos: FormatosService,
+    public db: CIndexedDB,
+    public caso: CasoService
+    ){
+    super(
+        http,
+        confirmationService,
+        globalService,
+        dialog,
+        onLine,
+        formatos
+        );
+}
 
   ngOnInit() {
       console.log('-> Object ', this.object);
@@ -315,9 +327,15 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
       }
 
       this.route.params.subscribe(params => {
-          if (params['casoId'])
-              this.urlUpload = '/v1/documentos/entrevistas/save/'+params['casoId'];
+          if (params['casoId']){
+            this.urlUpload = '/v1/documentos/entrevistas/save/'+params['casoId'];
+            this.caso.find(params['casoId']).then(
+              response => {
+                  this.updateDataFormatos(this.caso.caso);
+              }
+          );
 
+            }
       });
 
       this.formData.append('entrevista.id', this.id.toString());
@@ -336,6 +354,9 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
       this.data.push(_object);
       this.subject.next(this.data);
   }
+  public updateDataFormatos(_object){
+    this.formatos.formatos.setDataF1008(_object);
+}
 
 }
 

@@ -32,4 +32,8 @@ export class HttpService {
         return this.http.get(_config.api.host+_uri, { responseType: ResponseContentType.Blob })
             .map((response: Response) => response.blob());
     }
+    public getLocal(_uri: string): Observable<any>{
+        return this.http.get(_uri, { responseType: ResponseContentType.Blob })
+            .map((response: Response) => response.blob());
+    }
 }

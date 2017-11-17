@@ -9,6 +9,8 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
 import { SelectsService } from "@services/selects.service";
+import { FormatosService } from '@services/formatos/formatos.service';
+import { CasoService } from '@services/caso/caso.service';
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
@@ -329,8 +331,19 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
         public globalService:GlobalService,
         public dialog: MatDialog,
         private route: ActivatedRoute,
+        public onLine: OnLineService,
+        public formatos: FormatosService,
+        public db: CIndexedDB,
+        public caso: CasoService
         ){
-        super(http, confirmationService, globalService, dialog);
+        super(
+            http,
+            confirmationService,
+            globalService,
+            dialog,
+            onLine,
+            formatos
+            );
     }
 
     ngOnInit() {
@@ -346,8 +359,16 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
         }
 
         this.route.params.subscribe(params => {
-            if (params['casoId'])
+            if (params['casoId']){
                 this.urlUpload = '/v1/documentos/predenuncias/save/'+params['casoId'];
+                // if(!this.onLine.onLine){
+                    this.caso.find(params['casoId']).then(
+                        response => {
+                            this.updateDataFormatos(this.caso.caso);
+                        }
+                    );
+                // }
+            }
 
         });
 
@@ -366,6 +387,12 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
         console.log('setData()');
         this.data.push(_object);
         this.subject.next(this.data);
+    }
+
+    public updateDataFormatos(_object){
+        this.formatos.formatos.setDataF1004(_object);
+        this.formatos.formatos.setDataF1003(_object);
+        this.formatos.formatos.setDataF1005(_object);
     }
 
 }

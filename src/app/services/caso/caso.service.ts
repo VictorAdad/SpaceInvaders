@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
+import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { HttpService} from '@services/http.service';
 import { OnLineService } from '@services/onLine.service';
+import * as moment from 'moment';
 
 @Injectable()
 export class CasoService{
@@ -78,7 +80,65 @@ export class Caso{
 	public nuc: string
 	public tipoRelacionPersonas: any[];
 
-	public getNic(){
-		return this.nic;
+
+
+	public findVictima(){
+		console.log('Caso@findVictima', this.personaCasos);
+		let personas = this.personaCasos.filter(
+			object => { 
+				return object.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victima
+			}
+		);
+		return personas[0];
 	}
+
+	public formatCreated (){
+		moment.locale('es');
+       return moment(this.created).format('LL'); 
+    }
+
+    public formatHoraCreated(){
+    	return moment(this.created).format('LT');
+    }
+
+    public formatFecha(_date){
+    	let date = '';
+
+    	if(_date != null)
+    		date = moment(_date).format('LL')
+
+    	return date;
+    }
+
+    //Metódos de persona
+    public getAlias(_persona){
+		console.log('Caso@getAlias()', _persona);
+		if(_persona.persona.aliasNombrePersona.length > 0){
+			let nombres =  _persona.persona.aliasNombrePersona.map(object => { return object.nombre });
+			return nombres.toString();
+		}else{
+			return '';
+		}
+	}
+
+	public getDomicilios(_persona){
+		console.log('Caso@getDomicilios()', _persona);
+		let domicilios:any[] = [];
+
+		for (let localizacion of _persona.persona.localizacionPersona) {
+			let domicilio = '';
+			domicilio += ' '+localizacion.calle;
+			domicilio += ' '+localizacion.noInterior;
+			domicilio += ' '+localizacion.noExterior;
+			domicilio += ' '+localizacion.colonia.nombre;
+			domicilio += ' '+localizacion.municipio.nombre;
+			domicilio += ' '+localizacion.estado.nombre;
+
+			domicilios.push(domicilio);
+		}
+
+		return domicilios.toString();
+	}
+
+
 }

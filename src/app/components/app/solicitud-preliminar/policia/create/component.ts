@@ -1,3 +1,5 @@
+import { CasoService } from '@services/caso/caso.service';
+import { FormatosService } from '@services/formatos/formatos.service';
 import { FormatosGlobal } from './../../formatos';
 import { Component, ViewChild, Output, Input, EventEmitter} from '@angular/core';
 import { MatPaginator } from '@angular/material';
@@ -83,6 +85,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 			if (params['id']) {
 				this.id = +params['id'];
 				console.log('id', this.id);
+
 				if(this.onLine.onLine){
 					this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 					  	console.log(response.data),
@@ -206,15 +209,27 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
   public formData:FormData = new FormData();
   public urlUpload: string;
 
+
   constructor(
-      public http: HttpService,
-      public confirmationService:ConfirmationService,
-      public globalService:GlobalService,
-      public dialog: MatDialog,
-      private route: ActivatedRoute,
-      ){
-      super(http, confirmationService, globalService, dialog);
-  }
+    public http: HttpService,
+    public confirmationService:ConfirmationService,
+    public globalService:GlobalService,
+    public dialog: MatDialog,
+    private route: ActivatedRoute,
+    public onLine: OnLineService,
+    public formatos: FormatosService,
+    public db: CIndexedDB,
+    public caso: CasoService
+    ){
+    super(
+        http,
+        confirmationService,
+        globalService,
+        dialog,
+        onLine,
+        formatos
+        );
+}
 
   ngOnInit() {
       console.log('-> Object ', this.object);
@@ -230,7 +245,11 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
       this.route.params.subscribe(params => {
           if (params['casoId'])
               this.urlUpload = '/v1/documentos/solicitudes-pre-policias/save/'+params['casoId'];
-
+              this.caso.find(params['casoId']).then(
+                response => {
+                    this.updateDataFormatos(this.caso.caso);
+                }
+            );
       });
 
       this.formData.append('solicitudPrePolicia.id', this.id.toString());
@@ -248,6 +267,9 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
       console.log('setData()');
       this.data.push(_object);
       this.subject.next(this.data);
+  }
+  public updateDataFormatos(_object){
+    this.formatos.formatos.setDataF1011(_object,this.id);
   }
 }
 

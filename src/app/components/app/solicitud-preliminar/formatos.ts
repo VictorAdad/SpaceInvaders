@@ -6,6 +6,8 @@ import { FileUploader, FileDropDirective, FileSelectDirective } from 'ng2-file-u
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { ResolveEmit,ConfirmSettings} from '@utils/alert/alert.service';
 import { GlobalService } from "@services/global.service";
+import { OnLineService } from '@services/onLine.service';
+import { FormatosService } from '@services/formatos/formatos.service';
 
 
 export class FormatosGlobal{
@@ -22,12 +24,14 @@ export class FormatosGlobal{
         public http: HttpService,
         public _confirmation:ConfirmationService,
         public globalService: GlobalService,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        public onLine: OnLineService = null,
+        public formatos: FormatosService = null
         ){
 
     }
 
-    public changeFormat(_format, _id){
+    public changeFormat(_format, _id, _data: any = {}){
         console.log('Change format:', _format, _id);
 
         this._confirmation.create('Advertencia','¿Estás seguro de guardar este formato?',this.confirmation_settings)
@@ -35,14 +39,21 @@ export class FormatosGlobal{
             (ans: ResolveEmit) => {
                 console.log("respueta",ans);
                 if(ans.resolved){
-                    this.http.get(`/v1/documentos/formatos/save/${_id}/${_format}`).subscribe(
-                        response => {
-                            console.log('Done changeFormat()', response);
-                            this.setData(response);
-                            this.globalService.openSnackBar("Formato generado con éxito");
-                        }
+                    if(this.onLine.onLine){
+                        this.http.get(`/v1/documentos/formatos/save/${_id}/${_format}`).subscribe(
+                            response => {
+                                console.log('Done changeFormat()', response);
+                                this.setData(response);
+                                this.globalService.openSnackBar("Formato generado con éxito");
+                            }
 
-                    )
+                        );
+                    }else{
+                        this.formatos.replaceWord(
+                            this.formatos.formatos[_format].nombre,
+                            _format
+                        )
+                    }
 
                 }
             }
@@ -73,7 +84,6 @@ export class FormatosGlobal{
     }
 
     public openDocDialog() {
-      console.log(this.urlUpload)
         var dialog = this.dialog.open(SolPreDocComponent, {
             height: 'auto',
             width: 'auto',
@@ -212,3 +222,4 @@ export class SolPreDocComponent {
 
 // const URL = '/api/';
 const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
+
