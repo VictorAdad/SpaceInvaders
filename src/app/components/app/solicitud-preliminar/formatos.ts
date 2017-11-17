@@ -39,7 +39,7 @@ export class FormatosGlobal{
             (ans: ResolveEmit) => {
                 console.log("respueta",ans);
                 if(ans.resolved){
-                    if(this.onLine.onLine){
+                    if(this.onLine === null || this.onLine.onLine){
                         this.http.get(`/v1/documentos/formatos/save/${_id}/${_format}`).subscribe(
                             response => {
                                 console.log('Done changeFormat()', response);
