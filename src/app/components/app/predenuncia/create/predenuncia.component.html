@@ -54,7 +54,7 @@
 		    	<text label="Número de folio" name="noFolioConstancia" [max]="50" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-				<select2 [options]="[{value: true,label: 'Si'},{value: false,label: 'No'}]"
+				<select2 [options]="[{value: false,label: 'No'}, {value: true,label: 'Si'}]"
 				placeholder="¿Habla español?"
 				[(value)]="model.hablaEspanol"
 				name="hablaEspaniol"
@@ -70,7 +70,7 @@
 	    </div>
 	    <div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-				<select2 [options]="[{value: true,label: 'Si'},{value: false,label: 'No'}]"
+				<select2 [options]="[{value: false,label: 'No'}, {value: true,label: 'Si'}]"
 				placeholder="¿Comprendió la víctima u ofendido sus derechos?"
 				[(value)]="model.comprendioDerechos"
 				name="compredioDerechos"
@@ -78,7 +78,7 @@
 			    </select2>
 			</div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-				<select2 [options]="[{value: true, label: 'Si'},{value: false, label: 'No'}]"
+				<select2 [options]="[{value: false, label: 'No'}, {value: true, label: 'Si'}]"
 				placeholder="¿Se le proporcionó copia de derechos?"
 				name="proporcionoCopia"
 				[group]="form">
@@ -133,7 +133,7 @@
 		</div>
 		<div class="row">
 		    <div class="col-md-4 col-sm-12 col-lg-4">
-		    	<select2 [options]="[{value: true,label: 'Si'},{value: false,label: 'No'}]"
+		    	<select2 [options]="[{value: false,label: 'No'}, {value: true,label: 'Si'}]"
 				placeholder="¿Se canaliza a otra área o institución?"
 				[(value)]="model.canalizacion"
 				name="canalizacion"
