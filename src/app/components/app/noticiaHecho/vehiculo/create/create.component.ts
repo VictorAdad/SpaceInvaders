@@ -11,6 +11,7 @@ import { VehiculoService } from '@services/noticia-hecho/vehiculo/vehiculo.servi
 import { SelectsService} from '@services/selects.service';
 import { Observable }  from 'rxjs/Observable';
 import { CasoService } from '@services/caso/caso.service';
+import { _config} from '@app/app.config';
 
 @Component({
     selector: 'vehiculo-create',
@@ -41,7 +42,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         super();
         console.log('vehiculoserv', this.vehiculoServ);
 
-        optionsServ.getEstadoByPais(1);
+        optionsServ.getEstadoByPais(_config.optionValue.idMexico);
     }
 
     options:MOption[]=[

@@ -88,6 +88,7 @@ export class DocumentoComponent extends FormatosGlobal{
       this.db.list("documentos").then(archivos=>{
         var lista=archivos as any[];
         for (var i = 0; i < lista.length; ++i) {
+<<<<<<< HEAD
           var obj=new DocumentoPolicia();
           obj.id=lista[i]["id"];
           obj.nameEcm=lista[i]["nombre"];
@@ -96,6 +97,19 @@ export class DocumentoComponent extends FormatosGlobal{
           obj["blob"]=lista[i]["idBlob"];
           obj["contentType"]=lista[i]["type"];
           this.data.push(obj);
+=======
+
+          if (lista[i]["casoId"]==this.id){
+            var obj=new DocumentoPolicia();
+            obj.id=lista[i]["id"];
+            obj.nameEcm=lista[i]["nombre"];
+            obj.procedimiento="Caso";
+            obj.created=lista[i]["fecha"];
+            obj["blob"]=lista[i]["idBlob"];
+            obj["contentType"]=lista[i]["type"];
+            this.data.push(obj); 
+          }
+>>>>>>> 49bbe9162e1690a0e1f9b1c7370f5fd0c89704e7
         }
         this.subject.next(this.data);
         //this.dataSource = this.source;

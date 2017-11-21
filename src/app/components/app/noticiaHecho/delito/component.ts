@@ -152,30 +152,24 @@ export class DelitoComponent {
                             dependeDe:[this.id,e.id]
                         }
                         this.db.add("sincronizar",dato).then(p=>{
-                            this.db.get("casos", this.id).then(
-                                casoR => {
-                                    if (casoR) {
-                                        this.delitoCaso = casoR as DelitoCaso;
-                                        if (casoR["delitosCaso"]){
-                                            e.principal = !e.principal;
-                                            var lista = casoR["delitosCaso"] as any[];
-                                            for (var i = 0; i < lista.length; ++i) {
-                                                if (e.principal){
-                                                    lista[i].principal=false;
-                                                }
-                                                if (lista[i].id==e.id){
-                                                    lista[i].principal=e.principal;
-                                                    this.db.update("casos",casoR).then(casoU=>{
-                                                        this.dataSource = new TableService(this.paginator, casoU["delitosCaso"]);
-                                                    });
-                                                }
-                                            }
-                                            
+                            var casoR=this.casoService.caso;
+                            if (casoR) {
+                                if (casoR["delitoCaso"]){
+                                    e.principal = true;
+                                    var lista = casoR["delitoCaso"] as any[];
+                                    for (var i = 0; i < lista.length; ++i) {
+                                        lista[i].principal=false;
+                                        if (lista[i].id==e.id){
+                                            lista[i].principal=true;
                                         }
                                     }
-                                    this.globalService.openSnackBar('Nuevo delito asignado como principal');
-                                });
-                            
+                                    this.db.update("casos",casoR).then(casoU=>{
+                                        this.dataSource = new TableService(this.paginator, this.casoService.caso["delitoCaso"]);
+                                    });
+                                    
+                                }
+                            }
+                            this.globalService.openSnackBar('Nuevo delito asignado como principal');
                         }); 
                     }
                 }
