@@ -94,11 +94,11 @@
             <div class="row" *ngIf="isDefensorImputado">
                 <div class="col">
                     <select2
-                        placeholder="Víctima u ofendido"
+                        placeholder="Imputado"
                         name="id"
                         hintStart="Campo obligatorio"
-                        [(options)]="optionsNoticia.victimas"
-                        [group]="form.controls.tipoRelacionPersona.controls.personaCaso">
+                        [(options)]="optionsNoticia.imputados"
+                        [group]="form.controls.tipoRelacionPersona.controls.personaCasoRelacionada">
 
                     </select2>
                 </div>
@@ -189,7 +189,7 @@
             </div>
             <div class="row" *ngIf="isImputadoVictimaDelito">
                 <div class="col">
-                    <select2 placeholder="Clasificación del delito"
+                    <select2 placeholder="Clasificación Delito Orden"
                         name="id"
                         [(options)]="optionsRelacion.clasificacionDelitoOrden"
                         [group]="form.controls.clasificacionDelitoOrden">

@@ -516,9 +516,10 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             }
             this.form.patchValue(_data.detalleDelito);
             this.isViolenciaGenero = _data.detalleDelito.tieneViolenciaGenero;
-            if(this.isViolenciaGenero)
+            if(this.isViolenciaGenero && _data.detalleDelito.violenciaGenero!= null)
                 timer.subscribe(t => {
                     console.log('-> Fill violencia genero');
+                    this.formRelacion.violenciaGenero = this.cleanNulls(this.formRelacion.violenciaGenero);
                     this.formRelacion.violenciaGenero.patchValue(_data.detalleDelito.violenciaGenero);
                     for (var object of _data.detalleDelito.efectoViolencia) {
                         this.optionsRelacion.matrizEfectoDetalle.finded.push(object.efectoDetalle);

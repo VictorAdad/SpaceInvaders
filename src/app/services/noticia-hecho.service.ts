@@ -194,8 +194,8 @@ export class NoticiaHechoService {
         if (_data)
             for (var i in _data){      // code...
                 let object=_data[i];
-                let marca = object.marcaSubmarca.marca != null  ? object.marcaSubmarca.marca  : '';
-                let color = object.motivoRegistroColorClase.color != null  ? object.motivoRegistroColorClase.color  : '';
+                let marca = object.marcaSubmarca != null  ? object.marcaSubmarca.marca  : '';
+                let color = object.motivoRegistroColorClase != null  ? object.motivoRegistroColorClase.color  : '';
                 options.push({value: object.id, label: marca+" "+color});
             }
         options.sort((a,b)=>{
