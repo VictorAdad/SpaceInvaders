@@ -5,7 +5,7 @@
         <div class="row" *ngIf="uploader.queue.length == 0">
             <div ng2FileSelect ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader"
                 class="my-drop-zone container4">
-                <h5>Arrastre sus documentos o de click en esta área</h5>
+                <h5>Arrastre sus documentos o de clic en esta área</h5>
                 <input type="file" ng2FileSelect [uploader]="uploader" (change)="fileEvent($event)" multiple/>
             </div>
         </div>
