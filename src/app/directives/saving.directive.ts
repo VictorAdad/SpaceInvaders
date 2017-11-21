@@ -54,7 +54,7 @@ export class SavingDirective{
 	private getSaveingText(_saving : boolean): string{
     let saveName = 'Guardar';
     if(this.isEdit)
-    saveName='Editar';
+    // saveName='Editar';
 		return _saving ? 'Guardando...' : saveName;
 	}
 
