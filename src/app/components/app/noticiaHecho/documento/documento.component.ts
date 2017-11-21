@@ -42,8 +42,10 @@ export class DocumentoComponent extends FormatosGlobal{
       public globalService:GlobalService,
       public dialog: MatDialog,
       private route: ActivatedRoute,
+      private db: CIndexedDB,
+      _onLine:OnLineService
       ){
-      super(http, confirmationService, globalService, dialog);
+      super(http, confirmationService, globalService, dialog,_onLine);
   }
 
   ngOnInit() {
@@ -54,26 +56,76 @@ export class DocumentoComponent extends FormatosGlobal{
               console.log('iffff')
               this.id=params['id'];
               this.urlUpload = '/v1/documentos/casos/save/'+this.id;
-              this.http.get('/v1/base/casos/'+this.id).subscribe(response=>{
-                this.object=response;
-                console.log('-> Object ', this.object);
+              if (this.onLine.onLine){
+                this.http.get('/v1/base/casos/'+this.id).subscribe(response=>{
+                  this.object=response;
+                  console.log('-> Object ', this.object);
 
-                if(this.object.documentos){
-                    this.dataSource = this.source;
-                    for (let object of this.object.documentos) {
-                        this.data.push(object);
-                        this.subject.next(this.data);
-                    }
+                  if(this.object.documentos){
+                      this.dataSource = this.source;
+                      for (let object of this.object.documentos) {
+                          this.data.push(object);
+                          this.subject.next(this.data);
+                      }
 
-                }
-                this.formData.append('caso.id', this.id.toString());
+                  }
+                  this.formData.append('caso.id', this.id.toString());
 
-
-              });
+                });
+              }else{
+                this.cargaArchivosOffline();
+              }
             }
       });
 
   }
+  //convierte un archivo a blob
+  dataURItoBlob(dataURI, type) {
+    var binary = atob(dataURI);
+    var array = [];
+    for(var i = 0; i < binary.length; i++) {
+        array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], {type: type});
+  }
+
+  cargaArchivosOffline(){
+      this.db.list("documentos").then(archivos=>{
+        var lista=archivos as any[];
+        for (var i = 0; i < lista.length; ++i) {
+          var obj=new DocumentoPolicia();
+          obj.id=lista[i]["id"];
+          obj.nameEcm=lista[i]["nombre"];
+          obj.procedimiento="Caso";
+          obj.created=lista[i]["fecha"];
+          obj["blob"]=lista[i]["idBlob"];
+          obj["contentType"]=lista[i]["type"];
+          this.data.push(obj); 
+        }
+        this.subject.next(this.data);
+        this.dataSource = this.source;
+      });
+  }
+
+  download(row){
+    console.log(row);
+    if (!this.onLine.onLine){
+      this.db.get("blobs",row.blob).then(t=>{
+        var b=this.dataURItoBlob(t["blob"].split(',')[1], row.contentType );
+        var a = document.createElement('a');
+        a.download = row.nameEcm;
+        a.href=window.URL.createObjectURL( b );;
+        a.click();
+        a.remove();
+      });
+    }
+  }
+
+
+
+
+
+
 
   public cargaArchivos(_archivos){
     let archivos=_archivos.saved
@@ -100,7 +152,7 @@ export class DocumentoComponent extends FormatosGlobal{
   }
 }
 
-export interface DocumentoPolicia {
+export class DocumentoPolicia {
 	id: number
 	nameEcm: string;
 	procedimiento: string;
