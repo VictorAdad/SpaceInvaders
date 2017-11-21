@@ -155,10 +155,13 @@ export class SolPreDocComponent {
         //falta definir el guardado en la tabla de sincronizar
         var obj=this;
         if (i==listaArchivos.length){
-            this.close();
+            //this.close();
             this.db.add("sincronizar",_data).then(p=>{
                 this.globalService.openSnackBar("Se guardo con éxito")
             });
+            this.uploader.clearQueue();
+            this.emitter.emit(null);
+            this.close();
             return;
         }
         let item=listaArchivos[i];
