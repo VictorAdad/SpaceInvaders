@@ -252,26 +252,72 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     }
 
     addHostigamiento(_val: any){
-        console.log("HOSTIGAMIENTO",_val);
+        console.log("HOSTIGAMIENTO",_val, this);
         if (_val["ambito"]){
-            _val["conductaDetalle"]=this.optionsRelacion.matrizConductaDetalle.finded[0];
-            _val["modalidadAmbito"]=this.optionsRelacion.matrizModalidadAmbito.finded[0];
+                _val["conductaDetalle"]=this.optionsRelacion.matrizConductaDetalle.finded[0];
+                _val["modalidadAmbito"]=this.optionsRelacion.matrizModalidadAmbito.finded[0];
+            }
+        /*
+            TODO: Definir cuales son los campos obligatorios 
+        */
+        if (_val["conductaDetalle"] && _val["conductaDetalle"]["detalle"]){
+            this.colections.add('hostigamiento', 'subjectHostigamiento', _val);
+            let form = this.form.get('hostigamientoAcoso') as FormArray;
+            var idModalidadAmbito=this.optionsRelacion.matrizModalidadAmbito.finded[0]?this.optionsRelacion.matrizModalidadAmbito.finded[0].id:null;
+            var idConductaDetalle=this.optionsRelacion.matrizConductaDetalle.finded[0]?this.optionsRelacion.matrizConductaDetalle.finded[0].id:null;
+            var idTestigo=_val.testigo?_val.testigo.id:null;
+            if (_val["ambito"]){
+                idTestigo=_val.testigo;
+            }
+            form.push(
+                this.formRelacion.setHostigamientoForm(
+                    idModalidadAmbito,
+                    idConductaDetalle,
+                    idTestigo
+                )
+            );
+        }else if(_val["conductaDetalle"]) {
+            this.db.searchInCatalogo("conducta_detalle",_val["conductaDetalle"]).then(conductaDetalle=>{
+                this.db.searchInCatalogo("modalidad_ambito",_val["modalidadAmbito"]).then(modalidadAmbito=>{
+                    console.log("HOSTIGAMIENTO CHUNGO=>",_val);
+                    var testigo=_val["testigo"];
+                    for (let i=0;i<this.casoOffline["personaCasos"].length; ++i){
+                        if (testigo.id==this.casoOffline["personaCasos"][i]["persona"]["id"]){
+                            testigo=this.casoOffline["personaCasos"][i]["persona"];
+                            break;
+                        }
+                    }
+                    this.colections.add('hostigamiento', 'subjectHostigamiento', {
+                        id:_val["id"],
+                        conductaDetalle:{
+                            id:conductaDetalle["id"],
+                            conducta:conductaDetalle["conducta"],
+                            detalle:conductaDetalle["detalle"]
+                        },
+                        modalidadAmbito:{
+                            id:modalidadAmbito["id"],
+                            modalidad:modalidadAmbito["modalidad"],
+                            ambito:modalidadAmbito["ambito"]
+                        },
+                        testigo:testigo
+                    });
+                    let form = this.form.get('hostigamientoAcoso') as FormArray;
+                    var idModalidadAmbito=modalidadAmbito["id"];
+                    var idConductaDetalle=conductaDetalle["id"];
+                    var idTestigo=_val.testigo?_val.testigo.id:null;
+                    
+                    form.push(
+                        this.formRelacion.setHostigamientoForm(
+                            idModalidadAmbito,
+                            idConductaDetalle,
+                            idTestigo
+                        )
+                    );
+                })
+            })
         }
-        this.colections.add('hostigamiento', 'subjectHostigamiento', _val);
-        let form = this.form.get('hostigamientoAcoso') as FormArray;
-        var idModalidadAmbito=this.optionsRelacion.matrizModalidadAmbito.finded[0]?this.optionsRelacion.matrizModalidadAmbito.finded[0].id:null;
-        var idConductaDetalle=this.optionsRelacion.matrizConductaDetalle.finded[0]?this.optionsRelacion.matrizConductaDetalle.finded[0].id:null;
-        var idTestigo=_val.testigo?_val.testigo.id:null;
-        if (_val["ambito"]){
-            idTestigo=_val.testigo;
-        }
-        form.push(
-            this.formRelacion.setHostigamientoForm(
-                idModalidadAmbito,
-                idConductaDetalle,
-                idTestigo
-            )
-        );
+        
+        
     }
 
     save(_valid : any, _model : any){
@@ -403,7 +449,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                                 let item = (_model["efectoViolencia"])[i];
                                 item["id"]=copia;
                             }
-                            console.log(caso["tipoRelacionPersonas"]);
+                            console.log(_model);
                             var relacion={
                                 armaTipoRelacionPersona:_model["tipoRelacionPersona"]["armaTipoRelacionPersona"],
                                 detalleDelito:{
@@ -659,7 +705,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 tipo: _data.tipo,
             }
         });
-        console.log('tipo persona->',this.form.controls.tipoRelacionPersona);
+        //console.log('tipo persona->',this.form.controls.tipoRelacionPersona);
+        console.log("Data => ",_data);
         let timer = Observable.timer(1);
         let timer2 = Observable.timer(1);
         timer.subscribe(t => {
@@ -701,6 +748,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                     delete _data.detalleDelito[propName];
             }
             this.form.patchValue(_data.detalleDelito);
+            console.log(this.form);
             this.isViolenciaGenero = _data.detalleDelito.tieneViolenciaGenero;
             if(this.isViolenciaGenero && _data.detalleDelito.violenciaGenero!= null)
                 timer.subscribe(t => {
@@ -712,6 +760,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                         this.addEfectoDetalle(object.efectoDetalle);
                     }
                     for (var object of _data.detalleDelito.trataPersona) {
+                        this.eliminaNulos(object);
                         this.formRelacion.trataPersonasForm.patchValue(object);
                         this.optionsRelacion.matrizTipoTransportacion.finded.push(object.tipoTransportacion);
                         this.addTrataPersonas(object);
