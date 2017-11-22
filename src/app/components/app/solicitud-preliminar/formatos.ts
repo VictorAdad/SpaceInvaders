@@ -12,7 +12,8 @@ import { FormatosService } from '@services/formatos/formatos.service';
 
 export class FormatosGlobal{
 	public confirmation_settings:ConfirmSettings={
-        overlayClickToClose: false, // Default: true
+        overlay:true,
+        overlayClickToClose: true, // Default: true
         showCloseButton: true, // Default: true
         confirmText: "Continuar", // Default: 'Yes'
         declineText: "Cancelar",
@@ -120,6 +121,13 @@ export class SolPreDocComponent {
     private db: CIndexedDB
     @Output()
     emitter = new EventEmitter();
+    public confirmation_settings:ConfirmSettings={
+      overlayClickToClose: false, // Default: true
+      showCloseButton: true, // Default: true
+      confirmText: "Continuar", // Default: 'Yes'
+      declineText: "Cancelar",
+    };
+
 
     constructor(
         public dialogRef: MatDialogRef<SolPreDocComponent>,
@@ -127,6 +135,8 @@ export class SolPreDocComponent {
         public globalService : GlobalService,
         private http: HttpService,
         @Inject(MAT_DIALOG_DATA) private data:any,
+        public _confirmation:ConfirmationService,
+        public dialog: MatDialog,
         public onLine: OnLineService = null,){
         this.db=_db;
     }
@@ -135,8 +145,9 @@ export class SolPreDocComponent {
     public hasBaseDropZoneOver:boolean = false;
     public hasAnotherDropZoneOver:boolean = false;
     public isUploading: boolean = false;
-
     public archivos:any;
+    public formData: FormData;
+    public urlUpload: string;
 
     public fileOverBase(e:any):void {
       this.hasBaseDropZoneOver = e;
@@ -146,6 +157,7 @@ export class SolPreDocComponent {
     close(){
         this.dialogRef.close();
     }
+
 
     fileEvent(e){
 
@@ -189,43 +201,63 @@ export class SolPreDocComponent {
     }
 
     public guardar(){
-        console.log("-> Archivos:", this.uploader);
-        console.log("-> Data:", this.data);
-        var listaFiles = this.uploader.queue as any[];
-        console.log('-> Files to saves: ', listaFiles);
-        this.data.formData.set('files',[]);
-        for (let file of listaFiles) {
-            console.log('file',file)
-            this.data.formData.append('files', file['some']);
-        }
-        console.log(' A guardar!!', this.data.formData)
-        if (this.onLine.onLine){
-            this.http.post(this.data.urlUpload, this.data.formData).subscribe(
-                response => {
-                    console.log('Done guardar()', response);
-                    this.archivos=response;
-                    this.uploader.clearQueue();
-                    this.emitter.emit(this.archivos);
-                    this.close();
+      this.close();
+      this._confirmation.create('Advertencia','¿Estás seguro de adjuntar este documento?',this.confirmation_settings)
+      .subscribe(
+          (ans: ResolveEmit) => {
+              console.log("respueta",ans);
+              if(ans.resolved){
+                console.log("-> Archivos:", this.uploader);
+                console.log("-> Data:", this.data);
+                var listaFiles = this.uploader.queue as any[];
+                console.log('-> Files to saves: ', listaFiles);
+                this.data.formData.set('files',[]);
+                for (let file of listaFiles) {
+                    console.log('file',file)
+                    this.data.formData.append('files', file['some']);
                 }
-            )
-        }else{
-            let temId=Date.now();
-            let b=this.data.urlUpload.split("/")
-            let casoId=parseInt(b[b.length-1])
-            let dato={
-                url:this.data.urlUpload,
-                //hay que crear el body de los documentos
-                body:null,
-                options:[],
-                tipo:"postDocument",
-                pendiente:true,
-                dependeDe:[casoId],
-                temId: temId,
-                documentos:[]
-            }
-            this.guardarOffLine(0,listaFiles,casoId,dato);
-        }
+                console.log(' A guardar!!', this.data.formData)
+                if (this.onLine.onLine){
+                    this.http.post(this.data.urlUpload, this.data.formData).subscribe(
+                        response => {
+                            console.log('Done guardar()', response);
+                            this.archivos=response;
+                            this.uploader.clearQueue();
+                            this.emitter.emit(this.archivos);
+                            this.close();
+                        }
+                    )
+                }else{
+                    let temId=Date.now();
+                    let b=this.data.urlUpload.split("/")
+                    let casoId=parseInt(b[b.length-1])
+                    let dato={
+                        url:this.data.urlUpload,
+                        //hay que crear el body de los documentos
+                        body:null,
+                        options:[],
+                        tipo:"postDocument",
+                        pendiente:true,
+                        dependeDe:[casoId],
+                        temId: temId,
+                        documentos:[]
+                    }
+                    this.guardarOffLine(0,listaFiles,casoId,dato);
+                }
+
+              }
+              else{
+                var dialog = this.dialog.open(SolPreDocComponent, {
+                  height: 'auto',
+                  width: 'auto',
+                  data: {
+                    urlUpload: this.urlUpload,
+                    formData: this.formData
+                }
+              });
+              }
+          }
+      );
 
     }
 
