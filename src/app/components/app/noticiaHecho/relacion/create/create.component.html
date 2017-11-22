@@ -412,31 +412,51 @@
 
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-4">
-                            <select2 placeholder="Estado origen"
-                                [options]="arrEstadosOrigen"
-                                name="id"
-                                [group]="formRelacion.trataPersonasForm.controls.estadoOrigen"
-                                (valueChange)="changeEstado($event,'arrMunicipiosOrigen')">
-                            </select2>
-                             <select2 placeholder="Estado destino"
-                                [options]="arrEstadosDestino"
-                                name="id"
-                                [group]="formRelacion.trataPersonasForm.controls.estadoDestino"
-                                (valueChange)="changeEstado($event,'arrMunicipiosDestino')">
-                            </select2>
+                            <div *ngIf="!isMexicoPaisOrigen">
+                                <text label="Estado de origen" name="estadoOrigenOtro" [max]="50" [group]="formRelacion.trataPersonasForm" ></text>
+                            </div>
+                            <div *ngIf="isMexicoPaisOrigen">
+                                <select2 placeholder="Estado origen"
+                                    [options]="arrEstadosOrigen"
+                                    name="id"
+                                    [group]="formRelacion.trataPersonasForm.controls.estadoOrigen"
+                                    (valueChange)="changeEstado($event,'arrMunicipiosOrigen')">
+                                </select2>
+                            </div>
+                            <div *ngIf="!isMexicoPaisDestino">
+                                <text label="Estado de destino" name="estadoDestinoOtro" [max]="50" [group]="formRelacion.trataPersonasForm" ></text>
+                            </div>
+                            <div *ngIf="isMexicoPaisDestino">
+                                 <select2 placeholder="Estado destino"
+                                    [options]="arrEstadosDestino"
+                                    name="id"
+                                    [group]="formRelacion.trataPersonasForm.controls.estadoDestino"
+                                    (valueChange)="changeEstado($event,'arrMunicipiosDestino')">
+                                </select2>
+                            </div>  
 
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-4">
-                            <select2 placeholder="Municipio origen"
-                                [options]="arrMunicipiosOrigen"
-                                name="id"
-                                [group]="formRelacion.trataPersonasForm.controls.municipioOrigen">
-                            </select2>
-                           <select2 placeholder="Municipio destino"
-                                [options]="arrMunicipiosDestino"
-                                name="id"
-                                [group]="formRelacion.trataPersonasForm.controls.municipioDestino">
-                            </select2>
+                            <div *ngIf="!isMexicoPaisOrigen">
+                                <text label="Municipio de origen" name="municipioOrigenOtro" [max]="50" [group]="formRelacion.trataPersonasForm" ></text>
+                            </div>
+                            <div *ngIf="isMexicoPaisOrigen">
+                                <select2 placeholder="Municipio origen"
+                                        [options]="arrMunicipiosOrigen"
+                                    name="id"
+                                    [group]="formRelacion.trataPersonasForm.controls.municipioOrigen">
+                                </select2>
+                            </div>
+                            <div *ngIf="!isMexicoPaisDestino">
+                                <text label="Municipio de destino" name="municipioDestinoOtro" [max]="50" [group]="formRelacion.trataPersonasForm" ></text>
+                            </div>
+                            <div *ngIf="isMexicoPaisDestino">
+                               <select2 placeholder="Municipio destino"
+                                    [options]="arrMunicipiosDestino"
+                                    name="id"
+                                    [group]="formRelacion.trataPersonasForm.controls.municipioDestino">
+                                </select2>
+                            </div>
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <select2 placeholder="Tipo"
