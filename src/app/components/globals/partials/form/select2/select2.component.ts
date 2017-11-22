@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, Renderer } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, Renderer, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/startWith';
@@ -37,6 +37,11 @@ export class Select2Component{
 	ngAfterViewInit(){
 		this.renderer.listen(
 			this.searchInput.nativeElement, 'keyup', this.filter.bind(this));
+	}
+
+	ngOnChanges(changes: SimpleChanges) {
+		if(changes.options)
+			this.filteredOptions = this.options;
 	}
 
 
