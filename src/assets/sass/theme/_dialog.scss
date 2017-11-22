@@ -26,11 +26,11 @@
  overflow-y: auto !important;
  width: 100%;
 }
-.mat-dialog-container tr,td{
- width: 100%;
+.mat-dialog-container tr,td,th{
+ width: 100% !important;
 }
 .mat-dialog-container thead{
   display: block;
-  width: 100%;
+  width: 100% !important;
 
 }
