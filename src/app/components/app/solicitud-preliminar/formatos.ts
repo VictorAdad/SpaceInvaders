@@ -201,8 +201,7 @@ export class SolPreDocComponent {
     }
 
     public guardar(){
-      this.close();
-      this._confirmation.create('Advertencia','¿Estás seguro de adjuntar este documento?',this.confirmation_settings)
+     this._confirmation.create('Advertencia','¿Estás seguro de adjuntar este documento?',this.confirmation_settings)
       .subscribe(
           (ans: ResolveEmit) => {
               console.log("respueta",ans);
@@ -245,16 +244,6 @@ export class SolPreDocComponent {
                     this.guardarOffLine(0,listaFiles,casoId,dato);
                 }
 
-              }
-              else{
-                var dialog = this.dialog.open(SolPreDocComponent, {
-                  height: 'auto',
-                  width: 'auto',
-                  data: {
-                    urlUpload: this.urlUpload,
-                    formData: this.formData
-                }
-              });
               }
           }
       );

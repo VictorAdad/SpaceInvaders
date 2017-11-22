@@ -11,5 +11,7 @@
 	.content-dialog-lg{
 		width: 400px;
 	}
-
+.cdk-overlay-container{
+  z-index: 99;
+}
 }
