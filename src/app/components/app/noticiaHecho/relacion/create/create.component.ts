@@ -204,12 +204,30 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     }
 
     addEfectoDetalle(_val: any){
-        this.colections.add('efectoDetalle', 'subjectEfectoDetalle', _val);
-        let form = this.form.get('efectoViolencia') as FormArray;
-        if(this.optionsRelacion.matrizEfectoDetalle.finded[0])
-            form.push(
-                this.formRelacion.efectoViolenciaForm(this.optionsRelacion.matrizEfectoDetalle.finded[0].id)
-            );
+        console.log("EFECTO detalle: ",_val);
+        if (_val["detalle"]){
+            this.colections.add('efectoDetalle', 'subjectEfectoDetalle', _val);
+            let form = this.form.get('efectoViolencia') as FormArray;
+            if(this.optionsRelacion.matrizEfectoDetalle.finded[0])
+                form.push(
+                    this.formRelacion.efectoViolenciaForm(this.optionsRelacion.matrizEfectoDetalle.finded[0].id)
+                );
+        }else{
+            this.db.searchInCatalogo("efecto_detalle",_val).then(efectoDetalle=>{
+                this.colections.add('efectoDetalle', 'subjectEfectoDetalle', 
+                    {
+                        id:efectoDetalle["id"], 
+                        detalle:efectoDetalle["detalle"], 
+                        efecto:efectoDetalle["efecto"]
+                    });
+                let form = this.form.get('efectoViolencia') as FormArray;
+                if(this.optionsRelacion.matrizEfectoDetalle.finded[0])
+                    form.push(
+                        this.formRelacion.efectoViolenciaForm(this.optionsRelacion.matrizEfectoDetalle.finded[0].id)
+                    );
+            })
+        }
+        
     }
 
     addTrataPersonas(_val: any){
