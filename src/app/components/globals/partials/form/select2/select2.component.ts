@@ -47,6 +47,7 @@ export class Select2Component{
 
 	public filter(val: any) {
 		// console.log('Select@filter()', val);
+		// console.log('options', this.options);
   		this.filteredOptions =  this.options.filter(option => option.label.toLowerCase().indexOf(val.target.value.toLowerCase()) === 0 );
    	}
 
