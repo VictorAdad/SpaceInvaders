@@ -81,21 +81,24 @@ export class Form {
                     new FormGroup({
                         'lugar': new FormGroup({
                             'id': new FormControl('', [Validators.required]),
-                        })
+                        }),
+                        'id': new FormControl(''),
                     })
                 ]),
                 'armaTipoRelacionPersona': new FormArray([
                     new FormGroup({
                         'arma': new FormGroup({
                             'id': new FormControl(''),
-                        })
+                        }),
+                        'id': new FormControl('')
                     })
                 ]),
                 'vehiculoTipoRelacionPersona': new FormArray([
                     new FormGroup({
                         'vehiculo': new FormGroup({
                             'id': new FormControl(''),
-                        })
+                        }),
+                        'id': new FormControl(''),
                     })
                 ])
             })
@@ -120,6 +123,7 @@ export class Form {
             'testigo': new FormGroup({
                 'id': new FormControl(_testigo),
             }),
+            'id': new FormControl('')
         });
     }
 

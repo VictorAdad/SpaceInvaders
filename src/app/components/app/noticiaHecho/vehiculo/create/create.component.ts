@@ -26,7 +26,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     public id: number = null;
     public breadcrumb = [];
     public isProcedenciaExtranjera: boolean =false;
-    public regexPlaca = /^(?:\s*[a-zA-Z0-9]{2,}\s*)*$/
+    public regexPlaca = /^(?:\s*[a-zA-Z0-9]{1,}\s*)*$/
 
 
     constructor(

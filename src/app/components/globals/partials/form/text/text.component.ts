@@ -34,7 +34,7 @@ export class TextComponent implements OnInit{
 	}
 
 	ngOnInit(){
-		console.log(this);
+		// console.log(this);
 	}
 
 	ngAfterViewInit(){
