@@ -157,6 +157,14 @@ export class NoticiaHechoService {
         if (this.onLine.onLine)
             this.http.get(_url).subscribe((response) => {
                 this[_attr] = _call(response);
+                if(_attr === 'defensoresPublicos' || _attr === 'defensoresPrivados'){
+                    this.defensoresPublicos = this.defensoresPublicos.concat(this.defensoresPrivados);
+                    console.log(this.defensoresPrivados);
+                }
+                if(_attr === 'asesoresPublicos' || _attr === 'asesoresPrivados'){
+                    this.asesoresPublicos = this.asesoresPublicos.concat(this.asesoresPrivados);
+                    console.log(this.asesoresPrivados);
+                }
             });
         else{
             if (this.caso["personaCasos"]){
@@ -167,6 +175,14 @@ export class NoticiaHechoService {
                     }
                 }
                 this[_attr] = this.constructOptionsPersona(arr);
+                if(_attr === 'defensoresPublicos' || _attr === 'defensoresPrivados'){
+                    this.defensoresPublicos = this.defensoresPublicos.concat(this.defensoresPrivados);
+                    console.log(this.defensoresPrivados);
+                }
+                if(_attr === 'asesoresPublicos' || _attr === 'asesoresPrivados'){
+                    this.asesoresPublicos = this.asesoresPublicos.concat(this.asesoresPrivados);
+                    console.log(this.asesoresPrivados);
+                }
             }
         }
     }
@@ -235,7 +251,9 @@ export class NoticiaHechoService {
         if (_data)
             for (var i in _data){      // code...
                 let object=_data[i];
-                options.push({value: object.id, label: object.persona.nombre});
+                options.push(
+                    {value: object.id, label: `${object.persona.nombre}  ${object.persona.paterno}`}
+                );
             }
         options.sort((a,b)=>{
             if (a.label>b.label) 
