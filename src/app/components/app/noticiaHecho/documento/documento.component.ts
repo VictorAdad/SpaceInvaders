@@ -28,8 +28,9 @@ export class DocumentoComponent extends FormatosGlobal{
   id:number=null;
   displayedColumns = ['nombre','procedimiento', 'fechaCreacion'];
   object: any;
-	dataSource: TableDataSource | null;
+  public dataSource: TableService | null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  public pag: number = 0;
   public data: DocumentoPolicia[] = [];
   public subject:BehaviorSubject<DocumentoPolicia[]> = new BehaviorSubject<DocumentoPolicia[]>([]);
   public source:TableDataSource = new TableDataSource(this.subject);
@@ -59,16 +60,10 @@ export class DocumentoComponent extends FormatosGlobal{
               if (this.onLine.onLine){
                 this.http.get('/v1/base/casos/'+this.id).subscribe(response=>{
                   this.object=response;
+                  this.data=this.object.documentos
                   console.log('-> Object ', this.object);
-
-                  if(this.object.documentos){
-                      this.dataSource = this.source;
-                      for (let object of this.object.documentos) {
-                          this.data.push(object);
-                          this.subject.next(this.data);
-                      }
-
-                  }
+                  this.pag = this.data.length;
+                  this.dataSource = new TableService(this.paginator, this.data);
                   this.formData.append('caso.id', this.id.toString());
 
                 });
@@ -102,11 +97,14 @@ export class DocumentoComponent extends FormatosGlobal{
             obj.created=lista[i]["fecha"];
             obj["blob"]=lista[i]["idBlob"];
             obj["contentType"]=lista[i]["type"];
-            this.data.push(obj); 
+            this.data.push(obj);
           }
         }
         this.subject.next(this.data);
-        this.dataSource = this.source;
+        //this.dataSource = this.source;
+        this.dataSource = new TableService(this.paginator, this.data);
+        this.pag = this.data.length;
+
       });
   }
 
@@ -125,24 +123,27 @@ export class DocumentoComponent extends FormatosGlobal{
   }
 
 
-
-
-
-
-
   public cargaArchivos(_archivos){
+    if(_archivos){
+    console.log('cargando archivos',_archivos)
     let archivos=_archivos.saved
-
-      for (let object of archivos) {
+     for (let object of archivos) {
           this.data.push(object);
           this.subject.next(this.data);
       }
+      this.dataSource = new TableService(this.paginator, this.data);
+      this.pag = this.data.length;
+    }else{
+      this.cargaArchivosOffline();
+    }
   }
 
   public setData(_object){
       console.log('setData()');
       this.data.push(_object);
       this.subject.next(this.data);
+      this.dataSource = new TableService(this.paginator, this.data);
+      this.pag = this.data.length;
   }
   public mostrarOcultarFormatos(mostrar){
     if(mostrar){
@@ -153,6 +154,25 @@ export class DocumentoComponent extends FormatosGlobal{
 
     }
   }
+  public changePage(_e){
+    if(this.onLine.onLine){
+       // this.page('/v1/base/lugares/casos/'+this.id+'/page?p='+_e.pageIndex+'&tr='+_e.pageSize);
+
+    }
+
+}
+
+public page(url: string){
+    this.http.get(url).subscribe((response) => {
+        this.pag = response.totalCount;
+        this.data = response.data
+        console.log("Loading Documentos..");
+        console.log(this.data);
+        this.dataSource = new TableService(this.paginator, this.data);
+    });
+}
+
+
 }
 
 export class DocumentoPolicia {
