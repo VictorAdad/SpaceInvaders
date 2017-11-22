@@ -59,9 +59,6 @@ export class PredenunciaCreateComponent {
 
     ngOnInit(){
         this.route.params.subscribe(params => {
-            if(params['id']){
-                this.casoId = +params['id'];
-            }
             if (params['casoId']){
                 this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"});
