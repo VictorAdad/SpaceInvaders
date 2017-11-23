@@ -14,23 +14,23 @@
 
 }
 
-.cdk-overlay-container{
-  z-index: 99 !important;
-}
-.mat-dialog-container{
-  width: 540px !important;
-}
-.mat-dialog-container tbody{
-  display: block;
- max-height: 400px !important;
- overflow-y: auto !important;
- width: 100%;
-}
-.mat-dialog-container tr,td{
- width: 100%;
-}
-.mat-dialog-container thead{
-  display: block;
-  width: 100%;
+// .cdk-overlay-container{
+//   z-index: 99 !important;
+// }
+// .mat-dialog-container{
+//   width: 540px !important;
+// }
+// .mat-dialog-container tbody{
+//   display: block;
+//  max-height: 400px !important;
+//  overflow-y: auto !important;
+//  width: 100%;
+// }
+// .mat-dialog-container tr,td{
+//  width: 100%;
+// }
+// .mat-dialog-container thead{
+//   display: block;
+//   width: 100%;
 
-}
+// }
