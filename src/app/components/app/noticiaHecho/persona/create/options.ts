@@ -10,7 +10,7 @@ export class Options {
     public estados: MOption[]     = [];
     public municipios: MOption[]  = [];
     public colonias: MOption[]    = [];
-    public localidades: MOption[] = [];
+    public localidad: MOption[] = [];
     public tipoDomicilio: MOption[]= [];
 
 
@@ -24,7 +24,7 @@ export class Options {
         this.estados     = this.select.estados;
         this.municipios  = this.select.municipios;
         this.colonias    = this.select.colonias;
-        this.localidades = this.select.localidad;
+        this.localidad   = this.select.localidad;
         this.tipoDomicilio = this.select.tipoDomicilio;
     }
 
@@ -62,13 +62,13 @@ export class Options {
 
     public getColoniasByMunicipio(idMunicipio: number){
         this.http.get('/v1/catalogos/colonia/municipio/'+idMunicipio+'/options').subscribe((response) => {
-            this.localidades = this.constructOptions(response);
+            this.localidad = this.constructOptions(response);
         });
     }
 
     public getLocalidadByMunicipio(idColonia: number){
         this.http.get('/v1/catalogos/localidad/municipio/'+idColonia+'/options').subscribe((response) => {
-            this.localidades = this.constructOptions(response);
+            this.localidad = this.constructOptions(response);
         });
     }
 

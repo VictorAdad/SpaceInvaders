@@ -887,7 +887,7 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
 
     @Input()
     globals: PersonaGlobals;
-    options: Options;
+    options: SelectsService;
     isMexico:boolean=false;
     tabla: CIndexedDB;
 
@@ -900,8 +900,9 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
         ){
         super();
         this.tabla = _tabla;
-        this.options = new Options(this.http, this.onLine, this._tabla, this.select);
-        // this.options =  new SelectsService(this.http, this.onLine, this._tabla);
+        // this.options = new Options(this.http, this.onLine, this._tabla, this.select);
+        this.options =  new SelectsService(this.http, this.onLine, this._tabla);
+        this.options.getData();
 
     }
 
