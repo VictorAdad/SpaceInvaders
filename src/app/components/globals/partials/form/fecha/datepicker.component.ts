@@ -1,6 +1,6 @@
 import { Component, OnInit, forwardRef, EventEmitter, Input, Output, Renderer,  ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
-
+import { Observable } from 'rxjs/Observable';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 
@@ -89,7 +89,12 @@ export class DatePicker implements OnInit, ControlValueAccessor {
             this.datePicker.nativeElement, 'focus', event => this.popover = true);
 
         this.renderer.listen(
-            this.datePicker.nativeElement, 'blur', event => this.popover = false);
+            this.datePicker.nativeElement, 'blur', event => {
+                let timer2 = Observable.timer(200);
+                timer2.subscribe(tiempo => {
+                    this.popover = false;
+                });
+            });
     }
 
     private onTouchedCallback: () =>  {};
