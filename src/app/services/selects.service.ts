@@ -268,7 +268,26 @@ export class SelectsService {
         }
     }
     public getEstadoByPaisService(idPais: number){
-        return this.http.get('/v1/catalogos/estado/pais/'+idPais+'/options');
+        return new Promise((resolve,reject)=>{
+            if (this.onLine.onLine){
+                this.http.get('/v1/catalogos/estado/pais/'+idPais+'/options').subscribe(response=>{
+                    resolve(response);
+                },error=>{
+                    reject(error);
+                })
+            }else{
+                this.db.searchInNotMatrx("estado",{pais:{id:idPais}}).then(response=>{
+                    let estados={};
+                    for(let e in response){
+                        estados[""+response[e].id]=response[e].nombre
+                    }
+                    resolve(estados);
+                }).catch(error=>{
+                    reject(error);
+                })
+            }
+            
+        });
     }
 
     public getMunicipiosByEstado(idEstado: number){
@@ -288,7 +307,25 @@ export class SelectsService {
     }
 
     public getMunicipiosByEstadoService(idEstado: number){
-        return this.http.get('/v1/catalogos/municipio/estado/'+idEstado+'/options');
+        return new Promise( (resolve, reject) =>{
+            if (this.onLine.onLine){
+                this.http.get('/v1/catalogos/municipio/estado/'+idEstado+'/options').subscribe((response)=>{
+                    resolve(response);
+                },error=>{
+                    reject(error);
+                })
+            }else{
+                this.db.searchInNotMatrx("municipio",{estado:{id:idEstado}}).then(response=>{
+                    let estados={};
+                    for(let e in response){
+                        estados[""+response[e].id]=response[e].nombre
+                    }
+                    resolve(estados);
+                }).catch(error=>{
+                    reject(error);
+                });
+            }
+        });
     }
 
     public getColoniasByMunicipio(idMunicipio: number){

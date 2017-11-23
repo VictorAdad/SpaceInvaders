@@ -868,7 +868,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
             console.log(arr,arr.indexOf("Destino"),this.isMexicoPaisDestino,this.isMexicoPaisOrigen);
 
-            this.optionsService.getEstadoByPaisService(val).subscribe(estados=>{
+            this.optionsService.getEstadoByPaisService(val).then(estados=>{
                 this[arr]=this.optionsService.constructOptions(estados);
             });
         }
@@ -877,7 +877,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
     changeEstado(val,arr){
         if (val != null)
-            this.optionsService.getMunicipiosByEstadoService(val).subscribe(municipios=>{
+            this.optionsService.getMunicipiosByEstadoService(val).then(municipios=>{
                 this[arr]=this.optionsService.constructOptions(municipios);
             });
     }
