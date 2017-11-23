@@ -11,6 +11,7 @@ import { PersonaService} from '@services/noticia-hecho/persona/persona.service';
 import { NoticiaHechoGlobal } from '../../global';
 import { _config} from '@app/app.config';
 import { Form } from './form';
+import { Options } from './options';
 import { Observable }                  from 'rxjs/Observable';
 import * as moment from 'moment';
 import { CasoService } from '@services/caso/caso.service';
@@ -886,8 +887,6 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
 
     @Input()
     globals: PersonaGlobals;
-    @Input()
-    @Input()
     options: SelectsService;
     isMexico:boolean=false;
     tabla: CIndexedDB;
@@ -897,10 +896,13 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
         private _tabla: CIndexedDB,
         private http: HttpService,
         private onLine: OnLineService,
+        private select: SelectsService
         ){
         super();
         this.tabla = _tabla;
+        // this.options = new Options(this.http, this.onLine, this._tabla, this.select);
         this.options =  new SelectsService(this.http, this.onLine, this._tabla);
+        this.options.getData();
 
     }
 
@@ -920,8 +922,10 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
     }
 
     changeEstado(id){
-        if(id!=null && typeof id !='undefined')
+        if(id != null && typeof id !='undefined'){
             this.options.getMunicipiosByEstado(id);
+            this.globals.form.controls.municipio.reset();
+        }
     }
 
     changeMunicipio(id){

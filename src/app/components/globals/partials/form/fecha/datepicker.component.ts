@@ -1,7 +1,7 @@
 import { Component, OnInit, forwardRef, EventEmitter, Input, Output } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 
 export const DATEPICKER_CONTROL_VALUE_ACCESSOR: any = {
@@ -11,18 +11,27 @@ export const DATEPICKER_CONTROL_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-    selector: 'angular2-date-picker',
+    selector: 'date-picker',
     templateUrl: './datepicker.component.html',
     providers: [DATEPICKER_CONTROL_VALUE_ACCESSOR]
 })
 
 export class DatePicker implements OnInit, ControlValueAccessor {
 
-    @Input()
-    settings: Settings;
+    @Input() settings: Settings;
+    @Input() label : string = 'Seleccione una fecha';
+    @Input() value : string;
+    @Input() name  : string  = '';
+    @Input() group : FormGroup = new FormGroup({});
+    @Input() disabled: boolean=false;
+    @Input() hintStart: string="";
+    @Input() hintEnd: string="";
+    @Input() sufix    : string;
+    @Input() prefixIcon : string;
+    @Input() sufixIcon  : string;
 
-    @Output()
-    onDateSelect:EventEmitter<Date> = new EventEmitter<Date>();
+    @Output() onDateSelect:EventEmitter<Date> = new EventEmitter<Date>();
+    // @Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
 
     selectedDate: String;
     date: Date;
@@ -44,25 +53,33 @@ export class DatePicker implements OnInit, ControlValueAccessor {
         defaultOpen: false,
         bigBanner: true,
         timePicker: false,
-        format: 'dd-MMM-yyyy hh:mm a',
+        format: 'dd-MMM-yyyy',
         cal_days_labels: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-        cal_full_days_lables: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-        cal_months_labels: ['January', 'February', 'March', 'April',
+        cal_full_days_lables: ["Domingo","Lunes","Martes","Wednesday","Thursday","Friday","Saturday"],
+        cal_months_labels: ['January', 'February', 'March', 'Abril',
                             'May', 'June', 'July', 'August', 'September',
                             'October', 'Noviembre', 'December'],
-        cal_months_labels_short: ['JAN', 'FEB', 'MAR', 'APR',
-                                'MAY', 'JUN', 'JUL', 'AUG', 'SEP',
-                                'OCT', 'NOV', 'DEC'],
+        cal_months_labels_short: ['ENE', 'FEB', 'MAR', 'ABR',
+                                'MAY', 'JUN', 'JUL', 'AGO', 'SEP',
+                                'OCT', 'NOV', 'DIC'],
         closeOnSelect: true
     }
     constructor(){
 
     }
+
     ngOnInit(){
         this.settings = Object.assign(this.defaultSettings, this.settings);
+        this.writeValue(new Date());
         if(this.settings.defaultOpen){
             this.popover = true;
         }
+
+        this.group.controls[this.name].valueChanges.subscribe(
+            data => {
+                console.log('Change DatePicker value', data);
+            }
+        )
     }
     private onTouchedCallback: () =>  {};
     private onChangeCallback: (_: any) => {};
@@ -202,12 +219,13 @@ export class DatePicker implements OnInit, ControlValueAccessor {
                   var selectedDay = parseInt(evt.target.innerHTML);
                   this.date = new Date(this.date.setDate(selectedDay));  
                   console.log(this.date);
-                  this.onChangeCallback(this.date.toString());
+                  // this.onChangeCallback(this.date.toString());
                   if(this.settings.closeOnSelect){
                     this.popover = false;
                     this.onDateSelect.emit(this.date);
                   }
                 }
+                this.group.controls[this.name].setValue(this.date);
             }
     setYear(evt:any){
                   console.log( evt.target );
@@ -287,7 +305,7 @@ export class DatePicker implements OnInit, ControlValueAccessor {
             } 
        }
        done(){
-           this.onChangeCallback(this.date.toString());
+           // this.onChangeCallback(this.date.toString());
            this.popover = false;
            this.onDateSelect.emit(this.date);
        }

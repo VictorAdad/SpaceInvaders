@@ -20,7 +20,7 @@ import { Options } from './options';
 import { Colections } from './colections';
 import { TrataPersonas } from './colections';
 import { CasoService } from '@services/caso/caso.service';
-
+import { _config} from '@app/app.config';
 
 @Component({
     selector: 'relacion-create',
@@ -42,6 +42,9 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     public id: number = null;
 
     public breadcrumb = [];
+
+    isMexicoPaisDestino:boolean = false;
+    isMexicoPaisOrigen:boolean = false;
 
 
     tiposRelacion:MOption[] = [
@@ -857,15 +860,24 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
     changePais(val,arr){
         if (val != null)
-            this.optionsService.getEstadoByPaisService(val).subscribe(estados=>{
+        {
+            if (arr.indexOf("Destino")>-1)
+                this.isMexicoPaisDestino=val==_config.optionValue.idMexico;
+            else
+                this.isMexicoPaisOrigen=val==_config.optionValue.idMexico;
+
+            console.log(arr,arr.indexOf("Destino"),this.isMexicoPaisDestino,this.isMexicoPaisOrigen);
+
+            this.optionsService.getEstadoByPaisService(val).then(estados=>{
                 this[arr]=this.optionsService.constructOptions(estados);
             });
+        }
 
     }
 
     changeEstado(val,arr){
         if (val != null)
-            this.optionsService.getMunicipiosByEstadoService(val).subscribe(municipios=>{
+            this.optionsService.getMunicipiosByEstadoService(val).then(municipios=>{
                 this[arr]=this.optionsService.constructOptions(municipios);
             });
     }
