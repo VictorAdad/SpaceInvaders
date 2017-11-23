@@ -9,7 +9,28 @@
 
 @include media-breakpoint-between(sm, md,$grid-breakpoints) {
 	.content-dialog-lg{
-		width: 400px;
+    width: 400px;
 	}
+
+}
+
+.cdk-overlay-container{
+  z-index: 99 !important;
+}
+.mat-dialog-container{
+  width: 540px !important;
+}
+.mat-dialog-container tbody{
+  display: block;
+ max-height: 400px !important;
+ overflow-y: auto !important;
+ width: 100%;
+}
+.mat-dialog-container tr,td{
+ width: 100%;
+}
+.mat-dialog-container thead{
+  display: block;
+  width: 100%;
 
 }

@@ -12,7 +12,8 @@ import { FormatosService } from '@services/formatos/formatos.service';
 
 export class FormatosGlobal{
 	public confirmation_settings:ConfirmSettings={
-        overlayClickToClose: false, // Default: true
+        overlay:true,
+        overlayClickToClose: true, // Default: true
         showCloseButton: true, // Default: true
         confirmText: "Continuar", // Default: 'Yes'
         declineText: "Cancelar",
@@ -120,13 +121,23 @@ export class SolPreDocComponent {
     private db: CIndexedDB
     @Output()
     emitter = new EventEmitter();
+    public confirmation_settings:ConfirmSettings={
+      overlayClickToClose: false, // Default: true
+      showCloseButton: true, // Default: true
+      confirmText: "Continuar", // Default: 'Yes'
+      declineText: "Cancelar",
+    };
+
 
     constructor(
         public dialogRef: MatDialogRef<SolPreDocComponent>,
         private _db: CIndexedDB,
         public globalService : GlobalService,
         private http: HttpService,
-        @Inject(MAT_DIALOG_DATA) private data:any,){
+        @Inject(MAT_DIALOG_DATA) private data:any,
+        public _confirmation:ConfirmationService,
+        public dialog: MatDialog,
+        public onLine: OnLineService = null,){
         this.db=_db;
     }
 
@@ -134,8 +145,9 @@ export class SolPreDocComponent {
     public hasBaseDropZoneOver:boolean = false;
     public hasAnotherDropZoneOver:boolean = false;
     public isUploading: boolean = false;
-
     public archivos:any;
+    public formData: FormData;
+    public urlUpload: string;
 
     public fileOverBase(e:any):void {
       this.hasBaseDropZoneOver = e;
@@ -146,16 +158,22 @@ export class SolPreDocComponent {
         this.dialogRef.close();
     }
 
+
     fileEvent(e){
 
     }
 
-    guardarOffLine(i:number,listaArchivos:any[]){
+    guardarOffLine(i:number,listaArchivos:any[],casoId,_data){
         //falta definir el guardado en la tabla de sincronizar
         var obj=this;
         if (i==listaArchivos.length){
+            //this.close();
+            this.db.add("sincronizar",_data).then(p=>{
+                this.globalService.openSnackBar("Se guardo con éxito")
+            });
+            this.uploader.clearQueue();
+            this.emitter.emit(null);
             this.close();
-            this.globalService.openSnackBar("Se guardo con éxito");
             return;
         }
         let item=listaArchivos[i];
@@ -168,11 +186,13 @@ export class SolPreDocComponent {
                         type:(item["some"])["type"],
                         idBlob:t["id"],
                         procedimiento:"",
-                        fecha:new Date()
+                        fecha:new Date(),
+                        casoId:casoId
                     };
                     obj.db.add("documentos",dato).then(t=>{
                         console.log("Se guardo el archivo",(item["some"])["name"]);
-                        obj.guardarOffLine(i+1,listaArchivos);
+                        _data["documentos"].push(t);
+                        obj.guardarOffLine(i+1,listaArchivos,casoId,_data);
                     });
                 }
             );
@@ -181,25 +201,52 @@ export class SolPreDocComponent {
     }
 
     public guardar(){
-        console.log("-> Archivos:", this.uploader);
-        console.log("-> Data:", this.data);
-        var listaFiles = this.uploader.queue as any[];
-        console.log('-> Files to saves: ', listaFiles);
-        this.data.formData.set('files',[]);
-        for (let file of listaFiles) {
-            console.log('file',file)
-            this.data.formData.append('files', file['some']);
-        }
-        console.log(' A guardar!!', this.data.formData)
-        this.http.post(this.data.urlUpload, this.data.formData).subscribe(
-            response => {
-                console.log('Done guardar()', response);
-                this.archivos=response;
-                this.uploader.clearQueue();
-                this.emitter.emit(this.archivos);
-                this.close();
-            }
-        )
+     this._confirmation.create('Advertencia','¿Estás seguro de adjuntar este documento?',this.confirmation_settings)
+      .subscribe(
+          (ans: ResolveEmit) => {
+              console.log("respueta",ans);
+              if(ans.resolved){
+                console.log("-> Archivos:", this.uploader);
+                console.log("-> Data:", this.data);
+                var listaFiles = this.uploader.queue as any[];
+                console.log('-> Files to saves: ', listaFiles);
+                this.data.formData.set('files',[]);
+                for (let file of listaFiles) {
+                    console.log('file',file)
+                    this.data.formData.append('files', file['some']);
+                }
+                console.log(' A guardar!!', this.data.formData)
+                if (this.onLine.onLine){
+                    this.http.post(this.data.urlUpload, this.data.formData).subscribe(
+                        response => {
+                            console.log('Done guardar()', response);
+                            this.archivos=response;
+                            this.uploader.clearQueue();
+                            this.emitter.emit(this.archivos);
+                            this.close();
+                        }
+                    )
+                }else{
+                    let temId=Date.now();
+                    let b=this.data.urlUpload.split("/")
+                    let casoId=parseInt(b[b.length-1])
+                    let dato={
+                        url:this.data.urlUpload,
+                        //hay que crear el body de los documentos
+                        body:null,
+                        options:[],
+                        tipo:"postDocument",
+                        pendiente:true,
+                        dependeDe:[casoId],
+                        temId: temId,
+                        documentos:[]
+                    }
+                    this.guardarOffLine(0,listaFiles,casoId,dato);
+                }
+
+              }
+          }
+      );
 
     }
 

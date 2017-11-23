@@ -65,7 +65,7 @@
 		    	<text label="En caso negativo, especificar idioma o lengua" name="lenguaIdioma" [max]="50" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Nombre del interprete" name="nombreInterprete" [max]="150" [group]="form"></text>
+		    	<text label="Nombre del intérprete" name="nombreInterprete" [max]="150" [group]="form"></text>
 		    </div>
 	    </div>
 	    <div class="row">
@@ -79,7 +79,7 @@
 			</div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 				<select2 [options]="[{value: false, label: 'No'}, {value: true, label: 'Si'}]"
-				placeholder="¿Se le proporcionó copia de derechos?"
+				placeholder="¿Se proporcionó copia de derechos?"
 				name="proporcionoCopia"
 				[group]="form">
 			    </select2>
@@ -122,7 +122,7 @@
 		</div>
 		<div class="row">
 		    <div class="col-md-12 col-sm-12 col-lg-12">
-		    	<text-area label="Lugar en donde ocurrieron los hechos" name="lugarHechos" [group]="form"></text-area>
+		    	<text-area label="Lugar en donde sucedieron los hechos" name="lugarHechos" [group]="form"></text-area>
 		    </div>
 		    <div class="col-md-12 col-sm-12 col-lg-12">
 		    	<text-area label="Hechos narrados (hechos denunciados)" name="hechosNarrados" [group]="form"></text-area>
@@ -141,7 +141,7 @@
 			    </select2>
 		    </div>
 		    <div class="col-md-4 col-sm-12 col-lg-4">
-		    	<text label="En su caso, institución a que se canaliza" name="institucion" [max]="200" [group]="form"></text>
+		    	<text label="En su caso, ¿institución a la que se canaliza?" name="institucion" [max]="200" [group]="form"></text>
 		    </div>
 		    <div class="col-md-4 col-sm-12 col-lg-4">
             <date label="Fecha en la que se canaliza" [disabled]="hasPredenuncia" name="fechaCanalizacion" [group]="form" [(value)]="model.fechaCanalizacion" ></date>
@@ -149,7 +149,7 @@
 		</div>
 		<div class="row">
 		    <div class="col-md-12 col-sm-12 col-lg-12">
-		    	<text-area label="¿Motivo del por qué se canaliza a esa institución?" name="motivoCanalizacion" [group]="form"></text-area>
+		    	<text-area label="Motivo del por qué se canaliza a esa institución" name="motivoCanalizacion" [group]="form"></text-area>
 		    </div>
 		</div>
 		<div class="row">

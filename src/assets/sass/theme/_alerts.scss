@@ -6,11 +6,16 @@
 .jaspero__dialog{
 	width: 40% !important;
 	height: 30% !important;
-	max-width: 50%!important;
+  max-width: 50%!important;
+  z-index: 101 !important;
+}
+
+.jaspero__overlay{
+  z-index: 100 !important;
 }
 .jaspero__dialog-content{
 	padding-top: 34px !important;
-	text-align: center !important;
+  text-align: center !important;
 }
 
 .jaspero__dialog-title{

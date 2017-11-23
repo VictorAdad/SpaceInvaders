@@ -22,7 +22,9 @@ export class TextComponent implements OnInit{
 	@Input() max :number = 100;
 	@Input() valRfCurp : boolean =null;
 	@Input() functionChange: Function;
+	@Input() regex: RegExp;
 	@ViewChild('textComponent') textComponent;
+	backupValue : string;
 
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
@@ -72,6 +74,13 @@ export class TextComponent implements OnInit{
 		if (this.value!=null && this.value.toString().length > this.max) {
 			this.value = this.value.toString().slice(0,this.max);
 		}
+
+		if(this.regex)
+			if(!this.regex.test(this.value))
+				this.value = this.backupValue;
+
+		this.backupValue = this.value
+
 	}
 }
 

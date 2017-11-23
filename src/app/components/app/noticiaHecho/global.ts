@@ -24,5 +24,18 @@ export class NoticiaHechoGlobal{
                 });
             }
         });
+    }
+
+    public cleanNulls(object){
+        if (typeof object == "object"){
+            for(let i in object){
+                if (object[i]==null || typeof object[i] =="undefined")
+                    delete object[i];
+                // if (typeof object[i]=="object")
+                //     this.cleanNulls(object[i]);
+            }
+        }
+
+        return object;
     } 
 }

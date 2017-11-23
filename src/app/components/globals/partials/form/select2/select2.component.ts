@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, Renderer } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, Renderer, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/startWith';
@@ -39,6 +39,11 @@ export class Select2Component{
 			this.searchInput.nativeElement, 'keyup', this.filter.bind(this));
 	}
 
+	ngOnChanges(changes: SimpleChanges) {
+		if(changes.options)
+			this.filteredOptions = this.options;
+	}
+
 
 	//TODO: Falta ver como sincronizar los cambios los radio.
 	public update(value) {
@@ -47,6 +52,7 @@ export class Select2Component{
 
 	public filter(val: any) {
 		// console.log('Select@filter()', val);
+		// console.log('options', this.options);
   		this.filteredOptions =  this.options.filter(option => option.label.toLowerCase().indexOf(val.target.value.toLowerCase()) === 0 );
    	}
 

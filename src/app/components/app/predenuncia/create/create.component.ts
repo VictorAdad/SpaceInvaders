@@ -61,10 +61,11 @@ export class PredenunciaCreateComponent {
         this.route.params.subscribe(params => {
             if(params['id']){
                 this.casoId = +params['id'];
-                this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"})
             }
             if (params['casoId']){
                 this.casoId = +params['casoId'];
+                this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"});
+
                 if(this.onLine.onLine){
                     this.http.get(this.apiUrl+params['casoId']+'/page').subscribe(response => {
                         if(parseInt(response.totalCount) !== 0){

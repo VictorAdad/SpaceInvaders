@@ -132,6 +132,21 @@ export class OnLineService {
                         this.buscaDependenciasYDoPost(dependencias,item,i,lista);
                     }else
                         this.doPut(item.url, item, i,lista);
+                }else if (item.tipo=="get"){
+                    if (item["dependeDe"]){
+                        var dependencias=item["dependeDe"] as any[];
+                        console.log("Entro a las dependencias");
+                        this.buscaDependenciasYDoPost(dependencias,item,i,lista);
+                    }else
+                        this.doGet(item.url, item, i,lista);
+                }else if (item.tipo=="postDocument"){
+                    //console.log("Antes de entrar");
+                    if (item["dependeDe"]){
+                        var dependencias=item["dependeDe"] as any[];
+                        console.log("Entro a las dependencias");
+                        this.buscaDependenciasYDoPost(dependencias,item,i,lista);
+                    }else
+                        this.doPostDocument(item.url, item, i,lista);
                 }else{
                     //si no encuentra ninguno de los tipos validos
                     this.sincroniza(i+1,lista);
@@ -170,6 +185,12 @@ export class OnLineService {
                 this.doPost(item["url"], item, i, lista)
             else if(tipo=="update"){
                 this.doPut(item["url"], item, i, lista)
+            }
+            else if(tipo=="get"){
+                this.doGet(item["url"], item, i, lista)
+            }
+            else if(tipo=="postDocument"){
+                this.doPostDocument(item["url"], item, i, lista)
             }
         });
     }
@@ -292,6 +313,99 @@ export class OnLineService {
             });
         });
 
+    }
+
+    doGet(_url, item, i, lista2){
+        item["numItentos"]++;
+        this.db.list("newId").then(listaNewId=>{
+            console.log("URL",_url,"MODELO",item.body);
+            this.sustituyeHojasPorNewId(item.body,listaNewId);
+            var lista=listaNewId as any[];
+            for (var k = 0; k < lista.length; ++k) {
+                _url=_url.replace(""+lista[k].id,""+lista[k].newId);
+            }
+            console.log("URL",_url,"MODELO",item.body);
+            this.http.get(_url).subscribe(
+                respuesta=>{
+                    console.log("RESPONSE GET=>",respuesta);
+                    item.pendiente=false;
+                    this.db.update("sincronizar",item).then( respuesta =>{
+                        this.seActualizoAlmenosUnRegistro=true;
+                        this.sincroniza(i+1,lista2);
+                    });
+            },
+                error=>{
+                    console.log("Error:",error);
+                    item.pendiente=true;
+                    this.db.update("sincronizar",item);
+                    this.sincroniza(i+1,lista2);
+            });
+        });
+    }
+
+
+
+    //convierte un archivo a blob
+    dataURItoBlob(dataURI, type) {
+        var binary = atob(dataURI);
+        var array = [];
+        for(var i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], {type: type});
+    }
+
+    doPostDocument(_url, item, i, lista2){
+        var obj=this;
+        item["numItentos"]++;
+        this.db.list("newId").then(listaNewId=>{
+            console.log("URL",_url,"MODELO",item.body);
+            obj.sustituyeHojasPorNewId(item.body,listaNewId);
+            var lista=listaNewId as any[];
+            for (var k = 0; k < lista.length; ++k) {
+                _url=_url.replace(""+lista[k].id,""+lista[k].newId);
+            }
+            console.log("URL",_url,"MODELO",item.body);
+            var formData = new FormData();
+            var casoId="";
+            var rec=function(k,listaDocumentos){
+                if(k==listaDocumentos["length"]){
+                    console.log("Antes de enviar",_url, formData);
+                    formData.append('caso.id', casoId);
+                    obj.http.post(_url,formData).subscribe(
+                        respuesta=>{
+                            console.log("RESPONSE GET=>",respuesta);
+                            item.pendiente=false;
+                            obj.db.update("sincronizar",item).then( respuesta =>{
+                                obj.seActualizoAlmenosUnRegistro=true;
+                                obj.sincroniza(i+1,lista2);
+                            });
+                    },
+                        error=>{
+                            console.log("Error:",error);
+                            item.pendiente=true;
+                            obj.db.update("sincronizar",item);
+                            obj.sincroniza(i+1,lista2);
+                    });
+
+                }else{
+                    obj.db.get("blobs",listaDocumentos[k]["idBlob"]).then(t=>{
+                        var b=obj.dataURItoBlob(t["blob"].split(',')[1], listaDocumentos[k]["type"] );
+                        var file = new File([b], listaDocumentos[k]["nombre"],{type: listaDocumentos[k]["type"], lastModified: Date.now()});
+                        console.log("Archivos",b,listaDocumentos[k],file);
+                        formData.append("files",file);
+                        casoId=""+listaDocumentos[k]["casoId"];
+                        rec(k+1,listaDocumentos);
+                    });
+                }
+            }
+            if (item["documentos"] && item["documentos"]["length"] && item["documentos"]["length"]>0){
+                rec(0,item["documentos"]);
+            }else{
+                obj.sincroniza(i+1,lista2);
+            }
+            
+        });
     }
 
     sustituyeHojasPorNewId(json,listNewId){
