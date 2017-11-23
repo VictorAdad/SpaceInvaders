@@ -71,6 +71,7 @@ import { AgmCoreModule } from '@agm/core';
 import {Logger} from '@services/logger.service';
 import { MatPaginatorIntlEsp } from '@providers/paginator.provider';
 import 'hammerjs';
+import { pipes } from './pipes/pipe.module';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import 'hammerjs';
 
     EntrevistaComponents,
 
-    catalogosComponents
+    catalogosComponents,
+    pipes
   ],
   imports: [
     BrowserModule,

@@ -1,16 +1,39 @@
 <div class="winkel-calendar">
-    <input type="hidden" class="wc-input" value="{{date}}">
-    <div class="wc-date-container" (click)="popover = !popover">
-        <span>{{date | date: settings.format}}</span>
-        <i class="fa fa-calendar"></i>
-    </div>
+
+    <mat-form-field class="full-width" [formGroup]="group" *ngIf="name!=''">
+        <input class="wc-input" matInput
+                [matDatepicker]="picker"
+                formControlName="{{name}}"
+                name="{{name}}"
+                [disabled]="disabled"
+                placeholder="Fecha"
+                (click)="popover = !popover"
+                readonly>
+        <mat-icon matSuffix *ngIf="sufix">{{ sufix }}</mat-icon>        
+        <mat-hint align="start" *ngIf="hintStart">{{hintStart}} </mat-hint>
+        <mat-hint align="end" *ngIf="hintEnd">{{hintEnd}}</mat-hint>        
+    </mat-form-field>
+
+    <mat-form-field class="full-width" [formGroup]="group" *ngIf="name==''">
+        <input class="wc-input" matInput
+                [matDatepicker]="picker"
+                formControlName="{{name}}"
+                name="{{name}}"
+                [disabled]="disabled"
+                placeholder="{{date | inputPipe }}"
+                (click)="popover = !popover">
+        <mat-icon matSuffix *ngIf="sufix">{{ sufix }}</mat-icon>        
+        <mat-hint align="start" *ngIf="hintStart">{{hintStart}} </mat-hint>
+        <mat-hint align="end" *ngIf="hintEnd">{{hintEnd}}</mat-hint>                
+    </mat-form-field> 
+
     <div class="wc-date-popover" [ngClass]="{'banner-true': settings.bigBanner == true}" [hidden]="!popover">
         <div class="wc-banner" *ngIf="settings.bigBanner">
-            <div class="wc-day-row">{{date | date: 'EEEE'}}</div>
+            <div class="wc-day-row">{{date | dayPipe }}</div>
             <div class="wc-date-row">{{date | date: 'dd'}}</div>
             <div class="wc-my-sec">
                 <div class="wc-month-row">
-                    <div>{{date | date: 'MMMM'}}</div>
+                    <div>{{date | monthPipe }}</div>
                 </div>
                 <div class="wc-year-row">
                     <div>{{date | date: 'yyyy'}}</div>
@@ -25,12 +48,12 @@
         </div>
         <div class="wc-details">
             <i class="wc-prev fa fa-angle-left" (click)="prevMonth($event)"></i>
-            <div class="month-year" *ngIf="settings.bigBanner" (click)="toggleMonthView()">{{date | date: 'MMMM'}}
+            <div class="month-year" *ngIf="settings.bigBanner" (click)="toggleMonthView()">{{date | monthPipe}}
                 <!-- <i ng-show="!monthsView" class="fa fa-arrow-down"></i>
                                  <i ng-show="monthsView" class="fa fa-arrow-up"></i> -->
             </div>
             <div class="month-year" *ngIf="!settings.bigBanner" (click)="toggleMonthView()">
-                {{date | date: 'MMMM'}}
+                {{date | monthPipe}}
                 <!--    <i ng-show="!monthsView" class="fa fa-arrow-down" (click)="toggleMonthView()"></i>
                                     <i ng-show="monthsView" class="fa fa-arrow-up" (click)="toggleMonthView()"></i>  -->
 
@@ -59,8 +82,12 @@
             <span *ngFor="let month of settings.cal_months_labels_short" [ngClass]="{'current-month': month == settings.cal_months_labels_short[date.getMonth()]}" id="{{month}}">{{month}}</span>
         </div>
         <div class="years-view" *ngIf="yearView">
-            <div class="fa fa-angle-left prev" (click)="generateYearList('prev')"></div>
-            <div class="fa fa-angle-right next" (click)="generateYearList('next')"></div>
+            <div class="fa fa-angle-left prev" (click)="generateYearList('prev')">
+                <mat-icon>navigate_before</mat-icon>
+            </div>
+            <div class="fa fa-angle-right next" (click)="generateYearList('next')">
+                <mat-icon>navigate_next</mat-icon>
+            </div>
             <div class="years-list-view" (click)="setYear($event)">
                 <span *ngFor="let year of yearsList" [ngClass]="{'current-year': year == date.getFullYear()}" id="{{year}}">{{year}}</span>
             </div>
@@ -102,7 +129,7 @@
             <i class="fa fa-clock-o" aria-hidden="true" (click)="toggleTimeView()"></i>
         </div>-->
         <div class="cal-util">
-            <div class="ok" (click)="done()"><i class="fa fa-check"></i>Done
+            <div class="ok" (click)="done()"><i class="fa fa-check"></i>Hecho
             </div>
         </div>
     </div>

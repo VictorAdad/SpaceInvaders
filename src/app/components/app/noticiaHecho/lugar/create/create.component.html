@@ -66,7 +66,7 @@
                     </select2>
                 </div>
                 <div class="col-md-3" *ngIf="!isMexico">
-                    <text label="Estado" name="estadoOtro" [max]="50" [group]="form"hintStart="Campo obligatorio"></text>
+                    <text label="Estado" name="estadoOtro" [max]="50" [group]="form" hintStart="Campo obligatorio"></text>
                 </div>
                 <div class="col-md-3" *ngIf="!isMexico">
                     <text label="Municipio/Delegación" name="municipioOtro" [max]="50" [group]="form" hintStart="Campo obligatorio"></text>
@@ -107,7 +107,7 @@
                     <number label="C.P." name="cp" [group]="form" [maxValue]="99999" [max]="5" [hintEnd]="'5 dígitos máximo'"></number>
                 </div>
                 <div class="col-md-3">
-                    <date label="Fecha" name="fecha" [group]="form" hintStart="Campo obligatorio"></date>
+                    <date-picker label="Fecha" name="fecha" [group]="form" hintStart="Campo obligatorio"></date-picker>
                 </div>
                 <div class="col-md-3">
                     <time label="Hora" name="hora" [group]="form"></time>
