@@ -1,4 +1,4 @@
-import { Component, OnInit, forwardRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, forwardRef, EventEmitter, Input, Output, Renderer,  ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
@@ -29,9 +29,10 @@ export class DatePicker implements OnInit, ControlValueAccessor {
     @Input() sufix    : string;
     @Input() prefixIcon : string;
     @Input() sufixIcon  : string;
-
     @Output() onDateSelect:EventEmitter<Date> = new EventEmitter<Date>();
     // @Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
+
+    @ViewChild('datePicker') datePicker;
 
     selectedDate: String;
     date: Date;
@@ -64,7 +65,8 @@ export class DatePicker implements OnInit, ControlValueAccessor {
                                 'OCT', 'NOV', 'DIC'],
         closeOnSelect: true
     }
-    constructor(){
+
+    constructor(private renderer : Renderer){
 
     }
 
@@ -81,6 +83,15 @@ export class DatePicker implements OnInit, ControlValueAccessor {
             }
         )
     }
+
+    ngAfterViewInit(){
+        this.renderer.listen(
+            this.datePicker.nativeElement, 'focus', event => this.popover = true);
+
+        this.renderer.listen(
+            this.datePicker.nativeElement, 'blur', event => this.popover = false);
+    }
+
     private onTouchedCallback: () =>  {};
     private onChangeCallback: (_: any) => {};
     writeValue(value: any) {

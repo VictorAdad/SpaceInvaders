@@ -1,5 +1,10 @@
 <breadcrumb></breadcrumb>
 <caso-nic [id]="id"></caso-nic>
+<style>
+    .delito-list .mat-list-item-content {
+        height: auto !important;
+    }
+</style>
 <div class="row space">
     <div class="col-md-12">
         <mat-card>
@@ -23,21 +28,21 @@
                                 <p>{{caso.titulo}}</p>
                                 <p class="text-justify">{{caso.sintesis}}</p>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <strong>Involucrados</strong>
-                                <mat-list dense>
-                                    <mat-list-item *ngFor="let involucrado of involucrados">
+                                <ul class="list-group" style="max-height: 200px;overflow-x: scroll;">
+                                    <li class="list-group-item" *ngFor="let involucrado of involucrados" style="font-size: 14px; border: 0px;">
                                      {{involucrado.persona.nombre}} {{involucrado.persona.paterno}} {{involucrado.persona.materno}} 
-                                    </mat-list-item>
-                                </mat-list>
+                                    </li>
+                                </ul>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <strong>Delito</strong>
-                                <mat-list dense>
-                                    <mat-list-item *ngFor="let delitoCaso of delitos">
+                                <ul class="list-group" style="max-height: 200px;overflow-x: scroll;">
+                                    <li class="list-group-item" *ngFor="let delitoCaso of delitos" style="font-size: 11px; border: 0px">
                                      {{delitoCaso.delito.nombre}} 
-                                    </mat-list-item>
-                                </mat-list>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <mat-divider></mat-divider>
