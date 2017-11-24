@@ -157,8 +157,6 @@ export class SolPreDocComponent {
       this.checkMaximunCapacity();
 
     }
-    FileDropDirective
-
 
     close(){
         this.dialogRef.close();
