@@ -165,7 +165,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                         pendiente:true,
                         newId:0,
                         temId:id,
-                        otrosID:[{id:id},{delitoPrincipal:{id:id+1} }]
+                        otrosID:[{id:id},{delitoCaso:{id:id+1}}]
                     }
                     this.db.add("sincronizar",dato).then(p=>{
                         console.log('p', p);

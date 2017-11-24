@@ -348,7 +348,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 let copia = temId;
                 let dependeDe=[];
                 var otrosID=[];
-                otrosID.push({id:temId});
+                otrosID.push({detalleDelito:{id:temId}});
                 //solo se depende del caso cuando se crea
                 dependeDe.push(this.casoId);
                 //depende del delito del caso
