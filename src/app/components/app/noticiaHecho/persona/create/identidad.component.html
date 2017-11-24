@@ -31,14 +31,15 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col">
-                      <date label="Fecha de nacimiento" name="fechaNacimiento" [group]="globals.form" (valueChange)="edad($event)"></date>
+                    <!--   <date label="Fecha de nacimiento" name="fechaNacimiento" [group]="globals.form" (valueChange)="edad($event)"></date> -->
+                    <date-picker label="Fecha de nacimiento" name="fechaNacimiento" [group]="globals.form" (onDateSelect)="edad($event)"></date-picker>
                     </div>
                     <div class="col">
                       <number label="Edad" name="edad" hintStart="Campo obligatorio" [maxValue]="99" [max]="2" [group]="globals.form"></number>
                     </div>
 
                     <div class="col">
-                      <text label="CURP" name="curp" [max]="18" [valRfCurp]="true" [group]="globals.form"></text>
+                      <curp-rfc label="CURP" name="curp" [max]="18" [group]="globals.form"></curp-rfc>
                     </div>
                 </div>
             </div>
@@ -81,7 +82,7 @@
             </div>
 
             <div class="col">
-             <text label='RFC' name="rfc" [max]="13" [valRfCurp]="false" [group]="globals.form"></text>
+             <curp-rfc label='RFC' name="rfc" [max]="13" [curp]="false" [group]="globals.form"></curp-rfc>
             </div>
         </div>
         <div class="row">

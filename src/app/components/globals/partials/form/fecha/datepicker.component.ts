@@ -1,6 +1,6 @@
-import { Component, OnInit, forwardRef, EventEmitter, Input, Output, Renderer,  ViewChild } from '@angular/core';
+import { Component, OnInit, forwardRef, EventEmitter, Input, Output, Renderer,  ViewChild, ElementRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
-
+import { Observable } from 'rxjs/Observable';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 
@@ -13,7 +13,10 @@ export const DATEPICKER_CONTROL_VALUE_ACCESSOR: any = {
 @Component({
     selector: 'date-picker',
     templateUrl: './datepicker.component.html',
-    providers: [DATEPICKER_CONTROL_VALUE_ACCESSOR]
+    providers: [DATEPICKER_CONTROL_VALUE_ACCESSOR],
+    host: {
+    '(document:click)': 'onClick($event)',
+    }
 })
 
 export class DatePicker implements OnInit, ControlValueAccessor {
@@ -66,7 +69,10 @@ export class DatePicker implements OnInit, ControlValueAccessor {
         closeOnSelect: true
     }
 
-    constructor(private renderer : Renderer){
+    constructor(
+        private renderer : Renderer,
+        private elementRef : ElementRef
+        ){
 
     }
 
@@ -87,9 +93,12 @@ export class DatePicker implements OnInit, ControlValueAccessor {
     ngAfterViewInit(){
         this.renderer.listen(
             this.datePicker.nativeElement, 'focus', event => this.popover = true);
+    }
 
-        this.renderer.listen(
-            this.datePicker.nativeElement, 'blur', event => this.popover = false);
+    onClick(event) {
+        console.log('onClick()', event);
+        if (!this.elementRef.nativeElement.contains(event.target) && event.target.parentElement.className != "years-list-view") 
+            this.popover = false;
     }
 
     private onTouchedCallback: () =>  {};
@@ -125,201 +134,201 @@ export class DatePicker implements OnInit, ControlValueAccessor {
         this.minValue = this.date.getMinutes();
    }
    generateDays(){
-                  this.monthDays = [];
-                var year = this.date.getFullYear(),
-                    month = this.date.getMonth(),
-                    current_day = this.date.getDate(),
-                    today = new Date();
-                var firstDay = new Date(year, month, 1);
-                var startingDay = firstDay.getDay();
-                var monthLength = this.getMonthLength(month,year);
-                var day = 1;
-                var dateArr = [];
-                var dateRow =[];
-                // this loop is for is weeks (rows)
-                for (var i = 0; i < 9; i++) {
-                    // this loop is for weekdays (cells)
-                    dateRow = [];
-                    for (var j = 0; j <= 6; j++) { 
-                        var dateCell = null;
-                    if (day <= monthLength && (i > 0 || j >= startingDay)) {
-                        dateCell = day;
-                    if(day == current_day){
-                       // dateCell.classList.add('selected-day');
-                    }
-                    if(day == this.today.getDate() &&  this.date.getMonth() == today.getMonth() &&  this.date.getFullYear() == today.getFullYear()){
-                       // dateCell.classList.add('today');
-                    }
-                        day++;
-                    }
-                    dateRow.push(dateCell);
-                    }
-                    // stop making rows if we've run out of days
-                    if (day > monthLength) {
-                        dateArr.push(dateRow);
-                    break;
-                    } else {
-                        dateArr.push(dateRow);
-                    }
-                }
-                  this.monthDays = dateArr;
+       this.monthDays = [];
+        var year = this.date.getFullYear(),
+        month = this.date.getMonth(),
+        current_day = this.date.getDate(),
+        today = new Date();
+        var firstDay = new Date(year, month, 1);
+        var startingDay = firstDay.getDay();
+        var monthLength = this.getMonthLength(month,year);
+        var day = 1;
+        var dateArr = [];
+        var dateRow =[];
+        // this loop is for is weeks (rows)
+        for (var i = 0; i < 9; i++) {
+            // this loop is for weekdays (cells)
+            dateRow = [];
+            for (var j = 0; j <= 6; j++) { 
+                var dateCell = null;
+            if (day <= monthLength && (i > 0 || j >= startingDay)) {
+                dateCell = day;
+            if(day == current_day){
+               // dateCell.classList.add('selected-day');
             }
+            if(day == this.today.getDate() &&  this.date.getMonth() == today.getMonth() &&  this.date.getFullYear() == today.getFullYear()){
+               // dateCell.classList.add('today');
+            }
+                day++;
+            }
+            dateRow.push(dateCell);
+            }
+            // stop making rows if we've run out of days
+            if (day > monthLength) {
+                dateArr.push(dateRow);
+            break;
+            } else {
+                dateArr.push(dateRow);
+            }
+    }
+      this.monthDays = dateArr;
+    }
     generateYearList(param:string){
-                var startYear = null;
-                var currentYear = null;
-                if(param == "next"){
-                    startYear = this.yearsList[8] + 1;
-                    currentYear = this.date.getFullYear();
-                }
-                else if(param == "prev"){
-                    startYear = this.yearsList[0] - 9;
-                    currentYear = this.date.getFullYear();
-                }
-                else{
-                    currentYear = this.date.getFullYear();
-                    startYear = currentYear - 4;
-                    this.yearView = !this.yearView;
-                    this.monthsView = false;
-                }
-                 for(var k=0; k< 9; k++){
-                         this.yearsList[k] = startYear + k;
-                    }
+        var startYear = null;
+        var currentYear = null;
+        if(param == "next"){
+            startYear = this.yearsList[8] + 1;
+            currentYear = this.date.getFullYear();
+        }
+        else if(param == "prev"){
+            startYear = this.yearsList[0] - 9;
+            currentYear = this.date.getFullYear();
+        }
+        else{
+            currentYear = this.date.getFullYear();
+            startYear = currentYear - 4;
+            this.yearView = !this.yearView;
+            this.monthsView = false;
+        }
+         for(var k=0; k< 9; k++){
+                 this.yearsList[k] = startYear + k;
             }
-     getMonthLength(month:number,year:number){
-                var monthLength = this.cal_days_in_month[month];
-                
-                // compensate for leap year
-                if (month == 1) { // February only!
-                    if((year % 4 == 0 && year % 100 != 0) || year % 400 == 0){
-                    monthLength = 29;
-                    }
-                }
-                return monthLength;
+    }
+    getMonthLength(month:number,year:number){
+        var monthLength = this.cal_days_in_month[month];
+        
+        // compensate for leap year
+        if (month == 1) { // February only!
+            if((year % 4 == 0 && year % 100 != 0) || year % 400 == 0){
+            monthLength = 29;
             }
-     toggleMonthView(){
-                this.yearView = false;
-                this.monthsView =  !this.monthsView;
-            }
+        }
+        return monthLength;
+    }
+    toggleMonthView(){
+        this.yearView = false;
+        this.monthsView =  !this.monthsView;
+    }
     toggleMeridian(val:string){
-                this.timeViewMeridian = val;
-            }
+        this.timeViewMeridian = val;
+    }
     setTimeView(){
-                if(this.timeViewMeridian == "AM"){
-                    if(this.hourValue == 12){
-                        this.date.setHours(0);
-                    }
-                    else{
-                        this.date.setHours(this.hourValue);
-                    }
-                    this.date.setMinutes(this.minValue);
-                }
-                else{
-                    if(this.hourValue == 12){
-                        this.date.setHours(this.hourValue);
-                    }
-                    else{
-                        this.date.setHours(this.hourValue + 12);
-                    }
-                    this.date.setMinutes(this.minValue);
-                }
-                this.date = new Date(this.date);
-                this.timeView = !this.timeView;
+        if(this.timeViewMeridian == "AM"){
+            if(this.hourValue == 12){
+                this.date.setHours(0);
             }
-     setDay(evt:any){
-                if(evt.target.innerHTML){
-                  var selectedDay = parseInt(evt.target.innerHTML);
-                  this.date = new Date(this.date.setDate(selectedDay));  
-                  console.log(this.date);
-                  // this.onChangeCallback(this.date.toString());
-                  if(this.settings.closeOnSelect){
-                    this.popover = false;
-                    this.onDateSelect.emit(this.date);
-                  }
-                }
-                this.group.controls[this.name].setValue(this.date);
+            else{
+                this.date.setHours(this.hourValue);
             }
+            this.date.setMinutes(this.minValue);
+        }
+        else{
+            if(this.hourValue == 12){
+                this.date.setHours(this.hourValue);
+            }
+            else{
+                this.date.setHours(this.hourValue + 12);
+            }
+            this.date.setMinutes(this.minValue);
+        }
+        this.date = new Date(this.date);
+        this.timeView = !this.timeView;
+    }
+    setDay(evt:any){
+        console.log("INNERHTML", evt.target.innerHTML);
+        if(evt.target.innerHTML && !isNaN(evt.target.innerHTML) ){
+          var selectedDay = parseInt(evt.target.innerHTML);
+          this.date = new Date(this.date.setDate(selectedDay));  
+          console.log(this.date);
+          if(this.settings.closeOnSelect){
+            this.popover = false;
+            this.onDateSelect.emit(this.date);
+          }
+        }
+        this.group.controls[this.name].setValue(this.date);
+    }
     setYear(evt:any){
-                  console.log( evt.target );
-                  var selectedYear = parseInt(evt.target.getAttribute('id'));
-                  this.date = new Date(this.date.setFullYear(selectedYear)); 
-                   this.yearView = !this.yearView;
-                   this.generateDays();
-            }
+          console.log( evt.target );
+          var selectedYear = parseInt(evt.target.getAttribute('id'));
+          this.date = new Date(this.date.setFullYear(selectedYear)); 
+           this.yearView = !this.yearView;
+           this.generateDays();
+    }
     setMonth(evt:any){
-                if(evt.target.getAttribute('id')){
-                 var selectedMonth = this.settings.cal_months_labels_short.indexOf(evt.target.getAttribute('id'));
-                   this.date = new Date(this.date.setMonth(selectedMonth));
-                   this.monthsView = !this.monthsView;
-                   this.generateDays();
-                }
-            }
+        if(evt.target.getAttribute('id')){
+         var selectedMonth = this.settings.cal_months_labels_short.indexOf(evt.target.getAttribute('id'));
+           this.date = new Date(this.date.setMonth(selectedMonth));
+           this.monthsView = !this.monthsView;
+           this.generateDays();
+        }
+    }
     prevMonth(e:any){
-                e.stopPropagation();
-                var self = this;
-                if(this.date.getMonth() == 0){
-                    this.date.setMonth(11);
-                    this.date.setFullYear(this.date.getFullYear() - 1);
-                }else{
-                    var prevmonthLength = this.getMonthLength(this.date.getMonth() - 1, this.date.getFullYear());
-                    var currentDate = this.date.getDate();
-                    if(currentDate > prevmonthLength ){
-                        this.date.setDate(prevmonthLength);
-                    }
-                    this.date.setMonth(this.date.getMonth() - 1);
-                }
-                 this.date = new Date(this.date);
-                 this.generateDays();
+        e.stopPropagation();
+        var self = this;
+        if(this.date.getMonth() == 0){
+            this.date.setMonth(11);
+            this.date.setFullYear(this.date.getFullYear() - 1);
+        }else{
+            var prevmonthLength = this.getMonthLength(this.date.getMonth() - 1, this.date.getFullYear());
+            var currentDate = this.date.getDate();
+            if(currentDate > prevmonthLength ){
+                this.date.setDate(prevmonthLength);
             }
-     nextMonth(e:any){
-                e.stopPropagation();
-                var self = this;
-                if(this.date.getMonth() == 11){
-                    this.date.setMonth(0);
-                    this.date.setFullYear(this.date.getFullYear() + 1);
-                }else{
-                    var nextmonthLength = this.getMonthLength(this.date.getMonth() + 1, this.date.getFullYear());
-                    var currentDate = this.date.getDate();
-                    if(currentDate > nextmonthLength){
-                        this.date.setDate(nextmonthLength);
-                    }
-                    this.date.setMonth(this.date.getMonth() + 1);
-                    
-                }
-                this.date = new Date(this.date);
-                this.generateDays();
+            this.date.setMonth(this.date.getMonth() - 1);
+        }
+         this.date = new Date(this.date);
+         this.generateDays();
+    }
+    nextMonth(e:any){
+        e.stopPropagation();
+        var self = this;
+        if(this.date.getMonth() == 11){
+            this.date.setMonth(0);
+            this.date.setFullYear(this.date.getFullYear() + 1);
+        }else{
+            var nextmonthLength = this.getMonthLength(this.date.getMonth() + 1, this.date.getFullYear());
+            var currentDate = this.date.getDate();
+            if(currentDate > nextmonthLength){
+                this.date.setDate(nextmonthLength);
             }
-       onChange(evt:any){
-                console.log(evt);
-            }
-       incHour(){
-            if(this.hourValue < 12){
-                this.hourValue += 1;
-                console.log(this.hourValue);
-            } 
-       }
-       decHour(){
-            if(this.hourValue > 1){
-                this.hourValue -= 1;
-                console.log(this.hourValue);
-            } 
-       }
-       incMinutes(){
-            if(this.minValue < 59){
-                this.minValue += 1;
-                console.log(this.minValue);
-            } 
-       }
-       decMinutes(){
-            if(this.minValue > 0){
-                this.minValue -= 1;
-                console.log(this.minValue);
-            } 
-       }
-       done(){
-           // this.onChangeCallback(this.date.toString());
-           this.popover = false;
-           this.onDateSelect.emit(this.date);
-       }
+            this.date.setMonth(this.date.getMonth() + 1);
+            
+        }
+        this.date = new Date(this.date);
+        this.generateDays();
+    }
+    onChange(evt:any){
+        console.log(evt);
+    }
+    incHour(){
+        if(this.hourValue < 12){
+            this.hourValue += 1;
+            console.log(this.hourValue);
+        } 
+    }
+    decHour(){
+        if(this.hourValue > 1){
+            this.hourValue -= 1;
+            console.log(this.hourValue);
+        } 
+    }
+    incMinutes(){
+        if(this.minValue < 59){
+            this.minValue += 1;
+            console.log(this.minValue);
+        } 
+    }
+    decMinutes(){
+        if(this.minValue > 0){
+            this.minValue -= 1;
+            console.log(this.minValue);
+        } 
+    }
+    done(){
+       // this.onChangeCallback(this.date.toString());
+       this.popover = false;
+       this.onDateSelect.emit(this.date);
+    }
 }
 
 export interface Settings{
