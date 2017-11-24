@@ -171,7 +171,7 @@ export class NoticiaHechoService {
                 var arr=[];
                 for (var i = 0; i < this.caso["personaCasos"].length; ++i) {
                     if (idInterviniente==this.caso["personaCasos"][i]["tipoInterviniente"]["id"]){
-                        arr.push({id:this.caso["personaCasos"][i]["persona"]["id"], persona:{nombre:this.caso["personaCasos"][i]["persona"]["nombre"]}});
+                        arr.push({id:this.caso["personaCasos"][i]["persona"]["id"], persona:{nombre:this.caso["personaCasos"][i]["persona"]["nombre"], paterno:this.caso["personaCasos"][i]["persona"]["paterno"]}});
                     }
                 }
                 this[_attr] = this.constructOptionsPersona(arr);
