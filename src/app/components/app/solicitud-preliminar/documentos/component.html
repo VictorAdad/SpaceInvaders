@@ -2,8 +2,12 @@
     Carga de documentos</h2>
 <mat-dialog-content>
     <div class="container h-100">
+
+        <div class="row" *ngIf="isMaxCapacityViolated">
+       <label>El tamaño total de los archvivos excede los 10MB.</label>
+        </div>
         <div class="row" *ngIf="uploader.queue.length == 0">
-            <div ng2FileSelect ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader"
+            <div ng2FileSelect ng2FileDropFilesDropped [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader"
                 class="my-drop-zone container4">
                 <h5>Arrastre sus documentos o de clic en esta área</h5>
                 <input type="file" ng2FileSelect [uploader]="uploader" (change)="fileEvent($event)" multiple/>
@@ -20,7 +24,7 @@
                 <tbody>
                     <tr *ngFor="let item of uploader.queue">
                         <td>{{item?.file?.name}}</td>
-                        <td><button mat-icon-button matTooltip="Eliminar" (click)="item.remove()"><mat-icon>clear</mat-icon></button></td>
+                        <td><button mat-icon-button matTooltip="Eliminar" (click)="removeItem(item)"><mat-icon>clear</mat-icon></button></td>
                     </tr>
                 </tbody>
             </table>
@@ -37,7 +41,7 @@
 </mat-dialog-content>
 <mat-dialog-actions class="d-flex justify-content-end">
     <div class="p-2">
-        <button mat-raised-button matDialogClose color="accent" (click)="guardar()" [disabled]="uploader.queue.length==0">Guardar</button>
+        <button mat-raised-button matDialogClose color="accent" (click)="guardar()" [disabled]="uploader.queue.length==0 || isMaxCapacityViolated">Guardar</button>
     </div>
     <div class="p-2">
         <button mat-button (click)="close()">Cerrar</button>

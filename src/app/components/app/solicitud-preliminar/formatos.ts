@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter, Inject } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { CIndexedDB } from '@services/indexedDB';
 import { HttpService} from '@services/http.service';
-import { FileUploader, FileDropDirective, FileSelectDirective } from 'ng2-file-upload';
+import { FileUploader, FileDropDirective, FileSelectDirective,FileUploaderOptions } from 'ng2-file-upload';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { ResolveEmit,ConfirmSettings} from '@utils/alert/alert.service';
 import { GlobalService } from "@services/global.service";
@@ -88,6 +88,9 @@ export class FormatosGlobal{
         var dialog = this.dialog.open(SolPreDocComponent, {
             height: 'auto',
             width: 'auto',
+            panelClass:'file_chooser',
+            backdropClass:'file_chooser_backdrop',
+            id:'file_chooser',
             data: {
                 urlUpload: this.urlUpload,
                 formData: this.formData
@@ -127,7 +130,7 @@ export class SolPreDocComponent {
       confirmText: "Continuar", // Default: 'Yes'
       declineText: "Cancelar",
     };
-
+    public isMaxCapacityViolated:boolean=false
 
     constructor(
         public dialogRef: MatDialogRef<SolPreDocComponent>,
@@ -140,7 +143,6 @@ export class SolPreDocComponent {
         public onLine: OnLineService = null,){
         this.db=_db;
     }
-
     public uploader:FileUploader = new FileUploader({url: URL});
     public hasBaseDropZoneOver:boolean = false;
     public hasAnotherDropZoneOver:boolean = false;
@@ -152,7 +154,11 @@ export class SolPreDocComponent {
     public fileOverBase(e:any):void {
       this.hasBaseDropZoneOver = e;
       console.log("->",e);
+      this.checkMaximunCapacity();
+
     }
+    FileDropDirective
+
 
     close(){
         this.dialogRef.close();
@@ -160,7 +166,32 @@ export class SolPreDocComponent {
 
 
     fileEvent(e){
+      console.log('File Event has triggered!',e)
+        //this.failFlag = true;
+        this.checkMaximunCapacity();
+    }
+    checkMaximunCapacity(){
+      let total_size=0;
+      let  files =this.uploader.queue as any[];
+      console.log("checking files maximun capacity", files);
 
+      files.forEach(fileItem => {
+        console.log(fileItem);
+        total_size=+fileItem.file.size;
+      });
+      console.log('total size',total_size/1048576);
+      if(total_size/1048576>10){
+        console.log("Maximun capacity violated");
+        this.isMaxCapacityViolated=true;
+      }
+      else{
+        this.isMaxCapacityViolated=false;
+      }
+    }
+    public removeItem(item){
+      console.log(item)
+      this.uploader.removeFromQueue(item);
+      this.checkMaximunCapacity();
     }
 
     guardarOffLine(i:number,listaArchivos:any[],casoId,_data){
