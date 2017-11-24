@@ -72,10 +72,8 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
         this.model = new Inspeccion();
 
         this.form  = new FormGroup({
-            'fechaHoraInspeccion'  : new FormControl(this.model.fechaHoraInspeccion),
             'adscripcion' : new FormControl(this.model.adscripcion),
-            'descripcion' : new FormControl(this.model.descripcion),
-            'horaInspeccion': new FormControl('')
+            'descripcion' : new FormControl(this.model.descripcion)
           });
 
         this.route.params.subscribe(params => {
