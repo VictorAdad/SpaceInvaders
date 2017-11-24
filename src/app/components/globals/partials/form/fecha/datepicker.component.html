@@ -8,7 +8,7 @@
             formControlName="{{name}}"
             name="{{name}}"
             [disabled]="disabled"
-            placeholder="Fecha"
+            placeholder="{{label}}"
             readonly>
         <mat-icon matSuffix *ngIf="sufix">{{ sufix }}</mat-icon>        
         <mat-hint align="start" *ngIf="hintStart">{{hintStart}} </mat-hint>
@@ -131,9 +131,5 @@
         <!-- <div ng-if="!bigBanner">
             <i class="fa fa-clock-o" aria-hidden="true" (click)="toggleTimeView()"></i>
         </div>-->
-        <div class="cal-util">
-            <div class="ok" (click)="done()"><i class="fa fa-check"></i>Hecho
-            </div>
-        </div>
     </div>
 </div>
