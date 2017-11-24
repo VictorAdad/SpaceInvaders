@@ -289,10 +289,14 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
 
     activaRazonSocial(value){
-        if (value=="Moral")
+        if (value=="Moral"){
             this.form.controls.razonSocial.enable();
-        else
+            this.globals.maxRFC = 12;
+        }
+        else{
             this.form.controls.razonSocial.disable();
+            this.globals.maxRFC = 13;
+        }
     }
 
     searchCatalogos(datos:any[]){
@@ -886,10 +890,14 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 export class IdentidadComponent extends NoticiaHechoGlobal{
 
     @Input()
-    globals: PersonaGlobals;
-    options: SelectsService;
-    isMexico:boolean=false;
-    tabla: CIndexedDB;
+    public globals: PersonaGlobals;
+
+    public options: SelectsService;
+
+    public isMexico:boolean=false;
+
+    public tabla: CIndexedDB;
+
 
     constructor(
         public personaServ: PersonaService,
@@ -1059,6 +1067,7 @@ export class MediaFilacionComponent{
 
 
 export class PersonaGlobals{
+
     public inicioOnline:boolean;
     public personaCaso;
     public personaForm: Form;
@@ -1083,6 +1092,7 @@ export class PersonaGlobals{
     public formMediaFilicion=LosForm.createFormMediaFiliacion();
     public localizaciones=[];
     public tipoResidencia=[];
+    public maxRFC: number = 13;
 
     constructor(
         _form: FormGroup,

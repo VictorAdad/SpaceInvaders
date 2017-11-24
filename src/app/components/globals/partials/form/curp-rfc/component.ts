@@ -17,12 +17,19 @@ export class CurpRfcComponent extends BaseInputComponent implements OnInit{
 
 	public regexRFC: RegExp = /^[A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3}$/;
 
+	public regexRFC10: RegExp = /^[A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])$/;
+
+	public regexRFC12: RegExp =  /^[A-Z,Ñ,&]{3}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3}$/;
+
+	public regexRFC9: RegExp =  /^[A-Z,Ñ,&]{3}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])$/
+
 	constructor(){
 		super();
 	}
 
 
 	ngOnInit(){
+		console.log(this);
 		this.control = this.group.get(this.name) as FormControl;
 		this.control.valueChanges.subscribe(this.validate.bind(this));
 	}
@@ -31,16 +38,27 @@ export class CurpRfcComponent extends BaseInputComponent implements OnInit{
 	public validate(_value){
 		if (_value != null){
 			if (this.curp == true)
-				if ((_value == null || _value == "") || (_value.length == 18 && this.regexCURP.test(_value)))
+				if ((_value == "") || (_value.length == 18 && this.regexCURP.test(_value)))
 					this.valid();
 				else
 					this.invalid();
 					
 			else
-				if ((_value == null || _value == "") || (_value.length >= 12 && this.regexRFC.test(_value)))
-					this.valid();
+				if(this.max === 13)
+					if ((_value.length == 13 && this.regexRFC.test(_value)))
+						this.valid();
+					else if ((_value.length == 10 && this.regexRFC10.test(_value)))
+						this.valid();
+					else
+						this.invalid();
 				else
-					this.invalid();
+					if ((_value.length == 12 && this.regexRFC12.test(_value)))
+						this.valid();
+					else if ((_value.length == 9 && this.regexRFC9.test(_value)))
+						this.valid();
+					else
+						this.invalid();
+
 					
 
 			if(_value.toString().length > this.max)
