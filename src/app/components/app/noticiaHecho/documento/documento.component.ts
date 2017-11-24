@@ -36,6 +36,8 @@ export class DocumentoComponent extends FormatosGlobal{
   public source:TableDataSource = new TableDataSource(this.subject);
   public formData:FormData = new FormData();
   public urlUpload: string;
+  public pageSize:number=10;
+  public pageIndex:number=0;
 
   constructor(
       public http: HttpService,
@@ -58,12 +60,13 @@ export class DocumentoComponent extends FormatosGlobal{
               this.id=params['id'];
               this.urlUpload = '/v1/documentos/casos/save/'+this.id;
               if (this.onLine.onLine){
+                this.page('/v1/documentos/casos/'+this.id+'/page?p='+this.pageIndex+'&tr='+this.pageSize);
+
                 this.http.get('/v1/base/casos/'+this.id).subscribe(response=>{
                   this.object=response;
                   this.data=this.object.documentos
                   console.log('-> Object ', this.object);
-                  this.pag = this.data.length;
-                  this.dataSource = new TableService(this.paginator, this.data);
+
                   this.formData.append('caso.id', this.id.toString());
 
                 });
@@ -131,7 +134,9 @@ export class DocumentoComponent extends FormatosGlobal{
           this.data.push(object);
           this.subject.next(this.data);
       }
-      this.dataSource = new TableService(this.paginator, this.data);
+      let data_slice=this.data;
+      this.dataSource = new TableService(this.paginator, data_slice.slice(this.pageIndex,this.pageSize));
+      console.log(this.data.length);
       this.pag = this.data.length;
     }else{
       this.cargaArchivosOffline();
@@ -155,23 +160,25 @@ export class DocumentoComponent extends FormatosGlobal{
     }
   }
   public changePage(_e){
+    this.pageIndex= _e.pageIndex;
+    this.pageSize=_e.pageSize;
     if(this.onLine.onLine){
-       // this.page('/v1/base/lugares/casos/'+this.id+'/page?p='+_e.pageIndex+'&tr='+_e.pageSize);
-
+       this.page('/v1/documentos/casos/'+this.id+'/page?p='+_e.pageIndex+'&tr='+_e.pageSize);
     }
 
 }
 
-public page(url: string){
-    this.http.get(url).subscribe((response) => {
-        this.pag = response.totalCount;
-        this.data = response.data
-        console.log("Loading Documentos..");
-        console.log(this.data);
-        this.dataSource = new TableService(this.paginator, this.data);
-    });
-}
-
+	public page(url: string) {
+		this.data = [];
+		this.http.get(url).subscribe((response) => {
+			response.data.forEach(object => {
+				this.pag = response.totalCount;
+				this.data.push(object);
+				this.dataSource = new TableService(this.paginator, this.data);
+			});
+			console.log('Datos finales', this.dataSource);
+		});
+	}
 
 }
 

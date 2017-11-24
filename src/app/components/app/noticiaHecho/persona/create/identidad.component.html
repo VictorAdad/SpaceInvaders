@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="col">
-                      <text label="CURP" name="curp" [max]="18" [valRfCurp]="true" [group]="globals.form"></text>
+                      <curp-rfc label="CURP" name="curp" [max]="18" [group]="globals.form"></curp-rfc>
                     </div>
                 </div>
             </div>
@@ -82,7 +82,7 @@
             </div>
 
             <div class="col">
-             <text label='RFC' name="rfc" [max]="13" [valRfCurp]="false" [group]="globals.form"></text>
+             <curp-rfc label='RFC' name="rfc" [max]="globals.maxRFC" [curp]="false" [group]="globals.form"></curp-rfc>
             </div>
         </div>
         <div class="row">
