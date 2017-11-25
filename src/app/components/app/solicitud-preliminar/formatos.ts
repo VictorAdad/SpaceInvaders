@@ -175,7 +175,10 @@ export class SolPreDocComponent {
 
       files.forEach(fileItem => {
         console.log(fileItem);
-        total_size=+fileItem.file.size;
+        total_size=total_size+fileItem.file.size;
+        console.log('total_size',total_size);
+
+
       });
       console.log('total size',total_size/1048576);
       if(total_size/1048576>10){
