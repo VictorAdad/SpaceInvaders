@@ -49,19 +49,21 @@ export class TrataPersonas {
         console.log('MatrizTipoTransportacion', _optionsRelacion.matrizTipoTransportacion);
         this.paisOrigen      =
             _options.find('paises', _object.paisOrigen.id).label;
-
+        if (_object.estadoOrigen)
         this.estadoOrigen    = 
             typeof _estadosOrigen[_object.estadoOrigen.id] !== 'undefined' ? _estadosOrigen[_object.estadoOrigen.id].label : '';
-
+        if (_object.municipioOrige)
         this.municipioOrigen = 
             typeof _municipiosOrigen[_object.municipioOrigen.id] !== 'undefined' ? _municipiosOrigen[_object.municipioOrigen.id].label : '';
 
         this.paisDestino     =
             _options.find('paises', _object.paisDestino.id).label;
 
+        if (_object.estadoDestino)
         this.estadoDestino   =
             typeof _estadosDestino[_object.estadoDestino.id] !== 'undefined' ? _estadosDestino[_object.estadoDestino.id].label : '';
 
+        if (_object.municipioDestino)
         this.municipioDestino=
             typeof _municipiosDestino[_object.municipioDestino.id] !== 'undefined' ? _municipiosDestino[_object.municipioDestino.id].label : '';
 

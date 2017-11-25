@@ -162,9 +162,9 @@ export class Form {
         });
     }
 
-    public efectoViolenciaForm(_val: any){
+    public efectoViolenciaForm(_val: any,id){
         return new FormGroup({
-            'id': new FormControl(),
+            'id': new FormControl(id),
             'efectoDetalle': new FormGroup({
                 'id': new FormControl(_val, [Validators.required,]),
              }),
