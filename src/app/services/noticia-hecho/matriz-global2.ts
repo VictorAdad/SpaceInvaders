@@ -77,9 +77,11 @@ export class MatrizGlobal {
     }
 
     public filterBy(_val, _filter, _attr){
-        // console.log('Matriz@filter()', _val, _filter, _attr);
-        let filtered = this.objects.filter(o => o[_filter] === _val);
-        this[_attr] = this.getUniques(filtered, _attr);
+        console.log('Matriz@filter()', _val, _filter, _attr);
+        if(_val){
+            let filtered = this.objects.filter(o => o[_filter] === _val);
+            this[_attr] = this.getUniques(filtered, _attr);
+        }
     }
 
 }
