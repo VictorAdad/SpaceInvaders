@@ -272,6 +272,36 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     let formLoc = localizaciones.controls[i];
                     formLoc.patchValue(_data.localizacionPersona[i]);
 
+                    
+                    timer2.subscribe(t => {
+                        if((_data.localizacionPersona[i])['estado'] != null)
+                            formLoc.patchValue({
+                                'estado':{
+                                    'id': (_data.localizacionPersona[i])['estado']['id']
+                                }
+                            });
+                        if((_data.localizacionPersona[i])['municipio'] != null)
+                            formLoc.patchValue({
+                                'municipio':{
+                                    'id': (_data.localizacionPersona[i])['municipio']['id']
+                                }
+                            });
+                        if((_data.localizacionPersona[i])['colonia'] != null)
+                            formLoc.patchValue({
+                                'colonia':{
+                                    'id': (_data.localizacionPersona[i])['colonia']['id']
+                                }
+                            });
+
+                        if((_data.localizacionPersona[i])['localidad'] != null)
+                            formLoc.patchValue({
+                                'localidad':{
+                                    'id': (_data.localizacionPersona[i])['localidad']['id']
+                                }
+                            });
+
+                    })
+
                     this.globals.tipoResidencia.push((_data.localizacionPersona[i])["tipoRecidencia"]);
                 }
                 this.globals.form.controls.razonSocial.patchValue(_personaCaso["persona"].razonSocial);
