@@ -190,6 +190,31 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     public fillPersonaCaso(_personaCaso){
         let pcaso = this.globals.form.get('personaCaso') as FormArray;
         this.eliminaNulos(_personaCaso);
+
+        if(_personaCaso.detalleDetenido != null){
+            let timerDetenido = Observable.timer(1);
+            timerDetenido.subscribe( t => {
+                this.globals.detenido = true;
+                this.globals.form.patchValue({
+                    'detenido': true
+                });
+            });
+            var fechaDeclaracion = new Date(_personaCaso.detalleDetenido.fechaDeclaracion);
+            if (isNaN(fechaDeclaracion.getTime())) {
+                _personaCaso.detalleDetenido.fechaDeclaracion = null;
+            }else{
+                _personaCaso.detalleDetenido.fechaDeclaracion = fechaDeclaracion;
+            }
+
+            var fechaDetencion = new Date(_personaCaso.detalleDetenido.fechaDetencion);
+            if (isNaN(fechaDetencion.getTime())) {
+                _personaCaso.detalleDetenido.fechaDetencion = null;
+            }else{
+                _personaCaso.detalleDetenido.fechaDetencion = fechaDetencion;
+            }
+            // pcaso.controls[0].patchValue(_personaCaso.detalleDetenido.tipoDetenido);
+        }
+
         pcaso.controls[0].patchValue(_personaCaso);
         this.globals.tipoInterviniente=""+_personaCaso["tipoInterviniente"].id;
 
@@ -1347,6 +1372,9 @@ export class LosForm{
                         'horaDetenido'         : new FormControl("",[]),
                         'tipoDetenido' : new FormGroup({
                             'id' : new FormControl("", []),
+                            'tipoDetencion'         : new FormControl("",[]),
+                            'tipoReincidencia'         : new FormControl("",[]),
+                            'cereso'         : new FormControl("",[]),
                         })
                     }),
                 })

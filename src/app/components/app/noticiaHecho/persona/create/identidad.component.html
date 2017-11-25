@@ -135,17 +135,38 @@
             </div>
 
             <div class="col-md-2" *ngIf="globals.detenido">
-                <select2 [options]="personaServ.tipoDetenido.tipoDetencion" placeholder="Tipo de detención" name="id" [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido.controls.tipoDetenido" (valueChange)="personaServ.tipoDetenido.find($event, 'tipoDetencion')"></select2>
+                <select2
+                    [options]="personaServ.tipoDetenido.tipoDetencion"
+                    placeholder="Tipo de detención"
+                    name="tipoDetencion"
+                    [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido.controls.tipoDetenido"
+                    (valueChange)="personaServ.tipoDetenido.find($event, 'tipoDetencion')">
+                    
+                </select2>
             </div>
 
             <div class="col-md-2" *ngIf="globals.detenido">
                 <date label="Fecha de declaración" name="fechaDeclaracion" [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido"></date>
             </div>
             <div class="col-md-2" *ngIf="globals.detenido">
-                <select2 [options]="personaServ.tipoDetenido.tipoReincidencia" placeholder="Tipo de reincidencia" (valueChange)="personaServ.tipoDetenido.find($event, 'tipoReincidencia')"></select2>
+                <select2
+                    [options]="personaServ.tipoDetenido.tipoReincidencia"
+                    placeholder="Tipo de reincidencia"
+                    name="tipoReincidencia"
+                    [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido.controls.tipoDetenido"
+                    (valueChange)="personaServ.tipoDetenido.find($event, 'tipoReincidencia')">
+                        
+                </select2>
             </div>
             <div class="col-md-2" *ngIf="globals.detenido">
-                <select2 [options]="personaServ.tipoDetenido.cereso" placeholder="Cereso" (valueChange)="personaServ.tipoDetenido.find($event, 'cereso')"></select2>
+                <select2
+                    [options]="personaServ.tipoDetenido.cereso"
+                    placeholder="Cereso"
+                    name="cereso"
+                    [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido.controls.tipoDetenido"
+                    (valueChange)="personaServ.tipoDetenido.find($event, 'cereso')">
+
+                </select2>
             </div>
 
         </div>
