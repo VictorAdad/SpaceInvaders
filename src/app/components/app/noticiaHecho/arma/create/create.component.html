@@ -29,7 +29,7 @@
 						name="tipo"
 						hintStart="Campo obligatorio"
 						[(options)]="armaServ.claseArma.tipo"
-						(valueChange)="armaServ.claseArma.find($event, 'tipo'); armaServ.claseArma.filterBy($event, 'tipo', 'subtipo');"
+						(valueChange)="tipoChange($event)"
 						[group]="form"
 						>
 					</select2> 
