@@ -307,4 +307,4 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
 
     }
 
-    }
+}
