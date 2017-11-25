@@ -1,45 +1,23 @@
 import { Component, Input, Output, EventEmitter , OnInit, AfterViewInit, ViewChild, Renderer} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { BaseInputComponent } from '../base-input.component';
 
 
 @Component({
 	selector    : 'text',
   	templateUrl : './text.component.html'
 })
-export class TextComponent implements OnInit{
-	@Input() label    : string;
-	@Input() value    : string;
-	@Input() prefix   : string;
-	@Input() sufix    : string;
-	@Input() prefixIcon : string;
-	@Input() sufixIcon  : string;
-	@Input() name     : string  = '';
-	@Input() required : boolean = false;
-	@Input() group    : FormGroup = new FormGroup({});
-	@Input() hintStart: string="";
-	@Input() hintEnd: string="";
-	@Input() readonly: string="";
-	@Input() max :number = 100;
+export class TextComponent extends BaseInputComponent {
+
 	@Input() valRfCurp : boolean =null;
-	@Input() functionChange: Function;
-	@Input() regex: RegExp;
-	@ViewChild('textComponent') textComponent;
-	backupValue : string;
 
-
-	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
-
-	constructor(private renderer : Renderer){
-
-	}
-
-	ngOnInit(){
-		// console.log(this);
+	constructor(public renderer : Renderer){
+		super(renderer)
 	}
 
 	ngAfterViewInit(){
 		this.renderer.listen(
-			this.textComponent.nativeElement, 'keyup', (event) => { this.inputSlice(); });
+			this.input.nativeElement, 'keyup', (event) => { this.inputSlice(); });
 	}
 
 	update(value) {
