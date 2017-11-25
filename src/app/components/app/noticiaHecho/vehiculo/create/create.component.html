@@ -58,7 +58,7 @@
                     hintStart="Campo obligatorio"
                     name="marca"
                     [group]="form"
-                    (valueChange)="vehiculoServ.marcaSubmarca.find($event, 'marca')">
+                    (valueChange)="vehiculoServ.marcaSubmarca.find($event, 'marca'); vehiculoServ.marcaSubmarca.filterBy($event, 'marca', 'submarca')">
 
                 </select2>
             </div>
