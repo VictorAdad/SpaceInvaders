@@ -13,7 +13,7 @@ export class Form {
 	constructor() {
 		this.form = new FormGroup({
             'id': new FormControl(),
-            'flagrancia': new FormControl(),
+            'flagrancia': new FormControl(false),
             'tieneViolenciaGenero': new FormControl(''),
             'caso': new FormGroup({
                 'id': new FormControl("",[]),
