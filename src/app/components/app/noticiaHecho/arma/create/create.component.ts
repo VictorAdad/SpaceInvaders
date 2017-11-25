@@ -300,9 +300,10 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         else{
            this.isArmaBlanca=false;
         }
-
-        this.armaServ.claseArma.find(option, 'claseArma');
         console.log(this.armaServ.claseArma)
+        this.armaServ.claseArma.find(option, 'claseArma');
+        this.armaServ.claseArma.filterBy(option, 'claseArma', 'tipo');
+        
 
     }
 
