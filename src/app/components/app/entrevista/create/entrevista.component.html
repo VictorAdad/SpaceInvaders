@@ -22,7 +22,8 @@
                         </select2>
                     </div>
                     <div class="col-md-3">
-                        <date label="Fecha de nacimiento" name="fechaNacimiento" (valueChange)="calculateAge($event)"[group]="form"></date>
+                        <!-- <date label="Fecha de nacimiento" name="fechaNacimiento" (valueChange)="calculateAge($event)"[group]="form"></date> -->
+                        <date-picker label="Fecha de nacimiento" name="fechaNacimiento" (onDateSelect)="calculateAge($event)"[group]="form"></date-picker>
                     </div>
                     <div class="col-md-3">
                         <number label="Edad" name="edad" [max]="2" [maxValue]="99" [group]="form"></number>

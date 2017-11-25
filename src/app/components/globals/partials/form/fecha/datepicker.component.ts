@@ -37,6 +37,8 @@ export class DatePicker implements OnInit, ControlValueAccessor {
 
     @ViewChild('datePicker') datePicker;
 
+    public control: FormControl;
+
     selectedDate: String;
     date: Date;
     popover: Boolean = false;
@@ -85,9 +87,15 @@ export class DatePicker implements OnInit, ControlValueAccessor {
 
         this.group.controls[this.name].valueChanges.subscribe(
             data => {
-                console.log('Change DatePicker value', data);
+                // console.log('Change DatePicker value', data);
             }
         )
+
+        this.control = this.group.get(this.name)  as FormControl;
+        this.control.valueChanges.subscribe(val => {
+            this.date = new Date(val);
+            this.onDateSelect.emit(this.date);
+        });
     }
 
     ngAfterViewInit(){
@@ -96,9 +104,10 @@ export class DatePicker implements OnInit, ControlValueAccessor {
     }
 
     onClick(event) {
-        console.log('onClick()', event);
-        if (!this.elementRef.nativeElement.contains(event.target) && event.target.parentElement.className != "years-list-view") 
-            this.popover = false;
+        if (event.target.parentElement != null) {
+            if (!this.elementRef.nativeElement.contains(event.target) && event.target.parentElement.className != "years-list-view") 
+                this.popover = false;
+        }
     }
 
     private onTouchedCallback: () =>  {};
@@ -235,11 +244,10 @@ export class DatePicker implements OnInit, ControlValueAccessor {
         this.timeView = !this.timeView;
     }
     setDay(evt:any){
-        console.log("INNERHTML", evt.target.innerHTML);
+        // console.log("INNERHTML", evt.target.innerHTML);
         if(evt.target.innerHTML && !isNaN(evt.target.innerHTML) ){
           var selectedDay = parseInt(evt.target.innerHTML);
           this.date = new Date(this.date.setDate(selectedDay));  
-          console.log(this.date);
           if(this.settings.closeOnSelect){
             this.popover = false;
             this.onDateSelect.emit(this.date);
@@ -248,7 +256,6 @@ export class DatePicker implements OnInit, ControlValueAccessor {
         this.group.controls[this.name].setValue(this.date);
     }
     setYear(evt:any){
-          console.log( evt.target );
           var selectedYear = parseInt(evt.target.getAttribute('id'));
           this.date = new Date(this.date.setFullYear(selectedYear)); 
            this.yearView = !this.yearView;
