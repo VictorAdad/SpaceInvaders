@@ -307,4 +307,9 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
 
     }
 
+    public tipoChange(_event){
+        this.armaServ.claseArma.find(_event, 'tipo');
+        this.armaServ.claseArma.filterBy(_event, 'tipo', 'subtipo');
+    }
+
 }
