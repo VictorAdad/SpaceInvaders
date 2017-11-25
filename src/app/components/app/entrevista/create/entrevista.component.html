@@ -53,12 +53,12 @@
                         <text label="Nº de la identificación" name="noIdentificacion" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="CURP" name="curp" [max]="18" [valRfCurp]="true" [group]="form"></text>
+                        <curp-rfc label='CURP' name="curp" [group]="form"></curp-rfc>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        <text label="RFC" name="rfc" [valRfCurp]="false" [max]="13" [group]="form"></text>
+                        <curp-rfc label='RFC' name="rfc" [max]="13" [curp]="false" [group]="form"></curp-rfc>
                     </div>
                     <div class="col-md-3">
                         <select2 placeholder="¿Sabe leer y escribir?"
