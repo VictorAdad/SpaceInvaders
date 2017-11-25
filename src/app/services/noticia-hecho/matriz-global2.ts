@@ -30,6 +30,7 @@ export class MatrizGlobal {
                     && String(attr) !== 'getMatriz'
                     && String(attr) !== 'db'
                     && String(attr) !== 'catalogo'
+                    && String(attr) !== 'filterBy'
                     && String(attr) !== 'superDb'){
                     this[String(attr)] = this.getUniques(this.objects, attr);
                 }
@@ -73,6 +74,12 @@ export class MatrizGlobal {
 
     public validate(_object, _selected){
         return true;
+    }
+
+    public filterBy(_val, _filter, _attr){
+        // console.log('Matriz@filter()', _val, _filter, _attr);
+        let filtered = this.objects.filter(o => o[_filter] === _val);
+        this[_attr] = this.getUniques(filtered, _attr);
     }
 
 }
