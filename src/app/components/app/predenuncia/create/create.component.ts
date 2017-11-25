@@ -131,12 +131,13 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                             this.form.disable();
                             this.model= response.data[0] as Predenuncia;
                             var fechaCompleta:Date= new Date(response.fechaHoraInspeccion);
-                            this.model.fechaCanalizacion=fechaCompleta;
+                            // this.model.fechaCanalizacion=fechaCompleta;
                             var horas: string=(String(fechaCompleta.getHours()).length==1)?'0'+fechaCompleta.getHours():String(fechaCompleta.getHours());
                             var minutos: string=(String(fechaCompleta.getMinutes()).length==1)?'0'+fechaCompleta.getMinutes():String(fechaCompleta.getMinutes());;
                             this.model.horaConlcusionLlamada=horas+':'+minutos;
                             console.log("Emitiendo id..",this.model.id)
                             this.idEmitter.emit({id: this.model.id});
+                            console.log('PP----------->',this.model);
                             this.fillForm(this.model);
                         }
                     });
@@ -150,12 +151,13 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                 this.form.disable();
                                 let model = caso['predenuncias'];
                                 var fechaCompleta: Date = new Date(model.fechaHoraInspeccion);
-                                this.model.fechaCanalizacion=fechaCompleta;
+                                // this.model.fechaCanalizacion=fechaCompleta;
                                 var horas: string=(String(fechaCompleta.getHours()).length==1)?'0'+fechaCompleta.getHours():String(fechaCompleta.getHours());
                                 var minutos: string=(String(fechaCompleta.getMinutes()).length==1)?'0'+fechaCompleta.getMinutes():String(fechaCompleta.getMinutes());;
                                 this.model.horaConlcusionLlamada=horas+':'+minutos;
                                 console.log("Emitiendo id..",this.model.id)
                                 this.idEmitter.emit({id: this.model.id});
+                                console.log('LL------------>',this.model);
                                 this.fillForm(model);
                             }
                         }
@@ -298,8 +300,9 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             }
         }
         _data.fechaCanalizacion = new Date(_data.fechaCanalizacion);
+
         this.form.patchValue(_data);
-        console.log(_data);
+        console.log('hh------->',_data);
     }
 
 }
