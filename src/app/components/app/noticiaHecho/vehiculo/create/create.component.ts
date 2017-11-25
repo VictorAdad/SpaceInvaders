@@ -320,4 +320,9 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         this.form.patchValue(_data);
     }
 
+    public marcaChange(_event){
+        this.vehiculoServ.marcaSubmarca.find(_event, 'marca');
+        this.vehiculoServ.marcaSubmarca.filterBy(_event, 'marca', 'submarca');
+    }
+
 }
