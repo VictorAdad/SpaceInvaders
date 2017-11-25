@@ -135,9 +135,10 @@ export class DocumentoComponent extends FormatosGlobal{
           this.subject.next(this.data);
       }
       let data_slice=this.data;
+      console.log(this.data);
       this.dataSource = new TableService(this.paginator, data_slice.slice(this.pageIndex,this.pageSize));
       console.log(this.data.length);
-      this.pag = this.data.length;
+      this.pag = this.pag+_archivos.saved.length;
     }else{
       this.cargaArchivosOffline();
     }
