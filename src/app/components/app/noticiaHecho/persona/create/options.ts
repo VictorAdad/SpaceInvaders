@@ -62,7 +62,7 @@ export class Options {
 
     public getColoniasByMunicipio(idMunicipio: number){
         this.http.get('/v1/catalogos/colonia/municipio/'+idMunicipio+'/options').subscribe((response) => {
-            this.localidad = this.constructOptions(response);
+            this.colonias = this.constructOptions(response);
         });
     }
 
