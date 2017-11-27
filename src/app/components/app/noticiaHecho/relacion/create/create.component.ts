@@ -851,7 +851,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     }
 
     changeViolenciaGenero(status){
-      if(status){
+        console.log('changeViolenciaGenero()', status)
+      if(status.checked){
         this.isViolenciaGenero = true;
       }else{
         this.isViolenciaGenero = false;
