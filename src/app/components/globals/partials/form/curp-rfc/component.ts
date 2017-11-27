@@ -36,28 +36,32 @@ export class CurpRfcComponent extends BaseInputComponent implements OnInit{
 
 
 	public validate(_value){
+		console.log('CURP RFC validate() ', _value.length);
 		if (_value != null){
-			if (this.curp == true)
-				if ((_value == "") || (_value.length == 18 && this.regexCURP.test(_value)))
-					this.valid();
+			if(_value.length > 0)
+				if (this.curp == true)
+					if ((_value == "") || (_value.length == 18 && this.regexCURP.test(_value)))
+						this.valid();
+					else
+						this.invalid();
+						
 				else
-					this.invalid();
-					
+					if(this.max === 13)
+						if ((_value.length == 13 && this.regexRFC.test(_value)))
+							this.valid();
+						else if ((_value.length == 10 && this.regexRFC10.test(_value)))
+							this.valid();
+						else
+							this.invalid();
+					else
+						if ((_value.length == 12 && this.regexRFC12.test(_value)))
+							this.valid();
+						else if ((_value.length == 9 && this.regexRFC9.test(_value)))
+							this.valid();
+						else
+							this.invalid();
 			else
-				if(this.max === 13)
-					if ((_value.length == 13 && this.regexRFC.test(_value)))
-						this.valid();
-					else if ((_value.length == 10 && this.regexRFC10.test(_value)))
-						this.valid();
-					else
-						this.invalid();
-				else
-					if ((_value.length == 12 && this.regexRFC12.test(_value)))
-						this.valid();
-					else if ((_value.length == 9 && this.regexRFC9.test(_value)))
-						this.valid();
-					else
-						this.invalid();
+				this.valid();
 
 					
 
