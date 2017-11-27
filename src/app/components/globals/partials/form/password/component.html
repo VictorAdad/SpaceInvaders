@@ -10,7 +10,7 @@
 	<mat-form-field class="full-width" [formGroup]="group" *ngIf="name!=''">
 			<span *ngIf="prefix" matPrefix>{{ prefix }}&nbsp;</span>
 			<input 
-				#textComponent
+				#input
 				matInput
 				type="password" 
 				placeholder="{{label}}" 
