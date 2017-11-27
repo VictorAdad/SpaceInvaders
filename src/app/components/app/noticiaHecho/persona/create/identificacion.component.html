@@ -13,7 +13,8 @@
                 <select2 placeholder="Documento de identificación"
                     [options]="personaServ.idiomaIdentificacion.identificacion"
                     name="identificacion"
-                    [group]="globals.form">
+                    [group]="globals.form"
+                    (valueChange)="personaServ.idiomaIdentificacion.find($event, 'identificacion')">
                             
                 </select2>
             </div>
