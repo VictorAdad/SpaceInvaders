@@ -30,6 +30,7 @@ export class TransferirComponent{
     ngOnInit() {
         let users = Object.keys(_usuarios);
         this.form =  new FormGroup({
+            'userNamePropietario': new FormControl('Propietario'),
             'userNameAsignado': new FormControl(''),
             'userNameAsignacion': new FormControl(this.auth.user.username),
             'fechaAsignacion': new FormControl(new Date()),
