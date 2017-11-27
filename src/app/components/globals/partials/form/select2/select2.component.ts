@@ -40,6 +40,7 @@ export class Select2Component{
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
+		// console.log(changes);
 		if(changes.options)
 			this.filteredOptions = this.options;
 	}
@@ -81,6 +82,11 @@ export class Select2Component{
    	public setCursor(){
    		if(this.searchInput)
    			this.searchInput.nativeElement.focus();
+   	}
+
+   	public closeSelect(){
+   		console.log('closeSelect()');
+   		this.filteredOptions = this.options;
    	}
 
 }

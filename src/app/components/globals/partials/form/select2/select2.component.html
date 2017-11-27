@@ -26,7 +26,8 @@
 			(ngModelChange)="update($event)"
 			(onOpen)="setCursor()"
 			class="full-width"
-			formControlName="{{name}}">
+			formControlName="{{name}}"
+			(onClose)="closeSelect()">
 			<div class="md-custom-search">
 				<input type="text" name="search" placeholder="Buscar" #searchInput>
 				<mat-icon  class="suffix">search</mat-icon>
