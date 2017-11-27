@@ -285,21 +285,21 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
 
     public claseChange(option){
 
-        if(option == _config.optionValue.armaFuego){
-           this.isArmaFuego=true;
+        let timer = Observable.timer(1);
+
+        if(option == _config.optionValue.armaFuego || option==_config.optionValue.armaBlanca){
+           this.isArmaFuego  = (option == _config.optionValue.armaFuego) ;
+           this.isArmaBlanca = (option==_config.optionValue.armaBlanca);
            this.form.controls.tipo.enable();
         }
         else{
-           this.isArmaFuego=false;
+           this.isArmaFuego  = false;
+           this.isArmaBlanca = false;
+           timer.subscribe(t => {
+               this.form.controls.tipo.disable();
+           });
         }
-        if(option==_config.optionValue.armaBlanca){
-            console.log(option);
-           this.isArmaBlanca=true;
-           this.form.controls.tipo.enable();
-        }
-        else{
-           this.isArmaBlanca=false;
-        }
+
         console.log(this.armaServ.claseArma)
         this.armaServ.claseArma.find(option, 'claseArma');
         this.armaServ.claseArma.filterBy(option, 'claseArma', 'tipo');

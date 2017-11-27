@@ -70,6 +70,7 @@ export class MatrizGlobal {
         this.finded = this.objects.filter(object => {
             return this.validate(object, this.selected);
         });
+        console.log('Find', this);
     }
 
     public validate(_object, _selected){
