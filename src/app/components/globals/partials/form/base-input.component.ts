@@ -3,7 +3,8 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 
 
 @Component({
-	selector    : 'base-input'
+	selector: 'base-input',
+	template: 'base-input.component.html' 
 })
 export class BaseInputComponent implements OnInit{
 
