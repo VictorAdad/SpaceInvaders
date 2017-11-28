@@ -46,8 +46,10 @@ export class FormatosGlobal{
                                 console.log('Done changeFormat()', response);
                                 this.setData(response);
                                 this.globalService.openSnackBar("Formato generado con éxito");
+                            },
+                            error => {
+                                this.globalService.openSnackBar("X ocurrió un error al generar el formato");
                             }
-
                         );
                     }else{
                         this.formatos.replaceWord(
