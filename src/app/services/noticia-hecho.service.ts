@@ -165,6 +165,10 @@ export class NoticiaHechoService {
                     this.asesoresPublicos = this.asesoresPublicos.concat(this.asesoresPrivados);
                     console.log(this.asesoresPrivados);
                 }
+                if(_attr === 'victimas' || _attr === 'ofendidos'){
+                    this.victimas = this.victimas.concat(this.ofendidos);
+                    console.log(this.victimas);
+                }
             });
         else{
             if (this.caso["personaCasos"]){
@@ -182,6 +186,10 @@ export class NoticiaHechoService {
                 if(_attr === 'asesoresPublicos' || _attr === 'asesoresPrivados'){
                     this.asesoresPublicos = this.asesoresPublicos.concat(this.asesoresPrivados);
                     console.log(this.asesoresPrivados);
+                }
+                if(_attr === 'victimas' || _attr === 'ofendidos'){
+                    this.victimas = this.victimas.concat(this.ofendidos);
+                    console.log(this.victimas);
                 }
             }
         }
