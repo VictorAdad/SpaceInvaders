@@ -44,14 +44,14 @@ export class CasoService{
 	}
 
 	public setOnlineCaso(response){
-		console.log('Caso@setOnlineCaso')
+		// console.log('Caso@setOnlineCaso')
 		this.setCaso(response);
 		this.db.clear("casos").then( t =>{
             this.db.update("casos",this.caso).then( t =>{
-            	console.log('Indexed Caso actualizado');
+            	// console.log('Indexed Caso actualizado');
             });
         });
-        console.log(this.caso);
+        // console.log(this.caso);
 	}
 
 	public setCaso(caso){

@@ -31,11 +31,11 @@ export class CasoNicComponent implements OnInit{
 	}
 
 	public getCaso(_id){
-        console.log('CasoComponent@getCaso');
+        // console.log('CasoComponent@getCaso');
         if (this.onLine.onLine){
         	this.http.get('/v1/base/casos/'+this.id).subscribe(
 				response => {
-					console.log('Caso', response);
+					// console.log('Caso', response);
 					if(response.hasPredenuncia){
 		            	this.nic = response.nic
 		            	this.nuc = response.nuc
@@ -51,7 +51,7 @@ export class CasoNicComponent implements OnInit{
 				}
 			});
 		}
-		console.log(this);
+		// console.log(this);
     }
 }
 
