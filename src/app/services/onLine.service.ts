@@ -11,6 +11,7 @@ import { SimpleNotificationsComponent } from 'angular2-notifications';
 import { NotificationsService } from 'angular2-notifications';
 import { Notification } from 'angular2-notifications';
 import { MatDialog } from '@angular/material';
+import { DialogSincrinizarService} from "@services/onLine/dialogSincronizar.service";
 
 
 @Injectable()
@@ -32,9 +33,10 @@ export class OnLineService {
         private db:CIndexedDB,
         private http:HttpService,
         private notificationService: NotificationsService,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        public dialogoSincronizar:  DialogSincrinizarService
     ) {
-        this.sincronizarCatalogos=new SincronizaCatalogos(db,http,dialog);
+        this.sincronizarCatalogos=new SincronizaCatalogos(db,http,dialogoSincronizar);
         // timer = Observable.timer(2000,1000);
         this.timer.subscribe(t=>{
             this.anterior=this.onLine;

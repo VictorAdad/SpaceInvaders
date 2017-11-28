@@ -24,7 +24,8 @@ import {arrNACIONALIDAD_RELIGION}      from '@models/datos/nacionalidadReligion'
 import {arrIDIOMA_IDENTIFICACION} from '@models/datos/idiomaIdentificacion';
 import {SincronizaCatalogos} from "@services/onLine/sincronizaCatalogos";
 import { HttpService} from '@services/http.service';
-import { MatDialog } from '@angular/material';
+import { DialogSincrinizarService} from "@services/onLine/dialogSincronizar.service";
+
 @Injectable()
 export class CIndexedDB {
     nameDB:string = "SIGI";
@@ -32,7 +33,7 @@ export class CIndexedDB {
     sincronizarCatalogos:SincronizaCatalogos;
 
     constructor(private http:HttpService, 
-        public dialog: MatDialog) {
+        public dialog: DialogSincrinizarService) {
         var obj=this;
         this.sincronizarCatalogos=new SincronizaCatalogos(this,http,dialog);
         if(!this.init){
