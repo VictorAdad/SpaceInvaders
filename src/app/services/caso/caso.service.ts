@@ -130,9 +130,12 @@ export class Caso{
 			domicilio += ' '+localizacion.calle;
 			domicilio += ' '+localizacion.noInterior;
 			domicilio += ' '+localizacion.noExterior;
-			domicilio += ' '+localizacion.colonia.nombre;
-			domicilio += ' '+localizacion.municipio.nombre;
-			domicilio += ' '+localizacion.estado.nombre;
+			if(localizacion.colonia != null)
+				domicilio += ' '+localizacion.colonia.nombre;
+			if(localizacion.municipio  != null)
+				domicilio += ' '+localizacion.municipio.nombre;
+			if(localizacion.estado)
+				domicilio += ' '+localizacion.estado.nombre;
 
 			domicilios.push(domicilio);
 		}
