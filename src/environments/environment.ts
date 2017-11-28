@@ -6,6 +6,9 @@
 export const environment = {
   production: false,
   api : {
-    host : 'http://10.0.30.14:9001'
+    host : 'http://10.0.2.21:9000'
+  },
+  app: {
+  	host: 'http://10.0.2.21:4200'
   }
 };
