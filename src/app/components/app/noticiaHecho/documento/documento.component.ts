@@ -25,20 +25,21 @@ import { TableDataSource } from './../../global.component';
 })
 export class DocumentoComponent extends FormatosGlobal{
 
+
   id:number=null;
   displayedColumns = ['nombre','procedimiento', 'fechaCreacion'];
   object: any;
   public dataSource: TableService | null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   public pag: number = 0;
-  public data: DocumentoPolicia[] = [];
-  public subject:BehaviorSubject<DocumentoPolicia[]> = new BehaviorSubject<DocumentoPolicia[]>([]);
+  public data: DocumentoNoticia[] = [];
+  public subject:BehaviorSubject<DocumentoNoticia[]> = new BehaviorSubject<DocumentoNoticia[]>([]);
   public source:TableDataSource = new TableDataSource(this.subject);
   public formData:FormData = new FormData();
   public urlUpload: string;
   public pageSize:number=10;
   public pageIndex:number=0;
-
+  public isShowAll:boolean=false;
   constructor(
       public http: HttpService,
       public confirmationService:ConfirmationService,
@@ -93,7 +94,7 @@ export class DocumentoComponent extends FormatosGlobal{
         for (var i = 0; i < lista.length; ++i) {
 
           if (lista[i]["casoId"]==this.id){
-            var obj=new DocumentoPolicia();
+            var obj=new DocumentoNoticia();
             obj.id=lista[i]["id"];
             obj.nameEcm=lista[i]["nombre"];
             obj.procedimiento="Caso";
@@ -136,7 +137,11 @@ export class DocumentoComponent extends FormatosGlobal{
       }
       let data_slice=this.data;
       console.log(this.data);
-      this.dataSource = new TableService(this.paginator, data_slice.slice(this.pageIndex,this.pageSize));
+      if(this.pageSize*this.pageIndex+this.pageSize<=this.data.length)
+      this.dataSource = new TableService(this.paginator, data_slice.slice(this.pageSize*this.pageIndex,this.pageSize));
+     else{
+     this.dataSource = new TableService(this.paginator, data_slice.slice(this.pageSize*this.pageIndex,this.data.length));
+      }
       console.log(this.data.length);
       this.pag = this.pag+_archivos.saved.length;
     }else{
@@ -151,21 +156,106 @@ export class DocumentoComponent extends FormatosGlobal{
       this.dataSource = new TableService(this.paginator, this.data);
       this.pag = this.data.length;
   }
-  public mostrarOcultarFormatos(mostrar){
-    if(mostrar){
-      console.log("Mostrar formatos aquí")
+  public mostrarOcultarTodos(showAll){
+    if(showAll.checked){
+      this.isShowAll=true;
+     this.data= [];
+      console.log('mostrar',showAll);
+      this.http.get('/v1/base/casos/'+this.id+'/documentos').subscribe((response) => {
+       console.log(response)
+       let keys= Object.keys(response)
+       keys.forEach(key=> {
+          console.log(response[key]);
+          let documentArray=response[key];
+          let procedimiento= this.procedimientoByKey(key);
+          documentArray.forEach(document => {
+            document.procedimiento=procedimiento
+            console.log(document)
+            this.data.push(document);
+          });
+          });
+          this.pag = this.data.length;
+          let data_slice=this.data;
+          if(this.pageSize*this.pageIndex+this.pageSize<=this.data.length)
+            this.dataSource = new TableService(this.paginator, data_slice.slice(this.pageSize*this.pageIndex,this.pageSize*this.pageIndex+this.pageSize));
+          else{
+            this.dataSource = new TableService(this.paginator, data_slice.slice(this.pageSize*this.pageIndex,this.data.length));
+           }
+      });
     }
     else{
-      console.log("Ocultar formatos aquí")
-
+      this.page('/v1/documentos/casos/'+this.id+'/page?p='+this.pageIndex+'&tr='+this.pageSize);
+      this.isShowAll=false;
     }
+
   }
+  public procedimientoByKey(key: any): any {
+    let procedimiento='';
+
+    switch (key) {
+      case 'DocAcuerdo':
+      procedimiento= 'Acuerdos';
+      break;
+      case 'DocArchivoTemporal':
+      procedimiento= 'Archivo temporal';
+      break;
+      case 'DocEntrevista':
+      procedimiento= 'Entrevista';
+      break;
+      case 'DocFacultadNoInvestigar':
+      procedimiento= 'Facultad de no investigar';
+      break;
+      case 'DocNic':
+      procedimiento= 'NIC';
+      break;
+      case 'DocNoEjercicioAccion':
+      procedimiento= 'No ejercicio de acción penal';
+      break;
+      case 'DocPredenuncia':
+      procedimiento= 'Predenuncia';
+      break;
+      case 'DocSolPreAcuerdo':
+      procedimiento= 'Solicitudes y acuerdos generales';
+      break;
+      case 'DocSolPreInspeccion':
+      procedimiento= 'Inspecciones';
+      break;
+      case 'DocSolPrePericial':
+      procedimiento= 'Solicitudes a periciales';
+      break;
+      case 'DocSolPrePolicia':
+      procedimiento= 'Solicitudes a policía ministerial';
+      break;
+      case 'DocSolPreRegistro':
+      procedimiento= 'Registro general';
+      break;
+      case 'DocSolPreReqInfo':
+      procedimiento= 'Requerimiento de información';
+      break;
+      default:
+        break;
+    }
+    return procedimiento;
+  }
+
   public changePage(_e){
     this.pageIndex= _e.pageIndex;
     this.pageSize=_e.pageSize;
-    if(this.onLine.onLine){
-       this.page('/v1/documentos/casos/'+this.id+'/page?p='+_e.pageIndex+'&tr='+_e.pageSize);
+    console.log('page index',this.pageIndex)
+    if(!this.isShowAll){
+      if(this.onLine.onLine){
+         this.page('/v1/documentos/casos/'+this.id+'/page?p='+_e.pageIndex+'&tr='+_e.pageSize);
+      }
+    }else{
+      let data_slice=this.data;
+      console.log(data_slice.slice(this.pageSize*this.pageIndex,this.pageSize))
+      if(this.pageSize*this.pageIndex+this.pageSize<=this.data.length)
+      this.dataSource = new TableService(this.paginator, data_slice.slice(this.pageSize*this.pageIndex,this.pageSize*this.pageIndex+this.pageSize));
+      else{
+       this.dataSource = new TableService(this.paginator, data_slice.slice(this.pageSize*this.pageIndex,this.data.length));
+      }
     }
+
 
 }
 
@@ -183,7 +273,7 @@ export class DocumentoComponent extends FormatosGlobal{
 
 }
 
-export class DocumentoPolicia {
+export class DocumentoNoticia{
 	id: number
 	nameEcm: string;
 	procedimiento: string;

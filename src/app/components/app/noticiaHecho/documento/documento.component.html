@@ -5,15 +5,17 @@
 </div>
 <div class="row space justify-content-end">
     <div class="col-md-auto">
-      <slide-toggle (valueChange)="mostrarOcultarFormatos($event)"
+      <slide-toggle (valueChange)="mostrarOcultarTodos($event)"
       [label]="'Mostrar todos los formatos'"
       >
       Mostrar todos los formatos
     </slide-toggle>
     </div>
+    <!--
     <div class="col-md-auto">
         <button mat-raised-button color="accent" >Imprimir documentos</button>
     </div>
+    -->
     <div class="col-md-auto">
       <button mat-raised-button color="accent" (click)="openDocDialog()">Adjuntar documentos</button>
     </div>
