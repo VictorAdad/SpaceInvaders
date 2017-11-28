@@ -1,29 +1,21 @@
 import {CatalogosACargar} from "@services/onLine/CatalogosACargar";
 import { CIndexedDB } from '@services/indexedDB';
 import { HttpService} from '@services/http.service';
-import { ConfirmationService } from '@jaspero/ng2-confirmations';
-import { MatDialog } from '@angular/material';
-import {ProgressDialog} from '@components-app/onLine/progressDialog.component';
+import { DialogSincrinizarService} from "@services/onLine/dialogSincronizar.service";
+
+
 export class SincronizaCatalogos {
-
-
     public static sincronizando:boolean;
-
-    settings={
-        overlayClickToClose: false, // Default: true
-        showCloseButton: false, // Default: true
-        confirmText: "Continuar", // Default: 'Yes'
-        declineText: "Cancelar",
-    };
-
-    dialogo=null;
     catalogo="algun catalogo";
+
+    finalizoCatalogo=true;
+    finalizoMatrix=true;
+    error=false;
 
     constructor(
         private db:CIndexedDB,
         private http:HttpService,
-        //private confirmation: ConfirmationService,
-        public dialog: MatDialog
+        private dialogo:DialogSincrinizarService
         ){
     }
 
@@ -72,16 +64,11 @@ export class SincronizaCatalogos {
     }
 
     public nuevo(){
-        this.dialogo=this.dialog.open(
-            ProgressDialog,{
-            height: 'auto',
-            width: 'auto',
-            disableClose:true,
-            data:{catalogo:"",}
-            }
-        );
         SincronizaCatalogos.sincronizando=true;
         this.bajaCatalogoLlave();
+        this.finalizoCatalogo=false;
+        this.finalizoMatrix=false;
+        this.dialogo.open();
         this.sincronizaCatalogos(0,CatalogosACargar.matricesASincronizar,"matrices");
         this.sincronizaCatalogos(0,CatalogosACargar.catalogosASincronizar,"catalogos");
     }
@@ -103,16 +90,17 @@ export class SincronizaCatalogos {
     }
 
     public actualizaCatalogo(item){
+        var obj=this;
         this.http.get(item["uri"]).subscribe((response) => {
             this.db.update("catalogos",{id:item["catalogo"], arreglo:response}).then(e=>{
-                    
+                    obj.dialogo.close();
                 }).catch((e)=>{
-                    
+                    obj.dialogo.close();
                 });
         },
         (error)=>{
             console.log("Fallo el servicio "+item["uri"]);
-            
+            obj.dialogo.close();
         });
     }
 
@@ -120,16 +108,11 @@ export class SincronizaCatalogos {
         //si se esta sincronizando los catalogos por primera vez
         if (SincronizaCatalogos.sincronizando)
             return;
-        this.dialogo=this.dialog.open(
-            ProgressDialog,{
-            height: 'auto',
-            width: 'auto',
-            disableClose:true,
-            data:{catalogo:""}
-            }
-        );
-
+        //si se estan sincronizando los catalogos
+        if (!this.finalizoMatrix && !this.finalizoCatalogo)
+            return;
         var obj=this;
+        //obj.dialogo.open();
         console.time("BuscarCambios");
         this.http.get("/v1/catalogos/sincronizacion").subscribe(listaRemota=>{
             this.db.list("catalogoLlave").then(listaLocal=>{
@@ -152,6 +135,7 @@ export class SincronizaCatalogos {
                         let nombreCatalogo=obj.toGuionCase(itemR["nombreCatalogo"]);
                         let item=obj.buscaElementoInCatalogos(nombreCatalogo);
                         if (item!=null){
+                            obj.dialogo.open();
                             obj.actualizaCatalogo(item);
                             cambio=true;
                         }
@@ -162,12 +146,13 @@ export class SincronizaCatalogos {
                 if(cambio)
                     obj.bajaCatalogoLlave();
                 console.timeEnd("BuscarCambios");
-                obj.dialogo.close();
+                
             });
         },error=>{
-            obj.dialogo.close();
             console.log(error);
+            this.dialogo.close();
         });
+        //this.dialogo.close();
     }
 
     private bajaCatalogoLlave(){
@@ -193,10 +178,16 @@ export class SincronizaCatalogos {
         }
         if (i==arr.length){
             //dejamos de sincronizar hasta que las matrices se bajen
+            
+            
             if (titulo=="matrices"){
+                this.finalizoMatrix=true;
                 SincronizaCatalogos.sincronizando=false;
-                this.dialogo.close();
+            }else{
+                this.finalizoCatalogo=true;
             }
+            if (this.finalizoMatrix && this.finalizoCatalogo)
+                this.dialogo.close();
             console.log("%c" + "-> "+titulo+" sincronizadas", "color: blue;font-weight:bold;");
             console.timeEnd(titulo);
             return;
@@ -215,7 +206,11 @@ export class SincronizaCatalogos {
         },
         (error)=>{
             console.log("Fallo el servicio "+item["uri"]);
+            let catalogo=this.toCamelCase(item["catalogo"]);
             this.sincronizaCatalogos(i+1,arr,titulo);
+            console.log("Borrar el catalogo", catalogo);
+            this.db.delete("catalogoLlave",catalogo);
+            this.error=true;
         });
     }
 

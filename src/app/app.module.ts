@@ -22,6 +22,7 @@ import { MomentModule } from 'angular2-moment';
 import { EntrevistaModule, EntrevistaComponents } from '@components-app/entrevista/module';
 
 import { MiservicioService} from "./services/miservicio.service";
+import { DialogSincrinizarService} from "@services/onLine/dialogSincronizar.service";
 import { AuthenticationService} from "@services/auth/authentication.service";
 import { GlobalService } from "@services/global.service";
 import { OnLineService } from "@services/onLine.service";
@@ -149,6 +150,7 @@ import { pipes } from './pipes/pipe.module';
     })
   ],
   providers: [
+    DialogSincrinizarService,
     MiservicioService,
     AuthenticationService,
     GlobalService,
