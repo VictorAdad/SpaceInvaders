@@ -9,7 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng build --environment prod --prod --base-href http://sigi.evomatik.net/sigi-test/"
+    "deploy-dev": "ng build --environment dev --prod --base-href /sigi/",
+    "deploy-prod": "ng build --environment prod --prod --base-href http://sigi.evomatik.net/sigi-test/"
   },
   "private": true,
   "dependencies": {
