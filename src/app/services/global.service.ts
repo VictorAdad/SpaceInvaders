@@ -4,7 +4,10 @@ import {MatSnackBar} from '@angular/material';
 
 @Injectable()
 export class GlobalService{
-	public _LOADER : boolean = false;
+
+	public _LOADER: boolean = false;
+
+	public _SAVING: boolean = false;
 
 	constructor(public snackBar: MatSnackBar) {}
 
