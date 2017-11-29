@@ -46,26 +46,64 @@ export class TrataPersonas {
         _municipiosDestino,
         _optionsRelacion
         ){
+
         console.log('MatrizTipoTransportacion', _optionsRelacion.matrizTipoTransportacion);
         this.paisOrigen      =
             _options.find('paises', _object.paisOrigen.id).label;
-        if (_object.estadoOrigen)
-        this.estadoOrigen    = 
-            typeof _estadosOrigen[_object.estadoOrigen.id] !== 'undefined' ? _estadosOrigen[_object.estadoOrigen.id].label : '';
-        if (_object.municipioOrige)
-        this.municipioOrigen = 
-            typeof _municipiosOrigen[_object.municipioOrigen.id] !== 'undefined' ? _municipiosOrigen[_object.municipioOrigen.id].label : '';
+        if (_object.estadoOrigen && _object.estadoOrigen.id!=""){
+            if (_estadosOrigen.length>0)
+            this.estadoOrigen    = 
+                typeof _estadosOrigen[_object.estadoOrigen.id] !== 'undefined' ? _options.buscaItemConValue(_options["estados"],_object.estadoOrigen.id).label  : '';
+            else{
+                let estado=_options.buscaItemConValue(_options["estados"],_object.estadoOrigen.id);
+                this.estadoOrigen    =  estado? estado["label"] : '';
+            }
+        }else if (_object.estadoOrigenOtro)
+            this.estadoOrigen=_object.estadoOrigenOtro;
+
+        if (_object.municipioOrige && _object.municipioOrigen.id!="")
+            if (_municipiosOrigen.length>0)
+            this.municipioOrigen = 
+                typeof _municipiosOrigen[_object.municipioOrigen.id] !== 'undefined' ? _options.buscaItemConValue(_municipiosOrigen,_object.municipioOrigen.id).label : '';
+            else{
+                _options.getMunicipiosByEstadoService(_object.estadoDestino.id).then(respuesta=>{
+                    let municipios=_options.constructOptions(respuesta);
+                    let municipio=_options.buscaItemConValue(municipios,_object.municipioOrigen.id);
+                    this.municipioOrigen=municipio?municipio.label:"";
+                })
+            }
+        else if (_object.municipioOrigenOtro)
+            this.municipioOrigen = _object.municipioOrigenOtro;
 
         this.paisDestino     =
             _options.find('paises', _object.paisDestino.id).label;
+        if (_object.estadoDestino && _object.estadoDestino.id!=""){
+            if (_estadosDestino.length>0)
+            this.estadoDestino   =
+                typeof _estadosDestino[_object.estadoDestino.id] !== 'undefined' ? _options.buscaItemConValue(_options["estados"],_object.estadoDestino.id).label : '';
+            else{
+                let estado=_options.buscaItemConValue(_options["estados"],_object.estadoDestino.id);
+                this.estadoDestino = estado? estado["label"] : '';
+            }
+        }
+        else if (_object.estadoDestinoOtro )
+            this.estadoOrigen=_object.estadoDestinoOtro;
+        if (_object.municipioDestino && _object.municipioDestino.id!="")
+            if (_municipiosDestino.length>0)//todavia no se incilizan los estados
+            {
+                let municipio=_options.buscaItemConValue(_municipiosDestino,_object.municipioDestino.id);
+                this.municipioDestino=
+                    municipio ? municipio["label"]: '';
+            }else{//hay que consultar los municipios del estado
+                _options.getMunicipiosByEstadoService(_object.estadoDestino.id).then(respuesta=>{
+                    let municipios=_options.constructOptions(respuesta);
+                    let municipio=_options.buscaItemConValue(municipios,_object.municipioDestino.id);
+                    this.municipioDestino=municipio?municipio.label:"";
+                })
+            }
+        else if (_object.municipioDestinoOtro)
+            this.municipioDestino=_object.municipioDestinoOtro;
 
-        if (_object.estadoDestino)
-        this.estadoDestino   =
-            typeof _estadosDestino[_object.estadoDestino.id] !== 'undefined' ? _estadosDestino[_object.estadoDestino.id].label : '';
-
-        if (_object.municipioDestino)
-        this.municipioDestino=
-            typeof _municipiosDestino[_object.municipioDestino.id] !== 'undefined' ? _municipiosDestino[_object.municipioDestino.id].label : '';
 
         this.tipo            =
             _optionsRelacion.matrizTipoTransportacion.finded[0].tipo;
