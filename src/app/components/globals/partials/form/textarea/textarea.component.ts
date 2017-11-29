@@ -17,7 +17,7 @@ export class TextareaComponent implements OnInit{
 	@Input() max :number = 2000;
 	@ViewChild('textAreaComponent') textAreaComponent;
 
-	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
+	@Output() valueChange:EventEmitter<string> = new EventEmitter<string>();
 
 	constructor(private renderer : Renderer){
 
