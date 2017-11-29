@@ -54,7 +54,13 @@ export class Select2Component{
 	public filter(val: any) {
 		// console.log('Select@filter()', val);
 		// console.log('options', this.options);
-  		this.filteredOptions =  this.options.filter(option => option.label.toLowerCase().indexOf(val.target.value.toLowerCase()) === 0 );
+		let valNormal = val.target.value.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+  		this.filteredOptions =  this.options.filter(
+  			option => {
+  				let optNormal = option.label.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+  				return (optNormal.indexOf(valNormal) === 0 || optNormal.includes(valNormal));
+			} 
+		);
    	}
 
    	public setFilterList(){
