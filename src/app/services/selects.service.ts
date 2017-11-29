@@ -394,8 +394,17 @@ export class SelectsService {
         return options;
     }
 
+    buscaItemConValue(lista,val){
+        let list=lista as any[];
+        for (var i = 0; i < list.length; ++i) {
+            if (list[i]["value"]==val)
+                return list[i];
+        }
+        return null;
+    }
+
     public find(_attr:string, _val:string){
-        return this[_attr][_val];
+        return this.buscaItemConValue(this[_attr],parseInt(_val));
     }
 
     
