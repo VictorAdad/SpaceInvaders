@@ -481,19 +481,23 @@ public setDataF1011(_data,_id_solicitud){
      }
   });
   let nombreImputado=imputado.persona.nombre+' '+imputado.persona.paterno+' '+imputado.persona.materno;
-  let date= new Date(policia.created);
+  let date = new Date();
+
+  if(policia)
+       date = new Date(policia.created);
+
   this.data['xNUC']                    = _data.nuc? _data.nuc:'';
   this.data['xNIC']                    = _data.nic? _data.nic:'';
   this.data['xHechoDelictivo']         = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
   this.data['xVictima']                = nombreVictima;
   this.data['xImputado']               = nombreImputado;
-  this.data['xOficio']                 = policia.hechosDenunciados ? _data.hechosDenunciados : '';
+  this.data['xOficio']                 = typeof policia.hechosDenunciados != 'undefined' ? _data.hechosDenunciados : '';
   this.data['xEstado']                 =lugar.estado?lugar.estado:lugar.estadoOtro?lugar.estadoOtro:'';
   this.data['xPoblacion']              = lugar.municipio? lugar.municipio:lugar.municipioOtro?lugar.municipioOtro:'';
   this.data['xDia']                    = date? date.getDay()+'' : '';
   this.data['xMes']                    = date? date.getMonth()+'' : '';
   this.data['xAnio']                   = date? date.getFullYear()+'' : '';
-  this.data['xActuacionesSolicitadas'] =  policia.actuacionesSolicitadas ? policia.actuacionesSolicitadas: '';
+  this.data['xActuacionesSolicitadas'] =  typeof policia.actuacionesSolicitadas != 'undefined' ? policia.actuacionesSolicitadas: '';
   this.data['xAdscripcionEmisor']      = '';
   console.log('formato',this.data)
 

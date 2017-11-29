@@ -8,22 +8,25 @@ import { Observable } from 'rxjs';
 @Directive({ selector: '[_saving]' })
 export class SavingDirective{
 	public el         : ElementRef;
-  public saving     : boolean = false;
+	public saving     : boolean = false;
 	public savingText : string  = '';
 	public settings:ConfirmSettings={
-	    overlayClickToClose: false, // Default: true
-	    showCloseButton: true, // Default: true
-	    confirmText: "Continuar", // Default: 'Yes'
-	    declineText: "Cancelar",
-    };
+		overlayClickToClose: false, // Default: true
+		showCloseButton: true, // Default: true
+		confirmText: "Continuar", // Default: 'Yes'
+		declineText: "Cancelar",
+	};
 
 	@Input('saveFn')
-  saveFn: any;
-  @Input('isEdit')
-  public isEdit  : boolean = false;
+	saveFn: any;
+	@Input('isEdit')
+	public isEdit  : boolean = false;
 
 
-    constructor(_el: ElementRef, public globalService : GlobalService, private _confirmation: ConfirmationService) {
+    constructor(
+    	_el: ElementRef,
+    	public globalService : GlobalService,
+    	private _confirmation: ConfirmationService) {
     	this.el =  _el;
     }
 
@@ -33,18 +36,26 @@ export class SavingDirective{
          .subscribe(
          	(ans: ResolveEmit) => {
          		if(ans.resolved){
-	 				this.prepareSave(true);
-					this.saveFn().then(
-						response => {
-							this.prepareSave(false);
-							this.globalService.openSnackBar(response);
-						},
-						error => {
-							console.error('Ocurrio un error al guardar D:', error)
-							this.globalService.openSnackBar('X Ocurrió un error al guardar');
-							this.prepareSave(false);
-						}
-					);
+					console.log('-> SAVING', this.globalService._SAVING);
+         			if(!this.globalService._SAVING){
+         				this.globalService._SAVING = true;
+         				// this.el.nativeElement.click();
+         				console.log('Guardando');
+		 				this.prepareSave(true);
+						this.saveFn().then(
+							response => {
+								this.globalService._SAVING = false;
+								this.prepareSave(false);
+								this.globalService.openSnackBar(response);
+							},
+							error => {
+								console.error('Ocurrio un error al guardar D:', error);
+								this.globalService._SAVING = false;
+								this.globalService.openSnackBar('X Ocurrió un error al guardar');
+								this.prepareSave(false);
+							}
+						);
+					}
 
 				}
          	}
