@@ -165,7 +165,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
 
     public fillForm(_data) {
         this.form.patchValue(_data);
-        console.log(_data);
+        this.form.controls.presentoLlamada.patchValue(parseInt(_data.presentoLlamada));
     }
 
     public generateNUC(): string{
