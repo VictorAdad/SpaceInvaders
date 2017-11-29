@@ -138,7 +138,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
                         else {
                             this.router.navigate(['/acuerdos-inicio'+this.id+'/view']);
                         }
-                        resolve('Acuerdo de inicip creado con éxito');
+                        resolve('Acuerdo de inicio creado con éxito');
                     },
                     (error) => {
                         console.error('Error', error);
