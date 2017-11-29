@@ -1091,13 +1091,14 @@ export class IdentificacionComponent{
     tipo indica el tipo de campo(otroNombre o alias)
     */
     setForm(_event,_i,_j,_id,_tipo){
+        console.log('--------------->',_event,_i,_j,_id,_tipo );
         if(_tipo === 'otroNombre'){
-            this.otrosNombres.nombres[_j]=(<HTMLInputElement>_event.target).value;
+            this.otrosNombres.nombres[_j]=_event;
         }else{
-            this.alias.nombres[_j]=(<HTMLInputElement>_event.target).value;
+            this.alias.nombres[_j]=_event;
         }
         let otrosNombres = this.globals.form.get('aliasNombrePersona') as FormArray;
-        ((otrosNombres.controls[_i])["controls"])["nombre"].patchValue( (<HTMLInputElement>_event.target).value );
+        ((otrosNombres.controls[_i])["controls"])["nombre"].patchValue(_event);
         ((otrosNombres.controls[_i])["controls"])["id"].patchValue(_id);
     }
 
