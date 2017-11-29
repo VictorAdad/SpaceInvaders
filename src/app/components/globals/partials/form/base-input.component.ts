@@ -30,7 +30,7 @@ export class BaseInputComponent implements OnInit{
 
 	@Input() max: number = 100;
 
-	@Input() readOnly: boolean = false;
+	@Input() readonly: boolean = false;
 
 	@Input() functionChange: Function;
 

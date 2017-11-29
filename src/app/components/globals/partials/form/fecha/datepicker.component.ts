@@ -98,8 +98,11 @@ export class DatePicker implements OnInit, ControlValueAccessor {
 
         this.control = this.group.get(this.name)  as FormControl;
         this.control.valueChanges.subscribe(val => {
-            this.date = new Date(val);
-            this.onDateSelect.emit(this.date);
+            console.log('Date valueChanges()', val);
+            if(val != null && val != 'Invalid Date'){
+                this.date = new Date(val);
+                this.onDateSelect.emit(this.date);
+            }
         });
     }
 

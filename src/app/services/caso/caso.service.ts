@@ -44,14 +44,14 @@ export class CasoService{
 	}
 
 	public setOnlineCaso(response){
-		console.log('Caso@setOnlineCaso')
+		// console.log('Caso@setOnlineCaso')
 		this.setCaso(response);
 		this.db.clear("casos").then( t =>{
             this.db.update("casos",this.caso).then( t =>{
-            	console.log('Indexed Caso actualizado');
+            	// console.log('Indexed Caso actualizado');
             });
         });
-        console.log(this.caso);
+        // console.log(this.caso);
 	}
 
 	public setCaso(caso){
@@ -130,9 +130,12 @@ export class Caso{
 			domicilio += ' '+localizacion.calle;
 			domicilio += ' '+localizacion.noInterior;
 			domicilio += ' '+localizacion.noExterior;
-			domicilio += ' '+localizacion.colonia.nombre;
-			domicilio += ' '+localizacion.municipio.nombre;
-			domicilio += ' '+localizacion.estado.nombre;
+			if(localizacion.colonia != null)
+				domicilio += ' '+localizacion.colonia.nombre;
+			if(localizacion.municipio  != null)
+				domicilio += ' '+localizacion.municipio.nombre;
+			if(localizacion.estado)
+				domicilio += ' '+localizacion.estado.nombre;
 
 			domicilios.push(domicilio);
 		}

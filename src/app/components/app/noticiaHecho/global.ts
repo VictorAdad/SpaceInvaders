@@ -11,7 +11,7 @@ export class NoticiaHechoGlobal{
             const control = form.get(field);         
             if (control instanceof FormControl) {
                 if(control.status === 'INVALID')
-                    console.log('Validate Control', control);         
+                    // console.log('Validate Control', control);         
                 control.markAsTouched({ onlySelf: true });
             } else if (control instanceof FormGroup) {
                 this.validateForm(control);           

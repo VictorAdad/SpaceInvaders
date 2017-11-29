@@ -52,15 +52,15 @@ export class DetalleCasoComponent implements OnInit{
 				this.caso = response as Caso;
 				this.hasPredenuncia=this.caso.hasPredenuncia;
 				this.hasRelacionVictimaImputado=this.caso.hasRelacionVictimaImputado;
-                console.log(this.caso)
+                // console.log(this.caso)
             });
 			this.http.get('/v1/base/personas-casos/casos/'+this.id+'/page').subscribe((response) => {
                 this.involucrados = response.data as Persona[];    
-                console.log(this.involucrados)
+                // console.log(this.involucrados)
             });
 			this.http.get('/v1/base/delitos-casos/casos/'+this.id+'/page').subscribe((response) => {
                 this.delitos = response.data as DelitoCaso[];    
-                console.log(this.delitos)
+                // console.log(this.delitos)
             });  
 			/*this.http.get('/v1/base/predenuncias/casos/'+this.id).subscribe((response) => {
                 this.predenuncia = response.data as Predenuncia;    
@@ -70,13 +70,13 @@ export class DetalleCasoComponent implements OnInit{
         }else{
         	this.db.get("casos", this.id).then(
         		t => {
-        			console.log('T', t);
+        			// console.log('T', t);
         			let relaciones = t['tipoRelacionPersonas'].filter(object => object['tipo'] === 'Imputado');
             		this.caso = t as Caso;
 					this.hasPredenuncia = (typeof t['predenuncias'] !== 'undefined');
 					this.hasRelacionVictimaImputado = (relaciones.length > 0);
 
-					console.log('Predenuncia', this.hasPredenuncia);
+					// console.log('Predenuncia', this.hasPredenuncia);
                 }
             );
         }    

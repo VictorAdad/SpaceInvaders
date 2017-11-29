@@ -6,6 +6,7 @@ import * as JSZip from 'jszip';
 import * as JSZipUtils from 'jszip-utils';
 import * as docxtemplater from 'docxtemplater';
 import { forEach } from '@angular/router/src/utils/collection';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class FormatosService {
@@ -16,9 +17,9 @@ export class FormatosService {
 	}
 
     public getFormatos(){
-        console.log('Formatos@getFormatos()');
+        // console.log('Formatos@getFormatos()');
         for(let attr in this.formatos){
-            console.log(attr);
+            // console.log(attr);
             if(
                 String(attr) !== 'constructor',
                 String(attr) !== 'data',
@@ -35,7 +36,7 @@ export class FormatosService {
                 }
             }
         }
-        console.log(this.formatos);
+        // console.log(this.formatos);
     }
 
     public replaceWord(_name:string, _formato: string){
@@ -77,46 +78,46 @@ export class FormatosService {
 export class FormatosLocal {
 
     public F1_003 = {
-        'path': '../../../../../assets/formatos/F1-003 LECTURA DE DERECHOS DE LA VÍCTIMA.docx',
+        'path': environment.app.host+'/assets/formatos/F1-003 LECTURA DE DERECHOS DE LA VÍCTIMA.docx',
         'nombre': 'F1-003 LECTURA DE DERECHOS DE LA VÍCTIMA.docx',
         'file': null,
         'data': null
     };
     public F1_004= {
-        'path': '../../../../../assets/formatos/F1-004 REGISTRO PRESENCIAL.docx',
+        'path': environment.app.host+'/assets/formatos/F1-004 REGISTRO PRESENCIAL.docx',
         'nombre': 'F1-004 REGISTRO PRESENCIAL.docx',
         'file': null,
         'data': null
     };
     public F1_005 = {
-        'path': '../../../../../assets/formatos/F1-005 REGISTRO DE RECEPCIÓN DE LLAMADA.docx',
+        'path': environment.app.host+'/assets/formatos/F1-005 REGISTRO DE RECEPCIÓN DE LLAMADA.docx',
         'nombre': 'F1-005 REGISTRO DE RECEPCIÓN DE LLAMADA.docx',
         'file': null,
         'data': null
     };
   // Formato de entrevista
   public F1_008 = {
-    'path': '../../../../../assets/formatos/F1-008 ENTREVISTA.docx',
+    'path': environment.app.host+'/assets/formatos/F1-008 ENTREVISTA.docx',
     'nombre': 'F1-008 ENTREVISTA.docx',
     'file': null,
     'data': null
    };
     // Formato de solicitud pericial
    public F1_009 = {
-    'path': '../../../../../assets/formatos/F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES.docx',
+    'path': environment.app.host+'/assets/formatos/F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES.docx',
     'nombre': 'F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES.docx',
     'file': null,
     'data': null
    };
    public F1_010 = {
-    'path': '../../../../../assets/formatos/F1-010 SOLICITUD EXAMEN PSICOFÍSICO.docx',
+    'path': environment.app.host+'/assets/formatos/F1-010 SOLICITUD EXAMEN PSICOFÍSICO.docx',
     'nombre': 'F1-010 SOLICITUD EXAMEN PSICOFÍSICO.docx',
     'file': null,
     'data': null
    };
     // Formato de solicitud policia ministerial
    public F1_011 = {
-    'path': '../../../../../assets/formatos/F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
+    'path': environment.app.host+'/assets/formatos/F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
     'nombre': 'F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
     'file': null,
     'data': null
