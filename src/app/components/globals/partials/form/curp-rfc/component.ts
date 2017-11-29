@@ -29,14 +29,15 @@ export class CurpRfcComponent extends BaseInputComponent implements OnInit{
 
 
 	ngOnInit(){
-		console.log(this);
+		// console.log(this);
 		this.control = this.group.get(this.name) as FormControl;
 		this.control.valueChanges.subscribe(this.validate.bind(this));
 	}
 
 
 	public validate(_value){
-		console.log('CURP RFC validate() ', _value.length);
+		// console.log('CURP RFC validate() ', _value.length);
+		_value = _value.toUpperCase();
 		if (_value != null){
 			if(_value.length > 0)
 				if (this.curp == true)
@@ -67,6 +68,7 @@ export class CurpRfcComponent extends BaseInputComponent implements OnInit{
 
 			if(_value.toString().length > this.max)
 				this.control.setValue(_value.toString().slice(0,this.max));
+
 		}
 	}
 
