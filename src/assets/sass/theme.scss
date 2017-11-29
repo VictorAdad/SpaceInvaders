@@ -59,6 +59,11 @@ strong,
     	overflow: initial;
     }
 }
+.expansion-identidad{
+    .mat-expansion-panel-content{
+        overflow: -webkit-paged-x;
+    }
+}
 
 @import "bootstrap/functions";
 @import "bootstrap/variables";

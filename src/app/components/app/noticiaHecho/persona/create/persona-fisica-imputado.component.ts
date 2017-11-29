@@ -18,7 +18,6 @@ import { CasoService } from '@services/caso/caso.service';
 
 @Component({
     templateUrl : './persona-fisica-imputado.component.html',
-    styles: ['']
 })
 export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
