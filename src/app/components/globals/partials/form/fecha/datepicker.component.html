@@ -88,11 +88,12 @@
             <div class="fa fa-angle-left prev" (click)="generateYearList('prev')">
                 <mat-icon>navigate_before</mat-icon>
             </div>
-            <div class="fa fa-angle-right next" (click)="generateYearList('next')">
+            <div class="fa fa-angle-right next" (click)="generateYearList('next')" *ngIf="validateDays == ''">
                 <mat-icon>navigate_next</mat-icon>
             </div>
             <div class="years-list-view" (click)="setYear($event)">
-                <span *ngFor="let year of yearsList" [ngClass]="{'current-year': year == date.getFullYear()}" id="{{year}}">{{year}}</span>
+                <!-- <span *ngFor="let year of yearsList" [ngClass]="{'current-year': year == date.getFullYear()}" id="{{year}}">{{year}}</span> -->
+                <span *ngFor="let year of yearsList" [ngClass]="{'disabled current-year': year > date.getFullYear()}" id="{{year}}">{{year}}</span>
             </div>
         </div>
        <div class="time-view" [hidden]="!timeView">
@@ -121,7 +122,12 @@
         </div>
         <table class="calendar-days" (click)="setDay($event);" [hidden]="monthsView || yearView">
             <tr *ngFor="let week of monthDays">
-                <td [ngClass]="{'calendar-day': day != null,'today': day == today.getDate() && date.getMonth() == today.getMonth() && date.getFullYear() == today.getFullYear(),'selected-day': day == date.getDate()}"
+                <td
+                [ngClass]="{
+                    'calendar-day': day != null,
+                    'today': day == today.getDate() && date.getMonth() == today.getMonth() && date.getFullYear() == today.getFullYear(),
+                    'selected-day': day == date.getDate(),
+                    'moreThanToday' : day > today.getDate() && date.getMonth() > today.getMonth() > date.getFullYear() > today.getFullYear()}"
                     *ngFor="let day of week">
                     <span>{{day}}</span>
                 </td>

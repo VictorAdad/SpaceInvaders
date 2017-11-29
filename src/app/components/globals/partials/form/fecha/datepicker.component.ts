@@ -31,8 +31,13 @@ export class DatePicker implements OnInit, ControlValueAccessor {
     @Input() hintEnd: string="";
     @Input() sufix    : string;
     @Input() prefixIcon : string;
-    @Input() sufixIcon  : string;
+    @Input() sufixIcon : string;
+    @Input() validateDays : string ="";
     @Output() onDateSelect:EventEmitter<Date> = new EventEmitter<Date>();
+
+    selectedYear: any;
+    selectedMonth: any;
+    selectedDay:any;
     // @Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
 
     @ViewChild('datePicker') datePicker;
@@ -247,29 +252,83 @@ export class DatePicker implements OnInit, ControlValueAccessor {
         this.timeView = !this.timeView;
     }
     setDay(evt:any){
-        // console.log("INNERHTML", evt.target.innerHTML);
+        var ydate = this.today.getMonth();
+        var xdate = this.today.getFullYear();
+        var xday = this.today.getDate();
+        this.selectedMonth = this.today.getMonth();
+        this.selectedDay = parseInt(evt.target.innerHTML);
+        if (!this.selectedYear) {
+            this.selectedYear = this.today.getFullYear();
+        }
         if(evt.target.innerHTML && !isNaN(evt.target.innerHTML) ){
-          var selectedDay = parseInt(evt.target.innerHTML);
-          this.date = new Date(this.date.setDate(selectedDay));  
-          if(this.settings.closeOnSelect){
-            this.popover = false;
-            this.onDateSelect.emit(this.date);
-          }
+            if (this.validateDays == 'post') {
+                if (this.selectedYear == xdate) {
+                    if (this.selectedMonth <= ydate) {
+                        if (this.selectedDay <= xday ) {
+                            console.log('hollaa XD', xday);
+                            this.date = new Date(this.date.setDate(this.selectedDay));  
+                            if(this.settings.closeOnSelect){
+                                this.popover = false;
+                                this.onDateSelect.emit(this.date);
+                            }    
+                        }            
+                    }                    
+                }else{
+                    this.date = new Date(this.date.setDate(this.selectedDay));  
+                        if(this.settings.closeOnSelect){
+                            this.popover = false;
+                            this.onDateSelect.emit(this.date);
+                        }
+                }        
+            }else{
+                this.date = new Date(this.date.setDate(this.selectedDay));  
+                if(this.settings.closeOnSelect){
+                    this.popover = false;
+                    this.onDateSelect.emit(this.date);
+                }                
+          }  
         }
         this.group.controls[this.name].setValue(this.date);
     }
     setYear(evt:any){
-          var selectedYear = parseInt(evt.target.getAttribute('id'));
-          this.date = new Date(this.date.setFullYear(selectedYear)); 
-           this.yearView = !this.yearView;
-           this.generateDays();
+        this.selectedYear = parseInt(evt.target.getAttribute('id'));
+        var ydate = this.today.getFullYear();
+
+        if (this.validateDays == 'post') {
+            if (this.selectedYear <= ydate) {
+                this.date = new Date(this.date.setFullYear(this.selectedYear)); 
+                this.yearView = !this.yearView;
+                this.generateDays();
+            }
+        }else{
+            this.date = new Date(this.date.setFullYear(this.selectedYear)); 
+            this.yearView = !this.yearView;
+            this.generateDays();
+        }
     }
     setMonth(evt:any){
+        this.selectedMonth = this.settings.cal_months_labels_short.indexOf(evt.target.getAttribute('id'));
+        var ydate = this.today.getMonth();
+        var xdate = this.today.getFullYear();
+
         if(evt.target.getAttribute('id')){
-         var selectedMonth = this.settings.cal_months_labels_short.indexOf(evt.target.getAttribute('id'));
-           this.date = new Date(this.date.setMonth(selectedMonth));
-           this.monthsView = !this.monthsView;
-           this.generateDays();
+            if (this.validateDays == 'post') {
+                if (this.selectedYear < xdate) {
+                        this.date = new Date(this.date.setMonth(this.selectedMonth));
+                        this.monthsView = !this.monthsView;
+                        this.generateDays();    
+                }else{
+                    if (this.selectedMonth <= ydate) {
+                        this.date = new Date(this.date.setMonth(this.selectedMonth));
+                        this.monthsView = !this.monthsView;
+                        this.generateDays();
+                    }
+                }
+            }else{                
+                this.date = new Date(this.date.setMonth(this.selectedMonth));
+                this.monthsView = !this.monthsView;
+                this.generateDays();
+            }        
         }
     }
     prevMonth(e:any){

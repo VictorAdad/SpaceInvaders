@@ -107,10 +107,10 @@
                     <number label="C.P." name="cp" [group]="form" [maxValue]="99999" [max]="5" [hintEnd]="'5 dígitos máximo'"></number>
                 </div>
                 <div class="col-md-3">
-                    <date-picker label="Fecha" name="fecha" [group]="form" hintStart="Campo obligatorio"></date-picker>
+                    <date-picker label="Fecha" name="fecha" [group]="form" [validateDays]="'post'" hintStart="Campo obligatorio"></date-picker>
                 </div>
                 <div class="col-md-3">
-                    <time label="Hora" name="hora" [group]="form"></time>
+                    <time label="Hora" name="hora" [group]="form" hintStart="Campo obligatorio"></time>
                 </div>
                 <div class="col-md-3">
                     <select2
