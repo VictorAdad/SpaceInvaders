@@ -1,6 +1,6 @@
 <form [formGroup]="form">
 	<h4>Acuerdo de Radicación</h4>
-	<text-area label="Observaciones/Incidencias" name="observaciones" [(value)]="model.observaciones" [group]="form"></text-area>  
+	<text-area label="Observaciones/Incidencias" name="observaciones" [group]="form"></text-area>  
 
      <div class="row justify-content-end" >
          <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">    

@@ -5,7 +5,7 @@
     <select2 [options]="options.presentoLlamada" placeholder="Presentó o recibió llamada" [group]="form" name="presentoLlamada" ></select2>
     <text-area label="Manifestó" name="manifesto"  [group]="form"></text-area>
     <text-area label="Síntesis de los hechos" name="sintesisHechos" [group]="form"></text-area>
-    <text-area label="Observaciones/incidencias" name="observaciones" [(value)]="model.observaciones" [group]="form"></text-area>
+    <text-area label="Observaciones/incidencias" name="observaciones" [group]="form"></text-area>
     <div class="row space"></div>
     <div class="row justify-content-end">
         <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
