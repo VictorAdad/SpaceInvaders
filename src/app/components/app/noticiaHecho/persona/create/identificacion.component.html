@@ -40,7 +40,7 @@
                         <button class="float-left" mat-raised-button (click)="addOtroNombre('alias')" color="accent" >Agregar alias</button>
                     </div>
                     <div class="col-md-12" *ngFor="let nombre of alias.nombres;let i=index; trackBy:trackByIndex " [formGroupName]="alias.indices[i]">
-                        <text label="Alias" value="{{nombre}}" (valueChange)="setForm($event,alias.indices[i],i,alias.ids[i],'alias')"></text>
+                        <text label="Alias" value="{{nombre}}" [max]="12" (valueChange)="setForm($event,alias.indices[i],i,alias.ids[i],'alias')"></text>
                         <input type="hidden" value="Alias" formControlName="tipo">
                         <input type="hidden" value="{{alias.ids[i]}}" formControlName="id">
                     </div>
@@ -52,7 +52,7 @@
                         <button class="float-left" mat-raised-button (click)="addOtroNombre('otroNombre')" color="accent" >Agregar otro nombre</button>
                     </div>
                     <div class="col-md-12" *ngFor="let nombre of otrosNombres.nombres;let i=index; trackBy:trackByIndex " [formGroupName]="otrosNombres.indices[i]">
-                        <text label="Otro nombre" value="{{nombre}}" (valueChange)="setForm($event,otrosNombres.indices[i],i,otrosNombres.ids[i],'otroNombre')"></text>
+                        <text label="Otro nombre" value="{{nombre}}" [max]="12" (valueChange)="setForm($event,otrosNombres.indices[i],i,otrosNombres.ids[i],'otroNombre')"></text>
                         <input type="hidden" value="Otro nombre" formControlName="tipo">
                         <input type="hidden" value="{{otrosNombres.ids[i]}}" formControlName="id">
                     </div>
