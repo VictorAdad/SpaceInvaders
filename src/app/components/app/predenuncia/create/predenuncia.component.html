@@ -4,7 +4,7 @@
 	<div id="f1" *ngIf="authen.user.hasRoles(authen.roles.callCenter)">
 	    <div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Calidad del usuario" name="calidadPersona" [max]="200" [group]="form"></text>
+		    	<text label="Calidad del usuario" name="calidadPersona" [max]="140" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text label="Número telefónico del que se está llamando" name="noTelefonico" [max]="20" [group]="form"></text>
@@ -17,7 +17,7 @@
 			    </select2>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Lugar de donde se llama" name="lugarLlamada" [max]="200" [group]="form"></text>
+		    	<text label="Lugar de donde se llama" name="lugarLlamada" [max]="140" [group]="form"></text>
 		    </div>
 	    </div>
 	    <div class="row">
@@ -34,10 +34,10 @@
 		    	<time label="Hora de conclusión de la llamada" name="horaConclusionLlamada" [(value)]="model.horaConlcusionLlamada" [group]="form"></time>
 		    </div>
 		    <div class="col-md-4 col-sm-12 col-lg-4">
-		    	<text label="Duración de la llamada" name="duracionLlamada" [max]="20" [group]="form"></text>
+		    	<text label="Duración de la llamada" name="duracionLlamada" [max]="15" [group]="form"></text>
 		    </div>
 		    <div class="col-md-4 col-sm-12 col-lg-4">
-		    	<text label="Nombre del servidor público que registra" name="quienRegistro" [max]="150" [group]="form"></text>
+		    	<text label="Nombre del servidor público que registra" name="quienRegistro" [max]="100" [group]="form"></text>
 		    </div>
 		</div>
 		<div class="row">
@@ -62,10 +62,10 @@
 			    </select2>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="En caso negativo, especificar idioma o lengua" name="lenguaIdioma" [max]="50" [group]="form"></text>
+		    	<text label="En caso negativo, especificar idioma o lengua" name="lenguaIdioma" [max]="35" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Nombre del intérprete" name="nombreInterprete" [max]="150" [group]="form"></text>
+		    	<text label="Nombre del intérprete" name="nombreInterprete" [max]="100" [group]="form"></text>
 		    </div>
 	    </div>
 	    <div class="row">
@@ -85,32 +85,10 @@
 			    </select2>
 			</div>
 		</div>
-
-		<!-- <div class="row space"> <h2>Oficio de asignación de asesor jurídico</h2></div>
-		<div class="row">
-		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Nombre de la autoridad a quien se dirige el oficio" name="autoridadOficioAsignacion" [(value)]="model.autoridadOficioAsignacion" [group]="form"></text>
-		    </div>
-		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="¿Denuncia o querella?" name="denunciaQuerella" [(value)]="model.denunciaQuerella" [group]="form"></text>
-		    </div>
-		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Ubicación de la unidad inmediata" name="ubicacionUnidadInmediata" [(value)]="model.ubicacionUnidadInmediata" [group]="form"></text>
-		    </div>
-		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="¿Víctima, ofendido o querellante?" name="victimaOfendidoQuerellante" [(value)]="model.victimaOfendidoQuerellante" [group]="form"></text>
-		    </div>
-		</div>
-		<div class="row">
-		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Cargo o adscripción de la autoridad a quien se dirige el oficio" name="cargoAutoridadOficioAsignacion" [(value)]="model.cargoAutoridadOficioAsignacion" [group]="form"></text>
-		    </div>
-		</div> -->
-
 		<div class="row space"> <h2>Registro presencial</h2></div>
 		<div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Calidad de la persona" name="calidadPersona" [max]="200" [group]="form"></text>
+		    	<text label="Calidad de la persona" name="calidadPersona" [max]="150" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<select2 [options]="optionsServ.tipoPersona"
@@ -141,7 +119,7 @@
 			    </select2>
 		    </div>
 		    <div class="col-md-4 col-sm-12 col-lg-4">
-		    	<text label="En su caso, ¿institución a la que se canaliza?" name="institucion" [max]="200" [group]="form"></text>
+		    	<text label="En su caso, ¿institución a la que se canaliza?" name="institucion" [max]="150" [group]="form"></text>
 		    </div>
 		    <div class="col-md-4 col-sm-12 col-lg-4">
             	<date-picker label="Fecha en la que se canaliza" name="fechaCanalizacion" [group]="form"></date-picker>
@@ -157,36 +135,15 @@
 		    	<time label="Hora en la que se canaliza" name="horaCanalizacion" [(value)]="model.horaCanalizacion" [group]="form"></time>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Si lo sabe, nombre de quien causó el hecho" name="nombreCausante" [max]="150" [group]="form"></text>
+		    	<text label="Si lo sabe, nombre de quien causó el hecho" name="nombreCausante" [max]="100" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Si lo sabe, domicilio de quien causó el hecho" name="domicilioCausante" [max]="200" [group]="form"></text>
+		    	<text label="Si lo sabe, domicilio de quien causó el hecho" name="domicilioCausante" [max]="150" [group]="form"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Nombre de persona que llevó a cabo el registro" name="quienRegistro" [max]="150" [group]="form"></text>
+		    	<text label="Nombre de persona que llevó a cabo el registro" name="quienRegistro" [max]="100" [group]="form"></text>
 		    </div>
 		</div>
-
-	    <!-- <div class="row space"> <h2>Oficio para ayuda y atención a víctima</h2></div>
-		<div class="row">
-		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Oficio" name="oficio" [(value)]="model.oficio" [group]="form"></text>
-		    </div>
-		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Nombre de la autoridad a quien se dirige el oficio" name="nombreAutoridadDirigeOficio" [(value)]="model.nombreAutoridadDirigeOficio" [group]="form"></text>
-		    </div>
-		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Necesidades se ayudarán a cubrir" name="necesidadesCubrir" [(value)]="model.necesidadesCubrir" [group]="form"></text>
-		    </div>
-		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Ubicación de la unidad inmediata" name="ubicacionUnidadInmediataVictima" [(value)]="model.ubicacionUnidadInmediataVictima" [group]="form"></text>
-		    </div>
-		</div>
-		<div class="row">
-		    <div class="col-md-4 col-sm-12 col-lg-4">
-		    	<text label="Cargo o adscripción de la autoridad a quien se dirige el oficio" name="cargoAutoridadVictima" [(value)]="model.cargoAutoridadVictima" [group]="form"></text>
-		    </div>
-		</div> -->
 		<div class="row">
 		    <div class="col-md-12 col-sm-12 col-lg-12">
 		    	<text-area label="Observaciones/Incidencias" name="observaciones" [group]="form"></text-area>
