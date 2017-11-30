@@ -129,7 +129,7 @@ export class Form {
 
     public getTrataPersonasForm(){
         return new FormGroup({
-            'id': new FormControl('', []),
+            //'id': new FormControl('', []),
             'paisOrigen': new FormGroup({
                 'id': new FormControl('', []),
              }),
@@ -164,7 +164,7 @@ export class Form {
 
     public efectoViolenciaForm(_val: any,id){
         return new FormGroup({
-            'id': new FormControl(id),
+            //'id': new FormControl(id),
             'efectoDetalle': new FormGroup({
                 'id': new FormControl(_val, [Validators.required,]),
              }),
@@ -182,7 +182,7 @@ export class Form {
 
     public trataForm(){
         return new FormGroup({
-            'id': new FormControl('', []),
+            //'id': new FormControl('', []),
             'paisOrigen': new FormControl(),
             'estadoOrigen': new FormControl(),
             'municipioOrigen': new FormControl(),

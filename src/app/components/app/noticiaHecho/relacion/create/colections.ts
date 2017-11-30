@@ -47,7 +47,6 @@ export class TrataPersonas {
         _optionsRelacion
         ){
 
-        console.log('MatrizTipoTransportacion', _optionsRelacion.matrizTipoTransportacion);
         this.paisOrigen      =
             _options.find('paises', _object.paisOrigen.id).label;
         if (_object.estadoOrigenOtro && _object.estadoOrigenOtro!="")
@@ -65,10 +64,10 @@ export class TrataPersonas {
         if (_object.municipioOrigenOtro && _object.municipioOrigenOtro!="")
             this.municipioOrigen = _object.municipioOrigenOtro;
         else if (_object.municipioOrige && _object.municipioOrigen.id!="")
-            if (_municipiosOrigen.length>0)
-            this.municipioOrigen = 
-                typeof _municipiosOrigen[_object.municipioOrigen.id] !== 'undefined' ? _options.buscaItemConValue(_municipiosOrigen,_object.municipioOrigen.id).label : '';
-            else{
+            if (_municipiosOrigen.length>0){
+                let municipio=_options.buscaItemConValue(_municipiosDestino,_object.municipioDestino.id);
+                this.municipioOrigen = municipio ? municipio.label : '';
+            }else{
                 _options.getMunicipiosByEstadoService(_object.estadoDestino.id).then(respuesta=>{
                     let municipios=_options.constructOptions(respuesta);
                     let municipio=_options.buscaItemConValue(municipios,_object.municipioOrigen.id);
