@@ -290,7 +290,9 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         if(option == _config.optionValue.armaFuego || option==_config.optionValue.armaBlanca){
            this.isArmaFuego  = (option == _config.optionValue.armaFuego) ;
            this.isArmaBlanca = (option==_config.optionValue.armaBlanca);
-           this.form.controls.tipo.enable();
+           timer.subscribe(t => {
+               this.form.controls.tipo.enable();
+           });
         }
         else{
            this.isArmaFuego  = false;
