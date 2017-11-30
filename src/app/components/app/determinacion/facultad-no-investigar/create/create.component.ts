@@ -81,7 +81,7 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
             'superiorJerarquico': new FormControl(''),
             'nombreDenunciante': new FormControl(''),
             'originarioDenunciante': new FormControl(''),
-            'edadDenunciante': new FormControl('',[Validators.min(0),Validators.max(999)]),
+            'edadDenunciante': new FormControl(''),
             'domicilioDenunciante': new FormControl(''),
         });
 
