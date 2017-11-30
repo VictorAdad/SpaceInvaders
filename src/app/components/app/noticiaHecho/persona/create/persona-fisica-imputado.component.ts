@@ -1197,7 +1197,7 @@ export class LosForm{
             'telMovil': new FormControl(),
             'fax': new FormControl(),
             'otroMedioContacto': new FormControl(),
-            'correo': new FormControl("",[]),
+            'correo': new FormControl(),
             'tipoRecidencia': new FormControl(),
             'estadoOtro': new FormControl(),
             'municipioOtro': new FormControl(),

@@ -14,7 +14,7 @@ export class TextareaComponent implements OnInit{
 	@Input() functionChange: Function;
 	@Input() hintStart: string="";
 	@Input() hintEnd: string="";
-	@Input() max :number = 2000;
+	@Input() max :number = 1500;
 	@ViewChild('textAreaComponent') textAreaComponent;
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<string>();

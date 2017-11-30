@@ -1,10 +1,10 @@
 <form [formGroup]="form">
     <div class="row">
         <div class="col-md-4 col-sm-12 col-lg-4">
-          <text label="Nombre de denunciante" name="nombreDenunciante" [max]="150" [group]="form"></text>
+          <text label="Nombre de denunciante" name="nombreDenunciante" [group]="form"></text>
         </div>
         <div class="col-md-4 col-sm-12 col-lg-4">
-          <text label="Originario de " name="originarioDenunciante" [max]="200" [group]="form"></text>
+          <text label="Originario de " name="originarioDenunciante" [max]="150" [group]="form"></text>
         </div>
         <div class="col-md-4 col-sm-12 col-lg-4">
             <number label="Edad" name="edadDenunciante" [maxValue]="999" [max]="3" [group]="form"></number>
@@ -12,35 +12,35 @@
       </div>
    <div class="row">
       <div class="col-md-4 col-sm-12 col-lg-4">
-          <text label="Domicilio" name="domicilioDenunciante" [max]="200" [group]="form"></text>
+          <text label="Domicilio" name="domicilioDenunciante" [max]="150" [group]="form"></text>
       </div>
     </div>
     <div class="row">
 	    <div class="col-md-12 col-sm-12 col-lg-12">
-	    	<text-area label="Síntesis de los hechos" name="sintesisHechos"  [group]="form" [max]="2000"></text-area>
+	    	<text-area label="Síntesis de los hechos" name="sintesisHechos"  [group]="form"></text-area>
 	    </div>
 	    <div class="col-md-12 col-sm-12 col-lg-12">
-	    	<text-area label="Datos de prueba" name="datosPrueba" [group]="form" [max]="2000"></text-area>
+	    	<text-area label="Datos de prueba" name="datosPrueba" [group]="form"></text-area>
       </div>
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-lg-12">
-            <text-area label="Motivos por los que se abstuvo de investigar" name="motivosAbstuvoInvestigar" [group]="form" [max]="2000"></text-area>
+            <text-area label="Motivos por los que se abstuvo de investigar" name="motivosAbstuvoInvestigar" [group]="form"></text-area>
         </div>
 	    <div class="col-md-12 col-sm-12 col-lg-12">
-	    	<text-area label="En su caso, el medio alternativo de solución de conflictos adoptado" name="medioAlternativoSolucion"  [group]="form" [max]="2000"></text-area>
+	    	<text-area label="En su caso, el medio alternativo de solución de conflictos adoptado" name="medioAlternativoSolucion"  [group]="form"></text-area>
 	    </div>
 	    <div class="col-md-12 col-sm-12 col-lg-12">
-	    	<text-area label="A quién se remite la determinación" name="destinatarioDeterminacion" [group]="form" [max]="2000"></text-area>
+	    	<text-area label="A quién se remite la determinación" name="destinatarioDeterminacion" [group]="form"></text-area>
       </div>
 
 	</div>
 	<div class="row">
       <div class="col-md-12 col-sm-12 col-lg-12">
-          <text-area label="Nombre del superior jerárquico" name="superiorJerarquico"  [group]="form" [max]="2000"></text-area>
+          <text-area label="Nombre del superior jerárquico" name="superiorJerarquico"  [group]="form"></text-area>
         </div>
 	    <div class="col-md-12 col-sm-12 col-lg-12">
-	    	<text-area label="Observaciones/Incidencias" name="observaciones"  [group]="form" [max]="2000"></text-area>
+	    	<text-area label="Observaciones/Incidencias" name="observaciones"  [group]="form"></text-area>
 	    </div>
 	</div>
 	<div class="row justify-content-end" >

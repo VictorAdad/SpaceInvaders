@@ -36,10 +36,10 @@
                 </select2>
             </div>
             <div class="col-md-3">
-                <text label="Nº tarjeta de circulación" name="tarjetaCirculacion" [max]="50" [group]="form"></text>
+                <text label="Nº tarjeta de circulación" name="tarjetaCirculacion" [max]="40" [group]="form"></text>
             </div>
             <div class="col-md-3">
-                <text label="Nº económico" name="noEconomico" [max]="50" [group]="form"></text>
+                <text label="Nº económico" name="noEconomico" [max]="40" [group]="form"></text>
             </div>
         </div>
         <div class="row">
@@ -108,26 +108,26 @@
                     label="Placas"
                     name="placas"
                     hintStart="Campo obligatorio"
-                    [max]="15"
+                    [max]="10"
                     [group]="form"
                     [regex]="regexPlaca">
                     
             </text>
             </div>
             <div class="col-md-3">
-                <text label="Placas adicionales" name="placasAdicionales" [max]="15" [group]="form" [regex]="regexPlaca"></text>
+                <text label="Placas adicionales" name="placasAdicionales" [max]="10" [group]="form" [regex]="regexPlaca"></text>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3">
-                <text label="Registro federal del vehículo (RFV)" name="registroFederalVehiculo" [max]="30" [group]="form"></text>
+                <text label="Registro federal del vehículo (RFV)" name="registroFederalVehiculo" [max]="20" [group]="form"></text>
             </div>
             <div class="col-md-3">
                 <text
                     label="Nº serie (VIN)"
                     name="noSerie"
                     hintStart="Campo obligatorio"
-                    [max]="30"
+                    [max]="20"
                     [group]="form">
                         
                 </text>

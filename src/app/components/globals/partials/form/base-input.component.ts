@@ -28,7 +28,7 @@ export class BaseInputComponent implements OnInit{
 
 	@Input() hintEnd: string="";
 
-	@Input() max: number = 100;
+	@Input() max: number = 50;
 
 	@Input() readonly: boolean = false;
 

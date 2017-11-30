@@ -12,7 +12,7 @@
                 <date-picker label="Fecha del hecho delictivo" name="fechaHechoDelictivo" [group]="form"></date-picker>
             </div>
             <div class="col-md-4">
-                <text label="Artículo del CPEM que sanciona y prevé el delito" name="articuloCpem" [max]="500" [group]="form"></text>
+                <text label="Artículo del CPEM que sanciona y prevé el delito" name="articuloCpem" [max]="300" [group]="form"></text>
             </div>
         </div>
         <div class="row">    
@@ -22,7 +22,7 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                <text label="Fracción que corresponda del artículo 327" name="fraccionArticulo" [max]="500" [group]="form"></text>
+                <text label="Fracción que corresponda del artículo 327" name="fraccionArticulo" [max]="300" [group]="form"></text>
             </div>
             <div class="col-md-3">
                 <select2 placeholder="Hipótesis de sobreseímiento que se actualiza" [options]="
@@ -38,7 +38,7 @@
                 
             </div>
             <div class="col-md-6">
-                <text label="Nombre del fiscal de justicia del Estado de México" name="nombreProcurador" [max]="150" [group]="form"></text>
+                <text label="Nombre del fiscal de justicia del Estado de México" name="nombreProcurador" [group]="form"></text>
             </div>
         </div>
     </div>
@@ -54,7 +54,7 @@
                 {label:'Jurisdicción',value:'jurisdicción'}]" name="ambitoHechos" [(value)]="model.ambitoHechos" [group]="form"></select2>
             </div>
             <div class="col-md-6">
-                <text label="Nombre de la autoridad competente" name="autoridadCompetente" [max]="150" [group]="form"></text>
+                <text label="Nombre de la autoridad competente" name="autoridadCompetente" [group]="form"></text>
             </div>
         </div>
         <div class="row">    

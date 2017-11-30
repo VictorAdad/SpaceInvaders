@@ -51,11 +51,11 @@
               <select2 [options]="options.paises" placeholder="País de nacimiento"  name="id" [group]="globals.form.controls.pais" (valueChange)="changePais($event)"></select2>
             </div>
             <div class="col-md-4" *ngIf="!isMexico">
-              <text label="Estado de nacimiento" name="estadoNacimientoOtro" [max]="50" [group]="globals.form" ></text>
+              <text label="Estado de nacimiento" name="estadoNacimientoOtro" [max]="40" [group]="globals.form" ></text>
             </div>
 
             <div class="col-md-4" *ngIf="!isMexico">
-              <text  label="Municipio" name="municipioNacimientoOtro" [max]="50" [group]="globals.form"></text>
+              <text  label="Municipio" name="municipioNacimientoOtro" [max]="40" [group]="globals.form"></text>
             </div>
             <div class="col-md-4" *ngIf="isMexico">
               <select2 [options]="options.estados" placeholder="Estado de nacimiento" name="id" [group]="globals.form.controls.estado" (valueChange)="changeEstado($event)"></select2>

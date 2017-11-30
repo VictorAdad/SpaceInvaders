@@ -53,13 +53,12 @@ export class EmailComponent implements OnInit{
 			this.value = this.value.toString().slice(0,this.max);
 		}
 		if (this.value == null || this.value == "" || rejex.test(this.value)) {
-			console.log('-----------> uno',this.value);
 			this.hintEnd = ""
 			this.group.controls[this.name].setErrors(null);
 		}else{	
 			this.hintEnd = "Este correo no es valido"
 			this.group.controls[this.name].setErrors({'incorrect': true});
-			console.log('-----------> dos',this.value);
+
 		}
 	}
 }

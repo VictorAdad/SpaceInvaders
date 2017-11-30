@@ -45,7 +45,7 @@
                     <text label="Estado"
                         name="estadoOtro"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]"
-                        [max]="50">
+                        [max]="40">
                     </text>
                 </div>
 
@@ -53,14 +53,14 @@
                     <text label="Municipio/Delegación"
                         name="municipioOtro"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]"
-                        [max]="50">        
+                        [max]="40">        
                     </text>
                 </div>
                 <div class="col-md-3" *ngIf="!isMexico">
                     <text label="Colonia/Asentamiento"
                         name="coloniaOtro"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]"
-                        [max]="50">
+                        [max]="40">
                     </text>
                 </div>
 
@@ -70,7 +70,7 @@
                 <div class="col-md-3" *ngIf="!isMexico">
                     <text label="Localidad"
                         name="localidadOtro"
-                        [max]="50"
+                        [max]="40"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
                     </text>
                 </div>
@@ -78,10 +78,10 @@
                     <text label="Calle" name="calle" [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]"></text>
                 </div>
                 <div class="col-md-3">
-                    <text label="No. exterior" name="noExterior" [max]="15" [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]"></text>
+                    <text label="No. exterior" name="noExterior" [max]="10" [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]"></text>
                 </div>
                 <div class="col-md-3">
-                    <text label="No. interior" name="noInterior" [max]="15" [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]"></text>
+                    <text label="No. interior" name="noInterior" [max]="10" [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]"></text>
                 </div>
             </div>
 
@@ -158,7 +158,7 @@
                 <div class="col-md-3">
                     <text label="Otro medio de contacto"
                         name="otroMedioContacto"
-                        [max]="20"
+                        [max]="15"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
                             
                     </text>
@@ -168,7 +168,6 @@
                         name="correo"
                         [max]="25"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
-                            
                     </email>
                 </div>
             </div>
