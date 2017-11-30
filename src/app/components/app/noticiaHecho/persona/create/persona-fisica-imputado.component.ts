@@ -1091,7 +1091,10 @@ export class IdentificacionComponent{
     tipo indica el tipo de campo(otroNombre o alias)
     */
     setForm(_event,_i,_j,_id,_tipo){
-        console.log('--------------->',_event,_i,_j,_id,_tipo );
+        // console.log('--------------->',_event,_i,_j,_id,_tipo );
+        if (_event["length"]>12)
+        _event=_event.slice(0,12);
+        // console.log('%cHHH-------------->','color:red;',_event,_i,_j,_id,_tipo );
         if(_tipo === 'otroNombre'){
             this.otrosNombres.nombres[_j]=_event;
         }else{
