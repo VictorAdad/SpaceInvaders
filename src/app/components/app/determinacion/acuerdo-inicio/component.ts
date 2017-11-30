@@ -191,7 +191,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
 export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
 
   @Input() id:number=null;
-  displayedColumns = ['nombre', 'fechaCreacion'];
+  displayedColumns = ['nombre', 'fechaCreacion', 'acciones'];
   @Input()
   object: any;
 	dataSource: TableDataSource | null;
