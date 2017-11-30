@@ -10,8 +10,8 @@
 	</div>
 </div>
 <mat-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
-  </mat-paginator>
-  <mat-table #table [dataSource]="dataSource">
+</mat-paginator>
+<mat-table #table [dataSource]="dataSource">
       <ng-container matColumnDef="nombre">
           <mat-header-cell *matHeaderCellDef> Nombre</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.nameEcm}} </mat-cell>
@@ -22,6 +22,19 @@
           <mat-cell *matCellDef="let element"> {{element.created| date:'MM/dd/yyyy'}} </mat-cell>
       </ng-container>
 
+    <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <button 
+                mat-raised-button
+                color="accent"
+                [disabled]="documentos[element.id] ? !documentos[element.id]['validate'] : false"
+                (click)="downloadFile(element, element.contentType)">
+                {{ documentos[element.id] ? !documentos[element.id]['validate'] ? 'Generando PDF...': 'Desacargar' : 'Descargar' }}
+            </button>
+        </mat-cell>
+    </ng-container>
+
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"  (click)="downloadFile(row, row.contentType)"></mat-row>
-    </mat-table>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

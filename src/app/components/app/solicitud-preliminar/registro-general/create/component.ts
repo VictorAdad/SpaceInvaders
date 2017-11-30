@@ -152,7 +152,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 })
 export class DocumentoRegistroGeneralComponent  extends FormatosGlobal{
   @Input() id:number=null;
-  displayedColumns = ['nombre', 'fechaCreacion'];
+  displayedColumns = ['nombre', 'fechaCreacion', 'acciones'];
   @Input()
   object: any;
 	dataSource: TableDataSource | null;

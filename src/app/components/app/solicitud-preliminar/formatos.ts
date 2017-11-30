@@ -8,6 +8,7 @@ import { ResolveEmit,ConfirmSettings} from '@utils/alert/alert.service';
 import { GlobalService } from "@services/global.service";
 import { OnLineService } from '@services/onLine.service';
 import { FormatosService } from '@services/formatos/formatos.service';
+import { Observable } from 'rxjs/Observable';
 
 
 export class FormatosGlobal{
@@ -20,6 +21,7 @@ export class FormatosGlobal{
     };
     public formData: FormData;
     public urlUpload: string;
+    public documentos: any = {};
 
     constructor(
         public http: HttpService,
@@ -29,7 +31,7 @@ export class FormatosGlobal{
         public onLine: OnLineService = null,
         public formatos: FormatosService = null
         ){
-
+        this.validateFiles();
     }
 
     public changeFormat(_format, _id, _data: any = {}){
@@ -44,8 +46,10 @@ export class FormatosGlobal{
                         this.http.get(`/v1/documentos/formatos/save/${_id}/${_format}`).subscribe(
                             response => {
                                 console.log('Done changeFormat()', response);
-                                this.setData(response);
                                 this.globalService.openSnackBar("Formato generado con éxito");
+                                this.documentos[response.id] = response;
+                                this.documentos[response.id]['validate'] = false;
+                                this.setData(response);
                             },
                             error => {
                                 this.globalService.openSnackBar("X ocurrió un error al generar el formato");
@@ -84,6 +88,33 @@ export class FormatosGlobal{
             }
 
         )
+    }
+
+
+    public validateFiles(){
+        let timer = Observable.timer(2,5000);
+        let subs = timer.subscribe( 
+            t => {
+                for (var key in this.documentos) {
+                    console.log('validateFile()');
+                    let doc = this.documentos[key];
+                    let _contentType = doc.contentType.replace("/", "-");
+                    this.http.getFile(`/v1/documentos/documento/${doc.uuidEcm}/${_contentType}/${doc.tipo}`).subscribe(
+                        response => {
+                            console.log('El archivo ya está generado');
+                            this.documentos[key]['validate'] = true;
+                            delete this.documentos[key];
+                            
+                        },
+                        error => {
+                            console.log('El archivo no está generado :(');
+
+                        }
+                    )
+                    }
+                }
+        );
+        
     }
 
     public openDocDialog() {

@@ -260,10 +260,10 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 })
 export class DocumentoPeritoComponent extends FormatosGlobal {
 
-  columns = ['nombre', 'fechaCreacion'];
+  columns = ['nombre', 'fechaCreacion', 'acciones'];
   @Input() isPericiales:boolean=false;
   @Input() id:number=null;
-  displayedColumns = ['nombre', 'fechaCreacion'];
+  displayedColumns = ['nombre', 'fechaCreacion', 'acciones'];
   @Input()
   object: any;
 	dataSource: TableDataSource | null;
