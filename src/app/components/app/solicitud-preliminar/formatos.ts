@@ -92,7 +92,7 @@ export class FormatosGlobal{
 
 
     public validateFiles(){
-        let timer = Observable.timer(2,5000);
+        let timer = Observable.timer(2,6000);
         let subs = timer.subscribe( 
             t => {
                 for (var key in this.documentos) {
