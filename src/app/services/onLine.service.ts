@@ -215,6 +215,32 @@ export class OnLineService {
         }
     }
 
+    agregaOtrosId(arrId:any[],original) {
+        var obj=this;
+        return new Promise((resolve,reject)=>{
+            if (arrId.length<1)
+                resolve(true);
+            var cont =0;
+            for (var k = 0; k < arrId.length; ++k) {
+                var model=arrId[k];
+                var ids=obj.buscarValores(original,model);
+                if (ids && ids["id"]){
+                    cont++;
+                    console.log("%c" + "-> newId", "color: pink;font-weight:bold;",ids);
+                    obj.db.update("newId",{id:ids.id,newId:ids.newId}).then(p=>{
+                        console.log(cont);
+                        if(cont==arrId.length)
+                            resolve(true);
+                    });
+                }
+            }
+            //si no se encontraron todos los ids hay un error
+            if (cont!=arrId.length){
+                reject({enontrados:cont,total:arrId.length});
+            }
+        });
+    }//si hay otros ids
+
     doPost(_url, item, i, lista){
         console.log(_url,item,i,lista);
         item["numItentos"]++;
@@ -227,31 +253,8 @@ export class OnLineService {
                     var json = respuesta;
                     var obj=this;
 
-                    var agregaOtrosId=function(arrId:any[],original) {
-                        return new Promise((resolve,reject)=>{
-                            if (arrId.length<1)
-                                resolve(true);
-                            var cont =0;
-                            for (var k = 0; k < arrId.length; ++k) {
-                                var model=arrId[k];
-                                var ids=obj.buscarValores(original,model);
-                                if (ids){
-                                    cont++;
-                                    obj.db.update("newId",{id:ids.id,newId:ids.newId}).then(p=>{
-                                        console.log(cont);
-                                        if(cont==arrId.length)
-                                            resolve(true);
-                                    });
-                                }
-                            }
-                            //si no se encontraron todos los ids hay un error
-                            if (cont!=arrId.length){
-                                reject({enontrados:cont,total:arrId.length});
-                            }
-                        });
-                    }//si hay otros ids
                     if (item["otrosID"]){
-                        agregaOtrosId(item["otrosID"],json).then(p=>{
+                        this.agregaOtrosId(item["otrosID"],json).then(p=>{
                             console.log("NUNCALLEGO",item);
                             this.db.update("sincronizar",item).then( respuesta =>{
                                 this.seActualizoAlmenosUnRegistro=true;
@@ -302,6 +305,7 @@ export class OnLineService {
                 respuesta=>{
                     console.log("RESPONSE EDIT=>",respuesta);
                     item.pendiente=false;
+                    
                     this.db.update("sincronizar",item).then( respuesta =>{
                         this.seActualizoAlmenosUnRegistro=true;
                         this.sincroniza(i+1,lista2);
@@ -409,7 +413,10 @@ export class OnLineService {
             
         });
     }
-
+    /*
+    Suponiendo que el json es un arbol,
+    se sustitullen las hojas que coinciden con el array de valores de listNewId
+    */
     sustituyeHojasPorNewId(json,listNewId){
         if (typeof json=="object"){
             for (var key in json){//si es objecto
