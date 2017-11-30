@@ -122,6 +122,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         
         this.form  = this.formRelacion.form;
 
+        this.optionsService.getPaises();
+
         this.route.params.subscribe(params => {
             if(params['casoId']){
                 this.casoId = params['casoId'];
@@ -212,7 +214,6 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                         efecto:efectoDetalle["efecto"]
                     });
                 let form = this.form.get('efectoViolencia') as FormArray;
-                if(this.optionsRelacion.matrizEfectoDetalle.finded[0])
                     form.push(
                         this.formRelacion.efectoViolenciaForm(efectoDetalle["id"],id)
                     );
