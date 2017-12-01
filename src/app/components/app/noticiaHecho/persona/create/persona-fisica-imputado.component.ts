@@ -184,16 +184,16 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             let horaDetencion=horas+':'+minutos;
             _personaCaso.detalleDetenido['horaDetenido']=horaDetencion;
 
-            console.log(_personaCaso.detalleDetenido);
-            console.log(_personaCaso.detalleDetenido.tipoDetenido);
+            // console.log(_personaCaso.detalleDetenido);
+            // console.log(_personaCaso.detalleDetenido.tipoDetenido);
             let timer3 = Observable.timer(1);
             timer3.subscribe( t => {
               ((pcaso["controls"][0] as FormGroup).controls.detalleDetenido as FormGroup).controls.tipoDetenido.patchValue(
                 {
-                'id' : _personaCaso.detalleDetenido.tipoDetenido.id,
-                'tipoDetencion'   : _personaCaso.detalleDetenido.tipoDetenido.tipoDetencion,
-                'tipoReincidencia': _personaCaso.detalleDetenido.tipoDetenido.tipoReincidencia,
-                'cereso'          : _personaCaso.detalleDetenido.tipoDetenido.cereso
+                'id' : _personaCaso.detalleDetenido.tipoDetenido? _personaCaso.detalleDetenido.tipoDetenido.id : "",
+                'tipoDetencion'   : _personaCaso.detalleDetenido.tipoDetenido? _personaCaso.detalleDetenido.tipoDetenido.tipoDetencion : "",
+                'tipoReincidencia': _personaCaso.detalleDetenido.tipoDetenido? _personaCaso.detalleDetenido.tipoDetenido.tipoReincidencia : "",
+                'cereso'          : _personaCaso.detalleDetenido.tipoDetenido? _personaCaso.detalleDetenido.tipoDetenido.cereso : ""
               }
               );
 
