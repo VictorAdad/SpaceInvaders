@@ -9,14 +9,12 @@ import { BaseInputComponent } from '../base-input.component';
 })
 export class TextComponent extends BaseInputComponent {
 
-	public control : FormControl;
-
 	constructor(public renderer : Renderer){
 		super(renderer)
 	}
 
 	ngOnInit(){
-		if (this.control !=null) {
+		if (this.group !=null && this.name != null && this.name != '') {
 			this.control = this.group.get(this.name) as FormControl;
 			this.control.valueChanges.subscribe(this.inputSlice.bind(this));
 		}
@@ -34,10 +32,10 @@ export class TextComponent extends BaseInputComponent {
 	}
 
 	inputSlice(_value){
-		if (_value!=null && _value.toString().length > this.max) {
-			this.control.setValue(_value.toString().slice(0,this.max));
+		if (_value!=null) {
+			if(_value.toString().length > this.max)
+				this.control.setValue(_value.toString().slice(0,this.max));
 		}
-
 	}
 }
 
