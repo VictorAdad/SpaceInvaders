@@ -283,7 +283,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 export class DocumentoEntrevistaComponent extends FormatosGlobal{
 
   @Input() id:number=null;
-  displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+  displayedColumns = ['nombre', 'fechaCreacion', 'acciones',];
   @Input()
   object: any;
 	dataSource: TableDataSource | null;

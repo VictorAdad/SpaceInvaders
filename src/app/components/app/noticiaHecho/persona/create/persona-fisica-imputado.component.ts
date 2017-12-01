@@ -16,6 +16,7 @@ import { Options } from './options';
 import { Observable }                  from 'rxjs/Observable';
 import * as moment from 'moment';
 import { CasoService } from '@services/caso/caso.service';
+import { Yason } from '@services/utils/yason';
 
 @Component({
     templateUrl : './persona-fisica-imputado.component.html',
@@ -25,6 +26,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     public form  : FormGroup;
     public casoId: number = null;
     public id: number = null;
+    public personaId: number = null;
     public globals: PersonaGlobals;
     public isMexico: boolean=false;
     persona:Persona;
@@ -32,6 +34,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     public breadcrumb = [];
     public tipoInter = [];
     public detalleDetenido=null;
+    public tipoInterviniente =null;
+    public tipoPersona=null;
 
     forma=[{label:"Redonda", value:"Redonda"},{label:"Eliptica",value:"Eliptica"}];
     helixOriginal=[{label:"Si", value:"Si"},{label:"No",value:"No"}];
@@ -95,11 +99,14 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/personas-casos/'+this.id).subscribe(response =>{
                         console.log("PERSONACASO->",response);
+                        this.tipoInterviniente={id:response["tipoInterviniente"]["id"], tipo:response["tipoInterviniente"]["tipo"]};
+                        this.tipoPersona=response["persona"]["tipoPersona"];
                         this.globals.personaCaso=response["persona"];
                         this.fillPersonaCaso(response);
                         this.form.controls.tipoPersona.disable();
                         this.globals.form.controls.personaCaso["controls"][0].controls.tipoInterviniente.disable();
                         console.log('Form', this.globals);
+                        console.log("Coco",this.tipoPersona,this.tipoInterviniente);
                     });
                 }else{
                     //this.tabla.get("casos",this.casoId).then(caso => {
@@ -116,50 +123,16 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         }
                         this.detalleDetenido=personaCaso["detalleDetenido"]
                         console.log(this.detalleDetenido)
+                        this.tipoInterviniente={id:personaCaso["tipoInterviniente"]["id"], tipo:personaCaso["tipoInterviniente"]["tipo"]};
+                        this.tipoPersona=personaCaso["persona"]["tipoPersona"];
                         this.globals.personaCaso=personaCaso["persona"];
+                        console.log("%cPersona","color:red;",personaCaso);
                         this.fillPersonaCaso(personaCaso);
                         console.log('Form', this.globals);
+                        this.globals.form.controls.personaCaso["controls"][0].controls.tipoInterviniente.disable();
+                        this.form.controls.tipoPersona.disable();
+                        console.log("Coco",this.tipoPersona,this.tipoInterviniente);
                     });
-                    // this._tabla.get("personas",this.id).then(t=>{
-                    //     console.log("Persona->",t);
-                    //     let persona_caso=(t["personaCaso"])[0];
-                    //     persona_caso["persona"]=t;
-                    //     (persona_caso["persona"])["id"]=persona_caso["personaId"];
-                    //     this.globals.form.patchValue(persona_caso["persona"]);
-                    //     this.fillNombres(t["aliasNombrePersona"]);
-                    //     var promesa=new Promise((resolve)=>{
-                    //         resolve(persona_caso["persona"]);
-                    //     }).then(copia=>{
-                    //         this.globals.personaCaso=copia;
-                    //     });
-
-                    //     console.log("PERSONA_CASO -> ",persona_caso);
-
-                    //     let localizaciones = this.globals.form.get('localizacionPersona') as FormArray;
-                    //     for (let i=0; i< t["localizacionPersona"].length; i++) {
-                    //         let formLoc = LosForm.createFormLocalizacion();
-                    //         localizaciones.push(formLoc);
-                    //     }
-
-                    //     let timer2 = Observable.timer(1);
-                    //     timer2.subscribe(tiempo => {
-                    //         let localizaciones = this.globals.form.get('localizacionPersona') as FormArray;
-                    //         for (let i=0; i< t["localizacionPersona"].length; i++) {
-                    //             for (var propName in ((t["localizacionPersona"])[i])) {
-                    //                 if (( (t["localizacionPersona"])[i])[propName] === null || ( (t["localizacionPersona"])[i])[propName] === undefined) {
-                    //                     delete ( (t["localizacionPersona"])[i]) [propName];
-                    //                 }
-                    //             }
-                    //             let formLoc = localizaciones.controls[i];
-                    //             formLoc.patchValue( (t["localizacionPersona"])[i]);
-
-                    //             this.globals.tipoResidencia.push(( (t["localizacionPersona"])[i] )["tipoRecidencia"]);
-                    //         }
-
-                    //     });
-
-                    //     console.log('Form', this.globals);
-                    // });
                 }
             }
         });
@@ -177,22 +150,10 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
       return 0;
     }
 
-    eliminaNulos(x){
-                if (typeof x == "object"){
-                    for(let i in x){
-                        if (x[i]==null || typeof x[i] =="undefined"){
-                            delete x[i];
-                        }
-                        if (typeof x[i]=="object")
-                            this.eliminaNulos(x[i]);
-                    }
-                }
-            }
-
-
     public fillPersonaCaso(_personaCaso){
+        this.personaId = _personaCaso["persona"]["id"];
         let pcaso = this.globals.form.get('personaCaso') as FormArray;
-        this.eliminaNulos(_personaCaso);
+        Yason.eliminaNulos(_personaCaso);
 
         if(_personaCaso.detalleDetenido != null){
             let timerDetenido = Observable.timer(1);
@@ -292,6 +253,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
             let timer2 = Observable.timer(1);
             timer2.subscribe(t => {
+                this.fillMediaFiliacion(_personaCaso["persona"]["mediaFiliacion"]);
                 let localizaciones = this.globals.form.get('localizacionPersona') as FormArray;
                 for (let i=0; i< _data["localizacionPersona"].length; i++) {
                     for (var propName in (_data.localizacionPersona[i])) {
@@ -338,8 +300,59 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
             });
 
+
+
         });
 
+    }
+
+    public fillMediaFiliacion(mediaFiliacion){
+        var formMediaFiliacion=this.globals.formMediaFilicion;
+        if (mediaFiliacion){
+            //no existe este campo, que indica que viene de base
+            if (mediaFiliacion["complexionPielSangre"] && !mediaFiliacion["complexionPielSangre"]["created"]){
+                this.tabla.searchInCatalogo("complexion_piel_sangre",mediaFiliacion["complexionPielSangre"]).then(d=>{
+                    formMediaFiliacion.controls.complexionPielSangre.patchValue(d);
+                });
+            }
+            if (mediaFiliacion["cabello"] && !mediaFiliacion["cabello"]["created"]){
+                this.tabla.searchInCatalogo("cabello",mediaFiliacion["cabello"]).then(d=>{
+                    formMediaFiliacion.controls.cabello.patchValue(d);
+                });
+            }
+            if (mediaFiliacion["frenteMenton"] && !mediaFiliacion["frenteMenton"]["created"]){
+                this.tabla.searchInCatalogo("frente_menton",mediaFiliacion["frenteMenton"]).then(d=>{
+                    formMediaFiliacion.controls.frenteMenton.patchValue(d);
+                });
+            }
+            if (mediaFiliacion["cejaBoca"] && !mediaFiliacion["cejaBoca"]["created"]){
+                this.tabla.searchInCatalogo("ceja_boca",mediaFiliacion["cejaBoca"]).then(d=>{
+                    formMediaFiliacion.controls.cejaBoca.patchValue(d);
+                });
+            }
+            if (mediaFiliacion["labioOjo"] && !mediaFiliacion["labioOjo"]["created"]){
+                this.tabla.searchInCatalogo("labio_ojo",mediaFiliacion["labioOjo"]).then(d=>{
+                    formMediaFiliacion.controls.labioOjo.patchValue(d);
+                });
+            }
+            if (mediaFiliacion["caraNariz"] && !mediaFiliacion["caraNariz"]["created"]){
+                this.tabla.searchInCatalogo("cara_nariz",mediaFiliacion["caraNariz"]).then(d=>{
+                    formMediaFiliacion.controls.caraNariz.patchValue(d);
+                });
+            }
+            if (mediaFiliacion["orejaIzquierda"] && !mediaFiliacion["orejaIzquierda"]["created"]){
+                this.tabla.searchInCatalogo("oreja",mediaFiliacion["orejaIzquierda"]).then(d=>{
+                    formMediaFiliacion.controls.orejaIzquierda.patchValue(d);
+                });
+            }
+            if (mediaFiliacion["orejaDerecha"] && !mediaFiliacion["orejaDerecha"]["created"]){
+                this.tabla.searchInCatalogo("oreja",mediaFiliacion["orejaDerecha"]).then(d=>{
+                    formMediaFiliacion.controls.orejaDerecha.patchValue(d);
+                });
+            }
+
+
+        }
     }
 
     public fillNombres(_alias:any[]){
@@ -460,7 +473,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 color:this.globals.formMediaFilicion.controls.cabello["controls"].color.value,
                 forma:this.globals.formMediaFilicion.controls.cabello["controls"].forma.value,
                 calvicie:this.globals.formMediaFilicion.controls.cabello["controls"].calvicie.value,
-                implantacion:this.globals.formMediaFilicion.controls.cabello["controls"].implantacion.value
+                implantacion:this.globals.formMediaFilicion.controls.cabello["controls"].implantacion.value,
+                cantidad:this.globals.formMediaFilicion.controls.cabello["controls"].cantidad.value
             }
         });
 
@@ -515,15 +529,24 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 formaCara:this.globals.formMediaFilicion.controls.caraNariz["controls"].formaCara.value
             }
         });
-
+        console.log("%cTipoInterviniente","color:cyan;",this.tipoInterviniente,"Modelo",_model);
         var promesa = new Promise((resolve,reject)=>{
             this.searchCatalogos(buscar).then(e=>{
-                for(let key in e){
-                    if (e[key]!=null){
-                        (_model["mediaFiliacion"])[key]={id:e[key].id};
+                if (//preguntamos si existe el tipo intervininte(caso editar)
+                    (this.tipoInterviniente && this.tipoInterviniente["id"]==_config.optionValue.tipoInterviniente.imputado)
+                    ||//si no existe vemos si existe el media filiacion
+                    (_model["personaCaso"] && _model["personaCaso"][0] && _model["personaCaso"][0]["tipoInterviniente"] && _model["personaCaso"][0]["tipoInterviniente"]["id"])
+                    ){
+                    for(let key in e){
+                        if (e[key]!=null){
+                            console.log("%cEKEY","color:cyan;",e[key]);
+                            (_model["mediaFiliacion"])[key]={id:e[key].id};
+                        }
                     }
+                    resolve(_model);
+                }else{
+                    resolve(_model);
                 }
-                resolve(_model);
             });
         });
 
@@ -573,7 +596,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 data:{
                     hablaEspaniol:this.form.controls.hablaEspaniol.value,
                     lenguaIndigena:this.form.controls.lenguaIndigena.value,
-                    familiaLinguistica:this.form.controls.familiaLinguistica.value
+                    familiaLinguistica:this.form.controls.familiaLinguistica.value,
+                    identificacion:this.form.controls.identificacion.value
                 }
             });
             this.searchCatalogos(buscar).then(e=>{
@@ -772,7 +796,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         this.agregaIdTemporales(_model,copia,otrosID,true);
                         console.log("MODEL",copia,_model);
                         _model["dependeDe"]=dependeDe;
-
+                        _model["id"]=_model["personaCaso"][0]["personaId"];
                         let personaCaso={
                             tipoInterviniente:_model.personaCaso[0].tipoInterviniente,
                             caso:_model.personaCaso[0].caso,
@@ -824,8 +848,10 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 (_model.personaCaso[0])["id"]=this.id;
                 (_model.personaCaso[0])["personaId"]=_model["id"];
                 _model["id"]=this.id;
-                console.log("->PERSONA",this.globals.personaCaso);
+                console.log("->PERSONA",this.globals.personaCaso,_model);
                 var lista=this.options.tipoInterviniente as any[];
+                _model.personaCaso[0]["tipoInterviniente"]=this.tipoInterviniente;
+                _model["tipoPersona"]=this.tipoPersona;
                 for (var i = 0; i < lista.length; ++i) {
                     if((lista[i])["value"]==_model.personaCaso[0].tipoInterviniente["id"])
                     {
@@ -853,11 +879,12 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         var caso=this.casoService.caso;
 
                         this.agregaIdTemporalesEdit(_model,temId,otrosID,true);
+                        _model["id"]=this.personaId;
 
                         let personaCaso={
                             tipoInterviniente:_model.personaCaso[0].tipoInterviniente,
                             caso:_model.personaCaso[0].caso,
-                            id:_model.personaCaso[0].id,
+                            id:this.id,
                             persona:_model,
                         }
 
@@ -927,7 +954,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 data:{
                     hablaEspaniol:this.form.controls.hablaEspaniol.value,
                     lenguaIndigena:this.form.controls.lenguaIndigena.value,
-                    familiaLinguistica:this.form.controls.familiaLinguistica.value
+                    familiaLinguistica:this.form.controls.familiaLinguistica.value,
+                    identificacion:this.form.controls.identificacion.value
                 }
             });
             this.searchCatalogos(buscar).then(e=>{
@@ -971,16 +999,44 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 delete _data.mediaFiliacion[propName];
             }
         }
+
         if (_data["nacionalidadReligion"]){
-            _data["nacionalidad"]=(_data["nacionalidadReligion"])["nacionalidad"];
-            _data["religion"]=(_data["nacionalidadReligion"])["religion"];
+            if (!_data["nacionalidadReligion"]["religion"]){
+                this.tabla.searchInCatalogo("nacionalidad_religion",_data["nacionalidadReligion"]).then(d=>{
+                    _data["nacionalidad"]=d["nacionalidad"];
+                    _data["religion"]=d["religion"];
+                    this.form.patchValue(_data);
+                });
+            }else{
+                _data["nacionalidad"]=(_data["nacionalidadReligion"])["nacionalidad"];
+                _data["religion"]=(_data["nacionalidadReligion"])["religion"];
+            }
         }
 
         if (_data["idiomaIdentificacion"]){
-            _data["familiaLinguistica"]=(_data["idiomaIdentificacion"])["familiaLinguistica"];
-            _data["lenguaIndigena"]=(_data["idiomaIdentificacion"])["lenguaIndigena"];
-            _data["hablaEspaniol"]=(_data["idiomaIdentificacion"])["hablaEspaniol"];
-            _data["identificacion"]=(_data["idiomaIdentificacion"])["identificacion"];;
+            if (!_data["idiomaIdentificacion"]["hablaEspaniol"])
+                this.tabla.searchInCatalogo("idioma_identificacion",_data["idiomaIdentificacion"]).then(d=>{
+                    if (d["familiaLinguistica"])
+                        _data["familiaLinguistica"]=d["familiaLinguistica"];
+                    if (d["lenguaIndigena"])
+                        _data["lenguaIndigena"]=d["lenguaIndigena"];
+                    if (d["hablaEspaniol"])
+                        _data["hablaEspaniol"]=d["hablaEspaniol"];
+                    if (d["identificacion"])
+                        _data["identificacion"]=d["identificacion"];;
+                    this.form.patchValue(_data);
+                });
+            else{
+                if ((_data["idiomaIdentificacion"])["familiaLinguistica"])
+                    _data["familiaLinguistica"]=(_data["idiomaIdentificacion"])["familiaLinguistica"];
+                if ((_data["idiomaIdentificacion"])["lenguaIndigena"])
+                    _data["lenguaIndigena"]=(_data["idiomaIdentificacion"])["lenguaIndigena"];
+                if ((_data["idiomaIdentificacion"])["hablaEspaniol"])
+                    _data["hablaEspaniol"]=(_data["idiomaIdentificacion"])["hablaEspaniol"];
+                if ((_data["idiomaIdentificacion"])["identificacion"])
+                    _data["identificacion"]=(_data["idiomaIdentificacion"])["identificacion"];;
+            }
+
         }
 
         console.log("datos ->",_data);

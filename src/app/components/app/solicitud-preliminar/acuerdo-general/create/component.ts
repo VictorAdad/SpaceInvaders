@@ -228,7 +228,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
 })
 export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
 
-    displayedColumns = ['nombre', 'fechaCreacion'];
+    displayedColumns = ['nombre', 'fechaCreacion', 'acciones'];
     @Input() tipo:string=null;
     @Input() id:number=null;
     tipo_options={

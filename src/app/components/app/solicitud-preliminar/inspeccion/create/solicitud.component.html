@@ -3,12 +3,12 @@
         <form>
             <div class="row">
                 <div class="col">
-                    <text-area label="Adscripción" name="adscripcion" [(value)]="model.adscripcion" [group]="form"></text-area>
+                    <text label="Adscripción" name="adscripcion" [group]="form" [max]="100"></text>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <text-area label="Descripción" name="descripcion" [(value)]="model.descripcion" [group]="form"></text-area>
+                    <text-area label="Descripción" name="descripcion" [group]="form"></text-area>
                 </div>
             </div>
             <div class="row justify-content-end">

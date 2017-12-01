@@ -178,7 +178,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
 export class DocumentoInspeccionComponent extends FormatosGlobal{
 
 
-  displayedColumns = ['nombre', 'fechaCreacion'];
+  displayedColumns = ['nombre', 'fechaCreacion', 'acciones'];
   @Input() tipo:string=null;
   @Input() id:number=null;
   tipo_options={

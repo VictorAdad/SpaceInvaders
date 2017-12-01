@@ -540,6 +540,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     public edit(_valid : any, _model : any){
         return new Promise((resolve,reject)=>{
             console.log('-> Relacion@edit()', _model);
+            _model.tipoRelacionPersona.caso.id = this.casoId;
             if(_model.tieneViolenciaGenero)
                 if(this.optionsRelacion.matrizViolenciaGenero.finded[0])
                     _model.violenciaGenero.id = this.optionsRelacion.matrizViolenciaGenero.finded[0].id;

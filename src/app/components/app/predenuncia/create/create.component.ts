@@ -313,7 +313,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
 })
 
 export class DocumentoPredenunciaComponent extends FormatosGlobal {
-    displayedColumns = ['nombre', 'procedimiento', 'fechaCreacion'];
+    displayedColumns = ['nombre', 'fechaCreacion', 'procedimiento'];
     @Input() id:number=null;
     @Input()
     object: any;
