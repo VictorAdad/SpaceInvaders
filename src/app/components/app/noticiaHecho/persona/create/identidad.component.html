@@ -103,7 +103,7 @@
                     name="hablaEspaniol"
                     [group]="globals.form"
                     (valueChange)="personaServ.idiomaIdentificacion.find($event, 'hablaEspaniol')">
-        
+
                 </select2>
             </div>
             <div class="col-md-2">
@@ -113,7 +113,7 @@
                     name="lenguaIndigena"
                     [group]="globals.form"
                     (valueChange)="personaServ.idiomaIdentificacion.find($event, 'lenguaIndigena')">
-                        
+
                 </select2>
             </div>
             <div class="col-md-2">
@@ -132,7 +132,7 @@
                     name="familiaLinguistica"
                     [group]="globals.form"
                     (valueChange)="personaServ.idiomaIdentificacion.find($event, 'familiaLinguistica')">
-        
+
                 </select2>
             </div>
             <div class="col-md-3">
@@ -161,7 +161,7 @@
                     name="tipoDetencion"
                     [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido.controls.tipoDetenido"
                     (valueChange)="personaServ.tipoDetenido.find($event, 'tipoDetencion')">
-                    
+
                 </select2>
             </div>
 
@@ -175,7 +175,7 @@
                     name="tipoReincidencia"
                     [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido.controls.tipoDetenido"
                     (valueChange)="personaServ.tipoDetenido.find($event, 'tipoReincidencia')">
-                        
+
                 </select2>
             </div>
             <div class="col-md-2" *ngIf="globals.detenido">

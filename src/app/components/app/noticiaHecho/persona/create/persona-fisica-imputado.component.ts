@@ -1,3 +1,4 @@
+import { DetalleDetenido, TipoDetenido } from './../../../../../models/persona';
 import { Component, Input } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -30,6 +31,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     tabla: CIndexedDB;
     public breadcrumb = [];
     public tipoInter = [];
+    public detalleDetenido=null;
 
     forma=[{label:"Redonda", value:"Redonda"},{label:"Eliptica",value:"Eliptica"}];
     helixOriginal=[{label:"Si", value:"Si"},{label:"No",value:"No"}];
@@ -112,6 +114,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                                 break;
                             }
                         }
+                        this.detalleDetenido=personaCaso["detalleDetenido"]
+                        console.log(this.detalleDetenido)
                         this.globals.personaCaso=personaCaso["persona"];
                         this.fillPersonaCaso(personaCaso);
                         console.log('Form', this.globals);
@@ -197,6 +201,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 this.globals.form.patchValue({
                     'detenido': true
                 });
+
             });
             var fechaDeclaracion = new Date(_personaCaso.detalleDetenido.fechaDeclaracion);
             if (isNaN(fechaDeclaracion.getTime())) {
@@ -204,6 +209,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             }else{
                 _personaCaso.detalleDetenido.fechaDeclaracion = fechaDeclaracion;
             }
+            console.log(_personaCaso.detalleDetenido);
 
             var fechaDetencion = new Date(_personaCaso.detalleDetenido.fechaDetencion);
             if (isNaN(fechaDetencion.getTime())) {
@@ -211,10 +217,35 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             }else{
                 _personaCaso.detalleDetenido.fechaDetencion = fechaDetencion;
             }
-            // pcaso.controls[0].patchValue(_personaCaso.detalleDetenido.tipoDetenido);
-        }
+            // this.model.fechaCanalizacion=fechaCompleta;
+            var horas: string=(String(fechaDetencion.getHours()).length==1)?'0'+fechaDetencion.getHours():String(fechaDetencion.getHours());
+            var minutos: string=(String(fechaDetencion.getMinutes()).length==1)?'0'+fechaDetencion.getMinutes():String(fechaDetencion.getMinutes());;
+            let horaDetencion=horas+':'+minutos;
+            _personaCaso.detalleDetenido['horaDetenido']=horaDetencion;
+
+            console.log(_personaCaso.detalleDetenido);
+            console.log(_personaCaso.detalleDetenido.tipoDetenido);
+            let timer3 = Observable.timer(1);
+            timer3.subscribe( t => {
+              ((pcaso["controls"][0] as FormGroup).controls.detalleDetenido as FormGroup).controls.tipoDetenido.patchValue(
+                {
+                'id' : _personaCaso.detalleDetenido.tipoDetenido.id,
+                'tipoDetencion'   : _personaCaso.detalleDetenido.tipoDetenido.tipoDetencion,
+                'tipoReincidencia': _personaCaso.detalleDetenido.tipoDetenido.tipoReincidencia,
+                'cereso'          : _personaCaso.detalleDetenido.tipoDetenido.cereso
+              }
+              );
+
+          });
+
+
+            console.log(pcaso)
+
+          }
 
         pcaso.controls[0].patchValue(_personaCaso);
+
+        console.log(pcaso)
         this.globals.tipoInterviniente=""+_personaCaso["tipoInterviniente"].id;
 
         let timer = Observable.timer(1);
@@ -271,7 +302,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     let formLoc = localizaciones.controls[i];
                     formLoc.patchValue(_data.localizacionPersona[i]);
 
-                    
+
                     timer2.subscribe(t => {
                         if((_data.localizacionPersona[i])['estado'] != null)
                             formLoc.patchValue({
@@ -526,7 +557,16 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             if (this.personaServ.tipoDetenido.finded[0]){
                 (_model["personaCaso"])[0].detalleDetenido["tipoDetenido"].id=this.personaServ.tipoDetenido.finded[0].id
             }
+            if((_model["personaCaso"])[0].detalleDetenido['fechaDetencion']){
+              var fechaCompleta = new Date ((_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
+              var hora=(_model["personaCaso"])[0].detalleDetenido['horaDetenido'];
 
+              fechaCompleta.setMinutes(parseInt(hora.split(':')[1]));
+              fechaCompleta.setHours(parseInt(hora.split(':')[0]));
+              var mes:number=fechaCompleta.getMonth()+1;
+              (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
+              console.log('lo que envio: '+  (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
+             }
             buscar.push({
                 catalogo:"idioma_identificacion",
                 name:"idiomaIdentificacion",
@@ -862,11 +902,24 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
             this.personaServ.nacionalidadReligion.find(this.form.controls.nacionalidad.value,"nacionalidad");
             this.personaServ.nacionalidadReligion.find(this.form.controls.religion.value,"religion");
-            if (this.personaServ.nacionalidadReligion.finded[0])
+            if (this.personaServ.nacionalidadReligion.finded[0]){
                 _model["nacionalidadReligion"]={id:this.personaServ.nacionalidadReligion.finded[0].id};
+            }
             if (this.personaServ.tipoDetenido.finded[0]){
                 (_model["personaCaso"])[0].detalleDetenido["tipoDetenido"].id=this.personaServ.tipoDetenido.finded[0].id
-            }
+                console.log('Tipo de detenido service',this.personaServ.tipoDetenido);
+
+              }
+              if((_model["personaCaso"])[0].detalleDetenido['fechaDetencion']){
+                var fechaCompleta = new Date ((_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
+                var hora=(_model["personaCaso"])[0].detalleDetenido['horaDetenido'];
+
+                fechaCompleta.setMinutes(parseInt(hora.split(':')[1]));
+                fechaCompleta.setHours(parseInt(hora.split(':')[0]));
+                var mes:number=fechaCompleta.getMonth()+1;
+                (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
+                console.log('lo que envio: '+  (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
+               }
 
             buscar.push({
                 catalogo:"idioma_identificacion",
@@ -1404,11 +1457,10 @@ export class LosForm{
                         'fechaDeclaracion' : new FormControl(),
                         'horaDetenido'         : new FormControl("",[]),
                         'tipoDetenido' : new FormGroup({
-                            'id' : new FormControl("", []),
-                            'tipoDetencion'         : new FormControl("",[]),
-                            'tipoReincidencia'         : new FormControl("",[]),
-                            'cereso'         : new FormControl("",[]),
-                        })
+                          'id' : new FormControl("", []),
+                          'tipoDetencion'         : new FormControl("",[]),
+                          'tipoReincidencia'         : new FormControl("",[]),
+                          'cereso'         : new FormControl("",[])                        })
                     }),
                 })
             ]),
