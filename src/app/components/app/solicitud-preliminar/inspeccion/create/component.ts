@@ -181,11 +181,7 @@ export class DocumentoInspeccionComponent extends FormatosGlobal{
   displayedColumns = ['nombre', 'fechaCreacion', 'acciones'];
   @Input() tipo:string=null;
   @Input() id:number=null;
-  tipo_options={
-    'Acuerdo General':[{'label':'ACUERDO GENERAL','value':'F1_006'}],
-    'Asignación de asesor jurídico':[{'label':'SOLICITUD DE ASESOR JURIDICO','value':'F1_002'}],
-    'Ayuda y atención a víctimas':[{'label':'OFICIO PARA AYUDA Y ATENCIÓN A VÍCTIMA','value':'F1_001'}]
-  }
+  tipo_options= [{'label':'FORMATO DE INSPECCIÓN GENERAL','value':'F1_018'}]
   @Input()
   object: any;
   dataSource: TableDataSource | null;
