@@ -16,8 +16,10 @@ export class TextComponent extends BaseInputComponent {
 	}
 
 	ngOnInit(){
-		this.control = this.group.get(this.name) as FormControl;
-		this.control.valueChanges.subscribe(this.inputSlice.bind(this));
+		if (this.control !=null) {
+			this.control = this.group.get(this.name) as FormControl;
+			this.control.valueChanges.subscribe(this.inputSlice.bind(this));
+		}
 	}
 
 	ngAfterViewInit(){
