@@ -16,6 +16,7 @@ import { SlideToggleComponent} from '@partials/form/slide-toggle/slide-toggle.co
 import { EmailComponent } from '@partials/form/email/email.component';
 import { DatePicker } from '@partials/form/fecha/datepicker.component';
 import { CurpRfcComponent } from '@partials/form/curp-rfc/component';
+import { IntComponent } from '@partials/form/int/int.component';
 import { BaseInputComponent } from '@partials/form/base-input.component';
 
 @NgModule()
@@ -39,5 +40,6 @@ export const partialsComponents = [
 	EmailComponent,
 	DatePicker,
 	CurpRfcComponent,
+	IntComponent,
 	BaseInputComponent
 ];
