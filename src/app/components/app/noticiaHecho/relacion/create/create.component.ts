@@ -164,6 +164,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                           let timer = Observable.timer(4000);
                           timer.subscribe(t=>{
                               this.fillForm(response);
+                              this.detalleDelitoId=response["detalleDelito"]["id"];
                           })
                         });
                     });
@@ -226,19 +227,35 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     addTrataPersonas(_val: any){
         if(this.optionsRelacion.matrizTipoTransportacion.finded[0])
             _val.tipoTransportacion.id = this.optionsRelacion.matrizTipoTransportacion.finded[0].id;
-        this.colections.add(
-            'trataPersonas',
-            'subjectTrataPersonas',
-            new TrataPersonas(
-                _val,
-                this.optionsService,
-                this.arrEstadosOrigen,
-                this.arrMunicipiosOrigen,
-                this.arrEstadosDestino,
-                this.arrMunicipiosDestino,
-                this.optionsRelacion
-            )
-        );
+
+        var obj=this;
+
+        var addColections=function(val){
+            obj.colections.add(
+                'trataPersonas',
+                'subjectTrataPersonas',
+                new TrataPersonas(
+                    val,
+                    obj.optionsService,
+                    obj.arrEstadosOrigen,
+                    obj.arrMunicipiosOrigen,
+                    obj.arrEstadosDestino,
+                    obj.arrMunicipiosDestino,
+                    obj.optionsRelacion
+                )
+            );
+        }
+        if (!_val["tipoTransportacion"]["created"]){//no vienen de la basede datos
+            this.db.searchInCatalogo("tipo_transportacion",_val["tipoTransportacion"]).then(d=>{
+                    _val["tipo"]=d["tipo"];
+                    _val["transportacion"]=d["transportacion"];
+                    addColections(_val);
+                })
+        }else{
+            _val["tipo"]=_val["tipoTransportacion"]["tipo"];
+            _val["transportacion"]=_val["tipoTransportacion"]["transportacion"];
+            addColections(_val);
+        }
         let form = this.form.get('trataPersona') as FormArray;
         var trata= this.formRelacion.getTrataPersonasForm();
         trata.patchValue(this.formRelacion.trataPersonasForm["value"]);
