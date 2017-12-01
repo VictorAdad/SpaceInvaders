@@ -26,17 +26,19 @@ export class EmailComponent implements OnInit{
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
 
+	public control: FormControl;
+
 	constructor(private renderer : Renderer){
 
 	}
 
 	ngOnInit(){
-		// console.log(this);
+		this.control = this.group.get(this.name) as FormControl;
+		this.control.valueChanges.subscribe(this.inputSlice.bind(this));
 	}
 
 	ngAfterViewInit(){
-		this.renderer.listen(
-			this.emailComponent.nativeElement, 'keyup', (event) => { this.inputSlice(); });
+	
 	}
 
 	update(value) {
@@ -46,20 +48,28 @@ export class EmailComponent implements OnInit{
 		}
 	}
 
-	inputSlice(){
+	inputSlice(_value){
 		var rejex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-		if (this.value!=null && this.value.toString().length > this.max) {
-			this.value = this.value.toString().slice(0,this.max);
+		if (_value!=null && _value.toString().length > this.max) {
+			this.control.setValue(_value.toString().slice(0,this.max));
 		}
-		if (this.value == null || this.value == "" || rejex.test(this.value)) {
-			this.hintEnd = ""
-			this.group.controls[this.name].setErrors(null);
+		if (_value == null || _value == "" || rejex.test(_value)) {
+			this.valid();
 		}else{	
-			this.hintEnd = "Este correo no es valido"
-			this.group.controls[this.name].setErrors({'incorrect': true});
+			this.inValid();
 
 		}
+	}
+
+	public valid(){
+		this.hintEnd = ""
+		this.control.setErrors(null);
+	}
+
+	public inValid(){
+		this.hintEnd = "Este correo no es valido"
+		this.control.setErrors({'incorrect': true});
 	}
 }
 

@@ -1,7 +1,7 @@
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 
 export class Form {
-		
+
 	public form: FormGroup;
 
 	constructor() {
@@ -107,8 +107,11 @@ export class Form {
                     'fechaDetencion'   : new FormControl(),
                     'fechaDeclaracion' : new FormControl(),
                     'tipoDetenido' : new FormGroup({
-                        'id' : new FormControl(),
-                    })
+                      'id' : new FormControl("", []),
+                      'tipoDetencion'         : new FormControl("",[]),
+                      'tipoReincidencia'         : new FormControl("",[]),
+                      'cereso'         : new FormControl("",[])
+                     })
                 }),
             }),
             'aliasNombrePersona' : new FormArray([
