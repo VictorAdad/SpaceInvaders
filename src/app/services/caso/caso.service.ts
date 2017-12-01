@@ -65,6 +65,7 @@ export class Caso{
 	public descripcion: string
 	public hasRelacionVictimaImputado: boolean
 	public hasPredenuncia: boolean
+	public hasAcuerdoInicio: boolean
 	public entrevistas: any[];
 	public created: number;
 	public titulo: string;

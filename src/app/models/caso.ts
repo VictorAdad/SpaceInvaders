@@ -12,6 +12,7 @@ export class Caso {
     public delitoCaso: DelitoCaso = new DelitoCaso();
     public hasPredenuncia:boolean;
     public hasRelacionVictimaImputado:boolean;
+    public hasAcuerdoInicio:boolean;
     
     fecha (){
        let meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];

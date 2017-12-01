@@ -32,6 +32,7 @@
 				<input type="text" name="search" placeholder="Buscar" #searchInput>
 				<mat-icon  class="suffix">search</mat-icon>
 			</div>
+			<mat-option>(Limpiar selección)</mat-option>
 			<mat-option *ngFor="let option of filteredOptions" [value]="option.value">
 				{{ option.label }}
 			</mat-option>

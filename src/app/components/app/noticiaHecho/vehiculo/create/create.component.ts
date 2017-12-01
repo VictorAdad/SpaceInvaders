@@ -41,16 +41,15 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         public casoService:CasoService
         ) {
         super();
-        console.log('vehiculoserv', this.vehiculoServ);
-
         optionsServ.getEstadoByPais(_config.optionValue.idMexico);
-    }
 
-    options:MOption[]=[
-        {value:"1", label:"Opcion 1"},
-        {value:"2", label:"Opcion 2"},
-        {value:"3", label:"Opcion 3"}
-        ];
+        let timer = Observable.timer(1000);
+        timer.subscribe(t => {
+            vehiculoServ.marcaSubmarca.submarca = [];
+            console.log('vehiculoserv', this.vehiculoServ);
+        });
+
+    }
 
     ngOnInit() {
         this.model = new Vehiculo();

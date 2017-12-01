@@ -20,7 +20,7 @@ export class Select2Component{
 	@Input() hintStart: string="";
 	@Input() hintEnd: string="";
 	@Input() search: boolean = true;
-	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
+	@Output() valueChange:EventEmitter<string> = new EventEmitter<string>();
 	@ViewChild('searchInput') searchInput;
 
 	public searchControl: FormControl = new FormControl();

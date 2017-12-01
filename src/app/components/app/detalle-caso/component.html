@@ -367,14 +367,14 @@
                                         <div class="col-lg-4">
                                             <div class="row text-center">
                                                 <div class="col p-0">
-                                                    <img [style.opacity]="hasPredenuncia && onLine.onLine? 1 : 0.2" src="./assets/images/Acuerdos/acuerdoRadicacion.svg">
+                                                    <img [style.opacity]="hasAcuerdoInicio && onLine.onLine? 1 : 0.2" src="./assets/images/Acuerdos/acuerdoRadicacion.svg">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row space"></div>
                                     <div class="row">
-                                        <button mat-button [disabled]="!hasPredenuncia || !onLine.onLine" routerLink="/caso/{{id}}/acuerdo-radicacion">Ver ahora</button>
+                                        <button mat-button [disabled]="!hasAcuerdoInicio || !onLine.onLine" routerLink="/caso/{{id}}/acuerdo-radicacion">Ver ahora</button>
                                     </div>
                                 </mat-card-content>
                             </mat-card>
