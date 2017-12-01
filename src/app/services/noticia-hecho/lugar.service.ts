@@ -7,7 +7,6 @@ import { MatrizGlobal } from './matriz-global2';
 @Injectable()
 export class LugarService extends MatrizGlobal{
 
-    public selected       = new Selected();
     public finded         = [];
     public detalleLugar   = [];
     public tipoLugar      = [];
@@ -19,6 +18,7 @@ export class LugarService extends MatrizGlobal{
         private db: CIndexedDB
         ) {
         super(db,"detalle_lugar");
+        this.selected =  new DetalleLugar();
         this.getData();
     }
 
@@ -37,18 +37,23 @@ export class LugarService extends MatrizGlobal{
     }
 
     public find(_e, _tipo:string){
-        this.selected[_tipo] = _e;
+        if (typeof _e!=="undefined")
+            this.selected[_tipo] = _e;
+        else
+            this.selected[_tipo] = null;
+
         this.finded = this.detalleLugar.filter(object => {
             return object.tipoLugar === this.selected.tipoLugar && object.tipoZona === this.selected.tipoZona && object.dia === this.selected.dia
         });
+        console.log('DetalleLugar finded', this.finded, this.selected);
     }
     
 }
 
-export class Selected {
+export class DetalleLugar {
 
-    public tipoLugar: string=null;
-    public tipoZona: string=null;
-    public dia: string=null;
+    public tipoLugar: string = null;
+    public tipoZona: string = null;
+    public dia: string = null;
 
 }

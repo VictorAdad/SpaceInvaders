@@ -108,11 +108,9 @@ export class TrataPersonas {
         }
 
 
-        this.tipo            =
-            _optionsRelacion.matrizTipoTransportacion.finded[0].tipo;
+        this.tipo = _object.tipo;
 
-        this.transportacion  =
-            _optionsRelacion.matrizTipoTransportacion.finded[0].transportacion;
+        this.transportacion  = _object.transportacion;
 
     }
 

@@ -17,6 +17,10 @@ export class MatrizCalibreMecanismo extends MatrizGlobal{
     public validate(_object: any, _selected: any): boolean{
         return (_object.mecanismo === _selected.mecanismo && _object.calibre === _selected.calibre);
     }
+
+    public clean(){
+        this.selected = new CalibreMecanismo();
+    }
 }
 
 export class CalibreMecanismo {

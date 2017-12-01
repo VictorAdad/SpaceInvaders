@@ -20,6 +20,10 @@ export class MatrizClaseArma extends MatrizGlobal{
         // console.log(_object.claseArma === _selected.claseArma && _object.tipo === _selected.tipo && _object.subtipo === _selected.subtipo);
         return (_object.claseArma === _selected.claseArma && _object.tipo === _selected.tipo && _object.subtipo === _selected.subtipo);
     }
+
+    public clean(){
+        this.selected = new ClaseArma();
+    }
 }
 
 export class ClaseArma {
