@@ -265,7 +265,6 @@ export class DatePicker implements OnInit, ControlValueAccessor {
                 if (this.selectedYear == xdate) {
                     if (this.selectedMonth <= ydate) {
                         if (this.selectedDay <= xday ) {
-                            console.log('hollaa XD', xday);
                             this.date = new Date(this.date.setDate(this.selectedDay));  
                             if(this.settings.closeOnSelect){
                                 this.popover = false;
@@ -293,18 +292,19 @@ export class DatePicker implements OnInit, ControlValueAccessor {
     setYear(evt:any){
         this.selectedYear = parseInt(evt.target.getAttribute('id'));
         var ydate = this.today.getFullYear();
-
-        if (this.validateDays == 'post') {
-            if (this.selectedYear <= ydate) {
+        if(evt.target.innerHTML && !isNaN(evt.target.innerHTML) ){
+            if (this.validateDays == 'post') {
+                if (this.selectedYear <= ydate) {
+                    this.date = new Date(this.date.setFullYear(this.selectedYear)); 
+                    this.yearView = !this.yearView;
+                    this.generateDays();
+                }
+            }else{
                 this.date = new Date(this.date.setFullYear(this.selectedYear)); 
                 this.yearView = !this.yearView;
                 this.generateDays();
             }
-        }else{
-            this.date = new Date(this.date.setFullYear(this.selectedYear)); 
-            this.yearView = !this.yearView;
-            this.generateDays();
-        }
+        }    
     }
     setMonth(evt:any){
         this.selectedMonth = this.settings.cal_months_labels_short.indexOf(evt.target.getAttribute('id'));
