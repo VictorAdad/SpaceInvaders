@@ -106,10 +106,14 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         this.validateForm(this.form);
     }
 
+    ngOnDestroy(){
+        this.armaServ.claseArma.clean();
+        this.armaServ.calibreMecanismo.clean();
+    }
+
     public save(_valid:boolean, _model:any){
         return new Promise<any>((resolve, reject) => {
             if(this.onLine.onLine){
-                console.log('Arma Serv', this.armaServ);
                 _model.caso.id             = this.casoId;
                 if(this.armaServ.claseArma.finded[0])
                     _model.claseArma.id        = this.armaServ.claseArma.finded[0].id

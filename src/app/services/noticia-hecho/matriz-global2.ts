@@ -31,6 +31,7 @@ export class MatrizGlobal {
                     && String(attr) !== 'db'
                     && String(attr) !== 'catalogo'
                     && String(attr) !== 'filterBy'
+                    && String(attr) !== 'clean'
                     && String(attr) !== 'superDb'){
                     this[String(attr)] = this.getUniques(this.objects, attr);
                 }
