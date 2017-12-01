@@ -19,16 +19,24 @@
         <mat-cell *matCellDef="let element"> {{element.nameEcm}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="procedimiento">
-        <mat-header-cell *matHeaderCellDef> Procedimiento </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.procedimiento}} </mat-cell>
-    </ng-container>
-
     <ng-container matColumnDef="fechaCreacion">
         <mat-header-cell *matHeaderCellDef> Fecha de creación </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.created| date:'MM/dd/yyyy'}} </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <button 
+                mat-raised-button
+                color="accent"
+                [disabled]="documentos[element.id] ? !documentos[element.id]['validate'] : false"
+                (click)="downloadFile(element, element.contentType)">
+                {{ documentos[element.id] ? !documentos[element.id]['validate'] ? 'Generando PDF...': 'Desacargar' : 'Descargar' }}
+            </button>
+        </mat-cell>
+    </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"  (click)="downloadFile(row, row.contentType)"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" ></mat-row>
   </mat-table>
