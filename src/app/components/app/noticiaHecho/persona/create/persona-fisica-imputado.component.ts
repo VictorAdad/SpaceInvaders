@@ -559,7 +559,10 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     save(valid : any, _model : any){
         return new Promise<any>((resolve, reject) => {
 
-            console.log('-> Form', this.form);
+            console.log('%cSave@Model','color:cyan;',_model);
+            if (!_model["edad"]){//quiere decir que solo viene la edad calculada
+                _model["edad"]=this.globals.form.controls.edad["value"];
+            }
 
             var buscar=[];
             var obj=this;
@@ -913,8 +916,10 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
     edit(valid : any, _model : any){
         return new Promise((resolve,reject)=>{
-            console.log("Modelo a guardar:",_model);
-
+            console.log('%cEdit@Model','color:cyan;',_model);
+            if (!_model["edad"]){//quiere decir que solo viene la edad calculada
+                _model["edad"]=this.globals.form.controls.edad["value"];
+            }
             var buscar=[];
             var obj=this;
 
