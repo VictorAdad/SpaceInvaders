@@ -255,22 +255,30 @@ export class DatePicker implements OnInit, ControlValueAccessor {
         var ydate = this.today.getMonth();
         var xdate = this.today.getFullYear();
         var xday = this.today.getDate();
-        this.selectedMonth = this.today.getMonth();
         this.selectedDay = parseInt(evt.target.innerHTML);
         if (!this.selectedYear) {
             this.selectedYear = this.today.getFullYear();
         }
+        if (!this.selectedMonth) {
+            this.selectedMonth = this.today.getMonth();
+        }
         if(evt.target.innerHTML && !isNaN(evt.target.innerHTML) ){
             if (this.validateDays == 'post') {
                 if (this.selectedYear == xdate) {
-                    if (this.selectedMonth <= ydate) {
-                        if (this.selectedDay <= xday ) {
+                    if (this.selectedMonth == ydate) {
+                        if (this.selectedDay <= xday) {
                             this.date = new Date(this.date.setDate(this.selectedDay));  
                             if(this.settings.closeOnSelect){
                                 this.popover = false;
                                 this.onDateSelect.emit(this.date);
                             }    
                         }            
+                    }else if(this.selectedMonth < ydate){
+                        this.date = new Date(this.date.setDate(this.selectedDay));  
+                            if(this.settings.closeOnSelect){
+                                this.popover = false;
+                                this.onDateSelect.emit(this.date);
+                            }    
                     }                    
                 }else{
                     this.date = new Date(this.date.setDate(this.selectedDay));  
