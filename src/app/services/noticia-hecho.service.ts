@@ -240,7 +240,7 @@ export class NoticiaHechoService {
             for (var i in _data){      // code...
                 let object=_data[i];
                 let clase = object.claseArma != null  ? object.claseArma.claseArma  : '';
-                let tipo = object.claseArma != null  ? object.claseArma.tipo  : '';
+                let tipo = object.claseArma.tipo != null  ? ' - '+ object.claseArma.tipo  : '';
                 options.push({value: object.id, label: clase+" "+tipo});
             }
         }
