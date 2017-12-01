@@ -25,6 +25,7 @@ export class DetalleCasoComponent implements OnInit{
 	public delitos:DelitoCaso[];
 	public predenuncia:Predenuncia;
 	hasPredenuncia:boolean=false;
+	hasAcuerdoInicio:boolean=false;
     hasRelacionVictimaImputado:boolean=false;
 
 	constructor(
@@ -50,8 +51,9 @@ export class DetalleCasoComponent implements OnInit{
 		if(this.onLine.onLine){
 			this.http.get('/v1/base/casos/'+this.id).subscribe((response) => {
 				this.caso = response as Caso;
-				this.hasPredenuncia=this.caso.hasPredenuncia;
-				this.hasRelacionVictimaImputado=this.caso.hasRelacionVictimaImputado;
+				this.hasPredenuncia = this.caso.hasPredenuncia;
+				this.hasAcuerdoInicio = this.caso.hasAcuerdoInicio;
+				this.hasRelacionVictimaImputado = this.caso.hasRelacionVictimaImputado;
                 // console.log(this.caso)
             });
 			this.http.get('/v1/base/personas-casos/casos/'+this.id+'/page').subscribe((response) => {
