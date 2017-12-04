@@ -390,6 +390,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         if (value=="Moral"){
             this.form.controls.razonSocial.enable();
             this.globals.maxRFC = 12;
+            this.validateForm(this.form);
         }
         else{
             this.form.controls.razonSocial.disable();
