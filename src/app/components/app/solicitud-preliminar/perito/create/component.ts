@@ -20,6 +20,7 @@ import { GlobalService } from "@services/global.service";
 import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
+import { Logger } from "@services/logger.service";
 
 @Component({
 	templateUrl: './component.html',
@@ -46,11 +47,11 @@ export class PeritoCreateComponent {
     this.solicitudId= model.id;
     this.isPericiales = model.tipo === 'Periciales'
     this.model=model
-	  console.log(model);
+	  Logger.log(model);
   }
   pericialesUpdate(bool: any) {
     this.isPericiales= bool;
-	  console.log(bool);
+	  Logger.log(bool);
   }
 
 }
@@ -93,10 +94,10 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 		this.route.params.subscribe(params => {
 			if (params['casoId'])
 				this.casoId = +params['casoId'];
-			console.log('casoId', this.casoId);
+			Logger.log('casoId', this.casoId);
 			if (params['id']) {
 				this.id = +params['id'];
-				console.log('id', this.id);
+				Logger.log('id', this.id);
 				if(this.onLine.onLine){
 					this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 	          			delete response.hechosNarrados;
@@ -156,7 +157,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 		_model.caso.id = this.casoId;
 		return new Promise<any>(
 			(resolve, reject) => {
-				console.log('-> Perito@save()', _model);
+				Logger.log('-> Perito@save()', _model);
 				this.http.post(this.apiUrl, _model).subscribe(
 					(response) => {
 						if (this.onLine.onLine) {
@@ -196,7 +197,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 						}
 					},
 					(error) => {
-						console.error('Error', error);
+						Logger.error('Error', error);
 						reject(error);
 					}
 				);
@@ -205,12 +206,12 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	}
 
 	public edit(_valid: any, _model: any){
-		console.log('-> AcuerdoGeneral@edit()', _model);
+		Logger.log('-> AcuerdoGeneral@edit()', _model);
 		return new Promise<any>(
 			(resolve, reject) => {
 				this.http.put(this.apiUrl + '/' + this.id, _model).subscribe(
 					response => {
-						console.log('-> Registro actualizado', response);
+						Logger.log('-> Registro actualizado', response);
 						if (this.id) {
 							this.router.navigate(['/caso/' + this.casoId + '/perito']);
 						}
@@ -223,12 +224,12 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	}
 
 	public fillForm(_data) {
-		console.log('_data1', _data);
+		Logger.log('_data1', _data);
 		for (var propName in _data) {
 			if (_data[propName] === null || _data[propName] === undefined)
 				delete _data[propName];
 		}
-		console.log('_data2', _data);
+		Logger.log('_data2', _data);
 		this.form.patchValue({
 			tipo: _data.tipo
 		});
@@ -297,7 +298,7 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
 }
 
   ngOnInit() {
-      console.log('-> Data source ', this.object);
+      Logger.log('-> Data source ', this.object);
       if(this.object.documentos){
           this.dataSource = this.source;
           for (let object of this.object.documentos) {
@@ -331,7 +332,7 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
   }
 
   public setData(_object){
-      console.log('setData()');
+      Logger.log('setData()');
       this.data.push(_object);
       this.subject.next(this.data);
   }

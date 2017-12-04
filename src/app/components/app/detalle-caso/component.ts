@@ -8,7 +8,7 @@ import { DelitoCaso } from '@models/delitoCaso';
 import { Predenuncia } from '@models/predenuncia';
 import { AuthenticationService } from '@services/auth/authentication.service';
 import { CIndexedDB } from '@services/indexedDB';
-
+import { Logger } from "@services/logger.service";
 
 @Component({
 	templateUrl:'./component.html'
@@ -54,31 +54,31 @@ export class DetalleCasoComponent implements OnInit{
 				this.hasPredenuncia = this.caso.hasPredenuncia;
 				this.hasAcuerdoInicio = this.caso.hasAcuerdoInicio;
 				this.hasRelacionVictimaImputado = this.caso.hasRelacionVictimaImputado;
-                // console.log(this.caso)
+                // Logger.log(this.caso)
             });
 			this.http.get('/v1/base/personas-casos/casos/'+this.id+'/page').subscribe((response) => {
                 this.involucrados = response.data as Persona[];    
-                // console.log(this.involucrados)
+                // Logger.log(this.involucrados)
             });
 			this.http.get('/v1/base/delitos-casos/casos/'+this.id+'/page').subscribe((response) => {
                 this.delitos = response.data as DelitoCaso[];    
-                // console.log(this.delitos)
+                // Logger.log(this.delitos)
             });  
 			/*this.http.get('/v1/base/predenuncias/casos/'+this.id).subscribe((response) => {
                 this.predenuncia = response.data as Predenuncia;    
-                console.log(this.predenuncia)
+                Logger.log(this.predenuncia)
             });  */
 
         }else{
         	this.db.get("casos", this.id).then(
         		t => {
-        			// console.log('T', t);
+        			// Logger.log('T', t);
         			let relaciones = t['tipoRelacionPersonas'].filter(object => object['tipo'] === 'Imputado');
             		this.caso = t as Caso;
 					this.hasPredenuncia = (typeof t['predenuncias'] !== 'undefined');
 					this.hasRelacionVictimaImputado = (relaciones.length > 0);
 
-					// console.log('Predenuncia', this.hasPredenuncia);
+					// Logger.log('Predenuncia', this.hasPredenuncia);
                 }
             );
         }    

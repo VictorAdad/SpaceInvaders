@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter , OnInit, AfterViewInit, ViewChild} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { BaseInputComponent } from '../base-input.component';
+import { Logger } from "@services/logger.service";
 
 
 @Component({
@@ -29,14 +30,14 @@ export class CurpRfcComponent extends BaseInputComponent implements OnInit{
 
 
 	ngOnInit(){
-		// console.log(this);
+		// Logger.log(this);
 		this.control = this.group.get(this.name) as FormControl;
 		this.control.valueChanges.subscribe(this.validate.bind(this));
 	}
 
 
 	public validate(_value){
-		// console.log('CURP RFC validate() ', _value.length);
+		// Logger.log('CURP RFC validate() ', _value.length);
 		_value = _value.toUpperCase();
 		if (_value != null){
 			if(_value.length > 0)

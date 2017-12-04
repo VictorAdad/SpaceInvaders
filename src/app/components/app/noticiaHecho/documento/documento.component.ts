@@ -17,6 +17,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../global.component';
+import { Logger } from "@services/logger.service";
 
 
 @Component({
@@ -53,11 +54,11 @@ export class DocumentoComponent extends FormatosGlobal{
   }
 
   ngOnInit() {
-    console.log('-> Object ', this.object);
+    Logger.log('-> Object ', this.object);
     this.route.parent.params.subscribe(params => {
-      console.log('id',params['id']);
+      Logger.log('id',params['id']);
             if(params['id']){
-              console.log('iffff')
+              Logger.log('iffff')
               this.id=params['id'];
               this.urlUpload = '/v1/documentos/casos/save/'+this.id;
               if (this.onLine.onLine){
@@ -66,7 +67,7 @@ export class DocumentoComponent extends FormatosGlobal{
                 this.http.get('/v1/base/casos/'+this.id).subscribe(response=>{
                   this.object=response;
                   this.data=this.object.documentos
-                  console.log('-> Object ', this.object);
+                  Logger.log('-> Object ', this.object);
 
                   this.formData.append('caso.id', this.id.toString());
 
@@ -113,7 +114,7 @@ export class DocumentoComponent extends FormatosGlobal{
   }
 
   download(row){
-    console.log(row);
+    Logger.log(row);
     if (!this.onLine.onLine){
       this.db.get("blobs",row.blob).then(t=>{
         var b=this.dataURItoBlob(t["blob"].split(',')[1], row.contentType );
@@ -129,20 +130,20 @@ export class DocumentoComponent extends FormatosGlobal{
 
   public cargaArchivos(_archivos){
     if(_archivos){
-    console.log('cargando archivos',_archivos)
+    Logger.log('cargando archivos',_archivos)
     let archivos=_archivos.saved
      for (let object of archivos) {
           this.data.push(object);
           this.subject.next(this.data);
       }
       let data_slice=this.data;
-      console.log(this.data);
+      Logger.log(this.data);
       if(this.pageSize*this.pageIndex+this.pageSize<=this.data.length)
       this.dataSource = new TableService(this.paginator, data_slice.slice(this.pageSize*this.pageIndex,this.pageSize));
      else{
      this.dataSource = new TableService(this.paginator, data_slice.slice(this.pageSize*this.pageIndex,this.data.length));
       }
-      console.log(this.data.length);
+      Logger.log(this.data.length);
       this.pag = this.pag+_archivos.saved.length;
     }else{
       this.cargaArchivosOffline();
@@ -150,7 +151,7 @@ export class DocumentoComponent extends FormatosGlobal{
   }
 
   public setData(_object){
-      console.log('setData()');
+      Logger.log('setData()');
       this.data.push(_object);
       this.subject.next(this.data);
       this.dataSource = new TableService(this.paginator, this.data);
@@ -160,17 +161,17 @@ export class DocumentoComponent extends FormatosGlobal{
     if(showAll.checked){
       this.isShowAll=true;
      this.data= [];
-      console.log('mostrar',showAll);
+      Logger.log('mostrar',showAll);
       this.http.get('/v1/base/casos/'+this.id+'/documentos').subscribe((response) => {
-       console.log(response)
+       Logger.log(response)
        let keys= Object.keys(response)
        keys.forEach(key=> {
-          console.log(response[key]);
+          Logger.log(response[key]);
           let documentArray=response[key];
           let procedimiento= this.procedimientoByKey(key);
           documentArray.forEach(document => {
             document.procedimiento=procedimiento
-            console.log(document)
+            Logger.log(document)
             this.data.push(document);
           });
           });
@@ -241,14 +242,14 @@ export class DocumentoComponent extends FormatosGlobal{
   public changePage(_e){
     this.pageIndex= _e.pageIndex;
     this.pageSize=_e.pageSize;
-    console.log('page index',this.pageIndex)
+    Logger.log('page index',this.pageIndex)
     if(!this.isShowAll){
       if(this.onLine.onLine){
          this.page('/v1/documentos/casos/'+this.id+'/page?p='+_e.pageIndex+'&tr='+_e.pageSize);
       }
     }else{
       let data_slice=this.data;
-      console.log(data_slice.slice(this.pageSize*this.pageIndex,this.pageSize))
+      Logger.log(data_slice.slice(this.pageSize*this.pageIndex,this.pageSize))
       if(this.pageSize*this.pageIndex+this.pageSize<=this.data.length)
       this.dataSource = new TableService(this.paginator, data_slice.slice(this.pageSize*this.pageIndex,this.pageSize*this.pageIndex+this.pageSize));
       else{
@@ -267,7 +268,7 @@ export class DocumentoComponent extends FormatosGlobal{
 				this.data.push(object);
 				this.dataSource = new TableService(this.paginator, this.data);
 			});
-			console.log('Datos finales', this.dataSource);
+			Logger.log('Datos finales', this.dataSource);
 		});
 	}
 

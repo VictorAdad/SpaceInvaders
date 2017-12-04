@@ -7,6 +7,7 @@ import * as JSZipUtils from 'jszip-utils';
 import * as docxtemplater from 'docxtemplater';
 import { forEach } from '@angular/router/src/utils/collection';
 import { environment } from '../../../environments/environment';
+import { Logger } from "@services/logger.service";
 
 @Injectable()
 export class FormatosService {
@@ -17,9 +18,9 @@ export class FormatosService {
 	}
 
     public getFormatos(){
-        // console.log('Formatos@getFormatos()');
+        // Logger.log('Formatos@getFormatos()');
         for(let attr in this.formatos){
-            // console.log(attr);
+            // Logger.log(attr);
             if(
                 String(attr) !== 'constructor',
                 String(attr) !== 'data',
@@ -36,11 +37,11 @@ export class FormatosService {
                 }
             }
         }
-        // console.log(this.formatos);
+        // Logger.log(this.formatos);
     }
 
     public replaceWord(_name:string, _formato: string){
-        console.log('-> Response', this.formatos[_formato]);
+        Logger.log('-> Response', this.formatos[_formato]);
         let doc = new docxtemplater();
         let reader = new FileReader();
         doc.loadZip(this.formatos[_formato].file);
@@ -56,7 +57,7 @@ export class FormatosService {
                 stack: error.stack,
                 properties: error.properties,
             }
-            console.log(JSON.stringify({error: e}));
+            Logger.log(JSON.stringify({error: e}));
             // The error thrown here contains additional information when logged with JSON.stringify (it contains a property object).
             throw error;
         }
@@ -238,7 +239,7 @@ export class FormatosLocal {
     }
 
     public setDataF1003(_data){
-        console.log('Formatos@setDataF1003', _data);
+        Logger.log('Formatos@setDataF1003', _data);
         this.setCasoInfo(_data);
         this.setVictimaInfo(_data);
         this.data['xFolioDocumento']     = _data.predenuncias.noFolioConstancia ? _data.predenuncias.noFolioConstancia  : '';
@@ -255,7 +256,7 @@ export class FormatosLocal {
     }
 
     public setDataF1004(_data){
-        console.log('Formatos@setDataF1004', _data);
+        Logger.log('Formatos@setDataF1004', _data);
         this.setCasoInfo(_data);
         // this.data['xNombreUsuario']           = _data.
 
@@ -325,7 +326,7 @@ export class FormatosLocal {
 
 
 public setDataF1008(_data){
-  console.log('Formatos@setDataF1008', _data);
+  Logger.log('Formatos@setDataF1008', _data);
 
   this.data['xNUC']= _data.nuc? _data.nuc:'';
   this.data['xNIC']= _data.nic? _data.nic:'';
@@ -377,7 +378,7 @@ public setDataF1008(_data){
 }
 
 public setDataF1009(_data,_id_solicitud){
-  console.log('Formatos@setDataF1009', _data);
+  Logger.log('Formatos@setDataF1009', _data);
   let imputado;
   let victima = _data.findVictima();
   let nombreVictima =`${victima.persona.nombre} ${victima.persona.paterno} ${victima.persona.materno ? victima.persona.materno :'' }`;
@@ -387,7 +388,7 @@ public setDataF1009(_data,_id_solicitud){
   _data.personaCasos.forEach(persona => {
     if(persona.tipoInterviniente.tipo==='Imputado'){
         imputado=persona;
-        console.log(imputado)
+        Logger.log(imputado)
     }
 
   });
@@ -418,7 +419,7 @@ public setDataF1009(_data,_id_solicitud){
 }
 
 public setDataF1010(_data,_id_solicitud){
-  console.log('Formatos@setDataF1010', _data);
+  Logger.log('Formatos@setDataF1010', _data);
   let imputado;
   let victima = _data.findVictima();
   let nombreVictima =`${victima.persona.nombre} ${victima.persona.paterno} ${victima.persona.materno ? victima.persona.materno :'' }`;
@@ -428,7 +429,7 @@ public setDataF1010(_data,_id_solicitud){
   _data.personaCasos.forEach(persona => {
     if(persona.tipoInterviniente.tipo==='Imputado'){
         imputado=persona;
-        console.log(imputado)
+        Logger.log(imputado)
     }
   });
 
@@ -462,7 +463,7 @@ public setDataF1010(_data,_id_solicitud){
 
 
 public setDataF1011(_data,_id_solicitud){
-  console.log('Formatos@setDataF1010', _data);
+  Logger.log('Formatos@setDataF1010', _data);
   let imputado;
   let victima = _data.findVictima();
   let nombreVictima =`${victima.persona.nombre} ${victima.persona.paterno} ${victima.persona.materno ? victima.persona.materno :'' }`;
@@ -472,7 +473,7 @@ public setDataF1011(_data,_id_solicitud){
   _data.personaCasos.forEach(persona => {
     if(persona.tipoInterviniente.tipo==='Imputado'){
         imputado=persona;
-        console.log(imputado)
+        Logger.log(imputado)
     }
   });
   _data.solicitudPrePolicias.forEach(solicitud => {
@@ -499,7 +500,7 @@ public setDataF1011(_data,_id_solicitud){
   this.data['xAnio']                   = date? date.getFullYear()+'' : '';
   this.data['xActuacionesSolicitadas'] =  typeof policia.actuacionesSolicitadas != 'undefined' ? policia.actuacionesSolicitadas: '';
   this.data['xAdscripcionEmisor']      = '';
-  console.log('formato',this.data)
+  Logger.log('formato',this.data)
 
 }
 

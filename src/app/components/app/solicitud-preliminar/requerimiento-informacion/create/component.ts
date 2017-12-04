@@ -17,6 +17,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl:'./component.html',
@@ -40,7 +41,7 @@ export class RequerimientoInformacionCreateComponent {
   modelUpdate(model: any) {
     this.solicitudId= model.id;
     this.model=model
-  console.log(model);
+  Logger.log(model);
   }
 
 }
@@ -89,12 +90,12 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 		this.route.params.subscribe(params => {
 			if (params['casoId'])
 				this.casoId = +params['casoId'];
-			console.log('casoId', this.casoId);
+			Logger.log('casoId', this.casoId);
 			if (params['id']) {
 				this.id = +params['id'];
-				console.log('id', this.id);
+				Logger.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-					console.log('Get reg ',response),
+					Logger.log('Get reg ',response),
 					this.fillForm(response);
 					this.modelUpdate.emit(response);
 					this.form.disable();
@@ -106,22 +107,22 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 	public save(valid: any, _model: any) {
 
 		_model.caso.id = this.casoId;
-		console.log('-> RequerimientoInformacion@save()', _model);
+		Logger.log('-> RequerimientoInformacion@save()', _model);
 
 		return new Promise<any>(
             (resolve, reject) => {
 				this.http.post(this.apiUrl, _model).subscribe(
 
 					(response) => {
-						console.log(response);
-						console.log('here');
+						Logger.log(response);
+						Logger.log('here');
 						this.id=response.id;
 						this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion/' + this.id + '/edit']);
 						resolve('Solicitud de requerimiento de información creada con éxito');
 
 					},
 					(error) => {
-						console.error('Error', error);
+						Logger.error('Error', error);
 						reject(error);
 					}
 				);
@@ -131,11 +132,11 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 	}
 
 	public edit(_valid: any, _model: any) {
-		console.log('-> RequerimientoInformacion@edit()', _model);
+		Logger.log('-> RequerimientoInformacion@edit()', _model);
 		return new Promise<any>(
             (resolve, reject) => {
 				this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
-					console.log('-> Registro acutualizado', response);
+					Logger.log('-> Registro acutualizado', response);
 
 					this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion']);
 					resolve('Solicitud de requerimiento de información actualizada con éxito');
@@ -148,7 +149,7 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 	public fillForm(_data) {
 		_data.fechaReq = new Date(_data.fechaReq);
 		this.form.patchValue(_data);
-		console.log(_data);
+		Logger.log(_data);
 	}
 }
 
@@ -181,7 +182,7 @@ export class DocumentoRequerimientoInformacionComponent extends FormatosGlobal{
   }
 
   ngOnInit() {
-      console.log('-> Object ', this.object);
+      Logger.log('-> Object ', this.object);
       if(this.object.documentos){
           this.dataSource = this.source;
           for (let object of this.object.documentos) {
@@ -209,7 +210,7 @@ export class DocumentoRequerimientoInformacionComponent extends FormatosGlobal{
   }
 
   public setData(_object){
-      console.log('setData()');
+      Logger.log('setData()');
       this.data.push(_object);
       this.subject.next(this.data);
   }

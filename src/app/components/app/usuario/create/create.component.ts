@@ -5,6 +5,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { Usuario } from '@models/usuario';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { ResolveEmit,ConfirmSettings} from '@utils/alert/alert.service';
+import { Logger } from "@services/logger.service";
 
 @Component({
   selector: 'arma-create',
@@ -82,18 +83,18 @@ export class UsuarioCreateComponent{
       this.isEditForm ?  control.disable(): control.enable();
       });
       // traer el id desde el servicio
-      console.log('-> ID: ', id);
+      Logger.log('-> ID: ', id);
 
     }
 
     public save(valid : any, model : any):void{
-         console.log(this._confirmation);
+         Logger.log(this._confirmation);
          let resolved=this._confirmation.create('','¿Estás seguro de continuar con el registro de este usuario?',this.settings)
-         .subscribe((ans: ResolveEmit) => ans.resolved?console.log('Usuario@save()'):console.log('cancel'));
+         .subscribe((ans: ResolveEmit) => ans.resolved?Logger.log('Usuario@save()'):Logger.log('cancel'));
     }
     public edit(valid : any, model : any):void{
          let resolved=this._confirmation.create('','¿Estás seguro guardar los cambios de este usuario?',this.settings)
-         .subscribe((ans: ResolveEmit) => ans.resolved?console.log('Usuario@edit()'):console.log('cancel'));
+         .subscribe((ans: ResolveEmit) => ans.resolved?Logger.log('Usuario@edit()'):Logger.log('cancel'));
 
     }
 

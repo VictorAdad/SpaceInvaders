@@ -9,6 +9,7 @@ import { HttpService} from '@services/http.service';
 import { OnLineService} from '@services/onLine.service';
 import { PersonaService } from '@services/noticia-hecho/persona/persona.service';
 import { SelectsService} from '@services/selects.service';
+import { Logger } from "@services/logger.service";
 
 
 @Component({
@@ -35,7 +36,7 @@ export class LocalizacionComponent{
 
     ngOnInit(){
         
-        console.log('Options: ', this.options);
+        Logger.log('Options: ', this.options);
     }
 
     changePais(id){
@@ -74,18 +75,18 @@ export class LocalizacionComponent{
 
 
     addLocalizacion(_e){
-        console.log(this.globals.form.value);
+        Logger.log(this.globals.form.value);
         let form = LosForm.createFormLocalizacion();
         this.localizaciones.push(null);
         let localizaciones = this.globals.form.get('localizacionPersona') as FormArray;
         localizaciones.push(form);
-        console.log(localizaciones.value);
+        Logger.log(localizaciones.value);
     }
 
     changeTipoResida(value,i){
-        console.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i] );
-        console.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i].controls );
-        console.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i].controls.tipoResidencia );
+        Logger.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i] );
+        Logger.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i].controls );
+        Logger.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i].controls.tipoResidencia );
         this.globals.form.controls.localizacionPersona["controls"][i].controls.tipoRecidencia.patchValue(value);
     }
 
@@ -113,8 +114,8 @@ export class LocalizacionFormComponent{
     }
 
     ngOnInit(){
-        console.log('->LocalizacionForm Globals', this.globals);
-        console.log('->LocalizacionForm IndexForm', this.indexForm);
+        Logger.log('->LocalizacionForm Globals', this.globals);
+        Logger.log('->LocalizacionForm IndexForm', this.indexForm);
         this.options = new Options(this.http, this.onLine, this.db, this.select);
     }
 
@@ -150,9 +151,9 @@ export class LocalizacionFormComponent{
     }
 
     changeTipoResida(value,i){
-        console.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i] );
-        console.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i].controls );
-        console.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i].controls.tipoResidencia );
+        Logger.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i] );
+        Logger.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i].controls );
+        Logger.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i].controls.tipoResidencia );
         this.globals.form.controls.localizacionPersona["controls"][i].controls.tipoRecidencia.patchValue(value);
     }
 

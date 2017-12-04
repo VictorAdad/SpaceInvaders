@@ -1,5 +1,6 @@
 import { CIndexedDB } from '@services/indexedDB';
 import { MatrizGlobal } from '../matriz-global2';
+import { Logger } from "@services/logger.service";
 
 export class MatrizClaseArma extends MatrizGlobal{
 
@@ -16,8 +17,8 @@ export class MatrizClaseArma extends MatrizGlobal{
     }
 
     public validate(_object: any, _selected: any): boolean{
-        // console.log('object', _object, 'Selected', _selected);
-        // console.log(_object.claseArma === _selected.claseArma && _object.tipo === _selected.tipo && _object.subtipo === _selected.subtipo);
+        // Logger.log('object', _object, 'Selected', _selected);
+        // Logger.log(_object.claseArma === _selected.claseArma && _object.tipo === _selected.tipo && _object.subtipo === _selected.subtipo);
         return (_object.claseArma === _selected.claseArma && _object.tipo === _selected.tipo && _object.subtipo === _selected.subtipo);
     }
 

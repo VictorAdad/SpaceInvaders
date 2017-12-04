@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter , OnInit, AfterViewInit, ViewChild, Renderer} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Logger } from "@services/logger.service";
 
 @Component({
 	selector    : 'number',
@@ -32,7 +33,7 @@ export class NumberComponent implements OnInit{
 	}
 
 	ngOnInit(){
-    // console.log('-------------> ',this);
+    // Logger.log('-------------> ',this);
 
 	}
 
@@ -52,7 +53,7 @@ export class NumberComponent implements OnInit{
 
 	inputSlice(event){
 		if (this.decimal == true && (event.keyCode == 189 || event.keyCode == 69)) {
-			// console.log('Primera opcion');
+			// Logger.log('Primera opcion');
 			if(this.backupValue == null){
 				this.value = '0';	
 			}else{
@@ -61,7 +62,7 @@ export class NumberComponent implements OnInit{
 			return
 		}
 		if (this.decimal == false && (event.keyCode == 189 || event.keyCode == 69 || event.keyCode == 190)) {
-			// console.log('Segunda opcion');
+			// Logger.log('Segunda opcion');
 			if(this.backupValue == null){
 				this.value = '0';	
 			}else{

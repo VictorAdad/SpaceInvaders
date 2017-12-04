@@ -19,6 +19,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../global.component';
 import { Options } from './option';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl: './component.html',
@@ -41,7 +42,7 @@ export class AcuerdoInicioComponent {
     modelUpdate(model: any) {
       this.acuerdoId= model.id;
       this.model=model
-    console.log(model);
+    Logger.log(model);
     }
 
 }
@@ -123,7 +124,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
 
         Object.assign(this.model, _model);
         this.model.caso.id = this.casoId;
-        console.log('-> AcuerdoInicio@save()', this.model);
+        Logger.log('-> AcuerdoInicio@save()', this.model);
 
         return new Promise<any>(
             (resolve, reject) => {
@@ -131,7 +132,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
 
                     (response) => {
         				this.id=response.id;
-                        console.log(response);
+                        Logger.log(response);
                         if (this.casoId!=null) {
                             this.router.navigate(['/caso/' + this.casoId + '/acuerdo-inicio/'+this.id+'/view']);
                         }
@@ -141,7 +142,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
                         resolve('Acuerdo de inicio creado con éxito');
                     },
                     (error) => {
-                        console.error('Error', error);
+                        Logger.error('Error', error);
                         reject(error);
                     }
                 );
@@ -151,12 +152,12 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
     }
 
     public edit(_valid: any, _model: any) {
-        console.log('-> AcuerdoInicio@edit()', _model);
+        Logger.log('-> AcuerdoInicio@edit()', _model);
 
         return new Promise<any>(
             (resolve, reject) => {
                 this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
-                    console.log('-> Registro acutualizado', response);
+                    Logger.log('-> Registro acutualizado', response);
                     resolve('Acuerdo de inicio actualizado con éxito');
                 });
             }
@@ -213,7 +214,7 @@ export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
   }
 
   ngOnInit() {
-      console.log('-> Object ', this.object);
+      Logger.log('-> Object ', this.object);
       if(this.object.documentos){
           this.dataSource = this.source;
           for (let object of this.object.documentos) {
@@ -241,7 +242,7 @@ export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
   }
 
   public setData(_object){
-      console.log('setData()');
+      Logger.log('setData()');
       this.data.push(_object);
       this.subject.next(this.data);
   }

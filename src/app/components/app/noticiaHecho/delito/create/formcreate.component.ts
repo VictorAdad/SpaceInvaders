@@ -7,6 +7,7 @@ import { CIndexedDB } from '@services/indexedDB';
 import { HttpService } from '@services/http.service';
 import { Delito } from '@models/catalogo/delito';
 import { OnLineService } from '@services/onLine.service';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl: './formcreate.component.html',
@@ -68,12 +69,12 @@ export class FormCreateDelitoComponent {
             this.searchDelito="";
         if (this.onLine.onLine)
             this.http.get('/v1/catalogos/delitos/search?name='+this.searchDelito).subscribe(response => {
-                console.log('-> done buscar delito', response);
+                Logger.log('-> done buscar delito', response);
                 this.dataSource = new ExampleDataSource(response);
             });
         else
             this.tabla.searchInNotMatrx("delito",{nombre:this.searchDelito}, true).then(response=>{
-                console.log('-> done buscar delito', response, this.searchDelito);
+                Logger.log('-> done buscar delito', response, this.searchDelito);
                 this.dataSource = new ExampleDataSource(response);
             });
     }

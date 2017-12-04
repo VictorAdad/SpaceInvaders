@@ -19,6 +19,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
+import { Logger } from "@services/logger.service";
 
 @Component({
 	templateUrl: './component.html',
@@ -42,7 +43,7 @@ export class PoliciaCreateComponent {
   modelUpdate(model: any) {
     this.solicitudId= model.id;
     this.model=model
-  console.log(model);
+  Logger.log(model);
   }
 }
 
@@ -81,14 +82,14 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 		this.route.params.subscribe(params => {
 			if (params['casoId'])
 				this.casoId = +params['casoId'];
-			console.log('casoId', this.casoId);
+			Logger.log('casoId', this.casoId);
 			if (params['id']) {
 				this.id = +params['id'];
-				console.log('id', this.id);
+				Logger.log('id', this.id);
 
 				if(this.onLine.onLine){
 					this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-					  	console.log(response.data),
+					  	Logger.log(response.data),
 	            		this.fillForm(response);
 						this.modelUpdate.emit(response);
 						this.form.disable();
@@ -115,7 +116,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 
 		return new Promise<any>(
 			(resolve, reject) => {
-				console.log('-> Policia@save()', this.model);
+				Logger.log('-> Policia@save()', this.model);
 				this.http.post(this.apiUrl, this.model).subscribe(
 					(response) => {
 						if (this.onLine.onLine) {
@@ -154,7 +155,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 						}
 					},
 					(error) => {
-						console.error('Error', error);
+						Logger.error('Error', error);
 						reject(error);
 					}
 				);
@@ -164,19 +165,19 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 	}
 
 	public edit(_valid: any, _model: any) {
-		console.log('-> Policia@edit()', _model);
+		Logger.log('-> Policia@edit()', _model);
 		return new Promise<any>(
 			(resolve, reject) => {
 				this.http.put(this.apiUrl + '/' + this.id, _model).subscribe(
 					(response) => {
-						console.log('-> Registro acutualizado', response);
+						Logger.log('-> Registro acutualizado', response);
 						if(this.id!=null){
 							this.router.navigate(['/caso/' + this.casoId + '/policia']);
 						}
 						resolve('Solitud de policía actualizada con éxito');
 					},
 					(error) => {
-						console.error('Error', error);
+						Logger.error('Error', error);
 						reject(error);
 					}
 				);
@@ -186,7 +187,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 
 	public fillForm(_data) {
 		this.form.patchValue(_data);
-		console.log(_data);
+		Logger.log(_data);
 	}
 
 }
@@ -232,7 +233,7 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
 }
 
   ngOnInit() {
-      console.log('-> Object ', this.object);
+      Logger.log('-> Object ', this.object);
       if(this.object.documentos){
           this.dataSource = this.source;
           for (let object of this.object.documentos) {
@@ -264,7 +265,7 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
   }
 
   public setData(_object){
-      console.log('setData()');
+      Logger.log('setData()');
       this.data.push(_object);
       this.subject.next(this.data);
   }

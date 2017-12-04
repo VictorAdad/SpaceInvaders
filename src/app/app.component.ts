@@ -10,6 +10,7 @@ import { FormatosService } from '@services/formatos/formatos.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
 import { _config} from '@app/app.config';
+import { Logger } from '@services/logger.service';
 
 @Component({
   selector: 'app-root',
@@ -71,7 +72,7 @@ export class AppComponent {
     }
 
     cleanDB(){
-        console.log('cleanDB()');
+        Logger.log('cleanDB()');
         this.router.navigate(['/']);
         localStorage.setItem("initDB","false");
         localStorage.setItem("sincronizacion","false");
