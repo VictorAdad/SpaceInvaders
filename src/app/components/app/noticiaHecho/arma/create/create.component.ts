@@ -126,6 +126,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                     (response) => {
                         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/armas' ]);
                         resolve("Se agregó la arma con éxito");
+                        this.casoService.actualizaCaso();
                     },
                     (error) => {
                         reject(error);
@@ -203,6 +204,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                     this.http.put('/v1/base/armas/'+this.id, _model).subscribe((response) => {
                         console.log('-> Registro acutualizado', response);
                         resolve("Se actualizó la información del arma");
+                        this.casoService.actualizaCaso();
                     },e=>{
                         reject(e);
                     });

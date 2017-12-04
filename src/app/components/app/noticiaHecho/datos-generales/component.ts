@@ -196,6 +196,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
             if(this.onLine.onLine){
                 this.http.put('/v1/base/casos/'+this.id, _model).subscribe((response) => {
                     resolve("Caso actualizado");
+                    this.casoService.actualizaCaso();
                 },e=>{
                     reject(e);
                 });

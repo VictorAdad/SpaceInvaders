@@ -354,6 +354,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                     (response) => {
                         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/relaciones' ]);
                         resolve("Se creo la relación con éxito");
+                        this.casoService.actualizaCaso();
                     },
                     (error) => {reject(error)}
                 );
@@ -567,6 +568,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 this.http.put('/v1/base/detalle-delitos/'+_model.id, _model).subscribe((response) => {
                     console.log('-> Registro acutualizado', response);
                     resolve("Se actualizó la relación con éxito");
+                    this.casoService.actualizaCaso();
                 });
             }else{
                 let temId = Date.now();

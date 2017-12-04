@@ -755,6 +755,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         console.log(response);
                         resolve("Se creo la persona con éxito");
                         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas' ]);
+                        this.casoService.actualizaCaso();
                     },
                     (error) => {
                         console.error('Error', error);
@@ -839,6 +840,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     (response) => {
                         console.log("Editar Persona->",response);
                         resolve("Se actualizó la persona con éxito");
+                        this.casoService.actualizaCaso();
                         // this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas' ]);
                     },
                     (error) => {
