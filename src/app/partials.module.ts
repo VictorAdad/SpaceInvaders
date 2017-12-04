@@ -17,7 +17,9 @@ import { EmailComponent } from '@partials/form/email/email.component';
 import { DatePicker } from '@partials/form/fecha/datepicker.component';
 import { CurpRfcComponent } from '@partials/form/curp-rfc/component';
 import { IntComponent } from '@partials/form/int/int.component';
+import { PhoneComponent } from '@partials/form/phone/phone.component';
 import { BaseInputComponent } from '@partials/form/base-input.component';
+
 
 @NgModule()
 export class PartialsModule {}
@@ -41,5 +43,6 @@ export const partialsComponents = [
 	DatePicker,
 	CurpRfcComponent,
 	IntComponent,
+	PhoneComponent,
 	BaseInputComponent
 ];

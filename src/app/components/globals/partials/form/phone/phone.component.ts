@@ -3,15 +3,15 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { BaseInputComponent } from '../base-input.component';
 
 @Component({
-	selector    : 'int',
-  	templateUrl : './int.component.html'
+	selector    : 'phone',
+  	templateUrl : './phone.component.html'
 })
 
-export class IntComponent extends BaseInputComponent {
+export class PhoneComponent extends BaseInputComponent {
 
-	@Input() max :number = 12;
+	@Input() max :number = 20;
 
-	public regexINT: RegExp = /^\d+$/;
+	public regexPHONE: RegExp = /^[0-9()-\s]*$/;
 
 	constructor(public renderer : Renderer){
 		super(renderer)
@@ -34,8 +34,9 @@ export class IntComponent extends BaseInputComponent {
 	}
 
 	inputSlice(_value){
-		if (_value!=null && _value != '') {
-			if (!this.regexINT.test(_value)){
+		console.log('--------------->',this.backupValue, _value)
+		if (_value != null && _value != "") {
+			if (!this.regexPHONE.test(_value)){
 				this.control.setValue(this.backupValue);
 			}else{
 				this.backupValue = _value;
@@ -43,7 +44,7 @@ export class IntComponent extends BaseInputComponent {
 
 			if (_value.toString().length > this.max)
 				this.control.setValue(_value.toString().slice(0,this.max));
-		}else{
+		}else {
 			this.backupValue = _value;
 		}
 	}
