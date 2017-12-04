@@ -70,7 +70,7 @@ export class TransferirComponent{
         return new Promise<any>((resolve, reject) => {            
             this.http.post('/v1/base/titulares', _form).subscribe(
                 (response) => {
-                    this.router.navigate(['/caso/'+this.data.casoId+'/noticia-hecho/titulares' ]);
+                    this.router.navigate(['/' ]);
                     resolve("Se cambió de titular del caso");
                 },
                 (error) => {
