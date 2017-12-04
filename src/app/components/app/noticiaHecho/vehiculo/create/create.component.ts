@@ -302,6 +302,10 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             if (_data.marcaSubmarca){
                 _data["marca"]=_data.marcaSubmarca.marca;
                 _data["submarca"]=_data.marcaSubmarca.submarca;
+                let timer = Observable.timer(1);
+                timer.subscribe(t => {
+                  this.marcaChange(_data.marcaSubmarca.marca)
+                });
             }
             if (_data.motivoRegistroColorClase){
                 _data["clase"]=_data.motivoRegistroColorClase.clase;
@@ -322,8 +326,10 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     }
 
     public marcaChange(_event){
+        console.log('Marca Change',_event)
         this.vehiculoServ.marcaSubmarca.find(_event, 'marca');
         this.vehiculoServ.marcaSubmarca.filterBy(_event, 'marca', 'submarca');
+
     }
 
 }
