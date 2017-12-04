@@ -344,7 +344,7 @@
                                 name="efecto"
                                 [group]="formRelacion.efectoDetalle"
                                 [options]="optionsRelacion.matrizEfectoDetalle.efecto"
-                                (valueChange)="optionsRelacion.matrizEfectoDetalle.find($event, 'efecto')">
+                                (valueChange)="changeEfecto($event)">
 
                             </select2>
                         </div>
@@ -598,7 +598,7 @@
                                 name="conducta"
                                 [group]="formRelacion.hostigamiento"
                                 [options]="optionsRelacion.matrizConductaDetalle.conducta"
-                                (valueChange)="optionsRelacion.matrizConductaDetalle.find($event, 'conducta')">
+                                (valueChange)="changeConducta($event)">
                             </select2>
 
                         </div>

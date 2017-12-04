@@ -991,6 +991,16 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         return null;
     }
 
+    public changeEfecto(_event){
+        this.optionsRelacion.matrizEfectoDetalle.find(_event, 'efecto');
+        this.optionsRelacion.matrizEfectoDetalle.filterBy(_event, 'efecto', 'detalle');
+    }
+
+    public changeConducta(_event){
+        this.optionsRelacion.matrizConductaDetalle.find(_event, 'conducta')
+        this.optionsRelacion.matrizConductaDetalle.filterBy(_event, 'conducta', 'detalle')
+    }
+
 }
 
 
