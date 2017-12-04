@@ -31,7 +31,7 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col">
-                        <date-picker label="Fecha de nacimiento" name="fechaNacimiento" [group]="globals.form" (onDateSelect)="edad($event)"></date-picker>
+                        <date-picker label="Fecha de nacimiento" name="fechaNacimiento" [validateDays]="'post'" [group]="globals.form" (onDateSelect)="edad($event)"></date-picker>
                     </div>
                     <div class="col">
                       <number label="Edad" name="edad" hintStart="Campo obligatorio" [maxValue]="99" [max]="2" [group]="globals.form"></number>
