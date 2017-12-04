@@ -84,6 +84,8 @@ export class MatrizGlobal {
         if(_val){
             let filtered = this.objects.filter(o => o[_filter] === _val);
             this[_attr] = this.getUniques(filtered, _attr);
+        }else{
+            this[_attr] = [];
         }
     }
 
