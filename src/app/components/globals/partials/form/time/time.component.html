@@ -7,7 +7,7 @@
 				[(ngModel)]="value" 
 				(ngModelChange)="update($event)" 
 				name="{{name}}"
-				type="time"
+				type="text"
 				formControlName="{{name}}"  >
 			<mat-icon matSuffix *ngIf="sufix">{{ sufix }}</mat-icon>
 			<mat-hint align="start" *ngIf="hintStart">{{hintStart}} </mat-hint>
