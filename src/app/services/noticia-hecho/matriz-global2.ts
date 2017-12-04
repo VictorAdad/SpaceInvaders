@@ -1,5 +1,6 @@
 import { MOption } from '@partials/form/select2/select2.component';
 import { CIndexedDB } from '@services/indexedDB';
+import { Logger } from "@services/logger.service";
 
 export class MatrizGlobal {
 
@@ -71,7 +72,7 @@ export class MatrizGlobal {
         this.finded = this.objects.filter(object => {
             return this.validate(object, this.selected);
         });
-        // console.log('Find', this);
+        // Logger.log('Find', this);
     }
 
     public validate(_object, _selected){
@@ -79,7 +80,7 @@ export class MatrizGlobal {
     }
 
     public filterBy(_val, _filter, _attr){
-        // console.log('Matriz@filter()', _val, _filter, _attr);
+        // Logger.log('Matriz@filter()', _val, _filter, _attr);
         if(_val){
             let filtered = this.objects.filter(o => o[_filter] === _val);
             this[_attr] = this.getUniques(filtered, _attr);

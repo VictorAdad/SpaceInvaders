@@ -11,6 +11,7 @@ import { CIndexedDB } from '@services/indexedDB';
 import { NoticiaHechoGlobal } from '../../../noticiaHecho/global';
 import { SelectsService} from '@services/selects.service';
 import 'rxjs/add/observable/of';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl: 'create.component.html'
@@ -65,7 +66,7 @@ export class estadosCreateComponent extends NoticiaHechoGlobal{
                         resolve('Registro editado con éxito');
                     },
                     error => {
-                        console.error('Error', error);
+                        Logger.error('Error', error);
                         reject('Ocurrió un error al guardar la información');
                     }
                 );
@@ -84,7 +85,7 @@ export class estadosCreateComponent extends NoticiaHechoGlobal{
                         resolve('Registro editado con éxito');
                     },
                     error => {
-                        console.error('Error', error);
+                        Logger.error('Error', error);
                         reject('Ocurrió un error al editar la información');
                     }
                 );

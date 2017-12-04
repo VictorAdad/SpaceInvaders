@@ -6,6 +6,7 @@ import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { Router } from '@angular/router';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl: 'component.html',
@@ -24,7 +25,7 @@ export class CalibreArmaComponent {
     
     setClickedRow(row) {
         this.selectedRow = row.id;
-        //console.log(row.calibre);
+        //Logger.log(row.calibre);
         this.router.navigate(['/calibre-arma/'+row.id+'/edit']);
     }
 

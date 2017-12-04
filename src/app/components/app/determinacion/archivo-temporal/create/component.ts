@@ -17,6 +17,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
+import { Logger } from "@services/logger.service";
 
 @Component({
 	templateUrl: './component.html',
@@ -40,7 +41,7 @@ export class ArchivoTemporalCreateComponent {
   modelUpdate(model: any) {
     this.archivoId= model.id;
     this.model=model
-  console.log(model);
+  Logger.log(model);
   }
 }
 
@@ -79,7 +80,7 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 			if (params['id']) {
 				this.id = +params['id'];
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-					console.log(response.data),
+					Logger.log(response.data),
             this.fillForm(response);
             this.modelUpdate.emit(response);
           });
@@ -92,13 +93,13 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 		this.model.caso.id = this.casoId;
 		//var _date = new Date();
 		//this.model.fechaCreacion = _date.toString();
-		console.log('-> ArchivoTemporal@save()', this.model);
+		Logger.log('-> ArchivoTemporal@save()', this.model);
 		return new Promise<any>(
             (resolve, reject) => {
 				this.http.post(this.apiUrl, this.model).subscribe(
 					(response) => {
 						this.id=response.id;
-						console.log(response);
+						Logger.log(response);
 						if (this.casoId!=null) {
 							this.router.navigate(['/caso/' + this.casoId + '/archivo-temporal/'+this.id+'/edit']);
 						}
@@ -114,11 +115,11 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 	}
 
 	public edit(_valid: any, _model: any) {
-		console.log('-> ArchivoTemporal@edit()', _model);
+		Logger.log('-> ArchivoTemporal@edit()', _model);
 		return new Promise<any>(
             (resolve, reject) => {
 				this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
-					console.log('-> Registro acutualizado', response);
+					Logger.log('-> Registro acutualizado', response);
 					if(this.id!=null){
 						this.router.navigate(['/caso/' + this.casoId + '/archivo-temporal']);
 					}
@@ -131,7 +132,7 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 	public fillForm(_data) {
 		this.form.patchValue(_data);
 		this.form.controls.observaciones.disable();
-		console.log(_data);
+		Logger.log(_data);
 	}
 }
 
@@ -165,7 +166,7 @@ export class DocumentoArchivoTemporalComponent extends FormatosGlobal{
   }
 
   ngOnInit() {
-      console.log('-> Object ', this.object);
+      Logger.log('-> Object ', this.object);
       if(this.object.documentos){
           this.dataSource = this.source;
           for (let object of this.object.documentos) {
@@ -193,7 +194,7 @@ export class DocumentoArchivoTemporalComponent extends FormatosGlobal{
   }
 
   public setData(_object){
-      console.log('setData()');
+      Logger.log('setData()');
       this.data.push(_object);
       this.subject.next(this.data);
   }

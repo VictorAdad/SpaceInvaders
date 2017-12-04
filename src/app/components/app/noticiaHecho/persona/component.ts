@@ -7,6 +7,7 @@ import { Persona } from '@models/persona';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { CasoService } from '@services/caso/caso.service';
+import { Logger } from "@services/logger.service";
 
 @Component({
     selector : 'persona',
@@ -45,7 +46,7 @@ export class PersonaComponent implements OnInit{
                         var caso = this.casoService.caso;
                         if (caso["personaCasos"]){
                             this.pag = caso["personaCasos"].length;
-                            console.log("CASO ->",caso);
+                            Logger.log("CASO ->",caso);
                             this.dataSource = new TableService(this.paginator, caso["personaCasos"]);
                         }
                         

@@ -12,6 +12,7 @@ import { SelectsService} from '@services/selects.service';
 import { NoticiaHechoGlobal } from '../../noticiaHecho/global';
 import { _catalogos } from '../catalogos';
 import 'rxjs/add/observable/of';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl: 'component.html'
@@ -63,7 +64,7 @@ export class CatalogosCreateComponent extends NoticiaHechoGlobal{
                         resolve('Registro creado con éxito');
                     },
                     error => {
-                        console.error('Error', error);
+                        Logger.error('Error', error);
                         reject('Ocurrió un error al guardar la información');
                     }
                 );
@@ -81,7 +82,7 @@ export class CatalogosCreateComponent extends NoticiaHechoGlobal{
                         resolve('Registro editado con éxito');
                     },
                     error => {
-                        console.error('Error', error);
+                        Logger.error('Error', error);
                         reject('Ocurrió un error al guardar la información');
                     }
                 );

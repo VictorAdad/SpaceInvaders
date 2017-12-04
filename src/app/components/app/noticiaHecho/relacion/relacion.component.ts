@@ -8,6 +8,7 @@ import { Relacion } from '@models/relacion'
 import { CIndexedDB } from '@services/indexedDB';
 import { NoticiaHechoService } from '@services/noticia-hecho.service';
 import { CasoService } from '@services/caso/caso.service';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl:'./relacion.component.html',
@@ -32,7 +33,7 @@ export class RelacionComponent{
         ){}
 
 	ngOnInit() {
-    	console.log('-> Data Source', this.dataSource);
+    	Logger.log('-> Data Source', this.dataSource);
 
         this.route.parent.params.subscribe(params => {
             if(params['id']){
@@ -62,9 +63,9 @@ export class RelacionComponent{
 
     public changePage(_e) {
         if(this.onLine.onLine){
-            console.log('Page index', _e.pageIndex);
-            console.log('Page size', _e.pageSize);
-            console.log('Id caso', this.casoId);
+            Logger.log('Page index', _e.pageIndex);
+            Logger.log('Page size', _e.pageSize);
+            Logger.log('Id caso', this.casoId);
             this.relaciones = [];
             this.page('/v1/base/tipo-relacion-persona/casos/' + this.casoId + '/page?p=' + _e.pageIndex + '&tr=' + _e.pageSize);
         }
@@ -72,15 +73,15 @@ export class RelacionComponent{
 
     public page(url: string) {
         this.http.get(url).subscribe((response) => {
-            //console.log('Paginator response', response.data);
+            //Logger.log('Paginator response', response.data);
             
             response.data.forEach(object => {
                 this.pag = response.totalCount;
-                //console.log("Respuestadelitos", response["data"]);
+                //Logger.log("Respuestadelitos", response["data"]);
                 this.relaciones.push(Object.assign(new Relacion(), object));
                 this.dataSource = new TableService(this.paginator, this.relaciones);
             });
-            console.log('Datos finales', this.dataSource);
+            Logger.log('Datos finales', this.dataSource);
         });
     }
 }

@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter , OnInit} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-
+import { Logger } from "@services/logger.service";
 
 @Component({
 	selector    : 'time',
@@ -49,7 +49,7 @@ export class TimeComponent implements OnInit{
 	}
 
 	public validate(_val){
-		// console.log('Time ', _val);
+		// Logger.log('Time ', _val);
 		if(_val != null)
 			if(_val.length > 0){
 				if(_val.length <= this.max){

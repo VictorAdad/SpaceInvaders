@@ -22,6 +22,7 @@ import { Validation } from '@services/validation/validation.service';
 import * as moment from 'moment';
 import { CasoService } from '@services/caso/caso.service';
 import { FormatosService } from '@services/formatos/formatos.service';
+import { Logger } from "@services/logger.service";
 
 
 var eliminaNulos = function(x){
@@ -59,7 +60,7 @@ export class EntrevistaCreateComponent {
   modelUpdate(_model: any) {
     this.entrevistaId = _model.id;
     this.model=_model;
-	  console.log(_model);
+	  Logger.log(_model);
   }
 
 }
@@ -95,11 +96,11 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 		this.route.params.subscribe(params => {
 			if (params['casoId'])
 				this.casoId = +params['casoId'];
-			console.log('casoId', this.casoId);
+			Logger.log('casoId', this.casoId);
 			if (params['id']) {
 				this.id = + params['id'];
 				this.form.disable();
-				console.log('id', this.id);
+				Logger.log('id', this.id);
 
 				if(this.onLine.onLine){
 					this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
@@ -180,7 +181,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 	public save(valid: any, _model: any) {
 
 		_model.caso.id = this.casoId;
-		console.log('-> Entrevista@save()', _model);
+		Logger.log('-> Entrevista@save()', _model);
 		return new Promise<any>(
             (resolve, reject) => {
 				if (this.onLine.onLine) {
@@ -189,13 +190,13 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 						(response) => {
 							this.id=response.id;
 							if (this.casoId!=null) {
-							    console.log(response);
+							    Logger.log(response);
 								this.router.navigate(['/caso/' + this.casoId + '/entrevista/'+this.id+'/view']);
 							}
 							resolve('Entrevista creada con éxito');
 						},
 						(error) => {
-							console.error('Error', error);
+							Logger.error('Error', error);
 							reject(error);
 						}
 					);
@@ -233,11 +234,11 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 
 	public edit(_valid: any, _model: any) {
 		this.model.sexo.id = 2;
-		console.log('-> Entrevista@edit()', _model);
+		Logger.log('-> Entrevista@edit()', _model);
 		return new Promise<any>(
             (resolve, reject) => {
 				this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
-					console.log('-> Registro acutualizado', response);
+					Logger.log('-> Registro acutualizado', response);
 					if (this.id) {
 						this.router.navigate(['/caso/' + this.casoId + '/entrevista']);
 					}
@@ -250,18 +251,18 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 	public fillForm(_data) {
 		_data.fechaNacimiento = new Date(_data.fechaNacimiento);
 		eliminaNulos(_data);
-		console.log(_data);
+		Logger.log(_data);
 		this.form.patchValue(_data);
-		console.log(_data);
+		Logger.log(_data);
 	}
 
 	tipoChange(_tipo): void {
-		console.log('valor', _tipo);
+		Logger.log('valor', _tipo);
   }
   calculateAge(e){
 
             var m = moment(e);
-            console.log(typeof e,m.isValid());
+            Logger.log(typeof e,m.isValid());
             if (m.isValid()){
                 var a=moment(e);
                 var hoy=moment();
@@ -316,7 +317,7 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
 }
 
   ngOnInit() {
-      console.log('-> Object ', this.object);
+      Logger.log('-> Object ', this.object);
       if(this.object.documentos){
           this.dataSource = this.source;
           for (let object of this.object.documentos) {
@@ -350,7 +351,7 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
   }
 
   public setData(_object){
-      console.log('setData()');
+      Logger.log('setData()');
       this.data.push(_object);
       this.subject.next(this.data);
   }

@@ -25,6 +25,7 @@ import {arrIDIOMA_IDENTIFICACION} from '@models/datos/idiomaIdentificacion';
 import {SincronizaCatalogos} from "@services/onLine/sincronizaCatalogos";
 import { HttpService} from '@services/http.service';
 import { DialogSincrinizarService} from "@services/onLine/dialogSincronizar.service";
+import { Logger } from "@services/logger.service";
 
 @Injectable()
 export class CIndexedDB {
@@ -37,13 +38,13 @@ export class CIndexedDB {
         var obj=this;
         this.sincronizarCatalogos=new SincronizaCatalogos(this,http,dialog);
         if(!this.init){
-            console.log("Creando tablas para la BD");
+            Logger.log("Creando tablas para la BD");
             var indexedDB = window.indexedDB ;
             var open = indexedDB.open(this.nameDB, 1);
             var obj=this;
             var newDB=false;
             open.onupgradeneeded = () => {
-                console.log(" -> Inciando conexión a la BD");
+                Logger.log(" -> Inciando conexión a la BD");
                 var db    = open.result;
                 db.createObjectStore("casos", {keyPath: "id"})
                 db.createObjectStore("personas", {keyPath: "id"});
@@ -76,7 +77,7 @@ export class CIndexedDB {
 
 
                 this.init = true;
-                console.log(" -> Se crearon las tablas");
+                Logger.log(" -> Se crearon las tablas");
                 localStorage.setItem('initDB', 'true');
                 newDB=true;
                 obj.sincronizarCatalogos.nuevo();
@@ -85,14 +86,14 @@ export class CIndexedDB {
                 
             }
         }else{
-            console.log("La BD ya se encuentra inicializada ;)");
+            Logger.log("La BD ya se encuentra inicializada ;)");
             this.init = true;
             localStorage.setItem('initDB', 'true');
         }
     }
 
     inicialiazaCatalogos(){
-        console.log("-> Inicializando carga de los catalogos");
+        Logger.log("-> Inicializando carga de los catalogos");
 
         var obj= this;
         var indexedDB = window.indexedDB ;
@@ -187,7 +188,7 @@ export class CIndexedDB {
                                 //var requets=index.get();
                                 var resultado=[];
                                 requets.onsuccess=function(e){
-                                    //console.log("#",e);
+                                    //Logger.log("#",e);
                                     var cursor = e.target.result;
                                     if(cursor) {
                                         resultado.push(cursor.value);
@@ -218,13 +219,13 @@ export class CIndexedDB {
                             var list=store.getAll();
                             list.onsuccess=function(){
                                 var datos=list.result;
-                                //console.log(datos);
+                                //Logger.log(datos);
                                 resolve(datos);
                             }
                         }else if(_tipo=="clear"){
                             var req = store.clear();
                             req.onsuccess = function(evt) {
-                                console.log("Tabla "+_table+" limpiada");
+                                Logger.log("Tabla "+_table+" limpiada");
                                 resolve(true);
                             };
                         }
@@ -236,11 +237,11 @@ export class CIndexedDB {
                         
                         tx.oncomplete = function() {
                             db.close();
-                            //console.log("-> cierra la conexion");
+                            //Logger.log("-> cierra la conexion");
                         };
                     }
                 }else{
-                    console.warn("No se ha creado la tabla: ", _table, " Con la acción: ", _tipo);
+                    Logger.warn("No se ha creado la tabla: ", _table, " Con la acción: ", _tipo);
                 }
             }
 
@@ -297,7 +298,7 @@ export class CIndexedDB {
             var indice="indice"+tablaDeRelacion[0].toUpperCase();
             for (var i = 1; i < tablaDeRelacion.length; ++i)
                 indice=indice+tablaDeRelacion[i];
-            console.log("@indice",indice);
+            Logger.log("@indice",indice);
 
             obj.list(tablaFuerte).then(datosFuertes => {
                 var listaFuerte = datosFuertes as any[];
@@ -391,7 +392,7 @@ export class CIndexedDB {
                 return e==y;
             if(e=="")
                 return true;
-            //console.log(y,e);
+            //Logger.log(y,e);
             return y.toUpperCase().indexOf(e.toUpperCase())>0;
             
         }

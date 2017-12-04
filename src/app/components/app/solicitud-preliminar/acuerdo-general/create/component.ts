@@ -20,6 +20,7 @@ import { GlobalService } from "@services/global.service";
 import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
+import { Logger } from "@services/logger.service";
 
 
 @Component({
@@ -49,7 +50,7 @@ export class AcuerdoGeneralCreateComponent {
       this.solicitudId= model.id;
       this.tipo = model.tipo;
       this.model=model
-    console.log(model);
+    Logger.log(model);
     }
 }
 
@@ -91,7 +92,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
             if (params['id']) {
                 this.id = +params['id'];
                 this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-                    console.log(response)
+                    Logger.log(response)
                     this.fillForm(response);
                     this.isAcuerdoGral = (this.form.controls.tipo.value==='Acuerdo General');
                     this.isJuridico = (this.form.controls.tipo.value==='Asignación de asesor jurídico');
@@ -137,7 +138,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
     public save(valid: any, _model: any) {
 
         _model.caso.id = this.casoId;
-        console.log('-> AcuerdoGeneral@save()', _model);
+        Logger.log('-> AcuerdoGeneral@save()', _model);
         return new Promise<any>(
             (resolve, reject) => {
                 this.http.post(this.apiUrl, _model).subscribe(
@@ -145,15 +146,15 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
                         this.id=response.id;
                         if(this.casoId!=null){
                             this.router.navigate(['/caso/' + this.casoId + '/acuerdo-general/'+this.id+'/edit']);
-                            console.log('-> registro guardado',response);
+                            Logger.log('-> registro guardado',response);
                        }else{
-                            console.log('-> registro guardado',response);
+                            Logger.log('-> registro guardado',response);
                             this.router.navigate(['/acuerdos'+this.id+'/edit' ]);
                         }
                         resolve('Solicitud de acuerdo general creada con éxito');
                     },
                     (error) => {
-                        console.error('Error', error);
+                        Logger.error('Error', error);
                         reject(error);
                     }
                 );
@@ -163,11 +164,11 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
     }
 
     public edit(_valid: any, _model: any) {
-        console.log('-> AcuerdoGeneral@edit()', _model);
+        Logger.log('-> AcuerdoGeneral@edit()', _model);
         return new Promise<any>(
             (resolve, reject) => {
                 this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
-                    console.log('-> Registro acutualizado', response);
+                    Logger.log('-> Registro acutualizado', response);
                     if(this.id!=null){
                         this.router.navigate(['/caso/' + this.casoId + '/acuerdo-general']);
                     }
@@ -209,7 +210,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
 
       });
 
-        console.log();
+        Logger.log();
 
 
     }
@@ -258,7 +259,7 @@ export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
     }
 
     ngOnInit() {
-        console.log('-> Object ', this.object);
+        Logger.log('-> Object ', this.object);
         if(this.object.documentos){
             this.dataSource = this.source;
             for (let object of this.object.documentos) {
@@ -285,7 +286,7 @@ export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
     }
 
     public setData(_object){
-        console.log('setData()');
+        Logger.log('setData()');
         this.data.push(_object);
         this.subject.next(this.data);
     }

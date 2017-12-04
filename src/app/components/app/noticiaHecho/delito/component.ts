@@ -14,6 +14,7 @@ import { HttpService } from '@services/http.service';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { ResolveEmit,ConfirmSettings} from '@utils/alert/alert.service';
 import { CasoService } from '@services/caso/caso.service';
+import { Logger } from "@services/logger.service";
 
 @Component({
     selector: 'delito',
@@ -87,9 +88,9 @@ export class DelitoComponent {
     }
 
     public setClickedRow(row){
-        console.log('row',row);
+        Logger.log('row',row);
         this.http.get('/v1/base/delitos-casos/'+row.id+'/casos/'+this.id).subscribe((response) => {
-            console.log('response', response);
+            Logger.log('response', response);
             this.page('/v1/base/delitos-casos/casos/' + this.id + '/page');  
         });
     }
@@ -97,9 +98,9 @@ export class DelitoComponent {
     public changePage(_e) {
         this.pageIndex = _e.pageIndex;
         this.pageSize = _e.pageSize;
-        console.log('Page index', _e.pageIndex);
-        console.log('Page size', _e.pageSize);
-        console.log('Id caso', this.id);
+        Logger.log('Page index', _e.pageIndex);
+        Logger.log('Page size', _e.pageSize);
+        Logger.log('Id caso', this.id);
         this.delitoCasos = [];
         this.page('/v1/base/delitos-casos/casos/' + this.id + '/page?p=' + _e.pageIndex + '&tr=' + _e.pageSize);
     }
@@ -107,21 +108,21 @@ export class DelitoComponent {
     public page(url: string) {
         this.delitoCasos = [];
         this.http.get(url).subscribe((response) => {
-            //console.log('Paginator response', response.data);
+            //Logger.log('Paginator response', response.data);
             
             response.data.forEach(object => {
                 this.pag = response.totalCount;
-                //console.log("Respuestadelitos", response["data"]);
+                //Logger.log("Respuestadelitos", response["data"]);
                 this.delitoCasos.push(Object.assign(new DelitoCaso(), object));
                 //response["data"].push(Object.assign(new Caso(), object));
                 this.dataSource = new TableService(this.paginator, this.delitoCasos);
             });
-            console.log('Datos finales', this.dataSource);
+            Logger.log('Datos finales', this.dataSource);
         });
     }
 
     swap(e) {
-        console.log('row',e);
+        Logger.log('row',e);
         this.confirmation.create('Advertencia','¿Está seguro de asignar a este delito como el delito principal?',this.settings).subscribe(
             (ans: ResolveEmit) => {
                 if(ans.resolved){

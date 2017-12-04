@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { MatDialog } from '@angular/material';
 import {ProgressDialog} from '@components-app/onLine/progressDialog.component';
+import { Logger } from "@services/logger.service";
 
 @Injectable()
 export class DialogSincrinizarService{
@@ -20,7 +21,7 @@ export class DialogSincrinizarService{
 
     open() {
         if (!this.isOpen){
-            console.log("%c" + "-> Dialogo abierto", "color: blue;font-weight:bold;");
+            Logger.log("%c" + "-> Dialogo abierto", "color: blue;font-weight:bold;");
             this.dialogo=this.dialog.open(
                 ProgressDialog,{
                 height: 'auto',
@@ -34,7 +35,7 @@ export class DialogSincrinizarService{
     }
     close(){
         if (this.isOpen){
-            console.log("%c" + "-> Dialogo cerrado", "color: red;font-weight:bold;");
+            Logger.log("%c" + "-> Dialogo cerrado", "color: red;font-weight:bold;");
             this.dialogo.close()
             this.isOpen=false;
         }

@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { Usuario } from '@models/usuario';
+import { Logger } from "@services/logger.service";
 
 
 @Component({
@@ -27,9 +28,9 @@ export class UsuariosComponent{
    // ];
     	this.dataSource = new TableService(this.paginator, this.data);
 
-    	console.log('-> Data Source', this.dataSource);
+    	Logger.log('-> Data Source', this.dataSource);
   	}
  delete(id) {
-    console.log('Usuario@delete()');
+    Logger.log('Usuario@delete()');
   }
 }

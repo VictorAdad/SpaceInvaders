@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';
+import { Logger } from "@services/logger.service";
 
 
 
@@ -40,7 +41,7 @@ export class Select2Component{
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
-		// console.log(changes);
+		// Logger.log(changes);
 		if(changes.options)
 			this.filteredOptions = this.options;
 	}
@@ -52,8 +53,8 @@ export class Select2Component{
 	}
 
 	public filter(val: any) {
-		// console.log('Select@filter()', val);
-		// console.log('options', this.options);
+		// Logger.log('Select@filter()', val);
+		// Logger.log('options', this.options);
 		let valNormal = val.target.value.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "")
   		this.filteredOptions =  this.options.filter(
   			option => {
@@ -65,7 +66,7 @@ export class Select2Component{
 
    	public setFilterList(){
    		if(this.search){
-   			// console.log(this.options)
+   			// Logger.log(this.options)
    			let timer = Observable.timer(1,1000);
    			let subs = timer.subscribe( 
    				t =>{
@@ -76,7 +77,7 @@ export class Select2Component{
 						            if(a.label > b.label) return 1;
 						            return 0;
 						        });
-							// console.log('-> Tiene options');
+							// Logger.log('-> Tiene options');
 							subs.unsubscribe();
 						}
 					this.filteredOptions = this.options;
@@ -91,7 +92,7 @@ export class Select2Component{
    	}
 
    	public closeSelect(){
-   		console.log('closeSelect()');
+   		Logger.log('closeSelect()');
    		this.filteredOptions = this.options;
    	}
 
