@@ -192,6 +192,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                         console.log('-> registro guardado', response);
                         resolve("Se creó un nuevo lugar con éxito");
                         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/lugares' ]);
+                        this.casoService.actualizaCaso();
                     },
                     (error) => {
                         console.error('Error', error);
@@ -248,6 +249,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 this.http.put('/v1/base/lugares/'+this.id, _model).subscribe((response) => {
                     console.log('-> Registro acutualizado', response);
                     resolve("Se actualizó el lugar");
+                    this.casoService.actualizaCaso();
                 },e=>{
                     reject(e);
                 });

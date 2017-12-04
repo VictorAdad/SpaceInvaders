@@ -183,6 +183,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/vehiculos' ]);
                         resolve("Se creo el vehículo con éxito");
                         this.vehiculoServ.reset();
+                        this.casoService.actualizaCaso();
                     },
                     (error) => reject(error)
                 );
@@ -248,6 +249,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                     console.log('-> Registro acutualizado', response);
                     resolve("Se actualizo el vehiculo");
                     obj.vehiculoServ.reset();
+                    obj.casoService.actualizaCaso();
                 },e=>{
                     reject(e);
                 });

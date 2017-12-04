@@ -227,19 +227,26 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         //});
     }
 
+    concatDate(fechaCanalizacion, horaCanalizacion){
+        return fechaCanalizacion = new Date(fechaCanalizacion+' '+horaCanalizacion)
+        // return fechaCanalizacion.parse(fechaCanalizacion+horaCanalizacion);
+    }
+
     public save(valid : any, _model : any){
         return new Promise<any>(
             (resolve, reject) => {
                 if(this.onLine.onLine){
+                    console.log('--------------->', this.model.fechaCanalizacion);
+                    this.model.fechaCanalizacion = this.concatDate(this.model.fechaCanalizacion, this.model.horaCanalizacion);
                     Object.assign(this.model, _model);
                     this.model.caso.id = this.casoId;
                     console.log(this.model);
                     this.model.tipo="Predenuncia";// temporalmente
                     if(this.model.fechaCanalizacion){
                       var fechaCompleta = new Date (this.model.fechaCanalizacion);
-                      if(this.model.horaConlcusionLlamada)
-                      { fechaCompleta.setMinutes(parseInt(this.model.horaConlcusionLlamada.split(':')[1]));
-                        fechaCompleta.setHours(parseInt(this.model.horaConlcusionLlamada.split(':')[0]));
+                      if(this.model.horaCanalizacion)
+                      { fechaCompleta.setMinutes(parseInt(this.model.horaCanalizacion.split(':')[1]));
+                        fechaCompleta.setHours(parseInt(this.model.horaCanalizacion.split(':')[0]));
                       }
                       var mes:number=fechaCompleta.getMonth()+1;
                       this.model.fechaCanalizacion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
@@ -289,6 +296,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                         });
                     });
                 }
+                console.log('--------------->', this.model.fechaCanalizacion);
             }
         );
     }
@@ -300,9 +308,12 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             }
         }
         _data.fechaCanalizacion = new Date(_data.fechaCanalizacion);
-
+        // var time = _data.fechaCanalizacion.getMinutes();
+        // time = _data.fechaCanalizacion.getHours();
+        var time = _data.fechaCanalizacion.getHours()+_data.fechaCanalizacion.getMinutes();
+        console.log('HH----------------->', time)
         this.form.patchValue(_data);
-        console.log('hh------->',_data);
+        this.form.controls.horaCanalizacion.setValue(time);
     }
 
 }

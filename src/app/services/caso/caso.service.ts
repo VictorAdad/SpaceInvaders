@@ -4,6 +4,7 @@ import { CIndexedDB } from '@services/indexedDB';
 import { HttpService} from '@services/http.service';
 import { OnLineService } from '@services/onLine.service';
 import * as moment from 'moment';
+import { Logger } from '@services/logger.service';
 
 @Injectable()
 export class CasoService{
@@ -56,6 +57,17 @@ export class CasoService{
 
 	public setCaso(caso){
 		Object.assign(this.caso, caso)
+	}
+
+	public actualizaCaso(){
+		if(this.onLine.onLine){
+			this.http.get(`/v1/base/casos/${this.id}/all`).subscribe(
+				response => {
+					this.setOnlineCaso(response);
+					Logger.log("%cCaso "+this.id+" actualizado","color:green;");
+				}
+			)
+		}
 	}
 }
 

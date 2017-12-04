@@ -12,37 +12,37 @@ export class Logger {
         console.log("%c" + "Sede:" +"%c"+_config.sede, "color: blue;font-weight:bold;", "color: black;");
     }
 
-    public error(...args){
+    public static error(...args){
         if (_config.develop){
             console.error.apply(console, args);
         }
     }
 
-    public log(...args){
+    public static log(...args){
         if (_config.develop){
             console.log.apply(console, args);
         }
     }
 
-    public warn(...args){
+    public static warn(...args){
         if (_config.develop){
             console.warn.apply(console, args);
         }
     }
 
-    public info(...args){
+    public static info(...args){
         if (_config.develop){
             console.info.apply(console, args);
         }
     }
 
-    public time(...args){
+    public static time(...args){
         if (_config.develop){
             console.time.apply(console, args);
         }
     }
 
-    public timeEnd(...args){
+    public static timeEnd(...args){
         if (_config.develop){
             console.timeEnd.apply(console, args);
         }
