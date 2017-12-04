@@ -19,6 +19,7 @@ import { Observable } from 'rxjs';
 import { _config} from '@app/app.config';
 import { Validation } from '@services/validation/validation.service';
 import { CasoService } from '@services/caso/caso.service';
+import { Logger } from "@services/logger.service";
 
 
 @Component({
@@ -72,7 +73,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         this.searchControl = new FormControl();
         this.form = this.createForm();
         this.optionsServ.getData();
-        console.log(this.optionsServ);
+        Logger.log(this.optionsServ);
 
         this.route.params.subscribe(params => {
             if(params['casoId']){
@@ -84,7 +85,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 this.id = +params['id'];
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/lugares/'+this.id).subscribe(response =>{
-                        console.log("Lugar->",response)
+                        Logger.log("Lugar->",response)
                         this.fillForm(response);
                         this.form.controls.id.patchValue(this.id);
                     });
@@ -95,7 +96,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                     let lugares=t["lugares"] as any[];
                     for (var i = 0; i < lugares.length; ++i) {
                         if ((lugares[i])["id"]==this.id){
-                            console.log("Lugar->",t)
+                            Logger.log("Lugar->",t)
                             this.fillForm(lugares[i]);
                             this.form.controls.id.patchValue(this.id);
                             break;
@@ -186,16 +187,16 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             }
 
             if(this.onLine.onLine){
-                console.log("MODELO",_model);
+                Logger.log("MODELO",_model);
                 this.http.post('/v1/base/lugares', _model).subscribe(
                     (response) => {
-                        console.log('-> registro guardado', response);
+                        Logger.log('-> registro guardado', response);
                         resolve("Se creó un nuevo lugar con éxito");
                         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/lugares' ]);
                         this.casoService.actualizaCaso();
                     },
                     (error) => {
-                        console.error('Error', error);
+                        Logger.error('Error', error);
                         reject(error);
                     }
                 );
@@ -236,7 +237,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
 
     public edit(_valid : any, _model : any){
         return new Promise<any>((resolve, reject)=>{
-            console.log('-> Lugar@edit()', _model);
+            Logger.log('-> Lugar@edit()', _model);
             Object.assign(this.model, _model);
             _model["fecha"] = moment(this.model.fecha).format('YYYY-MM-DD');
             _model["latitud"]     = this.latMarker;
@@ -247,7 +248,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             }
             if(this.onLine.onLine){
                 this.http.put('/v1/base/lugares/'+this.id, _model).subscribe((response) => {
-                    console.log('-> Registro acutualizado', response);
+                    Logger.log('-> Registro acutualizado', response);
                     resolve("Se actualizó el lugar");
                     this.casoService.actualizaCaso();
                 },e=>{
@@ -279,7 +280,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                         this.db.update("casos",t).then(t=>{
                             resolve("Se actualizo el lugar de manera local");
                         });
-                        console.log("caso",t);
+                        Logger.log("caso",t);
                     //});
                 });
             }
@@ -288,7 +289,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
 
     public fillForm(_data){
         _data.fecha = new Date(_data.fecha);
-        console.log(_data.fecha);
+        Logger.log(_data.fecha);
         this.zoom   = 17;
         this.lat    = _data.latitud;
         this.lng    = _data.longitud;
@@ -329,18 +330,18 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
     }
 
     public changeLocation(_e){
-        console.log(_e);
+        Logger.log(_e);
         this.latMarker = _e.coords.lat;
         this.lngMarker = _e.coords.lng;
-        console.log(this);
+        Logger.log(this);
     }
 
     public changePais(id){
-        console.log('-------->', id);
+        Logger.log('-------->', id);
         if(id!=null && typeof id !='undefined'){
             this.optionsServ.getEstadoByPais(id);
             this.isMexico = (id==_config.optionValue.idMexico);
-            console.log(this.optionsServ.paises);
+            Logger.log(this.optionsServ.paises);
           }
           if(id == _config.optionValue.idMexico){
               this.form.controls.estado.enable();
@@ -365,7 +366,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         if(id!=null && typeof id !='undefined'){
             this.optionsServ.getMunicipiosByEstado(id);
             this.form.controls.estado.patchValue(id);
-            console.log(this.form.controls)
+            Logger.log(this.form.controls)
             }
 
     }
@@ -380,13 +381,13 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         if(id){
             this.http.get(`/v1/catalogos/colonia/${id}`).subscribe(
                 response => {
-                    console.log('done changeColonia()', response);
+                    Logger.log('done changeColonia()', response);
                     this.form.patchValue({
                         'cp': response.cp
                     })
                 },
                 error => {
-                    console.log(`No se encontró una colonia con el id = ${id}`);
+                    Logger.log(`No se encontró una colonia con el id = ${id}`);
                 }
             )
         }

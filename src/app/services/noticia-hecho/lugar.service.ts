@@ -3,6 +3,7 @@ import { HttpService } from '@services/http.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { MOption } from '@partials/form/select2/select2.component'
 import { MatrizGlobal } from './matriz-global2';
+import { Logger } from "@services/logger.service";
 
 @Injectable()
 export class LugarService extends MatrizGlobal{
@@ -45,7 +46,7 @@ export class LugarService extends MatrizGlobal{
         this.finded = this.detalleLugar.filter(object => {
             return object.tipoLugar === this.selected.tipoLugar && object.tipoZona === this.selected.tipoZona && object.dia === this.selected.dia
         });
-        console.log('DetalleLugar finded', this.finded, this.selected);
+        Logger.log('DetalleLugar finded', this.finded, this.selected);
     }
     
 }

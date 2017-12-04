@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { LocationStrategy } from '@angular/common';
 import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
+import { Logger } from '@services/logger.service';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -82,7 +83,7 @@ export class CreateArmaComponent implements OnInit {
     }
 
     save(valid: any, model: any): void {
-        console.log('-> Submit', valid, model);
+        Logger.log('-> Submit', valid, model);
     }
 
     return() {

@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Logger } from "@services/logger.service";
 
 @Component({
 	selector    : 'radiobutton',
@@ -22,7 +23,7 @@ export class RadioButtonComponent{
 	update(value) {
 		this.valueChange.emit(value);
 		if (value==null || typeof value=="undefined" || value=="" || value==" ")
-				console.log();
+				Logger.log();
 		else{
 			this.requerido=false;
 		}

@@ -13,6 +13,7 @@ import { _config} from '@app/app.config';
 import { _catalogos } from '../../catalogos';
 import { SelectsService} from '@services/selects.service';
 import 'rxjs/add/observable/of';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl: 'create.component.html'
@@ -93,7 +94,7 @@ export class LocalidadCreateComponent extends NoticiaHechoGlobal{
                         resolve('Registro creado con éxito');
                     },
                     error => {
-                        console.error('Error', error);
+                        Logger.error('Error', error);
                         reject('Ocurrió un error al guardar la información');
                     }
                 );
@@ -111,7 +112,7 @@ export class LocalidadCreateComponent extends NoticiaHechoGlobal{
                         resolve('Registro editado con éxito');
                     },
                     error => {
-                        console.error('Error', error);
+                        Logger.error('Error', error);
                         reject('Ocurrió un error al guardar la información');
                     }
                 );

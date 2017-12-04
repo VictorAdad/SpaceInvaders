@@ -2,6 +2,7 @@ import {CatalogosACargar} from "@services/onLine/CatalogosACargar";
 import { CIndexedDB } from '@services/indexedDB';
 import { HttpService} from '@services/http.service';
 import { DialogSincrinizarService} from "@services/onLine/dialogSincronizar.service";
+import { Logger } from "@services/logger.service";
 
 
 export class SincronizaCatalogos {
@@ -36,7 +37,7 @@ export class SincronizaCatalogos {
                 }
                 else if (cad[i]=="_")
                     ant_=true;
-                console.log(i,copia);
+                Logger.log(i,copia);
             }
         }
         return copia;
@@ -99,7 +100,7 @@ export class SincronizaCatalogos {
                 });
         },
         (error)=>{
-            console.log("Fallo el servicio "+item["uri"]);
+            Logger.log("Fallo el servicio "+item["uri"]);
             obj.dialogo.close();
         });
     }
@@ -113,7 +114,7 @@ export class SincronizaCatalogos {
             return;
         var obj=this;
         //obj.dialogo.open();
-        console.time("BuscarCambios");
+        Logger.time("BuscarCambios");
         this.http.get("/v1/catalogos/sincronizacion").subscribe(listaRemota=>{
             this.db.list("catalogoLlave").then(listaLocal=>{
                 var encontrado:boolean;
@@ -139,17 +140,17 @@ export class SincronizaCatalogos {
                             obj.actualizaCatalogo(item);
                             cambio=true;
                         }
-                        console.log("actualizar este catalogo",itemR, nombreCatalogo,item);
+                        Logger.log("actualizar este catalogo",itemR, nombreCatalogo,item);
                     }
                 }
                 //actualizamos el catalogo de llaves
                 if(cambio)
                     obj.bajaCatalogoLlave();
-                console.timeEnd("BuscarCambios");
+                Logger.timeEnd("BuscarCambios");
                 
             });
         },error=>{
-            console.log(error);
+            Logger.log(error);
             this.dialogo.close();
         });
         //this.dialogo.close();
@@ -162,7 +163,7 @@ export class SincronizaCatalogos {
                 for (var i = 0; i < lista.length; ++i) {
                     let dato={id:(lista[i])["nombreCatalogo"],uuid:(lista[i])["uuid"]};
                     obj.db.update("catalogoLlave",dato).then(E=>{
-                        //console.log(E);
+                        //Logger.log(E);
                     });
                 
                 }
@@ -173,8 +174,8 @@ export class SincronizaCatalogos {
 
     private sincronizaCatalogos(i,arr:any[],titulo:string=""){
         if (i==0){
-            console.time(titulo);
-            console.log("%c" + "-> Iniciando Sincronizacion de "+titulo, "color: black;font-weight:bold;");
+            Logger.time(titulo);
+            Logger.log("%c" + "-> Iniciando Sincronizacion de "+titulo, "color: black;font-weight:bold;");
         }
         if (i==arr.length){
             //dejamos de sincronizar hasta que las matrices se bajen
@@ -188,8 +189,8 @@ export class SincronizaCatalogos {
             }
             if (this.finalizoMatrix && this.finalizoCatalogo)
                 this.dialogo.close();
-            console.log("%c" + "-> "+titulo+" sincronizadas", "color: blue;font-weight:bold;");
-            console.timeEnd(titulo);
+            Logger.log("%c" + "-> "+titulo+" sincronizadas", "color: blue;font-weight:bold;");
+            Logger.timeEnd(titulo);
             return;
         }
         this.sincronizaMatrix(i,arr[i],arr,titulo);
@@ -198,17 +199,17 @@ export class SincronizaCatalogos {
 
     private sincronizaMatrix(i,item,arr,titulo:string=""){
         this.catalogo=item["catalogo"];
-        console.log(this.catalogo);
+        Logger.log(this.catalogo);
         this.http.get(item["uri"]).subscribe((response) => {
             this.db.update("catalogos",{id:item["catalogo"], arreglo:response}).then(e=>{
                     this.sincronizaCatalogos(i+1,arr,titulo);
                 });
         },
         (error)=>{
-            console.log("Fallo el servicio "+item["uri"]);
+            Logger.log("Fallo el servicio "+item["uri"]);
             let catalogo=this.toCamelCase(item["catalogo"]);
             this.sincronizaCatalogos(i+1,arr,titulo);
-            console.log("Borrar el catalogo", catalogo);
+            Logger.log("Borrar el catalogo", catalogo);
             this.db.delete("catalogoLlave",catalogo);
             this.error=true;
         });

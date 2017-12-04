@@ -7,6 +7,7 @@ import { MiservicioService,MDato } from '@services/miservicio.service';
 import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+import { Logger } from "@services/logger.service";
 
 @Component({
     selector:'notificaciones',
@@ -23,7 +24,7 @@ export class NotificacionesComponent{
     ngOnInit(){
         this.data = data;
         this.dataSource = new TableService(this.paginator, this.data);
-        console.log('-> Data Source', this.dataSource);
+        Logger.log('-> Data Source', this.dataSource);
     }
 
 }

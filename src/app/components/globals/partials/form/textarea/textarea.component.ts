@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter , OnInit, AfterViewInit, ViewChild, Renderer} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Logger } from "@services/logger.service";
 
 
 @Component({
@@ -24,7 +25,7 @@ export class TextareaComponent implements OnInit{
 	}
 
 	ngOnInit(){
-		// console.log(this);
+		// Logger.log(this);
 	}
 
 	ngAfterViewInit(){

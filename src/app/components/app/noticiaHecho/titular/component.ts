@@ -9,6 +9,7 @@ import { OnLineService} from '@services/onLine.service';
 import { TableService} from '@utils/table/table.service';
 import { MOption } from '@partials/form/select2/select2.component'
 import { _usuarios } from '@services/auth/usuarios';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl:'tranferir.component.html'
@@ -45,7 +46,7 @@ export class TransferirComponent{
                 }
             }
         );
-        console.log(users);
+        Logger.log(users);
         for (let usuario of users) {
             this.usuarios.push({value: _usuarios[usuario].username, label: _usuarios[usuario].nombreCompleto});
         }
@@ -104,7 +105,7 @@ export class TitularComponent{
         ){}
 
     ngOnInit() {
-        console.log(this.route)
+        Logger.log(this.route)
         this.route.parent.params.subscribe(params => {
             if(params['id']){
                 this.casoId = +params['id'];
@@ -113,7 +114,7 @@ export class TitularComponent{
 
                 }else{
                     this.db.get("casos",this.casoId).then(caso=>{
-                        console.log("Caso en armas ->",caso);
+                        Logger.log("Caso en armas ->",caso);
                         if (caso){
                             if(caso["arma"]){
                                 this.dataSource = new TableService(this.paginator, caso["arma"] as Titular[]);
@@ -136,8 +137,8 @@ export class TitularComponent{
         this.http.get(url).subscribe((response) => {
             this.pag = response.totalCount;
             this.data = response.data as Titular[];
-            console.log("Loading armas..");
-            console.log(this.data);
+            Logger.log("Loading armas..");
+            Logger.log(this.data);
             this.dataSource = new TableService(this.paginator, response.data);
         });
     }

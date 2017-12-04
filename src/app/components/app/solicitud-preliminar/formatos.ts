@@ -9,7 +9,7 @@ import { GlobalService } from "@services/global.service";
 import { OnLineService } from '@services/onLine.service';
 import { FormatosService } from '@services/formatos/formatos.service';
 import { Observable } from 'rxjs/Observable';
-
+import { Logger } from "@services/logger.service";
 
 export class FormatosGlobal{
 	public confirmation_settings:ConfirmSettings={
@@ -35,17 +35,17 @@ export class FormatosGlobal{
     }
 
     public changeFormat(_format, _id, _data: any = {}){
-        console.log('Change format:', _format, _id);
+        Logger.log('Change format:', _format, _id);
 
         this._confirmation.create('Advertencia','¿Estás seguro de guardar este formato?',this.confirmation_settings)
         .subscribe(
             (ans: ResolveEmit) => {
-                console.log("respueta",ans);
+                Logger.log("respueta",ans);
                 if(ans.resolved){
                     if(this.onLine === null || this.onLine.onLine){
                         this.http.get(`/v1/documentos/formatos/save/${_id}/${_format}`).subscribe(
                             response => {
-                                console.log('Done changeFormat()', response);
+                                Logger.log('Done changeFormat()', response);
                                 this.globalService.openSnackBar("Formato generado con éxito");
                                 this.documentos[response.id] = response;
                                 this.documentos[response.id]['validate'] = false;
@@ -70,11 +70,11 @@ export class FormatosGlobal{
 
 
     public downloadFile(_object, _contentType){
-        console.log('downloadFile():', _object);
+        Logger.log('downloadFile():', _object);
         _contentType=_contentType.replace("/", "-");
         this.http.getFile(`/v1/documentos/documento/${_object.uuidEcm}/${_contentType}/${_object.tipo}`).subscribe(
             response => {
-                console.log('Done downloadFile()', response);
+                Logger.log('Done downloadFile()', response);
                 let blob = new Blob([response], {
                     type: _contentType
                 });
@@ -96,18 +96,18 @@ export class FormatosGlobal{
         let subs = timer.subscribe( 
             t => {
                 for (var key in this.documentos) {
-                    console.log('validateFile()');
+                    Logger.log('validateFile()');
                     let doc = this.documentos[key];
                     let _contentType = doc.contentType.replace("/", "-");
                     this.http.getFile(`/v1/documentos/documento/${doc.uuidEcm}/${_contentType}/${doc.tipo}`).subscribe(
                         response => {
-                            console.log('El archivo ya está generado');
+                            Logger.log('El archivo ya está generado');
                             this.documentos[key]['validate'] = true;
                             delete this.documentos[key];
                             
                         },
                         error => {
-                            console.log('El archivo no está generado :(');
+                            Logger.log('El archivo no está generado :(');
 
                         }
                     )
@@ -131,7 +131,7 @@ export class FormatosGlobal{
         });
 
         dialog.componentInstance.emitter.subscribe((archivos) => {
-           console.log(archivos);
+           Logger.log(archivos);
            this.cargaArchivos(archivos);
         });
 
@@ -186,7 +186,7 @@ export class SolPreDocComponent {
 
     public fileOverBase(e:any):void {
       this.hasBaseDropZoneOver = e;
-      console.log("->",e);
+      Logger.log("->",e);
       this.checkMaximunCapacity();
 
     }
@@ -197,25 +197,25 @@ export class SolPreDocComponent {
 
 
     fileEvent(e){
-      console.log('File Event has triggered!',e)
+      Logger.log('File Event has triggered!',e)
         //this.failFlag = true;
         this.checkMaximunCapacity();
     }
     checkMaximunCapacity(){
       let total_size=0;
       let  files =this.uploader.queue as any[];
-      console.log("checking files maximun capacity", files);
+      Logger.log("checking files maximun capacity", files);
 
       files.forEach(fileItem => {
-        console.log(fileItem);
+        Logger.log(fileItem);
         total_size=total_size+fileItem.file.size;
-        console.log('total_size',total_size);
+        Logger.log('total_size',total_size);
 
 
       });
-      console.log('total size',total_size/1048576);
+      Logger.log('total size',total_size/1048576);
       if(total_size/1048576>10){
-        console.log("Maximun capacity violated");
+        Logger.log("Maximun capacity violated");
         this.isMaxCapacityViolated=true;
       }
       else{
@@ -223,7 +223,7 @@ export class SolPreDocComponent {
       }
     }
     public removeItem(item){
-      console.log(item)
+      Logger.log(item)
       this.uploader.removeFromQueue(item);
       this.checkMaximunCapacity();
     }
@@ -255,7 +255,7 @@ export class SolPreDocComponent {
                         casoId:casoId
                     };
                     obj.db.add("documentos",dato).then(t=>{
-                        console.log("Se guardo el archivo",(item["some"])["name"]);
+                        Logger.log("Se guardo el archivo",(item["some"])["name"]);
                         _data["documentos"].push(t);
                         obj.guardarOffLine(i+1,listaArchivos,casoId,_data);
                     });
@@ -269,22 +269,22 @@ export class SolPreDocComponent {
      this._confirmation.create('Advertencia','¿Estás seguro de adjuntar este documento?',this.confirmation_settings)
       .subscribe(
           (ans: ResolveEmit) => {
-              console.log("respueta",ans);
+              Logger.log("respueta",ans);
               if(ans.resolved){
-                console.log("-> Archivos:", this.uploader);
-                console.log("-> Data:", this.data);
+                Logger.log("-> Archivos:", this.uploader);
+                Logger.log("-> Data:", this.data);
                 var listaFiles = this.uploader.queue as any[];
-                console.log('-> Files to saves: ', listaFiles);
+                Logger.log('-> Files to saves: ', listaFiles);
                 this.data.formData.set('files',[]);
                 for (let file of listaFiles) {
-                    console.log('file',file)
+                    Logger.log('file',file)
                     this.data.formData.append('files', file['some']);
                 }
-                console.log(' A guardar!!', this.data.formData)
+                Logger.log(' A guardar!!', this.data.formData)
                 if (this.onLine.onLine){
                     this.http.post(this.data.urlUpload, this.data.formData).subscribe(
                         response => {
-                            console.log('Done guardar()', response);
+                            Logger.log('Done guardar()', response);
                             this.archivos=response;
                             this.uploader.clearQueue();
                             this.emitter.emit(this.archivos);
@@ -321,9 +321,9 @@ export class SolPreDocComponent {
 
     check(){
         if(this.uploader.isUploading){
-            console.log('isUploading');
+            Logger.log('isUploading');
           }else{
-            console.log('inNotUploading');
+            Logger.log('inNotUploading');
           }
     }
 

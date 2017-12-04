@@ -6,6 +6,7 @@ import { AcuerdoRadicacion } from '@models/determinacion/acuerdoRadicacion';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { CIndexedDB } from '@services/indexedDB';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl:'./acuerdos-radicacion.component.html',
@@ -46,16 +47,16 @@ export class AcuerdosRadicacionComponent{
     public page(url: string) {
         this.data = [];
         this.http.get(url).subscribe((response) => {
-            //console.log('Paginator response', response.data);
+            //Logger.log('Paginator response', response.data);
 
             response.data.forEach(object => {
                 this.pag = response.totalCount;
-                //console.log("Respuestadelitos", response["data"]);
+                //Logger.log("Respuestadelitos", response["data"]);
                 this.data.push(Object.assign(new AcuerdoRadicacion(), object));
                 //response["data"].push(Object.assign(new Caso(), object));
                 this.dataSource = new TableService(this.paginator, this.data);
             });
-            console.log('Datos finales', this.dataSource);
+            Logger.log('Datos finales', this.dataSource);
         });
     }
 }

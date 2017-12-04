@@ -5,6 +5,7 @@ import { MOption } from '@partials/form/select2/select2.component';
 import { _config} from '@app/app.config';
 import { OnLineService} from '@services/onLine.service';
 import { CIndexedDB } from '@services/indexedDB';
+import { Logger } from "@services/logger.service";
 
 @Injectable()
 export class NoticiaHechoService {
@@ -73,7 +74,7 @@ export class NoticiaHechoService {
     }
     
     public llamaDatos(){
-        console.log("CASO->",this.caso);
+        Logger.log("CASO->",this.caso);
         this.getLugares();
         this.getVehiculos();
         this.getArmas();
@@ -139,7 +140,7 @@ export class NoticiaHechoService {
                     arr.push({id:this.caso["personaCasos"][i]["persona"]["id"], persona:{nombre:this.caso["personaCasos"][i]["persona"]["nombre"]}});
                 }
                 this.personas = this.constructOptionsPersona(arr);
-                console.log("PERSONAS",arr);
+                Logger.log("PERSONAS",arr);
             }
     }
 
@@ -159,15 +160,15 @@ export class NoticiaHechoService {
                 this[_attr] = _call(response);
                 if(_attr === 'defensoresPublicos' || _attr === 'defensoresPrivados'){
                     this.defensoresPublicos = this.defensoresPublicos.concat(this.defensoresPrivados);
-                    console.log(this.defensoresPrivados);
+                    Logger.log(this.defensoresPrivados);
                 }
                 if(_attr === 'asesoresPublicos' || _attr === 'asesoresPrivados'){
                     this.asesoresPublicos = this.asesoresPublicos.concat(this.asesoresPrivados);
-                    console.log(this.asesoresPrivados);
+                    Logger.log(this.asesoresPrivados);
                 }
                 if(_attr === 'victimas' || _attr === 'ofendidos'){
                     this.victimas = this.victimas.concat(this.ofendidos);
-                    console.log(this.victimas);
+                    Logger.log(this.victimas);
                 }
             });
         else{
@@ -181,15 +182,15 @@ export class NoticiaHechoService {
                 this[_attr] = this.constructOptionsPersona(arr);
                 if(_attr === 'defensoresPublicos' || _attr === 'defensoresPrivados'){
                     this.defensoresPublicos = this.defensoresPublicos.concat(this.defensoresPrivados);
-                    console.log(this.defensoresPrivados);
+                    Logger.log(this.defensoresPrivados);
                 }
                 if(_attr === 'asesoresPublicos' || _attr === 'asesoresPrivados'){
                     this.asesoresPublicos = this.asesoresPublicos.concat(this.asesoresPrivados);
-                    console.log(this.asesoresPrivados);
+                    Logger.log(this.asesoresPrivados);
                 }
                 if(_attr === 'victimas' || _attr === 'ofendidos'){
                     this.victimas = this.victimas.concat(this.ofendidos);
-                    console.log(this.victimas);
+                    Logger.log(this.victimas);
                 }
             }
         }

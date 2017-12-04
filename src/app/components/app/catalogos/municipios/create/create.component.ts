@@ -12,6 +12,7 @@ import { CIndexedDB } from '@services/indexedDB';
 import { _catalogos } from '../../catalogos';
 import { SelectsService} from '@services/selects.service';
 import 'rxjs/add/observable/of';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl: 'create.component.html'
@@ -59,7 +60,7 @@ export class municipioCreateComponent extends Catalogos{
                     this.id = params['id']
                     this.http.get(this.url+'/'+this.id).subscribe(response =>{
                        this.fillForm(response);
-                        console.log(response)
+                        Logger.log(response)
                     });
                 }
             }
@@ -86,12 +87,12 @@ export class municipioCreateComponent extends Catalogos{
         if(_valid)
             this.http.post(this.url, _form).subscribe(
                 response => {
-                    console.log('MUNICIPIO SALVADO->',response);
+                    Logger.log('MUNICIPIO SALVADO->',response);
                     resolve("Se actualizó la información del arma");
                     this.router.navigate(['/catalogos/municipios']);
                 },
                 error => {
-                    console.error('Error', error);
+                    Logger.error('Error', error);
                 }
             );
           });
@@ -106,7 +107,7 @@ export class municipioCreateComponent extends Catalogos{
                     this.router.navigate(['/catalogos/municipios']);
                 },
                 error => {
-                    console.error('Error', error);
+                    Logger.error('Error', error);
                 }
             );
           });
@@ -114,7 +115,7 @@ export class municipioCreateComponent extends Catalogos{
     changePais(id){
       if(id!=null && typeof id !='undefined'){
             this.options.getEstadoByPais(id);
-            console.log('FIltrando estados',id);
+            Logger.log('FIltrando estados',id);
       }
     }
 

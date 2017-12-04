@@ -8,6 +8,7 @@ import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { CasoService } from '@services/caso/caso.service';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl:'./arma.component.html',
@@ -27,7 +28,7 @@ export class ArmaComponent{
 	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB, private casoService:CasoService){}
 
 	ngOnInit() {
-        console.log(this.route)
+        Logger.log(this.route)
         this.route.parent.params.subscribe(params => {
             if(params['id']){
                 this.casoId = +params['id'];
@@ -38,7 +39,7 @@ export class ArmaComponent{
                     //this.db.get("casos",this.casoId).then(caso=>{
                     this.casoService.find(this.casoId).then(r=>{
                         var caso = this.casoService.caso;
-                        console.log("Caso en armas ->",caso);
+                        Logger.log("Caso en armas ->",caso);
                         if (caso){
                             if(caso["armas"]){
                                 this.pag = caso["armas"].length;
@@ -63,8 +64,8 @@ export class ArmaComponent{
         this.http.get(url).subscribe((response) => {
             this.pag = response.totalCount;
             this.data = response.data as Arma[];
-            console.log("Loading armas..");
-            console.log(this.data);
+            Logger.log("Loading armas..");
+            Logger.log(this.data);
             this.dataSource = new TableService(this.paginator, this.data);
         });
     }

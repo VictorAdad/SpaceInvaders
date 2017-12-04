@@ -17,6 +17,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
+import { Logger } from "@services/logger.service";
 
 @Component({
 	templateUrl: './component.html',
@@ -40,7 +41,7 @@ export class NoEjercicioAccionPenalCreateComponent {
   modelUpdate(model: any) {
     this.determinacionId= model.id;
     this.model=model
-  console.log(model);
+  Logger.log(model);
   }
 }
 
@@ -91,7 +92,7 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
 			if (params['id']) {
 				this.id = +params['id'];
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-					  console.log(response.data),
+					  Logger.log(response.data),
             this.fillForm(response);
             this.modelUpdate.emit(response);
 
@@ -103,13 +104,13 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
 	public save(valid: any, _model: any) {
         Object.assign(this.model, _model);
         this.model.caso.id = this.casoId;
-        console.log('->AccionPenal@save()', this.model);
+        Logger.log('->AccionPenal@save()', this.model);
 
         return new Promise<any>(
             (resolve, reject) => {
 		        this.http.post(this.apiUrl, this.model).subscribe(
 		            (response) => {
-		                console.log(response);
+		                Logger.log(response);
 						this.id=response.id;
 		                if (this.casoId) {
 		                    this.router.navigate(['/caso/' + this.casoId + '/no-ejercicio-accion-penal/'+this.id+'/edit']);
@@ -126,11 +127,11 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
     }
 
     public edit(_valid: any, _model: any) {
-        console.log('-> AccionPenal@edit()', _model);
+        Logger.log('-> AccionPenal@edit()', _model);
         return new Promise<any>(
             (resolve, reject) => {
 		        this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
-		            console.log('-> Registro acutualizado', response);
+		            Logger.log('-> Registro acutualizado', response);
 		            this.router.navigate(['/caso/' + this.casoId + '/no-ejercicio-accion-penal']);
 		            resolve('Registro actualizado con éxito');
 		        });
@@ -143,7 +144,7 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
 			_data.fechaHechoDelictivo = new Date(_data.fechaHechoDelictivo);
         this.form.patchValue(_data);
         this.form.disable();
-        console.log(_data);
+        Logger.log(_data);
     }
 }
 
@@ -176,7 +177,7 @@ export class DocumentoNoEjercicioAccionPenalComponent extends FormatosGlobal {
   }
 
   ngOnInit() {
-      console.log('-> Object ', this.object);
+      Logger.log('-> Object ', this.object);
       if(this.object.documentos){
           this.dataSource = this.source;
           for (let object of this.object.documentos) {
@@ -204,7 +205,7 @@ export class DocumentoNoEjercicioAccionPenalComponent extends FormatosGlobal {
   }
 
   public setData(_object){
-      console.log('setData()');
+      Logger.log('setData()');
       this.data.push(_object);
       this.subject.next(this.data);
   }

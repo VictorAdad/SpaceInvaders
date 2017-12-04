@@ -15,6 +15,7 @@ import { NoticiaHechoGlobal } from '../global';
 import { _config} from '@app/app.config';
 import { CasoService } from '@services/caso/caso.service'
 import { Observable }                  from 'rxjs/Observable';
+import { Logger } from "@services/logger.service";
 
 @Component({
     selector : 'datos-generales',
@@ -68,7 +69,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         this.activeRoute.parent.params.subscribe(params => {
             if(this.hasId){
                 this.id = +params['id'];
-                console.log(this.casoService);
+                Logger.log(this.casoService);
                 if (!isNaN(this.id)){
                     this.casoService.find(this.id);
                     if(this.onLine.onLine){
@@ -87,10 +88,10 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                             timer.subscribe(t => {
                                 if (this.casoService.caso){
                                     let model = this.casoService.caso;
-                                    console.log(model);
+                                    Logger.log(model);
                                     this.form.patchValue(model); 
                                     if (model["delitoPrincipal"] != null) {
-                                        console.log("DELITO principal");
+                                        Logger.log("DELITO principal");
                                         this.form.patchValue({
                                             'delito' : model["delitoPrincipal"].nombre
                                         });
@@ -131,7 +132,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
 
     public save(_valid : boolean, _model : any):Promise<any>{
         Object.assign(_model, this.model);
-        console.log('Model', _model);
+        Logger.log('Model', _model);
         // _model["agencia"]={id:1};
         _model["nic"]=this.generateNIC(_model);
         // _model["estatus"]={id:1};
@@ -151,10 +152,10 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                 delete _model["created"];
                 
                 let temId=Date.now();
-                console.log('temID', temId);
-                console.log("MODEL",_model);
+                Logger.log('temID', temId);
+                Logger.log("MODEL",_model);
                 this.db.add('casos', _model).then(object => {
-                    console.log('object', object);
+                    Logger.log('object', object);
                     var id=object["id"];
                     _model["id"]="";
                     let dato={
@@ -168,7 +169,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                         otrosID:[{id:id},{delitoCaso:{id:id+1}}]
                     }
                     this.db.add("sincronizar",dato).then(p=>{
-                        console.log('p', p);
+                        Logger.log('p', p);
                         // _model["id"] = temId;
                         resolve("Se creó el caso de manera local");
                         var copiaModel = this.copiaJson(_model);
@@ -178,7 +179,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                         copiaModel["titulares"].pop();
                         copiaModel["titulares"].push((_model["titulares"])["0"]);
                         this.db.update('casos', copiaModel).then(p=>{
-                            console.log("actualizacion",p);
+                            Logger.log("actualizacion",p);
                             this.casoService.caso=copiaModel;
                             this.casoService.id=copiaModel["id"];
                             this.router.navigate(['/caso/'+id+'/noticia-hecho/datos-generales' ]);
@@ -192,7 +193,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
 
     public edit(_valid : boolean, _model : any):Promise<any>{
         return new Promise((resolve,reject)=>{
-            console.log('-> Caso@edit()', _model);
+            Logger.log('-> Caso@edit()', _model);
             if(this.onLine.onLine){
                 this.http.put('/v1/base/casos/'+this.id, _model).subscribe((response) => {
                     resolve("Caso actualizado");
@@ -210,7 +211,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                 }
                 this.db.add("sincronizar",dato).then(p=>{
                     resolve("Se actualizó el caso de manera local");
-                    console.log('-> Registro acutualizado');
+                    Logger.log('-> Registro acutualizado');
                 }); 
             }
         });
@@ -227,7 +228,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
     }
 
     public generateNIC(_caso: any): string{
-        console.log('caso ', _caso.delitoCaso.delito.id);
+        Logger.log('caso ', _caso.delitoCaso.delito.id);
         let nic: string = '';
         let user = this.auth.user;
         nic=`${user.fiscalia}/${user.agencia}/${user.turno}/${user.autoridad}/${this.pad(this.delito.id, 3)}/NICID/${(new Date()).getFullYear().toString().substr(-2)}/${this.pad((new Date()).getMonth(), 2)}`

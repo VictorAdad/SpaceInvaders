@@ -17,6 +17,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
+import { Logger } from "@services/logger.service";
 
 @Component({
 	templateUrl: './component.html',
@@ -40,7 +41,7 @@ export class RegistroGeneralCreateComponent {
   modelUpdate(model: any) {
     this.solicitudId= model.id;
     this.model=model
-  console.log(model);
+  Logger.log(model);
   }
 
 }
@@ -82,12 +83,12 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 		this.route.params.subscribe(params => {
 			if (params['casoId'])
 				this.casoId = +params['casoId'];
-			console.log('casoId', this.casoId);
+			Logger.log('casoId', this.casoId);
 			if (params['id']) {
 				this.id = +params['id'];
-				console.log('id', this.id);
+				Logger.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-					console.log(response.data),
+					Logger.log(response.data),
 					this.modelUpdate.emit(response);
 					this.fillForm(response);
 					this.form.disable();
@@ -100,14 +101,14 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 
 		Object.assign(this.model, _model);
 		this.model.caso.id = this.casoId;
-		console.log('-> RegistroGeneral@save()', this.model);
+		Logger.log('-> RegistroGeneral@save()', this.model);
 
 		return new Promise<any>(
             (resolve, reject) => {
 				this.http.post(this.apiUrl, this.model).subscribe(
 
 					(response) => {
-            console.log('registro guardado->',response);
+            Logger.log('registro guardado->',response);
 						if(this.casoId!=null){
 							this.id=response.id;
 							this.router.navigate(['/caso/' + this.casoId + '/registro-general/' + this.id + '/edit']);
@@ -115,7 +116,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 						resolve('Solicitud de registro general creada con éxito');
 					},
 					(error) => {
-						console.error('Error', error);
+						Logger.error('Error', error);
 						reject(error)
 					}
 				);
@@ -125,11 +126,11 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 	}
 
 	public edit(_valid: any, _model: any) {
-		console.log('-> RegistroGeneral@edit()', _model);
+		Logger.log('-> RegistroGeneral@edit()', _model);
 		return new Promise<any>(
             (resolve, reject) => {
 				this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
-					console.log('-> Registro acutualizado', response);
+					Logger.log('-> Registro acutualizado', response);
 					if (this.id) {
 						this.router.navigate(['/caso/' + this.casoId + '/registro-general']);
 					}
@@ -141,7 +142,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 
 	public fillForm(_data) {
 		this.form.patchValue(_data);
-		console.log(_data);
+		Logger.log(_data);
 	}
 
 }
@@ -174,7 +175,7 @@ export class DocumentoRegistroGeneralComponent  extends FormatosGlobal{
   }
 
   ngOnInit() {
-      console.log('-> Object ', this.object);
+      Logger.log('-> Object ', this.object);
       if(this.object.documentos){
           this.dataSource = this.source;
           for (let object of this.object.documentos) {
@@ -201,7 +202,7 @@ export class DocumentoRegistroGeneralComponent  extends FormatosGlobal{
       }
   }
   public setData(_object){
-      console.log('setData()');
+      Logger.log('setData()');
       this.data.push(_object);
       this.subject.next(this.data);
   }

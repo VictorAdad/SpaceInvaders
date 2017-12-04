@@ -62,7 +62,7 @@ export class OnLineService {
                 localStorage.setItem('sincronizacion', 'true')
             });
         // else
-        //     console.log('Ya existen catalogos sincroinzados');
+        //     Logger.log('Ya existen catalogos sincroinzados');
     }
 
     startSincronizacion(){
@@ -93,6 +93,7 @@ export class OnLineService {
     }
 
     sincroniza(i, lista:any[]){
+        //Logger.log(i,lista);
         if (i==lista.length){
             this.sincronizando=false;
             if (this.seActualizoAlmenosUnRegistro){
@@ -132,22 +133,22 @@ export class OnLineService {
                 else if (item.tipo=="update"){
                     if (item["dependeDe"]){
                         var dependencias=item["dependeDe"] as any[];
-                        console.log("Entro a las dependencias");
+                        Logger.log("Entro a las dependencias");
                         this.buscaDependenciasYDoPost(dependencias,item,i,lista);
                     }else
                         this.doPut(item.url, item, i,lista);
                 }else if (item.tipo=="get"){
                     if (item["dependeDe"]){
                         var dependencias=item["dependeDe"] as any[];
-                        console.log("Entro a las dependencias");
+                        Logger.log("Entro a las dependencias");
                         this.buscaDependenciasYDoPost(dependencias,item,i,lista);
                     }else
                         this.doGet(item.url, item, i,lista);
                 }else if (item.tipo=="postDocument"){
-                    //console.log("Antes de entrar");
+                    //Logger.log("Antes de entrar");
                     if (item["dependeDe"]){
                         var dependencias=item["dependeDe"] as any[];
-                        console.log("Entro a las dependencias");
+                        Logger.log("Entro a las dependencias");
                         this.buscaDependenciasYDoPost(dependencias,item,i,lista);
                     }else
                         this.doPostDocument(item.url, item, i,lista);
@@ -165,25 +166,25 @@ export class OnLineService {
         this.db.list("newId").then(diccionario=>{
             this.sustituyeHojasPorNewId(item,diccionario);
             // var listNewId = diccionario as any[];
-            // console.log("ARREGLO DEPENDENCIAS",dependencias);
+            // Logger.log("ARREGLO DEPENDENCIAS",dependencias);
             // for (var k = 0; k < dependencias.length; ++k) {
             //     for (var j = 0; j < listNewId.length; ++j) {
             //         if (dependencias[k]==(listNewId[j])["id"] ){
             //             if ((item["body"])["caso"]){//existe el caso
             //                 if ( ((item["body"])["caso"])["id"]==dependencias[k]){
             //                     ((item["body"])["caso"])["id"]=(listNewId[j])["newId"];
-            //                     console.log("asignacion: ",((item["body"])["caso"])["id"],(listNewId[j])["newId"]);
+            //                     Logger.log("asignacion: ",((item["body"])["caso"])["id"],(listNewId[j])["newId"]);
             //                 }
             //             }
             //             if ((item["body"])["id"]==dependencias[k]){
             //                 (item["body"])["id"]=(listNewId[j])["newId"];
             //             }
-            //             console.log(""+dependencias[k],""+([j])["newId"]);
+            //             Logger.log(""+dependencias[k],""+([j])["newId"]);
             //             item["url"]=item["url"].replace(""+dependencias[k],""+(listNewId[j])["newId"]);
             //         }
             //     }
             // }
-            console.log("Item",item);
+            Logger.log("Item",item);
             let tipo=item["tipo"];
             if (tipo=="post")
                 this.doPost(item["url"], item, i, lista)
@@ -200,7 +201,7 @@ export class OnLineService {
     }
 
     buscarValores(original, model){
-        console.log("ORIGINAL",original,"MODEL",model);
+        Logger.log("ORIGINAL",original,"MODEL",model);
         if (typeof model=="object"){
             for (let x in model){
                 if (original[x]){
@@ -228,9 +229,9 @@ export class OnLineService {
                 var ids=obj.buscarValores(original,model);
                 if (ids && ids["id"]){
                     cont++;
-                    console.log("%c" + "-> newId", "color: pink;font-weight:bold;",ids);
+                    Logger.log("%c" + "-> newId", "color: pink;font-weight:bold;",ids);
                     obj.db.update("newId",{id:ids.id,newId:ids.newId}).then(p=>{
-                        console.log(cont);
+                        Logger.log(cont);
                         if(cont==arrId.length)
                             resolve(true);
                     });
@@ -244,11 +245,11 @@ export class OnLineService {
     }//si hay otros ids
 
     doPost(_url, item, i, lista){
-        console.log(_url,item,i,lista);
+        Logger.log(_url,item,i,lista);
         item["numItentos"]++;
         this.http.post(_url, item.body).subscribe(
             respuesta=>{
-                console.log("RESPONSE POST",respuesta);
+                Logger.log("RESPONSE POST",respuesta);
                 item.pendiente=false;
                 if (item["temId"] && respuesta){
                     //convertimos la cadena en json
@@ -257,13 +258,13 @@ export class OnLineService {
 
                     if (item["otrosID"]){
                         this.agregaOtrosId(item["otrosID"],json).then(p=>{
-                            console.log("NUNCALLEGO",item);
+                            Logger.log("NUNCALLEGO",item);
                             this.db.update("sincronizar",item).then( respuesta =>{
                                 this.seActualizoAlmenosUnRegistro=true;
                                 this.sincroniza(i+1,lista);
                             });
                         }).catch(r=>{
-                            console.log("ERROR numeros de ids Enontrados",r,item);
+                            Logger.log("ERROR numeros de ids Enontrados",r,item);
                             item.pendiente=true;
                             this.db.update("sincronizar",item);
                             this.sincroniza(i+1,lista);
@@ -286,7 +287,7 @@ export class OnLineService {
 
         },
             error=>{
-                console.log("Error:",error);
+                Logger.log("Error:",error);
                 item.pendiente=true;
                 this.db.update("sincronizar",item)
                 this.sincroniza(i+1,lista);
@@ -296,16 +297,16 @@ export class OnLineService {
     doPut(_url, item, i, lista2){
         item["numItentos"]++;
         this.db.list("newId").then(listaNewId=>{
-            console.log("URL",_url,"MODELO",item.body);
+            Logger.log("URL",_url,"MODELO",item.body);
             this.sustituyeHojasPorNewId(item.body,listaNewId);
             var lista=listaNewId as any[];
             for (var k = 0; k < lista.length; ++k) {
                 _url=_url.replace(""+lista[k].id,""+lista[k].newId);
             }
-            console.log("URL",_url,"MODELO",item.body);
+            Logger.log("URL",_url,"MODELO",item.body);
             this.http.put(_url,item.body).subscribe(
                 respuesta=>{
-                    console.log("RESPONSE EDIT=>",respuesta);
+                    Logger.log("RESPONSE EDIT=>",respuesta);
                     item.pendiente=false;
                     
                     this.db.update("sincronizar",item).then( respuesta =>{
@@ -314,7 +315,7 @@ export class OnLineService {
                     });
             },
                 error=>{
-                    console.log("Error:",error);
+                    Logger.log("Error:",error);
                     item.pendiente=true;
                     this.db.update("sincronizar",item);
                     this.sincroniza(i+1,lista2);
@@ -326,16 +327,16 @@ export class OnLineService {
     doGet(_url, item, i, lista2){
         item["numItentos"]++;
         this.db.list("newId").then(listaNewId=>{
-            console.log("URL",_url,"MODELO",item.body);
+            Logger.log("URL",_url,"MODELO",item.body);
             this.sustituyeHojasPorNewId(item.body,listaNewId);
             var lista=listaNewId as any[];
             for (var k = 0; k < lista.length; ++k) {
                 _url=_url.replace(""+lista[k].id,""+lista[k].newId);
             }
-            console.log("URL",_url,"MODELO",item.body);
+            Logger.log("URL",_url,"MODELO",item.body);
             this.http.get(_url).subscribe(
                 respuesta=>{
-                    console.log("RESPONSE GET=>",respuesta);
+                    Logger.log("RESPONSE GET=>",respuesta);
                     item.pendiente=false;
                     this.db.update("sincronizar",item).then( respuesta =>{
                         this.seActualizoAlmenosUnRegistro=true;
@@ -343,7 +344,7 @@ export class OnLineService {
                     });
             },
                 error=>{
-                    console.log("Error:",error);
+                    Logger.log("Error:",error);
                     item.pendiente=true;
                     this.db.update("sincronizar",item);
                     this.sincroniza(i+1,lista2);
@@ -367,22 +368,22 @@ export class OnLineService {
         var obj=this;
         item["numItentos"]++;
         this.db.list("newId").then(listaNewId=>{
-            console.log("URL",_url,"MODELO",item.body);
+            Logger.log("URL",_url,"MODELO",item.body);
             obj.sustituyeHojasPorNewId(item.body,listaNewId);
             var lista=listaNewId as any[];
             for (var k = 0; k < lista.length; ++k) {
                 _url=_url.replace(""+lista[k].id,""+lista[k].newId);
             }
-            console.log("URL",_url,"MODELO",item.body);
+            Logger.log("URL",_url,"MODELO",item.body);
             var formData = new FormData();
             var casoId="";
             var rec=function(k,listaDocumentos){
                 if(k==listaDocumentos["length"]){
-                    console.log("Antes de enviar",_url, formData);
+                    Logger.log("Antes de enviar",_url, formData);
                     formData.append('caso.id', casoId);
                     obj.http.post(_url,formData).subscribe(
                         respuesta=>{
-                            console.log("RESPONSE GET=>",respuesta);
+                            Logger.log("RESPONSE GET=>",respuesta);
                             item.pendiente=false;
                             obj.db.update("sincronizar",item).then( respuesta =>{
                                 obj.seActualizoAlmenosUnRegistro=true;
@@ -390,7 +391,7 @@ export class OnLineService {
                             });
                     },
                         error=>{
-                            console.log("Error:",error);
+                            Logger.log("Error:",error);
                             item.pendiente=true;
                             obj.db.update("sincronizar",item);
                             obj.sincroniza(i+1,lista2);
@@ -400,7 +401,7 @@ export class OnLineService {
                     obj.db.get("blobs",listaDocumentos[k]["idBlob"]).then(t=>{
                         var b=obj.dataURItoBlob(t["blob"].split(',')[1], listaDocumentos[k]["type"] );
                         var file = new File([b], listaDocumentos[k]["nombre"],{type: listaDocumentos[k]["type"], lastModified: Date.now()});
-                        console.log("Archivos",b,listaDocumentos[k],file);
+                        Logger.log("Archivos",b,listaDocumentos[k],file);
                         formData.append("files",file);
                         casoId=""+listaDocumentos[k]["casoId"];
                         rec(k+1,listaDocumentos);

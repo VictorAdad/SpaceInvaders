@@ -20,6 +20,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { GlobalService } from "@services/global.service";
 import { TableDataSource } from './../../global.component';
 import { AuthenticationService } from '@services/auth/authentication.service.ts';
+import { Logger } from "@services/logger.service";
 
 
 
@@ -88,7 +89,7 @@ export class PredenunciaCreateComponent {
 
     idUpdate(event: any) {
       this.solicitudId = event.id;
-      console.log("Recibiendo id emitido", event.id);
+      Logger.log("Recibiendo id emitido", event.id);
     }
 
 }
@@ -122,12 +123,12 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         this.route.params.subscribe(params => {
             if (params['casoId']){
                 this.casoId = +params['casoId'];
-                console.log(this.casoId);
+                Logger.log(this.casoId);
                 if(this.onLine.onLine){
                     this.http.get(this.apiUrl+this.casoId+'/page').subscribe(response => {
                          if(parseInt(response.totalCount) !== 0){
                             this.hasPredenuncia = true;
-                            console.log("Dont have predenuncia");
+                            Logger.log("Dont have predenuncia");
                             this.form.disable();
                             this.model= response.data[0] as Predenuncia;
                             var fechaCompleta:Date= new Date(response.fechaHoraInspeccion);
@@ -135,19 +136,19 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                             var horas: string=(String(fechaCompleta.getHours()).length==1)?'0'+fechaCompleta.getHours():String(fechaCompleta.getHours());
                             var minutos: string=(String(fechaCompleta.getMinutes()).length==1)?'0'+fechaCompleta.getMinutes():String(fechaCompleta.getMinutes());;
                             this.model.horaConlcusionLlamada=horas+':'+minutos;
-                            console.log("Emitiendo id..",this.model.id)
+                            Logger.log("Emitiendo id..",this.model.id)
                             this.idEmitter.emit({id: this.model.id});
-                            console.log('PP----------->',this.model);
+                            Logger.log('PP----------->',this.model);
                             this.fillForm(this.model);
                         }
                     });
                 }else{
                     this.db.get("casos", this.casoId).then(caso=>{
-                        console.log("Caso en armas ->",caso);
+                        Logger.log("Caso en armas ->",caso);
                         if (caso){
                             if(caso["predenuncias"]){
                                 this.hasPredenuncia = true;
-                                console.log("Have predenuncia");
+                                Logger.log("Have predenuncia");
                                 this.form.disable();
                                 let model = caso['predenuncias'];
                                 var fechaCompleta: Date = new Date(model.fechaHoraInspeccion);
@@ -155,9 +156,9 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                 var horas: string=(String(fechaCompleta.getHours()).length==1)?'0'+fechaCompleta.getHours():String(fechaCompleta.getHours());
                                 var minutos: string=(String(fechaCompleta.getMinutes()).length==1)?'0'+fechaCompleta.getMinutes():String(fechaCompleta.getMinutes());;
                                 this.model.horaConlcusionLlamada=horas+':'+minutos;
-                                console.log("Emitiendo id..",this.model.id)
+                                Logger.log("Emitiendo id..",this.model.id)
                                 this.idEmitter.emit({id: this.model.id});
-                                console.log('LL------------>',this.model);
+                                Logger.log('LL------------>',this.model);
                                 this.fillForm(model);
                             }
                         }
@@ -236,11 +237,11 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         return new Promise<any>(
             (resolve, reject) => {
                 if(this.onLine.onLine){
-                    console.log('--------------->', this.model.fechaCanalizacion);
+                    Logger.log('--------------->', this.model.fechaCanalizacion);
                     this.model.fechaCanalizacion = this.concatDate(this.model.fechaCanalizacion, this.model.horaCanalizacion);
                     Object.assign(this.model, _model);
                     this.model.caso.id = this.casoId;
-                    console.log(this.model);
+                    Logger.log(this.model);
                     this.model.tipo="Predenuncia";// temporalmente
                     if(this.model.fechaCanalizacion){
                       var fechaCompleta = new Date (this.model.fechaCanalizacion);
@@ -250,20 +251,20 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                       }
                       var mes:number=fechaCompleta.getMonth()+1;
                       this.model.fechaCanalizacion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
-                      console.log('lo que envio: '+  this.model.fechaCanalizacion);
+                      Logger.log('lo que envio: '+  this.model.fechaCanalizacion);
                      }
 
 
 
                     this.http.post('/v1/base/predenuncias', this.model).subscribe(
                         (response) => {
-                            console.log(response);
+                            Logger.log(response);
 
                             resolve('Predenuncia creada con éxito');
                             this.router.navigate(['/caso/'+this.casoId+'/detalle' ]);
                          },
                         (error) => {
-                            console.error('Error', error);
+                            Logger.error('Error', error);
                             reject(error);
                         }
                     );
@@ -286,9 +287,9 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                 }
                                 _model["id"]=temId;
                                 caso["predenuncia"].push(_model);
-                                console.log("caso arma", caso["predenuncia"]);
+                                Logger.log("caso arma", caso["predenuncia"]);
                                 this.db.update("casos",caso).then(t=>{
-                                    console.log("caso arma", t["arma"]);
+                                    Logger.log("caso arma", t["arma"]);
                                     resolve("Se agregó la arma de manera local");
                                     this.router.navigate(['/caso/'+this.casoId+'/detalle']);
                                 });
@@ -296,7 +297,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                         });
                     });
                 }
-                console.log('--------------->', this.model.fechaCanalizacion);
+                Logger.log('--------------->', this.model.fechaCanalizacion);
             }
         );
     }
@@ -311,9 +312,10 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         // var time = _data.fechaCanalizacion.getMinutes();
         // time = _data.fechaCanalizacion.getHours();
         var time = _data.fechaCanalizacion.getHours()+_data.fechaCanalizacion.getMinutes();
-        console.log('HH----------------->', time)
+        Logger.log('HH----------------->', time)
         this.form.patchValue(_data);
         this.form.controls.horaCanalizacion.setValue(time);
+
     }
 
 }
@@ -396,7 +398,7 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
     }
 
     public setData(_object){
-        console.log('setData()');
+        Logger.log('setData()');
         this.data.push(_object);
         this.subject.next(this.data);
     }

@@ -17,6 +17,7 @@ import { Observable }                  from 'rxjs/Observable';
 import * as moment from 'moment';
 import { CasoService } from '@services/caso/caso.service';
 import { Yason } from '@services/utils/yason';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl : './persona-fisica-imputado.component.html',
@@ -68,7 +69,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
     public changeTipoInterviniente(tipoInterviniente){
         this.globals.tipoInterviniente=tipoInterviniente;
-        console.log("TIPOINTERVINIENTE->",tipoInterviniente);
+        Logger.log("TIPOINTERVINIENTE->",tipoInterviniente);
     }
 
     ngOnInit(){
@@ -98,21 +99,21 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 this.id = +params['id'];
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/personas-casos/'+this.id).subscribe(response =>{
-                        console.log("PERSONACASO->",response);
+                        Logger.log("PERSONACASO->",response);
                         this.tipoInterviniente={id:response["tipoInterviniente"]["id"], tipo:response["tipoInterviniente"]["tipo"]};
                         this.tipoPersona=response["persona"]["tipoPersona"];
                         this.globals.personaCaso=response["persona"];
                         this.fillPersonaCaso(response);
                         this.form.controls.tipoPersona.disable();
                         this.globals.form.controls.personaCaso["controls"][0].controls.tipoInterviniente.disable();
-                        console.log('Form', this.globals);
-                        console.log("Coco",this.tipoPersona,this.tipoInterviniente);
+                        Logger.log('Form', this.globals);
+                        Logger.log("Coco",this.tipoPersona,this.tipoInterviniente);
                     });
                 }else{
                     //this.tabla.get("casos",this.casoId).then(caso => {
                     this.casoService.find(this.casoId).then(r=>{
                         var caso=this.casoService.caso;
-                        console.log("CASO ->",caso);
+                        Logger.log("CASO ->",caso);
                         var lista = caso["personaCasos"] as any[];
                         var personaCaso;
                         for (var i = 0; i < lista["length"]; ++i) {
@@ -122,16 +123,16 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                             }
                         }
                         this.detalleDetenido=personaCaso["detalleDetenido"]
-                        console.log(this.detalleDetenido)
+                        Logger.log(this.detalleDetenido)
                         this.tipoInterviniente={id:personaCaso["tipoInterviniente"]["id"], tipo:personaCaso["tipoInterviniente"]["tipo"]};
                         this.tipoPersona=personaCaso["persona"]["tipoPersona"];
                         this.globals.personaCaso=personaCaso["persona"];
-                        console.log("%cPersona","color:red;",personaCaso);
+                        Logger.log("%cPersona","color:red;",personaCaso);
                         this.fillPersonaCaso(personaCaso);
-                        console.log('Form', this.globals);
+                        Logger.log('Form', this.globals);
                         this.globals.form.controls.personaCaso["controls"][0].controls.tipoInterviniente.disable();
                         this.form.controls.tipoPersona.disable();
-                        console.log("Coco",this.tipoPersona,this.tipoInterviniente);
+                        Logger.log("Coco",this.tipoPersona,this.tipoInterviniente);
                     });
                 }
             }
@@ -170,7 +171,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             }else{
                 _personaCaso.detalleDetenido.fechaDeclaracion = fechaDeclaracion;
             }
-            console.log(_personaCaso.detalleDetenido);
+            Logger.log(_personaCaso.detalleDetenido);
 
             var fechaDetencion = new Date(_personaCaso.detalleDetenido.fechaDetencion);
             if (isNaN(fechaDetencion.getTime())) {
@@ -184,8 +185,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             let horaDetencion=horas+':'+minutos;
             _personaCaso.detalleDetenido['horaDetenido']=horaDetencion;
 
-            // console.log(_personaCaso.detalleDetenido);
-            // console.log(_personaCaso.detalleDetenido.tipoDetenido);
+            // Logger.log(_personaCaso.detalleDetenido);
+            // Logger.log(_personaCaso.detalleDetenido.tipoDetenido);
             let timer3 = Observable.timer(1);
             timer3.subscribe( t => {
               ((pcaso["controls"][0] as FormGroup).controls.detalleDetenido as FormGroup).controls.tipoDetenido.patchValue(
@@ -200,13 +201,13 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
           });
 
 
-            console.log(pcaso)
+            Logger.log(pcaso)
 
           }
 
         pcaso.controls[0].patchValue(_personaCaso);
 
-        console.log(pcaso)
+        Logger.log(pcaso)
         this.globals.tipoInterviniente=""+_personaCaso["tipoInterviniente"].id;
 
         let timer = Observable.timer(1);
@@ -356,7 +357,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     public fillNombres(_alias:any[]){
-        console.log("alias->",_alias);
+        Logger.log("alias->",_alias);
         this.globals.indexNombres=0;
         for(var i=0;i<_alias.length;i++){
             var item=_alias[i];
@@ -530,7 +531,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 formaCara:this.globals.formMediaFilicion.controls.caraNariz["controls"].formaCara.value
             }
         });
-        console.log("%cTipoInterviniente","color:cyan;",this.tipoInterviniente,"Modelo",_model);
+        Logger.log("%cTipoInterviniente","color:cyan;",this.tipoInterviniente,"Modelo",_model);
         var promesa = new Promise((resolve,reject)=>{
             this.searchCatalogos(buscar).then(e=>{
                 if (//preguntamos si existe el tipo intervininte(caso editar)
@@ -540,7 +541,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     ){
                     for(let key in e){
                         if (e[key]!=null){
-                            console.log("%cEKEY","color:cyan;",e[key]);
+                            Logger.log("%cEKEY","color:cyan;",e[key]);
                             (_model["mediaFiliacion"])[key]={id:e[key].id};
                         }
                     }
@@ -560,7 +561,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     save(valid : any, _model : any){
         return new Promise<any>((resolve, reject) => {
 
-            console.log('%cSave@Model','color:cyan;',_model);
+            Logger.log('%cSave@Model','color:cyan;',_model);
             if (!_model["edad"]){//quiere decir que solo viene la edad calculada
                 _model["edad"]=this.globals.form.controls.edad["value"];
             }
@@ -592,7 +593,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
               fechaCompleta.setHours(parseInt(hora.split(':')[0]));
               var mes:number=fechaCompleta.getMonth()+1;
               (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
-              console.log('lo que envio: '+  (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
+              Logger.log('lo que envio: '+  (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
              }
             buscar.push({
                 catalogo:"idioma_identificacion",
@@ -611,7 +612,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     }
                 }
                 this.buscaMediaFiliacion(_model).then(datos=>{
-                    console.log("Model",datos);
+                    Logger.log("Model",datos);
                     obj.doSave(datos).then(r=>{
                         resolve(r);
                     }).catch(e=>reject(e));
@@ -745,20 +746,20 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     doSave(_model:any){
-        console.log(this.globals);
+        Logger.log(this.globals);
         return new Promise((resolve,reject)=>{
             if(this.onLine.onLine){
                 _model.personaCaso[0].caso.id = this.casoId;
-                console.log('Model', _model);
+                Logger.log('Model', _model);
                 this.http.post('/v1/base/personas', _model).subscribe(
                     (response) => {
-                        console.log(response);
+                        Logger.log(response);
                         resolve("Se creo la persona con éxito");
                         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas' ]);
                         this.casoService.actualizaCaso();
                     },
                     (error) => {
-                        console.error('Error', error);
+                        Logger.error('Error', error);
                         reject(error);
                     }
                 );
@@ -777,7 +778,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 let copia=temId;
                 var otrosID=[];
                 var dependeDe=this.agregaIdTemporales(_model,temId,otrosID);
-                console.log(dependeDe, otrosID);
+                Logger.log(dependeDe, otrosID);
 
                 let dato={
                     url:'/v1/base/personas',
@@ -790,16 +791,16 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     otrosID: otrosID
                 }
                 _model["id"]="";
-                console.log("MODEL",_model);
+                Logger.log("MODEL",_model);
                 this.tabla.add("sincronizar",dato).then(response=>{
                     //this.tabla.get("casos",this.casoId).then(
                     //        casoR=>{
                         var caso=this.casoService.caso;
                         //this.caso=casoR as Caso;
 
-                        console.log("MODEL",_model);
+                        Logger.log("MODEL",_model);
                         this.agregaIdTemporales(_model,copia,otrosID,true);
-                        console.log("MODEL",copia,_model);
+                        Logger.log("MODEL",copia,_model);
                         _model["dependeDe"]=dependeDe;
                         _model["id"]=_model["personaCaso"][0]["personaId"];
                         let personaCaso={
@@ -809,18 +810,18 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                             persona:_model,
                         }
                         // this.tabla.update('personas', _model).then( p => {
-                        //     console.log("SI");
+                        //     Logger.log("SI");
                             if (!caso["personaCasos"])
                                 caso["personaCasos"]=[];
                             caso["personaCasos"].push(personaCaso);
                             this.tabla.update("casos",caso).then(
                                 ds=>{
-                                    console.log("Se actualizo registro",ds);
+                                    Logger.log("Se actualizo registro",ds);
                                     resolve("Se creo la persona de manera local");
                                     this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas']);
 
                             });
-                            //console.log('-> Persona Guardada',);
+                            //Logger.log('-> Persona Guardada',);
 
                         // });
 
@@ -835,16 +836,16 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             if(this.onLine.onLine&&this.globals.inicioOnline){
                 _model.personaCaso[0].caso.id = this.casoId;
                 (_model.personaCaso[0])["id"]=this.id;
-                console.log('Model', _model);
+                Logger.log('Model', _model);
                 this.http.put('/v1/base/personas/'+this.globals.personaCaso["id"], _model).subscribe(
                     (response) => {
-                        console.log("Editar Persona->",response);
+                        Logger.log("Editar Persona->",response);
                         resolve("Se actualizó la persona con éxito");
                         this.casoService.actualizaCaso();
                         // this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas' ]);
                     },
                     (error) => {
-                        console.error('Error', error);
+                        Logger.error('Error', error);
                         reject(error);
                     }
                 );
@@ -854,7 +855,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 (_model.personaCaso[0])["id"]=this.id;
                 (_model.personaCaso[0])["personaId"]=_model["id"];
                 _model["id"]=this.id;
-                console.log("->PERSONA",this.globals.personaCaso,_model);
+                Logger.log("->PERSONA",this.globals.personaCaso,_model);
                 var lista=this.options.tipoInterviniente as any[];
                 _model.personaCaso[0]["tipoInterviniente"]=this.tipoInterviniente;
                 _model["tipoPersona"]=this.tipoPersona;
@@ -869,7 +870,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 let copia=temId;
                 var otrosID=[];
                 var dependeDe=this.agregaIdTemporalesEdit(_model,temId,otrosID);
-                console.log(dependeDe, otrosID);
+                Logger.log(dependeDe, otrosID);
 
                 let dato={
                     url:'/v1/base/personas/'+this.globals.personaCaso["id"] ,
@@ -905,7 +906,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         }
                         this.tabla.update("casos",caso).then(
                             ds=>{
-                                console.log("Se actualizo registro",ds);
+                                Logger.log("Se actualizo registro",ds);
                                 resolve("Se creo la persona de manera local");
                                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas']);
 
@@ -919,7 +920,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
     edit(valid : any, _model : any){
         return new Promise((resolve,reject)=>{
-            console.log('%cEdit@Model','color:cyan;',_model);
+            Logger.log('%cEdit@Model','color:cyan;',_model);
             if (!_model["edad"]){//quiere decir que solo viene la edad calculada
                 _model["edad"]=this.globals.form.controls.edad["value"];
             }
@@ -942,7 +943,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             }
             if (this.personaServ.tipoDetenido.finded[0]){
                 (_model["personaCaso"])[0].detalleDetenido["tipoDetenido"].id=this.personaServ.tipoDetenido.finded[0].id
-                console.log('Tipo de detenido service',this.personaServ.tipoDetenido);
+                Logger.log('Tipo de detenido service',this.personaServ.tipoDetenido);
 
               }
               if((_model["personaCaso"])[0].detalleDetenido['fechaDetencion']){
@@ -953,7 +954,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 fechaCompleta.setHours(parseInt(hora.split(':')[0]));
                 var mes:number=fechaCompleta.getMonth()+1;
                 (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
-                console.log('lo que envio: '+  (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
+                Logger.log('lo que envio: '+  (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
                }
 
             buscar.push({
@@ -989,7 +990,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     public fillForm(_data){
-        console.log('---------------->', _data)
+        Logger.log('---------------->', _data)
         var z = new Date(_data.fechaNacimiento);
         if (isNaN(z.getTime())) {
             _data.fechaNacimiento = null;
@@ -1047,9 +1048,9 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
         }
 
-        console.log("datos ->",_data);
+        Logger.log("datos ->",_data);
         this.form.patchValue(_data);
-        console.log('After patch', this.form);
+        Logger.log('After patch', this.form);
     }
 
 }
@@ -1128,7 +1129,7 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
     edad(e){
 
         var m = moment(e);
-        console.log(typeof e,m.isValid());
+        Logger.log(typeof e,m.isValid());
         if (m.isValid()){
             var a=moment(e);
             var hoy=moment();
@@ -1208,10 +1209,10 @@ export class IdentificacionComponent{
     tipo indica el tipo de campo(otroNombre o alias)
     */
     setForm(_event,_i,_j,_id,_tipo){
-        // console.log('--------------->',_event,_i,_j,_id,_tipo );
+        // Logger.log('--------------->',_event,_i,_j,_id,_tipo );
         if (_event["length"]>12)
         _event=_event.slice(0,12);
-        // console.log('%cHHH-------------->','color:red;',_event,_i,_j,_id,_tipo );
+        // Logger.log('%cHHH-------------->','color:red;',_event,_i,_j,_id,_tipo );
         if(_tipo === 'otroNombre'){
             this.otrosNombres.nombres[_j]=_event;
         }else{

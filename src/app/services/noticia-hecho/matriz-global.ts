@@ -1,5 +1,6 @@
 import { MOption } from '@partials/form/select2/select2.component';
 import { HttpService } from '@services/http.service';
+import { Logger } from "@services/logger.service";
 
 export class MatrizGlobal {
 
@@ -54,7 +55,7 @@ export class MatrizGlobal {
     }
 
     public find(_e, _tipo:string){
-        console.log('-> Buscar registro');
+        Logger.log('-> Buscar registro');
         this.selected[_tipo] = _e;
         this.finded = this.objects.filter(object => {
             return this.validate(object, this.selected);

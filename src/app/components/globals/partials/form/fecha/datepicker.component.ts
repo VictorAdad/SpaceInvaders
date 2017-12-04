@@ -3,6 +3,7 @@ import { DatePipe } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
+import { Logger } from "@services/logger.service";
 
 export const DATEPICKER_CONTROL_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -92,13 +93,13 @@ export class DatePicker implements OnInit, ControlValueAccessor {
 
         this.group.controls[this.name].valueChanges.subscribe(
             data => {
-                // console.log('Change DatePicker value', data);
+                // Logger.log('Change DatePicker value', data);
             }
         )
 
         this.control = this.group.get(this.name)  as FormControl;
         this.control.valueChanges.subscribe(val => {
-            console.log('Date valueChanges()', val);
+            Logger.log('Date valueChanges()', val);
             if(val != null && val != 'Invalid Date'){
                 this.date = new Date(val);
                 this.onDateSelect.emit(this.date);
@@ -375,30 +376,30 @@ export class DatePicker implements OnInit, ControlValueAccessor {
         this.generateDays();
     }
     onChange(evt:any){
-        console.log(evt);
+        Logger.log(evt);
     }
     incHour(){
         if(this.hourValue < 12){
             this.hourValue += 1;
-            console.log(this.hourValue);
+            Logger.log(this.hourValue);
         } 
     }
     decHour(){
         if(this.hourValue > 1){
             this.hourValue -= 1;
-            console.log(this.hourValue);
+            Logger.log(this.hourValue);
         } 
     }
     incMinutes(){
         if(this.minValue < 59){
             this.minValue += 1;
-            console.log(this.minValue);
+            Logger.log(this.minValue);
         } 
     }
     decMinutes(){
         if(this.minValue > 0){
             this.minValue -= 1;
-            console.log(this.minValue);
+            Logger.log(this.minValue);
         } 
     }
     done(){

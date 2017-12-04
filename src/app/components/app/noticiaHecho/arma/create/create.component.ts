@@ -12,6 +12,7 @@ import { CIndexedDB } from '@services/indexedDB';
 import { ArmaService } from '@services/noticia-hecho/arma/arma.service';
 import { Observable } from 'rxjs';
 import { CasoService } from '@services/caso/caso.service';
+import { Logger } from "@services/logger.service";
 @Component({
   selector: 'arma-create',
   templateUrl: 'create.component.html',
@@ -37,7 +38,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         private casoService: CasoService
         ) {
         super();
-        console.log(this.armaServ);
+        Logger.log(this.armaServ);
     }
 
     ngOnInit(){
@@ -76,7 +77,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/armas/'+this.id).subscribe(response =>{
                         this.model = response as Arma;
-                        console.log("Arma->",this.model);
+                        Logger.log("Arma->",this.model);
                         if (this.model.claseArma)
                             this.isArmaFuego=this.model.claseArma.claseArma===_config.optionValue.armaFuego;
                         this.fillForm(response);
@@ -147,7 +148,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                         _model.calibreMecanismo["mecanismo"]=this.armaServ.calibreMecanismo.finded[0].mecanismo;
                     }
                 }
-                console.log("MODEL",_model);
+                Logger.log("MODEL",_model);
                 let temId=Date.now();
                 let dato={
                     url:'/v1/base/armas',
@@ -167,9 +168,9 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                             }
                             _model["id"]=temId;
                             caso["armas"].push(_model);
-                            console.log("caso arma", caso["armas"]);
+                            Logger.log("caso arma", caso["armas"]);
                             this.db.update("casos",caso).then(t=>{
-                                console.log("caso arma", t["armas"]);
+                                Logger.log("caso arma", t["armas"]);
                                 resolve("Se agregó la arma de manera local");
                                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/armas' ]);
                             });
@@ -182,7 +183,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
 
     public edit(_valid : any, _model : any){
         return new Promise<any>((resolve, reject) => {
-            console.log('Arma Serv', this.armaServ);
+            Logger.log('Arma Serv', this.armaServ);
             _model.caso.id             = this.casoId;
             //if(this.armaServ.claseArma.finded.length>0 && this.armaServ.calibreMecanismo.finded.length>0){
                 if(this.armaServ.claseArma.finded[0]){
@@ -199,10 +200,10 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                     }
                 }
 
-                console.log('-> Arma@edit()', _model);
+                Logger.log('-> Arma@edit()', _model);
                 if(this.onLine.onLine){
                     this.http.put('/v1/base/armas/'+this.id, _model).subscribe((response) => {
-                        console.log('-> Registro acutualizado', response);
+                        Logger.log('-> Registro acutualizado', response);
                         resolve("Se actualizó la información del arma");
                         this.casoService.actualizaCaso();
                     },e=>{
@@ -229,7 +230,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                                 }
                             }
                             this.db.update("casos",t).then(e=>{
-                                console.log("caso",t);
+                                Logger.log("caso",t);
                                 resolve("Se actualizó la información del arma de manera local");
                             });
 
@@ -240,7 +241,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
 
             // }else{
             //     reject("Se actualizó la información del arma de manera local");
-            //     console.log("No se ha encontrado combinación clase de arma, tipo, subtipo o calibre mecanismo")
+            //     Logger.log("No se ha encontrado combinación clase de arma, tipo, subtipo o calibre mecanismo")
             // }
         });
 
@@ -308,7 +309,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
            });
         }
 
-        console.log(this.armaServ.claseArma)
+        Logger.log(this.armaServ.claseArma)
         this.armaServ.claseArma.find(option, 'claseArma');
         this.armaServ.claseArma.filterBy(option, 'claseArma', 'tipo');
         
