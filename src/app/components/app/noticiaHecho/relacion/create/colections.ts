@@ -63,9 +63,9 @@ export class TrataPersonas {
 
         if (_object.municipioOrigenOtro && _object.municipioOrigenOtro!="")
             this.municipioOrigen = _object.municipioOrigenOtro;
-        else if (_object.municipioOrige && _object.municipioOrigen.id!="")
+        else if (_object.municipioOrigen && _object.municipioOrigen.id!="")
             if (_municipiosOrigen.length>0){
-                let municipio=_options.buscaItemConValue(_municipiosDestino,_object.municipioDestino.id);
+                let municipio=_options.buscaItemConValue(_municipiosOrigen,_object.municipioOrigen.id);
                 this.municipioOrigen = municipio ? municipio.label : '';
             }else{
                 _options.getMunicipiosByEstadoService(_object.estadoDestino.id).then(respuesta=>{
