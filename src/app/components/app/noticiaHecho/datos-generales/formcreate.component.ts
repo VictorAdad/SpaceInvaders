@@ -76,9 +76,19 @@ export class FormCreateDelitoCasoComponent {
                 this.dataSource = new ExampleDataSource(response);
             });
         else
-            this.tabla.searchInNotMatrx("delito",{nombre:this.searchDelito}, true).then(response=>{
-                Logger.log('-> done buscar delito', response, this.searchDelito);
-                this.dataSource = new ExampleDataSource(response);
+            this.tabla.get("catalogos","delito").then(response=>{
+                var delitos =[];
+                if (response && response["arreglo"]){
+                    var lista=response["arreglo"] as any[];
+                    for (var i = 0; i < lista.length; ++i) {
+                        if (lista[i]["nombre"].indexOf(this.searchDelito.toUpperCase())>=0){
+                            delitos.push(lista[i]);
+                        }
+                    }
+                }
+
+                Logger.log('%c-> done buscar delito',"color: red;", delitos, this.searchDelito);
+                this.dataSource = new ExampleDataSource(delitos);
             });
     }
 
