@@ -180,15 +180,15 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             }
             // this.model.fechaCanalizacion=fechaCompleta;
             var horas: string=(String(fechaDetencion.getHours()).length==1)?'0'+fechaDetencion.getHours():String(fechaDetencion.getHours());
-            var minutos: string=(String(fechaDetencion.getMinutes()).length==1)?'0'+fechaDetencion.getMinutes():String(fechaDetencion.getMinutes());;
+            var minutos: string=(String(fechaDetencion.getMinutes()).length==1)?'0'+fechaDetencion.getMinutes():String(fechaDetencion.getMinutes());
             let horaDetencion=horas+':'+minutos;
-            _personaCaso.detalleDetenido['horaDetenido']=horaDetencion;
+            // _personaCaso.detalleDetenido['horaDetenido']=horaDetencion;
 
             // console.log(_personaCaso.detalleDetenido);
-            // console.log(_personaCaso.detalleDetenido.tipoDetenido);
             let timer3 = Observable.timer(1);
             timer3.subscribe( t => {
-              ((pcaso["controls"][0] as FormGroup).controls.detalleDetenido as FormGroup).controls.tipoDetenido.patchValue(
+                pcaso["controls"][0]["controls"].detalleDetenido.controls.horaDetenido.setValue(horaDetencion);  
+                ((pcaso["controls"][0] as FormGroup).controls.detalleDetenido as FormGroup).controls.tipoDetenido.patchValue(
                 {
                 'id' : _personaCaso.detalleDetenido.tipoDetenido? _personaCaso.detalleDetenido.tipoDetenido.id : "",
                 'tipoDetencion'   : _personaCaso.detalleDetenido.tipoDetenido? _personaCaso.detalleDetenido.tipoDetenido.tipoDetencion : "",
@@ -197,10 +197,9 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
               }
               );
 
-          });
+          }); 
 
-
-            console.log(pcaso)
+          console.log(pcaso)
 
           }
 
@@ -586,10 +585,13 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             }
             if((_model["personaCaso"])[0].detalleDetenido['fechaDetencion']){
               var fechaCompleta = new Date ((_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
+              console.log('1.- fechaCompleta', fechaCompleta ); 
               var hora=(_model["personaCaso"])[0].detalleDetenido['horaDetenido'];
+              console.log('2.- Hora', hora ); 
 
               fechaCompleta.setMinutes(parseInt(hora.split(':')[1]));
               fechaCompleta.setHours(parseInt(hora.split(':')[0]));
+              console.log('3.- Hora', fechaCompleta );
               var mes:number=fechaCompleta.getMonth()+1;
               (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
               console.log('lo que envio: '+  (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
@@ -1519,7 +1521,7 @@ export class LosForm{
                     'detalleDetenido': new FormGroup({
                         'fechaDetencion'   : new FormControl(),
                         'fechaDeclaracion' : new FormControl(),
-                        'horaDetenido'         : new FormControl("",[]),
+                        'horaDetenido'     : new FormControl("",[]),
                         'tipoDetenido' : new FormGroup({
                           'id' : new FormControl("", []),
                           'tipoDetencion'         : new FormControl("",[]),
