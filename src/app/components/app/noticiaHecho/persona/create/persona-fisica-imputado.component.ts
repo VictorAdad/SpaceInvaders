@@ -1519,6 +1519,7 @@ export class LosForm{
                         'id': new FormControl("",[Validators.required,])
                     }),
                     'detalleDetenido': new FormGroup({
+                        'id'               : new FormControl(),
                         'fechaDetencion'   : new FormControl(),
                         'fechaDeclaracion' : new FormControl(),
                         'horaDetenido'     : new FormControl("",[]),
