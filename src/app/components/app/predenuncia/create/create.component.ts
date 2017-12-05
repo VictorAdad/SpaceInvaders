@@ -269,6 +269,8 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                     );
                 }else{
                     let temId = Date.now();
+                    _model.fechaCanalizacion = this.concatDate(_model.fechaCanalizacion, _model.horaCanalizacion);
+                    _model.caso.id = this.casoId;
                     let dato = {
                         url:'/v1/base/predenuncias',
                         body:_model,
