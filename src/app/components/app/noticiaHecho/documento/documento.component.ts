@@ -92,6 +92,8 @@ export class DocumentoComponent extends FormatosGlobal{
   cargaArchivosOffline(){
       this.db.list("documentos").then(archivos=>{
         var lista=archivos as any[];
+        console.log(lista);
+        this.data=[];
         for (var i = 0; i < lista.length; ++i) {
 
           if (lista[i]["casoId"]==this.id){
@@ -105,11 +107,14 @@ export class DocumentoComponent extends FormatosGlobal{
             this.data.push(obj);
           }
         }
-        this.subject.next(this.data);
-        //this.dataSource = this.source;
-        this.dataSource = new TableService(this.paginator, this.data);
+        let data_slice=this.data;
+        if(this.pageSize*this.pageIndex+this.pageSize<=this.data.length)
+        {
+          this.dataSource = new TableService(this.paginator, data_slice.slice(this.pageSize*this.pageIndex,this.pageSize));}
+       else{
+       this.dataSource = new TableService(this.paginator, data_slice.slice(this.pageSize*this.pageIndex,this.data.length));
+        }
         this.pag = this.data.length;
-
       });
   }
 
@@ -185,6 +190,7 @@ export class DocumentoComponent extends FormatosGlobal{
       });
     }
     else{
+      this.pageIndex=0;
       this.page('/v1/documentos/casos/'+this.id+'/page?p='+this.pageIndex+'&tr='+this.pageSize);
       this.isShowAll=false;
     }
@@ -246,6 +252,16 @@ export class DocumentoComponent extends FormatosGlobal{
     if(!this.isShowAll){
       if(this.onLine.onLine){
          this.page('/v1/documentos/casos/'+this.id+'/page?p='+_e.pageIndex+'&tr='+_e.pageSize);
+      }
+      else{
+        let data_slice=this.data;
+        console.log(this.data.length)
+        Logger.log(data_slice.slice(this.pageSize*this.pageIndex,this.pageSize))
+        if(this.pageSize*this.pageIndex+this.pageSize<=this.data.length)
+        this.dataSource = new TableService(this.paginator, data_slice.slice(this.pageSize*this.pageIndex,this.pageSize*this.pageIndex+this.pageSize));
+        else{
+         this.dataSource = new TableService(this.paginator, data_slice.slice(this.pageSize*this.pageIndex,this.data.length));
+        }
       }
     }else{
       let data_slice=this.data;
