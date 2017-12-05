@@ -704,7 +704,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     dependeDe.push(temId);
                     temId++;
                 }else{
-                    dependeDe.push( ((_model["localizacionPersona"])[i])["id"] );
+                    ((_model["localizacionPersona"])[i])["id"]=null;
+                    //dependeDe.push( ((_model["localizacionPersona"])[i])["id"] );
                 }
 
             }
@@ -737,7 +738,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         dependeDe.push(temId);
                         temId++;
                     }else{
-                        dependeDe.push(((_model["aliasNombrePersona"])[i])["id"]);
+                        //dependeDe.push(((_model["aliasNombrePersona"])[i])["id"]);
+                        ((_model["aliasNombrePersona"])[i])["id"]=null;
                     }
 
                 }
@@ -872,7 +874,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 var otrosID=[];
                 var dependeDe=this.agregaIdTemporalesEdit(_model,temId,otrosID);
                 Logger.log(dependeDe, otrosID);
-
+                var idModel=_model["id"];
+                _model["id"]=this.globals.personaCaso["id"];
                 let dato={
                     url:'/v1/base/personas/'+this.globals.personaCaso["id"] ,
                     body:_model,
@@ -882,6 +885,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     dependeDe:dependeDe,
                 }
                 this.tabla.add("sincronizar",dato).then(response=>{
+                        _model["id"]=idModel;
                     // this.tabla.get("casos",this.casoId).then(
                     //         casoR=>{
                         var caso=this.casoService.caso;
