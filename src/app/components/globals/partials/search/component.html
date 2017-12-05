@@ -1,4 +1,7 @@
 <div class="md-custom-search">
-	<input type="search" placeholder="Buscar">
-	<mat-icon  class="suffix">search</mat-icon>
+	<input #input type="search" placeholder="Buscar">
+	<button mat-icon-button style="line-height: 45px;">
+		<mat-icon  class="suffix" *ngIf="empty">search</mat-icon>
+		<mat-icon  class="suffix" *ngIf="!empty" (click)="clean()">close</mat-icon>
+	</button>
 </div>

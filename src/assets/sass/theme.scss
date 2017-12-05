@@ -65,6 +65,12 @@ strong,
     }
 }
 
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+    background-color: white !important;
+    background-image: none;
+    color: rgb(0, 0, 0);
+}
+
 @import "bootstrap/functions";
 @import "bootstrap/variables";
 @import "bootstrap/mixins/breakpoints";

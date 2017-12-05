@@ -17,16 +17,31 @@ import { _catalogos } from '@components-app/catalogos/catalogos';
 export class HomeComponent implements OnInit {
 
     private db: CIndexedDB;
+
     private onLine: OnLineService;
+
     private http: HttpService;
+
     public casos: Caso[] = [];
+
     public dataSource: TableService;
+
     public pag: number = 0;
+
     public loadList = true;
+
     public catalogos:any;
+
     public catalogosKeys:any[];
+
+    public pageIndex: number;
+
+    public pageSize: number;
+
+    public pageFilter: string = '';
+
     @ViewChild(MatPaginator) 
-    paginator: MatPaginator;
+    public paginator: MatPaginator;
     
 
     constructor(
@@ -64,11 +79,19 @@ export class HomeComponent implements OnInit {
     }
 
     public changePage(_e){
+        this.dataSource = null;
         this.page(`/v1/base/casos/titulares/${this.auth.user.username}/page?p=`+_e.pageIndex+'&tr='+_e.pageSize);
     }
 
+    public filterPage(_event){
+        if(typeof _event == 'string')
+            this.page(`/v1/base/casos/titulares/${this.auth.user.username}/page?f=${_event}`)
+    }
+
     public page(url: string){
-        this.http.get(url).subscribe((response) => {
+        this.http.get(
+            url    
+        ).subscribe((response) => {
             this.casos = [];
             this.loadList = false;
             response.data.forEach(object => {
