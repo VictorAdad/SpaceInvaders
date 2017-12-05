@@ -173,6 +173,9 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         //timer.subscribe(t => {
             //if (this.authen.user.hasRoles(this.authen.roles.callCenter)) {
                 this.form  = new FormGroup({
+                'caso': new FormGroup({
+                    'id': new FormControl()
+                }),
                 // 'calidadUsuario'        :  new FormControl(this.model.calidadUsuario),
                 'noTelefonico'        :  new FormControl(this.model.numeroTelefono),
                 'tipoLinea'   :  new FormGroup({
