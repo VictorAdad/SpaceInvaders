@@ -289,14 +289,13 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
 
     public fillForm(_data){
         _data.fecha = new Date(_data.fecha);
-        Logger.log(_data.fecha);
+        console.log(_data.fecha.getTime());
         this.zoom   = 17;
         this.lat    = _data.latitud;
         this.lng    = _data.longitud;
         this.latMarker = _data.latitud;
         this.lngMarker = _data.longitud;
         let timer = Observable.timer(1);
-
         this.form.patchValue(
             {
                 'tipo'            : _data.detalleLugar ? _data.detalleLugar.tipoLugar : null,
@@ -316,15 +315,29 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 "noInterior"      :_data.noInterior,
                 "pais"            :_data.pais,
                 "referencias"     :_data.referencias,
-                "colonia"         :_data.colonia? _data.colonia:new Colonia(),
-                "estado"          :_data.estado? _data.estado:{},
-                "municipio"       :_data.municipio? _data.municipio:new Municipio(),
+               // "colonia"         :_data.colonia? _data.colonia.nombre:new Colonia(),
+               // "estado"          :_data.estado? _data.estado:{},
+               // "municipio"       :_data.municipio? _data.municipio:new Municipio(),
                 "detalleLugar"    :_data.detalleLugar? _data.detalleLugar:{},
                 "caso"            :_data.caso? _data.caso:new Caso(),
 
             }
 
           );
+
+          timer.subscribe(t => {
+            this.form.patchValue({
+            "colonia"         :_data.colonia? _data.colonia:new Colonia(),
+            "municipio"       :_data.municipio? _data.municipio:new Municipio(),
+            "estado"          :_data.estado? _data.estado:{},
+            }
+            )
+          }
+        );
+
+
+
+
     //  this.form.patchValue(_data);
 
     }
@@ -337,6 +350,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
     }
 
     public changePais(id){
+
         Logger.log('-------->', id);
         if(id!=null && typeof id !='undefined'){
             this.optionsServ.getEstadoByPais(id);
@@ -363,6 +377,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
     }
 
     public changeEstado(id){
+      console.log('Id de estado',id)
         if(id!=null && typeof id !='undefined'){
             this.optionsServ.getMunicipiosByEstado(id);
             this.form.controls.estado.patchValue(id);

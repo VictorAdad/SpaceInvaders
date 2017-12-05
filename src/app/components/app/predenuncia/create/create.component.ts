@@ -230,7 +230,6 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
 
     concatDate(fechaCanalizacion, horaCanalizacion){
         return fechaCanalizacion = new Date(fechaCanalizacion+' '+horaCanalizacion)
-        // return fechaCanalizacion.parse(fechaCanalizacion+horaCanalizacion);
     }
 
     public save(valid : any, _model : any){
@@ -309,10 +308,12 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             }
         }
         _data.fechaCanalizacion = new Date(_data.fechaCanalizacion);
-        // var time = _data.fechaCanalizacion.getMinutes();
-        // time = _data.fechaCanalizacion.getHours();
-        var time = _data.fechaCanalizacion.getHours()+_data.fechaCanalizacion.getMinutes();
+
+       
+        var time = _data.fechaCanalizacion.getHours()+':'+_data.fechaCanalizacion.getMinutes();
+
         Logger.log('HH----------------->', time)
+        
         this.form.patchValue(_data);
         this.form.controls.horaCanalizacion.setValue(time);
 
