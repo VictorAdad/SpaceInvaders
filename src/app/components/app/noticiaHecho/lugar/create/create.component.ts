@@ -181,7 +181,17 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             _model.caso.id      = this.casoId;
             _model.latitud      = this.latMarker;
             _model.longitud     = this.lngMarker;
-            _model.fecha        = moment(_model.fecha).format('YYYY-MM-DD');
+            console.log('lo que envio: '+   _model.fecha);
+
+            if(_model.fecha){
+              var hora=_model.hora
+              let fechaCompleta   = new Date(_model.fecha);
+              fechaCompleta.setMinutes(parseInt(hora.split(':')[1]));
+              fechaCompleta.setHours(parseInt(hora.split(':')[0]));
+              var mes:number=fechaCompleta.getMonth()+1;
+              _model.fecha =fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
+              console.log('lo que envio: '+   _model.fecha);
+            }
             if(this.lugarServ.finded.length > 0){
                 _model.detalleLugar.id = this.lugarServ.finded[0].id;
             }
@@ -191,6 +201,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 this.http.post('/v1/base/lugares', _model).subscribe(
                     (response) => {
                         Logger.log('-> registro guardado', response);
+                        console.log('hora guardada',new Date(response.fecha))
                         resolve("Se creó un nuevo lugar con éxito");
                         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/lugares' ]);
                         this.casoService.actualizaCaso();
@@ -243,10 +254,22 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             _model["latitud"]     = this.latMarker;
             _model["longitud"]     = this.lngMarker;
             _model.caso.id      = this.casoId;
+            console.log('lo que envio: '+   _model.fecha);
+
+            if(_model.fecha){
+              var hora=_model.hora
+              let fechaCompleta   = new Date(_model.fecha);
+              let minutos=hora?hora.split(':')[1]:'0';
+              let horas=hora?hora.split(':')[0]:'0';
+              var mes:number=fechaCompleta.getMonth()+1;
+              _model.fecha =fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+horas+':'+minutos+':00.000';
+              console.log('lo que envio: '+   _model.fecha);
+             }
             if(this.lugarServ.finded.length > 0){
                 _model.detalleLugar.id = this.lugarServ.finded[0].id;
             }
             if(this.onLine.onLine){
+               console.log('Modelo a guardar',_model)
                 this.http.put('/v1/base/lugares/'+this.id, _model).subscribe((response) => {
                     Logger.log('-> Registro acutualizado', response);
                     resolve("Se actualizó el lugar");
@@ -289,13 +312,16 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
 
     public fillForm(_data){
         _data.fecha = new Date(_data.fecha);
-        console.log(_data.fecha.getTime());
+        console.log(_data.fecha.getMinutes());
+        console.log(_data.fecha.getHours());
         this.zoom   = 17;
         this.lat    = _data.latitud;
         this.lng    = _data.longitud;
         this.latMarker = _data.latitud;
         this.lngMarker = _data.longitud;
         let timer = Observable.timer(1);
+        _data.hora= ((_data.fecha.getHours()<10)?('0'+_data.fecha.getHours()):_data.fecha.getHours()) +":"  +((_data.fecha.getMinutes()<10)?('0'+_data.fecha.getMinutes()):_data.fecha.getMinutes());
+        console.log(_data.hora);
         this.form.patchValue(
             {
                 'tipo'            : _data.detalleLugar ? _data.detalleLugar.tipoLugar : null,
@@ -306,7 +332,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 "coloniaOtro"     :_data.coloniaOtro,
                 "cp"              :_data.cp,
                 "fecha"           :_data.fecha,
-                "hora"            : moment(_data.fecha.getTime()).format("HH:MM"),
+                "hora"            : _data.hora,
                 "descripcionLugar":_data.descripcionLugar,
                 "notas"           :_data.notas,
                 "refeGeograficas" :_data.refeGeograficas,
