@@ -7,6 +7,7 @@ import { HttpService} from '@services/http.service';
 import { Vehiculo } from '@models/vehiculo';
 import { CIndexedDB } from '@services/indexedDB';
 import { CasoService } from '@services/caso/caso.service';
+import { Logger } from "@services/logger.service";
 @Component({
     selector: 'vehiculo',
     templateUrl:'./vehiculo.component.html'
@@ -51,24 +52,24 @@ export class VehiculoComponent{
   	}
 
     public changePage(_e) {
-        console.log('Page index', _e.pageIndex);
-        console.log('Page size', _e.pageSize);
-        console.log('Id caso', this.casoId);
+        Logger.log('Page index', _e.pageIndex);
+        Logger.log('Page size', _e.pageSize);
+        Logger.log('Id caso', this.casoId);
         this.vehiculos = [];
         this.page('/v1/base/vehiculos/casos/' + this.casoId + '/page?p=' + _e.pageIndex + '&tr=' + _e.pageSize);
     }
 
     public page(url: string) {
         this.http.get(url).subscribe((response) => {
-            //console.log('Paginator response', response.data);
+            //Logger.log('Paginator response', response.data);
             
             response.data.forEach(object => {
                 this.pag = response.totalCount;
-                //console.log("Respuestadelitos", response["data"]);
+                //Logger.log("Respuestadelitos", response["data"]);
                 this.vehiculos.push(Object.assign(new Vehiculo(), object));
                 this.dataSource = new TableService(this.paginator, this.vehiculos);
             });
-            console.log('Datos finales', this.dataSource);
+            Logger.log('Datos finales', this.dataSource);
         });
     }
 }

@@ -15,6 +15,7 @@ import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { GlobalService } from "@services/global.service";
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl:'./component.html',
@@ -34,12 +35,12 @@ export class InspeccionCreateComponent {
                 this.breadcrumb.push({path:`/caso/${this.casoId}/inspeccion`,label:"Solicitudes de inspección"})
             }
         });
-        console.log('casoID', this.casoId);
+        Logger.log('casoID', this.casoId);
   	}
     modelUpdate(model: any) {
       this.solicitudId= model.id;
       this.model=model
-      console.log(model);
+      Logger.log(model);
     }
 }
 
@@ -80,10 +81,10 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
         this.route.params.subscribe(params => {
             if(params['casoId'])
                 this.casoId = +params['casoId'];
-                console.log('casoId', this.casoId);
+                Logger.log('casoId', this.casoId);
             if(params['id']){
                 this.id = +params['id'];
-                console.log('id', this.id);
+                Logger.log('id', this.id);
                 this.http.get(this.apiUrl+'/'+this.id).subscribe(response =>{
                         var fechaCompleta:Date= new Date(response.fechaHoraInspeccion);
                         response.fechaHoraInspeccion=fechaCompleta;
@@ -102,7 +103,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
 
             Object.assign(this.model, _model);
             this.model.caso.id = this.casoId;
-            console.log('-> Inspeccion@save()', this.model);
+            Logger.log('-> Inspeccion@save()', this.model);
 
             var fechaCompleta = new Date (this.model.fechaHoraInspeccion);
             if(this.model['horaInspeccion'])
@@ -111,15 +112,15 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
              }
             var mes:number=fechaCompleta.getMonth()+1;
             this.model.fechaHoraInspeccion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
-            console.log('lo que envio: '+  this.model.fechaHoraInspeccion);
+            Logger.log('lo que envio: '+  this.model.fechaHoraInspeccion);
 
         return new Promise<any>(
             (resolve, reject) => {
                 this.http.post(this.apiUrl, this.model).subscribe(
 
                     (response) => {
-                        //console.log(response);
-                      //console.log('lo que recibo: '+ new Date(response.fechaHoraInspeccion));
+                        //Logger.log(response);
+                      //Logger.log('lo que recibo: '+ new Date(response.fechaHoraInspeccion));
                       if(this.casoId!=null){
     					this.id=response.id;
                         this.router.navigate(['/caso/'+this.casoId+'/inspeccion/'+this.id+'/edit' ]);
@@ -130,7 +131,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
                       resolve('Solicitud de inspección creada con éxito');
                     },
                     (error) => {
-                        console.error('Error', error);
+                        Logger.error('Error', error);
                         reject(error);
                     }
                 );
@@ -141,20 +142,20 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
 
     public edit(_valid : any, _model : any){
         Object.assign(this.model, _model);
-        console.log('-> Inspeccion@edit()', this.model);
+        Logger.log('-> Inspeccion@edit()', this.model);
 
         var fechaCompleta = new Date (this.model.fechaHoraInspeccion);
         fechaCompleta.setMinutes(this.model['horaInspeccion'].split(':')[1]);
         fechaCompleta.setHours(this.model['horaInspeccion'].split(':')[0]);
-        console.log();
+        Logger.log();
         var mes:number=fechaCompleta.getMonth()+1;
         this.model.fechaHoraInspeccion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
-        console.log('lo que envio: '+  this.model.fechaHoraInspeccion);
+        Logger.log('lo que envio: '+  this.model.fechaHoraInspeccion);
 
         return new Promise<any>(
             (resolve, reject) => {
                 this.http.put(this.apiUrl+'/'+this.id, this.model).subscribe((response) => {
-                    console.log('lo que recibo: '+ new Date(response.fechaHoraInspeccion));
+                    Logger.log('lo que recibo: '+ new Date(response.fechaHoraInspeccion));
                     if(this.id){
                         this.router.navigate(['/caso/'+this.casoId+'/inspeccion']);
                     }
@@ -166,7 +167,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
 
     public fillForm(_data){
         this.form.patchValue(_data);
-        console.log(_data);
+        Logger.log(_data);
     }
 
 }
@@ -204,7 +205,7 @@ export class DocumentoInspeccionComponent extends FormatosGlobal{
   }
 
   ngOnInit() {
-      console.log('-> Object ', this.object);
+      Logger.log('-> Object ', this.object);
       if(this.object.documentos){
           this.dataSource = this.source;
           for (let object of this.object.documentos) {
@@ -232,7 +233,7 @@ export class DocumentoInspeccionComponent extends FormatosGlobal{
   }
 
   public setData(_object){
-      console.log('setData()');
+      Logger.log('setData()');
       this.data.push(_object);
       this.subject.next(this.data);
   }

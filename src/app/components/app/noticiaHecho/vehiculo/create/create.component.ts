@@ -12,6 +12,7 @@ import { SelectsService} from '@services/selects.service';
 import { Observable }  from 'rxjs/Observable';
 import { CasoService } from '@services/caso/caso.service';
 import { _config} from '@app/app.config';
+import { Logger } from "@services/logger.service";
 
 @Component({
     selector: 'vehiculo-create',
@@ -46,7 +47,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         let timer = Observable.timer(1000);
         timer.subscribe(t => {
             vehiculoServ.marcaSubmarca.submarca = [];
-            console.log('vehiculoserv', this.vehiculoServ);
+            Logger.log('vehiculoserv', this.vehiculoServ);
         });
 
     }
@@ -156,7 +157,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     }
 
     public save(valid : any, _model : any){
-        console.log("SI",this.vehiculoServ.tipoUsoTipoVehiculo.finded);
+        Logger.log("SI",this.vehiculoServ.tipoUsoTipoVehiculo.finded);
         if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0]){
             _model.tipoUsoTipoVehiculo.id=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].id;
             _model.tipoUsoTipoVehiculo["tipoVehiculo"]=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].tipoVehiculo;
@@ -171,8 +172,8 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             _model.motivoRegistroColorClase.id=this.vehiculoServ.motivoColorClase.finded[0].id;
             _model.motivoRegistroColorClase["color"]=this.vehiculoServ.motivoColorClase.finded[0].color;
         }
-        console.log("MODEL@SAVE=>",_model);
-        console.log(this.vehiculoServ);
+        Logger.log("MODEL@SAVE=>",_model);
+        Logger.log(this.vehiculoServ);
         return new Promise<any>((resolve, reject)=>{
             if(this.onLine.onLine){
                 Object.assign(this.model, _model);
@@ -239,14 +240,14 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             _model.motivoRegistroColorClase.id=this.vehiculoServ.motivoColorClase.finded[0].id;
             _model.motivoRegistroColorClase["color"]=this.vehiculoServ.motivoColorClase.finded[0].color;
         }
-        console.log("MODEL@EDIT=>",_model);
+        Logger.log("MODEL@EDIT=>",_model);
         return new Promise((resolve,reject)=>{
-            console.log('-> Vechiulo@edit()', _model);
+            Logger.log('-> Vechiulo@edit()', _model);
             _model.caso.id      = this.casoId;
             _model.id = this.id;
             if(this.onLine.onLine){
                 this.http.put('/v1/base/vehiculos/'+this.id, _model).subscribe((response) => {
-                    console.log('-> Registro acutualizado', response);
+                    Logger.log('-> Registro acutualizado', response);
                     resolve("Se actualizo el vehiculo");
                     obj.vehiculoServ.reset();
                     obj.casoService.actualizaCaso();
@@ -276,9 +277,9 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                         this.db.update("casos", t).then(r=>{
                             resolve("vehiculo actualizado");
                             this.vehiculoServ.reset();
-                            console.log('-> Registro acutualizado');
+                            Logger.log('-> Registro acutualizado');
                         });
-                        console.log("caso",t);
+                        Logger.log("caso",t);
                     //});
                 });
             }
@@ -302,6 +303,10 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             if (_data.marcaSubmarca){
                 _data["marca"]=_data.marcaSubmarca.marca;
                 _data["submarca"]=_data.marcaSubmarca.submarca;
+                let timer = Observable.timer(1);
+                timer.subscribe(t => {
+                  this.marcaChange(_data.marcaSubmarca.marca)
+                });
             }
             if (_data.motivoRegistroColorClase){
                 _data["clase"]=_data.motivoRegistroColorClase.clase;
@@ -322,8 +327,10 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     }
 
     public marcaChange(_event){
+        console.log('Marca Change',_event)
         this.vehiculoServ.marcaSubmarca.find(_event, 'marca');
         this.vehiculoServ.marcaSubmarca.filterBy(_event, 'marca', 'submarca');
+
     }
 
 }

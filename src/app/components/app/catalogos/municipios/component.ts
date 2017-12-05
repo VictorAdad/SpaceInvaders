@@ -7,6 +7,7 @@ import { Municipio } from '@models/catalogo/municipio';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { CIndexedDB } from '@services/indexedDB';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl:'component.html',
@@ -25,7 +26,7 @@ export class municipioCatalogosComponent{
 	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
 
 	ngOnInit() {
-        console.log(this.route)
+        Logger.log(this.route)
         this.route.parent.params.subscribe(params => {
                 if(this.onLine.onLine){
                     this.page('/v1/catalogos/municipio/page');
@@ -46,8 +47,8 @@ export class municipioCatalogosComponent{
         this.http.get(url).subscribe((response) => {
             this.pag = response.totalCount;
             this.data = response.data as Municipio[];
-            console.log("Loading catalogo Municipio..");
-            console.log(this.data);
+            Logger.log("Loading catalogo Municipio..");
+            Logger.log(this.data);
             this.dataSource = new TableService(this.paginator, this.data);
         });
     }

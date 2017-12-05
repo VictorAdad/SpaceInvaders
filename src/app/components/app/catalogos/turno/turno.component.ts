@@ -9,6 +9,7 @@ import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { _catalogos } from '../catalogos';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl: 'turno.component.html',
@@ -42,13 +43,13 @@ export class TurnoCatalogosComponent {
     // }
 
     ngOnInit() {
-        console.log("INICIA");
+        Logger.log("INICIA");
         this.tipo = 'turno';
         this.catalogo = _catalogos[this.tipo];
         if(this.onLine.onLine)
             this.page(this.catalogo.url+'/page');
         //this.dataSource = new TableService(this.paginator, null);
-        console.log("FIN INICIA",this);
+        Logger.log("FIN INICIA",this);
            
     }
 
@@ -61,7 +62,7 @@ export class TurnoCatalogosComponent {
 
     public page(url: string){
         this.http.get(url).subscribe((response) => {
-            console.log("RESPONSE",response);
+            Logger.log("RESPONSE",response);
             this.totalCount = response.totalCount;
             this.dataSource = new TableService(this.paginator, response.data);
         });

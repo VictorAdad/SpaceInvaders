@@ -7,6 +7,7 @@ import { HttpService} from '@services/http.service';
 import { Lugar } from '@models/lugar';
 import { CIndexedDB } from '@services/indexedDB';
 import { CasoService } from '@services/caso/caso.service';
+import { Logger } from "@services/logger.service";
 
 @Component({
     selector:'lugar',
@@ -25,7 +26,7 @@ export class LugarComponent{
     constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB, private casoService:CasoService){}
 
     ngOnInit(){
-        console.log('-> Data Source', this.dataSource);
+        Logger.log('-> Data Source', this.dataSource);
         this.route.parent.params.subscribe(params => {
             if(params['id']){
                 this.casoId = +params['id'];
@@ -65,8 +66,8 @@ export class LugarComponent{
         this.http.get(url).subscribe((response) => {
             this.pag = response.totalCount;
             this.data = response.data as Lugar[];
-            console.log("Loading Lugares..");
-            console.log(this.data);
+            Logger.log("Loading Lugares..");
+            Logger.log(this.data);
             this.dataSource = new TableService(this.paginator, this.data);
         });
     }

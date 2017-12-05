@@ -17,6 +17,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl: './create.component.html',
@@ -42,7 +43,7 @@ export class FacultadNoInvestigarCreateComponent {
     modelUpdate(model: any) {
       this.determinacionId= model.id;
       this.model=model
-    console.log(model);
+    Logger.log(model);
     }
 }
 
@@ -91,7 +92,7 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
             if (params['id']) {
                 this.id = +params['id'];
                 this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-                        console.log('response',response),
+                        Logger.log('response',response),
                         this.fillForm(response);
                         this.modelUpdate.emit(response);
 
@@ -103,13 +104,13 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
     public save(valid: any, _model: any) {
         Object.assign(this.model, _model);
         this.model.caso.id = this.casoId;
-        console.log('->FacultadNoInvestigar@save()', this.model);
+        Logger.log('->FacultadNoInvestigar@save()', this.model);
 
         return new Promise<any>(
             (resolve, reject) => {
                 this.http.post(this.apiUrl, this.model).subscribe(
                     (response) => {
-                      console.log('registro guardado',response);
+                      Logger.log('registro guardado',response);
         				       this.id= response.id;
                         if (this.casoId!=null) {
                             this.router.navigate(['/caso/' + this.casoId + '/facultad-no-investigar/'+this.id+'/edit']);
@@ -126,12 +127,12 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
     }
 
     public edit(_valid: any, _model: any) {
-        console.log('-> FacultadNoInvestigar@edit()', _model);
+        Logger.log('-> FacultadNoInvestigar@edit()', _model);
 
         return new Promise<any>(
             (resolve, reject) => {
                 this.http.put(this.apiUrl + '/' + this.id, _model).subscribe((response) => {
-                    console.log('-> Registro acutualizado', response);
+                    Logger.log('-> Registro acutualizado', response);
                     if(this.id!=null){
                         this.router.navigate(['/caso/' + this.casoId + '/facultad-no-investigar']);
                     }
@@ -144,7 +145,7 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
     public fillForm(_data) {
         this.form.patchValue(_data);
         this.form.disable();
-        console.log(_data);
+        Logger.log(_data);
     }
 
 }
@@ -180,7 +181,7 @@ export class DocumentoFacultadNoInvestigarComponent extends FormatosGlobal{
   }
 
   ngOnInit() {
-      console.log('-> Object ', this.object);
+      Logger.log('-> Object ', this.object);
       if(this.object.documentos){
           this.dataSource = this.source;
           for (let object of this.object.documentos) {
@@ -208,7 +209,7 @@ export class DocumentoFacultadNoInvestigarComponent extends FormatosGlobal{
   }
 
   public setData(_object){
-      console.log('setData()');
+      Logger.log('setData()');
       this.data.push(_object);
       this.subject.next(this.data);
   }

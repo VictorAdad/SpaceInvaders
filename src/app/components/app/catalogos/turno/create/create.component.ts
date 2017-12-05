@@ -10,6 +10,7 @@ import { HttpService} from '@services/http.service';
 import { _catalogos } from '../../catalogos';
 import 'rxjs/add/observable/of';
 import { NoticiaHechoGlobal } from '../../../noticiaHecho/global';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl: 'create.component.html'
@@ -37,7 +38,7 @@ export class TurnoCatalogosCreateComponent extends NoticiaHechoGlobal{
         });
         this.tipo = "turno";
         this.catalogo = _catalogos[this.tipo];
-        console.log(this);
+        Logger.log(this);
         this._activeRoute.params.subscribe(
             params => {
                 

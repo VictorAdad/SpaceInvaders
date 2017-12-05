@@ -8,6 +8,7 @@ import {Caso} from '@models/caso';
 import { HttpService } from '@services/http.service';
 import { OnLineService} from '@services/onLine.service';
 import { CasoService } from '@services/caso/caso.service';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl: 'create.component.html',
@@ -39,7 +40,7 @@ export class DelitoCreateComponent{
     }
     ngOnInit(){
         this.route.params.subscribe(params => {
-            console.log("params",params);
+            Logger.log("params",params);
             if(params['casoId']){
                 this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho/delitos`,label:"Detalle noticia de hechos"})
@@ -84,10 +85,10 @@ export class DelitoCreateComponent{
                 // if (!this.caso["delito"])
                 //     this.caso["delito"]=[];
                 // this.caso["delito"].push({delitos:this.listaDelitos, principal:false});
-                // console.log("-> caso", this.caso);
+                // Logger.log("-> caso", this.caso);
                 // this.tabla.update("casos", this.caso).then(
                 //     response=>{
-                //         console.log("Seactualizo", response);
+                //         Logger.log("Seactualizo", response);
                 //         this.listaDelitos=[];
                 //         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho']);
                 //     });
@@ -114,7 +115,7 @@ export class DelitoCreateComponent{
                     }
                     if (obj.onLine.onLine)
                         obj.http.post('/v1/base/delitos-casos',data).subscribe(response => {
-                                console.log("->",response);
+                                Logger.log("->",response);
                                 guardaLista(i+1,obj.listaDelitos,listaErrores);
                             },
                             error=>{
@@ -138,7 +139,7 @@ export class DelitoCreateComponent{
                                 if (caso){
                                     if(!caso["delitoCaso"]){
                                         caso["delitoCaso"]=[];
-                                        console.log("ITEM",item)
+                                        Logger.log("ITEM",item)
                                     }
                                     var dat={id:temId,delito:item, principal:false}
                                     caso["delitoCaso"].push(dat);

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Router, Params, NavigationEnd, ActivatedRoute} from "@angular/router";
 import "rxjs/add/operator/filter";
+import { Logger } from "@services/logger.service";
 
 class IBreadcrumb {
   childs: any;
@@ -62,7 +63,7 @@ export class BreadcrumbComponent implements OnInit {
     breadcrumb.url=this.activeRoute.url.toString();
 
     this.activeRoute.data.subscribe(data => {
-        // console.log('-> Data Route', data);
+        // Logger.log('-> Data Route', data);
         if (data){
             if(this.rutas.length === 0){
               if(data.rutas){

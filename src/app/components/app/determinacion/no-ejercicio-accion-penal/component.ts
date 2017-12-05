@@ -6,6 +6,7 @@ import { NoEjercicioAccionPenal } from '@models/determinacion/no-ejercicio-accio
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
 import { CIndexedDB } from '@services/indexedDB';
+import { Logger } from "@services/logger.service";
 
 @Component({
 	templateUrl: './component.html',
@@ -39,7 +40,7 @@ export class NoEjercicioAccionPenalComponent {
 
 	public changePage(_e){
         if(this.onLine.onLine){
-			console.log(this.apiUrl)
+			Logger.log(this.apiUrl)
             this.page(this.apiUrl+'?p='+_e.pageIndex+'&tr='+_e.pageSize);
 
         }
@@ -49,8 +50,8 @@ export class NoEjercicioAccionPenalComponent {
         this.http.get(url).subscribe((response) => {
             this.pag = response.totalCount;
             this.data = response.data as NoEjercicioAccionPenal[];
-            console.log("Loading armas..");
-            console.log(this.data);
+            Logger.log("Loading armas..");
+            Logger.log(this.data);
             this.dataSource = new TableService(this.paginator, this.data);
         });
     }

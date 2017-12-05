@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpService} from '@services/http.service';
 import { OnLineService} from '@services/onLine.service';
 import { CIndexedDB } from '@services/indexedDB';
+import { Logger } from "@services/logger.service";
 
 @Component({
 	selector    : 'caso-nic',
@@ -31,11 +32,11 @@ export class CasoNicComponent implements OnInit{
 	}
 
 	public getCaso(_id){
-        // console.log('CasoComponent@getCaso');
+        // Logger.log('CasoComponent@getCaso');
         if (this.onLine.onLine){
         	this.http.get('/v1/base/casos/'+this.id).subscribe(
 				response => {
-					// console.log('Caso', response);
+					// Logger.log('Caso', response);
 					if(response.hasPredenuncia){
 		            	this.nic = response.nic
 		            	this.nuc = response.nuc
@@ -44,14 +45,14 @@ export class CasoNicComponent implements OnInit{
 	        );
         }else{
 			this.db.get("casos",this.id).then(caso=>{
-				//console.log("CASO",caso);
+				//Logger.log("CASO",caso);
 				if(caso['hasPredenuncia']){
 					this.nic=caso["nic"];
 					this.nuc=caso["nuc"];
 				}
 			});
 		}
-		// console.log(this);
+		// Logger.log(this);
     }
 }
 

@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter , OnInit, AfterViewInit, ViewChild, Renderer} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { BaseInputComponent } from '../base-input.component';
+import { Logger } from "@services/logger.service";
 
 @Component({
 	selector    : 'phone',
@@ -34,7 +35,7 @@ export class PhoneComponent extends BaseInputComponent {
 	}
 
 	inputSlice(_value){
-		console.log('--------------->',this.backupValue, _value)
+		Logger.log('--------------->',this.backupValue, _value)
 		if (_value != null && _value != "") {
 			if (!this.regexPHONE.test(_value)){
 				this.control.setValue(this.backupValue);

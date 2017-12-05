@@ -3,6 +3,7 @@ import { FileUploader, FileDropDirective, FileSelectDirective } from 'ng2-file-u
 import { MatDialogRef } from '@angular/material';
 import { CIndexedDB } from '@services/indexedDB';
 import { GlobalService } from "@services/global.service";
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl: './create.component.html',
@@ -27,7 +28,7 @@ export class DocumentoCreateComponent {
    
     public fileOverBase(e:any):void {
       this.hasBaseDropZoneOver = e;
-      console.log("->",e);
+      Logger.log("->",e);
     }
 
     close(){
@@ -58,7 +59,7 @@ export class DocumentoCreateComponent {
                   fecha:new Date()
                 };
                 obj.db.add("documentos",dato).then(t=>{
-                    console.log("Se guardo el archivo",(item["some"])["name"]);
+                    Logger.log("Se guardo el archivo",(item["some"])["name"]);
                     obj.guardarOffLine(i+1,listaArchivos);
                 });
             });
@@ -67,7 +68,7 @@ export class DocumentoCreateComponent {
     }
 
     guardar(){
-        console.log("archivos:",this.uploader);
+        Logger.log("archivos:",this.uploader);
         var listaFiles=this.uploader.queue as any[];
         this.guardarOffLine(0,listaFiles);
         
@@ -79,9 +80,9 @@ export class DocumentoCreateComponent {
 
     check(){
         if(this.uploader.isUploading){
-            console.log('isUploading');
+            Logger.log('isUploading');
           }else{
-            console.log('inNotUploading');
+            Logger.log('inNotUploading');
           }
     }
    

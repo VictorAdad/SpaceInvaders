@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Logger } from "@services/logger.service";
 
 @Component({
 	selector    : 'slide-toggle',
@@ -14,7 +15,7 @@ export class SlideToggleComponent{
 	@Output() valueChange:EventEmitter<boolean> = new EventEmitter<Boolean>()
 
 	update(value) {
-    console.log('togle value change')
+    Logger.log('togle value change')
 		this.valueChange.emit(value);
 	}
 

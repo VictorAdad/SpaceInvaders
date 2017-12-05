@@ -45,14 +45,14 @@ export class CasoService{
 	}
 
 	public setOnlineCaso(response){
-		// console.log('Caso@setOnlineCaso')
+		// Logger.log('Caso@setOnlineCaso')
 		this.setCaso(response);
 		this.db.clear("casos").then( t =>{
             this.db.update("casos",this.caso).then( t =>{
-            	// console.log('Indexed Caso actualizado');
+            	// Logger.log('Indexed Caso actualizado');
             });
         });
-        // console.log(this.caso);
+        // Logger.log(this.caso);
 	}
 
 	public setCaso(caso){
@@ -96,7 +96,7 @@ export class Caso{
 
 
 	public findVictima(){
-		console.log('Caso@findVictima', this.personaCasos);
+		Logger.log('Caso@findVictima', this.personaCasos);
 		let personas = this.personaCasos.filter(
 			object => { 
 				return object.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victima
@@ -125,7 +125,7 @@ export class Caso{
 
     //Metódos de persona
     public getAlias(_persona){
-		console.log('Caso@getAlias()', _persona);
+		Logger.log('Caso@getAlias()', _persona);
 		if(_persona.persona.aliasNombrePersona.length > 0){
 			let nombres =  _persona.persona.aliasNombrePersona.map(object => { return object.nombre });
 			return nombres.toString();
@@ -135,7 +135,7 @@ export class Caso{
 	}
 
 	public getDomicilios(_persona){
-		console.log('Caso@getDomicilios()', _persona);
+		Logger.log('Caso@getDomicilios()', _persona);
 		let domicilios:any[] = [];
 
 		for (let localizacion of _persona.persona.localizacionPersona) {

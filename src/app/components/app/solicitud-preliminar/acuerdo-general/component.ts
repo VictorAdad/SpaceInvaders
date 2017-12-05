@@ -6,6 +6,7 @@ import { AcuerdoGeneral } from '@models/solicitud-preliminar/acuerdoGeneral';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
 import { CIndexedDB } from '@services/indexedDB';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl:'./component.html',
@@ -28,7 +29,7 @@ export class AcuerdoGeneralComponent {
 	ngOnInit() {
         this.route.params.subscribe(params => {
             if(params['casoId']){
-                console.log('casoID---');
+                Logger.log('casoID---');
             	this.haveCaso=true;
                 this.casoId = +params['casoId'];
                 this.apiUrl=this.apiUrl.replace("{id}",String(this.casoId));
@@ -36,10 +37,10 @@ export class AcuerdoGeneralComponent {
                 this.page('/v1/base/solicitudes-pre-acuerdos/casos/' + this.casoId + '/page');
             }
             else{
-                console.log('sin casoId');
+                Logger.log('sin casoId');
             	 this.http.get(this.apiUrl).subscribe((response) => {
 	                 this.data = response.data as AcuerdoGeneral[];
-	                 console.log(this.data)
+	                 Logger.log(this.data)
 	                 this.dataSource = new TableService(this.paginator, this.data);
 	                });
             }
@@ -53,16 +54,16 @@ export class AcuerdoGeneralComponent {
     public page(url: string) {
         this.data = [];
         this.http.get(url).subscribe((response) => {
-            //console.log('Paginator response', response.data);
+            //Logger.log('Paginator response', response.data);
             
             response.data.forEach(object => {
                 this.pag = response.totalCount;
-                //console.log("Respuestadelitos", response["data"]);
+                //Logger.log("Respuestadelitos", response["data"]);
                 this.data.push(Object.assign(new AcuerdoGeneral(), object));
                 //response["data"].push(Object.assign(new Caso(), object));
                 this.dataSource = new TableService(this.paginator, this.data);
             });
-            console.log('Datos finales', this.dataSource);
+            Logger.log('Datos finales', this.dataSource);
         });
     }
 

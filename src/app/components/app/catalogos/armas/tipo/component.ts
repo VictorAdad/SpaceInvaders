@@ -5,6 +5,7 @@ import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { Router } from '@angular/router';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl: 'component.html',
@@ -23,7 +24,7 @@ export class TipoArmaComponent {
     
     setClickedRow(row) {
         this.selectedRow = row.id;
-        //console.log(row.nombre);
+        //Logger.log(row.nombre);
         this.router.navigate(['/tipo-arma/'+row.id+'/edit']);
     }
 

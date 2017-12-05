@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/co
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@services/auth/authentication.service';
+import { Logger } from "@services/logger.service";
 
 @Component({
     selector: 'login',
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit{
                     // }
                 // });
         }else{
-            // console.log('Elm formulario no pasó la validación D:');
+            // Logger.log('Elm formulario no pasó la validación D:');
         }      
     }
 }

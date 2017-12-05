@@ -6,6 +6,7 @@ import { Inspeccion } from '@models/solicitud-preliminar/inspeccion';
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
 import { CIndexedDB } from '@services/indexedDB';
+import { Logger } from "@services/logger.service";
 
 @Component({
     templateUrl: './component.html',
@@ -36,7 +37,7 @@ export class InspeccionComponent {
             else {
                 this.http.get('/v1/base/solicitudes-pre-inspecciones').subscribe((response) => {
                     this.data = response.data as Inspeccion[];
-                    console.log(this.data)
+                    Logger.log(this.data)
                     this.dataSource = new TableService(this.paginator, this.data);
                 });
             }
@@ -50,16 +51,16 @@ export class InspeccionComponent {
     public page(url: string) {
         this.data = [];
         this.http.get(url).subscribe((response) => {
-            //console.log('Paginator response', response.data);
+            //Logger.log('Paginator response', response.data);
 
             response.data.forEach(object => {
                 this.pag = response.totalCount;
-                //console.log("Respuestadelitos", response["data"]);
+                //Logger.log("Respuestadelitos", response["data"]);
                 this.data.push(Object.assign(new Inspeccion(), object));
                 //response["data"].push(Object.assign(new Caso(), object));
                 this.dataSource = new TableService(this.paginator, this.data);
             });
-            console.log('Datos finales', this.dataSource);
+            Logger.log('Datos finales', this.dataSource);
         });
     }
 }
