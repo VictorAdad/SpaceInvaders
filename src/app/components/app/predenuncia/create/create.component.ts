@@ -173,6 +173,9 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         //timer.subscribe(t => {
             //if (this.authen.user.hasRoles(this.authen.roles.callCenter)) {
                 this.form  = new FormGroup({
+                'caso': new FormGroup({
+                    'id': new FormControl()
+                }),
                 // 'calidadUsuario'        :  new FormControl(this.model.calidadUsuario),
                 'noTelefonico'        :  new FormControl(this.model.numeroTelefono),
                 'tipoLinea'   :  new FormGroup({
@@ -269,6 +272,8 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                     );
                 }else{
                     let temId = Date.now();
+                    _model.fechaCanalizacion = this.concatDate(_model.fechaCanalizacion, _model.horaCanalizacion);
+                    _model.caso.id = this.casoId;
                     let dato = {
                         url:'/v1/base/predenuncias',
                         body:_model,

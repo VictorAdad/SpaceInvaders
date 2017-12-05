@@ -26,7 +26,7 @@
                         <date-picker label="Fecha de nacimiento" name="fechaNacimiento" (onDateSelect)="calculateAge($event)"[group]="form"></date-picker>
                     </div>
                     <div class="col-md-3">
-                        <number label="Edad" name="edad" [max]="2" [maxValue]="99" [group]="form"></number>
+                        <int label="Edad" name="edad" [max]="2" [group]="form"></int>
                     </div>
                 </div>
                 <div class="row">
@@ -109,7 +109,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        <number label="CP" name="cp" [maxValue]="99999" [max]="5" [group]="form"></number>
+                        <int label="CP" name="cp" [max]="5" [group]="form"></int>
                     </div>
                     <div class="col-md-3">
                         <text label="Municipio" name="municipio" [group]="form"></text>
@@ -118,12 +118,12 @@
                         <text label="Estado" name="estado" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Nº telefónico particular" name="noTelefonoParticular" [max]="20" [group]="form"></text>
+                        <phone label="Nº telefónico particular" name="noTelefonoParticular" [max]="20" [group]="form"></phone>
                     </div>
                 </div>
                 <div class="row justify-content-start">
                     <div class="col-md-3">
-                        <text label="Nº telefónico celular" name="noTelefonoCelular" [max]="20" [group]="form"></text>
+                        <phone label="Nº telefónico celular" name="noTelefonoCelular" [max]="20" [group]="form"></phone>
                     </div>
                     <div class="col-md-3">
                         <email label="Correo electrónico" name="correoElectronico" [group]="form"></email>
