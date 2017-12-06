@@ -1,45 +1,31 @@
 import { Component, Input, Output, EventEmitter , OnInit, AfterViewInit, ViewChild, Renderer} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { BaseInputComponent } from '../base-input.component';
 import { Logger } from "@services/logger.service";
 
 @Component({
 	selector    : 'number',
   	templateUrl : './component.html'
 })
-export class NumberComponent implements OnInit{
-	@Input() label    : string;
-	@Input() value    : string;
-	@Input() prefix   : string;
-	@Input() sufix    : string;
-	@Input() prefixIcon : string;
-	@Input() sufixIcon  : string;
-	@Input() name     : string  = '';
-	@Input() required : boolean = false;
-	@Input() group    : FormGroup = new FormGroup({});
-	@Input() hintStart: string="";
-	@Input() hintEnd: string="";
-	@Input() readonly: string="";
-	@Input() functionChange: Function;
-  	@Input() max :number = 12;
-  	@Input() maxValue :number = 999999999999;
-  	@Input() decimal: boolean = false; 
-	backupValue : string;
 
-  	@ViewChild('numberComponent') numberComponent;
+export class NumberComponent extends BaseInputComponent {
 
-	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
+	@Input() max :number = 20;
 
-	constructor(private renderer: Renderer){
+	public regexDEC: RegExp = /^[0-9.]*$/;
+	// /^[0-9]*\.[0-9]{2}$/
+
+	constructor(public renderer : Renderer){
+		super(renderer)
 	}
 
 	ngOnInit(){
-    // Logger.log('-------------> ',this);
-
+		this.control = this.group.get(this.name) as FormControl;
+		this.control.valueChanges.subscribe(this.inputSlice.bind(this));
 	}
 
 	ngAfterViewInit(){
-		this.renderer.listen(
-			this.numberComponent.nativeElement, 'keyup', (event) => { this.inputSlice(event); });
+
 	}
 
 	update(value) {
@@ -49,35 +35,21 @@ export class NumberComponent implements OnInit{
 		}
 	}
 
-	//69 189
+	inputSlice(_value){
+		Logger.log('--------------->',this.backupValue, _value)
+		if (_value != null && _value != "") {
+			if (!this.regexDEC.test(_value)){
+				this.control.setValue(this.backupValue);
+			}else{
+				this.backupValue = _value;
+			}
 
-	inputSlice(event){
-		if (this.decimal == true && (event.keyCode == 189 || event.keyCode == 69)) {
-			// Logger.log('Primera opcion');
-			if(this.backupValue == null){
-				this.value = '0';	
-			}else{
-				this.value = this.backupValue;
-			}
-			return
+			if (_value.toString().length > this.max)
+				this.control.setValue(_value.toString().slice(0,this.max));
+		}else {
+			this.backupValue = _value;
 		}
-		if (this.decimal == false && (event.keyCode == 189 || event.keyCode == 69 || event.keyCode == 190)) {
-			// Logger.log('Segunda opcion');
-			if(this.backupValue == null){
-				this.value = '0';	
-			}else{
-				this.value = this.backupValue;
-			}
-			return
-		}
-		if (this.value!=null && this.value.toString().length > this.max) {
-			this.value = this.value.toString().slice(0,this.max);
-		}
-		this.backupValue = this.value;
 	}
-
-
-
 }
 
 
