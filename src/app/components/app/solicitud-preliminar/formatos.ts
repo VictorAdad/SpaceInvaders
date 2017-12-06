@@ -277,6 +277,7 @@ export class SolPreDocComponent {
     }
 
     public guardar(){
+        var obj=this;
      this._confirmation.create('Advertencia','¿Estás seguro de adjuntar este documento?',this.confirmation_settings)
       .subscribe(
           (ans: ResolveEmit) => {
@@ -306,6 +307,9 @@ export class SolPreDocComponent {
                     let temId=Date.now();
                     let b=this.data.urlUpload.split("/")
                     let casoId=parseInt(b[b.length-1])
+                    var dependeDe=[casoId];
+                    if (obj.data.atributoExtraPost)
+                        dependeDe.push(obj.data.atributoExtraPost["valor"]);
                     let dato={
                         url:this.data.urlUpload,
                         //hay que crear el body de los documentos
@@ -313,7 +317,7 @@ export class SolPreDocComponent {
                         options:[],
                         tipo:"postDocument",
                         pendiente:true,
-                        dependeDe:[casoId],
+                        dependeDe:dependeDe,
                         temId: temId,
                         documentos:[]
                     }

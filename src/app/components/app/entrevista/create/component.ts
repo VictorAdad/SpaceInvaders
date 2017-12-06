@@ -115,6 +115,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                             if ((entrevistas[i])["id"]==this.id){
                                 var entrevista = entrevistas[i];
                                 this.fillForm(entrevistas[i]);
+                                this.modelUpdate.emit(entrevistas[i]);
                                 break;
                             }
                         }
@@ -339,7 +340,7 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
 
             }
       });
-
+      this.atributoExtraPost={nombre:"entrevista.id",valor:this.id.toString()};
       this.formData.append('entrevista.id', this.id.toString());
   }
 
