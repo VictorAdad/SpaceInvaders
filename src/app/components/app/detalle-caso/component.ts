@@ -75,7 +75,7 @@ export class DetalleCasoComponent implements OnInit{
         			// Logger.log('T', t);
         			let relaciones = t['tipoRelacionPersonas'].filter(object => object['tipo'] === "Imputado víctima delito");
             		this.caso = t as Caso;
-					this.hasPredenuncia = (typeof t['predenuncia'] !== 'undefined');
+					this.hasPredenuncia = (typeof t['predenuncias'] !== 'undefined');
 					this.hasRelacionVictimaImputado = (relaciones.length > 0);
 
 					// Logger.log('Predenuncia', this.hasPredenuncia);

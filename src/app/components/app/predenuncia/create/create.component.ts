@@ -148,9 +148,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                     this.db.get("casos", this.casoId).then(caso=>{
                         Logger.log("Caso en armas ->",caso);
                         if (caso){
-                            Logger.log('2.-OffLine------------>',this.model);
                             if(caso["predenuncias"]){
-                                Logger.log('3.-OffLine------------>',this.model);
                                 this.hasPredenuncia = true;
                                 Logger.log("Have predenuncias");
                                 this.form.disable();
@@ -162,7 +160,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                 this.model.horaConlcusionLlamada=horas+':'+minutos;
                                 Logger.log("Emitiendo id..",this.model.id)
                                 this.idEmitter.emit({id: this.model.id});
-                                Logger.log('4.- OffLine------------>',this.model, model);
+                                Logger.log('4.- OffLine------------>', model);
                                 this.fillForm(model);
                             }
                         }
@@ -303,10 +301,10 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                         this.db.get("casos",this.casoId).then(caso=>{
                             if (caso){
                                 if(!caso["predenuncias"]){
-                                    caso["predenuncias"]=[];
+                                    caso["predenuncias"];
                                 }
                                 _model["id"]=temId;
-                                caso["predenuncias"].push(_model);
+                                caso["predenuncias"] = _model;
                                 Logger.log("caso arma", caso["predenuncia"]);
                                 this.db.update("casos",caso).then(t=>{
                                     Logger.log("caso arma", t["arma"]);
@@ -383,17 +381,19 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
     }
 
     ngOnInit() {
-        if(this.object.data)
-            this.object=this.object.data[0];
-            Logger.log('1. ----------->', this.object);
-            this.formData.append('predenuncia.id', this.object.id.toString());
-        if(this.object.documentos){
-            this.dataSource = this.source;
-            for (let object of this.object.documentos) {
-                this.data.push(object);
-                this.subject.next(this.data);
-            }
+        if(this.onLine.onLine){
+            if(this.object.data)
+                this.object=this.object.data[0];
+                Logger.log('1. ----------->', this.object);
+            if(this.object.documentos){
+                this.dataSource = this.source;
+                for (let object of this.object.documentos) {
+                    this.data.push(object);
+                    this.subject.next(this.data);
+                }
 
+            }
+            this.formData.append('predenuncia.id', this.object.id.toString());
         }
 
         this.route.params.subscribe(params => {
@@ -403,12 +403,16 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
                     this.caso.find(params['casoId']).then(
                         response => {
                             this.updateDataFormatos(this.caso.caso);
+                            if(!this.onLine.onLine){
+                                this.object = this.caso.caso.predenuncias;
+                            }
                         }
                     );
                 // }
             }
 
         });
+
     }
 
     public cargaArchivos(_archivos){
