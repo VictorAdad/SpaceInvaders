@@ -336,7 +336,7 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
 
             }
       });
-
+      this.atributoExtraPost={nombre:"solicitudPrePericial.id",valor:this.id.toString()};
       this.formData.append('solicitudPrePericial.id', this.id.toString());
   }
 
