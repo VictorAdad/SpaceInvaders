@@ -13,6 +13,8 @@ import { Notification } from 'angular2-notifications';
 import { MatDialog } from '@angular/material';
 import { DialogSincrinizarService} from "@services/onLine/dialogSincronizar.service";
 import { Logger } from "@services/logger.service";
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ConfirmationService } from '@jaspero/ng2-confirmations';
 
 
 @Injectable()
@@ -28,6 +30,13 @@ export class OnLineService {
 
     sincronizarCatalogos:SincronizaCatalogos;
 
+    public settings={
+        overlayClickToClose: false, // Default: true
+        showCloseButton: true, // Default: true
+        confirmText: "Aceptar", // Default: 'Yes'
+        declineText: "Cancelar",
+    };
+
 
     constructor(
         public snackBar: MatSnackBar,
@@ -36,7 +45,9 @@ export class OnLineService {
         private notificationService: NotificationsService,
         public dialog: MatDialog,
         public dialogoSincronizar:  DialogSincrinizarService,
-        public logger:Logger
+        public logger:Logger,
+        private route: Router,
+        private _confirmation: ConfirmationService
     ) {
         this.sincronizarCatalogos=new SincronizaCatalogos(db,http,dialogoSincronizar);
         // timer = Observable.timer(2000,1000);
@@ -103,6 +114,28 @@ export class OnLineService {
                 //     let newUrl=this.router.url.replace("noticia-hecho", "detalle");
                 //     this.router.navigate([newUrl]);
                 // }
+                if (this.route["url"]){
+                    var elementos=this.route["url"].split("/");
+                    var url=this.route["url"];
+                    this.db.list("newId").then(lista=>{
+                        var cambioUrl=false;
+                        for (var i = 0; i < lista["length"]; ++i) {
+                            for (var item in elementos){
+                                if (elementos[item]==lista[i]["id"]){
+                                    url=url.replace(""+lista[i]["id"],""+lista[i]["newId"]);
+                                    cambioUrl=true;
+                                    break;
+                                }
+                            }
+
+                        }
+                        Logger.log("%cLa url","color:cyan;",url);
+                        if (cambioUrl)
+                            this._confirmation.create('Advertencia','Se recargará la pagina',this.settings).subscribe((ans) => {
+                                    this.route.navigate([url]);
+                                 });
+                    });
+                }
             }
 
             //console.log("->Finalizo sincronizacion");
