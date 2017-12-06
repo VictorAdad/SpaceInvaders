@@ -60,6 +60,7 @@ export class SearchComponent {
 		let input   = this.input.nativeElement;
 		input.value = '';
 		this.empty  = true;
+		this.search.emit('');
 	}
 
 	update(value) {
