@@ -51,6 +51,7 @@ export class DocumentoComponent extends FormatosGlobal{
       _onLine:OnLineService
       ){
       super(http, confirmationService, globalService, dialog,_onLine);
+      this.vista="noticiaHecho";
   }
 
   ngOnInit() {
@@ -96,7 +97,7 @@ export class DocumentoComponent extends FormatosGlobal{
         this.data=[];
         for (var i = 0; i < lista.length; ++i) {
 
-          if (lista[i]["casoId"]==this.id){
+          if (lista[i]["casoId"]==this.id && lista[i]["vista"]=="noticiaHecho"){
             var obj=new DocumentoNoticia();
             obj.id=lista[i]["id"];
             obj.nameEcm=lista[i]["nombre"];
