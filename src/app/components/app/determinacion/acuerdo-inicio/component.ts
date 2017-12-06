@@ -90,7 +90,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
             'observaciones': new FormControl(this.model.observaciones),
             'tipo': new FormControl('Acuerdo Inicio'),
             'caso': new FormGroup({
-                'nuc': new FormControl(this.generateNUC())
+                'nuc': new FormControl('')
             })
         });
 
@@ -123,7 +123,8 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
     public save(valid: any, _model: any) {
 
         Object.assign(this.model, _model);
-        this.model.caso.id = this.casoId;
+        this.model.caso.id  = this.casoId;
+        this.model.caso.nuc = this.generateNUC();
         Logger.log('-> AcuerdoInicio@save()', this.model);
 
         return new Promise<any>(
@@ -172,7 +173,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
     public generateNUC(): string{
         let nuc: string = '';
         let user = this.auth.user;
-        nuc=`${user.distrito}/${user.fiscalia}/${user.agencia}/${user.municipio}/00126/${(new Date()).getFullYear().toString().substr(-2)}/${this.pad((new Date()).getMonth(), 2)}`
+        nuc=`${user.distrito}/${user.fiscalia}/${user.agencia}/${user.municipio}/${this.pad(this.casoId, 6)}/${(new Date()).getFullYear().toString().substr(-2)}/${this.pad((new Date()).getMonth(), 2)}`
 
         return nuc;
     }
