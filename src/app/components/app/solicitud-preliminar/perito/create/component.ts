@@ -66,8 +66,8 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	public apiUrlPre : string = "/v1/base/predenuncias/casos/"
 	public casoId: number = null;
 	public id: number = null;
-  @Output() modelUpdate = new EventEmitter<any>();
-  @Output() isPericialesUpdate= new EventEmitter<any>();
+    @Output() modelUpdate = new EventEmitter<any>();
+    @Output() isPericialesUpdate= new EventEmitter<any>();
 	public form: FormGroup;
 	public model: Perito;
 	isPericiales: boolean = false;
@@ -84,7 +84,8 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 		private http: HttpService,
 		private router: Router,
 		private db: CIndexedDB,
-		private options: SelectsService
+		private options: SelectsService,
+        public caso: CasoService
 	) { super(); }
 
 	ngOnInit() {
@@ -111,10 +112,15 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	        		});
         		}else{
         			this.db.get("casos", this.casoId).then(t=>{
-                        let sol = t["solicitudPrePeritos"] as any[];
+                        let sol = t["solicitudPrePericiales"] as any[];
                         for (var i = 0; i < sol.length; ++i) {
                             if ((sol[i])["id"]==this.id){
                                 this.fillForm(sol[i]);
+                                this.isPericiales = this.form.controls.tipo.value === 'Periciales';
+                                this.isPsicofisico = this.form.controls.tipo.value === 'Psicofísico';
+                                this.isPericialesUpdate.emit(this.isPericiales);
+                                this.modelUpdate.emit(sol[i]);
+                                this.form.disable();
                                 break;
                             }
                         }
@@ -122,11 +128,16 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
         		}
 			}
 		});
-		this.http.get(this.apiUrlPre+this.casoId+'/page').subscribe(response => {
-			this.form.patchValue({
-				hechosNarrados : response.data[0].hechosNarrados
+
+		if(this.onLine.onLine){
+			this.http.get(this.apiUrlPre+this.casoId+'/page').subscribe(response => {
+				this.form.patchValue({
+					hechosNarrados : response.data[0].hechosNarrados
+				});
 			});
-		});
+		}else{
+
+		}
 	}
 
 	public createForm() {
@@ -158,49 +169,52 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 		return new Promise<any>(
 			(resolve, reject) => {
 				Logger.log('-> Perito@save()', _model);
-				this.http.post(this.apiUrl, _model).subscribe(
-					(response) => {
-						if (this.onLine.onLine) {
-							if(this.casoId!=null){
-								this.id=response.id;
-								this.router.navigate(['/caso/' + this.casoId + '/perito/' + this.id + '/edit']);
-							}
-							resolve('Solicitud pericial creada con éxito');
-						}else{
-							let temId=Date.now();
-			                let dato={
-			                    url: this.apiUrl,
-			                    body:_model,
-			                    options:[],
-			                    tipo:"post",
-			                    pendiente:true,
-			                    dependeDe:[this.casoId],
-			                    temId: temId
-			                }
-			                this.db.add("sincronizar",dato).then(p=>{
-			                    this.db.get("casos", this.casoId).then(caso=>{
-			                        if (caso){
-			                            if(!caso["solicitudPrePeritos"]){
-		                        			caso["solicitudPrePeritos"]=[];
-			                            }
-			                            _model["id"]=temId;
-			                            this.id= _model['id'];
-			                            caso["solicitudPrePeritos"].push(_model);
-			                            this.db.update("casos",caso).then(t=>{
-			                                resolve('Solicitud pericial creada con éxito');
-			                                this.router.navigate(['/caso/' + this.casoId + '/perito/' + this.id + '/edit']);
-			                            });
-			                        }
-			                    });
-			                });
+                if (this.onLine.onLine) {
+    				this.http.post(this.apiUrl, _model).subscribe(
+    					(response) => {
+    							if(this.casoId!=null){
+    								this.id=response.id;
+    								this.router.navigate(['/caso/' + this.casoId + '/perito/' + this.id + '/edit']);
+    							}
+    							resolve('Solicitud pericial creada con éxito');
+    					},
+    					(error) => {
+    						Logger.error('Error', error);
+    						reject(error);
+    					}
+    				);
+                }else{
+                    let temId = Date.now();
+                    let dato  = {
+                        url: this.apiUrl,
+                        body:_model,
+                        options:[],
+                        tipo:"post",
+                        pendiente:true,
+                        dependeDe:[this.casoId],
+                        temId: temId
+                    }
+                    this.db.add("sincronizar",dato).then(
+                        p => {
+                            if (this.caso.caso){
+                                if(!this.caso.caso["solicitudPrePericiales"])
+                                    this.caso.caso["solicitudPrePericiales"] = [];
 
-						}
-					},
-					(error) => {
-						Logger.error('Error', error);
-						reject(error);
-					}
-				);
+                                _model["id"] = temId;
+                                this.id      = _model['id'];
+                                this.caso.caso["solicitudPrePericiales"].push(_model);
+
+                                this.db.update("casos",this.caso.caso).then(
+                                    t => {
+                                        resolve('Solicitud pericial creada con éxito');
+                                        this.router.navigate(['/caso/' + this.casoId + '/perito/' + this.id + '/edit']);
+                                    }
+                                );
+                            }
+                        }
+                    );
+
+                }
 			}
 		);
 	}
@@ -244,11 +258,13 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 
 		let timer = Observable.timer(1);
 		timer.subscribe(t => {
-			this.http.get(this.apiUrlPre+this.casoId+'/page').subscribe(response => {
-				this.form.patchValue({
-					hechosNarrados : response.data[0].hechosNarrados
+			if(this.onLine.onLine){
+				this.http.get(this.apiUrlPre+this.casoId+'/page').subscribe(response => {
+					this.form.patchValue({
+						hechosNarrados : response.data[0].hechosNarrados
+					});
 				});
-			});
+			}
 		})
 		this.form.controls.hechosNarrados.disable();
 
@@ -261,31 +277,31 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 })
 export class DocumentoPeritoComponent extends FormatosGlobal {
 
-  columns = ['nombre', 'fechaCreacion', 'acciones'];
-  @Input() isPericiales:boolean=false;
-  @Input() id:number=null;
-  displayedColumns = ['nombre', 'fechaCreacion', 'acciones'];
-  @Input()
-  object: any;
-	dataSource: TableDataSource | null;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  public data: DocumentoPerito[] = [];
-  public subject:BehaviorSubject<DocumentoPerito[]> = new BehaviorSubject<DocumentoPerito[]>([]);
-  public source:TableDataSource = new TableDataSource(this.subject);
-  public formData:FormData = new FormData();
-  public urlUpload: string;
+    columns = ['nombre', 'fechaCreacion', 'acciones'];
+    @Input() isPericiales:boolean=false;
+    @Input() id:number=null;
+    displayedColumns = ['nombre', 'fechaCreacion', 'acciones'];
+    @Input()
+    object: any;
+    dataSource: TableDataSource | null;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    public data: DocumentoPerito[] = [];
+    public subject:BehaviorSubject<DocumentoPerito[]> = new BehaviorSubject<DocumentoPerito[]>([]);
+    public source:TableDataSource = new TableDataSource(this.subject);
+    public formData:FormData = new FormData();
+    public urlUpload: string;
 
 
-  constructor(
-    public http: HttpService,
-    public confirmationService:ConfirmationService,
-    public globalService:GlobalService,
-    public dialog: MatDialog,
-    private route: ActivatedRoute,
-    public onLine: OnLineService,
-    public formatos: FormatosService,
-    public db: CIndexedDB,
-    public caso: CasoService
+    constructor(
+        public http: HttpService,
+        public confirmationService:ConfirmationService,
+        public globalService:GlobalService,
+        public dialog: MatDialog,
+        private route: ActivatedRoute,
+        public onLine: OnLineService,
+        public formatos: FormatosService,
+        public db: CIndexedDB,
+        public caso: CasoService
     ){
     super(
         http,
@@ -294,7 +310,7 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
         dialog,
         onLine,
         formatos
-        );
+    );
 }
 
   ngOnInit() {

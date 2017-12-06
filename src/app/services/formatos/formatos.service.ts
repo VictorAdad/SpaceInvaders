@@ -397,8 +397,11 @@ public setDataF1009(_data,_id_solicitud){
          pericial=solicitud;
      }
   });
-  let nombreImputado=imputado.persona.nombre+' '+imputado.persona.paterno+' '+imputado.persona.materno;
-  let date= new Date(pericial.created);
+  let nombreImputado = imputado.persona.nombre+' '+imputado.persona.paterno+' '+imputado.persona.materno;
+  let date = new Date();
+  if(pericial != null)
+      date= new Date(pericial.created);
+
   this.data['xNUC']                     = _data.nuc? _data.nuc:'';
   this.data['xNIC']                     = _data.nic? _data.nic:'';
   this.data['xHechoDelictivo']          = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
