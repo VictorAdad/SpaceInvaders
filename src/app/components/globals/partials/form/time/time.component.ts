@@ -1,38 +1,23 @@
-import { Component, Input, Output, EventEmitter , OnInit} from '@angular/core';
+import { Component, Input, Output, EventEmitter , OnInit, Renderer} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Logger } from "@services/logger.service";
+import { BaseInputComponent } from '../base-input.component';
 
 @Component({
 	selector    : 'time',
   	templateUrl : './time.component.html'
 })
-export class TimeComponent implements OnInit{
-	@Input() label    : string;
-	@Input() value    : string;
-	@Input() prefix   : string;
-	@Input() sufix    : string;
-	@Input() prefixIcon : string;
-	@Input() sufixIcon  : string;
-	@Input() name     : string  = '';
-	@Input() required : boolean = false;
-	@Input() group    : FormGroup = new FormGroup({});
-	@Input() hintStart: string="";
-	@Input() hintEnd: string="";
-	@Input() readonly: string="";
-	@Input() functionChange: Function;
+export class TimeComponent extends BaseInputComponent implements OnInit{
 
 	public max: number = 5
 
-	public backupValue: string;
+	public regex: RegExp = /^([0-1]?[0-9]|2[0-3])(:[0-5][0-9])$/;
 
-	public control: FormControl;
+	public regexTime: RegExp = /^[0-9():{1}]*$/;
 
-	public regex: RegExp = /^([0-1]?[0-9]|2[0-3])(:[0-5][0-9])?$/;
-
-	public regexTime: RegExp = /^[0-9():]*$/;
-
-
-	@Output() valueChange:EventEmitter<string> = new EventEmitter<string>();
+	constructor(public renderer: Renderer){
+		super(renderer);
+	}
 
 	ngOnInit(){
 		if(this.name != ''){
@@ -40,6 +25,7 @@ export class TimeComponent implements OnInit{
 			this.control.valueChanges.subscribe(this.validate.bind(this));
 		}
 	}
+
 
 	update(value) {
 		this.valueChange.emit(value);
