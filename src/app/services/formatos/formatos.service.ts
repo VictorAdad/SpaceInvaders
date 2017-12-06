@@ -242,13 +242,13 @@ export class FormatosLocal {
         Logger.log('Formatos@setDataF1003', _data);
         this.setCasoInfo(_data);
         this.setVictimaInfo(_data);
-        this.data['xFolioDocumento']     = _data.predenuncias.noFolioConstancia ? _data.predenuncias.noFolioConstancia  : '';
+        this.data['xFolioDocumento']     = !_data.predenuncias ? '' :(_data.predenuncias.noFolioConstancia ? _data.predenuncias.noFolioConstancia  : '');
 
-        this.data['xHablaEspaniol']      = _data.predenuncias.hablaEspaniol ? 'Sí' : 'No';
-        this.data['xIdiomaLengua']       = _data.predenuncias.hablaEspaniol ? '' : _data.predenuncias.lenguaIdioma;
-        this.data['xInterprete']         = _data.predenuncias.nombreInterprete ? _data.predenuncias.nombreInterprete  : '';
-        this.data['xComprendioDerechos'] = _data.predenuncias.compredioDerechos ? 'Sí' : 'No';
-        this.data['xCopiaDerechos']      = _data.predenuncias.proporcionoCopia ? 'Sí' : 'No';
+        this.data['xHablaEspaniol']      = !_data.predenuncias ? '' :(_data.predenuncias.hablaEspaniol ? 'Sí' : 'No');
+        this.data['xIdiomaLengua']       = !_data.predenuncias ? '' :(_data.predenuncias.hablaEspaniol ? '' : _data.predenuncias.lenguaIdioma);
+        this.data['xInterprete']         = !_data.predenuncias ? '' :(_data.predenuncias.nombreInterprete ? _data.predenuncias.nombreInterprete  : '');
+        this.data['xComprendioDerechos'] = !_data.predenuncias ? '' :(_data.predenuncias.compredioDerechos ? 'Sí' : 'No');
+        this.data['xCopiaDerechos']      = !_data.predenuncias ? '' :(_data.predenuncias.proporcionoCopia ? 'Sí' : 'No');
 
         this.data['xCargoEmisor']        = '';
         this.data['xNombreEmisor']       = '';
@@ -260,35 +260,35 @@ export class FormatosLocal {
         this.setCasoInfo(_data);
         // this.data['xNombreUsuario']           = _data.
 
-        this.data['xCalidadUsuarioPersona']   = _data.predenuncias.calidadPersona;
+        this.data['xCalidadUsuarioPersona']   = _data.predenuncia ? _data.predenuncias.calidadPersona : '';
         this.data['xTipoPersona']             = _data.tipoPersona ? _data.tipoPersona.nombre : '';
         this.data['xNumeroTelefonico']        = _data.noTelefonico;
-        this.data['xFolioIdentificacion']     = _data.predenuncias.noFolioConstancia ? _data.predenuncias.noFolioConstancia  : '';
-        this.data['xHechosNarrados']          = _data.predenuncias.hechosNarrados ? _data.predenuncias.hechosNarrados  : '';
-        this.data['xConclusionHechos']        = _data.predenuncias.conclusion ? _data.predenuncias.conclusion  : '';
-        this.data['xLugarHechos']             = _data.predenuncias.lugarHechos ? _data.predenuncias.lugarHechos  : '';
-        this.data['xCanalizacion']            = _data.predenuncias.canalizacion ? _data.predenuncias.canalizacion  : '';
-        this.data['xInstitucionCanalizacion'] = _data.predenuncias.institucion ? _data.predenuncias.institucion  : '';
-        this.data['xMotivoCanalizacion']      = _data.predenuncias.motivoCanalizacion ? _data.predenuncias.motivoCanalizacion  : '';
-        this.data['xFechaCanalizacion']       = _data.predenuncias.fechaCanalizacion ? _data.predenuncias.fechaCanalizacion  : '';
-        this.data['xHoraCanalizacion']        = _data.predenuncias.horaCanalizacion ? _data.predenuncias.horaCanalizacion  : '';
-        this.data['xNombreCausoHecho']        = _data.predenuncias.nombreCausante ? _data.predenuncias.nombreCausante  : '';
-        this.data['xDomicilioHechos']         = _data.predenuncias.domicilioCausante ? _data.predenuncias.domicilioCausante  : '';
-        this.data['xObservaciones']           = _data.predenuncias.observaciones ? _data.predenuncias.observaciones  : '';
+        this.data['xFolioIdentificacion']     = !_data.predenuncias ? '' :(_data.predenuncias.noFolioConstancia ? _data.predenuncias.noFolioConstancia  : '');
+        this.data['xHechosNarrados']          = !_data.predenuncias ? '' :(_data.predenuncias.hechosNarrados ? _data.predenuncias.hechosNarrados  : '');
+        this.data['xConclusionHechos']        = !_data.predenuncias ? '' :(_data.predenuncias.conclusion ? _data.predenuncias.conclusion  : '');
+        this.data['xLugarHechos']             = !_data.predenuncias ? '' :(_data.predenuncias.lugarHechos ? _data.predenuncias.lugarHechos  : '');
+        this.data['xCanalizacion']            = !_data.predenuncias ? '' :(_data.predenuncias.canalizacion ? _data.predenuncias.canalizacion  : '');
+        this.data['xInstitucionCanalizacion'] = !_data.predenuncias ? '' :(_data.predenuncias.institucion ? _data.predenuncias.institucion  : '');
+        this.data['xMotivoCanalizacion']      = !_data.predenuncias ? '' :(_data.predenuncias.motivoCanalizacion ? _data.predenuncias.motivoCanalizacion  : '');
+        this.data['xFechaCanalizacion']       = !_data.predenuncias ? '' :(_data.predenuncias.fechaCanalizacion ? _data.predenuncias.fechaCanalizacion  : '');
+        this.data['xHoraCanalizacion']        = !_data.predenuncias ? '' :(_data.predenuncias.horaCanalizacion ? _data.predenuncias.horaCanalizacion  : '');
+        this.data['xNombreCausoHecho']        = !_data.predenuncias ? '' :(_data.predenuncias.nombreCausante ? _data.predenuncias.nombreCausante  : '');
+        this.data['xDomicilioHechos']         = !_data.predenuncias ? '' :(_data.predenuncias.domicilioCausante ? _data.predenuncias.domicilioCausante  : '');
+        this.data['xObservaciones']           = !_data.predenuncias ? '' :(_data.predenuncias.observaciones ? _data.predenuncias.observaciones  : '');
         // this.data['xPersonaRegistro']         = _data.
     }
 
     public setDataF1005(_data){
         this.setCasoInfo(_data);
         this.setVictimaInfo(_data);
-        this.data['xTelefonoLlamando']      = _data.predenuncias.noTelefonico ? _data.predenuncias.noTelefonico  : '';
-        this.data['xTipoLineaTelefonica']   = _data.predenuncias.tipoLinea ? _data.predenuncias.tipoLinea  : '';
-        this.data['xLugarLlamada']          = _data.predenuncias.lugarLlamada ? _data.predenuncias.lugarLlamada  : '';
-        this.data['xNarracionHechos']       = _data.predenuncias.hechosNarrados ? _data.predenuncias.hechosNarrados  : '';
-        this.data['xAsesoria']              = _data.predenuncias.comunicado ? _data.predenuncias.comunicado  : '';
-        this.data['xHoraConclusionLlamada'] = _data.predenuncias.horaConclusionLlamada ? _data.predenuncias.horaConclusionLlamada  : '';
-        this.data['xDuracionLlamada']       = _data.predenuncias.duracionLlamada ? _data.predenuncias.duracionLlamada  : '';
-        this.data['xObservaciones']         = _data.predenuncias.observaciones ? _data.predenuncias.observaciones  : '';
+        this.data['xTelefonoLlamando']      = !_data.predenuncias ? '' :(_data.predenuncias.noTelefonico ? _data.predenuncias.noTelefonico  : '');
+        this.data['xTipoLineaTelefonica']   = !_data.predenuncias ? '' :(_data.predenuncias.tipoLinea ? _data.predenuncias.tipoLinea  : '');
+        this.data['xLugarLlamada']          = !_data.predenuncias ? '' :(_data.predenuncias.lugarLlamada ? _data.predenuncias.lugarLlamada  : '');
+        this.data['xNarracionHechos']       = !_data.predenuncias ? '' :(_data.predenuncias.hechosNarrados ? _data.predenuncias.hechosNarrados  : '');
+        this.data['xAsesoria']              = !_data.predenuncias ? '' :(_data.predenuncias.comunicado ? _data.predenuncias.comunicado  : '');
+        this.data['xHoraConclusionLlamada'] = !_data.predenuncias ? '' :(_data.predenuncias.horaConclusionLlamada ? _data.predenuncias.horaConclusionLlamada  : '');
+        this.data['xDuracionLlamada']       = !_data.predenuncias ? '' :(_data.predenuncias.duracionLlamada ? _data.predenuncias.duracionLlamada  : '');
+        this.data['xObservaciones']         = !_data.predenuncias ? '' :(_data.predenuncias.observaciones ? _data.predenuncias.observaciones  : '');
         this.data['xAdscripcionEmisor']     = ''
         this.data['xOrientadorJuridico']    = ''
     }

@@ -125,6 +125,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                 this.casoId = +params['casoId'];
                 Logger.log(this.casoId);
                 if(this.onLine.onLine){
+                    Logger.log('OnLine------------>',);
                     this.http.get(this.apiUrl+this.casoId+'/page').subscribe(response => {
                          if(parseInt(response.totalCount) !== 0){
                             this.hasPredenuncia = true;
@@ -143,22 +144,25 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                         }
                     });
                 }else{
+                    Logger.log('1.-OffLine------------>');
                     this.db.get("casos", this.casoId).then(caso=>{
                         Logger.log("Caso en armas ->",caso);
                         if (caso){
+                            Logger.log('2.-OffLine------------>',this.model);
                             if(caso["predenuncias"]){
+                                Logger.log('3.-OffLine------------>',this.model);
                                 this.hasPredenuncia = true;
-                                Logger.log("Have predenuncia");
+                                Logger.log("Have predenuncias");
                                 this.form.disable();
                                 let model = caso['predenuncias'];
                                 var fechaCompleta: Date = new Date(model.fechaHoraInspeccion);
-                                // this.model.fechaCanalizacion=fechaCompleta;
+                                this.model.fechaCanalizacion=fechaCompleta;
                                 var horas: string=(String(fechaCompleta.getHours()).length==1)?'0'+fechaCompleta.getHours():String(fechaCompleta.getHours());
                                 var minutos: string=(String(fechaCompleta.getMinutes()).length==1)?'0'+fechaCompleta.getMinutes():String(fechaCompleta.getMinutes());;
                                 this.model.horaConlcusionLlamada=horas+':'+minutos;
                                 Logger.log("Emitiendo id..",this.model.id)
                                 this.idEmitter.emit({id: this.model.id});
-                                Logger.log('LL------------>',this.model);
+                                Logger.log('4.- OffLine------------>',this.model, model);
                                 this.fillForm(model);
                             }
                         }
@@ -272,8 +276,20 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                     );
                 }else{
                     let temId = Date.now();
-                    _model.fechaCanalizacion = this.concatDate(_model.fechaCanalizacion, _model.horaCanalizacion);
                     _model.caso.id = this.casoId;
+                    
+                    if(_model.fechaCanalizacion){
+                      Logger.log('1.-  -------->',_model.fechaCanalizacion);  
+                      var fechaCompletaOff = new Date (_model.fechaCanalizacion);
+                      Logger.log('2.-  -------->',fechaCompletaOff);  
+                      if(_model.horaCanalizacion){ 
+                        fechaCompletaOff.setMinutes(parseInt(_model.horaCanalizacion.split(':')[1]));
+                        fechaCompletaOff.setHours(parseInt(_model.horaCanalizacion.split(':')[0]));
+                      }
+                      var mes:number=fechaCompletaOff.getMonth()+1;
+                      _model.fechaCanalizacion=fechaCompletaOff.getFullYear()+'-'+mes+'-'+fechaCompletaOff.getDate()+' '+fechaCompletaOff.getHours()+':'+fechaCompletaOff.getMinutes()+':00.000';
+                      Logger.log('lo que envio: '+  _model.fechaCanalizacion);
+                     }
                     let dato = {
                         url:'/v1/base/predenuncias',
                         body:_model,
@@ -286,11 +302,11 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                     this.db.add("sincronizar", dato).then(p=>{
                         this.db.get("casos",this.casoId).then(caso=>{
                             if (caso){
-                                if(!caso["predenuncia"]){
-                                    caso["predenuncia"]=[];
+                                if(!caso["predenuncias"]){
+                                    caso["predenuncias"]=[];
                                 }
                                 _model["id"]=temId;
-                                caso["predenuncia"].push(_model);
+                                caso["predenuncias"].push(_model);
                                 Logger.log("caso arma", caso["predenuncia"]);
                                 this.db.update("casos",caso).then(t=>{
                                     Logger.log("caso arma", t["arma"]);
@@ -368,7 +384,9 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
 
     ngOnInit() {
         if(this.object.data)
-            this.object=this.object.data[0]
+            this.object=this.object.data[0];
+            Logger.log('1. ----------->', this.object);
+            this.formData.append('predenuncia.id', this.object.id.toString());
         if(this.object.documentos){
             this.dataSource = this.source;
             for (let object of this.object.documentos) {
@@ -391,8 +409,6 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
             }
 
         });
-
-        this.formData.append('predenuncia.id', this.object.id.toString());
     }
 
     public cargaArchivos(_archivos){
