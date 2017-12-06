@@ -65,7 +65,6 @@ export class Logger {
         if (_config.develop){
             var arg2=["%c"+texto,"color:"+color+";font-weight:bold;"];
             arg2=arg2.concat(args);
-            console.log(arg2);
             console.log.apply(console, arg2);
         }
     }
