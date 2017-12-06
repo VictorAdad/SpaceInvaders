@@ -71,17 +71,9 @@ export class DelitoComponent {
                         if (this.casoService.caso)
                             if (this.casoService.caso["delitoCaso"]){
                                 this.pag = this.casoService.caso["delitoCaso"].length;
-                                this.dataSource = new TableService(this.paginator, this.casoService.caso["delitoCaso"]);
+                                this.dataSource = new TableService(this.paginator, this.casoService.caso["delitoCaso"].slice(0,10));
                             }
                     });
-                    // this.db.get("casos", this.id).then(
-                    // casoR => {
-                    //     if (casoR) {
-                    //         this.delitoCaso = casoR as DelitoCaso;
-                    //         if (casoR["delitosCaso"])
-                    //             this.dataSource = new TableService(this.paginator, casoR["delitoCaso"]);
-                    //     }
-                    // });
                 }    
             } 
         });
@@ -102,23 +94,34 @@ export class DelitoComponent {
         Logger.log('Page size', _e.pageSize);
         Logger.log('Id caso', this.id);
         this.delitoCasos = [];
-        this.page('/v1/base/delitos-casos/casos/' + this.id + '/page?p=' + _e.pageIndex + '&tr=' + _e.pageSize);
+        this.page('/v1/base/delitos-casos/casos/' + this.id + '/page?p=' + _e.pageIndex + '&tr=' + _e.pageSize,_e);
     }
 
-    public page(url: string) {
-        this.delitoCasos = [];
-        this.http.get(url).subscribe((response) => {
-            //Logger.log('Paginator response', response.data);
-            
-            response.data.forEach(object => {
-                this.pag = response.totalCount;
-                //Logger.log("Respuestadelitos", response["data"]);
-                this.delitoCasos.push(Object.assign(new DelitoCaso(), object));
-                //response["data"].push(Object.assign(new Caso(), object));
-                this.dataSource = new TableService(this.paginator, this.delitoCasos);
+    public page(url: string,_e=null) {
+        if (this.onLine.onLine){
+            this.delitoCasos = [];
+            this.http.get(url).subscribe((response) => {
+                //Logger.log('Paginator response', response.data);
+                
+                response.data.forEach(object => {
+                    this.pag = response.totalCount;
+                    //Logger.log("Respuestadelitos", response["data"]);
+                    this.delitoCasos.push(Object.assign(new DelitoCaso(), object));
+                    //response["data"].push(Object.assign(new Caso(), object));
+                    this.dataSource = new TableService(this.paginator, this.delitoCasos);
+                });
+                Logger.log('Datos finales', this.dataSource);
             });
-            Logger.log('Datos finales', this.dataSource);
-        });
+        }else{
+            if (_e){
+                var caso = this.casoService.caso;
+                if (caso["delitoCaso"]){
+                    var datos=caso["delitoCaso"];
+                    let x=_e.pageSize*_e.pageIndex;
+                    this.dataSource = new TableService(this.paginator, datos.slice(x,x+_e.pageSize));
+                }
+            }
+        }
     }
 
     swap(e) {
@@ -165,7 +168,9 @@ export class DelitoComponent {
                                         }
                                     }
                                     this.db.update("casos",casoR).then(casoU=>{
-                                        this.dataSource = new TableService(this.paginator, this.casoService.caso["delitoCaso"]);
+                                        var _e=this.paginator;
+                                        let x=_e.pageSize*_e.pageIndex;
+                                        this.dataSource = new TableService(this.paginator, this.casoService.caso["delitoCaso"].slice(x,x+_e.pageSize));
                                     });
                                     
                                 }

@@ -42,7 +42,7 @@ export class VehiculoComponent{
                         if (caso){
                             if(caso["vehiculos"]){
                                 this.pag = caso["vehiculos"].length;
-                                this.dataSource = new TableService(this.paginator, caso["vehiculos"]);
+                                this.dataSource = new TableService(this.paginator, caso["vehiculos"].slice(0,10));
                             }
                         }
                     });
@@ -56,20 +56,31 @@ export class VehiculoComponent{
         Logger.log('Page size', _e.pageSize);
         Logger.log('Id caso', this.casoId);
         this.vehiculos = [];
-        this.page('/v1/base/vehiculos/casos/' + this.casoId + '/page?p=' + _e.pageIndex + '&tr=' + _e.pageSize);
+        this.page('/v1/base/vehiculos/casos/' + this.casoId + '/page?p=' + _e.pageIndex + '&tr=' + _e.pageSize,_e);
     }
 
-    public page(url: string) {
-        this.http.get(url).subscribe((response) => {
-            //Logger.log('Paginator response', response.data);
-            
-            response.data.forEach(object => {
-                this.pag = response.totalCount;
-                //Logger.log("Respuestadelitos", response["data"]);
-                this.vehiculos.push(Object.assign(new Vehiculo(), object));
-                this.dataSource = new TableService(this.paginator, this.vehiculos);
+    public page(url: string,_e=null) {
+        if (this.onLine.onLine)
+            this.http.get(url).subscribe((response) => {
+                //Logger.log('Paginator response', response.data);
+                
+                response.data.forEach(object => {
+                    this.pag = response.totalCount;
+                    //Logger.log("Respuestadelitos", response["data"]);
+                    this.vehiculos.push(Object.assign(new Vehiculo(), object));
+                    this.dataSource = new TableService(this.paginator, this.vehiculos);
+                });
+                Logger.log('Datos finales', this.dataSource);
             });
-            Logger.log('Datos finales', this.dataSource);
-        });
+        else{
+            if (_e){
+                var caso = this.casoService.caso;
+                if (caso["vehiculos"]){
+                    var datos=caso["vehiculos"];
+                    let x=_e.pageSize*_e.pageIndex;
+                    this.dataSource = new TableService(this.paginator, datos.slice(x,x+_e.pageSize));
+                }
+            }
+        }
     }
 }

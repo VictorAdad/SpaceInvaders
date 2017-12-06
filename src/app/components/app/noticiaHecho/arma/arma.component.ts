@@ -43,7 +43,7 @@ export class ArmaComponent{
                         if (caso){
                             if(caso["armas"]){
                                 this.pag = caso["armas"].length;
-                                this.dataSource = new TableService(this.paginator, caso["armas"] as Arma[]);
+                                this.dataSource = new TableService(this.paginator, caso["armas"].slice(0,10));
                             }
                         }
                     });
@@ -54,20 +54,29 @@ export class ArmaComponent{
   	}
 
     public changePage(_e){
-        if(this.onLine.onLine){
-            this.page('/v1/base/armas/casos/'+this.casoId+'/page?p='+_e.pageIndex+'&tr='+_e.pageSize);
-            
-        }
+        this.page('/v1/base/armas/casos/'+this.casoId+'/page?p='+_e.pageIndex+'&tr='+_e.pageSize,_e);
     }  
 
-    public page(url: string){
-        this.http.get(url).subscribe((response) => {
-            this.pag = response.totalCount;
-            this.data = response.data as Arma[];
-            Logger.log("Loading armas..");
-            Logger.log(this.data);
-            this.dataSource = new TableService(this.paginator, this.data);
-        });
+    public page(url: string,_e=null){
+        if (this.onLine.onLine){
+            this.http.get(url).subscribe((response) => {
+                this.pag = response.totalCount;
+                this.data = response.data as Arma[];
+                Logger.log("Loading armas..");
+                Logger.log(this.data);
+                this.dataSource = new TableService(this.paginator, this.data);
+            });
+        }else{
+            if (_e){
+                var caso = this.casoService.caso;
+                if (caso["armas"]){
+                    var datos=caso["armas"];
+                    let x=_e.pageSize*_e.pageIndex;
+                    this.dataSource = new TableService(this.paginator, datos.slice(x,x+_e.pageSize));
+                }
+            }
+        }
+        
     }
 
 

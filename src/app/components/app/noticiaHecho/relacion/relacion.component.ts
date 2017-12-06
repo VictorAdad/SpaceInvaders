@@ -52,7 +52,7 @@ export class RelacionComponent{
                         if (caso){
                             if(caso["tipoRelacionPersonas"]){
                                 this.pag = caso["tipoRelacionPersonas"].length;
-                                this.dataSource = new TableService(this.paginator, caso["tipoRelacionPersonas"]);
+                                this.dataSource = new TableService(this.paginator, caso["tipoRelacionPersonas"].slice(0,10));
                             }
                         }
                     });
@@ -67,21 +67,32 @@ export class RelacionComponent{
             Logger.log('Page size', _e.pageSize);
             Logger.log('Id caso', this.casoId);
             this.relaciones = [];
-            this.page('/v1/base/tipo-relacion-persona/casos/' + this.casoId + '/page?p=' + _e.pageIndex + '&tr=' + _e.pageSize);
+            this.page('/v1/base/tipo-relacion-persona/casos/' + this.casoId + '/page?p=' + _e.pageIndex + '&tr=' + _e.pageSize,_e);
         }
     }
 
-    public page(url: string) {
-        this.http.get(url).subscribe((response) => {
-            //Logger.log('Paginator response', response.data);
-            
-            response.data.forEach(object => {
-                this.pag = response.totalCount;
-                //Logger.log("Respuestadelitos", response["data"]);
-                this.relaciones.push(Object.assign(new Relacion(), object));
-                this.dataSource = new TableService(this.paginator, this.relaciones);
+    public page(url: string,_e) {
+        if (this.onLine)
+            this.http.get(url).subscribe((response) => {
+                //Logger.log('Paginator response', response.data);
+                
+                response.data.forEach(object => {
+                    this.pag = response.totalCount;
+                    //Logger.log("Respuestadelitos", response["data"]);
+                    this.relaciones.push(Object.assign(new Relacion(), object));
+                    this.dataSource = new TableService(this.paginator, this.relaciones);
+                });
+                Logger.log('Datos finales', this.dataSource);
             });
-            Logger.log('Datos finales', this.dataSource);
-        });
+        else{
+            if (_e){
+                var caso = this.casoService.caso;
+                if (caso["tipoRelacionPersonas"]){
+                    var datos=caso["tipoRelacionPersonas"];
+                    let x=_e.pageSize*_e.pageIndex;
+                    this.dataSource = new TableService(this.paginator, datos.slice(x,x+_e.pageSize));
+                }
+            }
+        }
     }
 }
