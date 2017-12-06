@@ -36,7 +36,7 @@ export class BaseInputComponent implements OnInit{
 
 	@Input() regex: RegExp;
 
-	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
+	@Output() valueChange:EventEmitter<string> = new EventEmitter<string>();
 
 	@ViewChild('input') input;
 

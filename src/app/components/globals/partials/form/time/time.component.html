@@ -2,7 +2,9 @@
 	<mat-form-field [formGroup]="group" class="full-width">
 			<mat-icon matPrefix *ngIf="prefixIcon">{{ prefixIcon }}</mat-icon>
 			<span *ngIf="prefix" matPrefix>{{ prefix }}&nbsp;</span>
-			<input matInput 
+			<input
+				#input 
+				matInput 
 				placeholder="{{label}}" 
 				[(ngModel)]="value" 
 				(ngModelChange)="update($event)" 
