@@ -47,7 +47,9 @@ export class PersonaComponent implements OnInit{
                         if (caso["personaCasos"]){
                             this.pag = caso["personaCasos"].length;
                             Logger.log("CASO ->",caso);
-                            this.dataSource = new TableService(this.paginator, caso["personaCasos"]);
+                            var datos=caso["personaCasos"];
+                            this.dataSource = new TableService(this.paginator, datos.slice(0,datos["length"]<10?datos["length"]:10));
+                            // this.dataSource = new TableService(this.paginator, caso["personaCasos"]);
                         }
                         
                     });
@@ -57,15 +59,27 @@ export class PersonaComponent implements OnInit{
     }
 
     public changePage(_e) {
-        this.page('/v1/base/personas-casos/casos/'+this.casoId+'/page?p='+_e.pageIndex+'&tr='+_e.pageSize)
+        this.page('/v1/base/personas-casos/casos/'+this.casoId+'/page?p='+_e.pageIndex+'&tr='+_e.pageSize,_e)
     }
 
-    public page(url:string){
-        this.http.get(url).subscribe((response) => {
-            this.pag = response.totalCount;
-            this.data = response.data as Persona[];
-            this.dataSource = new TableService(this.paginator, this.data);
-        });
+    public page(url:string,_e=null){
+        if (this.onLine.onLine)
+            this.http.get(url).subscribe((response) => {
+                this.pag = response.totalCount;
+                this.data = response.data as Persona[];
+                this.dataSource = new TableService(this.paginator, this.data);
+            });
+        else{
+            if (_e){
+                var caso = this.casoService.caso;
+                if (caso["personaCasos"]){
+                    var datos=caso["personaCasos"];
+                    let x=_e.pageSize*_e.pageIndex;
+                    this.dataSource = new TableService(this.paginator, datos.slice(x,x+_e.pageSize));
+                }
+            }
+        }
+
     }
 
     public getAlias(_persona){

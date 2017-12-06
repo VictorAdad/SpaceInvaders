@@ -14,7 +14,7 @@ export class Logger {
         var estilo5= 'background-color:black; border-right:3px solid gray;border-bottom:3px solid gray; font-size:20px; font-weight: bold; padding:3px;color:';
         
         console.log("%c" + "F G J ",estilo+"white; padding-left: 75px;padding-right: 74px;");
-        console.log("%c"+"ESTADO DE %cME%cXÍ%cCO", estilo2+"white",estilo3+"green",estilo4+"white",estilo5+"red");
+        console.log("%c"+"ESTADO DE %cMÉ%cXI%cCO", estilo2+"white",estilo3+"green",estilo4+"white",estilo5+"red");
         console.log("%c" + "EVOMATIK", "color: #2b697f;font-weight:bold; font-size: 20px; letter-spacing: ;padding-left: 125px;");
         console.log("%c" + "SOFTWARE", "color:#e5493c;padding-left: 170px;");
         console.log("%c" + "Sede:" +"%c"+_config.sede, "color: blue;font-weight:bold;", "color: black;");
@@ -53,6 +53,19 @@ export class Logger {
     public static timeEnd(...args){
         if (_config.develop){
             console.timeEnd.apply(console, args);
+        }
+    }
+    /*
+    Funcion para resaltar mensajes en la consola, normal mente solo queremos el primer texto para resaltar
+    texto Texto a resaltar
+    color Color para el estilo del texto
+    args  demas argumentos 
+    */
+    public static logColor(texto,color="black",...args){
+        if (_config.develop){
+            var arg2=["%c"+texto,"color:"+color+";font-weight:bold;"];
+            arg2=arg2.concat(args);
+            console.log.apply(console, arg2);
         }
     }
 

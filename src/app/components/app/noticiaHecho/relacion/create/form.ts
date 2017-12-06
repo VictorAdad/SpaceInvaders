@@ -67,6 +67,7 @@ export class Form {
                 // this.efectoViolenciaForm(1),
             ]),
             'tipoRelacionPersona': new FormGroup({
+                'id': new FormControl(),
                 'tipo': new FormControl('', [Validators.required,]),
                 'personaCaso': new FormGroup({
                     'id': new FormControl('', [Validators.required,]),

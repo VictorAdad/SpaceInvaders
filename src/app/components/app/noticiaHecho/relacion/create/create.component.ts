@@ -798,6 +798,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     public fillForm(_data){
         this.form.patchValue({
             tipoRelacionPersona: {
+                id: _data.id,
                 tipo: _data.tipo,
             }
         });
