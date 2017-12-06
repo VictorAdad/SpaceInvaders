@@ -26,7 +26,11 @@ export class PeritoComponent {
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
-	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db: CIndexedDB) { }
+	constructor(
+		private route: ActivatedRoute,
+		private http: HttpService,
+		private onLine: OnLineService,
+		private db: CIndexedDB) { }
 
 	ngOnInit() {
 
@@ -36,7 +40,17 @@ export class PeritoComponent {
 				this.casoId = +params['casoId'];
 				this.apiUrl = this.apiUrl.replace("{id}", String(this.casoId));
 				this.breadcrumb.push({ path: `/caso/${this.casoId}/detalle`, label: "Detalle del caso" })
-				this.page(this.apiUrl);
+				if(this.onLine.onLine){
+					this.page(this.apiUrl);
+				}else{
+                    this.db.get("casos", this.casoId).then(caso=>{
+                        if (caso){
+                            if(caso["solicitudPrePericiales"]){
+                                this.dataSource = new TableService(this.paginator, caso["solicitudPrePericiales"] as Perito[]);
+                            }
+                        }
+                    });
+                }
 			}
 			else {
 				this.http.get(this.apiUrl).subscribe((response) => {

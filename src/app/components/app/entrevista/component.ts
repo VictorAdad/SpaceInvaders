@@ -25,7 +25,11 @@ export class EntrevistaComponent {
     public pag: number = 0;
 
 
-	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB){}
+	constructor(
+        private route: ActivatedRoute,
+        private http: HttpService,
+        private onLine: OnLineService,
+        private db:CIndexedDB) {}
 
 	ngOnInit() {
     	this.route.params.subscribe(params => {
