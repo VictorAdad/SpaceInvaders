@@ -295,6 +295,7 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
         onLine,
         formatos
         );
+    this.vista="solicitudPerito";
 }
 
   ngOnInit() {

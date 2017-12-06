@@ -378,6 +378,7 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
             onLine,
             formatos
             );
+        this.vista="predenuncia";
     }
 
     ngOnInit() {

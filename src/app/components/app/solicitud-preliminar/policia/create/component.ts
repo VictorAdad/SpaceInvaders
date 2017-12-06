@@ -230,6 +230,7 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
         onLine,
         formatos
         );
+    this.vista="policia";
 }
 
   ngOnInit() {

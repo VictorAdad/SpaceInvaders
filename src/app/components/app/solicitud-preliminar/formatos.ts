@@ -22,6 +22,7 @@ export class FormatosGlobal{
     public formData: FormData;
     public urlUpload: string;
     public documentos: any = {};
+    public vista:string="";
 
     constructor(
         public http: HttpService,
@@ -126,7 +127,8 @@ export class FormatosGlobal{
             id:'file_chooser',
             data: {
                 urlUpload: this.urlUpload,
-                formData: this.formData
+                formData: this.formData,
+                vista:this.vista,
             }
         });
 
@@ -252,7 +254,8 @@ export class SolPreDocComponent {
                         idBlob:t["id"],
                         procedimiento:"",
                         fecha:new Date(),
-                        casoId:casoId
+                        casoId:casoId,
+                        vista:obj.data.vista
                     };
                     obj.db.add("documentos",dato).then(t=>{
                         Logger.log("Se guardo el archivo",(item["some"])["name"]);

@@ -314,6 +314,7 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
         onLine,
         formatos
         );
+    this.vista="entrevista";
 }
 
   ngOnInit() {
