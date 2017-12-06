@@ -410,10 +410,18 @@ export class OnLineService {
             Logger.log("URL",_url,"MODELO",item.body);
             var formData = new FormData();
             var casoId="";
+            /*
+            atributo extra es para agregar un valor extra al formdata que se envia al sincronizar los atributos que tienen son nombre y valor.
+            ejemplo de uso
+            atributoExtraPost:{nombre:"predenuncia.id",valor:"104"}
+            */
+            var atributoExtraPost=null;
             var rec=function(k,listaDocumentos){
                 if(k==listaDocumentos["length"]){
                     Logger.log("Antes de enviar",_url, formData);
                     formData.append('caso.id', casoId);
+                    if (atributoExtraPost)
+                        formData.append(atributoExtraPost["nombre"], atributoExtraPost["valor"]);
                     obj.http.post(_url,formData).subscribe(
                         respuesta=>{
                             Logger.log("RESPONSE GET=>",respuesta);
@@ -437,6 +445,8 @@ export class OnLineService {
                         Logger.log("Archivos",b,listaDocumentos[k],file);
                         formData.append("files",file);
                         casoId=""+listaDocumentos[k]["casoId"];
+                        if (listaDocumentos[k]["atributoExtraPost"])
+                            atributoExtraPost=listaDocumentos[k]["atributoExtraPost"];
                         rec(k+1,listaDocumentos);
                     });
                 }

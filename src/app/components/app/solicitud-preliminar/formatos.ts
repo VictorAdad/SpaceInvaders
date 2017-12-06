@@ -23,6 +23,12 @@ export class FormatosGlobal{
     public urlUpload: string;
     public documentos: any = {};
     public vista:string="";
+    /*
+    atributo extra es para agregar un valor extra al formdata que se envia al sincronizar los atributos que tienen son nombre y valor.
+    ejemplo de uso
+    atributoExtraPost:{nombre:"predenuncia.id",valor:"104"}
+    */
+    public atributoExtraPost:any=null;
 
     constructor(
         public http: HttpService,
@@ -129,6 +135,7 @@ export class FormatosGlobal{
                 urlUpload: this.urlUpload,
                 formData: this.formData,
                 vista:this.vista,
+                atributoExtraPost:this.atributoExtraPost
             }
         });
 
@@ -255,7 +262,8 @@ export class SolPreDocComponent {
                         procedimiento:"",
                         fecha:new Date(),
                         casoId:casoId,
-                        vista:obj.data.vista
+                        vista:obj.data.vista,
+                        atributoExtraPost:obj.data.atributoExtraPost
                     };
                     obj.db.add("documentos",dato).then(t=>{
                         Logger.log("Se guardo el archivo",(item["some"])["name"]);

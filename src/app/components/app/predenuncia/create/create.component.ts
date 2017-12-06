@@ -382,6 +382,7 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
     }
 
     ngOnInit() {
+        var obj=this;
         if(this.onLine.onLine){
             if(this.object.data)
                 this.object=this.object.data[0];
@@ -395,6 +396,7 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
 
             }
             this.formData.append('predenuncia.id', this.object.id.toString());
+            obj.atributoExtraPost={nombre:"predenuncia.id",valor:this.object.id.toString()};
         }
 
         this.route.params.subscribe(params => {
@@ -407,6 +409,8 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
                             if(!this.onLine.onLine){
                                 this.object = this.caso.caso.predenuncias;
                             }
+                            this.formData.append('predenuncia.id', this.object.id.toString());
+                            obj.atributoExtraPost={nombre:"predenuncia.id",valor:this.object.id.toString()};
                         }
                     );
                 // }
