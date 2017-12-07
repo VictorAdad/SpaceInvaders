@@ -127,8 +127,9 @@
                     'calendar-day': day != null,
                     'today': day == today.getDate() && date.getMonth() == today.getMonth() && date.getFullYear() == today.getFullYear(),
                     'selected-day': day == date.getDate(),
-                    'moreThanToday' : day > today.getDate() && date.getMonth() > today.getMonth() > date.getFullYear() > today.getFullYear()}"
-                    *ngFor="let day of week">
+                    'more-than-today text-muted' : day > today.getDate() && selectedMonth >= today.getMonth() && selectedYear >= today.getFullYear() && validateDays == 'post'}"
+                    *ngFor="let day of week"
+                >
                     <span>{{day}}</span>
                 </td>
 
