@@ -12,8 +12,9 @@ export class NumberComponent extends BaseInputComponent {
 
 	@Input() max :number = 20;
 
-	public regexDEC: RegExp = /^[0-9.]*$/;
-	// /^[0-9]*\.[0-9]{2}$/
+	public regexDEC: RegExp = /^[0-9]{0,7}[.]{1}[0-9]{0,2}$/;
+	public regexINT: RegExp = /^[0-9]{0,7}$/;
+	// /^[0-9]{0,7}[.]{0,1}[0-9]{0,2}$/
 
 	constructor(public renderer : Renderer){
 		super(renderer)
@@ -36,16 +37,18 @@ export class NumberComponent extends BaseInputComponent {
 	}
 
 	inputSlice(_value){
-		Logger.log('--------------->',this.backupValue, _value)
+		// Logger.log('--------------->',this.backupValue, _value)
 		if (_value != null && _value != "") {
-			if (!this.regexDEC.test(_value)){
-				this.control.setValue(this.backupValue);
-			}else{
+			if (this.regexDEC.test(_value) || this.regexINT.test(_value)){
 				this.backupValue = _value;
+
+			}else{
+				this.control.setValue(this.backupValue);
+				
 			}
 
-			if (_value.toString().length > this.max)
-				this.control.setValue(_value.toString().slice(0,this.max));
+			// if (_value.toString().length > this.max)
+			// 	this.control.setValue(_value.toString().slice(0,this.max));
 		}else {
 			this.backupValue = _value;
 		}
