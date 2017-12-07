@@ -77,7 +77,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             'valorEstimado'         : new FormControl("", []),
             'tipoUso'               : new FormControl("", []),
             'procedencia'           : new FormControl("", []),
-            'pedimentoImportacion'  : new FormControl("", []),
+            'pedimentoImportancion' : new FormControl("", []),
             'llevaCarga'            : new FormControl(""),
             'alterado'              : new FormControl(""),
             'seniasParticulares'     : new FormControl("", []),
@@ -104,7 +104,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
 
         });
 
-        this.form.controls.pedimentoImportacion.disable();
+        this.form.controls.pedimentoImportancion.disable();
 
         this.route.params.subscribe(params => {
             if(params['casoId']){
@@ -149,10 +149,10 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     public change(option){
         if (option == "EXTRANJERO") {
             this.isProcedenciaExtranjera = true;
-            this.form.controls.pedimentoImportacion.enable();
+            this.form.controls.pedimentoImportancion.enable();
         }else{
             this.isProcedenciaExtranjera = false;
-            this.form.controls.pedimentoImportacion.disable();
+            this.form.controls.pedimentoImportancion.disable();
         }
     }
 
@@ -324,6 +324,12 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             }
         }
         this.form.patchValue(_data);
+        let timer = Observable.timer(1);
+        timer.subscribe(t => {
+            this.form.controls.pedimentoImportancion.setValue(_data.pedimentoImportancion);    
+        });
+
+        
     }
 
     public marcaChange(_event){
