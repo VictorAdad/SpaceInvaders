@@ -148,6 +148,8 @@ export class SincronizaCatalogos {
                     obj.bajaCatalogoLlave();
                 Logger.timeEnd("BuscarCambios");
                 
+            }).catch( error=>{
+                console.error("error", error);
             });
         },error=>{
             Logger.log(error);
@@ -183,12 +185,13 @@ export class SincronizaCatalogos {
             
             if (titulo=="matrices"){
                 this.finalizoMatrix=true;
-                SincronizaCatalogos.sincronizando=false;
             }else{
                 this.finalizoCatalogo=true;
             }
-            if (this.finalizoMatrix && this.finalizoCatalogo)
+            if (this.finalizoMatrix && this.finalizoCatalogo){
+                SincronizaCatalogos.sincronizando=false;
                 this.dialogo.close();
+            }
             Logger.log("%c" + "-> "+titulo+" sincronizadas", "color: blue;font-weight:bold;");
             Logger.timeEnd(titulo);
             return;

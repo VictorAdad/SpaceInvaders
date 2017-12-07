@@ -81,6 +81,8 @@ import {TurnoCatalogosCreateComponent} from '@components-app/catalogos/turno/cre
 
 import {AyudaComponent} from '@components-app/ayuda/component';
 
+import {Nothing} from '@components-app/home/nothing.component';
+
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
     { path : '', component: HomeComponent, data : { breadcrumb : 'Noticia de hechos'}},
@@ -88,7 +90,7 @@ const routes: Routes = [
     { path : 'usuarios', component : UsuariosComponent, data : { breadcrumb : 'Usuarios' } },
     { path : 'usuarios/create', component : UsuarioCreateComponent, data : { breadcrumb : 'Crear usuario', rutas:[{path:'/usuarios',label:"Usuarios"}] } },
     { path : 'usuarios/edit/:id',component : UsuarioCreateComponent,data : { breadcrumb : 'Editar usuario', rutas:[{path:'/usuarios',label:"Usuarios"}] } },
-
+    { path : 'nada', component: Nothing,  data : { breadcrumb : 'nada' } },
     //Noticia de Hecho
     { path : 'noticia-hecho', component : NoticiaHechoComponent, data : { breadcrumb : 'Detalle noticia de hechos'}, children: [
         { path : 'datos-generales', component : DatosGeneralesComponent },
@@ -229,6 +231,7 @@ const routes: Routes = [
 export class AppRoutingModule {}
 
 export const routingComponents = [
+    Nothing,
 	UsuariosComponent,
 	UsuarioCreateComponent,
 	ArmaComponent,
