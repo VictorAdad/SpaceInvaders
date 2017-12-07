@@ -1,9 +1,9 @@
-body{
-    font-family: 'Roboto',sans-serif;
-}
-*{
-	box-sizing: border-box;
-}
+// body{
+//     font-family: 'Roboto',sans-serif;
+// }
+// *{
+// 	box-sizing: border-box;
+// }
 #cuppaDatePickerContainer, #cuppaDatePicker{
 	width: 250px;
     text-align: center;
@@ -341,7 +341,7 @@ body{
 .calendar-days td{
 	cursor: pointer;
 }
-.calendar-day:hover > span{
+.calendar-day:hover:not(.more-than-today) > span{
 	background: #9e9e9e;
     color: #fff;
 }

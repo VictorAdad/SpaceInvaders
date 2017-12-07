@@ -81,7 +81,8 @@ export class DatePicker implements OnInit, ControlValueAccessor {
         private renderer : Renderer,
         private elementRef : ElementRef
         ){
-
+        this.selectedMonth = this.today.getMonth();
+        this.selectedYear  = this.today.getFullYear();
     }
 
     ngOnInit(){
