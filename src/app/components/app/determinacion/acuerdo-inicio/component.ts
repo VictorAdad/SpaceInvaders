@@ -84,7 +84,9 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
 
         this.form = new FormGroup({
             'nombrePersonaAcepta': new FormControl(this.model.nombrePersonaAcepta),
-            'presentoLlamada': new FormControl(this.model.presentoLlamada),
+            'presentoLlamada': new FormGroup({
+                'id': new FormControl(this.model.presentoLlamada)
+            }),
             'manifesto': new FormControl(this.model.manifesto),
             'sintesisHechos': new FormControl(this.model.sintesisHechos),
             'observaciones': new FormControl(this.model.observaciones),
