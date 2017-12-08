@@ -1,4 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
+import { BasePaginationComponent } from './../../base/pagination/component';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
@@ -11,7 +12,7 @@ import { Logger } from "@services/logger.service";
 @Component({
     templateUrl: './component.html',
 })
-export class InspeccionComponent {
+export class InspeccionComponent extends BasePaginationComponent implements OnInit{
 
     public apiUrl = '/v1/base/solicitudes-pre-inspecciones/casos/{id}/page';
     columns = ['fecha', 'adscripcion'];
@@ -24,7 +25,7 @@ export class InspeccionComponent {
     public breadcrumb = [];
     public pag: number = 0;
 
-    constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db: CIndexedDB) { }
+    constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db: CIndexedDB) { super();}
     ngOnInit() {
         this.route.params.subscribe(params => {
             if (params['casoId']) {
@@ -32,7 +33,7 @@ export class InspeccionComponent {
                 this.casoId = +params['casoId'];
                 this.apiUrl = this.apiUrl.replace("{id}", String(this.casoId));
                 this.breadcrumb.push({ path: `/caso/${this.casoId}/detalle`, label: "Detalle de caso" })
-                this.page('/v1/base/solicitudes-pre-inspecciones/casos/' + this.casoId + '/page');
+                this.page();
             }
             else {
                 this.http.get('/v1/base/solicitudes-pre-inspecciones').subscribe((response) => {
@@ -44,24 +45,40 @@ export class InspeccionComponent {
         });
     }
 
-    public changePage(_e) {
-        this.page('/v1/base/solicitudes-pre-inspecciones/casos/' + this.casoId + '/page?p=' + _e.pageIndex + '&tr=' + _e.pageSize);
-    }
+    public changePage(_e){
+      console.log('changePage()', _e);
+      this.dataSource = null;
+      this.pageIndex  = _e.pageIndex;
+      this.pageSize   = _e.pageSize;
+      this.page();
+  }
 
-    public page(url: string) {
-        this.data = [];
-        this.http.get(url).subscribe((response) => {
-            //Logger.log('Paginator response', response.data);
+  public filterPage(_event){
+      if(typeof _event == 'string'){
+          this.dataSource = null;
+          this.pageFilter = _event;
+          this.page();
+      }
+  }
 
-            response.data.forEach(object => {
-                this.pag = response.totalCount;
-                //Logger.log("Respuestadelitos", response["data"]);
-                this.data.push(Object.assign(new Inspeccion(), object));
-                //response["data"].push(Object.assign(new Caso(), object));
-                this.dataSource = new TableService(this.paginator, this.data);
-            });
-            Logger.log('Datos finales', this.dataSource);
-        });
-    }
+    public page(){
+      this.loadList = true;
+      this.http.get(
+          `/v1/base/solicitudes-pre-inspecciones/casos/${this.casoId}/page?f=${this.pageFilter}&p=${this.pageIndex}&tr=${this.pageSize}`
+      ).subscribe(
+          (response) => {
+              this.data = [];
+              this.loadList = false;
+              response.data.forEach(object => {
+                  this.pag = response.totalCount;
+                  this.data.push(object);
+                  this.dataSource = new TableService(this.paginator, this.data);
+              });
+          },
+          (error) => {
+              this.loadList = false
+          }
+      );
+  }
 }
 
