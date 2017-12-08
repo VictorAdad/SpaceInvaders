@@ -1,32 +1,46 @@
-<div class="row space">
-    <div class="col-md-12">
-        <h3>Constancia general</h3>
-    </div>
-</div>
 <div class="row">
     <div class="col-md-12">
         <form>
-            <div class="row">
-                <div class="col-md-12">
-                    <text-area label="Contenido de la constancia" name="contenidoConstancia" [group]="form"></text-area>
+            <select2 [options]="
+                [
+                     {label:'Registro general', value:'Registro general'},
+                     {label:'Registro de llamada para permitir al imputado comunicarse con su defensor',value:'Registro de llamada'}
+                ]"
+                placeholder="Tipo de solicitud"
+                (valueChange)="tipoChange($event)"
+                [group]="form"
+                name="tipo">
+            </select2>
+            <div *ngIf="tipo=='Registro general'">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Constancia general</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <text-area label="Contenido de la constancia" name="contenidoConstancia" [group]="form"></text-area>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <h3>Constancia de llamada para permitir al imputado comunicarse con su defensor</h3>
+            <div *ngIf="tipo=='Registro de llamada'">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Constancia de llamada para permitir al imputado comunicarse con su defensor</h3>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <phone label="Especificar número teléfonico" name="noTelefonico" [max]="20" [group]="form"></phone>
+                <div class="row">
+                    <div class="col">
+                        <phone label="Especificar número teléfonico" name="noTelefonico" [max]="20" [group]="form"></phone>
+                    </div>
+                    <div class="col">
+                        <text label="Nombre de la persona que atiende la llamada telefónica" name="atencionLlamada" [max]="100" [group]="form"></text>
+                    </div>
                 </div>
-                <div class="col">
-                    <text label="Nombre de la persona que atiende la llamada telefónica" name="atencionLlamada" [max]="100" [group]="form"></text>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <text-area label="Observaciones/Incidencias" name="observaciones" [group]="form"></text-area>
+                <div class="row">
+                    <div class="col">
+                        <text-area label="Observaciones/Incidencias" name="observaciones" [group]="form"></text-area>
+                    </div>
                 </div>
             </div>
             <div class="row justify-content-end">
