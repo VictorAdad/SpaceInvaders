@@ -10,8 +10,8 @@
 </div>
 <div class="row space justify-content-end">
     <div class="col-md-auto">
-        <search></search>
-    </div>
+        <search (search)="filterPage($event)"></search>
+      </div>
     <div class="col-md-auto">
         <button mat-raised-button color="accent" routerLink="/caso/{{casoId}}/entrevista/create">Agregar entrevista</button>
     </div>

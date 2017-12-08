@@ -1,4 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
+import { BasePaginationComponent } from './../base/pagination/component';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material';
 import { TableService} from '@utils/table/table.service';
@@ -11,7 +12,7 @@ import { Logger } from "@services/logger.service";
 @Component({
     templateUrl:'./component.html',
 })
-export class EntrevistaComponent {
+export class EntrevistaComponent extends BasePaginationComponent implements OnInit{
 
     public columns = [ 'entrevistado', 'calidadEntrevistado', 'fechaCreacion'];
     public dataSource: TableService | null;
@@ -29,7 +30,7 @@ export class EntrevistaComponent {
         private route: ActivatedRoute,
         private http: HttpService,
         private onLine: OnLineService,
-        private db:CIndexedDB) {}
+        private db:CIndexedDB) {super();}
 
 	ngOnInit() {
     	this.route.params.subscribe(params => {
@@ -40,7 +41,7 @@ export class EntrevistaComponent {
                 this.apiUrl=`/v1/base/entrevistas/casos/${this.casoId}/page`;
 
                 if(this.onLine.onLine){
-                    this.page(this.apiUrl);
+                    this.page();
                 }else{
                     this.db.get("casos", this.casoId).then(caso=>{
                         if (caso){
@@ -62,19 +63,40 @@ export class EntrevistaComponent {
 
       }
 
-    public changePage(_e){
-        if(this.onLine.onLine){
-            this.page(this.apiUrl+'?p='+_e.pageIndex+'&tr='+_e.pageSize);
+
+      public changePage(_e){
+        console.log('changePage()', _e);
+        this.dataSource = null;
+        this.pageIndex  = _e.pageIndex;
+        this.pageSize   = _e.pageSize;
+        this.page();
+    }
+
+    public filterPage(_event){
+        if(typeof _event == 'string'){
+            this.dataSource = null;
+            this.pageFilter = _event;
+            this.page();
         }
     }
 
-    public page(url: string){
-        this.http.get(url).subscribe((response) => {
-            this.pag = response.totalCount;
-            this.data = response.data as Entrevista[];
-            Logger.log("Loading armas..");
-            Logger.log(this.data);
-            this.dataSource = new TableService(this.paginator, this.data);
-        });
+      public page(){
+        this.loadList = true;
+        this.http.get(
+            `/v1/base/entrevistas/casos/${this.casoId}/page?f=${this.pageFilter}&p=${this.pageIndex}&tr=${this.pageSize}`
+        ).subscribe(
+            (response) => {
+                this.data = [];
+                this.loadList = false;
+                response.data.forEach(object => {
+                    this.pag = response.totalCount;
+                    this.data.push(object);
+                    this.dataSource = new TableService(this.paginator, this.data);
+                });
+            },
+            (error) => {
+                this.loadList = false
+            }
+        );
     }
 }
