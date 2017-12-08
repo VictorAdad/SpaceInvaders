@@ -76,10 +76,20 @@ export class Options {
         }
     }
 
-    public getLocalidadByMunicipio(idColonia: number){
-        this.http.get('/v1/catalogos/localidad/municipio/'+idColonia+'/options').subscribe((response) => {
-            this.localidad = this.constructOptions(response);
-        });
+    public getLocalidadByMunicipio(idMunicipio: number){
+        if (this.onLine.onLine) {
+            this.http.get('/v1/catalogos/localidad/municipio/'+idMunicipio+'/options').subscribe((response) => {
+                this.localidad = this.constructOptions(response);
+            });
+        }else{
+            this.db.searchInNotMatrx("localidad",{municipio:{id:idMunicipio}}).then(response=>{
+                let localidad={};
+                for(let e in response){
+                    localidad[""+response[e].id]=response[e].nombre
+                }
+                this.localidad=this.constructOptions(localidad);
+            });
+        }
     }
 
     public constructOptions(_data:any){
