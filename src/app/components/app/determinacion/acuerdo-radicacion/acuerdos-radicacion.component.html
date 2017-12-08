@@ -14,8 +14,8 @@
 
 <div class="row space justify-content-end">
     <div class="col-md-auto">
-        <search></search>
-    </div>
+        <search (search)="filterPage($event)"></search>
+      </div>
     <div class="col-md-auto">
         <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/acuerdo-radicacion/create" color="accent">Agregar acuerdo</button>
     </div>
