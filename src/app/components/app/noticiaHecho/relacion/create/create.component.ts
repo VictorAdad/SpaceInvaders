@@ -564,6 +564,9 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 if(this.optionsRelacion.matrizViolenciaGenero.finded[0])
                     _model.violenciaGenero.id = this.optionsRelacion.matrizViolenciaGenero.finded[0].id;
 
+            if (this.optionsRelacion.matrizDesaparicionConsumacion.finded[0])
+                _model["desaparicionConsumacion"]["id"]=this.optionsRelacion.matrizDesaparicionConsumacion.finded[0].id;
+
             Logger.warn(this.optionsRelacion.matrizViolenciaGenero.finded);
             if(this.onLine.onLine){
                 this.http.put('/v1/base/detalle-delitos/'+_model.id, _model).subscribe((response) => {
