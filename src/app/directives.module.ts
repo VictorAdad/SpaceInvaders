@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { SavingDirective } from './directives/saving.directive';
+import { SavingDirective } from './directives/saving/saving.directive';
 
 
 @NgModule()
