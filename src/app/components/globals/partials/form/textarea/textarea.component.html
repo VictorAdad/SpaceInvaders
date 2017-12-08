@@ -6,15 +6,17 @@
 	<mat-form-field class="full-width" [formGroup]="group" *ngIf="name!=''">
 			<textarea
 				#textAreaComponent
-			    rows="8" 
-				matInput 
-				placeholder="{{label}}" 
-				[(ngModel)]="value" 
-				(ngModelChange)="update($event)" 
-				formControlName="{{name}}"  
+        [rows]="rows"
+        [readonly]="readonly"
+				matInput
+				placeholder="{{label}}"
+				[(ngModel)]="value"
+				(ngModelChange)="update($event)"
+				formControlName="{{name}}"
 				name="{{name}}">
 				[min]="min"
-        		[max]="max"
+        [max]="max"
+
 			</textarea>
 			<mat-hint align="start" *ngIf="hintStart">{{hintStart}} </mat-hint>
 		    <mat-hint align="end" *ngIf="hintEnd">{{hintEnd}}</mat-hint>

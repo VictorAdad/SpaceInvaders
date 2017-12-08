@@ -320,13 +320,17 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
 
   ngOnInit() {
       Logger.log('-> Object ', this.object);
-      if(this.object.documentos){
-          this.dataSource = this.source;
-          for (let object of this.object.documentos) {
-              this.data.push(object);
-              this.subject.next(this.data);
-          }
+      if (this.onLine.onLine){
+	      if(this.object.documentos){
+	          this.dataSource = this.source;
+	          for (let object of this.object.documentos) {
+	              this.data.push(object);
+	              this.subject.next(this.data);
+	          }
 
+	      }
+      }else{
+      	this.cargaArchivosOffline(this,"",DocumentoEntrevista);
       }
 
       this.route.params.subscribe(params => {
@@ -345,12 +349,19 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
   }
 
   public cargaArchivos(_archivos){
-    let archivos=_archivos.saved
-      for (let object of archivos) {
-          this.data.push(object);
-          this.subject.next(this.data);
-      }
+  	if (this.onLine.onLine){
+	    let archivos=_archivos.saved
+	      for (let object of archivos) {
+	          this.data.push(object);
+	          this.subject.next(this.data);
+	      }
+  	}else{
+  		this.cargaArchivosOffline(this, "",DocumentoEntrevista);
+  	}
+
   }
+
+  
 
   public setData(_object){
       Logger.log('setData()');
@@ -363,7 +374,7 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
 
 }
 
-export interface DocumentoEntrevista {
+export class DocumentoEntrevista {
 	id: number
 	nameEcm: string;
 	procedimiento: string;

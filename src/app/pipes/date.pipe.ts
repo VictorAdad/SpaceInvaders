@@ -28,3 +28,11 @@ export class InputPipe implements PipeTransform {
 		return moment(date).format('L');
 	}
 }
+
+@Pipe({name : 'longDate'})
+export class LongDate implements PipeTransform {
+	transform(date:Date){
+		moment.locale('es');
+		return moment(date).format('LLL');
+	}
+}

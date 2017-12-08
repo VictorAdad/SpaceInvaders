@@ -10,17 +10,17 @@
 </div>
 <div class="row space justify-content-end">
     <div class="col-md-auto">
-        <search></search>
-    </div>
+        <search (search)="filterPage($event)"></search>
+      </div>
     <div class="col-md-auto">
         <button mat-raised-button *ngIf="haveCaso" color="accent" routerLink="/caso/{{casoId}}/acuerdo-general/create">Agregar solicitud</button>
         <button mat-raised-button *ngIf="!haveCaso" color="accent" routerLink="create">Agregar solicitud</button>
     </div>
 </div>
-<mat-paginator #paginator 
-    [length]="pag" 
-    [pageIndex]="0" 
-    [pageSize]="10" 
+<mat-paginator #paginator
+    [length]="pag"
+    [pageIndex]="0"
+    [pageSize]="10"
     [pageSizeOptions]="[5, 10, 25, 100]"
     (page)="changePage($event)">
 </mat-paginator>

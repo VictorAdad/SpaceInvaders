@@ -92,7 +92,7 @@ export class Select2Component{
    	}
 
    	public closeSelect(){
-   		Logger.log('closeSelect()');
+   		// Logger.log('closeSelect()');
    		this.filteredOptions = this.options;
    	}
 

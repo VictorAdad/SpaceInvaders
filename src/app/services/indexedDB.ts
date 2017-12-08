@@ -161,6 +161,9 @@ export class CIndexedDB {
                 if(obj.init){
                     var indexedDB = window.indexedDB ;
                     var open = indexedDB.open(obj.nameDB, 1);
+                    open.onblocked = function(e){
+                        Logger.logColor("INDEXEDDB BLOQUEDO","red",e);
+                    }
                     open.onsuccess = function() {
                         // Start a new transaction
                         var db    = open.result;
@@ -241,6 +244,7 @@ export class CIndexedDB {
                         };
                     }
                 }else{
+                    reject("Init es false y la bd no esta inicializada");
                     Logger.warn("No se ha creado la tabla: ", _table, " Con la acción: ", _tipo);
                 }
             }
