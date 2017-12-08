@@ -53,13 +53,22 @@ export class RegistroGeneralCreateComponent {
 export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal {
 
 	public apiUrl: string = "/v1/base/solicitudes-pre-registros";
+
 	public casoId: number = null;
+
 	public id: number = null;
-  @Output() modelUpdate=new EventEmitter<any>();
+
+	public tipo: string;
+
 	public form: FormGroup;
+
 	public model: RegistroGeneral;
-	dataSource: TableService | null;
+
+	public dataSource: TableService | null;
+
 	@ViewChild(MatPaginator) paginator: MatPaginator;
+
+	@Output() modelUpdate=new EventEmitter<any>();
 
 	constructor(
 		private _fbuilder: FormBuilder,
@@ -74,6 +83,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 		this.model = new RegistroGeneral();
 
 		this.form = new FormGroup({
+			'tipo': new FormControl(''),
 			'contenidoConstancia': new FormControl(''),
 			'noTelefonico': new FormControl(''),
 			'atencionLlamada': new FormControl(''),
@@ -108,7 +118,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 				this.http.post(this.apiUrl, this.model).subscribe(
 
 					(response) => {
-            Logger.log('registro guardado->',response);
+            			Logger.log('registro guardado->',response);
 						if(this.casoId!=null){
 							this.id=response.id;
 							this.router.navigate(['/caso/' + this.casoId + '/registro-general/' + this.id + '/edit']);
@@ -141,8 +151,15 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 	}
 
 	public fillForm(_data) {
-		this.form.patchValue(_data);
-		Logger.log(_data);
+		let timer = Observable.timer(1);
+		this.form.controls.tipo.setValue(_data.tipo);
+		timer.subscribe(t => {
+			this.form.patchValue(_data);
+		});
+	}
+
+	public tipoChange(_event){
+		this.tipo = _event;
 	}
 
 }
