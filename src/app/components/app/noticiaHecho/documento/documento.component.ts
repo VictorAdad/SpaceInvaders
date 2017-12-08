@@ -18,6 +18,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../global.component';
 import { Logger } from "@services/logger.service";
+import { Yason } from "@services/utils/yason";
 
 
 @Component({
@@ -80,16 +81,7 @@ export class DocumentoComponent extends FormatosGlobal{
       });
 
   }
-  //convierte un archivo a blob
-  dataURItoBlob(dataURI, type) {
-    var binary = atob(dataURI);
-    var array = [];
-    for(var i = 0; i < binary.length; i++) {
-        array.push(binary.charCodeAt(i));
-    }
-    return new Blob([new Uint8Array(array)], {type: type});
-  }
-
+  
   cargaArchivosOffline(){
       this.db.list("documentos").then(archivos=>{
         var lista=archivos as any[];
@@ -123,7 +115,7 @@ export class DocumentoComponent extends FormatosGlobal{
     Logger.log(row);
     if (!this.onLine.onLine){
       this.db.get("blobs",row.blob).then(t=>{
-        var b=this.dataURItoBlob(t["blob"].split(',')[1], row.contentType );
+        var b=Yason.dataURItoBlob(t["blob"].split(',')[1], row.contentType );
         var a = document.createElement('a');
         a.download = row.nameEcm;
         a.href=window.URL.createObjectURL( b );;

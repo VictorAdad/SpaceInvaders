@@ -21,4 +21,20 @@ export class Yason {
         }else
             return original;
     }
+
+    
+    /*
+        convierte un dataURl a blob
+        esto sirve cuando se combierte un archivo a dataUrl y  despues se quiere regresar a la normalidad
+        recordar que un file hereda de blob.
+    */
+    public static dataURItoBlob(dataURI, type) {
+        var binary = atob(dataURI);
+        var array = [];
+        for(var i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], {type: type});
+    }
+
 }

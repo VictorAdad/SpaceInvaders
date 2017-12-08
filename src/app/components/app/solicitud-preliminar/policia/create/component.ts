@@ -235,13 +235,19 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
 
   ngOnInit() {
       Logger.log('-> Object ', this.object);
-      if(this.object.documentos){
-          this.dataSource = this.source;
-          for (let object of this.object.documentos) {
-              this.data.push(object);
-              this.subject.next(this.data);
-          }
+      if (this.onLine.onLine){
 
+	      if(this.object.documentos){
+	          this.dataSource = this.source;
+	          for (let object of this.object.documentos) {
+	              this.data.push(object);
+	              this.subject.next(this.data);
+	          }
+
+	      }
+
+      }else{
+      	this.cargaArchivosOffline(this,"",DocumentoPolicia);
       }
 
       this.route.params.subscribe(params => {
@@ -266,16 +272,20 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
   }
 
   public setData(_object){
+  	if (this.onLine.onLine){
       Logger.log('setData()');
       this.data.push(_object);
       this.subject.next(this.data);
+    }else{
+      	this.cargaArchivosOffline(this,"",DocumentoPolicia);
+    }
   }
   public updateDataFormatos(_object){
     this.formatos.formatos.setDataF1011(_object,this.id);
   }
 }
 
-export interface DocumentoPolicia {
+export class DocumentoPolicia {
 	id: number
 	nameEcm: string;
 	procedimiento: string;

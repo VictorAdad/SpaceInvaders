@@ -316,13 +316,17 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
 
   ngOnInit() {
       Logger.log('-> Data source ', this.object);
-      if(this.object.documentos){
-          this.dataSource = this.source;
-          for (let object of this.object.documentos) {
-              this.data.push(object);
-              this.subject.next(this.data);
-          }
+      if (this.onLine.onLine){
+	      if(this.object.documentos){
+	          this.dataSource = this.source;
+	          for (let object of this.object.documentos) {
+	              this.data.push(object);
+	              this.subject.next(this.data);
+	          }
 
+	      }
+      }else{
+      	this.cargaArchivosOffline(this,"",DocumentoPerito);
       }
 
       this.route.params.subscribe(params => {
@@ -341,11 +345,15 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
   }
 
   public cargaArchivos(_archivos){
-    let archivos=_archivos.saved
-      for (let object of archivos) {
-          this.data.push(object);
-          this.subject.next(this.data);
-      }
+  	if (this.onLine.onLine){
+	    let archivos=_archivos.saved
+	      for (let object of archivos) {
+	          this.data.push(object);
+	          this.subject.next(this.data);
+	      }
+	}else{
+		this.cargaArchivosOffline(this,"",DocumentoPerito);
+	}
   }
 
   public setData(_object){
@@ -363,7 +371,7 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
 
 
 }
-export interface DocumentoPerito {
+export class DocumentoPerito {
 	id: number
 	nameEcm: string;
 	procedimiento: string;
