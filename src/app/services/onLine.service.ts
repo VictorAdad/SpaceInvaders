@@ -70,7 +70,6 @@ export class OnLineService {
             this.timerSincronizarMatrices.subscribe(t=>{
                 if (this.onLine)
                     this.sincronizarCatalogos.searchChange();
-                localStorage.setItem('sincronizacion', 'true')
             });
         // else
         //     Logger.log('Ya existen catalogos sincroinzados');
@@ -98,6 +97,9 @@ export class OnLineService {
                     this.sincronizando=false;
                     this.notificationService.remove();
                 }
+            }).catch(error=>{
+                this.sincronizando=false;
+                this.notificationService.remove();
             });
         }
 

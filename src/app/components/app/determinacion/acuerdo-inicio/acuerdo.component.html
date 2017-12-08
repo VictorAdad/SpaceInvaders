@@ -2,7 +2,7 @@
     <h4>Aceptación de remisión a UMASC</h4>
     <text label="Nombre de la persona que acepta asistir a la unidad de medios alternativos" name="nombrePersonaAcepta" [max]="150" [group]="form"></text>
     <h4>Acuerdo de inicio</h4>
-    <select2 [options]="options.presentoLlamada" placeholder="Presentó o recibió llamada" [group]="form" name="presentoLlamada" ></select2>
+    <select2 [options]="options.presentoLlamada" placeholder="Presentó o recibió llamada" [group]="form.controls.presentoLlamada" name="id" ></select2>
     <text-area label="Manifestó" name="manifesto"  [group]="form"></text-area>
     <text-area label="Síntesis de los hechos" name="sintesisHechos" [group]="form"></text-area>
     <text-area label="Observaciones/incidencias" name="observaciones" [group]="form"></text-area>

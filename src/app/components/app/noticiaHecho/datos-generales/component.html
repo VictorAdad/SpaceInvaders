@@ -14,7 +14,7 @@
 					<button mat-raised-button color="accent" (click)="openDialog()" [disabled]="hasId() ? true : false">Agregar delitos</button>
 				</div>
 			</div>
-			<text name="delito" class="delito-principal-input" hintStart="Campo obligatorio" [readonly]="true" [max]="5000" [group]="form"> </text>
+			<text-area  name="delito"  class="delito-principal-input" hintStart="Campo obligatorio" [rows]="4" [readonly]="true" [group]="form"> </text-area>
 
 
       <div class="row justify-content-end">
