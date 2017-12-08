@@ -10,6 +10,7 @@ import { OnLineService } from '@services/onLine.service';
 import { FormatosService } from '@services/formatos/formatos.service';
 import { Observable } from 'rxjs/Observable';
 import { Logger } from "@services/logger.service";
+import { Yason } from "@services/utils/yason";
 
 export class FormatosGlobal{
 	public confirmation_settings:ConfirmSettings={
@@ -154,6 +155,53 @@ export class FormatosGlobal{
 
     }
 
+    cargaArchivosOffline(object,procedimiento,ClassDocument){
+      object.db.list("documentos").then(archivos=>{
+        var lista=archivos as any[];
+        Logger.logColor("------->","pink",lista, object);
+        console.log(lista);
+        object.data=[];
+        object.dataSource = object.source;
+        for (var i = 0; i < lista.length; ++i) {
+
+          if (object.caso && lista[i]["casoId"]==object.caso.id && lista[i]["vista"]==object.vista){
+            var obj=new ClassDocument();
+            obj.id=lista[i]["id"];
+            obj.nameEcm=lista[i]["nombre"];
+            obj.procedimiento=procedimiento;
+            obj.created=lista[i]["fecha"];
+            obj["blob"]=lista[i]["idBlob"];
+            obj["contentType"]=lista[i]["type"];
+            object.data.push(obj);
+            object.subject.next(object.data);
+          }
+        }
+        Logger.logColor("------->","red",object.data);
+      });
+    }
+
+    download(obj,row){
+    Logger.logColor("Descargar","red",obj,row);
+    if (!obj.onLine.onLine){
+      Logger.logColor("0","red");
+      obj.db.get("blobs",row.blob).then(t=>{
+        Logger.logColor("1","red");
+        var b=Yason.dataURItoBlob(t["blob"].split(',')[1], row.contentType );
+        var a = document.createElement('a');
+        a.download = row.nameEcm;
+        a.href=window.URL.createObjectURL( b );
+        a.onclick=function(e){
+            Logger.log("Descargo archivo");
+            document.body.removeChild(a);
+        }
+        a.target="_blank";
+        document.body.appendChild(a);
+        a.click();
+        Logger.logColor("------>","pink",b, a);
+      });
+    }
+  }
+
 
 }
 
@@ -238,10 +286,10 @@ export class SolPreDocComponent {
     }
 
     guardarOffLine(i:number,listaArchivos:any[],casoId,_data){
-        //falta definir el guardado en la tabla de sincronizar
         var obj=this;
         if (i==listaArchivos.length){
             //this.close();
+            Logger.logColor("documentos offline","cyan");
             this.db.add("sincronizar",_data).then(p=>{
                 this.globalService.openSnackBar("Se guardo con éxito")
             });

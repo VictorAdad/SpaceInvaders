@@ -47,13 +47,23 @@
     <ng-container matColumnDef="procedimiento">
         <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
         <mat-cell *matCellDef="let element">
-            <button 
-                mat-raised-button
-                color="accent"
-                [disabled]="documentos[element.id] ? !documentos[element.id]['validate'] : false"
-                (click)="downloadFile(element, element.contentType)">
-                {{ documentos[element.id] ? !documentos[element.id]['validate'] ? 'Generando PDF...': 'Desacargar' : 'Descargar' }}
-            </button>
+            <div *ngIf="!element['blob']">
+                <button 
+                    mat-raised-button
+                    color="accent"
+                    [disabled]="documentos[element.id] ? !documentos[element.id]['validate'] : false"
+                    (click)="downloadFile(element, element.contentType)">
+                    {{ documentos[element.id] ? !documentos[element.id]['validate'] ? 'Generando PDF...': 'Desacargar' : 'Descargar' }}
+                </button>
+            </div>
+            <div *ngIf="element['blob']">
+                <button 
+                    mat-raised-button
+                    color="accent"
+                    [disabled]="documentos[element.id] ? !documentos[element.id]['validate'] : false"
+                    (click)="download(this,element)">Descargar
+                </button>
+            </div>
         </mat-cell>
     </ng-container>
 
