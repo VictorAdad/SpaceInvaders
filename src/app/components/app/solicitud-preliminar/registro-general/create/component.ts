@@ -26,9 +26,10 @@ export class RegistroGeneralCreateComponent {
 
 	public casoId: number = null;
 	public breadcrumb = [];
-  public solicitudId: number = null;
-  public model:any=null;
+	public solicitudId: number = null;
+	public model:any=null;
 	constructor(private route: ActivatedRoute) { }
+	
 	ngOnInit() {
 		this.route.params.subscribe(params => {
 			if (params['casoId']) {
@@ -38,11 +39,12 @@ export class RegistroGeneralCreateComponent {
 			}
 		});
 	}
-  modelUpdate(model: any) {
-    this.solicitudId= model.id;
-    this.model=model
-  Logger.log(model);
-  }
+
+	modelUpdate(model: any) {
+		this.solicitudId = model.id;
+		this.model = model;
+		// Logger.log(model);
+	}
 
 }
 
@@ -94,6 +96,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 			if (params['casoId'])
 				this.casoId = +params['casoId'];
 			Logger.log('casoId', this.casoId);
+
 			if (params['id']) {
 				this.id = +params['id'];
 				Logger.log('id', this.id);
@@ -169,17 +172,18 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 	templateUrl: './documento.component.html',
 })
 export class DocumentoRegistroGeneralComponent  extends FormatosGlobal{
-  @Input() id:number=null;
-  displayedColumns = ['nombre', 'fechaCreacion', 'acciones'];
-  @Input()
-  object: any;
+
+	@Input() id:number=null;
+	displayedColumns = ['nombre', 'fechaCreacion', 'acciones'];
+	@Input()
+	object: any;
 	dataSource: TableDataSource | null;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  public data: DocumentoRegistroGeneral[] = [];
-  public subject:BehaviorSubject<DocumentoRegistroGeneral[]> = new BehaviorSubject<DocumentoRegistroGeneral[]>([]);
-  public source:TableDataSource = new TableDataSource(this.subject);
-  public formData:FormData = new FormData();
-  public urlUpload: string;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
+	public data: DocumentoRegistroGeneral[] = [];
+	public subject:BehaviorSubject<DocumentoRegistroGeneral[]> = new BehaviorSubject<DocumentoRegistroGeneral[]>([]);
+	public source:TableDataSource = new TableDataSource(this.subject);
+	public formData:FormData = new FormData();
+	public urlUpload: string;
 
   constructor(
       public http: HttpService,
@@ -191,25 +195,25 @@ export class DocumentoRegistroGeneralComponent  extends FormatosGlobal{
       super(http, confirmationService, globalService, dialog);
   }
 
-  ngOnInit() {
-      Logger.log('-> Object ', this.object);
-      if(this.object.documentos){
-          this.dataSource = this.source;
-          for (let object of this.object.documentos) {
-              this.data.push(object);
-              this.subject.next(this.data);
-          }
+	ngOnInit() {
+		Logger.log('-> Object ', this.object);
+		if(this.object.documentos){
+			this.dataSource = this.source;
+			for (let object of this.object.documentos) {
+				this.data.push(object);
+				this.subject.next(this.data);
+			}
 
-      }
+		}
 
-      this.route.params.subscribe(params => {
-          if (params['casoId'])
-              this.urlUpload = '/v1/documentos/solicitudes-pre-registros/save/'+params['casoId'];
+		this.route.params.subscribe(params => {
+			if (params['casoId'])
+ 				this.urlUpload = '/v1/documentos/solicitudes-pre-registros/save/'+params['casoId'];
 
-      });
+		});
 
-      this.formData.append('solicitudPreRegistro.id', this.id.toString());
-  }
+      	this.formData.append('solicitudPreRegistro.id', this.id.toString());
+	}
 
   public cargaArchivos(_archivos){
     let archivos=_archivos.saved
@@ -218,6 +222,7 @@ export class DocumentoRegistroGeneralComponent  extends FormatosGlobal{
           this.subject.next(this.data);
       }
   }
+
   public setData(_object){
       Logger.log('setData()');
       this.data.push(_object);
