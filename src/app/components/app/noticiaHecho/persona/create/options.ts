@@ -69,9 +69,9 @@ export class Options {
             this.db.searchInNotMatrx("colonia",{municipio:{id:idMunicipio}}).then(response=>{
                 let colonias={};
                 for(let e in response){
-                    colonias[""+response[e].id]=response[e].nombre
+                    colonias[""+response[e].id+"-"+response[e].cp]=response[e].nombre
                 }
-                this.colonias=this.constructOptions(colonias);
+                this.colonias=this.constructOptionsColonia(colonias);
             });
         }
     }
@@ -90,6 +90,24 @@ export class Options {
                 this.localidad=this.constructOptions(localidad);
             });
         }
+    }
+
+    public constructOptionsColonia(_data:any){
+        let options: MOption[] = [];
+
+        for (var key in _data) {
+            options.push({value: key, label: _data[key]});
+        }
+
+        options.sort((a,b)=>{
+            if (a.label>b.label) 
+                return 1; 
+            if (a.label<b.label)
+                return -1;
+            return 0;
+        });
+
+        return options;
     }
 
     public constructOptions(_data:any){

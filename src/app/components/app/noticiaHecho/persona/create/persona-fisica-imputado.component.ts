@@ -280,7 +280,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         if((_data.localizacionPersona[i])['colonia'] != null)
                             formLoc.patchValue({
                                 'colonia':{
-                                    'id': (_data.localizacionPersona[i])['colonia']['id']
+                                    'id': (_data.localizacionPersona[i])['colonia']['id'],
+                                    'idCp':(_data.localizacionPersona[i])['colonia']['id']+"-"+(_data.localizacionPersona[i])['colonia']['cp']
                                 }
                             });
 
@@ -1305,6 +1306,8 @@ export class LosForm{
             }),
             'colonia': new FormGroup({
                 'id': new FormControl(),
+                //campo auxiliar para administrar el id-cp
+                'idCp': new FormControl(),
             }),
             'localidad': new FormGroup({
                 'id': new FormControl(),
