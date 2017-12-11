@@ -233,7 +233,7 @@ export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
     @Input() tipo:string=null;
     @Input() id:number=null;
     tipo_options={
-      'Acuerdo General':[{'label':'ACUERDO GENERAL','value':'F1_006'}],
+      'Acuerdo General':[{'label':'ACUERDO GENERAL','value':'F1_006'},{'label':'ACUERDO GENERAL SIN APERCIBIMIENTO','value':'F1_019'}],
       'Asignación de asesor jurídico':[{'label':'SOLICITUD DE ASESOR JURIDICO','value':'F1_002'}],
       'Ayuda y atención a víctimas':[{'label':'OFICIO PARA AYUDA Y ATENCIÓN A VÍCTIMA','value':'F1_001'}]
     }
