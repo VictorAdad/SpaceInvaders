@@ -5,40 +5,9 @@
             <select2 [options]="
                 [
                      {label:'Asignación de asesor jurídico',value:'Asignación de asesor jurídico'},
-                     {label:'Ayuda y atención a víctimas',value:'Ayuda y atención a víctimas'},
-                     {label:'Acuerdo general',value:'Acuerdo General'}
+                     {label:'Ayuda y atención a víctimas',value:'Ayuda y atención a víctimas'}
                 ]" placeholder="Tipo de solicitud" (valueChange)="tipoChange($event)" [group]="form" name="tipo">
             </select2>
-            <div *ngIf="isAcuerdoGral">
-                <h4>Fundamento legal</h4>
-                <div class="row">
-                    <div class="col">
-                        <text label="Fundamento legal" name="fundamentoLegal" [group]="form"></text>
-                    </div>
-                    <div class="col">
-                        <text label="Contenido del acuerdo" name="contenidoAcuerdo" [max]="100" [group]="form"></text>
-                    </div>
-                    <div class="col">
-                        <text label="Con la finalidad de" name="finalidad" [max]="100" [group]="form"></text>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <text label="Plazo en el que debe ser complementado" name="plazo" [max]="100" [group]="form"></text>
-                    </div>
-                    <div class="col">
-                        <text label="Apercibimientos" name="apercibimiento" [max]="100" [group]="form"></text>
-                    </div>
-                    <div class="col">
-                        <text label="Señalar que se solicita" name="senialar" [max]="100" [group]="form"></text>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <text-area label="Observaciones/Incidencias" name="observaciones" [group]="form"></text-area>
-                    </div>
-                </div>
-            </div>
             <div *ngIf="isJuridico">
                 <h4>Oficio de asignación de asesor jurídico</h4>
                 <div class="row">

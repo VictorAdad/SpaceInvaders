@@ -89,7 +89,14 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 			'contenidoConstancia': new FormControl(''),
 			'noTelefonico': new FormControl(''),
 			'atencionLlamada': new FormControl(''),
-			'observaciones': new FormControl('')
+			'observaciones': new FormControl(''),
+
+			'fundamentoLegal': new FormControl(''),
+			'contenidoAcuerdo': new FormControl(''),
+			'finalidad': new FormControl(''),
+			'plazo': new FormControl(''),
+			'apercibimiento': new FormControl(''),
+			'senialar': new FormControl(''),
 		});
 
 		this.route.params.subscribe(params => {
