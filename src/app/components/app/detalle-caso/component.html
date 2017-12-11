@@ -130,7 +130,7 @@
                     </div>
                     <div class="col-md-4 text-right">
                         <strong>Fecha y hora de los hechos</strong>
-                        <p>{{detalleFecha | longDate}}</p>
+                        <p *ngIf="caso.hasPredenuncia">({{detalleFecha | longDate}})</p>
                     </div>
                 </div>
                 <mat-divider></mat-divider>
