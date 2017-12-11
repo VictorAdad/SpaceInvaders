@@ -116,7 +116,7 @@
             <mat-card-content>
              <div class="d-flex justify-content-between">
                     <div class="row">
-                        <h2>Detalle pre denuncia <small  *ngIf="caso.hasPredenuncia">(NIC: {{caso.nic}})</small></h2>
+                        <h2>Detalle pre denuncia <small  *ngIf="caso.hasPredenuncia || hasPredenuncia">(NIC: {{caso.nic}})</small></h2>
                     </div>
                     <div>
                         <mat-icon>more_vert</mat-icon>
