@@ -16,7 +16,9 @@ export class CasoService{
 		private db: CIndexedDB,
 		private http: HttpService,
 		private onLine: OnLineService
-		) {}
+		) {
+		onLine.setCaso(this);
+	}
 
 
 	public find(_id){
