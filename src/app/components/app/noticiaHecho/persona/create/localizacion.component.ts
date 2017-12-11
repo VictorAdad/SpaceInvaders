@@ -133,21 +133,37 @@ export class LocalizacionFormComponent{
        }
     }
 
-    public changeEstado(id){
-        if(id!=null && typeof id !='undefined')
-        this.options.getMunicipiosByEstado(id);
+    private cleanSelects(i,municipio){
+        if (municipio)
+            this.globals.form.controls.localizacionPersona["controls"][i].controls.municipio.reset();
+        this.globals.form.controls.localizacionPersona["controls"][i].controls.colonia.reset();
+        this.globals.form.controls.localizacionPersona["controls"][i].controls.localidad.reset();
+        this.globals.form.controls.localizacionPersona["controls"][i].controls.cp.reset();
     }
 
-    public changeMunicipio(id){
+    public changeEstado(id,i){
+        if(id!=null && typeof id !='undefined'){
+            this.options.getMunicipiosByEstado(id);
+            
+        }
+        this.cleanSelects(i,true);
+    }
+
+    public changeMunicipio(id,i){
         if(id!=null && typeof id !='undefined'){
             this.options.getColoniasByMunicipio(id);
             this.options.getLocalidadByMunicipio(id);
         }
+        this.cleanSelects(i,false);
     }
 
-    public changeColonia(id){
-        // if(id!=null && typeof id !='undefined')
-        //     this.options.getLocalidadByColonias(id);
+    public changeColonia(i,idCp){
+        if (idCp){
+            let arr = idCp.split("-");
+            this.globals.form.controls.localizacionPersona["controls"][i].controls.cp.patchValue(arr[1]);
+            this.globals.form.controls.localizacionPersona["controls"][i].controls.colonia.patchValue({id:arr[0]});
+        }
+
     }
 
     changeTipoResida(value,i){

@@ -2,9 +2,16 @@
 	<div class="col-md-2">
 		<select2
     placeholder= "Formatos"
+    *ngIf="object.tipo === 'Registro general'"
     (valueChange)="changeFormat($event, object.id)" 
     [options]="[
-        {label:'REGISTRO DE DERIVACION A LA UNIDAD DE MECANISMOS ALTERNATIVOS',value:'F2_117'},
+        {label:'REGISTRO DE DERIVACION A LA UNIDAD DE MECANISMOS ALTERNATIVOS',value:'F2_117'}
+    ]"></select2>
+    <select2
+    placeholder= "Formatos"
+    *ngIf="object.tipo === 'Registro de llamada'"
+    (valueChange)="changeFormat($event, object.id)" 
+    [options]="[
         {label:'REGISTRO PARA PERMITIR AL IMPUTADO COMUNICARSE CON SU DEFENSOR O FAMILIAR',value:'F2_063'}
     ]"></select2>
 	</div>
