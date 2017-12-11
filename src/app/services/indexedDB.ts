@@ -388,7 +388,8 @@ export class CIndexedDB {
             if((typeof e)=="object"){
                 let igual=true;
                 for (var element in e){
-                    igual=igual&&rec(e[element],y[element]);
+                    if (y[element])
+                        igual=igual&&rec(e[element],y[element]);
                 }
                 return igual;
             }
