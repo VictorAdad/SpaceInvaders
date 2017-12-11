@@ -3,6 +3,7 @@ import { HttpService } from '@services/http.service';
 import { MOption } from '@partials/form/select2/select2.component'
 import { OnLineService} from '@services/onLine.service';
 import { CIndexedDB } from '@services/indexedDB';
+import { Logger } from "@services/logger.service";
 
 @Injectable()
 export class SelectsService {
@@ -337,7 +338,7 @@ export class SelectsService {
             this.db.searchInNotMatrx("colonia",{municipio:{id:idMunicipio}}).then(response=>{
                 let colonias={};
                 for(let e in response){
-                    colonias[""+response[e].id]=response[e].nombre
+                    colonias[""+response[e].id+"-"+response[e].cp]=response[e].nombre
                 }
                 this.colonias=this.constructOptions(colonias);
             });

@@ -1,4 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
+import { BasePaginationComponent } from './../../base/pagination/component';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
@@ -11,7 +12,7 @@ import { Logger } from "@services/logger.service";
 @Component({
 	templateUrl: './component.html',
 })
-export class ArchivoTemporalComponent {
+export class ArchivoTemporalComponent extends BasePaginationComponent implements OnInit{
 	public breadcrumb = [];
 	public apiUrl = '/v1/base/archivos-temporales';
 	columns = ['fechaCreacion'];
@@ -23,7 +24,7 @@ export class ArchivoTemporalComponent {
 	paginator: MatPaginator;
 	public pag: number = 0;
 
-	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db: CIndexedDB) { }
+	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db: CIndexedDB) { super();}
 
 	ngOnInit() {
 		this.route.params.subscribe(params => {
@@ -31,29 +32,46 @@ export class ArchivoTemporalComponent {
 				this.haveCaso = true;
 				this.casoId = +params['casoId'];
 				this.breadcrumb.push({ path: `/caso/${this.casoId}/detalle`, label: "Detalle de caso" });
-				this.page('/v1/base/archivos-temporales/casos/'+this.casoId+'/page');
+				this.page();
 			}
 
 		});
 	}
 
-	public changePage(_e) {
-        this.page('/v1/base/archivos-temporales/casos/' + this.casoId + '/page?p=' + _e.pageIndex + '&tr=' + _e.pageSize);
+
+  public changePage(_e){
+    console.log('changePage()', _e);
+    this.dataSource = null;
+    this.pageIndex  = _e.pageIndex;
+    this.pageSize   = _e.pageSize;
+    this.page();
+}
+
+public filterPage(_event){
+    if(typeof _event == 'string'){
+        this.dataSource = null;
+        this.pageFilter = _event;
+        this.page();
     }
+}
 
-    public page(url: string) {
-        this.data = [];
-        this.http.get(url).subscribe((response) => {
-            //Logger.log('Paginator response', response.data);
-
+  public page(){
+    this.loadList = true;
+    this.http.get(
+        `/v1/base/archivos-temporales/casos/${this.casoId}/page?f=${this.pageFilter}&p=${this.pageIndex}&tr=${this.pageSize}`
+    ).subscribe(
+        (response) => {
+            this.data = [];
+            this.loadList = false;
             response.data.forEach(object => {
                 this.pag = response.totalCount;
-                //Logger.log("Respuestadelitos", response["data"]);
-                this.data.push(Object.assign(new ArchivoTemporal(), object));
-                //response["data"].push(Object.assign(new Caso(), object));
+                this.data.push(object);
                 this.dataSource = new TableService(this.paginator, this.data);
             });
-            Logger.log('Datos finales', this.dataSource);
-        });
-    }
+        },
+        (error) => {
+            this.loadList = false
+        }
+    );
+}
 }

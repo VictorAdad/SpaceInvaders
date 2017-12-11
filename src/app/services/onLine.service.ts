@@ -29,6 +29,7 @@ export class OnLineService {
     seActualizoAlmenosUnRegistro:boolean;
 
     sincronizarCatalogos:SincronizaCatalogos;
+    private casoService=null;
 
     public settings={
         overlayClickToClose: false, // Default: true
@@ -75,6 +76,10 @@ export class OnLineService {
         //     Logger.log('Ya existen catalogos sincroinzados');
     }
 
+    setCaso(casoService){
+        this.casoService=casoService;
+    }
+
     startSincronizacion(){
 
         if (!this.sincronizando){
@@ -116,6 +121,7 @@ export class OnLineService {
                 //     let newUrl=this.router.url.replace("noticia-hecho", "detalle");
                 //     this.router.navigate([newUrl]);
                 // }
+                this.casoService.actualizaCaso();
                 if (this.route["url"]){
                     var elementos=this.route["url"].split("/");
                     var url=this.route["url"];

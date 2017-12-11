@@ -71,7 +71,9 @@ export class DetalleCasoComponent implements OnInit{
                 Logger.log(this.predenuncia)
             });  */
             this.http.get('/v1/base/casos/'+this.id+'/all').subscribe((response) =>{
-            	this.detalleFecha = response.predenuncias.created ;
+            	if (response.predenuncias) {
+            		this.detalleFecha = response.predenuncias.created;            		
+            	}
             	this.involucrados = response.personaCasos as Persona[];
             	this.delitos = response.delitoCaso as DelitoCaso[];
             
