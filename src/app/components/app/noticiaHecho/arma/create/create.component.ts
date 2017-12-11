@@ -89,13 +89,6 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                         let armas=t["armas"] as any[];
                         for (var i = 0; i < armas.length; ++i) {
                             if ((armas[i])["id"]==this.id){
-                                var arma=armas[i];
-                                (arma["claseArma"])["claseArma"]=arma["clase"];
-                                if (arma["subtipo"])
-                                    (arma["claseArma"])["subtipo"]=arma["subtipo"];
-                                if (arma["tipo"])
-                                    (arma["claseArma"])["tipo"]=arma["tipo"];
-
                                 this.fillForm(armas[i]);
                                 break;
                             }
