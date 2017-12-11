@@ -22,7 +22,9 @@ export class Select2Component{
 	@Input() hintEnd: string="";
 	@Input() search: boolean = true;
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<string>();
-	@ViewChild('searchInput') searchInput;
+  @Output() haveclosed:EventEmitter<string> = new EventEmitter<string>();
+
+  @ViewChild('searchInput') searchInput;
 
 	public searchControl: FormControl = new FormControl();
 	public filteredOptions: MOption[];
@@ -50,7 +52,10 @@ export class Select2Component{
 	//TODO: Falta ver como sincronizar los cambios los radio.
 	public update(value) {
 		this.valueChange.emit(value);
-	}
+  }
+  public onSelected(value){
+    this.valueChange.emit(value);
+  }
 
 	public filter(val: any) {
 		// Logger.log('Select@filter()', val);
@@ -60,7 +65,7 @@ export class Select2Component{
   			option => {
   				let optNormal = option.label.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "")
   				return (optNormal.indexOf(valNormal) === 0 || optNormal.includes(valNormal));
-			} 
+			}
 		);
    	}
 
@@ -68,7 +73,7 @@ export class Select2Component{
    		if(this.search){
    			// Logger.log(this.options)
    			let timer = Observable.timer(1,1000);
-   			let subs = timer.subscribe( 
+   			let subs = timer.subscribe(
    				t =>{
    					if(this.options)
 							if(this.options.length > 0){

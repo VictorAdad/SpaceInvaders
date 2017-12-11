@@ -15,7 +15,7 @@
                         placeholder="Estado"
                         name="id"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.estado"
-                        (valueChange)="changeEstado($event)">
+                        (valueChange)="changeEstado($event,indexForm)">
                     </select2>
                 </div>
                 <div class="col-md-3" *ngIf="isMexico">
@@ -23,15 +23,15 @@
                         placeholder="Municipio/Delegación"
                         name="id"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.municipio"
-                        (valueChange)="changeMunicipio($event)">
+                        (valueChange)="changeMunicipio($event,indexForm)">
                     </select2>
                 </div>
                 <div class="col-md-3" *ngIf="isMexico">
                     <select2 [options]="options.colonias"
                         placeholder="Colonia/Asentamiento"
-                        name="id"
+                        name="idCp"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.colonia"
-                        (valueChange)="changeColonia($event)">
+                        (valueChange)="changeColonia(indexForm,$event)">
                     </select2>
                 </div>
                 <div class="col-md-3" *ngIf="isMexico">
