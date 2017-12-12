@@ -3,14 +3,45 @@
         <form>
             <select2 [options]="
                 [
-                     {label:'Registro general', value:'Registro general'},
-                     {label:'Registro de llamada para permitir al imputado comunicarse con su defensor',value:'Registro de llamada'}
+                    {label:'Acuerdo general',value:'Acuerdo general'},
+                    {label:'Registro general', value:'Registro general'},
+                    {label:'Registro de llamada para permitir al imputado comunicarse con su defensor',value:'Registro de llamada'}
                 ]"
                 placeholder="Tipo de solicitud"
                 (valueChange)="tipoChange($event)"
                 [group]="form"
                 name="tipo">
             </select2>
+            <div *ngIf="tipo === 'Acuerdo general'">
+                <h4>Fundamento legal</h4>
+                <div class="row">
+                    <div class="col">
+                        <text label="Fundamento legal" name="fundamentoLegal" [group]="form"></text>
+                    </div>
+                    <div class="col">
+                        <text label="Contenido del acuerdo" name="contenidoAcuerdo" [max]="100" [group]="form"></text>
+                    </div>
+                    <div class="col">
+                        <text label="Con la finalidad de" name="finalidad" [max]="100" [group]="form"></text>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <text label="Plazo en el que debe ser complementado" name="plazo" [max]="100" [group]="form"></text>
+                    </div>
+                    <div class="col">
+                        <text label="Apercibimientos" name="apercibimiento" [max]="100" [group]="form"></text>
+                    </div>
+                    <div class="col">
+                        <text label="Señalar que se solicita" name="senialar" [max]="100" [group]="form"></text>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <text-area label="Observaciones/Incidencias" name="observaciones" [group]="form"></text-area>
+                    </div>
+                </div>
+            </div>
             <div *ngIf="tipo=='Registro general'">
                 <div class="row">
                     <div class="col-md-12">
