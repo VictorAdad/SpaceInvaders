@@ -88,7 +88,7 @@
             <div class="fa fa-angle-left prev" (click)="generateYearList('prev')">
                 <mat-icon>navigate_before</mat-icon>
             </div>
-            <div class="fa fa-angle-right next" (click)="generateYearList('next')" *ngIf="validateDays == ''">
+            <div class="fa fa-angle-right next" (click)="generateYearList('next')" >
                 <mat-icon>navigate_next</mat-icon>
             </div>
             <div class="years-list-view" (click)="setYear($event)">
