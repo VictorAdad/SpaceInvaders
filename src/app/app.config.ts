@@ -22,6 +22,8 @@ export var _config = {
 			victima: 8,
 			defensorPrivado: 9,
 			policia: 10,
+			imputadoDesconocido: 21,
+			victimaDesconocida: 22
 		}
 	},
 	manuales: {
