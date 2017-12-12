@@ -168,7 +168,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                 'id': new FormControl("",[Validators.required,]),
             }),
             'colonia': new FormGroup({
-                'id': new FormControl("",[Validators.required,]),
+                'id': new FormControl("",[]),
+                'idCp': new FormControl("",[Validators.required,]),
             }),
             'caso': new FormGroup({
                 'id': new FormControl("",[]),
@@ -176,12 +177,40 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         });
     }
 
+    public addNombres(_model){
+        if (this.optionsServ.colonias){
+            for (var i = 0; i < this.optionsServ.colonias.length; ++i) {
+                if (this.optionsServ.colonias[i]["value"].split("-")[0].indexOf(_model["colonia"]["id"]) ){
+                    _model["colonia"]["nombre"]=this.optionsServ.colonias[i]["label"];
+                    _model["colonia"]["cp"]=this.optionsServ.colonias[i]["value"].split("-")[1];
+                    break;
+                }
+            }
+        }
+        if (this.optionsServ.municipios){
+            for (var i = 0; i < this.optionsServ.municipios.length; ++i) {
+                if (this.optionsServ.municipios[i]["value"]==_model["municipio"]["id"] ){
+                    _model["municipio"]["nombre"]=this.optionsServ.municipios[i]["label"];
+                    break;
+                }
+            }
+        }
+        if (this.optionsServ.estados){
+            for (var i = 0; i < this.optionsServ.estados.length; ++i) {
+                if (this.optionsServ.estados[i]["value"]==_model["estado"]["id"] ){
+                    _model["estado"]["nombre"]=this.optionsServ.estados[i]["label"];
+                    break;
+                }
+            }
+        }
+    }
+
     public save(_valid : any, _model : any){
         return new Promise<any>((resolve, reject)=>{
             _model.caso.id      = this.casoId;
             _model.latitud      = this.latMarker;
             _model.longitud     = this.lngMarker;
-            console.log('lo que envio: '+   _model.fecha);
+            Logger.log('lo que envio: '+   _model.fecha);
 
             if(_model.fecha){
               var hora=_model.hora
@@ -190,18 +219,19 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
               fechaCompleta.setHours(parseInt(hora.split(':')[0]));
               var mes:number=fechaCompleta.getMonth()+1;
               _model.fecha =fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
-              console.log('lo que envio: '+   _model.fecha);
+              Logger.log('lo que envio: '+   _model.fecha);
             }
             if(this.lugarServ.finded.length > 0){
                 _model.detalleLugar.id = this.lugarServ.finded[0].id;
             }
+            Logger.logColor("Options","cyan",this.optionsServ);
 
             if(this.onLine.onLine){
                 Logger.log("MODELO",_model);
                 this.http.post('/v1/base/lugares', _model).subscribe(
                     (response) => {
                         Logger.log('-> registro guardado', response);
-                        console.log('hora guardada',new Date(response.fecha))
+                        Logger.log('hora guardada',new Date(response.fecha))
                         resolve("Se creó un nuevo lugar con éxito");
                         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/lugares' ]);
                         this.casoService.actualizaCaso();
@@ -212,6 +242,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                     }
                 );
             }else{
+                this.addNombres(_model);
                 let temId=Date.now();
                 let dato={
                     url:'/v1/base/lugares',
@@ -254,7 +285,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
             _model["latitud"]     = this.latMarker;
             _model["longitud"]     = this.lngMarker;
             _model.caso.id      = this.casoId;
-            console.log('lo que envio: '+   _model.fecha);
+            Logger.log('lo que envio: '+   _model.fecha);
 
             if(_model.fecha){
               var hora=_model.hora
@@ -263,13 +294,13 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
               let horas=hora?hora.split(':')[0]:'0';
               var mes:number=fechaCompleta.getMonth()+1;
               _model.fecha =fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+horas+':'+minutos+':00.000';
-              console.log('lo que envio: '+   _model.fecha);
+              Logger.log('lo que envio: '+   _model.fecha);
              }
             if(this.lugarServ.finded.length > 0){
                 _model.detalleLugar.id = this.lugarServ.finded[0].id;
             }
             if(this.onLine.onLine){
-               console.log('Modelo a guardar',_model)
+               Logger.log('Modelo a guardar',_model)
                 this.http.put('/v1/base/lugares/'+this.id, _model).subscribe((response) => {
                     Logger.log('-> Registro acutualizado', response);
                     resolve("Se actualizó el lugar");
@@ -278,6 +309,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
                     reject(e);
                 });
             }else{
+                this.addNombres(_model);
                 let dato={
                     url:'/v1/base/lugares/'+this.id,
                     body:_model,
@@ -312,8 +344,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
 
     public fillForm(_data){
         _data.fecha = new Date(_data.fecha);
-        console.log(_data.fecha.getMinutes());
-        console.log(_data.fecha.getHours());
+        Logger.log(_data.fecha.getMinutes());
+        Logger.log(_data.fecha.getHours());
         this.zoom   = 17;
         this.lat    = _data.latitud;
         this.lng    = _data.longitud;
@@ -321,7 +353,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
         this.lngMarker = _data.longitud;
         let timer = Observable.timer(1);
         _data.hora= ((_data.fecha.getHours()<10)?('0'+_data.fecha.getHours()):_data.fecha.getHours()) +":"  +((_data.fecha.getMinutes()<10)?('0'+_data.fecha.getMinutes()):_data.fecha.getMinutes());
-        console.log(_data.hora);
+        Logger.log(_data.hora);
         this.form.patchValue(
             {
                 'tipo'            : _data.detalleLugar ? _data.detalleLugar.tipoLugar : null,
@@ -354,10 +386,16 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
           timer.subscribe(t => {
             this.form.patchValue({
             "colonia"         :_data.colonia? _data.colonia:new Colonia(),
-            "municipio"       :_data.municipio? _data.municipio:new Municipio(),
             "estado"          :_data.estado? _data.estado:{},
+            "municipio"       :_data.municipio? _data.municipio:new Municipio(),
             }
             )
+            if (_data.colonia){
+                this.form.controls.colonia.patchValue({
+                    id:_data.colonia.id,
+                    idCp:""+_data.colonia.id+"-"+_data.colonia.cp });
+            }
+            Logger.logColor("DATOS","tomato",this.form.value,_data);
           }
         );
 
@@ -403,35 +441,34 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit{
     }
 
     public changeEstado(id){
-      console.log('Id de estado',id)
+      Logger.log('Id de estado',id)
         if(id!=null && typeof id !='undefined'){
             this.optionsServ.getMunicipiosByEstado(id);
             this.form.controls.estado.patchValue(id);
             Logger.log(this.form.controls)
             }
-
+            this.cleanSelects(true);
     }
 
     public changeMunicipio(id){
         if(id!=null && typeof id !='undefined')
             this.optionsServ.getColoniasByMunicipio(id);
-
+        this.cleanSelects(false);
     }
 
-    public changeColonia(id){
-        if(id){
-            this.http.get(`/v1/catalogos/colonia/${id}`).subscribe(
-                response => {
-                    Logger.log('done changeColonia()', response);
-                    this.form.patchValue({
-                        'cp': response.cp
-                    })
-                },
-                error => {
-                    Logger.log(`No se encontró una colonia con el id = ${id}`);
-                }
-            )
+    public changeColonia(idCp){
+        if(idCp){
+            let arr = idCp.split("-");
+            this.form.controls.cp.patchValue(arr[1]);
+            this.form.controls.colonia.patchValue({id:arr[0]});
         }
+    }
+
+    private cleanSelects(municipio){
+        if (municipio)
+            this.form.controls.municipio.reset();
+        this.form.controls.colonia.reset();
+        this.form.controls.cp.reset();
     }
 
 }
