@@ -15,9 +15,10 @@ permanezca conectado entre actualizaciones o sesiones, el comportamiento podría
 
 */
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import { _usuarios } from './usuarios';
+import { environment } from '../../../environments/environment';
 import 'rxjs/add/operator/map'
 
 @Injectable()
@@ -29,15 +30,15 @@ export class AuthenticationService {
 
     constructor(private http: Http) {
         // set token if saved in local storage
-        let usuario = JSON.parse(localStorage.getItem('user'))
-        if (localStorage.getItem("user") == null) {
-            this.isLoggedin = false;
-        }
-        else {
-            this.user   = new Usuario(usuario);
-            this.token  = this.user && this.user.token;
-            this.isLoggedin = true;
-        }
+        // let usuario = JSON.parse(localStorage.getItem('user'))
+        // if (localStorage.getItem("user") == null) {
+        //     this.isLoggedin = false;
+        // }
+        // else {
+        //     this.user   = new Usuario(usuario);
+        //     this.token  = this.user && this.user.token;
+        //     this.isLoggedin = true;
+        // }
 
         this.roles = {
             'callCenter': 'callCenter',
@@ -51,32 +52,31 @@ export class AuthenticationService {
 
     // login(username: string, password: string): Observable<boolean> {
     login(username: string, password: string){
-        //realizando peticion POST a la API del Backend falso
-        
-        // return this.http.post('/api/authenticate', JSON.stringify({ username: username, password: password }))
-        //     .map((response: Response) => {
-        //         // Si hay un JWT en la respuesta significa que se autenticó correctamente
-        //         let token = response.json() && response.json().token;
-        //         if (token) {
-        //             // Se guarda el JWT token 
-        //             this.token = token;
 
-                    // se guarda el nombre del usuario logueado en el Localstorage(donde???)
-                    // para preservalo incluso cuando la pagina se refresca
-                    // localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
-                    let usuario = _usuarios[username];
-                    if(usuario != null){
-                        this.user  = new Usuario(usuario);
-                        localStorage.setItem('user', JSON.stringify(this.user));
-                        this.isLoggedin = true;
-                    }
-                
-                    // return true;
-            //     } else {
+        console.log('login()');
 
-            //         return false;
-            //     }
-            // });
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', 'Basic d2VibG9naWM6V0VMQ09NRTE=');
+        headers.append('Content-Type', 'application/json');
+
+        let options = new RequestOptions({ headers: headers })
+        let body = {
+            "id":"oauthsigiclient",
+            "scopes":["AttributesOUD.attrs"],
+            "clientType":"CONFIDENTIAL_CLIENT",
+            "idDomain":"OAuthSIGIDomain",
+            "description":"SIGI Client",
+            "name":"OAuthSIGIClient",
+            "grantTypes": ["PASSWORD","CLIENT_CREDENTIALS","JWT_BEARER","REFRESH_TOKEN","AUTHORIZATION_CODE"],
+            "defaultScope":"AttributesOUD.attrs"
+        }
+
+        var request = this.http.post(environment.oam.host, body, options)
+            .map((response: Response) => response.json());
+        request.subscribe(
+            response => console.log('-> Response', response)
+        )
     }
 
     logout(): void {

@@ -10,5 +10,12 @@ export const environment = {
   },
   app: {
   	host: 'http://10.0.2.21:4200'
+  },
+  oam: {
+  	tokenApp: 'b2F1dGhzaWdpY2xpZW50OmZjODFmZGFmNjlhYjQ4NjZhMmZjODU3NWMwZGIwYmQ2',
+  	domainName: 'OAuthSIGIDomain',
+  	grantType: 'PASSWORD',
+  	scope: 'AttributesOUD.attrs',
+  	host: 'http://10.0.30.12:14100/oauth2/rest/token'
   }
 };
