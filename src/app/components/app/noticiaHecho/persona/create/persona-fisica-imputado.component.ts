@@ -157,6 +157,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         this.tipoInterviniente={id:response["tipoInterviniente"]["id"], tipo:response["tipoInterviniente"]["tipo"]};
                         this.tipoPersona=response["persona"]["tipoPersona"];
                         this.globals.personaCaso=response["persona"];
+                        this.globals.isFillForm=true;
                         this.fillPersonaCaso(response);
                         this.form.controls.tipoPersona.disable();
                         this.globals.form.controls.personaCaso["controls"][0].controls.tipoInterviniente.disable();
@@ -182,6 +183,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         this.tipoPersona=personaCaso["persona"]["tipoPersona"];
                         this.globals.personaCaso=personaCaso["persona"];
                         Logger.log("%cPersona","color:red;",personaCaso);
+                        this.globals.isFillForm=true;
                         this.fillPersonaCaso(personaCaso);
                         Logger.log('Form', this.globals);
                         this.globals.form.controls.personaCaso["controls"][0].controls.tipoInterviniente.disable();
@@ -332,13 +334,13 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                                 }
                             });
                         if((_data.localizacionPersona[i])['colonia'] != null){
+                            _data.localizacionPersona[i]['colonia']['idCp']=(_data.localizacionPersona[i])['colonia']['id']+"-"+(_data.localizacionPersona[i])['colonia']['cp'];
                             formLoc.patchValue({
                                 'colonia':{
                                     'id': (_data.localizacionPersona[i])['colonia']['id'],
                                     'idCp':(_data.localizacionPersona[i])['colonia']['id']+"-"+(_data.localizacionPersona[i])['colonia']['cp']
                                 }
                             });
-                            _data.localizacionPersona[i]['colonia']['idCp']=(_data.localizacionPersona[i])['colonia']['id']+"-"+(_data.localizacionPersona[i])['colonia']['cp'];
                         }
 
                         if((_data.localizacionPersona[i])['localidad'] != null)
@@ -356,7 +358,10 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
             });
 
-
+            let timerIsFillPersona = Observable.timer(7000);
+            timerIsFillPersona.subscribe(t => {
+                this.globals.isFillForm=false;
+            });
 
         });
 
@@ -1341,6 +1346,8 @@ export class PersonaGlobals{
     public localizaciones=[];
     public tipoResidencia=[];
     public maxRFC: number = 13;
+
+    public isFillForm:boolean=false;
 
     constructor(
         _form: FormGroup,
