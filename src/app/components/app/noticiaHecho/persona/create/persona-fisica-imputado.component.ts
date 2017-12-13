@@ -71,54 +71,59 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     public changeTipoInterviniente(tipoInterviniente){
         this.globals.tipoInterviniente=tipoInterviniente;
         Logger.log("TIPOINTERVINIENTE->",tipoInterviniente);
-        (this.form.controls.razonSocial as FormControl).clearValidators();
-        (this.form.controls.razonSocial as FormControl).reset();
-        if(this.form.controls.tipoPersona.value=="Moral")
-         this.form.controls.razonSocial.enable();
+
+        if(typeof tipoInterviniente != 'undefined' && tipoInterviniente != ''){
+            (this.form.controls.razonSocial as FormControl).clearValidators();
+            (this.form.controls.razonSocial as FormControl).reset();
+            if(this.form.controls.tipoPersona.value=="Moral")
+                 this.form.controls.razonSocial.enable();
+        }
 
         this.validateIntervinienteDesconocido(tipoInterviniente)
 
     }
 
-  public  validateIntervinienteDesconocido(tipoInterviniente){
-    if(tipoInterviniente ==_config.optionValue.tipoInterviniente.imputadoDesconocido || tipoInterviniente ==_config.optionValue.tipoInterviniente.victimaDesconocido)
-    {
-       console.log('here', this.form.controls.nombre);
-      //this.form.controls.nombre.clearValidators();
+    public  validateIntervinienteDesconocido(tipoInterviniente){
+        if(typeof tipoInterviniente != 'undefined'){
+            if(tipoInterviniente ==_config.optionValue.tipoInterviniente.imputadoDesconocido || tipoInterviniente ==_config.optionValue.tipoInterviniente.victimaDesconocido)
+            {
+               console.log('here', this.form.controls.nombre);
+              //this.form.controls.nombre.clearValidators();
 
 
-      this.form.controls.nombre.clearValidators();
-      this.form.controls.paterno.clearValidators();
-      this.form.controls.edad.clearValidators();
-      (this.form.controls.sexo as FormGroup).controls.id.clearValidators();
-      (this.form.controls.ocupacion as FormGroup).controls.id.clearValidators();
+              this.form.controls.nombre.clearValidators();
+              this.form.controls.paterno.clearValidators();
+              this.form.controls.edad.clearValidators();
+              (this.form.controls.sexo as FormGroup).controls.id.clearValidators();
+              (this.form.controls.ocupacion as FormGroup).controls.id.clearValidators();
 
-      (this.form.controls.nombre as FormControl).reset();
-      (this.form.controls.paterno as FormControl).reset();
-      (this.form.controls.sexo as FormGroup).reset();
-      (this.form.controls.edad as FormControl).reset();
-      (this.form.controls.ocupacion as FormGroup).reset();
+              (this.form.controls.nombre as FormControl).reset();
+              (this.form.controls.paterno as FormControl).reset();
+              (this.form.controls.sexo as FormGroup).reset();
+              (this.form.controls.edad as FormControl).reset();
+              (this.form.controls.ocupacion as FormGroup).reset();
 
 
-     // this.validateForm(this.form);
+             // this.validateForm(this.form);
 
-    }
-    else{
+            }
+            else{
 
-      this.form.controls.nombre.setValidators([Validators.required]);
-      this.form.controls.paterno.setValidators([Validators.required]);
-      this.form.controls.edad.setValidators([Validators.required]);
-      (this.form.controls.sexo as FormGroup).controls.id.setValidators([Validators.required]);
-      (this.form.controls.ocupacion as FormGroup).controls.id.setValidators([Validators.required]);
-      (this.form.controls.nombre as FormControl).reset();
-      (this.form.controls.paterno as FormControl).reset();
-      (this.form.controls.sexo as FormGroup).reset();
-      (this.form.controls.edad as FormControl).reset();
-      (this.form.controls.ocupacion as FormGroup).reset();
-      (this.form.controls.razonSocial as FormControl).setValidators([Validators.required,Validators.minLength(4)]);
-      (this.form.controls.razonSocial as FormControl).reset();
-      this.validateForm(this.form);
-    }
+              this.form.controls.nombre.setValidators([Validators.required]);
+              this.form.controls.paterno.setValidators([Validators.required]);
+              this.form.controls.edad.setValidators([Validators.required]);
+              (this.form.controls.sexo as FormGroup).controls.id.setValidators([Validators.required]);
+              (this.form.controls.ocupacion as FormGroup).controls.id.setValidators([Validators.required]);
+              (this.form.controls.nombre as FormControl).reset();
+              (this.form.controls.paterno as FormControl).reset();
+              (this.form.controls.sexo as FormGroup).reset();
+              (this.form.controls.edad as FormControl).reset();
+              (this.form.controls.ocupacion as FormGroup).reset();
+              (this.form.controls.razonSocial as FormControl).setValidators([Validators.required,Validators.minLength(4)]);
+              (this.form.controls.razonSocial as FormControl).reset();
+              this.validateForm(this.form);
+            }
+        }
     }
 
     ngOnInit(){
@@ -438,20 +443,23 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
 
     activaRazonSocial(value){
-
-      //.controls.id.value
-
+        Logger.log('activaRazonSocial', value);
         if (value=="Moral"){
             this.form.controls.razonSocial.enable();
             this.globals.maxRFC = 12;
-            this.validateForm(this.form);
-            this.validateIntervinienteDesconocido(this.globals.tipoInterviniente);
+            let timer = Observable.timer(1);
+            timer.subscribe(t => {
+                // this.validateForm(this.form);
+                this.form.controls.razonSocial.markAsTouched({ onlySelf: true });
+            });
+            if(this.globals.tipoInterviniente != '')
+                this.validateIntervinienteDesconocido(this.globals.tipoInterviniente);
         }
         else{
             this.form.controls.razonSocial.disable();
             this.globals.maxRFC = 13;
-            this.validateForm(this.form);
-            this.validateIntervinienteDesconocido(this.globals.tipoInterviniente);
+            if(this.globals.tipoInterviniente != '')
+                this.validateIntervinienteDesconocido(this.globals.tipoInterviniente);
 
         }
     }
