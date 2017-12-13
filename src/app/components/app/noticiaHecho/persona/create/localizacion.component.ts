@@ -104,6 +104,10 @@ export class LocalizacionFormComponent{
     public indexForm: number;
     public isMexico:boolean=false;
 
+    antIdMunicipio=null;
+    antIdEstado=null;
+    antIdPais=null;
+
     constructor(
         private http: HttpService,
         private onLine: OnLineService,
@@ -121,16 +125,17 @@ export class LocalizacionFormComponent{
 
 
     public changePais(id){
-      if(id!=null && typeof id !='undefined'){
-      this.isMexico=id==_config.optionValue.idMexico;
-      this.options.getEstadoByPais(id);
-        for (var i = 0; i < this.options.paises.length; ++i) {
-            var pais=this.options.paises[i];
-            if(pais.value==id && pais.label=="MEXICO"){
-                this.isMexico=true;
+        if(id!=null && typeof id !='undefined' && this.antIdPais!=id){
+            this.isMexico=id==_config.optionValue.idMexico;
+            this.options.getEstadoByPais(id);
+            for (var i = 0; i < this.options.paises.length; ++i) {
+                var pais=this.options.paises[i];
+                if(pais.value==id && pais.label=="MEXICO"){
+                    this.isMexico=true;
+                }
             }
         }
-       }
+        this.antIdPais=id;
     }
 
     private cleanSelects(i,municipio){
@@ -142,19 +147,20 @@ export class LocalizacionFormComponent{
     }
 
     public changeEstado(id,i){
-        if(id!=null && typeof id !='undefined'){
+        if(id!=null && typeof id !='undefined' && this.antIdEstado!=id){
             this.options.getMunicipiosByEstado(id);
-            
+            this.cleanSelects(i,true);
         }
-        this.cleanSelects(i,true);
+        this.antIdEstado=id;
     }
 
     public changeMunicipio(id,i){
-        if(id!=null && typeof id !='undefined'){
+        if(id!=null && typeof id !='undefined' && id!=this.antIdMunicipio){
             this.options.getColoniasByMunicipio(id);
             this.options.getLocalidadByMunicipio(id);
+            this.cleanSelects(i,false);
         }
-        this.cleanSelects(i,false);
+        this.antIdMunicipio=id;
     }
 
     public changeColonia(i,idCp){
