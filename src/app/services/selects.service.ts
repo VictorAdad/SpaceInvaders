@@ -331,8 +331,8 @@ export class SelectsService {
 
     public getColoniasByMunicipio(idMunicipio: number){
         if(this.onLine.onLine){
-            this.http.get('/v1/catalogos/colonia/municipio/'+idMunicipio+'/options').subscribe((response) => {
-                this.colonias = this.constructOptions(response);
+            this.http.get('/v1/catalogos/colonia/municipio/'+idMunicipio).subscribe((response) => {
+                this.colonias = this.constructOptionsColonia(response,true);
             });
         }else{
             this.db.searchInNotMatrx("colonia",{municipio:{id:idMunicipio}}).then(response=>{
@@ -340,7 +340,7 @@ export class SelectsService {
                 for(let e in response){
                     colonias[""+response[e].id+"-"+response[e].cp]=response[e].nombre
                 }
-                this.colonias=this.constructOptions(colonias);
+                this.colonias=this.constructOptionsColonia(colonias,false);
             });
         }
     }
@@ -395,6 +395,29 @@ export class SelectsService {
                 this.tipoLinea = this.constructOptions(response["arreglo"]);
             });
         }
+    }
+
+    public constructOptionsColonia(_data:any, isArray){
+        let options: MOption[] = [];
+        if (!isArray){
+            for (var key in _data) {
+                options.push({value: key, label: _data[key]});
+            }
+        }
+        else{
+            for (var i=0; i<_data["length"]; i++) {
+                options.push({value: ""+_data[i]["id"]+"-"+_data[i]["cp"], label: _data[i]["nombre"]});
+            }
+        }
+        options.sort((a,b)=>{
+            if (a.label>b.label) 
+                return 1; 
+            if (a.label<b.label)
+                return -1;
+            return 0;
+        });
+
+        return options;
     }
 
     public constructOptions(_data:any){

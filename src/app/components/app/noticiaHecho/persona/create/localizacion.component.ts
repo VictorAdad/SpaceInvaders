@@ -104,6 +104,12 @@ export class LocalizacionFormComponent{
     public indexForm: number;
     public isMexico:boolean=false;
 
+    antIdMunicipio=null;
+    idMunicipioBuscadoEnColonia=null;
+    idMunicipioBuscadoEnLocalidad=null;
+    antIdEstado=null;
+    antIdPais=null;
+
     constructor(
         private http: HttpService,
         private onLine: OnLineService,
@@ -121,16 +127,33 @@ export class LocalizacionFormComponent{
 
 
     public changePais(id){
-      if(id!=null && typeof id !='undefined'){
-      this.isMexico=id==_config.optionValue.idMexico;
-      this.options.getEstadoByPais(id);
-        for (var i = 0; i < this.options.paises.length; ++i) {
-            var pais=this.options.paises[i];
-            if(pais.value==id && pais.label=="MEXICO"){
-                this.isMexico=true;
+        if(id!=null && typeof id !='undefined' && this.antIdPais!=id){
+            this.isMexico=id==_config.optionValue.idMexico;
+            this.options.getEstadoByPais(id);
+            for (var i = 0; i < this.options.paises.length; ++i) {
+                var pais=this.options.paises[i];
+                if(pais.value==id && pais.label=="MEXICO"){
+                    this.isMexico=true;
+                }
             }
         }
-       }
+        this.antIdPais=id;
+    }
+
+    public buscaColonias(){
+        Logger.log("Entro Aqui antes de",this.antIdMunicipio,this.idMunicipioBuscadoEnColonia);
+        if (this.antIdMunicipio!=this.idMunicipioBuscadoEnColonia){
+            this.options.getColoniasByMunicipio(this.antIdMunicipio);
+        }
+        this.idMunicipioBuscadoEnColonia=this.antIdMunicipio;
+    }
+
+    public buscaLocalidades(){
+        Logger.log("Entro Aqui antes de",this.antIdMunicipio,this.idMunicipioBuscadoEnLocalidad);
+        if (this.antIdMunicipio!=this.idMunicipioBuscadoEnLocalidad){
+            this.options.getLocalidadByMunicipio(this.antIdMunicipio);
+        }
+        this.idMunicipioBuscadoEnLocalidad=this.antIdMunicipio;
     }
 
     private cleanSelects(i,municipio){
@@ -142,22 +165,36 @@ export class LocalizacionFormComponent{
     }
 
     public changeEstado(id,i){
-        if(id!=null && typeof id !='undefined'){
+        if(id!=null && typeof id !='undefined' && this.antIdEstado!=id){
             this.options.getMunicipiosByEstado(id);
-            
+            this.cleanSelects(i,true);
         }
-        this.cleanSelects(i,true);
+        this.antIdEstado=id;
     }
 
     public changeMunicipio(id,i){
-        if(id!=null && typeof id !='undefined'){
-            this.options.getColoniasByMunicipio(id);
-            this.options.getLocalidadByMunicipio(id);
+        Logger.logColor("MUNICIPIO","purple",this.globals.isFillForm);
+        if(id!=null && typeof id !='undefined' && id!=this.antIdMunicipio){
+            if (!this.globals.isFillForm){
+                this.options.getColoniasByMunicipio(id);
+                this.options.getLocalidadByMunicipio(id);
+                this.idMunicipioBuscadoEnLocalidad=id;
+                this.idMunicipioBuscadoEnColonia=id;
+            }else{
+                var _data=this.globals.personaCaso;
+                Logger.logColor("PERSONA","brown",this.globals.personaCaso);
+                if (_data.localizacionPersona[i]['colonia'] && _data.localizacionPersona[i]['colonia']["id"])
+                    this.options.colonias=[{value:_data.localizacionPersona[i]['colonia']['id']+"-"+_data.localizacionPersona[i]['colonia']['cp'],label:_data.localizacionPersona[i]['colonia']['nombre']}];
+                if (_data.localizacionPersona[i]['localidad'] && _data.localizacionPersona[i]['localidad']["id"])
+                    this.options.localidad=[{value:_data.localizacionPersona[i]['localidad']['id'],label:_data.localizacionPersona[i]['localidad']['nombre']}];
+            }
+            this.cleanSelects(i,false);
         }
-        this.cleanSelects(i,false);
+        this.antIdMunicipio=id;
     }
 
     public changeColonia(i,idCp){
+        Logger.log("Colonia",idCp,this.options);
         if (idCp){
             let arr = idCp.split("-");
             this.globals.form.controls.localizacionPersona["controls"][i].controls.cp.patchValue(arr[1]);

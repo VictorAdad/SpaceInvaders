@@ -5,7 +5,7 @@
     *ngIf="object.tipo === 'Registro general'"
     (valueChange)="changeFormat($event, object.id)" 
     [options]="[
-        {label:'REGISTRO DE DERIVACION A LA UNIDAD DE MECANISMOS ALTERNATIVOS',value:'F2_117'}
+        {label:'REGISTRO GENERAL',value:'F1_017'}
     ]"></select2>
     <select2
     placeholder= "Formatos"
@@ -19,7 +19,15 @@
     *ngIf="object.tipo === 'Acuerdo general'"
     (valueChange)="changeFormat($event, object.id)" 
     [options]="[
-        {'label':'ACUERDO GENERAL','value':'F1_006'}
+        {'label':'ACUERDO GENERAL','value':'F1_006'},
+        {'label':'ACUERDO GENERAL SIN APERCIBIMIENTO','value':'F1_019'}
+    ]"></select2>
+    <select2
+    placeholder= "Formatos"
+    *ngIf="object.tipo === 'Registro de derivación a la UMASC'"
+    (valueChange)="changeFormat($event, object.id)" 
+    [options]="[
+        {'label':'Registro de derivación a la UMASC','value':'F2_117'}
     ]"></select2>
 	</div>
 	<div class="col-md-auto">

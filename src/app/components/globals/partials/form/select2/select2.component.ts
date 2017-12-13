@@ -21,6 +21,8 @@ export class Select2Component{
 	@Input() hintStart: string="";
 	@Input() hintEnd: string="";
 	@Input() search: boolean = true;
+	@Input() order : boolean = true;
+	@Input() onOpenFunction: Function=null;
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<string>();
   @Output() haveclosed:EventEmitter<string> = new EventEmitter<string>();
 
@@ -75,7 +77,7 @@ export class Select2Component{
    			let timer = Observable.timer(1,1000);
    			let subs = timer.subscribe(
    				t =>{
-   					if(this.options)
+   					if(this.options && this.order)
 							if(this.options.length > 0){
 								this.options = this.options.sort(function(a, b){
 						            if(a.label < b.label) return -1;
@@ -92,8 +94,11 @@ export class Select2Component{
    	}
 
    	public setCursor(){
-   		if(this.searchInput)
+   		if (this.onOpenFunction)
+	   			this.onOpenFunction();
+   		if(this.searchInput){
    			this.searchInput.nativeElement.focus();
+   		}
    	}
 
    	public closeSelect(){

@@ -74,7 +74,7 @@ import { MatPaginatorIntlEsp } from '@providers/paginator.provider';
 import 'hammerjs';
 import { pipes } from './pipes/pipe.module';
 
-import {BasePaginationComponent} from '@components-app/base/pagination/component';
+import { BasePaginationComponent } from '@components-app/base/pagination/component';
 
 @NgModule({
   declarations: [

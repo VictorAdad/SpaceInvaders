@@ -1,3 +1,4 @@
+import { TipoInterviniente } from './../../../../../models/personaCaso';
 import { DetalleDetenido, TipoDetenido } from './../../../../../models/persona';
 import { Component, Input } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
@@ -70,6 +71,59 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     public changeTipoInterviniente(tipoInterviniente){
         this.globals.tipoInterviniente=tipoInterviniente;
         Logger.log("TIPOINTERVINIENTE->",tipoInterviniente);
+
+        if(typeof tipoInterviniente != 'undefined' && tipoInterviniente != ''){
+            (this.form.controls.razonSocial as FormControl).clearValidators();
+            (this.form.controls.razonSocial as FormControl).reset();
+            if(this.form.controls.tipoPersona.value=="Moral")
+                 this.form.controls.razonSocial.enable();
+        }
+
+        this.validateIntervinienteDesconocido(tipoInterviniente)
+
+    }
+
+    public  validateIntervinienteDesconocido(tipoInterviniente){
+        if(typeof tipoInterviniente != 'undefined'){
+            if(tipoInterviniente ==_config.optionValue.tipoInterviniente.imputadoDesconocido || tipoInterviniente ==_config.optionValue.tipoInterviniente.victimaDesconocido)
+            {
+               console.log('here', this.form.controls.nombre);
+              //this.form.controls.nombre.clearValidators();
+
+
+              this.form.controls.nombre.clearValidators();
+              this.form.controls.paterno.clearValidators();
+              this.form.controls.edad.clearValidators();
+              (this.form.controls.sexo as FormGroup).controls.id.clearValidators();
+              (this.form.controls.ocupacion as FormGroup).controls.id.clearValidators();
+
+              (this.form.controls.nombre as FormControl).reset();
+              (this.form.controls.paterno as FormControl).reset();
+              (this.form.controls.sexo as FormGroup).reset();
+              (this.form.controls.edad as FormControl).reset();
+              (this.form.controls.ocupacion as FormGroup).reset();
+
+
+             // this.validateForm(this.form);
+
+            }
+            else{
+
+              this.form.controls.nombre.setValidators([Validators.required]);
+              this.form.controls.paterno.setValidators([Validators.required]);
+              this.form.controls.edad.setValidators([Validators.required]);
+              (this.form.controls.sexo as FormGroup).controls.id.setValidators([Validators.required]);
+              (this.form.controls.ocupacion as FormGroup).controls.id.setValidators([Validators.required]);
+              (this.form.controls.nombre as FormControl).reset();
+              (this.form.controls.paterno as FormControl).reset();
+              (this.form.controls.sexo as FormGroup).reset();
+              (this.form.controls.edad as FormControl).reset();
+              (this.form.controls.ocupacion as FormGroup).reset();
+              (this.form.controls.razonSocial as FormControl).setValidators([Validators.required,Validators.minLength(4)]);
+              (this.form.controls.razonSocial as FormControl).reset();
+              this.validateForm(this.form);
+            }
+        }
     }
 
     ngOnInit(){
@@ -103,6 +157,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         this.tipoInterviniente={id:response["tipoInterviniente"]["id"], tipo:response["tipoInterviniente"]["tipo"]};
                         this.tipoPersona=response["persona"]["tipoPersona"];
                         this.globals.personaCaso=response["persona"];
+                        this.globals.isFillForm=true;
                         this.fillPersonaCaso(response);
                         this.form.controls.tipoPersona.disable();
                         this.globals.form.controls.personaCaso["controls"][0].controls.tipoInterviniente.disable();
@@ -128,6 +183,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         this.tipoPersona=personaCaso["persona"]["tipoPersona"];
                         this.globals.personaCaso=personaCaso["persona"];
                         Logger.log("%cPersona","color:red;",personaCaso);
+                        this.globals.isFillForm=true;
                         this.fillPersonaCaso(personaCaso);
                         Logger.log('Form', this.globals);
                         this.globals.form.controls.personaCaso["controls"][0].controls.tipoInterviniente.disable();
@@ -187,7 +243,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
             let timer3 = Observable.timer(1);
             timer3.subscribe( t => {
-                pcaso["controls"][0]["controls"].detalleDetenido.controls.horaDetenido.setValue(horaDetencion);  
+                pcaso["controls"][0]["controls"].detalleDetenido.controls.horaDetenido.setValue(horaDetencion);
                 ((pcaso["controls"][0] as FormGroup).controls.detalleDetenido as FormGroup).controls.tipoDetenido.patchValue(
                 {
                 'id' : _personaCaso.detalleDetenido.tipoDetenido? _personaCaso.detalleDetenido.tipoDetenido.id : "",
@@ -197,7 +253,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
               }
               );
 
-          }); 
+          });
 
             Logger.log(pcaso)
 
@@ -277,13 +333,15 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                                     'id': (_data.localizacionPersona[i])['municipio']['id']
                                 }
                             });
-                        if((_data.localizacionPersona[i])['colonia'] != null)
+                        if((_data.localizacionPersona[i])['colonia'] != null){
+                            _data.localizacionPersona[i]['colonia']['idCp']=(_data.localizacionPersona[i])['colonia']['id']+"-"+(_data.localizacionPersona[i])['colonia']['cp'];
                             formLoc.patchValue({
                                 'colonia':{
                                     'id': (_data.localizacionPersona[i])['colonia']['id'],
                                     'idCp':(_data.localizacionPersona[i])['colonia']['id']+"-"+(_data.localizacionPersona[i])['colonia']['cp']
                                 }
                             });
+                        }
 
                         if((_data.localizacionPersona[i])['localidad'] != null)
                             formLoc.patchValue({
@@ -300,7 +358,10 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
             });
 
-
+            let timerIsFillPersona = Observable.timer(7000);
+            timerIsFillPersona.subscribe(t => {
+                this.globals.isFillForm=false;
+            });
 
         });
 
@@ -387,14 +448,24 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
 
     activaRazonSocial(value){
+        Logger.log('activaRazonSocial', value);
         if (value=="Moral"){
             this.form.controls.razonSocial.enable();
             this.globals.maxRFC = 12;
-            this.validateForm(this.form);
+            let timer = Observable.timer(1);
+            timer.subscribe(t => {
+                // this.validateForm(this.form);
+                this.form.controls.razonSocial.markAsTouched({ onlySelf: true });
+            });
+            if(this.globals.tipoInterviniente != '')
+                this.validateIntervinienteDesconocido(this.globals.tipoInterviniente);
         }
         else{
             this.form.controls.razonSocial.disable();
             this.globals.maxRFC = 13;
+            if(this.globals.tipoInterviniente != '')
+                this.validateIntervinienteDesconocido(this.globals.tipoInterviniente);
+
         }
     }
 
@@ -586,9 +657,9 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             }
             if((_model["personaCaso"])[0].detalleDetenido['fechaDetencion']){
               var fechaCompleta = new Date ((_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
-              console.log('1.- fechaCompleta', fechaCompleta ); 
+              console.log('1.- fechaCompleta', fechaCompleta );
               var hora=(_model["personaCaso"])[0].detalleDetenido['horaDetenido'];
-              console.log('2.- Hora', hora ); 
+              console.log('2.- Hora', hora );
 
               fechaCompleta.setMinutes(parseInt(hora.split(':')[1]));
               fechaCompleta.setHours(parseInt(hora.split(':')[0]));
@@ -1275,6 +1346,8 @@ export class PersonaGlobals{
     public localizaciones=[];
     public tipoResidencia=[];
     public maxRFC: number = 13;
+
+    public isFillForm:boolean=false;
 
     constructor(
         _form: FormGroup,

@@ -60,6 +60,7 @@ export class DatePicker implements OnInit, ControlValueAccessor {
     monthDays: Array<any> = [];
     monthsView:boolean = false;
     today:Date = new Date();
+    monthVal = {'ENE':0, 'FEB':1, 'MAR':2, 'ABR':3, 'MAY':4, 'JUN':5, 'JUL':6, 'AGO':7, 'SEP':8, 'OCT':9, 'NOV':10, 'DIC':11}
     
     defaultSettings: Settings = {
         defaultOpen: false,
