@@ -30,6 +30,7 @@
                     <select2 [options]="options.colonias"
                         placeholder="Colonia/Asentamiento"
                         name="idCp"
+                        [onOpenFunction]="buscaColonias.bind(this)" 
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.colonia"
                         (valueChange)="changeColonia(indexForm,$event)">
                     </select2>
@@ -37,6 +38,7 @@
                 <div class="col-md-3" *ngIf="isMexico">
                     <select2 [options]="options.localidad"
                         placeholder="Localidad"
+                        [onOpenFunction]="buscaLocalidades.bind(this)" 
                         name="id"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.localidad">
                     </select2>

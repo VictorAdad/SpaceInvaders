@@ -21,6 +21,7 @@ export class Select2Component{
 	@Input() hintStart: string="";
 	@Input() hintEnd: string="";
 	@Input() search: boolean = true;
+	@Input() onOpenFunction: Function=null;
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<string>();
   @Output() haveclosed:EventEmitter<string> = new EventEmitter<string>();
 
@@ -92,8 +93,11 @@ export class Select2Component{
    	}
 
    	public setCursor(){
-   		if(this.searchInput)
+   		if (this.onOpenFunction)
+	   			this.onOpenFunction();
+   		if(this.searchInput){
    			this.searchInput.nativeElement.focus();
+   		}
    	}
 
    	public closeSelect(){
