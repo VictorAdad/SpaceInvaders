@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-md-3">
                         <!-- <date label="Fecha de nacimiento" name="fechaNacimiento" (valueChange)="calculateAge($event)"[group]="form"></date> -->
-                        <date-picker label="Fecha de nacimiento" name="fechaNacimiento" (onDateSelect)="calculateAge($event)"[group]="form"></date-picker>
+                        <date-picker label="Fecha de nacimiento" name="fechaNacimiento" (onDateSelect)="calculateAge($event)" [validateDays]="'post'" [group]="form"></date-picker>
                     </div>
                     <div class="col-md-3">
                         <int label="Edad" name="edad" [max]="2" [group]="form"></int>

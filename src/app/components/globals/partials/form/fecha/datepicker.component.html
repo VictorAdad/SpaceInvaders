@@ -82,7 +82,9 @@
             </tr>
         </table>
        <div class="months-view" [hidden]="!monthsView" (click)="setMonth($event)">
-            <span *ngFor="let month of settings.cal_months_labels_short" [ngClass]="{'current-month': month == settings.cal_months_labels_short[date.getMonth()]}" id="{{month}}">{{month}}</span>
+            <span *ngFor="let month of settings.cal_months_labels_short" [ngClass]="{
+                'current-month': month == settings.cal_months_labels_short[date.getMonth()],
+                'more-than-today text-muted' : monthVal[month] > today.getMonth() && selectedYear >= today.getFullYear() && validateDays == 'post' }" id="{{month}}">{{month}}</span>
         </div>
         <div class="years-view" *ngIf="yearView">
             <div class="fa fa-angle-left prev" (click)="generateYearList('prev')">

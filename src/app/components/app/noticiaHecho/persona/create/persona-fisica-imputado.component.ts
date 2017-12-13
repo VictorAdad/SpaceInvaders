@@ -326,13 +326,15 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                                     'id': (_data.localizacionPersona[i])['municipio']['id']
                                 }
                             });
-                        if((_data.localizacionPersona[i])['colonia'] != null)
+                        if((_data.localizacionPersona[i])['colonia'] != null){
                             formLoc.patchValue({
                                 'colonia':{
                                     'id': (_data.localizacionPersona[i])['colonia']['id'],
                                     'idCp':(_data.localizacionPersona[i])['colonia']['id']+"-"+(_data.localizacionPersona[i])['colonia']['cp']
                                 }
                             });
+                            _data.localizacionPersona[i]['colonia']['idCp']=(_data.localizacionPersona[i])['colonia']['id']+"-"+(_data.localizacionPersona[i])['colonia']['cp'];
+                        }
 
                         if((_data.localizacionPersona[i])['localidad'] != null)
                             formLoc.patchValue({
