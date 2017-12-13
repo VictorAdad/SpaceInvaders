@@ -117,6 +117,7 @@
                         placeholder="Día"
                         name="dia"
                         [options]="lugarServ.dia"
+                        [order]="false"
                         [group]="form"
                         (valueChange)="lugarServ.find($event, 'dia')">
                     </select2>

@@ -30,10 +30,30 @@ export class LugarService extends MatrizGlobal{
 
     public getDetalleLugar(){
         this.db.get("catalogos","detalle_lugar").then(response=>{
+            Logger.logColor('------>','green', response );
             this.detalleLugar = response["arreglo"] as any[];
             this.tipoLugar    = this.getUniques(this.detalleLugar, 'tipoLugar');
             this.tipoZona     = this.getUniques(this.detalleLugar, 'tipoZona');
-            this.dia          = this.getUniques(this.detalleLugar, 'dia');
+            this.dia = this.getUniques(this.detalleLugar, 'dia');
+            var orden = [];
+            for (var i = 0; i<7; i++) {
+                if (this.dia[i].value == 'LUNES') {
+                    orden[0] =  this.dia[i]
+                }else if (this.dia[i].value == 'MARTES') {
+                    orden[1] =  this.dia[i]
+                }else if (this.dia[i].value == 'MIÉRCOLES') {
+                    orden[2] =  this.dia[i]
+                }else if (this.dia[i].value == 'JUEVES') {
+                    orden[3] =  this.dia[i]
+                }else if (this.dia[i].value == 'VIERNES') {
+                    orden[4] =  this.dia[i]
+                }else if (this.dia[i].value == 'SÁBADO') {
+                    orden[5] =  this.dia[i]
+                }else if (this.dia[i].value == 'DOMINGO') {
+                    orden[6] =  this.dia[i]
+                }
+            }
+            this.dia          = orden;
         });
     }
 
