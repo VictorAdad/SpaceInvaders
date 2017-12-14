@@ -34,7 +34,9 @@ export class TextComponent extends BaseInputComponent {
 	inputSlice(_value){
 		if (_value!=null) {
 			if(_value.toString().length > this.max)
-				this.control.setValue(_value.toString().slice(0,this.max));
+				this.control.setValue(_value.toString().trim().slice(0,this.max));
+			else if  ( _value.toString().length>0 && (/^\s*$/).test(_value) )
+				this.control.setValue(_value.toString().trim());
 		}
 	}
 }
