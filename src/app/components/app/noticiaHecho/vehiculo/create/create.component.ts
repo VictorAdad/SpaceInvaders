@@ -46,6 +46,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
 
         let timer = Observable.timer(1000);
         timer.subscribe(t => {
+            vehiculoServ.marcaSubmarca.marca    = [];
             vehiculoServ.marcaSubmarca.submarca = [];
             Logger.log('vehiculoserv', this.vehiculoServ);
         });
@@ -330,6 +331,11 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         });
 
         
+    }
+
+    public tipoVehiculoChange(_event){
+        this.vehiculoServ.marcaSubmarca.find(_event, 'tipoVehiculo');
+        this.vehiculoServ.marcaSubmarca.filterBy(_event, 'tipoVehiculo', 'marca');
     }
 
     public marcaChange(_event){

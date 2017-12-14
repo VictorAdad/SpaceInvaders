@@ -3,8 +3,10 @@ import { MatrizGlobal } from '../matriz-global2';
 
 export class MatrizMarcaSubmarca extends MatrizGlobal{
 
-    public marca    = [];
-    public submarca = [];
+    public tipoVehiculo = [];
+    
+    public marca        = [];
+    public submarca     = [];
 
     constructor(
         private db: CIndexedDB
@@ -20,6 +22,7 @@ export class MatrizMarcaSubmarca extends MatrizGlobal{
 }
 
 export class MarcaSubmarca {
+    public tipoVehiculo:string = null;
     public marca: string = null;
     public submarca: string = null;
 }
