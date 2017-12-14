@@ -1,6 +1,7 @@
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Logger } from "@services/logger.service";
 
 
 export class Colections {
@@ -47,9 +48,13 @@ export class TrataPersonas {
         _optionsRelacion
         ){
 
-        this.paisOrigen      =
-            _options.find('paises', _object.paisOrigen.id).label;
-        if (_object.estadoOrigenOtro && _object.estadoOrigenOtro!="")
+        if (_object.paisOrigen)
+            this.paisOrigen = _options.find('paises', _object.paisOrigen.id).label;
+        else
+            this.paisOrigen="";
+        if (!_object.estadoOrigenOtro && !_object.estadoOrigen)
+            _object.estadoOrigenOtro="";
+        else if (_object.estadoOrigenOtro && _object.estadoOrigenOtro!="")
             this.estadoOrigen=_object.estadoOrigenOtro;
         else if (_object.estadoOrigen && _object.estadoOrigen.id!=""){
             if (_estadosOrigen.length>0)
@@ -61,23 +66,30 @@ export class TrataPersonas {
             }
         }
 
-        if (_object.municipioOrigenOtro && _object.municipioOrigenOtro!="")
+        if (!_object.municipioOrigenOtro && !_object.municipioOrigen)
+            _object.municipioOrigenOtro="";
+        else if (_object.municipioOrigenOtro && _object.municipioOrigenOtro!="")
             this.municipioOrigen = _object.municipioOrigenOtro;
         else if (_object.municipioOrigen && _object.municipioOrigen.id!="")
             if (_municipiosOrigen.length>0){
                 let municipio=_options.buscaItemConValue(_municipiosOrigen,_object.municipioOrigen.id);
                 this.municipioOrigen = municipio ? municipio.label : '';
             }else{
-                _options.getMunicipiosByEstadoService(_object.estadoDestino.id).then(respuesta=>{
+                _options.getMunicipiosByEstadoService(_object.estadoOrigen.id).then(respuesta=>{
                     let municipios=_options.constructOptions(respuesta);
                     let municipio=_options.buscaItemConValue(municipios,_object.municipioOrigen.id);
                     this.municipioOrigen=municipio?municipio.label:"";
                 })
             }
 
-        this.paisDestino     =
-            _options.find('paises', _object.paisDestino.id).label;
-        if (_object.estadoDestinoOtro && _object.estadoDestinoOtro!="")
+        if (_object.paisDestino)    
+            this.paisDestino=_options.find('paises', _object.paisDestino.id).label;
+        else
+            this.paisDestino="";
+
+        if (!_object.estadoDestinoOtro && !_object.estadoDestino)
+            _object.estadoDestinoOtro="";
+        else if (_object.estadoDestinoOtro && _object.estadoDestinoOtro!="")
             this.estadoDestino = _object.estadoDestinoOtro;
         else if (_object.estadoDestino && _object.estadoDestino.id!=""){
             if (_estadosDestino.length>0)
@@ -89,8 +101,9 @@ export class TrataPersonas {
             }
         }
         
-        
-        if (_object.municipioDestinoOtro && _object.municipioDestinoOtro!="")
+        if (!_object.municipioDestinoOtro && !_object.municipioDestino)
+            _object.municipioDestinoOtro="";
+        else if (_object.municipioDestinoOtro && _object.municipioDestinoOtro!="")
             this.municipioDestino=_object.municipioDestinoOtro;
         else if (_object.municipioDestino && _object.municipioDestino.id!=""){
             if (_municipiosDestino.length>0)//todavia no se incilizan los estados
@@ -107,10 +120,14 @@ export class TrataPersonas {
             }
         }
 
-
-        this.tipo = _object.tipo;
-
-        this.transportacion  = _object.transportacion;
+        if ( _object.tipo)
+            this.tipo = _object.tipo;
+        else
+            this.tipo = "";
+        if (_object.transportacion)
+            this.transportacion  = _object.transportacion;
+        else
+            _object.transportacion = "";
 
     }
 

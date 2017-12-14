@@ -132,6 +132,41 @@ export class Form {
         return new FormGroup({
             //'id': new FormControl('', []),
             'paisOrigen': new FormGroup({
+                'id': new FormControl('', [Validators.required,]),
+             }),
+            'estadoOrigen': new FormGroup({
+                'id': new FormControl('', [Validators.required,]),
+             }),
+            'municipioOrigen': new FormGroup({
+                'id': new FormControl('', [Validators.required,]),
+             }),
+            'paisDestino': new FormGroup({
+                'id': new FormControl('', [Validators.required,]),
+             }),
+            'estadoDestino': new FormGroup({
+                'id': new FormControl('', [Validators.required,]),
+             }),
+            'municipioDestino': new FormGroup({
+                'id': new FormControl('', [Validators.required,]),
+             }),
+            'tipoTransportacion': new FormGroup({
+                'id': new FormControl('', []),
+             }),
+            'paisOrigenOtro': new FormControl(),
+            'estadoOrigenOtro': new FormControl("",[Validators.required,]),
+            'municipioOrigenOtro': new FormControl("",[Validators.required,]),
+            'paisDestinoOtro': new FormControl(),
+            'estadoDestinoOtro': new FormControl("",[Validators.required,]),
+            'municipioDestinoOtro': new FormControl("",[Validators.required,]),
+            'tipo': new FormControl("",[Validators.required,]),
+            'transportacion': new FormControl("",[Validators.required,]),
+        });
+    }
+
+    public getTrataPersonas(){
+        return new FormGroup({
+            //'id': new FormControl('', []),
+            'paisOrigen': new FormGroup({
                 'id': new FormControl('', []),
              }),
             'estadoOrigen': new FormGroup({
@@ -153,13 +188,13 @@ export class Form {
                 'id': new FormControl('', []),
              }),
             'paisOrigenOtro': new FormControl(),
-            'estadoOrigenOtro': new FormControl(),
-            'municipioOrigenOtro': new FormControl(),
+            'estadoOrigenOtro': new FormControl("",[]),
+            'municipioOrigenOtro': new FormControl("",[]),
             'paisDestinoOtro': new FormControl(),
-            'estadoDestinoOtro': new FormControl(),
-            'municipioDestinoOtro': new FormControl(),
-            'tipo': new FormControl(),
-            'transportacion': new FormControl(),
+            'estadoDestinoOtro': new FormControl("",[]),
+            'municipioDestinoOtro': new FormControl("",[]),
+            'tipo': new FormControl("",[]),
+            'transportacion': new FormControl("",[]),
         });
     }
 
@@ -176,8 +211,8 @@ export class Form {
     public efectoDetalleForm(){
         return new FormGroup({
             'id': new FormControl(),
-            'efecto': new FormControl(),
-            'detalle': new FormControl(),
+            'efecto': new FormControl('', [Validators.required]),
+            'detalle': new FormControl('', [Validators.required]),
         });
     }
 
@@ -202,7 +237,7 @@ export class Form {
             'ambito': new FormControl('', [Validators.required]),
             'conducta': new FormControl('', [Validators.required]),
             'detalle': new FormControl('', [Validators.required]),
-            'testigo': new FormControl('', [Validators.required]),
+            'testigo': new FormControl('', []),
         });
     }
 
