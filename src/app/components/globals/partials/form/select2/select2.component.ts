@@ -45,9 +45,9 @@ export class Select2Component{
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
-		// Logger.log(changes);
+		Logger.log(changes);
 		if(changes.options)
-			this.filteredOptions = this.options;
+			this.filteredOptions = this.sort(this.options);
 	}
 
 
@@ -69,6 +69,14 @@ export class Select2Component{
   				return (optNormal.indexOf(valNormal) === 0 || optNormal.includes(valNormal));
 			}
 		);
+   	}
+
+   	public sort(options: MOption[]){
+   		return options.sort(function(a, b){
+            if(a.label < b.label) return -1;
+            if(a.label > b.label) return 1;
+            return 0;
+        });
    	}
 
    	public setFilterList(){
