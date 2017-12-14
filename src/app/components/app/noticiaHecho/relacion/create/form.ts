@@ -211,8 +211,8 @@ export class Form {
     public efectoDetalleForm(){
         return new FormGroup({
             'id': new FormControl(),
-            'efecto': new FormControl(),
-            'detalle': new FormControl(),
+            'efecto': new FormControl('', [Validators.required]),
+            'detalle': new FormControl('', [Validators.required]),
         });
     }
 
@@ -237,7 +237,7 @@ export class Form {
             'ambito': new FormControl('', [Validators.required]),
             'conducta': new FormControl('', [Validators.required]),
             'detalle': new FormControl('', [Validators.required]),
-            'testigo': new FormControl('', [Validators.required]),
+            'testigo': new FormControl('', []),
         });
     }
 
