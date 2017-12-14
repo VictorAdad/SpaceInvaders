@@ -150,7 +150,7 @@ export class Form {
                 'id': new FormControl('', [Validators.required,]),
              }),
             'tipoTransportacion': new FormGroup({
-                'id': new FormControl('', [Validators.required,]),
+                'id': new FormControl('', []),
              }),
             'paisOrigenOtro': new FormControl(),
             'estadoOrigenOtro': new FormControl("",[Validators.required,]),
