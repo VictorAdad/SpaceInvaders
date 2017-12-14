@@ -184,6 +184,7 @@ export class DocumentoComponent extends FormatosGlobal{
     }
     else{
       this.pageIndex=0;
+      this.dataSource = new TableService(this.paginator, []);
       this.page('/v1/documentos/casos/'+this.id+'/page?p='+this.pageIndex+'&tr='+this.pageSize);
       this.isShowAll=false;
     }
