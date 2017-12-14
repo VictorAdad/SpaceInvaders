@@ -83,8 +83,11 @@ export class PersonaComponent implements OnInit{
     }
 
     public getAlias(_persona){
-        let filter = _persona.persona.aliasNombrePersona.filter(it => it.tipo === 'Alias');
-        let alias = filter.map(it => it.nombre);
+        let alias  = [];
+        if(_persona.persona.aliasNombrePersona != null){
+            let filter = _persona.persona.aliasNombrePersona.filter(it => it.tipo === 'Alias');
+            alias      = filter.map(it => it.nombre);
+        }
         return alias.join(', ');
     }
 

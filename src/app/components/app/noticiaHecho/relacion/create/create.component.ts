@@ -96,7 +96,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
     efectoDetalleArr=[];
 
-    casoOffline=null;
+    casoOffline=null; 
 
 
 
@@ -230,7 +230,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             _val.tipoTransportacion.id = this.optionsRelacion.matrizTipoTransportacion.finded[0].id;
 
         var obj=this;
-
+        
         var addColections=function(val){
             obj.colections.add(
                 'trataPersonas',
@@ -258,7 +258,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             addColections(_val);
         }
         let form = this.form.get('trataPersona') as FormArray;
-        var trata= this.formRelacion.getTrataPersonasForm();
+        var trata= this.formRelacion.getTrataPersonas();
         trata.patchValue(this.formRelacion.trataPersonasForm["value"]);
         form.push(trata);
         this.formRelacion.trataPersonasForm.reset();
@@ -972,10 +972,34 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     changePais(val,arr){
         if (val != null)
         {
-            if (arr.indexOf("Destino")>-1)
+            if (arr.indexOf("Destino")>-1){
                 this.isMexicoPaisDestino=val==_config.optionValue.idMexico;
-            else
+                if (this.isMexicoPaisDestino){
+                    this.formRelacion.trataPersonasForm.controls.estadoDestinoOtro.disable();
+                    this.formRelacion.trataPersonasForm.controls.municipioDestinoOtro.disable();
+                    this.formRelacion.trataPersonasForm.controls.estadoDestino.enable();
+                    this.formRelacion.trataPersonasForm.controls.municipioDestino.enable();
+                }else{
+                    this.formRelacion.trataPersonasForm.controls.estadoDestinoOtro.enable();
+                    this.formRelacion.trataPersonasForm.controls.municipioDestinoOtro.enable();
+                    this.formRelacion.trataPersonasForm.controls.estadoDestino.disable();
+                    this.formRelacion.trataPersonasForm.controls.municipioDestino.disable();
+                }
+            }
+            else{
                 this.isMexicoPaisOrigen=val==_config.optionValue.idMexico;
+                if (this.isMexicoPaisOrigen){
+                    this.formRelacion.trataPersonasForm.controls.estadoOrigenOtro.disable();
+                    this.formRelacion.trataPersonasForm.controls.municipioOrigenOtro.disable();
+                    this.formRelacion.trataPersonasForm.controls.estadoOrigen.enable();
+                    this.formRelacion.trataPersonasForm.controls.municipioOrigen.enable();
+                }else{
+                    this.formRelacion.trataPersonasForm.controls.estadoOrigenOtro.enable();
+                    this.formRelacion.trataPersonasForm.controls.municipioOrigenOtro.enable();
+                    this.formRelacion.trataPersonasForm.controls.estadoOrigen.disable();
+                    this.formRelacion.trataPersonasForm.controls.municipioOrigen.disable();
+                }
+            }
 
             this.optionsService.getEstadoByPaisService(val).then(estados=>{
                 this[arr]=this.optionsService.constructOptions(estados);

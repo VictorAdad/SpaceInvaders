@@ -20,6 +20,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../global.component';
 import { Options } from './option';
 import { Logger } from "@services/logger.service";
+import { Yason } from "@services/utils/yason";
 
 @Component({
     templateUrl: './component.html',
@@ -168,6 +169,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
     }
 
     public fillForm(_data) {
+        Yason.eliminaNulos(_data);
         this.form.patchValue(_data);
         this.form.controls.presentoLlamada.patchValue(parseInt(_data.presentoLlamada));
     }

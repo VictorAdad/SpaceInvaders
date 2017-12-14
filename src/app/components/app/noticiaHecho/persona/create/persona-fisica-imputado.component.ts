@@ -71,54 +71,55 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     public changeTipoInterviniente(tipoInterviniente){
         this.globals.tipoInterviniente=tipoInterviniente;
         Logger.log("TIPOINTERVINIENTE->",tipoInterviniente);
-        (this.form.controls.razonSocial as FormControl).clearValidators();
-        (this.form.controls.razonSocial as FormControl).reset();
-        if(this.form.controls.tipoPersona.value=="Moral")
-         this.form.controls.razonSocial.enable();
+
+        if(typeof tipoInterviniente != 'undefined' && tipoInterviniente != ''){
+            if(this.form.controls.tipoPersona.value=="Moral")
+                 this.form.controls.razonSocial.enable();
+        }
 
         this.validateIntervinienteDesconocido(tipoInterviniente)
 
     }
 
-  public  validateIntervinienteDesconocido(tipoInterviniente){
-    if(tipoInterviniente ==_config.optionValue.tipoInterviniente.imputadoDesconocido || tipoInterviniente ==_config.optionValue.tipoInterviniente.victimaDesconocido)
-    {
-       console.log('here', this.form.controls.nombre);
-      //this.form.controls.nombre.clearValidators();
+    public  validateIntervinienteDesconocido(tipoInterviniente){
+        if(typeof tipoInterviniente != 'undefined'){
+            if(tipoInterviniente ==_config.optionValue.tipoInterviniente.imputadoDesconocido || tipoInterviniente ==_config.optionValue.tipoInterviniente.victimaDesconocido)
+            { this.globals.isIntervinienteDesconocido=true;
+              this.globals.hintsObligatorio="";
+              this.form.controls.nombre.setValidators([]);
+              this.form.controls.paterno.setValidators([]);
+              this.form.controls.edad.setValidators([]);
+              this.form.controls.razonSocial.setValidators([]);
+              (this.form.controls.sexo as FormGroup).controls.id.setValidators([]);
+              (this.form.controls.ocupacion as FormGroup).controls.id.setValidators([]);
 
+              this.form.controls.nombre.updateValueAndValidity();
+              this.form.controls.paterno.updateValueAndValidity();
+              this.form.controls.edad.updateValueAndValidity();
+              this.form.controls.razonSocial.updateValueAndValidity();
+              (this.form.controls.sexo as FormGroup).controls.id.updateValueAndValidity();
+              (this.form.controls.ocupacion as FormGroup).controls.id.updateValueAndValidity();
 
-      this.form.controls.nombre.clearValidators();
-      this.form.controls.paterno.clearValidators();
-      this.form.controls.edad.clearValidators();
-      (this.form.controls.sexo as FormGroup).controls.id.clearValidators();
-      (this.form.controls.ocupacion as FormGroup).controls.id.clearValidators();
+            }
+            else{
+               console.log('set requiered')
+               this.globals.isIntervinienteDesconocido=false;
+               this.globals.hintsObligatorio="Campo obligatorio";
+               this.form.controls.nombre.setValidators([Validators.required]);
+              this.form.controls.paterno.setValidators([Validators.required]);
+              this.form.controls.edad.setValidators([Validators.required]);
+              this.form.controls.razonSocial.setValidators([Validators.required,Validators.minLength(4)]);
+              (this.form.controls.sexo as FormGroup).controls.id.setValidators([Validators.required]);
+              (this.form.controls.ocupacion as FormGroup).controls.id.setValidators([Validators.required]);
 
-      (this.form.controls.nombre as FormControl).reset();
-      (this.form.controls.paterno as FormControl).reset();
-      (this.form.controls.sexo as FormGroup).reset();
-      (this.form.controls.edad as FormControl).reset();
-      (this.form.controls.ocupacion as FormGroup).reset();
-
-
-     // this.validateForm(this.form);
-
-    }
-    else{
-
-      this.form.controls.nombre.setValidators([Validators.required]);
-      this.form.controls.paterno.setValidators([Validators.required]);
-      this.form.controls.edad.setValidators([Validators.required]);
-      (this.form.controls.sexo as FormGroup).controls.id.setValidators([Validators.required]);
-      (this.form.controls.ocupacion as FormGroup).controls.id.setValidators([Validators.required]);
-      (this.form.controls.nombre as FormControl).reset();
-      (this.form.controls.paterno as FormControl).reset();
-      (this.form.controls.sexo as FormGroup).reset();
-      (this.form.controls.edad as FormControl).reset();
-      (this.form.controls.ocupacion as FormGroup).reset();
-      (this.form.controls.razonSocial as FormControl).setValidators([Validators.required,Validators.minLength(4)]);
-      (this.form.controls.razonSocial as FormControl).reset();
-      this.validateForm(this.form);
-    }
+              this.form.controls.nombre.updateValueAndValidity();
+              this.form.controls.paterno.updateValueAndValidity();
+              this.form.controls.edad.updateValueAndValidity();
+              this.form.controls.razonSocial.updateValueAndValidity();
+              (this.form.controls.sexo as FormGroup).controls.id.updateValueAndValidity();
+              (this.form.controls.ocupacion as FormGroup).controls.id.updateValueAndValidity();
+            }
+        }
     }
 
     ngOnInit(){
@@ -152,6 +153,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         this.tipoInterviniente={id:response["tipoInterviniente"]["id"], tipo:response["tipoInterviniente"]["tipo"]};
                         this.tipoPersona=response["persona"]["tipoPersona"];
                         this.globals.personaCaso=response["persona"];
+                        this.globals.isFillForm=true;
                         this.fillPersonaCaso(response);
                         this.form.controls.tipoPersona.disable();
                         this.globals.form.controls.personaCaso["controls"][0].controls.tipoInterviniente.disable();
@@ -177,6 +179,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         this.tipoPersona=personaCaso["persona"]["tipoPersona"];
                         this.globals.personaCaso=personaCaso["persona"];
                         Logger.log("%cPersona","color:red;",personaCaso);
+                        this.globals.isFillForm=true;
                         this.fillPersonaCaso(personaCaso);
                         Logger.log('Form', this.globals);
                         this.globals.form.controls.personaCaso["controls"][0].controls.tipoInterviniente.disable();
@@ -327,13 +330,13 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                                 }
                             });
                         if((_data.localizacionPersona[i])['colonia'] != null){
+                            _data.localizacionPersona[i]['colonia']['idCp']=(_data.localizacionPersona[i])['colonia']['id']+"-"+(_data.localizacionPersona[i])['colonia']['cp'];
                             formLoc.patchValue({
                                 'colonia':{
                                     'id': (_data.localizacionPersona[i])['colonia']['id'],
                                     'idCp':(_data.localizacionPersona[i])['colonia']['id']+"-"+(_data.localizacionPersona[i])['colonia']['cp']
                                 }
                             });
-                            _data.localizacionPersona[i]['colonia']['idCp']=(_data.localizacionPersona[i])['colonia']['id']+"-"+(_data.localizacionPersona[i])['colonia']['cp'];
                         }
 
                         if((_data.localizacionPersona[i])['localidad'] != null)
@@ -351,7 +354,10 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
             });
 
-
+            let timerIsFillPersona = Observable.timer(7000);
+            timerIsFillPersona.subscribe(t => {
+                this.globals.isFillForm=false;
+            });
 
         });
 
@@ -438,20 +444,23 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
 
     activaRazonSocial(value){
-
-      //.controls.id.value
-
+        Logger.log('activaRazonSocial', value);
         if (value=="Moral"){
             this.form.controls.razonSocial.enable();
             this.globals.maxRFC = 12;
-            this.validateForm(this.form);
-            this.validateIntervinienteDesconocido(this.globals.tipoInterviniente);
+            let timer = Observable.timer(1);
+            timer.subscribe(t => {
+                // this.validateForm(this.form);
+                this.form.controls.razonSocial.markAsTouched({ onlySelf: true });
+            });
+            if(this.globals.tipoInterviniente != '')
+                this.validateIntervinienteDesconocido(this.globals.tipoInterviniente);
         }
         else{
             this.form.controls.razonSocial.disable();
             this.globals.maxRFC = 13;
-            this.validateForm(this.form);
-            this.validateIntervinienteDesconocido(this.globals.tipoInterviniente);
+            if(this.globals.tipoInterviniente != '')
+              this.validateIntervinienteDesconocido(this.globals.tipoInterviniente);
 
         }
     }
@@ -1318,6 +1327,10 @@ export class PersonaGlobals{
     public persona:Persona;
     public formLocalizacion: FormGroup;
     public imputado = _config.optionValue.imputado;
+    public isIntervinienteDesconocido: boolean=false;
+    public hintsObligatorio="Campo obligatorio";
+
+
     public otrosNombres={
         nombres:[],
         ids:[],
@@ -1333,6 +1346,8 @@ export class PersonaGlobals{
     public localizaciones=[];
     public tipoResidencia=[];
     public maxRFC: number = 13;
+
+    public isFillForm:boolean=false;
 
     constructor(
         _form: FormGroup,
