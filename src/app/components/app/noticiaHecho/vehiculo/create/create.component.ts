@@ -150,42 +150,42 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     public validateDelitoRobo(){
       console.log(this.casoService.caso)
 
-      let isRoboSecundario=false;
-      this.casoService.caso.delitoCaso.forEach(delito => {
-        if(delito.delitonombre==_config.optionValue.delito.robo){
-          isRoboSecundario=true;
-        }
-      });
+      // let isRoboSecundario=false;
+      // this.casoService.caso.delitoCaso.forEach(delito => {
+      //   if(delito.delitonombre==_config.optionValue.delito.robo){
+      //     isRoboSecundario=true;
+      //   }
+      // });
 
-      if(this.casoService.caso.delitoPrincipal.nombre==_config.optionValue.delito.robo || isRoboSecundario)
-      {
-        /*
-          VIN
-          Placas
-          No. de Motor
-          Modelo
-        */
-        this.isRobo=true;
-        this.form.controls.placas.setValidators([Validators.required]);
-        this.form.controls.modelo.setValidators([Validators.required]);
-        this.form.controls.noSerie.setValidators([Validators.required]);
-        this.form.controls.noMotor.setValidators([Validators.required]);
+      // if(this.casoService.caso.delitoPrincipal.nombre==_config.optionValue.delito.robo || isRoboSecundario)
+      // {
+      //   /*
+      //     VIN
+      //     Placas
+      //     No. de Motor
+      //     Modelo
+      //   */
+      //   this.isRobo=true;
+      //   this.form.controls.placas.setValidators([Validators.required]);
+      //   this.form.controls.modelo.setValidators([Validators.required]);
+      //   this.form.controls.noSerie.setValidators([Validators.required]);
+      //   this.form.controls.noMotor.setValidators([Validators.required]);
 
-        this.form.controls.placas.updateValueAndValidity();
-        this.form.controls.modelo.updateValueAndValidity();
-        this.form.controls.noSerie.updateValueAndValidity();
-        this.form.controls.noMotor.updateValueAndValidity();
-        console.log(this.form.value)
-      }
-      else{
-        this.hintObligatorio="";
-        console.log(this.form.value)
-        this.form.clearValidators()
-        this.form.updateValueAndValidity();
-        this.isOneFilled=this.atLeastOneFilled(this.form);
-        console.log('Al menos uno',this.isOneFilled);
+      //   this.form.controls.placas.updateValueAndValidity();
+      //   this.form.controls.modelo.updateValueAndValidity();
+      //   this.form.controls.noSerie.updateValueAndValidity();
+      //   this.form.controls.noMotor.updateValueAndValidity();
+      //   console.log(this.form.value)
+      // }
+      // else{
+      //   this.hintObligatorio="";
+      //   console.log(this.form.value)
+      //   this.form.clearValidators()
+      //   this.form.updateValueAndValidity();
+      //   this.isOneFilled=this.atLeastOneFilled(this.form);
+      //   console.log('Al menos uno',this.isOneFilled);
 
-      }
+      // }
 
     }
 public validate(form: FormGroup){
