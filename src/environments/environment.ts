@@ -16,6 +16,6 @@ export const environment = {
   	domainName: 'OAuthSIGIDomain',
   	grantType: 'PASSWORD',
   	scope: 'AttributesOUD.attrs',
-  	host: 'http://10.0.30.12:14100/oauth2/rest/token'
+  	host: 'http://10.0.30.12/oauth2/rest/token'
   }
 };

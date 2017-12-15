@@ -56,21 +56,13 @@ export class AuthenticationService {
         console.log('login()');
 
         let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', 'Basic d2VibG9naWM6V0VMQ09NRTE=');
-        headers.append('Content-Type', 'application/json');
+        headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+        headers.append('authorization', 'Basic b2F1dGhzaWdpY2xpZW50OmZjODFmZGFmNjlhYjQ4NjZhMmZjODU3NWMwZGIwYmQ2');
+        headers.append('x-oauth-identity-domain-name', 'OAuthSIGIDomain');
+        // headers.append('Content-Type', 'application/json');
 
         let options = new RequestOptions({ headers: headers })
-        let body = {
-            "id":"oauthsigiclient",
-            "scopes":["AttributesOUD.attrs"],
-            "clientType":"CONFIDENTIAL_CLIENT",
-            "idDomain":"OAuthSIGIDomain",
-            "description":"SIGI Client",
-            "name":"OAuthSIGIClient",
-            "grantTypes": ["PASSWORD","CLIENT_CREDENTIALS","JWT_BEARER","REFRESH_TOKEN","AUTHORIZATION_CODE"],
-            "defaultScope":"AttributesOUD.attrs"
-        }
+        let body = 'grant_type=PASSWORD&username=mopega&password=welcome1&scope=AttributesOUD.attr'
 
         var request = this.http.post(environment.oam.host, body, options)
             .map((response: Response) => response.json());
