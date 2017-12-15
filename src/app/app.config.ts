@@ -8,6 +8,7 @@ export var _config = {
 	optionValue:{
 		armaFuego : "ARMA DE FUEGO",
 		armaBlanca : "ARMA BLANCA",
+        automovil: "AUTOMÓVIL/CAMIONETA",
 		idMexico  : 143,
 		imputado : '5',
 		tipoInterviniente : {

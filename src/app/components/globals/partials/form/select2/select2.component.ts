@@ -45,7 +45,7 @@ export class Select2Component{
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
-		Logger.log(changes);
+		// Logger.log(changes);
 		if(changes.options)
 			this.filteredOptions = this.sort(this.options);
 	}

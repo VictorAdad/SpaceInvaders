@@ -18,7 +18,6 @@
             <div class="col-md-3">
                 <select2 placeholder="Motivo por el que se registra"
                     [options]="vehiculoServ.motivoColorClase.motivoRegistro"
-                    hintStart="Campo obligatorio"
                     name="motivoRegistro"
                     [group]="form"
                     (valueChange)="vehiculoServ.motivoColorClase.find($event, 'motivoRegistro')">
@@ -28,10 +27,10 @@
             <div class="col-md-3">
                 <select2 placeholder="Vehículo"
                     name="campoVehiculo"
-                    [options]="vehiculoServ.tipoUsoTipoVehiculo.tipoVehiculo"
+                    [options]="vehiculoServ.marcaSubmarca.tipoVehiculo"
                     hintStart="Campo obligatorio"
                     [group]="form"
-                    (valueChange)="vehiculoServ.tipoUsoTipoVehiculo.find($event, 'tipoVehiculo')">
+                    (valueChange)="tipoVehiculoChange($event)">
 
                 </select2>
             </div>
@@ -55,7 +54,6 @@
             <div class="col-md-3">
                 <select2 placeholder="Marca"
                     [options]="vehiculoServ.marcaSubmarca.marca"
-                    hintStart="Campo obligatorio"
                     name="marca"
                     [group]="form"
                     (valueChange)="marcaChange($event)">
@@ -65,7 +63,6 @@
             <div class="col-md-3">
                 <select2 placeholder="Submarca"
                     name="submarca"
-                    hintStart="Campo obligatorio"
                     [options]="vehiculoServ.marcaSubmarca.submarca"
                     [group]="form"
                     (valueChange)="vehiculoServ.marcaSubmarca.find($event, 'submarca')">
@@ -75,7 +72,6 @@
             <div class="col-md-3">
                 <select2 placeholder="Color"
                     name="color"
-                    hintStart="Campo obligatorio"
                     [options]="vehiculoServ.motivoColorClase.color"
                     [group]="form"
                     (valueChange)="vehiculoServ.motivoColorClase.find($event, 'color')">
@@ -88,10 +84,10 @@
                 <int
                     label="Modelo"
                     name="modelo"
-                    hintStart="Campo obligatorio"
+                    hintStart="{{hintObligatorio}}"
                     [max]="4"
                     [group]="form">
-                        
+
                 </int>
             </div>
             <div class="col-md-3">
@@ -103,14 +99,14 @@
                 </select2>
             </div>
             <div class="col-md-3">
-                <text 
+                <text
                     label="Placas"
                     name="placas"
-                    hintStart="Campo obligatorio"
+                    hintStart="{{hintObligatorio}}"
                     [max]="10"
                     [group]="form"
                     [regex]="regexPlaca">
-                    
+
             </text>
             </div>
             <div class="col-md-3">
@@ -125,20 +121,20 @@
                 <text
                     label="Nº serie (VIN)"
                     name="noSerie"
-                    hintStart="Campo obligatorio"
+                    hintStart="{{hintObligatorio}}"
                     [max]="20"
                     [group]="form">
-                        
+
                 </text>
             </div>
             <div class="col-md-3">
                 <text
                     label="Nº motor"
                     name="noMotor"
-                    hintStart="Campo obligatorio"
+                    hintStart="{{hintObligatorio}}"
                     [max]="40"
                     [group]="form">
-                        
+
                 </text>
             </div>
 
@@ -218,9 +214,9 @@
             </div>
         </div>
         <div class="row justify-content-end space">
-            <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" matTooltipPosition="above">
-                <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id != null">Guardar</button>
-                <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id == null">Guardar</button>
+            <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validate(form)"  matTooltipPosition="above">
+                <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]|| !isOneFilled" *ngIf="id != null">Guardar</button>
+                <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]|| !isOneFilled" *ngIf="id == null">Guardar</button>
             </div>
             <div class="col-sm-auto">
                 <button mat-button routerLink="/caso/{{casoId}}/noticia-hecho/vehiculos">Cancelar</button>

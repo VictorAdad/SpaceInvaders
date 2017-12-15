@@ -143,6 +143,18 @@ export class NoticiaHechoService {
                 Logger.log("PERSONAS",arr);
             }
     }
+    //solo funciona en offline
+    public getPersonaCaso(id){
+        if (!this.onLine.onLine){
+            if (this.caso["personaCasos"]){
+                for (var i = 0; i < this.caso["personaCasos"].length; ++i) {
+                    if (this.caso["personaCasos"]["id"]==id)
+                        return this.caso["personaCasos"]["id"];
+                }
+            }
+        }
+        return null;
+    }
 
     public getDelitos(){
         if (this.onLine.onLine)

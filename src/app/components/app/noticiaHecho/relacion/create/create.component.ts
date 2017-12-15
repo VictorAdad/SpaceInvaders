@@ -764,14 +764,9 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                                     tieneViolenciaGenero:_model["tieneViolenciaGenero"],
                                     trataPersona:_model["trataPersona"],
                                     gradoParticipacion:_model["gradoParticipacion"]?_model["gradoParticipacion"]:null,
-                                    violenciaGenero:_model.tieneViolenciaGenero?{
+                                    violenciaGenero:_model.tieneViolenciaGenero?(this.optionsRelacion.matrizViolenciaGenero.finded[0]?{
                                         id: this.optionsRelacion.matrizViolenciaGenero.finded[0].id,
-                                        // delincuenciaOrganizada: this.optionsRelacion.matrizViolenciaGenero.finded[0].delincuenciaOrganizada,
-                                        // ordenProteccion:  this.optionsRelacion.matrizViolenciaGenero.finded[0].ordenProteccion,
-                                        // victimaAcoso:  this.optionsRelacion.matrizViolenciaGenero.finded[0].victimaAcoso,
-                                        // violenciaGenero:  this.optionsRelacion.matrizViolenciaGenero.finded[0].violenciaGenero,
-                                        // victimaTrata: this.optionsRelacion.matrizViolenciaGenero.finded[0].victimaTrata
-                                    }:null
+                                    }:null):null
                                 },
                                 id:this.id,
                                 lugarTipoRelacionPersona:_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"],

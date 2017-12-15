@@ -1,6 +1,6 @@
 import { TipoInterviniente } from './../../../../../models/personaCaso';
 import { DetalleDetenido, TipoDetenido } from './../../../../../models/persona';
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CIndexedDB } from '@services/indexedDB';
@@ -39,15 +39,9 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     public tipoInterviniente =null;
     public tipoPersona=null;
 
-    forma=[{label:"Redonda", value:"Redonda"},{label:"Eliptica",value:"Eliptica"}];
-    helixOriginal=[{label:"Si", value:"Si"},{label:"No",value:"No"}];
-    helixSuperior=[{label:"Si",value:"Si"},{label:"No",value:"No"}];
-    helixPosterior=[{label:"Si",value:"Si"},{label:"No",value:"No"}];
-    helixAdherencia=[{label:"Si", value:"Si"},{label:"No",value:"No"}];
-    lobuloContorno=[{label:"Si", value:"Si"},{label:"No",value:"No"}];
-    lobuloAdherencia=[{label:"Si", value:"Si"},{label:"No",value:"No"}];
-    lobuloParticular=[{label:"Si", value:"Si"},{label:"No",value:"No"}];
-    lobuloDimension=[{label:"chico",value:"chico"},{label:"Mediano",value:"Mediano"},{label:"Grande",value:"Grande"}];
+    @ViewChild('tipoInterviniente')
+    public tipoIntervinienteEl;
+
 
     constructor(
         private _fbuilder: FormBuilder,
@@ -128,7 +122,6 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         this.form  = LosForm.createForm();
         this.globals = new PersonaGlobals(this.form,this.persona);
         this.globals.form.controls.razonSocial.disable();
-        // this.globals.form.controls.personaCaso["controls"][0].controls.detalleDetenido.controls.tipoDetenido.disable();
         this.globals.formLocalizacion = LosForm.createFormLocalizacion();
         this.route.params.subscribe(params => {
             if(params['casoId']){
@@ -137,14 +130,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 this.casoService.find(this.casoId);
             }
             this.globals.inicioOnline=this.onLine.onLine;
-            // if(!this.onLine.onLine){
-            //     if (!isNaN(this.casoId)){
-            //         this.tabla.get("casos",this.casoId).then(
-            //             casoR=>{
-            //                 this.caso=casoR as Caso;
-            //             });
-            //     }
-            // }
+
             if(params['id']){
                 this.id = +params['id'];
                 if(this.onLine.onLine){
@@ -159,6 +145,40 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         this.globals.form.controls.personaCaso["controls"][0].controls.tipoInterviniente.disable();
                         Logger.log('Form', this.globals);
                         Logger.log("Coco",this.tipoPersona,this.tipoInterviniente);
+
+                        if(this.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victimaDesconocido){
+                            let timer = Observable.timer(500);
+                            timer.subscribe(t => {
+                                Logger.log('Es víctima desconocida');
+                                let contentRadios = this.tipoIntervinienteEl.contentRadios.nativeElement
+                                let radio = contentRadios.querySelectorAll('.mat-radio-button[ng-reflect-value="'+_config.optionValue.tipoInterviniente.victima+'"]');
+                                let input = radio[0].querySelectorAll('.mat-radio-input');
+                                let radioDesconocido = contentRadios.querySelectorAll('.mat-radio-button[ng-reflect-value="'+_config.optionValue.tipoInterviniente.victimaDesconocido+'"]');
+                                let inputDesconocido = radioDesconocido[0].querySelectorAll('.mat-radio-input');
+
+                                radio[0].classList.remove('mat-radio-disabled');
+                                input[0].removeAttribute('disabled');
+                                radioDesconocido[0].classList.remove('mat-radio-disabled');
+                                inputDesconocido[0].removeAttribute('disabled');
+
+                            });
+                        }else if(this.tipoInterviniente.id === _config.optionValue.tipoInterviniente.imputadoDesconocido){
+                            let timer = Observable.timer(500);
+                            timer.subscribe(t => {
+                                Logger.log('Es imputado desconocido');
+                                let contentRadios = this.tipoIntervinienteEl.contentRadios.nativeElement
+                                let radio = contentRadios.querySelectorAll('.mat-radio-button[ng-reflect-value="'+_config.optionValue.tipoInterviniente.imputado+'"]');
+                                let input = radio[0].querySelectorAll('.mat-radio-input');
+                                let radioDesconocido = contentRadios.querySelectorAll('.mat-radio-button[ng-reflect-value="'+_config.optionValue.tipoInterviniente.imputadoDesconocido+'"]');
+                                let inputDesconocido = radioDesconocido[0].querySelectorAll('.mat-radio-input');
+
+                                radio[0].classList.remove('mat-radio-disabled');
+                                input[0].removeAttribute('disabled');
+                                radioDesconocido[0].classList.remove('mat-radio-disabled');
+                                inputDesconocido[0].removeAttribute('disabled');
+
+                            });
+                        }
                     });
                 }else{
                     //this.tabla.get("casos",this.casoId).then(caso => {

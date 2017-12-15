@@ -1,5 +1,6 @@
+import { Validation } from '@services/validation/validation.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, FormArray, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Vehiculo } from '@models/vehiculo';
 import { OnLineService} from '@services/onLine.service';
@@ -28,7 +29,9 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     public breadcrumb = [];
     public isProcedenciaExtranjera: boolean =false;
     public regexPlaca = /^(?:\s*[a-zA-Z0-9]{1,}\s*)*$/
-
+    public isOneFilled:boolean=false;
+    public hintObligatorio="Campo obligatorio";
+    public isRobo:boolean=false;
 
     constructor(
         public optionsServ: SelectsService,
@@ -46,6 +49,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
 
         let timer = Observable.timer(1000);
         timer.subscribe(t => {
+            vehiculoServ.marcaSubmarca.marca    = [];
             vehiculoServ.marcaSubmarca.submarca = [];
             Logger.log('vehiculoserv', this.vehiculoServ);
         });
@@ -56,20 +60,20 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         this.model = new Vehiculo();
         this.form = new FormGroup({
             'id'  : new FormControl("",[]),
-            'motivoRegistro'        : new FormControl("", [Validators.required,]),
-            'campoVehiculo'         : new FormControl("", [Validators.required,]),
+            'motivoRegistro'        : new FormControl("", []),
+            'campoVehiculo'         : new FormControl("", []),
             'tarjetaCirculacion'    : new FormControl("", []),
             'noEconomico'           : new FormControl("", []),
             'clase'                 : new FormControl("", []),
-            'marca'                 : new FormControl("", [Validators.required,]),
-            'submarca'              : new FormControl("", [Validators.required,]),
-            'color'                 : new FormControl("", [Validators.required,]),
-            'modelo'                : new FormControl("", [Validators.required,]),
-            'placas'                : new FormControl("", [Validators.required,]),
+            'marca'                 : new FormControl("", []),
+            'submarca'              : new FormControl("", []),
+            'color'                 : new FormControl("", []),
+            'modelo'                : new FormControl("", []),
+            'placas'                : new FormControl("", []),
             'placasAdicionales'     : new FormControl("", []),
             'registroFederalVehiculo': new FormControl("", []),
-            'noSerie'               : new FormControl("", [Validators.required,]),
-            'noMotor'               : new FormControl("", [Validators.required,]),
+            'noSerie'               : new FormControl("", []),
+            'noMotor'               : new FormControl("", []),
             'aseguradora'           : new FormControl("", []),
             'factura'               : new FormControl("", []),
             'datosTomados'          : new FormControl("", []),
@@ -111,6 +115,8 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                 this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho/vehiculos`,label:"Detalle noticia de hechos"})
                 this.casoService.find(this.casoId);
+                this.validateDelitoRobo();
+
              }
             if(params['id']){
                 this.id = +params['id'];
@@ -141,6 +147,80 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             this.validateForm(this.form);
         });
     }
+
+    public validateDelitoRobo(){
+      console.log(this.casoService.caso)
+
+      // let isRoboSecundario=false;
+      // this.casoService.caso.delitoCaso.forEach(delito => {
+      //   if(delito.delitonombre==_config.optionValue.delito.robo){
+      //     isRoboSecundario=true;
+      //   }
+      // });
+
+      // if(this.casoService.caso.delitoPrincipal.nombre==_config.optionValue.delito.robo || isRoboSecundario)
+      // {
+      //   /*
+      //     VIN
+      //     Placas
+      //     No. de Motor
+      //     Modelo
+      //   */
+      //   this.isRobo=true;
+      //   this.form.controls.placas.setValidators([Validators.required]);
+      //   this.form.controls.modelo.setValidators([Validators.required]);
+      //   this.form.controls.noSerie.setValidators([Validators.required]);
+      //   this.form.controls.noMotor.setValidators([Validators.required]);
+
+      //   this.form.controls.placas.updateValueAndValidity();
+      //   this.form.controls.modelo.updateValueAndValidity();
+      //   this.form.controls.noSerie.updateValueAndValidity();
+      //   this.form.controls.noMotor.updateValueAndValidity();
+      //   console.log(this.form.value)
+      // }
+      // else{
+      //   this.hintObligatorio="";
+      //   console.log(this.form.value)
+      //   this.form.clearValidators()
+      //   this.form.updateValueAndValidity();
+      //   this.isOneFilled=this.atLeastOneFilled(this.form);
+      //   console.log('Al menos uno',this.isOneFilled);
+
+      // }
+
+    }
+public validate(form: FormGroup){
+  if(this.isRobo)
+  this.validateForm(form);
+  else {this.isOneFilled= this.atLeastOneFilled(form); console.log(this.isOneFilled)}
+
+}
+    public atLeastOneFilled(form: FormGroup) {
+      console.log(form);
+      Object.keys(form.controls).forEach(field => {
+          const control = form.get(field);
+          if (control instanceof FormControl) {
+              if(control.value != '')
+                 return true;
+          } else if (control instanceof FormGroup) {
+              this.atLeastOneFilled(control);
+          } else if (control instanceof FormArray){
+              Object.keys(control.controls).forEach(fieldArray => {
+                  const controlArray = control.controls[fieldArray];
+                  if (controlArray instanceof FormControl) {
+                      if(control.value != '')
+                         return true;
+                  } else if (controlArray instanceof FormGroup) {
+                      return this.atLeastOneFilled(controlArray);
+                  }
+              });
+              return false;
+          }
+      });
+      return false;
+    }
+
+
 
     public changeSelect(matrix, value){
 
@@ -326,10 +406,26 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         this.form.patchValue(_data);
         let timer = Observable.timer(1);
         timer.subscribe(t => {
-            this.form.controls.pedimentoImportancion.setValue(_data.pedimentoImportancion);    
+            this.form.controls.pedimentoImportancion.setValue(_data.pedimentoImportancion);
         });
 
+
+    }
+
+    public tipoVehiculoChange(_event){
+        Logger.log('tipoVehiculoChange()', _event);
+        this.vehiculoServ.marcaSubmarca.find(_event, 'tipoVehiculo');
+        this.vehiculoServ.marcaSubmarca.filterBy(_event, 'tipoVehiculo', 'marca');
         
+        if(_event == _config.optionValue.automovil)
+            this.form.controls.submarca.setValidators([Validators.required]);    
+        else
+            this.form.controls.submarca.setValidators([]);
+
+        if(typeof _event != 'undefined' && _event != ''){
+            this.form.controls.submarca.updateValueAndValidity();
+            this.form.controls.submarca.markAsTouched();
+        }
     }
 
     public marcaChange(_event){
