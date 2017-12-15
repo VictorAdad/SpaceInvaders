@@ -133,7 +133,7 @@
             <button mat-menu-item routerLink="ayuda">
                 <mat-icon fxHide="false" fxHide.gt-sm>help_outline</mat-icon>Ayuda
             </button>
-            <button mat-menu-item (click)="cleanDB()" *ngIf="_CONFIG.develop">
+            <button mat-menu-item (click)="cleanDB()" *ngIf="!env.production">
                 <mat-icon fxHide="false" fxHide.gt-sm>delete</mat-icon>Borrar BD local
             </button>
             <mat-divider></mat-divider>
@@ -141,7 +141,7 @@
                 <mat-icon fxHide="false" fxHide.gt-sm>autorenew</mat-icon>
             </button>
             <button (click)="logout()" mat-menu-item>
-                <mat-icon fxHide="false" fxHide.gt-sm>highlight_off</mat-icon>Logout
+                <mat-icon fxHide="false" fxHide.gt-sm>highlight_off</mat-icon>Cerrar sesión
             </button>
         </mat-menu>
     </mat-toolbar>
