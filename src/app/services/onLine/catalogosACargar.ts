@@ -260,10 +260,6 @@ export class CatalogosACargar {
             catalogo:"subdireccion",
             uri:"/v1/catalogos/usuario/subdireccion/options"
         },
-        {//55
-            catalogo:"subdireccion",
-            uri:"/v1/catalogos/predenuncia/tipo-linea/options"
-        },
         {//59
             catalogo:"turno",
             uri:"/v1/catalogos/usuario/turno/options"
