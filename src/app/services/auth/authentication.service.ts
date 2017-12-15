@@ -57,7 +57,7 @@ export class AuthenticationService {
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
-        headers.append('Authorization', 'b2F1dGhzaWdpY2xpZW50OmZjODFmZGFmNjlhYjQ4NjZhMmZjODU3NWMwZGIwYmQ2');
+        headers.append('Authorization', 'Basic b2F1dGhzaWdpY2xpZW50OmZjODFmZGFmNjlhYjQ4NjZhMmZjODU3NWMwZGIwYmQ2');
         headers.append('X-OAUTH-IDENTITY-DOMAIN-NAME', 'OAuthSIGIDomain');
 
         let body = `grant_type=PASSWORD&username=${username}&password=${password}&scope=AttributesOUD.attr`
