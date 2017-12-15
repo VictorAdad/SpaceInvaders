@@ -57,12 +57,12 @@ export class AuthenticationService {
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
-        headers.append('authorization', 'Basic b2F1dGhzaWdpY2xpZW50OmZjODFmZGFmNjlhYjQ4NjZhMmZjODU3NWMwZGIwYmQ2');
-        headers.append('x-oauth-identity-domain-name', 'OAuthSIGIDomain');
-        // headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', 'b2F1dGhzaWdpY2xpZW50OmZjODFmZGFmNjlhYjQ4NjZhMmZjODU3NWMwZGIwYmQ2');
+        headers.append('X-OAUTH-IDENTITY-DOMAIN-NAME', 'OAuthSIGIDomain');
+
+        let body = `grant_type=PASSWORD&username=${username}&password=${password}&scope=AttributesOUD.attr`
 
         let options = new RequestOptions({ headers: headers })
-        let body = 'grant_type=PASSWORD&username=mopega&password=welcome1&scope=AttributesOUD.attr'
 
         var request = this.http.post(environment.oam.host, body, options)
             .map((response: Response) => response.json());
