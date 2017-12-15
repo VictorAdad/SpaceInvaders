@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Logger } from "@services/logger.service";
 
@@ -17,7 +17,10 @@ export class RadioButtonComponent{
 	@Input() functionChange: Function;
 	@Input() requerido:boolean=false;
 
-	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>()
+	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
+
+	@ViewChild('contentRadios')
+	public contentRadios;
 
 	//TODO: Falta ver como sincronizar los cambios los radio.
 	update(value) {

@@ -11,6 +11,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
 import { _config} from '@app/app.config';
 import { Logger } from '@services/logger.service';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,7 @@ export class AppComponent {
 	public isAuthenticated : boolean;
     public _SIDEBAR        : boolean;
     public _CONFIG: any = _config;
+    public env = environment;
 
 	constructor(
 		public authService: AuthenticationService,

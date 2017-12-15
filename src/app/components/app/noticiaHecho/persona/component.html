@@ -22,7 +22,7 @@
 	<!-- Name Column -->
 	<ng-container matColumnDef="nombre">
 		<mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
-		<mat-cell *matCellDef="let element"> {{element.persona.nombre}} {{element.persona.paterno}} {{element.persona.materno}} </mat-cell>
+		<mat-cell *matCellDef="let element"> {{ element | personaNombre}} </mat-cell>
 	</ng-container>
 
 	<!-- Razon Social Column -->
