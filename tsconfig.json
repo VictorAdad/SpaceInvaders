@@ -22,7 +22,8 @@
       "@services/*": ["./app/services/*"],
       "@models/*": ["./app/models/*"],
       "@app/*": ["./app/*"],
-      "@providers/*": ["./app/providers/*"]
+      "@providers/*": ["./app/providers/*"],
+      "@pipes/*": ["./app/pipes/*"]
     }
   }
 }

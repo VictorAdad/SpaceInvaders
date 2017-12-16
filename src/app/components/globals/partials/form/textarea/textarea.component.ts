@@ -45,8 +45,10 @@ export class TextareaComponent implements OnInit{
 
 	inputSlice(){
 		if (this.value!=null && this.value.toString().length > this.max) {
-			this.value = this.value.toString().slice(0,this.max);
+			this.value = this.value.toString().trim().slice(0,this.max);
 		}
+		else if  ( this.value.toString().length>0 && (/^\s*$/).test(this.value) )
+				this.value = this.value.toString().trim();
 	}
 }
 
