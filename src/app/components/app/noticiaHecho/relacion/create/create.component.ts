@@ -114,6 +114,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         ) {
         super();
         this.optionsRelacion = new Options(http,db,onLine);
+        Logger.logColor("XXXX","red",this.optionsRelacion);
     }
 
     ngOnInit(){
@@ -133,14 +134,15 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 //this.optionsNoticia.getData();
                 this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho/relaciones`,label:"Detalle noticia de hechos"})
                 this.casoService.find(this.casoId).then(r=>{this.casoOffline=this.casoService.caso;});
-
+                this.optionsRelacion.getData();
                 if(this.onLine.onLine){
                 
                     this.casoOffline=this.casoService.caso;
                     this.optionsNoticia.setId(this.casoId, this.casoOffline);
                     this.optionsNoticia.getData();
                     this.optionsService.getData();
-                    this.optionsRelacion.getData();
+                    // this.optionsRelacion.getData();
+                    Logger.log("YYYYY",this.optionsNoticia);
                 
                 }else{
                     //this.db.list("casos").then(caso=>{
@@ -149,8 +151,9 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                         this.optionsNoticia.setId(this.casoId, this.casoOffline);
                         this.optionsNoticia.getData();
                         this.optionsService.getData();
-                        this.optionsRelacion.getData();
-                        Logger.log("TODA LA VISTA",this);
+                        // this.optionsRelacion.getData();
+                        Logger.log("TODA LA VISTA",this.optionsNoticia);
+
                     });
                 }
             }
@@ -511,7 +514,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                                     clasificacionDelito:_model["clasificacionDelito"],
                                     clasificacionDelitoOrden:_model["clasificacionDelitoOrden"],
                                     concursoDelito:_model["concursoDelito"],
-                                    delitoCaso:_model["delitoCaso"],
+                                    delitoCaso:this.optionsNoticia.getDelitoCaso(_model["delitoCaso"]["id"]),
                                     desaparicionConsumacion:_model["desaparicionConsumacion"],
                                     efectoViolencia:_model["efectoViolencia"],
                                     elementoComision:_model["elementoComision"],
@@ -535,9 +538,12 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                                     }:null
                                 },
                                 id:_model["id"],
-                                lugarTipoRelacionPersona:_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"],
-                                personaCaso:_model["tipoRelacionPersona"]["personaCaso"],
-                                personaCasoRelacionada:_model["tipoRelacionPersona"]["personaCasoRelacionada"],
+                                lugarTipoRelacionPersona:[{
+                                    id:_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"][0]["id"],
+                                    lugar:this.optionsNoticia.getLugarCaso(_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"][0]["lugar"]["id"])
+                                }],
+                                personaCaso:this.optionsNoticia.getPersonaCaso(_model["tipoRelacionPersona"]["personaCaso"]["id"]),
+                                personaCasoRelacionada:this.optionsNoticia.getPersonaCaso(_model["tipoRelacionPersona"]["personaCasoRelacionada"]["id"]),
                                 tipo:_model["tipoRelacionPersona"]["tipo"],
                                 vehiculoTipoRelacion:_model["tipoRelacionPersona"]["vehiculoTipoRelacionPersona"]
                             }
@@ -751,7 +757,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                                     clasificacionDelito:_model["clasificacionDelito"],
                                     clasificacionDelitoOrden:_model["clasificacionDelitoOrden"],
                                     concursoDelito:_model["concursoDelito"],
-                                    delitoCaso:_model["delitoCaso"],
+                                    delitoCaso:this.optionsNoticia.getDelitoCaso(_model["delitoCaso"]["id"]),
                                     desaparicionConsumacion:_model["desaparicionConsumacion"],
                                     efectoViolencia:_model["efectoViolencia"],
                                     elementoComision:_model["elementoComision"],
@@ -769,12 +775,16 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                                     }:null):null
                                 },
                                 id:this.id,
-                                lugarTipoRelacionPersona:_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"],
-                                personaCaso:_model["tipoRelacionPersona"]["personaCaso"],
-                                personaCasoRelacionada:_model["tipoRelacionPersona"]["personaCasoRelacionada"],
+                                lugarTipoRelacionPersona:[{
+                                    id:_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"][0]["id"],
+                                    lugar:this.optionsNoticia.getLugarCaso(_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"][0]["lugar"]["id"])
+                                }],
+                                personaCaso:this.optionsNoticia.getPersonaCaso(_model["tipoRelacionPersona"]["personaCaso"]["id"]),
+                                personaCasoRelacionada:this.optionsNoticia.getPersonaCaso(_model["tipoRelacionPersona"]["personaCasoRelacionada"]["id"]),
                                 tipo:_model["tipoRelacionPersona"]["tipo"],
                                 vehiculoTipoRelacion:_model["tipoRelacionPersona"]["vehiculoTipoRelacionPersona"]
                             }
+                            Logger.log("Relacion",relacion);
                             for (var i = 0; i < caso["tipoRelacionPersonas"].length; ++i) {
                                 if (caso["tipoRelacionPersonas"][i]["id"]==this.id){
                                     caso["tipoRelacionPersonas"][i]=relacion;
@@ -784,7 +794,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                             this.db.update("casos",caso).then(t=>{
                                 Logger.log("NO",t);
                                 resolve("Se creo la relación con éxito");
-                                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/relaciones' ]);
+                                //this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/relaciones' ]);
                             });
                         }
                 });

@@ -8,8 +8,7 @@ export class NoticiaHechoGlobal{
     }
 
 	public validateForm(form: FormGroup) {
-    console.log('Validate Control', form);
-
+    
         Object.keys(form.controls).forEach(field => {
             const control = form.get(field);
             if (control instanceof FormControl) {
