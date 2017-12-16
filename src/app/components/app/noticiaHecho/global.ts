@@ -8,12 +8,11 @@ export class NoticiaHechoGlobal{
     }
 
 	public validateForm(form: FormGroup) {
-    console.log('Validate Control', form);
-
         Object.keys(form.controls).forEach(field => {
             const control = form.get(field);
             if (control instanceof FormControl) {
                 if(control.status === 'INVALID')
+                    // Logger.log('Validate Control', control);
                 control.markAsTouched({ onlySelf: true });
             } else if (control instanceof FormGroup) {
                 this.validateForm(control);

@@ -25,7 +25,11 @@ export var _config = {
       imputadoDesconocido:21,
       victimaDesconocido:22
 
-		}
+    },
+    delito:{
+      robo:"ROBO"
+
+    }
 	},
 	manuales: {
 		videos: [
