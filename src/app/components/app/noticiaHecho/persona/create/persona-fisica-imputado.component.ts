@@ -207,6 +207,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         Logger.log("Coco",this.tipoPersona,this.tipoInterviniente);
                     });
                 }
+            }else{
+                this.globals.tipoPersona = 'Física';
             }
         });
         let timer = Observable.timer(1);
