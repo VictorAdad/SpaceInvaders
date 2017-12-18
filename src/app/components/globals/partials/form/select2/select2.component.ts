@@ -66,7 +66,7 @@ export class Select2Component{
   		this.filteredOptions =  this.options.filter(
   			option => {
   				let optNormal = option.label.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "")
-  				return (optNormal.indexOf(valNormal) === 0 || optNormal.includes(valNormal));
+  				return (optNormal.indexOf(valNormal) === 0);
 			}
 		);
    	}
