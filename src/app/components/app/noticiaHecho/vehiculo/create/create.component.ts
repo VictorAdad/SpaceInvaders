@@ -250,6 +250,10 @@ public validate(form: FormGroup){
     }
 
     public save(valid : any, _model : any){
+        if (!isNaN(_model.modelo)) {
+            Logger.logColor('------------>','red',_model);
+            _model.modelo = 0;            
+        }
         Logger.log("SI",this.vehiculoServ.tipoUsoTipoVehiculo.finded);
         if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0]){
             _model.tipoUsoTipoVehiculo.id=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].id;
@@ -319,6 +323,13 @@ public validate(form: FormGroup){
 
     public edit(_valid : any, _model : any){
         var obj=this;
+        Logger.logColor('------------>','green',_model);
+
+        if (!isNaN(_model.modelo)) {
+            Logger.logColor('------------>','red',_model);
+            _model.modelo = 0;            
+        }
+
         if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0]){
             _model.tipoUsoTipoVehiculo.id=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].id;
             _model.tipoUsoTipoVehiculo["tipoVehiculo"]=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].tipoVehiculo;
