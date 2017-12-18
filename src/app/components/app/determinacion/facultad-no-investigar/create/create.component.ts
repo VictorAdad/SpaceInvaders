@@ -84,6 +84,7 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
             'originarioDenunciante': new FormControl(''),
             'edadDenunciante': new FormControl(''),
             'domicilioDenunciante': new FormControl(''),
+            'fraccion': new FormControl(''),
         });
 
         this.route.params.subscribe(params => {

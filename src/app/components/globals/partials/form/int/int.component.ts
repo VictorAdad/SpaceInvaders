@@ -10,6 +10,7 @@ import { BaseInputComponent } from '../base-input.component';
 export class IntComponent extends BaseInputComponent {
 
 	@Input() max :number = 12;
+	@Input() min :number = null;
 
 	public regexINT: RegExp = /^\d+$/;
 
@@ -34,7 +35,7 @@ export class IntComponent extends BaseInputComponent {
 	}
 
 	inputSlice(_value){
-		if (_value!=null && _value != '') {
+		if (_value && _value != '') {
 			if (!this.regexINT.test(_value)){
 				this.control.setValue(this.backupValue);
 			}else{
@@ -43,8 +44,28 @@ export class IntComponent extends BaseInputComponent {
 
 			if (_value.toString().length > this.max)
 				this.control.setValue(_value.toString().slice(0,this.max));
+			if (this.min && _value.toString().length < this.min){
+				this.invalid();
+			}else{
+				this.valid();
+			}
 		}else{
 			this.backupValue = _value;
+			if (!_value){
+				console.log("Valor");
+				this.valid();
+			}
 		}
+	}
+
+	public valid(){
+		this.hintEnd = ""
+		if (this.value)
+			this.control.setErrors(null);
+	}
+
+	public invalid(){
+		this.hintEnd = "Este campo no es valido se requeiren "+this.min+" caracteres";
+		this.control.setErrors({'incorrect': true});
 	}
 }

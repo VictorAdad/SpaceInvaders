@@ -118,12 +118,12 @@
                         <text label="Estado" name="estado" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <phone label="Nº telefónico particular" name="noTelefonoParticular" [max]="20" [group]="form"></phone>
+                        <int label="Nº telefónico particular" name="noTelefonoParticular" [max]="10" [min]="10" [group]="form"></int>
                     </div>
                 </div>
                 <div class="row justify-content-start">
                     <div class="col-md-3">
-                        <phone label="Nº telefónico celular" name="noTelefonoCelular" [max]="20" [group]="form"></phone>
+                        <int label="Nº telefónico celular" name="noTelefonoCelular" [max]="10" [min]="10" [group]="form"></int>
                     </div>
                     <div class="col-md-3">
                         <email label="Correo electrónico" name="correoElectronico" [group]="form"></email>

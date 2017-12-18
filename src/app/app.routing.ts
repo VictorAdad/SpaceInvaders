@@ -143,9 +143,9 @@ const routes: Routes = [
     { path : 'caso/:casoId/registro-general/create', component : RegistroGeneralCreateComponent, data : { breadcrumb : 'Registro general'}},
     { path : 'caso/:casoId/registro-general/:id/edit', component : RegistroGeneralCreateComponent, data : { breadcrumb : 'Registro general'}},
 
-    { path : 'caso/:casoId/policia', component : PoliciaComponent, data : { breadcrumb : 'Solicitudes preliminares de Policia Ministerial'}},
-    { path : 'caso/:casoId/policia/create', component : PoliciaCreateComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
-    { path : 'caso/:casoId/policia/:id/edit', component : PoliciaCreateComponent, data : { breadcrumb : 'Solicitudes de Policia Ministerial'}},
+    { path : 'caso/:casoId/policia', component : PoliciaComponent, data : { breadcrumb : 'Solicitudes preliminares de Policía de investigación'}},
+    { path : 'caso/:casoId/policia/create', component : PoliciaCreateComponent, data : { breadcrumb : 'Solicitudes de Policía de investigación'}},
+    { path : 'caso/:casoId/policia/:id/edit', component : PoliciaCreateComponent, data : { breadcrumb : 'Solicitudes de Policía de investigación'}},
 
     { path : 'caso/:casoId/perito', component : PeritoComponent, data : { breadcrumb : 'Solicitudes preliminares a peritos'}},
     { path : 'caso/:casoId/perito/create', component : PeritoCreateComponent, data : { breadcrumb : 'Solicitudes de servicios periciales'}},
