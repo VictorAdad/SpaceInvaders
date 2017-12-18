@@ -14,9 +14,9 @@ import { Logger } from "@services/logger.service";
     templateUrl: 'create.component.html',
     styles:[`
         .fondo{
-        margin:5%; 
-        border-radius: 0; 
-        border-collapse: black; 
+        margin:5%;
+        border-radius: 0;
+        border-collapse: black;
         border-style: solid;
         }
         `
@@ -33,9 +33,9 @@ export class DelitoCreateComponent{
 
     listaDelitos=[];
     tabla:CIndexedDB;
-    
 
-    constructor(public dialog: MatDialog, private _tabla: CIndexedDB, private router:Router, private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private casoService:CasoService) { 
+
+    constructor(public dialog: MatDialog, private _tabla: CIndexedDB, private router:Router, private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private casoService:CasoService) {
         this.tabla=_tabla;
     }
     ngOnInit(){
@@ -63,7 +63,7 @@ export class DelitoCreateComponent{
                     }
                    });
                 }
-                
+
             }
         });
 
@@ -116,6 +116,7 @@ export class DelitoCreateComponent{
                     if (obj.onLine.onLine)
                         obj.http.post('/v1/base/delitos-casos',data).subscribe(response => {
                                 Logger.log("->",response);
+                                obj.casoService.actualizaCaso();
                                 guardaLista(i+1,obj.listaDelitos,listaErrores);
                             },
                             error=>{
@@ -148,7 +149,7 @@ export class DelitoCreateComponent{
                                     });
                                 }
                             //});
-                        }); 
+                        });
                     }
 
                 }

@@ -146,22 +146,17 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
 
     public validateDelitoRobo(caso){
       console.log('Casoooo',caso)
-
       let isRoboSecundario=false;
+      console.log('delito caso',caso.delitoCaso);
       caso.delitoCaso.forEach(delito => {
-        if(delito.delitonombre==_config.optionValue.delito.robo){
-          isRoboSecundario=true;
+        console.log(delito)
+        if(delito.delito.nombre===_config.optionValue.delito.robo){
+            isRoboSecundario=true;
         }
       });
 
       if(caso.delitoPrincipal.nombre==_config.optionValue.delito.robo || isRoboSecundario)
       {
-        /*
-          VIN
-          Placas
-          No. de Motor
-          Modelo
-        */
         this.isRobo=true;
         this.isOneFilled=true;
         console.log(this.isOneFilled)
@@ -245,7 +240,7 @@ public validate(form: FormGroup){
     public save(valid : any, _model : any){
         if (!isNaN(_model.modelo)) {
             Logger.logColor('------------>','red',_model);
-            _model.modelo = 0;            
+            _model.modelo = 0;
         }
         Logger.log("SI",this.vehiculoServ.tipoUsoTipoVehiculo.finded);
         if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0]){
@@ -320,7 +315,7 @@ public validate(form: FormGroup){
 
         if (!isNaN(_model.modelo)) {
             Logger.logColor('------------>','red',_model);
-            _model.modelo = 0;            
+            _model.modelo = 0;
         }
 
         if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0]){
@@ -432,14 +427,14 @@ public validate(form: FormGroup){
 
     public tipoVehiculoChange(_event){
         Logger.log('tipoVehiculoChange()', _event, this.vehiculoServ.marcaSubmarca);
-        
+
         if(_event){
             this.vehiculoServ.marcaSubmarca.find(_event, 'tipoVehiculo');
             this.vehiculoServ.marcaSubmarca.filterBy(_event, 'tipoVehiculo', 'marca');
         }
-        
+
         // if(_event == _config.optionValue.automovil)
-        //     this.form.controls.submarca.setValidators([Validators.required]);    
+        //     this.form.controls.submarca.setValidators([Validators.required]);
         // else
         //     this.form.controls.submarca.setValidators([]);
 
