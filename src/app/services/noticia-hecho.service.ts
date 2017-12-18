@@ -292,12 +292,11 @@ export class NoticiaHechoService {
 
     private constructOptionsVehiculo(_data:any){
         let options: MOption[] = [];
-
         if (_data)
             for (var i in _data){      // code...
                 let object=_data[i];
-                let marca = object.marcaSubmarca != null  ? object.marcaSubmarca.marca  : '';
-                let color = object.motivoRegistroColorClase != null  ? object.motivoRegistroColorClase.color  : '';
+                let marca = object.marcaSubmarca != null  ? (object.marcaSubmarca.marca? object.marcaSubmarca.marca:'SIN MARCA') : 'SIN MARCA';
+                let color = object.motivoRegistroColorClase != null  ? (object.motivoRegistroColorClase.color? object.motivoRegistroColorClase.color:'SIN COLOR') : 'SIN COLOR';
                 options.push({value: object.id, label: marca+" "+color});
             }
         options.sort((a,b)=>{
