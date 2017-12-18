@@ -11,7 +11,7 @@ export class MatrizEfectoDetalle extends MatrizGlobal{
         ) {
         super(db,"efecto_detalle");
         this.selected = new EfectoDetalle();
-        this.getMatriz();
+        this.getMatriz(['detalle']);
     }
 
     public validate(_object: any, _selected: any): boolean{
