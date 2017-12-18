@@ -12,7 +12,7 @@ export class MatrizGlobal {
 
     }
 
-    public getMatriz(){
+    public getMatriz(_exclude: string[] = []){
         this.superDb.get("catalogos",this.catalogo).then(response=>{
             this.objects = response["arreglo"];
             if ((response["arreglo"])["data"]){
@@ -34,7 +34,8 @@ export class MatrizGlobal {
                     && String(attr) !== 'filterBy'
                     && String(attr) !== 'clean'
                     && String(attr) !== 'superDb'){
-                    this[String(attr)] = this.getUniques(this.objects, attr);
+                    if(!(_exclude.indexOf(attr) > -1))
+                        this[String(attr)] = this.getUniques(this.objects, attr);
                 }
             }
         });

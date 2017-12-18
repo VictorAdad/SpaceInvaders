@@ -13,7 +13,7 @@ export class MatrizMarcaSubmarca extends MatrizGlobal{
         ) {
         super(db,"marca_submarca");
         this.selected = new MarcaSubmarca();
-        this.getMatriz();
+        this.getMatriz(['marca', 'submarca']);
     }
 
     public validate(_object: any, _selected: any): boolean{
