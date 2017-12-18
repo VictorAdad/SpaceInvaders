@@ -925,12 +925,18 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     doEdit(_model){
         return new Promise((resolve,reject)=>{
             if(this.onLine.onLine&&this.globals.inicioOnline){
+                if(this.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victimaDesconocido || this.tipoInterviniente.id === _config.optionValue.tipoInterviniente.imputadoDesconocido){
+                    this.form.controls.personaCaso["controls"][0].controls.tipoInterviniente.enable();
+                }
+                _model = this.form.value;
                 _model.personaCaso[0].caso.id = this.casoId;
                 (_model.personaCaso[0])["id"]=this.id;
+
                 Logger.log('Model', _model);
                 this.http.put('/v1/base/personas/'+this.globals.personaCaso["id"], _model).subscribe(
                     (response) => {
                         Logger.log("Editar Persona->",response);
+                        this.form.controls.personaCaso["controls"][0].controls.tipoInterviniente.disable();
                         resolve("Se actualizó la persona con éxito");
                         this.casoService.actualizaCaso();
                         // this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas' ]);
