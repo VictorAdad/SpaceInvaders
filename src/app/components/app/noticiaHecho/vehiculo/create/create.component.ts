@@ -138,9 +138,13 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
 
             }
         });
+        this.form.valueChanges.subscribe(
+          data => this.validate(this.form)
+        );
         let timer = Observable.timer(1);
         timer.subscribe(t => {
             this.validateForm(this.form);
+
         });
     }
 
