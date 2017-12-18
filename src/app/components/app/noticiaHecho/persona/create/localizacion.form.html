@@ -92,6 +92,7 @@
                     <int label="CP"
                         name="cp"
                         [max]="5"
+                        [min]="5"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
 
                     </int>
@@ -114,47 +115,52 @@
             </div>
             <div class="row">
                 <div class="col-md-3">
-                    <phone label="Tel. particular"
+                    <int label="Tel. particular"
                         name="telParticular"
-                        [max]="20"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
-                            
-                    </phone>
-                </div>
-                <div class="col-md-3">
-                    <phone label="Tel. del trabajo"
-                        name="telTrabajo"
-                        [max]="20"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
-                            
-                    </phone>
-                </div>
-                <div class="col-md-3">
-                    <int label="Extensión"
-                        name="extension"
-                        [max]="5"
+                        [max]="10"
+                        [min]="10"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
                             
                     </int>
                 </div>
                 <div class="col-md-3">
-                    <phone label="Tel. móvil"
-                        name="telMovil"
-                        [max]="20"
+                    <int label="Tel. del trabajo"
+                        name="telTrabajo"
+                        [max]="10"
+                        [min]="10"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
                             
-                    </phone>
+                    </int>
+                </div>
+                <div class="col-md-3">
+                    <int label="Extensión"
+                        name="extension"
+                        [max]="5"
+                        [min]="10"
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
+                            
+                    </int>
+                </div>
+                <div class="col-md-3">
+                    <int label="Tel. móvil"
+                        name="telMovil"
+                        [max]="10"
+                        [min]="10"
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
+                            
+                    </int>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-3">
-                    <phone label="Fax"
+                    <int label="Fax"
                         name="fax"
-                        [max]="20"
+                        [max]="10"
+                        [min]="10"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
                             
-                    </phone>
+                    </int>
                 </div>
                 <div class="col-md-3">
                     <text label="Otro medio de contacto"
