@@ -13,7 +13,7 @@
             <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/noticia-hecho/vehiculos" color="accent">Regresar</button>
         </div>
     </div>
-    <form [formGroup]="form">
+    <form [formGroup]="form" (mouseenter)="validate(form)">
         <div class="row">
             <div class="col-md-3">
                 <select2 placeholder="Motivo por el que se registra"
@@ -214,9 +214,9 @@
             </div>
         </div>
         <div class="row justify-content-end space">
-            <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validate(form)"  matTooltipPosition="above">
-                <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]|| !isOneFilled" *ngIf="id != null">Guardar</button>
-                <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]|| !isOneFilled" *ngIf="id == null">Guardar</button>
+            <div class="col-sm-auto" [matTooltip]="validateMsg(form)" matTooltipPosition="above">
+                <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving] || !isOneFilled" *ngIf="id != null">Guardar</button>
+                <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving] || !isOneFilled" *ngIf="id == null">Guardar</button>
             </div>
             <div class="col-sm-auto">
                 <button mat-button routerLink="/caso/{{casoId}}/noticia-hecho/vehiculos">Cancelar</button>

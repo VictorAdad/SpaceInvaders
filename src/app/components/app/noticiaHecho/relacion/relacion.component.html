@@ -22,8 +22,8 @@
     <ng-container matColumnDef="Elementos">
         <mat-header-cell *matHeaderCellDef> Elementos relacionados </mat-header-cell>
         <mat-cell style="width: 60%" *matCellDef="let element"> 
-            <strong>Imputado:</strong> {{element.personaCasoRelacionada.persona.nombre}} {{element.personaCasoRelacionada.persona.paterno}} {{element.personaCasoRelacionada.persona.materno}}<br>
-            <strong>Víctima:</strong> {{ element.personaCaso.persona.nombre}} {{ element.personaCaso.persona.paterno}} {{ element.personaCaso.persona.materno}} <br>
+            <strong>Imputado:</strong> {{element.personaCasoRelacionada | personaNombre}} <br>
+            <strong>Víctima:</strong> {{element.personaCaso | personaNombre}} <br>
             <strong>Lugar:</strong> {{element.lugarTipoRelacionPersona["0"].lugar.calle}}, {{element.lugarTipoRelacionPersona["0"].lugar.pais.nombre == 'MEXICO' ? element.lugarTipoRelacionPersona["0"].lugar.colonia.nombre : element.lugarTipoRelacionPersona["0"].lugar.coloniaOtro}}<br>
             <div style="text-overflow: ellipsis; white-space: pre; overflow: hidden !important;"><strong>Delito:</strong> {{element.detalleDelito.delitoCaso.delito.nombre}}</div>    
         </mat-cell>
