@@ -49,6 +49,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
 
         let timer = Observable.timer(1000);
         timer.subscribe(t => {
+            vehiculoServ.marcaSubmarca.marca    = [];
             vehiculoServ.marcaSubmarca.submarca = [];
             Logger.log('vehiculoserv', this.vehiculoServ);
         });
@@ -422,6 +423,22 @@ public validate(form: FormGroup){
         });
 
 
+    }
+
+    public tipoVehiculoChange(_event){
+        Logger.log('tipoVehiculoChange()', _event);
+        this.vehiculoServ.marcaSubmarca.find(_event, 'tipoVehiculo');
+        this.vehiculoServ.marcaSubmarca.filterBy(_event, 'tipoVehiculo', 'marca');
+        
+        if(_event == _config.optionValue.automovil)
+            this.form.controls.submarca.setValidators([Validators.required]);    
+        else
+            this.form.controls.submarca.setValidators([]);
+
+        if(typeof _event != 'undefined' && _event != ''){
+            this.form.controls.submarca.updateValueAndValidity();
+            this.form.controls.submarca.markAsTouched();
+        }
     }
 
     public marcaChange(_event){

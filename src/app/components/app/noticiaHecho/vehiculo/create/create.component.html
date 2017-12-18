@@ -27,9 +27,10 @@
             <div class="col-md-3">
                 <select2 placeholder="Vehículo"
                     name="campoVehiculo"
-                    [options]="vehiculoServ.tipoUsoTipoVehiculo.tipoVehiculo"
+                    [options]="vehiculoServ.marcaSubmarca.tipoVehiculo"
+                    hintStart="Campo obligatorio"
                     [group]="form"
-                    (valueChange)="vehiculoServ.tipoUsoTipoVehiculo.find($event, 'tipoVehiculo')">
+                    (valueChange)="tipoVehiculoChange($event)">
 
                 </select2>
             </div>

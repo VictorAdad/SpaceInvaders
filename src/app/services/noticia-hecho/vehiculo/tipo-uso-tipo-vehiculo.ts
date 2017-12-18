@@ -5,7 +5,6 @@ export class MatrizTipoUsoTipoVehiculo extends MatrizGlobal{
 
     public tipoUso        = [];
     public datosTomadosDe = [];
-    public tipoVehiculo   = [];
 
     constructor(
         private db: CIndexedDB
@@ -26,5 +25,4 @@ export class MatrizTipoUsoTipoVehiculo extends MatrizGlobal{
 export class TipoUsoTipoVehiculo {
     public tipoUso: string = null;
     public datosTomadosDe: string = null;
-    public tipoVehiculo:string = null;
 }
