@@ -5,7 +5,7 @@
                 [
                     {label:'Acuerdo general',value:'Acuerdo general'},
                     {label:'Registro general', value:'Registro general'},
-                    {label:'Registro de derivación a la UMASC', value:'Registro de derivación a la UMASC'},
+                    {label:'Registro de derivación a JR (Justicia Restaurativa)', value:'Registro de derivación'},
                     {label:'Registro de llamada para permitir al imputado comunicarse con su defensor',value:'Registro de llamada'}
                 ]"
                 placeholder="Tipo de solicitud"
@@ -13,7 +13,7 @@
                 [group]="form"
                 name="tipo">
             </select2>
-            <div *ngIf="tipo === 'Registro de derivación a la UMASC'">
+            <div *ngIf="tipo === 'Registro de derivación'">
             </div>    
             <div *ngIf="tipo === 'Acuerdo general'">
                 <h4>Fundamento legal</h4>

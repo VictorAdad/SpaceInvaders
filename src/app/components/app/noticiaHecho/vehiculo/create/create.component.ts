@@ -49,6 +49,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
 
         let timer = Observable.timer(1000);
         timer.subscribe(t => {
+            vehiculoServ.marcaSubmarca.marca    = [];
             vehiculoServ.marcaSubmarca.submarca = [];
             Logger.log('vehiculoserv', this.vehiculoServ);
         });
@@ -67,12 +68,12 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             'marca'                 : new FormControl("", []),
             'submarca'              : new FormControl("", []),
             'color'                 : new FormControl("", []),
-            'modelo'                : new FormControl("", []),
-            'placas'                : new FormControl("", []),
+            'modelo'                : new FormControl("", [Validators.required]),
+            'placas'                : new FormControl("", [Validators.required]),
             'placasAdicionales'     : new FormControl("", []),
             'registroFederalVehiculo': new FormControl("", []),
-            'noSerie'               : new FormControl("", []),
-            'noMotor'               : new FormControl("", []),
+            'noSerie'               : new FormControl("", [Validators.required]),
+            'noMotor'               : new FormControl("", [Validators.required]),
             'aseguradora'           : new FormControl("", []),
             'factura'               : new FormControl("", []),
             'datosTomados'          : new FormControl("", []),
@@ -113,8 +114,11 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             if(params['casoId']){
                 this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho/vehiculos`,label:"Detalle noticia de hechos"})
-                this.casoService.find(this.casoId);
-                this.validateDelitoRobo();
+                this.casoService.find(this.casoId).then(r=>{
+                  console.log(this.casoService)
+                  this.validateDelitoRobo(this.casoService.caso);
+                });
+
 
              }
             if(params['id']){
@@ -147,76 +151,86 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         });
     }
 
-    public validateDelitoRobo(){
-      console.log(this.casoService.caso)
+    public validateDelitoRobo(caso){
+      console.log('Casoooo',caso)
 
-      // let isRoboSecundario=false;
-      // this.casoService.caso.delitoCaso.forEach(delito => {
-      //   if(delito.delitonombre==_config.optionValue.delito.robo){
-      //     isRoboSecundario=true;
-      //   }
-      // });
+      let isRoboSecundario=false;
+      caso.delitoCaso.forEach(delito => {
+        if(delito.delitonombre==_config.optionValue.delito.robo){
+          isRoboSecundario=true;
+        }
+      });
 
-      // if(this.casoService.caso.delitoPrincipal.nombre==_config.optionValue.delito.robo || isRoboSecundario)
-      // {
-      //   /*
-      //     VIN
-      //     Placas
-      //     No. de Motor
-      //     Modelo
-      //   */
-      //   this.isRobo=true;
-      //   this.form.controls.placas.setValidators([Validators.required]);
-      //   this.form.controls.modelo.setValidators([Validators.required]);
-      //   this.form.controls.noSerie.setValidators([Validators.required]);
-      //   this.form.controls.noMotor.setValidators([Validators.required]);
+      if(caso.delitoPrincipal.nombre==_config.optionValue.delito.robo || isRoboSecundario)
+      {
+        /*
+          VIN
+          Placas
+          No. de Motor
+          Modelo
+        */
+        this.isRobo=true;
+        this.isOneFilled=true;
+        console.log(this.isOneFilled)
+        console.log(this.form.value)
+      }
+      else{
+        this.hintObligatorio="";
+        console.log('not robo')
+        this.form.controls.placas.setValidators([]);
+        this.form.controls.modelo.setValidators([]);
+        this.form.controls.noSerie.setValidators([]);
+        this.form.controls.noMotor.setValidators([]);
 
-      //   this.form.controls.placas.updateValueAndValidity();
-      //   this.form.controls.modelo.updateValueAndValidity();
-      //   this.form.controls.noSerie.updateValueAndValidity();
-      //   this.form.controls.noMotor.updateValueAndValidity();
-      //   console.log(this.form.value)
-      // }
-      // else{
-      //   this.hintObligatorio="";
-      //   console.log(this.form.value)
-      //   this.form.clearValidators()
-      //   this.form.updateValueAndValidity();
-      //   this.isOneFilled=this.atLeastOneFilled(this.form);
-      //   console.log('Al menos uno',this.isOneFilled);
+        this.form.controls.placas.updateValueAndValidity();
+        this.form.controls.modelo.updateValueAndValidity();
+        this.form.controls.noSerie.updateValueAndValidity();
+        this.form.controls.noMotor.updateValueAndValidity();
 
-      // }
+        this.isOneFilled=this.atLeastOneFilled(this.form);
+        //console.log('Al menos uno',this.isOneFilled);
+
+      }
 
     }
 public validate(form: FormGroup){
-  if(this.isRobo)
-  this.validateForm(form);
-  else {this.isOneFilled= this.atLeastOneFilled(form); console.log(this.isOneFilled)}
+  this.validateForm(form)
+ console.log('isRobo',this.isRobo);
+ if(!this.isRobo)
+  {
+    this.isOneFilled= this.atLeastOneFilled(form);
+  }
+ console.log('is one filled',this.isOneFilled)
 
 }
     public atLeastOneFilled(form: FormGroup) {
       console.log(form);
-      Object.keys(form.controls).forEach(field => {
-          const control = form.get(field);
-          if (control instanceof FormControl) {
-              if(control.value != '')
-                 return true;
-          } else if (control instanceof FormGroup) {
-              this.atLeastOneFilled(control);
-          } else if (control instanceof FormArray){
-              Object.keys(control.controls).forEach(fieldArray => {
-                  const controlArray = control.controls[fieldArray];
-                  if (controlArray instanceof FormControl) {
-                      if(control.value != '')
-                         return true;
-                  } else if (controlArray instanceof FormGroup) {
-                      return this.atLeastOneFilled(controlArray);
-                  }
-              });
-              return false;
-          }
-      });
+      for (let i=1; i<Object.keys(form.controls).length; i++)
+      {  let keys= Object.keys(form.controls)
+         const control = form.get(keys[i]);
+        if (control instanceof FormControl) {
+          if(control.value !== '' && control.value!==undefined )
+            { console.log('true',control);return true;}
+      } else if (control instanceof FormGroup) {
+            if(this.atLeastOneFilled(control))
+              return true;
+      } else if (control instanceof FormArray){
+        for (let i=1; i<Object.keys(form.controls).length; i++)
+        {  let keys= Object.keys(form.controls)
+          const controlArray = control.controls[keys[i]];
+          if (controlArray instanceof FormControl) {
+            if(control.value !== '' && control.value!==undefined )
+            { console.log('true',control);return true;}
+          } else if (controlArray instanceof FormGroup) {
+              if(this.atLeastOneFilled(controlArray))
+              { console.log('true',control);return true;}
+            }
+         }
+      }
+
+      }
       return false;
+
     }
 
 
@@ -409,6 +423,22 @@ public validate(form: FormGroup){
         });
 
 
+    }
+
+    public tipoVehiculoChange(_event){
+        Logger.log('tipoVehiculoChange()', _event);
+        this.vehiculoServ.marcaSubmarca.find(_event, 'tipoVehiculo');
+        this.vehiculoServ.marcaSubmarca.filterBy(_event, 'tipoVehiculo', 'marca');
+        
+        if(_event == _config.optionValue.automovil)
+            this.form.controls.submarca.setValidators([Validators.required]);    
+        else
+            this.form.controls.submarca.setValidators([]);
+
+        if(typeof _event != 'undefined' && _event != ''){
+            this.form.controls.submarca.updateValueAndValidity();
+            this.form.controls.submarca.markAsTouched();
+        }
     }
 
     public marcaChange(_event){

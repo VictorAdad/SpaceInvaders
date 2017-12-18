@@ -29,7 +29,8 @@ export class RelacionComponent{
         private http: HttpService,
         private onLine: OnLineService,
         private db:CIndexedDB,
-        private casoService:CasoService
+        private casoService:CasoService,
+        private noticiaHecho: NoticiaHechoService
         ){}
 
 	ngOnInit() {

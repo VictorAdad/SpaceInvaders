@@ -6,6 +6,7 @@ import { _config} from '@app/app.config';
 import { OnLineService} from '@services/onLine.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { Logger } from "@services/logger.service";
+import { PersonaNombre } from "@pipes/persona.pipe";
 
 @Injectable()
 export class NoticiaHechoService {
@@ -28,12 +29,16 @@ export class NoticiaHechoService {
     asesoresPrivados  = [];
     ofendidos  = [];
     policias  = [];
+
+    imputadoDesconocido = [];
+    victimaDesconocido = [];
+    
     caso=null;
 
     constructor(
         private http: HttpService,
         private db:CIndexedDB,
-        private onLine:OnLineService
+        private onLine:OnLineService,
         ) {
     }
 
@@ -91,6 +96,9 @@ export class NoticiaHechoService {
         this.getInterviniente('victimas', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.victima}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.victima);
         this.getInterviniente('defensoresPrivados', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.defensorPrivado}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.defensorPrivado);
         this.getInterviniente('policias', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.policia}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.policia);
+
+        this.getInterviniente('imputadoDesconocido', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.imputadoDesconocido}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.imputadoDesconocido);
+        this.getInterviniente('victimaDesconocido', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.victimaDesconocido}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.victimaDesconocido);
     }
 
     public getData(){
@@ -148,8 +156,39 @@ export class NoticiaHechoService {
         if (!this.onLine.onLine){
             if (this.caso["personaCasos"]){
                 for (var i = 0; i < this.caso["personaCasos"].length; ++i) {
-                    if (this.caso["personaCasos"]["id"]==id)
-                        return this.caso["personaCasos"]["id"];
+                    if (this.caso["personaCasos"][i]["id"]==id){
+                        return this.caso["personaCasos"][i];
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    //solo funciona en offline
+    public getLugarCaso(id){
+        Logger.log("IDLugar",id,this.caso["lugares"]);
+        if (!this.onLine.onLine){
+            if (this.caso["lugares"]){
+                for (var i = 0; i < this.caso["lugares"].length; ++i) {
+                    if (this.caso["lugares"][i]["id"]==id){
+                        return this.caso["lugares"][i];
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    //solo funciona en offline
+    public getDelitoCaso(id){
+        Logger.log("IDDelito",id,this.caso["delitoCaso"]);
+        if (!this.onLine.onLine){
+            if (this.caso["delitoCaso"]){
+                for (var i = 0; i < this.caso["delitoCaso"].length; ++i) {
+                    if (this.caso["delitoCaso"][i]["id"]==id){
+                        return this.caso["delitoCaso"][i];
+                    }
                 }
             }
         }
@@ -178,17 +217,31 @@ export class NoticiaHechoService {
                     this.asesoresPublicos = this.asesoresPublicos.concat(this.asesoresPrivados);
                     Logger.log(this.asesoresPrivados);
                 }
-                if(_attr === 'victimas' || _attr === 'ofendidos'){
+                if(_attr === 'victimas' || _attr === 'ofendidos' || _attr === 'victimaDesconocido'){
                     this.victimas = this.victimas.concat(this.ofendidos);
+                    this.victimas = this.victimas.concat(this.victimaDesconocido);
                     Logger.log(this.victimas);
                 }
+
+                if (_attr === 'imputado' || _attr === 'imputadoDesconocido') {
+                     this.imputados = this.imputados.concat(this.imputadoDesconocido);
+                     Logger.log(this.imputados);   
+                }
+
             });
         else{
             if (this.caso["personaCasos"]){
                 var arr=[];
                 for (var i = 0; i < this.caso["personaCasos"].length; ++i) {
                     if (idInterviniente==this.caso["personaCasos"][i]["tipoInterviniente"]["id"]){
-                        arr.push({id:this.caso["personaCasos"][i]["id"], persona:{nombre:this.caso["personaCasos"][i]["persona"]["nombre"], paterno:this.caso["personaCasos"][i]["persona"]["paterno"]}});
+                        arr.push({
+                            id:this.caso["personaCasos"][i]["id"], 
+                            persona:{nombre:this.caso["personaCasos"][i]["persona"]["nombre"], 
+                                paterno:this.caso["personaCasos"][i]["persona"]["paterno"],
+                                materno:this.caso["personaCasos"][i]["persona"]["materno"]
+                            },
+                            tipoInterviniente:this.caso["personaCasos"][i]["tipoInterviniente"]
+                        });
                     }
                 }
                 this[_attr] = this.constructOptionsPersona(arr);
@@ -200,10 +253,16 @@ export class NoticiaHechoService {
                     this.asesoresPublicos = this.asesoresPublicos.concat(this.asesoresPrivados);
                     Logger.log(this.asesoresPrivados);
                 }
-                if(_attr === 'victimas' || _attr === 'ofendidos'){
+                if(_attr === 'victimas' || _attr === 'ofendidos' || _attr === 'victimaDesconocido'){
                     this.victimas = this.victimas.concat(this.ofendidos);
+                    this.victimas = this.victimas.concat(this.victimaDesconocido);
                     Logger.log(this.victimas);
                 }
+                if (_attr === 'imputado' || _attr === 'imputadoDesconocido') {
+                     this.imputados = this.imputados.concat(this.imputadoDesconocido);
+                     Logger.log(this.imputados);   
+                }
+
             }
         }
     }
@@ -269,11 +328,15 @@ export class NoticiaHechoService {
 
     private constructOptionsPersona(_data:any){
         let options: MOption[] = [];
+        Logger.logColor("data","purple",_data);
         if (_data)
             for (var i in _data){      // code...
                 let object=_data[i];
+                Logger.logColor('----------->','green', object, _data);
+                let nombre = new PersonaNombre().transform(object);
+                
                 options.push(
-                    {value: object.id, label: `${object.persona.nombre}  ${object.persona.paterno}`}
+                    {value: object.id, label: nombre}
                 );
             }
         options.sort((a,b)=>{
