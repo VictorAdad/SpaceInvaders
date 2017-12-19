@@ -90,7 +90,7 @@
 
                 </int>
             </div>
-            <div class="col-md-3">
+            <div *ngIf="!isTipoBicicleta" class="col-md-3">
                 <select2 placeholder="Estado de origen de las placas"
                         [(options)]="optionsServ.estados"
                         name="id"
@@ -98,7 +98,7 @@
 
                 </select2>
             </div>
-            <div class="col-md-3">
+            <div *ngIf="!isTipoBicicleta" class="col-md-3">
                 <text
                     label="Placas"
                     name="placas"
@@ -109,15 +109,15 @@
 
             </text>
             </div>
-            <div class="col-md-3">
+            <div *ngIf="!isTipoBicicleta" class="col-md-3">
                 <text label="Placas adicionales" name="placasAdicionales" [max]="10" [group]="form" [regex]="regexPlaca"></text>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
+            <div  *ngIf="!isTipoBicicleta"class="col-md-3">
                 <text label="Registro federal del vehículo (RFV)" name="registroFederalVehiculo" [max]="20" [group]="form"></text>
             </div>
-            <div class="col-md-3">
+            <div *ngIf="!isTipoBicicleta" class="col-md-3">
                 <text
                     label="Nº serie (VIN)"
                     name="noSerie"
@@ -127,7 +127,7 @@
 
                 </text>
             </div>
-            <div class="col-md-3">
+            <div *ngIf="!isTipoBicicleta" class="col-md-3">
                 <text
                     label="Nº motor"
                     name="noMotor"
@@ -196,7 +196,7 @@
                     <div class="col-md-6">
                         <checkbox label="¿Lleva carga?" name="llevaCarga" [group]="form"></checkbox>
                     </div>
-                    <div class="col-md-6">
+                    <div *ngIf="!isTipoBicicleta" class="col-md-6">
                         <checkbox label="¿Alterado? (Nº serie)" name="alterado" [group]="form"></checkbox>
                     </div>
                 </div>

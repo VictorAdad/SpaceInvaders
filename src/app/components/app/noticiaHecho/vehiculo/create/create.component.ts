@@ -30,6 +30,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     public isProcedenciaExtranjera: boolean =false;
     public regexPlaca = /^(?:\s*[a-zA-Z0-9]{1,}\s*)*$/
     public isOneFilled:boolean=false;
+    public isTipoBicicleta:boolean=false;
     public hintObligatorio="Campo obligatorio";
     public isRobo:boolean=false;
 
@@ -193,7 +194,7 @@ public validate(form: FormGroup){
 }
     public atLeastOneFilled(form: FormGroup) {
       console.log(form);
-      for (let i=1; i<Object.keys(form.controls).length; i++)
+      for (let i=0; i<Object.keys(form.controls).length; i++)
       {  let keys= Object.keys(form.controls)
          const control = form.get(keys[i]);
         if (control instanceof FormControl) {
@@ -203,7 +204,7 @@ public validate(form: FormGroup){
             if(this.atLeastOneFilled(control))
               return true;
       } else if (control instanceof FormArray){
-        for (let i=1; i<Object.keys(form.controls).length; i++)
+        for (let i=0; i<Object.keys(form.controls).length; i++)
         {  let keys= Object.keys(form.controls)
           const controlArray = control.controls[keys[i]];
           if (controlArray instanceof FormControl) {
@@ -432,7 +433,26 @@ public validate(form: FormGroup){
             this.vehiculoServ.marcaSubmarca.find(_event, 'tipoVehiculo');
             this.vehiculoServ.marcaSubmarca.filterBy(_event, 'tipoVehiculo', 'marca');
         }
+        if(_event==_config.optionValue.vehiculo.bicicleta){
+           this.isTipoBicicleta=true;
+           this.form.controls.placas.setValidators([]);
+           this.form.controls.noSerie.setValidators([]);
+           this.form.controls.noMotor.setValidators([]);
 
+           this.form.controls.placas.updateValueAndValidity();
+           this.form.controls.noSerie.updateValueAndValidity();
+           this.form.controls.noMotor.updateValueAndValidity();
+
+        }else{
+          this.isTipoBicicleta=false;
+          this.form.controls.placas.setValidators([Validators.required]);
+          this.form.controls.noSerie.setValidators([Validators.required]);
+          this.form.controls.noMotor.setValidators([Validators.required]);
+
+          this.form.controls.placas.updateValueAndValidity();
+          this.form.controls.noSerie.updateValueAndValidity();
+          this.form.controls.noMotor.updateValueAndValidity();
+        }
         // if(_event == _config.optionValue.automovil)
         //     this.form.controls.submarca.setValidators([Validators.required]);
         // else

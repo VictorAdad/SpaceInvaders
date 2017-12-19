@@ -27,9 +27,11 @@ export var _config = {
       victimaDesconocido:22
 
     },
+    vehiculo:{
+      bicicleta:"BICICLETA"
+    },
     delito:{
       robo:"ROBO"
-
     }
 	},
 	manuales: {
