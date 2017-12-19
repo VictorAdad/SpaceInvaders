@@ -6,7 +6,7 @@
                     <select2 [options]="options.paises"
                         placeholder="País"
                         name="id"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.pais" 
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.pais"
                         (valueChange)="changePais($event)">
                     </select2>
                 </div>
@@ -30,7 +30,7 @@
                     <select2 [options]="options.colonias"
                         placeholder="Colonia/Asentamiento"
                         name="idCp"
-                        [onOpenFunction]="buscaColonias.bind(this)" 
+                        [onOpenFunction]="buscaColonias.bind(this)"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.colonia"
                         (valueChange)="changeColonia(indexForm,$event)">
                     </select2>
@@ -38,7 +38,7 @@
                 <div class="col-md-3" *ngIf="isMexico">
                     <select2 [options]="options.localidad"
                         placeholder="Localidad"
-                        [onOpenFunction]="buscaLocalidades.bind(this)" 
+                        [onOpenFunction]="buscaLocalidades.bind(this)"
                         name="id"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.localidad">
                     </select2>
@@ -55,7 +55,7 @@
                     <text label="Municipio/Delegación"
                         name="municipioOtro"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]"
-                        [max]="40">        
+                        [max]="40">
                     </text>
                 </div>
                 <div class="col-md-3" *ngIf="!isMexico">
@@ -109,7 +109,7 @@
                 <div class="col-md-12">
                     <text-area label="Referencias"
                         name="referencias"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">        
+                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
                     </text-area>
                 </div>
             </div>
@@ -120,7 +120,7 @@
                         [max]="10"
                         [min]="10"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
-                            
+
                     </int>
                 </div>
                 <div class="col-md-3">
@@ -129,16 +129,15 @@
                         [max]="10"
                         [min]="10"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
-                            
+
                     </int>
                 </div>
                 <div class="col-md-3">
                     <int label="Extensión"
                         name="extension"
                         [max]="5"
-                        [min]="10"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
-                            
+
                     </int>
                 </div>
                 <div class="col-md-3">
@@ -147,7 +146,7 @@
                         [max]="10"
                         [min]="10"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
-                            
+
                     </int>
                 </div>
             </div>
@@ -159,7 +158,7 @@
                         [max]="10"
                         [min]="10"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
-                            
+
                     </int>
                 </div>
                 <div class="col-md-3">
@@ -167,7 +166,7 @@
                         name="otroMedioContacto"
                         [max]="15"
                         [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
-                            
+
                     </text>
                 </div>
                 <div class="col-md-3">
@@ -195,7 +194,7 @@
                         [value]="globals.tipoResidencia[indexForm]"
 
                         >
-                            
+
                     </radiobutton>
                 </div>
             </div>
