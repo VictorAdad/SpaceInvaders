@@ -847,7 +847,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 this.http.post('/v1/base/personas', _model).subscribe(
                     (response) => {
                         Logger.log(response);
-                        resolve("Se creo la persona con éxito");
+                        resolve("Se creó la persona con éxito");
                         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas' ]);
                         this.casoService.actualizaCaso();
                     },
@@ -910,7 +910,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                             this.tabla.update("casos",caso).then(
                                 ds=>{
                                     Logger.log("Se actualizo registro",ds);
-                                    resolve("Se creo la persona de manera local");
+                                    resolve("Se creó la persona de manera local");
                                     this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas']);
 
                             });
