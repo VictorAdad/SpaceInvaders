@@ -242,7 +242,7 @@ public validate(form: FormGroup){
     }
 
     public save(valid : any, _model : any){
-        if (!isNaN(_model.modelo)) {
+        if (isNaN(_model.modelo) || _model.modelo == "") {
             Logger.logColor('------------>','red',_model);
             _model.modelo = 0;
         }
@@ -317,7 +317,7 @@ public validate(form: FormGroup){
         var obj=this;
         Logger.logColor('------------>','green',_model);
 
-        if (!isNaN(_model.modelo)) {
+        if (isNaN(_model.modelo) || _model.modelo == "") {
             Logger.logColor('------------>','red',_model);
             _model.modelo = 0;
         }
