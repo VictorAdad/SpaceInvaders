@@ -38,7 +38,6 @@ export class IntComponent extends BaseInputComponent {
 		if (_value && _value != '') {
 			if (!this.regexINT.test(_value)){
         this.control.setValue(this.backupValue);
-        console.log('Sttting previos',this.backupValue)
 			}else{
 				this.backupValue = _value;
 			}
@@ -48,14 +47,11 @@ export class IntComponent extends BaseInputComponent {
 			if (this.min && this.control.value.toString().length < this.min){
         this.invalid();
 			}else{
-        console.log('seting valid',this.backupValue)
-
 				this.valid();
 			}
 		}else{
 			this.backupValue = _value;
 			if (!_value){
-				console.log("Valor");
 				this.valid();
 			}
 		}
