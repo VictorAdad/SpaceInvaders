@@ -204,7 +204,7 @@ export class NoticiaHechoService {
             if (this.caso["delitoCaso"])
                 this.delitos = this.constructOptionsDelito(this.caso["delitoCaso"]);
     }
-
+    
     public getInterviniente(_attr:string, _url:string, _call:any, idInterviniente:number=null){
         if (this.onLine.onLine)
             this.http.get(_url).subscribe((response) => {
@@ -234,6 +234,12 @@ export class NoticiaHechoService {
                 var arr=[];
                 for (var i = 0; i < this.caso["personaCasos"].length; ++i) {
                     if (idInterviniente==this.caso["personaCasos"][i]["tipoInterviniente"]["id"]){
+                        /*
+                            Cuando se crea un caso los ids estan cruzados, por lo que
+                            hice esto para poder crear un objecto de manera correcta.
+                            en offLine el id de la persona es el id de personaCaso, 
+                            esto por que asi lo devuelvia el servicio. 
+                        */
                         arr.push({
                             id:this.caso["personaCasos"][i]["id"], 
                             persona:{nombre:this.caso["personaCasos"][i]["persona"]["nombre"], 
@@ -286,12 +292,11 @@ export class NoticiaHechoService {
 
     private constructOptionsVehiculo(_data:any){
         let options: MOption[] = [];
-
         if (_data)
             for (var i in _data){      // code...
                 let object=_data[i];
-                let marca = object.marcaSubmarca != null  ? object.marcaSubmarca.marca  : '';
-                let color = object.motivoRegistroColorClase != null  ? object.motivoRegistroColorClase.color  : '';
+                let marca = object.marcaSubmarca != null  ? (object.marcaSubmarca.marca? object.marcaSubmarca.marca:'SIN MARCA') : 'SIN MARCA';
+                let color = object.motivoRegistroColorClase != null  ? (object.motivoRegistroColorClase.color? object.motivoRegistroColorClase.color:'SIN COLOR') : 'SIN COLOR';
                 options.push({value: object.id, label: marca+" "+color});
             }
         options.sort((a,b)=>{

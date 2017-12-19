@@ -104,7 +104,7 @@
             </div>
             <div class="row">
                 <div class="col-md-3">
-                    <int label="C.P." name="cp" [group]="form" [max]="5" [hintEnd]="'5 dígitos máximo'"></int>
+                    <int label="C.P." name="cp" [group]="form" [max]="5" [min]="5" [hintEnd]="'5 dígitos máximo'"></int>
                 </div>
                 <div class="col-md-3">
                     <date-picker label="Fecha" name="fecha" [group]="form" [validateDays]="'post'" hintStart="Campo obligatorio"></date-picker>

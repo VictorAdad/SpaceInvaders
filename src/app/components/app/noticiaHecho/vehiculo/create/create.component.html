@@ -13,7 +13,7 @@
             <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/noticia-hecho/vehiculos" color="accent">Regresar</button>
         </div>
     </div>
-    <form [formGroup]="form" (mouseenter)="validate(form)">
+    <form [formGroup]="form">
         <div class="row">
             <div class="col-md-3">
                 <select2 placeholder="Motivo por el que se registra"
@@ -26,7 +26,7 @@
             </div>
             <div class="col-md-3">
                 <select2 placeholder="Vehículo"
-                    name="campoVehiculo"
+                    name="tipoVehiculo"
                     [options]="vehiculoServ.marcaSubmarca.tipoVehiculo"
                     hintStart="Campo obligatorio"
                     [group]="form"
