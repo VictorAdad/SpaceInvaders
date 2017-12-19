@@ -100,7 +100,7 @@ export class DelitoCreateComponent{
                             reject(listaErrores);
                         else
                             resolve("Se agregaron los delitos");
-                        this.casoSevice.actualizaCaso();
+                        obj.casoService.actualizaCaso();
                         obj.router.navigate(['/caso/'+obj.casoId+'/noticia-hecho/delitos']);
                         return;
                     }
@@ -117,7 +117,6 @@ export class DelitoCreateComponent{
                     if (obj.onLine.onLine)
                         obj.http.post('/v1/base/delitos-casos',data).subscribe(response => {
                                 Logger.log("->",response);
-                                obj.casoService.actualizaCaso();
                                 guardaLista(i+1,obj.listaDelitos,listaErrores);
                             },
                             error=>{

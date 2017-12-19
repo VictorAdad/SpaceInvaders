@@ -186,14 +186,10 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
 
     }
 public validate(form: FormGroup){
-  this.validateForm(form)
- console.log('isRobo',this.isRobo);
  if(!this.isRobo)
   {
     this.isOneFilled= this.atLeastOneFilled(form);
   }
- console.log('is one filled',this.isOneFilled)
-
 }
     public atLeastOneFilled(form: FormGroup) {
       console.log(form);
