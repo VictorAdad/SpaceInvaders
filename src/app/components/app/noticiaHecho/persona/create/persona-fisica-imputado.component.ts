@@ -150,15 +150,20 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                             let timer = Observable.timer(500);
                             timer.subscribe(t => {
                                 Logger.log('Es víctima desconocida');
-                                let contentRadios = this.tipoIntervinienteEl.contentRadios.nativeElement
-                                let radio = contentRadios.querySelectorAll('.mat-radio-button[ng-reflect-value="'+_config.optionValue.tipoInterviniente.victima+'"]');
-                                let input = radio[0].querySelectorAll('.mat-radio-input');
-                                let radioDesconocido = contentRadios.querySelectorAll('.mat-radio-button[ng-reflect-value="'+_config.optionValue.tipoInterviniente.victimaDesconocido+'"]');
-                                let inputDesconocido = radioDesconocido[0].querySelectorAll('.mat-radio-input');
+                                let contentRadios = this.tipoIntervinienteEl.contentRadios.nativeElement;
 
-                                radio[0].classList.remove('mat-radio-disabled');
+                                let radio = contentRadios.getElementsByClassName('content-radio '+_config.optionValue.tipoInterviniente.victima);
+                                let input = radio[0].querySelectorAll('.mat-radio-input');
+                                let matradio = radio[0].getElementsByClassName('mat-radio-button');
+
+                                let radioDesconocido = contentRadios.getElementsByClassName('content-radio '+_config.optionValue.tipoInterviniente.victimaDesconocido);
+                                let inputDesconocido = radioDesconocido[0].querySelectorAll('.mat-radio-input');
+                                let matradioDesconocido = radioDesconocido[0].getElementsByClassName('mat-radio-button');
+
+
+                                matradio[0].classList.remove('mat-radio-disabled');
                                 input[0].removeAttribute('disabled');
-                                radioDesconocido[0].classList.remove('mat-radio-disabled');
+                                matradioDesconocido[0].classList.remove('mat-radio-disabled');
                                 inputDesconocido[0].removeAttribute('disabled');
 
                             });
@@ -167,14 +172,18 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                             timer.subscribe(t => {
                                 Logger.log('Es imputado desconocido');
                                 let contentRadios = this.tipoIntervinienteEl.contentRadios.nativeElement
-                                let radio = contentRadios.querySelectorAll('.mat-radio-button[ng-reflect-value="'+_config.optionValue.tipoInterviniente.imputado+'"]');
-                                let input = radio[0].querySelectorAll('.mat-radio-input');
-                                let radioDesconocido = contentRadios.querySelectorAll('.mat-radio-button[ng-reflect-value="'+_config.optionValue.tipoInterviniente.imputadoDesconocido+'"]');
-                                let inputDesconocido = radioDesconocido[0].querySelectorAll('.mat-radio-input');
 
-                                radio[0].classList.remove('mat-radio-disabled');
+                                let radio = contentRadios.getElementsByClassName('content-radio '+_config.optionValue.tipoInterviniente.imputado);
+                                let input = radio[0].querySelectorAll('.mat-radio-input');
+                                let matradio = radio[0].getElementsByClassName('mat-radio-button');
+
+                                let radioDesconocido = contentRadios.getElementsByClassName('content-radio '+_config.optionValue.tipoInterviniente.imputadoDesconocido);
+                                let inputDesconocido = radioDesconocido[0].querySelectorAll('.mat-radio-input');
+                                let matradioDesconocido = radioDesconocido[0].getElementsByClassName('mat-radio-button');
+
+                                matradio[0].classList.remove('mat-radio-disabled');
                                 input[0].removeAttribute('disabled');
-                                radioDesconocido[0].classList.remove('mat-radio-disabled');
+                                matradioDesconocido[0].classList.remove('mat-radio-disabled');
                                 inputDesconocido[0].removeAttribute('disabled');
 
                             });
