@@ -15,20 +15,28 @@ export class TextareaComponent implements OnInit{
 	@Input() functionChange: Function;
 	@Input() hintStart: string="";
 	@Input() hintEnd: string="";
-  @Input() max :number = 1500;
-  @Input() rows :number = 8;
-  @Input() readonly :boolean = false;
+	@Input() max :number = 15000;
+	@Input() rows :number = 10;
+	@Input() readonly :boolean = false;
 
 	@ViewChild('textAreaComponent') textAreaComponent;
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<string>();
+
+	public control: FormControl;
 
 	constructor(private renderer : Renderer){
 
 	}
 
 	ngOnInit(){
-		// Logger.log(this);
+		if (this.group !=null && this.name != null && this.name != '') {
+			this.control = this.group.get(this.name) as FormControl;
+
+			if(this.control.errors)
+				if(this.control.errors.required)
+					this.hintStart = 'Campo requerido';
+		}
 	}
 
 	ngAfterViewInit(){
