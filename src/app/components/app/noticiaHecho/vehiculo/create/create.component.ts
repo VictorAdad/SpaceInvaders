@@ -14,6 +14,7 @@ import { Observable }  from 'rxjs/Observable';
 import { CasoService } from '@services/caso/caso.service';
 import { _config} from '@app/app.config';
 import { Logger } from "@services/logger.service";
+import {Yason} from "@services/utils/yason";
 
 @Component({
     selector: 'vehiculo-create',
@@ -321,7 +322,6 @@ public validate(form: FormGroup){
 
         if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0]){
             _model.tipoUsoTipoVehiculo.id=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].id;
-            _model.tipoUsoTipoVehiculo["tipoVehiculo"]=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].tipoVehiculo;
         }
         if (this.vehiculoServ.marcaSubmarca.finded[0]){
             _model.marcaSubmarca.id=this.vehiculoServ.marcaSubmarca.finded[0].id;
@@ -382,19 +382,7 @@ public validate(form: FormGroup){
 
     public fillForm(_data){
         Logger.logColor("VEHICULO","tomato",_data);
-        var rec = function(x){
-            if (typeof x == "object"){
-                for(let i in x){
-                    if (x[i]==null || typeof x[i] =="undefined"){
-                        delete x[i];
-                    }
-                    if (typeof x[i]=="object")
-                        rec(x[i]);
-                }
-            }
-        }
-        rec(_data);
-        
+        Yason.eliminaNulos(_data);
         if (_data.marcaSubmarca){
             if (!_data["tipoVehiculo"])
                 _data["tipoVehiculo"]=_data.marcaSubmarca.tipoVehiculo;
