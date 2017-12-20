@@ -86,6 +86,8 @@ import {Nothing} from '@components-app/home/nothing.component';
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
     { path : '', component: HomeComponent, data : { breadcrumb : 'Noticia de hechos'}},
+    { path : 'enlinea', component: HomeComponent, data : { breadcrumb : 'Noticia de hechos'}},
+    { path : 'sinconexion', component: HomeComponent, data : { breadcrumb : 'Noticia de hechos'}},
     { path : 'login', component: LoginComponent,  data : { breadcrumb : 'Login' } },
     { path : 'usuarios', component : UsuariosComponent, data : { breadcrumb : 'Usuarios' } },
     { path : 'usuarios/create', component : UsuarioCreateComponent, data : { breadcrumb : 'Crear usuario', rutas:[{path:'/usuarios',label:"Usuarios"}] } },
