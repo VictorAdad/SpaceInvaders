@@ -246,11 +246,11 @@ public validate(form: FormGroup){
         Logger.log("SI",this.vehiculoServ.tipoUsoTipoVehiculo.finded);
         if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0]){
             _model.tipoUsoTipoVehiculo.id=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].id;
-            _model.tipoUsoTipoVehiculo["tipoVehiculo"]=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].tipoVehiculo;
         }
         if (this.vehiculoServ.marcaSubmarca.finded[0]){
             _model.marcaSubmarca.id=this.vehiculoServ.marcaSubmarca.finded[0].id;
             _model.marcaSubmarca["marca"]=this.vehiculoServ.marcaSubmarca.finded[0].marca;
+            _model.marcaSubmarca["tipoVehiculo"]=this.vehiculoServ.marcaSubmarca.finded[0].tipoVehiculo;
         }
         if (this.vehiculoServ.procedenciaAseguradora.finded[0])
             _model.procedenciaAseguradora.id=this.vehiculoServ.procedenciaAseguradora.finded[0].id;
@@ -326,6 +326,7 @@ public validate(form: FormGroup){
         if (this.vehiculoServ.marcaSubmarca.finded[0]){
             _model.marcaSubmarca.id=this.vehiculoServ.marcaSubmarca.finded[0].id;
             _model.marcaSubmarca["marca"]=this.vehiculoServ.marcaSubmarca.finded[0].marca;
+            _model.marcaSubmarca["tipoVehiculo"]=this.vehiculoServ.marcaSubmarca.finded[0].tipoVehiculo;
         }
         if (this.vehiculoServ.procedenciaAseguradora.finded[0])
             _model.procedenciaAseguradora.id=this.vehiculoServ.procedenciaAseguradora.finded[0].id;
@@ -380,6 +381,7 @@ public validate(form: FormGroup){
     }
 
     public fillForm(_data){
+        Logger.logColor("VEHICULO","tomato",_data);
         var rec = function(x){
             if (typeof x == "object"){
                 for(let i in x){
@@ -392,31 +394,41 @@ public validate(form: FormGroup){
             }
         }
         rec(_data);
-        if(this.onLine.onLine){
-            if (_data.marcaSubmarca){
+        
+        if (_data.marcaSubmarca){
+            if (!_data["tipoVehiculo"])
                 _data["tipoVehiculo"]=_data.marcaSubmarca.tipoVehiculo;
+            if (!_data["marca"])
                 _data["marca"]=_data.marcaSubmarca.marca;
+            if (!_data["submarca"])
                 _data["submarca"]=_data.marcaSubmarca.submarca;
-                let timer = Observable.timer(500);
-                timer.subscribe(t => {
-                    this.tipoVehiculoChange(_data.marcaSubmarca.tipoVehiculo)
-                    this.marcaChange(_data.marcaSubmarca.marca)
-                });
-            }
-            if (_data.motivoRegistroColorClase){
-                _data["clase"]=_data.motivoRegistroColorClase.clase;
-                _data["color"]=_data.motivoRegistroColorClase.color;
-                _data["motivoRegistro"]=_data.motivoRegistroColorClase.motivoRegistro;
-            }
-            if (_data.procedenciaAseguradora){
-                _data["aseguradora"]=_data.procedenciaAseguradora.aseguradora;
-                _data["procedencia"]=_data.procedenciaAseguradora.procedencia;
-            }
-            if (_data.tipoUsoTipoVehiculo){
-                _data["tipoUso"]=_data.tipoUsoTipoVehiculo.tipoUso;
-                _data["datosTomados"]=_data.tipoUsoTipoVehiculo.datosTomadosDe;
-            }
+            let timer = Observable.timer(500);
+            timer.subscribe(t => {
+                this.tipoVehiculoChange(_data.marcaSubmarca.tipoVehiculo)
+                this.marcaChange(_data.marcaSubmarca.marca)
+            });
         }
+        if (_data.motivoRegistroColorClase){
+            if (!_data["clase"])
+                _data["clase"]=_data.motivoRegistroColorClase.clase;
+            if (!_data["color"])
+                _data["color"]=_data.motivoRegistroColorClase.color;
+            if (!_data["motivoRegistro"])
+                _data["motivoRegistro"]=_data.motivoRegistroColorClase.motivoRegistro;
+        }
+        if (_data.procedenciaAseguradora){
+            if (!_data["aseguradora"])
+                _data["aseguradora"]=_data.procedenciaAseguradora.aseguradora;
+            if (!_data["procedencia"])
+                _data["procedencia"]=_data.procedenciaAseguradora.procedencia;
+        }
+        if (_data.tipoUsoTipoVehiculo){
+            if (!_data["tipoUso"])
+                _data["tipoUso"]=_data.tipoUsoTipoVehiculo.tipoUso;
+            if (!_data["datosTomados"])
+                _data["datosTomados"]=_data.tipoUsoTipoVehiculo.datosTomadosDe;
+        }
+        
         this.form.patchValue(_data);
         let timer = Observable.timer(1);
         timer.subscribe(t => {
