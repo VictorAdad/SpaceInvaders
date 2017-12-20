@@ -34,7 +34,6 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     public isTipoBicicleta:boolean=false;
     public hintObligatorio="Campo obligatorio";
     public isRobo:boolean=false;
-    public isFill=true;
 
     constructor(
         public optionsServ: SelectsService,
@@ -105,9 +104,8 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         });
 
         this.form.controls.pedimentoImportancion.disable();
-        this.isFill=false;
+
         this.route.params.subscribe(params => {
-            this.isFill=true;
             if(params['casoId']){
                 this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/noticia-hecho/vehiculos`,label:"Detalle noticia de hechos"})
@@ -402,10 +400,6 @@ public validate(form: FormGroup){
             timer.subscribe(t => {
                 this.tipoVehiculoChange(_data.marcaSubmarca.tipoVehiculo)
                 this.marcaChange(_data.marcaSubmarca.marca)
-                Observable.timer(100).subscribe(
-                    data =>{
-                        this.isFill=false
-                    });
             });
         }
         if (_data.motivoRegistroColorClase){
@@ -436,15 +430,10 @@ public validate(form: FormGroup){
         });
 
 
-
     }
 
     public tipoVehiculoChange(_event){
         Logger.log('tipoVehiculoChange()', _event, this.vehiculoServ.marcaSubmarca);
-        if (!this.isFill){
-            this.form.controls.marca.reset();
-            this.form.controls.submarca.reset(); 
-        }      
 
         if(_event){
             this.vehiculoServ.marcaSubmarca.find(_event, 'tipoVehiculo');
