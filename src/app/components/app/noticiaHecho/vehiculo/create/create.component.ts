@@ -150,6 +150,12 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         });
     }
 
+    ngOnDestroy(){
+        this.vehiculoServ.marcaSubmarca.clean()
+        this.vehiculoServ.marcaSubmarca.marca = [];
+        this.vehiculoServ.marcaSubmarca.submarca = [];
+    }
+
     public validateDelitoRobo(caso){
       console.log('Casoooo',caso)
       let isRoboSecundario=false;
