@@ -43,12 +43,13 @@ export class IntComponent extends BaseInputComponent {
 			}
 
 			if (_value.toString().length > this.max)
-				this.control.setValue(_value.toString().slice(0,this.max));
-			if (this.min && this.control.value.toString().length < this.min){
-        this.invalid();
-			}else{
-				this.valid();
-			}
+        this.control.setValue(_value.toString().slice(0,this.max));
+      if(this.backupValue)
+        if (this.min && this.control.value.toString().length < this.min){
+          this.invalid();
+        }else{
+          this.valid();
+        }
 		}else{
 			this.backupValue = _value;
 			if (!_value){
