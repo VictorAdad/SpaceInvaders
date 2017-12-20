@@ -17,6 +17,7 @@
         <div class="row">
             <div class="col-md-3">
                 <select2 placeholder="Motivo por el que se registra"
+                    [focus]="true"
                     [options]="vehiculoServ.motivoColorClase.motivoRegistro"
                     name="motivoRegistro"
                     [group]="form"
