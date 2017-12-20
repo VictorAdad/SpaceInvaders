@@ -26,10 +26,11 @@ import {SincronizaCatalogos} from "@services/onLine/sincronizaCatalogos";
 import { HttpService} from '@services/http.service';
 import { DialogSincrinizarService} from "@services/onLine/dialogSincronizar.service";
 import { Logger } from "@services/logger.service";
+import { _config} from '@app/app.config';
 
 @Injectable()
 export class CIndexedDB {
-    nameDB:string = "SIGI";
+    nameDB:string = _config.offLine.indexedDB.nameDB;
     init: boolean = (localStorage.getItem('initDB') === 'true');
     sincronizarCatalogos:SincronizaCatalogos;
 

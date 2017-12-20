@@ -16,14 +16,15 @@ import { Logger } from "@services/logger.service";
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import {SincronizaCambios} from '@services/onLine/sincronizarCambios';
+import { _config} from '@app/app.config';
 
 
 @Injectable()
 export class OnLineService {
     onLine: boolean = true;
-    timer = Observable.timer(2000,1000);
+    timer = Observable.timer(2000,_config.offLine.tiempoChekeoConexion);
     //este timer se executa cada hora, la primera se sera a los 14s de iniciar la app
-    timerSincronizarMatrices = Observable.timer(7000,1000*60*20);
+    timerSincronizarMatrices = Observable.timer(_config.offLine.sincronizarCatalogos.tiempoStartSincronizarCatalogos,_config.offLine.sincronizarCatalogos.tiempoSincronizarCatalogos);
     anterior: boolean= true;
 
     
