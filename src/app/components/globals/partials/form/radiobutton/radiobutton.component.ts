@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit,  ViewChild } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Logger } from "@services/logger.service";
 
@@ -7,7 +7,7 @@ import { Logger } from "@services/logger.service";
   	templateUrl : './radiobutton.component.html',
   	styles: ['.ROJO { color: #f44336; }']
 })
-export class RadioButtonComponent{
+export class RadioButtonComponent {
 	@Input() radios: MRadioButton[] = [];
 	@Input() value: any;
 	@Input() class: string;
@@ -16,13 +16,22 @@ export class RadioButtonComponent{
 	@Input() group    : FormGroup = new FormGroup({});
 	@Input() functionChange: Function;
 	@Input() requerido:boolean=false;
+	@Input() focus:boolean=false;
 
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<String>();
 
 	@ViewChild('contentRadios')
 	public contentRadios;
 
-	//TODO: Falta ver como sincronizar los cambios los radio.
+
+	ngAfterViewInit(){
+		if(this.focus){
+			let radios = this.contentRadios.nativeElement.querySelectorAll('input');
+			radios[0].focus();
+		}
+
+	}
+
 	update(value) {
 		this.valueChange.emit(value);
 		if (value==null || typeof value=="undefined" || value=="" || value==" ")

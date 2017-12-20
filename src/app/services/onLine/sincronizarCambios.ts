@@ -5,6 +5,7 @@ import { Logger } from "@services/logger.service";
 import { NotificationsService } from 'angular2-notifications';
 import { Router} from '@angular/router';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
+import { _config} from '@app/app.config';
 
 
 export class SincronizaCambios {
@@ -112,7 +113,7 @@ export class SincronizaCambios {
                 if (!item["numItentos"]){
                     item["numItentos"]=0;
                 }
-                if (item.pendiente==false || item["numItentos"]>4){
+                if (item.pendiente==false || item["numItentos"]>_config.offLine.sincronizaCambios.numIntentos){
                     this.sincroniza(i+1,lista);
                 }
 

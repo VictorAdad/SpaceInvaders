@@ -2,7 +2,9 @@
     <div class="col-md-12">
         <form [formGroup]="form">
             <h3>Tipo de solicitud</h3>
-            <select2 [options]="
+            <select2
+                [focus]="true"
+                [options]="
                 [
                      {label:'Asignación de asesor jurídico',value:'Asignación de asesor jurídico'},
                      {label:'Ayuda y atención a víctimas',value:'Ayuda y atención a víctimas'}

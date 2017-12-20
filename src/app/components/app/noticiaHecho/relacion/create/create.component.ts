@@ -829,23 +829,40 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 }
             });
 
+            Logger.logColor('------ 1 ----->','green', _data);
+
             let tipoPersonaFormGroup:FormGroup=this.form.controls.tipoRelacionPersona as FormGroup;
 
             let lugarFormArray:FormArray =tipoPersonaFormGroup.controls.lugarTipoRelacionPersona as FormArray;
             let lugarFormGroup:FormGroup = lugarFormArray.controls[0] as FormGroup;
-            if (_data.lugarTipoRelacionPersona[0])
+            if (_data.lugarTipoRelacionPersona[0]){
                 lugarFormGroup.patchValue(_data.lugarTipoRelacionPersona[0]);
-
+            }
             let armasFormArray:FormArray =tipoPersonaFormGroup.controls.armaTipoRelacionPersona as FormArray;
             let armasFormGroup:FormGroup = armasFormArray.controls[0] as FormGroup;
-            if (_data.armaTipoRelacionPersona[0] && _data.armaTipoRelacionPersona[0].arma)
-                armasFormGroup.patchValue(_data.armaTipoRelacionPersona[0]);
 
+            if (_data.armaTipoRelacionPersona[0]){
+                armasFormGroup.controls.id.setValue(_data.armaTipoRelacionPersona[0].id);
+                if (_data.armaTipoRelacionPersona["0"].arma != null) {
+                    armasFormGroup.patchValue({
+                        arma: {
+                            id: _data.armaTipoRelacionPersona["0"].arma.id,
+                        }    
+                    })
+                }
+            }
             let vehiculoFormArray:FormArray =tipoPersonaFormGroup.controls.vehiculoTipoRelacionPersona as FormArray;
             let vehiculoFormGroup:FormGroup = vehiculoFormArray.controls[0] as FormGroup;
-            if (_data.vehiculoTipoRelacionPersona && _data.vehiculoTipoRelacionPersona[0] && _data.vehiculoTipoRelacionPersona[0].vehiculo)
-                vehiculoFormGroup.patchValue(_data.vehiculoTipoRelacionPersona[0]);
-
+            if (_data.vehiculoTipoRelacionPersona && _data.vehiculoTipoRelacionPersona[0]){
+                vehiculoFormGroup.controls.id.setValue(_data.vehiculoTipoRelacionPersona[0].id);
+                if (_data.vehiculoTipoRelacionPersona["0"].vehiculo != null){
+                    vehiculoFormGroup.patchValue({
+                        vehiculo: {
+                            id: _data.vehiculoTipoRelacionPersona["0"].vehiculo.id,
+                        }    
+                    })    
+                }
+            }
             Logger.log('Fill Detalle Delito');
 
             for (var propName in _data.detalleDelito) {

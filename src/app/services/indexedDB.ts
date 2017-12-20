@@ -26,10 +26,11 @@ import {SincronizaCatalogos} from "@services/onLine/sincronizaCatalogos";
 import { HttpService} from '@services/http.service';
 import { DialogSincrinizarService} from "@services/onLine/dialogSincronizar.service";
 import { Logger } from "@services/logger.service";
+import { _config} from '@app/app.config';
 
 @Injectable()
 export class CIndexedDB {
-    nameDB:string = "SIGI";
+    nameDB:string = _config.offLine.indexedDB.nameDB;
     init: boolean = (localStorage.getItem('initDB') === 'true');
     sincronizarCatalogos:SincronizaCatalogos;
 
@@ -251,81 +252,6 @@ export class CIndexedDB {
 
         );
         return promesa;
-    }
-    /*
-        TablaA -> tablaInermedia <- TablaB
-        data: es un filtro de la tablaIntermedia con alguna llave de la TablaA.
-        
-        en una relacion muchos a muchos,
-        donde ya se filtro la informacion de la tabla intermedia(es data)
-        se quiere un array con la lista de elementos de la tabla que se relaciona
-        donde solo se tiene la llave foranea key la cual se relaciona con la tabla con el idTabla.
-
-        regresa el arreglo de elementos de tabla que cumplen con la condicion anteior.
-
-        esto sirve para los paginadores
-     */
-    relationship(data:any[], key:string, tabla:string, idTabla:string){
-        var obj= this;
-        var promesa = new Promise(function(resolve,reject){
-            obj.list(tabla).then(
-                list=>{
-                    var lista=list as any[];
-                    var resultado=[];
-                    for (var i = 0; i < data.length; ++i) {
-                        for (var k = 0; k < lista.length; ++k) {
-                            if( (data[i])[key]==(lista[k])[idTabla]){
-                                (data[i])[tabla]=lista[k];
-                                resultado.push(lista[k]);
-                                break;
-                            }
-                        }
-                    }
-                    resolve(resultado);
-            }).catch(e=>{
-                reject(e);
-            });
-
-        });
-        return promesa;
-    }
-    /*
-        funcion que lista los elementos de una relacion de muchos a muchos
-        nota: tiene que existir el indice de la tabla de relacion que busque por la keyRelacionFuerte
-     */
-    manyToManyAll(tablaFuerte:string, keyFuerte:string, 
-        tablaDeRelacion:string, keyRelacionFuerte:string, keyRelacionDevil:string,
-        tablaDevil:string, keyDevil:string){
-        var obj=this;
-        var promesa= new Promise((resolve,reject)=>{
-            //notacion camello del indice
-            var indice="indice"+tablaDeRelacion[0].toUpperCase();
-            for (var i = 1; i < tablaDeRelacion.length; ++i)
-                indice=indice+tablaDeRelacion[i];
-            Logger.log("@indice",indice);
-
-            obj.list(tablaFuerte).then(datosFuertes => {
-                var listaFuerte = datosFuertes as any[];
-                var k=0;
-                for (var item of listaFuerte) {
-                    //obtenemos el primer filtrado
-                    obj.get(tablaDeRelacion,item[keyFuerte],indice).then(datosRelcion=>{
-                
-                        obj.relationship(datosRelcion as any[], keyRelacionDevil,tablaDevil,keyDevil)
-                            .then(datosDeviles=>{
-                                item[tablaDevil]=datosDeviles;
-                                k++;
-                                if(k==listaFuerte.length){
-                                    resolve(listaFuerte);
-                                }
-                            });
-                
-                    });
-                }
-            });
-        });
-        return promesa;
-        
     }
     //data tienen que ser un json
     add(_table:string, _datos:any){
