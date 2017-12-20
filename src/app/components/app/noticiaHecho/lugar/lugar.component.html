@@ -22,20 +22,23 @@
 
     <ng-container matColumnDef="colonia">
         <mat-header-cell *matHeaderCellDef> Colonia </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.coloniaOtro || element.colonia?.nombre}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{(element.pais.id == 143) ? element.colonia?.nombre : element.coloniaOtro }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="localidad">
         <mat-header-cell *matHeaderCellDef> Localidad </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.municipioOtro || element.municipio?.nombre}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{(element.pais.id == 143) ? element.municipio?.nombre : element.municipioOtro }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="estado">
         <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
-        <mat-cell  *matCellDef="let element"> {{element.estadoOtro || element.estado?.nombre}} </mat-cell>
+        <mat-cell  *matCellDef="let element"> {{(element.pais.id == 143) ? element.estado?.nombre : element.estadoOtro }} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;" routerLink="/caso/{{casoId}}/lugares/{{row.id}}"></mat-row>
 </mat-table>
 
+<!-- .data["0"].pais.id -->
+
+<!-- {{(element.pais.id == 143)?element.coloniaOtro : element.colonia?.nombre}} -->

@@ -58,6 +58,13 @@ export class OnLineService {
             }
 
             if (this.anterior!=this.onLine){
+                var url=this.route["url"];
+                if (url=="/")
+                    url=this.onLine?url+"enlinea":url+"sinconexion";
+                else if (url=="/enlinea" || url=="/sinconexion")
+                    url="/";
+                this.route.navigateByUrl(url);
+                
                 this.snackBar.open(message, "", {
                   duration: 10000,
                 });
