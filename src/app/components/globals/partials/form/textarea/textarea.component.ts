@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter , OnInit, AfterViewInit, ViewChild, Renderer} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
 import { Logger } from "@services/logger.service";
 
 
@@ -18,6 +19,7 @@ export class TextareaComponent implements OnInit{
 	@Input() max :number = 15000;
 	@Input() rows :number = 10;
 	@Input() readonly :boolean = false;
+	@Input() focus :boolean = false;
 
 	@ViewChild('textAreaComponent') textAreaComponent;
 
@@ -42,6 +44,14 @@ export class TextareaComponent implements OnInit{
 	ngAfterViewInit(){
 		this.renderer.listen(
 			this.textAreaComponent.nativeElement, 'keyup', (event) => { this.inputSlice(); });
+
+		if(this.focus){
+			let timer = Observable.timer(1);
+
+			timer.subscribe( t => {
+				this.textAreaComponent.nativeElement.focus();
+			});
+		}
 	}
 
 	update(value) {

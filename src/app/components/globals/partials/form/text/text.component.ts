@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter , OnInit, AfterViewInit, ViewChild, Renderer} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
 import { BaseInputComponent } from '../base-input.component';
 
 
@@ -25,7 +26,13 @@ export class TextComponent extends BaseInputComponent {
 	}
 
 	ngAfterViewInit(){
+		if(this.focus){
+			let timer = Observable.timer(1);
 
+			timer.subscribe( t => {
+				this.input.nativeElement.focus();
+			});
+		}
 	}
 
 	update(value) {
