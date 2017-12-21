@@ -200,13 +200,12 @@ public validate(form: FormGroup){
   }
 }
     public atLeastOneFilled(form: FormGroup) {
-      console.log(form);
       for (let i=0; i<Object.keys(form.controls).length; i++)
       {  let keys= Object.keys(form.controls)
          const control = form.get(keys[i]);
         if (control instanceof FormControl) {
           if(control.value !== '' && control.value!==undefined )
-            { console.log('true',control);return true;}
+            { return true;}
       } else if (control instanceof FormGroup) {
             if(this.atLeastOneFilled(control))
               return true;
@@ -216,10 +215,10 @@ public validate(form: FormGroup){
           const controlArray = control.controls[keys[i]];
           if (controlArray instanceof FormControl) {
             if(control.value !== '' && control.value!==undefined )
-            { console.log('true',control);return true;}
+            { return true;}
           } else if (controlArray instanceof FormGroup) {
               if(this.atLeastOneFilled(controlArray))
-              { console.log('true',control);return true;}
+              { return true;}
             }
          }
       }
@@ -433,8 +432,6 @@ public validate(form: FormGroup){
     }
 
     public tipoVehiculoChange(_event){
-        Logger.log('tipoVehiculoChange()', _event, this.vehiculoServ.marcaSubmarca);
-
         if(_event){
             this.vehiculoServ.marcaSubmarca.find(_event, 'tipoVehiculo');
             this.vehiculoServ.marcaSubmarca.filterBy(_event, 'tipoVehiculo', 'marca');
@@ -479,7 +476,6 @@ public validate(form: FormGroup){
     }
 
     public marcaChange(_event){
-        console.log('Marca Change',_event)
         if(_event){
             this.vehiculoServ.marcaSubmarca.find(_event, 'marca');
             this.vehiculoServ.marcaSubmarca.filterBy(_event, 'marca', 'submarca');

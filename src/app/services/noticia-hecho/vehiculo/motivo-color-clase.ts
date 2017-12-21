@@ -21,6 +21,10 @@ export class MatrizMotivoColorClase extends MatrizGlobal{
                 && _object.color === _selected.color;
     }
 
+    public clean(){
+        this.selected = new MotivoClaseColor();
+    }
+
 }
 
 export class MotivoClaseColor {
