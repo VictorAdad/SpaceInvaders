@@ -9,7 +9,7 @@ import { Logger } from "@services/logger.service";
 })
 export class SearchComponent {
 
-	@Input() label    : string;
+	@Input() label    : string = "Buscar";
 
 	@Input() value    : string;
 
