@@ -177,7 +177,13 @@ export class SincronizaCambios {
         }
 
     }
-    //funcion que busca todas las coincidencias y despues llama a la funcion de dopost
+    /**
+     * funcion que busca todas los ids de los que depende el servicio y verifica si son nuevos para despues sustituirlos en el json del body. despues llama al servicio
+     * @param dependencias el arreglo de ids de los que depende el servicio.
+     * @param item Es la fila de la tabla de sincronizacion que se esta atendiendo
+     * @param i indice de la lista
+     * @param lista lista de elementos de la tabla de sincronizar
+     */
     buscaDependenciasYDoPost(dependencias: any[], item, i , lista){
         //me conviene bajar todo el diccionario de newId y buscar ahi
         this.db.list("newId").then(diccionario=>{
