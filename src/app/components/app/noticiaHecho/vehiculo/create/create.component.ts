@@ -433,8 +433,11 @@ public validate(form: FormGroup){
 
     public tipoVehiculoChange(_event){
         if(_event){
+            this.form.controls.marca.setValue("");
+            this.form.controls.submarca.setValue("");
             this.vehiculoServ.marcaSubmarca.find(_event, 'tipoVehiculo');
             this.vehiculoServ.marcaSubmarca.filterBy(_event, 'tipoVehiculo', 'marca');
+            this.vehiculoServ.marcaSubmarca.submarca = [];
         }
         if(_event==_config.optionValue.vehiculo.bicicleta){
             this.isTipoBicicleta=true;

@@ -4,8 +4,13 @@ import { HttpService} from '@services/http.service';
 import { DialogSincrinizarService} from "@services/onLine/dialogSincronizar.service";
 import { Logger } from "@services/logger.service";
 
-
+/**
+ * Clase para sincronizar los cambios de los catalogos
+ */
 export class SincronizaCatalogos {
+    /**
+     * variable para saber si se esta sincronizando o no
+     */
     public static sincronizando:boolean;
     catalogo="algun catalogo";
 
@@ -19,7 +24,14 @@ export class SincronizaCatalogos {
         private dialogo:DialogSincrinizarService
         ){
     }
-
+    /**
+     * funcion que transforma una cadena en formato guioncase a camelcaseUpper
+     * @param cad String
+     * @example Ejemplo
+     * cad="hola_mundo"
+     * cad=toCamelCase(cad)
+     * cad es "HolaMundo"
+     */
     public toCamelCase(cad){
         var copia="";
         if (cad.length>0){
@@ -42,7 +54,14 @@ export class SincronizaCatalogos {
         }
         return copia;
     }
-    //transforma de camel case to guion case
+    /**
+     * funcion que transforma una cadena en formato camelcaseUpper a guioncase
+     * @param cad String
+     * @example Ejemplo
+     * cad="HolaMumundo"
+     * cad=toCamelCase(cad)
+     * cad es "hola_mundo"
+     */
     public toGuionCase(cad){
         let str="";
         for (var i = 0; i < cad.length; ++i) {
@@ -58,12 +77,17 @@ export class SincronizaCatalogos {
         }
         return str;
     }
-
+    /**
+     * No hace nada :'(
+     * @param arr 
+     */
     private arrayToCamelCase(arr:any[]){
         let arreglo=new Array<any>();
         return arreglo;
     }
-
+    /**
+     * Funcion que sincroniza los catalogos por primera vez. Es llamada desde la clase IndexedDB
+     */
     public nuevo(){
         SincronizaCatalogos.sincronizando=true;
         this.bajaCatalogoLlave();
@@ -73,7 +97,11 @@ export class SincronizaCatalogos {
         this.sincronizaCatalogos(0,CatalogosACargar.matricesASincronizar,"matrices");
         this.sincronizaCatalogos(0,CatalogosACargar.catalogosASincronizar,"catalogos");
     }
-
+    /**
+     * Busca el catalogo correspondiente dentro de la lista de catalogos y matrices
+     * @param catalogo string: nombre catalogo
+     * @return objecto de la forma {uri: "", nombre:""} o null si no lo encuentra
+     */
     public buscaElementoInCatalogos(catalogo){
         var catalogos=CatalogosACargar.catalogosASincronizar as any[];
         for (var i = 0; i < catalogos.length; ++i) {
@@ -89,7 +117,10 @@ export class SincronizaCatalogos {
         }
         return null;
     }
-
+    /**
+     * Actualiza el catalogo dentro de indexedDB
+     * @param item Es el catalogo a sincronizar
+     */
     public actualizaCatalogo(item){
         var obj=this;
         this.http.get(item["uri"]).subscribe((response) => {
@@ -104,7 +135,9 @@ export class SincronizaCatalogos {
             obj.dialogo.close();
         });
     }
-
+    /**
+     * Funcion que se encarga de descargar la lista de catalogos firmados y comparalos contra la lista de IndexedDB. Si existe alguna diferencia se actualiza el catalogo que tienen diferente firma.
+     */
     public searchChange(){
         //si se esta sincronizando los catalogos por primera vez
         if (SincronizaCatalogos.sincronizando)
@@ -157,7 +190,9 @@ export class SincronizaCatalogos {
         });
         //this.dialogo.close();
     }
-
+    /**
+     * Funcion que descarga la lista de catalogos firmados y los guarda en IndexedDB
+     */
     private bajaCatalogoLlave(){
         var obj=this;
             this.http.get("/v1/catalogos/sincronizacion").subscribe(listaRemota=>{
@@ -173,7 +208,12 @@ export class SincronizaCatalogos {
             });
        
     }
-
+    /**
+     * Funcion recursiva para sincronizar catalogos. en teoria todo lo que viene en el arr se va a sincronizar. Este arreglo se inicializa en la funcion searchChange
+     * @param i indice del arreglo
+     * @param arr arreglos de catalogos, es un arreglo de la forma[{uri:"",catalogo:""},]
+     * @param titulo string que indica si se sincronizan matrices o catalogos
+     */
     private sincronizaCatalogos(i,arr:any[],titulo:string=""){
         if (i==0){
             Logger.time(titulo);
@@ -199,7 +239,13 @@ export class SincronizaCatalogos {
         this.sincronizaMatrix(i,arr[i],arr,titulo);
 
     }
-
+     /**
+     * Funcion recursiva para sincronizar catalogos. Se encarga de descargar el catalogo definido en item y actualizarlo en indexeDB
+     * @param i indice del arreglo
+     * @param item es el elemento que se actualizara
+     * @param arr arreglos de catalogos, es un arreglo de la forma[{uri:"",catalogo:""},]
+     * @param titulo string que indica si se sincronizan matrices o catalogos
+     */
     private sincronizaMatrix(i,item,arr,titulo:string=""){
         this.catalogo=item["catalogo"];
         Logger.log(this.catalogo);

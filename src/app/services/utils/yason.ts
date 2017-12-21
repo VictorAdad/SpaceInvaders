@@ -1,4 +1,6 @@
-//clase para hacer operaciones comunes en json
+/**
+ * clase para hacer operaciones comunes en json
+ */
 export class Yason {
 	public static  eliminaNulos(x){
                 if (typeof x == "object"){
@@ -22,12 +24,13 @@ export class Yason {
             return original;
     }
 
-    
-    /*
-        convierte un dataURl a blob
-        esto sirve cuando se combierte un archivo a dataUrl y  despues se quiere regresar a la normalidad
-        recordar que un file hereda de blob.
-    */
+    /**
+     *  convierte un dataURl a blob
+     *   esto sirve cuando se combierte un archivo a dataUrl y  despues se quiere regresar a la normalidad
+     *   recordar que un file hereda de blob.
+     * @param dataURI es la informacion en formato dataUri 
+     * @param type el tipo del archvio que deseamos obtener, para hacer correctamente el casteo de la informacion.
+     */
     public static dataURItoBlob(dataURI, type) {
         var binary = atob(dataURI);
         var array = [];

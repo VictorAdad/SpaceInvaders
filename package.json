@@ -10,7 +10,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "deploy-test": "ng build --environment test --prod --base-href /sigi/",
-    "deploy-prod": "ng build --environment prod --prod --base-href http://sigi.evomatik.net/sigi-test/"
+    "deploy-prod": "ng build --environment prod --prod --base-href http://sigi.evomatik.net/sigi-test/",
+    "compodoc": "./node_modules/.bin/compodoc -p tsconfig.json"
   },
   "private": true,
   "dependencies": {
