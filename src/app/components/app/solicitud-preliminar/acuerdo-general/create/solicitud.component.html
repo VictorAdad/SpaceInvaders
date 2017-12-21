@@ -17,21 +17,27 @@
                         <text label="Oficio" name="noOficioAtencion" [max]="100" [group]="form"></text>
                     </div>
                     <div class="col">
-                        <text label="Nombre de la autoridad a quien se dirige el oficio" name="autoridadJuridico" [max]="100" [group]="form"></text>
-                    </div>
-                    <div class="col">
                         <select2 placeholder="¿Denuncia o querella?" [options]="options.denunciaQuerella" name="id" [group]="form.controls.denunciaQuerella"></select2>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <text label="Ubicación de la unidad inmediata" name="ubicacionJuridico" [max]="100" [group]="form"></text>
+                        <text-area label="Nombre de la autoridad a quien se dirige el oficio" name="autoridadJuridico" [group]="form"></text-area>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col">
                         <select2 placeholder="¿Víctima, ofendido o querellante?" [options]="options.victimaQuerellante" name="id" [group]="form.controls.victimaQuerellante"></select2>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col">
-                        <text label="Cargo y adscripción de la autoridad a la que se dirige el oficio" name="cargoAdscripcionJuridico" [max]="150" [group]="form"></text>
+                        <text-area label="Ubicación de la unidad inmediata" name="ubicacionJuridico"  [group]="form"></text-area>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <text-area label="Cargo y adscripción de la autoridad a la que se dirige el oficio" name="cargoAdscripcionJuridico" [group]="form"></text-area>
                     </div>
                 </div>
             </div>
@@ -39,21 +45,27 @@
                 <h4>Oficio para ayuda y atención a víctima</h4>
                 <div class="row">
                     <div class="col">
-                        <text label="Oficio" name="noOficioAtencion" [max]="100" [group]="form"></text>
-                    </div>
-                    <div class="col">
-                        <text label="Nombre de la autoridad a quien se dirige el oficio" name="autoridadJuridico" [max]="100" [group]="form"></text>
-                    </div>
-                    <div class="col">
-                        <text label="Necesidades que se ayudarán a cubrir" name="necesidades" [max]="100" [group]="form"></text>
-                    </div>
-                    <div class="col">
-                        <text label="Ubicación de la unidad inmediata" name="ubicacionAtencion" [max]="100" [group]="form"></text>
+                        <text label="Oficio" name="noOficioAtencion"  [group]="form"></text>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
-                        <text label="Cargo y adscripción de la autoridad a la que se dirige el oficio" name="cargoAdscripcionAtencion" [max]="150" [group]="form"></text>
+                    <div class="col">
+                        <text-area label="Nombre de la autoridad a quien se dirige el oficio" name="autoridadJuridico"  [group]="form"></text-area>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <text-area label="Necesidades que se ayudarán a cubrir" name="necesidades"  [group]="form"></text-area>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <text-area label="Ubicación de la unidad inmediata" name="ubicacionAtencion"  [group]="form"></text-area>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <text-area label="Cargo y adscripción de la autoridad a la que se dirige el oficio" name="cargoAdscripcionAtencion"  [group]="form"></text-area>
                     </div>
                 </div>
                 <div class="row">    
