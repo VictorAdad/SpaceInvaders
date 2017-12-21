@@ -274,7 +274,7 @@ public validate(form: FormGroup){
                 this.http.post('/v1/base/vehiculos', this.model).subscribe(
                     (response) => {
                         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/vehiculos' ]);
-                        resolve("Se creo el vehículo con éxito");
+                        resolve("Se creó el vehículo con éxito");
                         this.vehiculoServ.reset();
                         this.casoService.actualizaCaso();
                     },
@@ -304,7 +304,7 @@ public validate(form: FormGroup){
                             this.model["id"]=temId;
                             caso["vehiculos"].push(this.model);
                             this.db.update("casos",caso).then(t=>{
-                                resolve("Se creo el vehículo de manera local");
+                                resolve("Se creó el vehículo de manera local");
                                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/vehiculos' ]);
                                 this.vehiculoServ.reset();
                             });
