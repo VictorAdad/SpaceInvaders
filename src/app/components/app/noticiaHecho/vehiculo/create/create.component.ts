@@ -440,24 +440,32 @@ public validate(form: FormGroup){
             this.vehiculoServ.marcaSubmarca.filterBy(_event, 'tipoVehiculo', 'marca');
         }
         if(_event==_config.optionValue.vehiculo.bicicleta){
-           this.isTipoBicicleta=true;
-           this.form.controls.placas.setValidators([]);
-           this.form.controls.noSerie.setValidators([]);
-           this.form.controls.noMotor.setValidators([]);
+            this.isTipoBicicleta=true;
+           if (this.isRobo){               
+               this.form.controls.placas.setValidators([]);
+               this.form.controls.noSerie.setValidators([]);
+               this.form.controls.noMotor.setValidators([]);
 
-           this.form.controls.placas.updateValueAndValidity();
-           this.form.controls.noSerie.updateValueAndValidity();
-           this.form.controls.noMotor.updateValueAndValidity();
+               this.form.controls.placas.updateValueAndValidity();
+               this.form.controls.noSerie.updateValueAndValidity();
+               this.form.controls.noMotor.updateValueAndValidity();
+           }
+           
 
         }else{
-          this.isTipoBicicleta=false;
-          this.form.controls.placas.setValidators([Validators.required]);
-          this.form.controls.noSerie.setValidators([Validators.required]);
-          this.form.controls.noMotor.setValidators([Validators.required]);
 
-          this.form.controls.placas.updateValueAndValidity();
-          this.form.controls.noSerie.updateValueAndValidity();
-          this.form.controls.noMotor.updateValueAndValidity();
+            this.isTipoBicicleta=false;
+            if (this.isRobo){
+                  this.form.controls.placas.setValidators([Validators.required]);
+                  this.form.controls.noSerie.setValidators([Validators.required]);
+                  this.form.controls.noMotor.setValidators([Validators.required]);
+
+                  this.form.controls.placas.updateValueAndValidity();
+                  this.form.controls.noSerie.updateValueAndValidity();
+                  this.form.controls.noMotor.updateValueAndValidity();
+
+            }
+          
         }
         // if(_event == _config.optionValue.automovil)
         //     this.form.controls.submarca.setValidators([Validators.required]);
