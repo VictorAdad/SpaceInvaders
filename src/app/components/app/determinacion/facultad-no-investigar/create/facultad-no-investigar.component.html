@@ -1,22 +1,22 @@
 <form [formGroup]="form">
     <div class="row">
-        <div class="col-md-4 col-sm-12 col-lg-4">
-          <text label="Nombre de denunciante" name="nombreDenunciante" [group]="form" [focus]="true"></text>
+        <div class="col-md-12 col-sm-12 col-lg-12">
+          <text-area label="Nombre de denunciante" name="nombreDenunciante" [group]="form" [focus]="true"></text-area>
         </div>
-        <div class="col-md-4 col-sm-12 col-lg-4">
-          <text label="Originario de " name="originarioDenunciante" [max]="150" [group]="form"></text>
+        <div class="col-md-12 col-sm-12 col-lg-12">
+          <text-area label="Originario de " name="originarioDenunciante" [group]="form"></text-area>
         </div>
         <div class="col-md-4 col-sm-12 col-lg-4">
             <int label="Edad" name="edadDenunciante" [max]="3" [group]="form"></int>
         </div>
       </div>
    <div class="row">
-      <div class="col-md-4 col-sm-12 col-lg-4">
-          <text label="Domicilio" name="domicilioDenunciante" [max]="150" [group]="form"></text>
+      <div class="col-md-12 col-sm-12 col-lg-12">
+          <text-area label="Domicilio" name="domicilioDenunciante" [group]="form"></text-area>
       </div>
     </div>
     <div class="row">
-      <div class="col">
+      <div class="col-md-4 col-sm-12 col-lg-4">
         <text label="Inciso del artículo 34 apartado A de la fracción I" name="fraccion" [max]="150" [group]="form"></text>
       </div>
 	    <div class="col-md-12 col-sm-12 col-lg-12">
