@@ -28,10 +28,11 @@ import { Logger } from "@services/logger.service";
 export class PeritoCreateComponent {
 
 	public casoId: number = null;
-  public solicitudId: number = null;
-  public breadcrumb = [];
-  isPericiales: boolean = false;
-  public model:any=null;
+	public solicitudId: number = null;
+	public breadcrumb = [];
+	public isPericiales: boolean = false;
+	public model:any=null;
+
 	constructor(private route: ActivatedRoute) { }
 
 	ngOnInit() {
@@ -43,16 +44,18 @@ export class PeritoCreateComponent {
 			}
 		});
 	}
-  modelUpdate(model: any) {
-    this.solicitudId= model.id;
-    this.isPericiales = model.tipo === 'Periciales'
-    this.model=model
-	  Logger.log(model);
-  }
-  pericialesUpdate(bool: any) {
-    this.isPericiales= bool;
-	  Logger.log(bool);
-  }
+
+	modelUpdate(model: any) {
+		this.solicitudId= model.id;
+		this.isPericiales = model.tipo === 'Periciales'
+		this.model=model
+		Logger.log(model);
+	}
+
+	pericialesUpdate(bool: any) {
+		this.isPericiales= bool;
+		Logger.log(bool);
+	}
 
 }
 
