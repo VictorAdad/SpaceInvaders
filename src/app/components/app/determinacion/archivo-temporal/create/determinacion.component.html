@@ -3,16 +3,16 @@
         <form>
             <div class="row">
                 <div class="col">
-                    <text-area label="Observaciones/Incidencias" name="observaciones" [max]="200" [group]="form" [focus]="true"></text-area>  
+                    <text-area label="Observaciones/Incidencias" name="observaciones" [group]="form" [focus]="true"></text-area>
                 </div>
             </div>
             <div class="row justify-content-end" >
                 <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
-                   <!-- <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid" *ngIf="id != null">Guardar</button> -->    
+                   <!-- <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid" *ngIf="id != null">Guardar</button> -->
                    <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
                 </div>
                 <div class="col-sm-auto">
-                   <button class="float-right" mat-button routerLink="/caso/{{casoId}}/archivo-temporal">Cancelar</button> 
+                   <button class="float-right" mat-button routerLink="/caso/{{casoId}}/archivo-temporal">Cancelar</button>
                 </div>
            </div>
         </form>
