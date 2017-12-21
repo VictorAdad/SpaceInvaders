@@ -26,6 +26,9 @@ export class TextComponent extends BaseInputComponent {
 	}
 
 	ngAfterViewInit(){
+		if (!this["control"])
+			this.renderer.listen(
+				this.input.nativeElement, 'keyup', (event) => { this.inputSliceSinControl(); });
 		if(this.focus){
 			let timer = Observable.timer(1);
 
@@ -33,6 +36,14 @@ export class TextComponent extends BaseInputComponent {
 				this.input.nativeElement.focus();
 			});
 		}
+	}
+
+	inputSliceSinControl(){
+		if (this.value && this.value.toString().length > this.max) {
+			this.value = this.value.toString().trim().slice(0,this.max);
+		}
+		else if  (this.value && this.value.toString().length>0 && (/^\s*$/).test(this.value) )
+				this.value = this.value.toString().trim();
 	}
 
 	update(value) {

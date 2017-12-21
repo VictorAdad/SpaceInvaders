@@ -127,6 +127,10 @@ export class Select2Component{
    		this.filteredOptions = this.options;
    	}
 
+   	public cleanSelect(){
+   		this.value = "";
+   	}
+
 }
 
 export class MOption{
