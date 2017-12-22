@@ -113,6 +113,9 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
               (this.form.controls.sexo as FormGroup).controls.id.updateValueAndValidity();
               (this.form.controls.ocupacion as FormGroup).controls.id.updateValueAndValidity();
             }
+            if (this.id){//se esta editando
+                this.validateForm(this.form);
+            }
         }
     }
 
@@ -235,6 +238,10 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     public fillPersonaCaso(_personaCaso){
+        if (_personaCaso["persona"]["edad"]==0){
+            _personaCaso["persona"]["edad"]=null;
+        }
+        
         this.personaId = _personaCaso["persona"]["id"];
         let pcaso = this.globals.form.get('personaCaso') as FormArray;
         Yason.eliminaNulos(_personaCaso);
