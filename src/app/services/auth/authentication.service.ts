@@ -23,22 +23,41 @@ import 'rxjs/add/operator/map'
 
 @Injectable()
 export class AuthenticationService {
-    public token: string;
-    public isLoggedin: boolean;
-    public user: Usuario;
-    public roles: any;
+
+    public isLoggedin: boolean = false;
+
+    public user: Usuario = new Usuario();
+
+    public headers = new Headers();
+
+    public roles:any;
 
     constructor(private http: Http) {
-        // set token if saved in local storage
-        // let usuario = JSON.parse(localStorage.getItem('user'))
-        // if (localStorage.getItem("user") == null) {
-        //     this.isLoggedin = false;
-        // }
-        // else {
-        //     this.user   = new Usuario(usuario);
-        //     this.token  = this.user && this.user.token;
-        //     this.isLoggedin = true;
-        // }
+
+        this.headers = new Headers();
+        this.headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+        this.headers.append('Authorization', 'Basic b2F1dGhzaWdpY2xpZW50OmZjODFmZGFmNjlhYjQ4NjZhMmZjODU3NWMwZGIwYmQ2');
+        this.headers.append('X-OAUTH-IDENTITY-DOMAIN-NAME', 'OAuthSIGIDomain');
+
+        let session = localStorage.getItem(environment.oam.session);
+
+        if(session != null){
+            this.isLoggedin = true;
+            let usuario = JSON.parse(localStorage.getItem(environment.oam.session));
+            let request = this.getUser(usuario.token);
+
+            request.subscribe(
+                responseUser => {
+                    console.log('Response User '+responseUser );
+                    responseUser['token'] =  usuario.token;
+                    this.user = new Usuario(responseUser);
+                    localStorage.setItem(environment.oam.session, JSON.stringify(this.user));
+                    this.isLoggedin = true;
+                },
+                error => this.isLoggedin = false
+            );
+        }
+
 
         this.roles = {
             'callCenter': 'callCenter',
@@ -50,32 +69,45 @@ export class AuthenticationService {
         }
     }
 
-    // login(username: string, password: string): Observable<boolean> {
-    login(username: string, password: string){
+    public login(username: string, password: string){
 
-        console.log('login()');
+        var requestToken = this.getToken(username, password);
+        requestToken.subscribe(
+            response => {
+                console.log('-> Response Token', response);
+                let requestUser = this.getUser(response.access_token);
 
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
-        headers.append('Authorization', 'Basic b2F1dGhzaWdpY2xpZW50OmZjODFmZGFmNjlhYjQ4NjZhMmZjODU3NWMwZGIwYmQ2');
-        headers.append('X-OAUTH-IDENTITY-DOMAIN-NAME', 'OAuthSIGIDomain');
-
-        let body = `grant_type=PASSWORD&username=${username}&password=${password}&scope=AttributesOUD.attr`
-
-        let options = new RequestOptions({ headers: headers })
-
-        var request = this.http.post(environment.oam.host, body, options)
-            .map((response: Response) => response.json());
-        request.subscribe(
-            response => console.log('-> Response', response)
+                requestUser.subscribe(responseUser => {
+                    console.log('Response User '+responseUser );
+                    responseUser['token'] =  response.access_token;
+                    this.user = new Usuario(responseUser);
+                    localStorage.setItem(environment.oam.session, JSON.stringify(this.user));
+                    this.isLoggedin = true;
+                });
+            }
         )
     }
 
-    logout(): void {
+    public logout(): void {
         // Se elimina usuario del almacenamiento local
-        this.token = null;
         localStorage.removeItem('user');
         this.isLoggedin = false;
+    }
+
+    private getToken(_username, _password){
+        let body = `grant_type=PASSWORD&username=${_username}&password=${_password}&scope=AttributesOUD.attrs`
+        let options = new RequestOptions({ headers: this.headers });
+
+        return this.http.post(environment.oam.host+'/oauth2/rest/token', body, options)
+            .map((response: Response) => response.json());
+    }
+
+    private getUser(_token){
+        let options = new RequestOptions({ headers: this.headers });
+
+        return this.http.get(environment.oam.host+'/oauth2/rest/token/info?access_token='+_token, options)
+            .map((response: Response) => response.json());
+
     }
 
     isLoggedIn(): boolean{
@@ -103,20 +135,24 @@ export class Usuario {
     public distrito: string;
     public municipio: string;
     
-    constructor(_usuario: any) {
-        this.nombreCompleto = _usuario.nombreCompleto;
-        this.username = _usuario.username;
-        this.roles = this.setRoles(_usuario.roles);
-        this.fiscalia = _usuario.fiscalia;
-        this.agencia = _usuario.agencia;
-        this.autoridad = _usuario.autoridad;
-        this.turno = _usuario.turno;
-        this.distrito = _usuario.distrito;
-        this.municipio = _usuario.municipio;
+    constructor(_usuario: any =  null) {
+        if(_usuario != null){
+            console.log('New Usuario()', _usuario);
+            this.nombreCompleto = _usuario.sub;
+            this.username = _usuario.sub;
+            this.roles = this.setRoles(_usuario.Roles);
+            this.token = _usuario.token;
+            // this.fiscalia = _usuario.fiscalia;
+            this.agencia = _usuario.Municipio;
+            // this.autoridad = _usuario.autoridad;
+            // this.turno = _usuario.turno;
+            // this.distrito = _usuario.distrito;
+            this.municipio = _usuario.Municipio;
+        }
     }
 
-    public setRoles(_roles: string[]): string[]{
-        let roles: string[] = [];
+    public setRoles(_roles: string): string[]{
+        let roles: string[] = _roles.split('\\');
 
         for (let role of _roles) {
             roles.push(role);
@@ -126,8 +162,11 @@ export class Usuario {
     }
 
     public hasRoles(..._roles): boolean{
-        return _roles.some( role => this.roles.includes(role));
-    }
+        if(this.roles)
+            return _roles.some( role => this.roles.includes(role));
+        else
+            return false;   
+     }
 }
 
 export class Role {
