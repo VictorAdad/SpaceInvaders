@@ -48,5 +48,29 @@ export class Yason {
         }
         return new Blob([new Uint8Array(array)], {type: type});
     }
+    /**
+     * Busca todos los elementos de la lista que coincidadan con _item en todos sus llaves.
+     * @param lista lista de objectos
+     * @param _item objecto
+     */
+    public buscaTodosLosElementosEnLista(lista, _item){
+        var rec=function(e,y) {
+            if((typeof e)=="object"){
+                let igual=true;
+                for (var element in e){
+                    igual=igual&&rec(e[element],y[element]);
+                }
+                return igual;
+            }
+            return e==y;
+        }
+        var coincidencias=[];
+        for (let item in lista){
+            if (rec(_item,lista[item]))
+                coincidencias.push(Yason.copiaJson(lista[item])); 
+        }
+        return coincidencias;
+
+    }
 
 }
