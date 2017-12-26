@@ -1,48 +1,55 @@
-<mat-card>
-    <form [formGroup]="form">
-        <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-12">
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
             <h4>Datos de herencia</h4>
-        </div>
-        <div class=" col-lg-8 col-md-8 col-sm-12 text-justify">
-         Es necesario seleccionar "Heredar datos" para desplegar en el formato la información seleccionada, de lo contrario el sistema presentará toda la información de Datos Generales con base en la correspondencia de la información presentada en el formato.
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="float-right">
+              <strong>
+                  <checkbox label="Heredar datos" [group]="form" name="heredar" (valueChange)="setHeredarDatos($event)"></checkbox>
+              </strong>
+            </div>
           </div>
-        <div class="col-lg-2 col-md-2 col-sm-12">
-          <div class="float-right">
-            <strong>
-                <checkbox label="Heredar datos" [group]="form" name="heredar" (valueChange)="setHeredarDatos($event)"></checkbox>
-            </strong>
+         </div>
+        <div class="row">
+          <div class="col-md-4">
+              <select2 placeholder="Persona" [disabled]="!heredar" [options]="optionsNoticia.personas" [group]="" name=""  (valueChange)="addPersona($event)"></select2>
+          </div>
+          <div class="col-md-4">
+            <select2 placeholder="Lugar" [options]="optionsNoticia.lugares" [group]="form.controls.lugar" name="id"  (valueChange)="lugarChanged($event)"></select2>
+          </div>
+          <div class="col-md-4">
+            <select2 placeholder="Delito" [options]="optionsNoticia.delitos" [group]="form.controls.delito" name="id"></select2>
           </div>
         </div>
-    </div>
+        <div class="row">
+          <div class="col-md-4">
+              <mat-list *ngIf="personas != null">
+                  <mat-list-item *ngFor="let persona of personas">
+                    {{persona.label}}
+                  </mat-list-item>
+              </mat-list>
+          </div>
+          <div class="col-md-4">
+            <select2 placeholder="Vehiculo" [options]="optionsNoticia.vehiculos" [group]="form.controls.vehiculo" name="id"></select2>
+          </div>
+          <div class="col-md-4">
+            <select2 placeholder="Arma" [options]="optionsNoticia.armas" [group]="form.controls.arma" name="id"></select2>
+          </div>
+        </div>
+        <div class="row text-justify small">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+               Es necesario seleccionar "Heredar datos" para desplegar en el formato la información seleccionada, de lo contrario el sistema presentará toda la información de Datos Generales con base en la correspondencia de la información presentada en el formato.
+            </div>
 
-	<div>
-	</div>
-	<div class="row">
-		<div class="col-md-4">
-        <select2 placeholder="Persona" [disabled]="!heredar" [options]="optionsNoticia.personas" [group]="" name=""  (valueChange)="addPersona($event)"></select2>
-		</div>
-		<div class="col-md-4">
-			<select2 placeholder="Lugar" [options]="optionsNoticia.lugares" [group]="form.controls.lugar" name="id"></select2>
-		</div>
-		<div class="col-md-4">
-			<select2 placeholder="Delito" [options]="optionsNoticia.delitos" [group]="form.controls.delito" name="id"></select2>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-4">
-        <mat-list *ngIf="personas != null">
-            <mat-list-item *ngFor="let persona of personas">
-              {{persona.label}}
-            </mat-list-item>
-        </mat-list>
-		</div>
-		<div class="col-md-4">
-			<select2 placeholder="Vehiculo" [options]="optionsNoticia.vehiculos" [group]="form.controls.vehiculo" name="id"></select2>
-		</div>
-		<div class="col-md-4">
-			<select2 placeholder="Arma" [options]="optionsNoticia.armas" [group]="form.controls.arma" name="id"></select2>
-		</div>
-  </div>
-</form>
-</mat-card>
+      </div>
+      <div class="row justify-content-end space">
+          <div class="col-sm-auto" >
+              <button mat-raised-button color="accent" (click)="heredarDatos()" [disabled]="!heredar" >Guardar</button>
+          </div>
+      </div>
+    </div>
+</mat-expansion-panel>

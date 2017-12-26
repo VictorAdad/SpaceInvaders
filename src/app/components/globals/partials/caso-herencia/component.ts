@@ -1,13 +1,17 @@
+import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { Observable } from 'rxjs';
-import { MatPaginator } from '@angular/material';
+import { MatPaginator, MatDialog } from '@angular/material';
 import { HttpService } from '@services/http.service';
 import { NoticiaHechoService } from './../../../../services/noticia-hecho.service';
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Caso, CasoService } from '@services/caso/caso.service';
 import { Logger } from "@services/logger.service";
 import { TableService} from '@utils/table/table.service';
 import { Event } from '@angular/router/src/events';
+import { EventEmitter } from 'events';
+import { ResolveEmit,ConfirmSettings} from '@utils/alert/alert.service';
+
 
 @Component({
 	selector    : 'caso-herencia',
@@ -20,6 +24,23 @@ export class CasoHerenciaComponent implements OnInit{
 
 	@Input()
 	public form: FormGroup;
+  @Output()
+  public lugarChange:EventEmitter;
+  @Output()
+  public armaChange:EventEmitter;
+  @Output()
+  public vehiculoChange:EventEmitter;
+  @Output()
+  public delitoChange:EventEmitter;
+  @Output()
+  public personasChange:EventEmitter;
+
+  public settings:ConfirmSettings={
+		overlayClickToClose: false, // Default: true
+		showCloseButton: true, // Default: true
+		confirmText: "Continuar", // Default: 'Yes'
+		declineText: "Cancelar",
+	};
 
   public caso: Caso
   public heredar:boolean;
@@ -27,6 +48,8 @@ export class CasoHerenciaComponent implements OnInit{
     public casoServ: CasoService,
     public optionsNoticia: NoticiaHechoService,
     private http: HttpService,
+    private _confirmation: ConfirmationService,
+    public dialog: MatDialog
 
   ){
 	}
@@ -76,6 +99,20 @@ export class CasoHerenciaComponent implements OnInit{
       this.form.controls.vehiculo["controls"].id.disable();
       this.form.controls.arma["controls"].id.disable();
     }
+  }
+  public lugarChanged(event){
+     console.log(event as Event);
+  }
+  public heredarDatos(){
+    this._confirmation.create('Advertencia','¿Estás seguro de que deseas heradar estos dato?',this.settings).subscribe(
+      (ans: ResolveEmit) => {
+        console.log(ans)
+        if(ans.resolved){
+          console.log("Heredar datos")
+        }
+        else{ console.log("No heredar datos")
+        }
+      });
   }
 }
 
