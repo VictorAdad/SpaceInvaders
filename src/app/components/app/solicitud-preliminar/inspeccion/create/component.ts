@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { TableService} from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Inspeccion } from '@models/solicitud-preliminar/inspeccion';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
@@ -73,6 +73,21 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
         this.model = new Inspeccion();
 
         this.form  = new FormGroup({
+            'lugar': new FormGroup({
+              'id': new FormControl("", []),
+            }),
+            'arma': new FormGroup({
+              'id': new FormControl("", []),
+            }),
+            'vehiculo': new FormGroup({
+              'id': new FormControl("", []),
+            }),
+            'delito': new FormGroup({
+              'id': new FormControl("", []),
+            }),
+            'heredar':  new FormControl("", []),
+            'personas': new FormArray([]),
+
             'fechaHoraInspeccion': new FormControl(new Date()),
             'adscripcion' : new FormControl(this.model.adscripcion),
             'descripcion' : new FormControl(this.model.descripcion)
