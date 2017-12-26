@@ -5,12 +5,13 @@
 			placeholder="{{placeholder}}"
 			[(ngModel)]="value" (ngModelChange)="update($event)"
       (onOpen)="setCursor()"
+      [disabled]="disabled"
 			class="full-width" >
 			<div class="md-custom-search">
 				<input type="text" name="search" placeholder="Buscar" #searchInput>
 				<mat-icon  class="suffix">search</mat-icon>
 			</div>
-		  <mat-option *ngFor="let option of options" [value]="option.value" (click)="onSelected(option.value)">
+		  <mat-option *ngFor="let option of options" [value]="option.value">
 		    {{ option.label }}
 		  </mat-option>
 		</mat-select>
@@ -20,7 +21,7 @@
 </div>
 
 <div [formGroup]="group"  *ngIf="name!=''">
-	<mat-form-field class="full-width">
+	<mat-form-field  class="full-width">
 		<mat-select
 			#select
 			placeholder="{{placeholder}}"
@@ -28,7 +29,8 @@
 			(ngModelChange)="update($event)"
 			(onOpen)="setCursor()"
 			class="full-width"
-			formControlName="{{name}}"
+      formControlName="{{name}}"
+      [disabled]="disabled"
 			(onClose)="closeSelect()">
 			<div class="md-custom-search">
 				<input type="text" name="search" placeholder="Buscar" #searchInput>
