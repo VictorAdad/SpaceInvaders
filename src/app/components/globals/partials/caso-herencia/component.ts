@@ -3,13 +3,12 @@ import { Observable } from 'rxjs';
 import { MatPaginator, MatDialog } from '@angular/material';
 import { HttpService } from '@services/http.service';
 import { NoticiaHechoService } from './../../../../services/noticia-hecho.service';
-import { Component, OnInit, Input, ViewChild, Output } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output,EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Caso, CasoService } from '@services/caso/caso.service';
 import { Logger } from "@services/logger.service";
 import { TableService} from '@utils/table/table.service';
 import { Event } from '@angular/router/src/events';
-import { EventEmitter } from 'events';
 import { ResolveEmit,ConfirmSettings} from '@utils/alert/alert.service';
 
 
@@ -21,24 +20,23 @@ export class CasoHerenciaComponent implements OnInit{
   public personas:any[];
 	@Input()
 	public casoId: number;
-
 	@Input()
 	public form: FormGroup;
   @Output()
-  public lugarChange:EventEmitter;
+  public lugarChange:EventEmitter<string> = new EventEmitter<string>();
   @Output()
-  public armaChange:EventEmitter;
+  public armaChange:EventEmitter<string> = new EventEmitter<string>();
   @Output()
-  public vehiculoChange:EventEmitter;
+  public vehiculoChange:EventEmitter<string> = new EventEmitter<string>();
   @Output()
-  public delitoChange:EventEmitter;
+  public delitoChange:EventEmitter<string> = new EventEmitter<string>();
   @Output()
-  public personasChange:EventEmitter;
+  public personasChange:EventEmitter<string> = new EventEmitter<string>();
 
   public settings:ConfirmSettings={
-		overlayClickToClose: false, // Default: true
-		showCloseButton: true, // Default: true
-		confirmText: "Continuar", // Default: 'Yes'
+		overlayClickToClose: false,
+		showCloseButton: true,
+		confirmText: "Continuar",
 		declineText: "Cancelar",
 	};
 
@@ -72,6 +70,7 @@ export class CasoHerenciaComponent implements OnInit{
       if(this.optionsNoticia.personas[i].value==_id && !this.isInPersonas(_id)){
         this.personas.push(this.optionsNoticia.personas[i]);
         (this.form.controls.personas as FormArray).push(new FormGroup({"id":new FormControl(_id,[])}));
+        this.personasChanged(_id);
         break;
       }
     }
@@ -100,13 +99,9 @@ export class CasoHerenciaComponent implements OnInit{
       this.form.controls.arma["controls"].id.disable();
     }
   }
-  public lugarChanged(event){
-     console.log(event as Event);
-  }
   public heredarDatos(){
-    this._confirmation.create('Advertencia','¿Estás seguro de que deseas heradar estos dato?',this.settings).subscribe(
+    this._confirmation.create('Advertencia','¿Estás seguro de que deseas heradar estos datos?',this.settings).subscribe(
       (ans: ResolveEmit) => {
-        console.log(ans)
         if(ans.resolved){
           console.log("Heredar datos")
         }
@@ -114,6 +109,21 @@ export class CasoHerenciaComponent implements OnInit{
         }
       });
   }
+  public lugarChanged(id){
+    this.lugarChange.emit(id);
+ }
+ public armaChanged(id){
+  this.armaChange.emit(id);
+}
+public delitoChanged(id){
+  this.delitoChange.emit(id);
+}
+public vehiculoChanged(id){
+  this.vehiculoChange.emit(id);
+}
+public personasChanged(id){
+  this.personasChange.emit(id);
+}
 }
 
 
