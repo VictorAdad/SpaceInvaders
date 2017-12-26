@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { NoEjercicioAccionPenal } from '@models/determinacion/no-ejercicio-accion-penal';
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
@@ -71,6 +71,22 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
 	ngOnInit() {
 		this.model = new NoEjercicioAccionPenal();
 		this.form = new FormGroup({
+
+      'lugar': new FormGroup({
+        'id': new FormControl("", []),
+      }),
+      'arma': new FormGroup({
+        'id': new FormControl("", []),
+      }),
+      'vehiculo': new FormGroup({
+        'id': new FormControl("", []),
+      }),
+      'delito': new FormGroup({
+        'id': new FormControl("", []),
+      }),
+      'heredar':  new FormControl("", []),
+      'personas': new FormArray([]),
+
 			'narracionHechos': new FormControl(this.model.narracionHechos),
 			'datosPrueba': new FormControl(this.model.datosPrueba),
 			'fechaHechoDelictivo': new FormControl(this.model.fechaHechoDelictivo),
