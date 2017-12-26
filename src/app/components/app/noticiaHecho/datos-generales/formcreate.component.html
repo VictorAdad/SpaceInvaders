@@ -2,14 +2,8 @@
     <div class="content-dialog-lg">
         <div class="">
             <div class="row breadcrumd">
-                
-                <div class="col">
-                    <text label="Buscar delitos" [functionChange]="setDelito.bind(this)"></text>
-                </div>
-                <div class="col-sm-auto">
-                    <button mat-fab color="accent" (click)="buscar()">
-                        <mat-icon >search</mat-icon>
-                    </button>
+                <div class="col" style="padding-bottom: 10px">
+                    <search (search)="buscar($event)"></search>
                 </div>
             </div>
         </div>

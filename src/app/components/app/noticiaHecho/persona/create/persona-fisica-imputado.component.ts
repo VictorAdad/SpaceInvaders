@@ -246,6 +246,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         let pcaso = this.globals.form.get('personaCaso') as FormArray;
         Yason.eliminaNulos(_personaCaso);
 
+        Logger.logColor('---- 1 --->','purple', _personaCaso);
+
         if(_personaCaso.detalleDetenido != null){
             let timerDetenido = Observable.timer(1);
             timerDetenido.subscribe( t => {
@@ -702,6 +704,12 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
               (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
               Logger.log('lo que envio: '+  (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
              }
+
+             if (this.globals.detenido==false) {
+                 Logger.log('entroooooo!');
+                 delete (_model["personaCaso"])[0].detalleDetenido;
+             }
+
             buscar.push({
                 catalogo:"idioma_identificacion",
                 name:"idiomaIdentificacion",
