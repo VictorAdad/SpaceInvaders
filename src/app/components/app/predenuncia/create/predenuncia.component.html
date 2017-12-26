@@ -1,3 +1,8 @@
+<div class="row space">
+    <div class="col-md-12">
+      <caso-herencia [casoId]="casoId" [form]="form"></caso-herencia>
+    </div>
+</div>
 <!-- Fromulario para usuario 1-->
 
 <form [formGroup]="form">
@@ -48,8 +53,12 @@
 	</div>
 
 	<div id="f2" *ngIf="!authen.user.hasRoles(authen.roles.callCenter)">
-		<div class="row space"> <h2>Constancia de lectura de derechos a la víctima u ofendido</h2></div>
-	    <div class="row">
+		<div class="row space">
+        <div class="col">
+         <h2>Constancia de lectura de derechos a la víctima u ofendido</h2></div>
+       </div>
+
+      <div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text label="Número de folio" name="noFolioConstancia" [max]="50" [group]="form"></text>
 		    </div>
@@ -85,7 +94,11 @@
 			    </select2>
 			</div>
 		</div>
-		<div class="row space"> <h2>Registro presencial</h2></div>
+		<div class="row space">
+        <div class="col">
+          <h2>Registro presencial</h2>
+        </div>
+      </div>
 		<div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text label="Calidad de la persona" name="calidadPersona" [max]="150" [group]="form"></text>
