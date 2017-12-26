@@ -11,7 +11,7 @@ import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { SelectsService} from '@services/selects.service';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { GlobalService } from "@services/global.service";
 import { DataSource } from '@angular/cdk/collections';
@@ -129,6 +129,22 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 
 	public createForm() {
 		return new FormGroup({
+      'lugar': new FormGroup({
+				'id': new FormControl("", []),
+			}),
+      'arma': new FormGroup({
+				'id': new FormControl("", []),
+      }),
+      'vehiculo': new FormGroup({
+				'id': new FormControl("", []),
+      }),
+      'delito': new FormGroup({
+				'id': new FormControl("", []),
+      }),
+      'heredar':  new FormControl("", []),
+      'personas': new FormArray([]),
+
+
 			'autoridadRealizaEntrevista': new FormControl(""),
 			'lugarRealizaEntrevista': new FormControl(""),
 			'nombreEntrevistado': new FormControl(""),
@@ -361,7 +377,7 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
 
   }
 
-  
+
 
   public setData(_object){
       Logger.log('setData()');
