@@ -1,16 +1,24 @@
 <div class="row">
     <div class="col-md-12">
         <form [formGroup]="form">
-            <caso-herencia [casoId]="casoId" [form]="form"></caso-herencia>
-            <select2
-                [focus]="true"
-                [options]="
-                [
-                     {label:'Periciales',value:'Periciales'}, 
-                     {label:'Psicofísico',value:'Psicofísico'}
-                ]" placeholder="Tipo de solicitud" (valueChange)="tipoChange($event)" [group]="form"
-                name="tipo">
-            </select2>
+            <div class="row space">
+                <div class="col-md-12">
+                  <caso-herencia [casoId]="casoId" [form]="form"></caso-herencia>
+                </div>
+            </div>
+            <div class="row space">
+                <div class="col-md-12">
+                  <select2
+                      [focus]="true"
+                      [options]="
+                      [
+                          {label:'Periciales',value:'Periciales'},
+                          {label:'Psicofísico',value:'Psicofísico'}
+                      ]" placeholder="Tipo de solicitud" (valueChange)="tipoChange($event)" [group]="form"
+                      name="tipo">
+                  </select2>
+             </div>
+            </div>
             <div *ngIf="isPericiales">
                 <h4>Narración de los hechos denunciados</h4>
                 <text-area label="Hechos narrados que se denuncian" name="hechosNarrados" [group]="form"></text-area>
@@ -31,7 +39,7 @@
                 <select2 placeholder="Se solicita examen" [options]="options.tipoExamen" name="id" [group]="form.controls.tipoExamen"></select2>
                 <text label="Apercibimiento o medidas de apremio" name="apercibimiento" [max]="100" [group]="form"></text>
                 <text-area label="Observaciones/incidencias" name="observaciones" [group]="form"></text-area>
-            </div> 
+            </div>
 
             <div class="row justify-content-end">
                 <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">

@@ -12,7 +12,7 @@ import { SolicitudPreliminarGlobal } from '../../global';
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { SelectsService } from '@services/selects.service';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
@@ -142,6 +142,21 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 
 	public createForm() {
 		return new FormGroup({
+      'lugar': new FormGroup({
+				'id': new FormControl("", []),
+			}),
+      'arma': new FormGroup({
+				'id': new FormControl("", []),
+      }),
+      'vehiculo': new FormGroup({
+				'id': new FormControl("", []),
+      }),
+      'delito': new FormGroup({
+				'id': new FormControl("", []),
+      }),
+      'heredar':  new FormControl("", []),
+      'personas': new FormArray([]),
+
 			'tipo': new FormControl(this.model.tipo),
 			'hechosNarrados': new FormControl(this.model.hechosNarrados),
 			'noOficio': new FormControl(this.model.noOficio),
