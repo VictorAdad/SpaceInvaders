@@ -1,14 +1,20 @@
+<div class="row space">
+    <div class="col-md-12">
+      <caso-herencia [casoId]="casoId" [form]="form"></caso-herencia>
+    </div>
+</div>
+
 <form [formGroup]="form">
 	<h4>Acuerdo de Radicación</h4>
-	<text-area label="Observaciones/Incidencias" name="observaciones" [group]="form" [focus]="true"></text-area>  
+	<text-area label="Observaciones/Incidencias" name="observaciones" [group]="form" [focus]="true"></text-area>
 
      <div class="row justify-content-end" >
-         <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">    
+         <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
             <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
          </div>
          <div class="col-sm-auto">
-            <button class="float-right" mat-button routerLink="/caso/{{casoId}}/acuerdo-radicacion">Cancelar</button> 
+            <button class="float-right" mat-button routerLink="/caso/{{casoId}}/acuerdo-radicacion">Cancelar</button>
          </div>
     </div>
-    
+
 </form>
