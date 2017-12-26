@@ -1,28 +1,48 @@
 <mat-card>
-	<div>
-		<strong>Datos de herencia</strong>
-	</div>
-	<div class="row">
-		<div class="col-md-4">
-			<search label="Buscar personas"></search>
-		</div>
-		<div class="col-md-4">
-			<select2 placeholder="Lugar" [options]="[]" [group]="form" name=""></select2>
-		</div>
-		<div class="col-md-4">
-			<select2 placeholder="Delito" [options]="[]" [group]="form" name=""></select2>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-4">
+    <form [formGroup]="form">
+        <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-12">
+            <h4>Datos de herencia</h4>
+        </div>
+        <div class=" col-lg-8 col-md-8 col-sm-12 text-justify">
+         Es necesario seleccionar "Heredar datos" para desplegar en el formato la información seleccionada, de lo contrario el sistema presentará toda la información de Datos Generales con base en la correspondencia de la información presentada en el formato.
+          </div>
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <div class="float-right">
+            <strong>
+                <checkbox label="Heredar datos" [group]="form" name="heredar" (valueChange)="setHeredarDatos($event)"></checkbox>
+            </strong>
+          </div>
+        </div>
+    </div>
 
+	<div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+        <select2 placeholder="Persona" [disabled]="!heredar" [options]="optionsNoticia.personas" [group]="" name=""  (valueChange)="addPersona($event)"></select2>
 		</div>
 		<div class="col-md-4">
-			<select2 placeholder="Vehiculo" [options]="[]" [group]="form" name=""></select2>
+			<select2 placeholder="Lugar" [options]="optionsNoticia.lugares" [group]="form.controls.lugar" name="id"></select2>
 		</div>
 		<div class="col-md-4">
-			<select2 placeholder="Arma" [options]="[]" [group]="form" name=""></select2>
+			<select2 placeholder="Delito" [options]="optionsNoticia.delitos" [group]="form.controls.delito" name="id"></select2>
 		</div>
 	</div>
-	Caso: {{ caso }}
+	<div class="row">
+		<div class="col-md-4">
+        <mat-list *ngIf="personas != null">
+            <mat-list-item *ngFor="let persona of personas">
+              {{persona.label}}
+            </mat-list-item>
+        </mat-list>
+		</div>
+		<div class="col-md-4">
+			<select2 placeholder="Vehiculo" [options]="optionsNoticia.vehiculos" [group]="form.controls.vehiculo" name="id"></select2>
+		</div>
+		<div class="col-md-4">
+			<select2 placeholder="Arma" [options]="optionsNoticia.armas" [group]="form.controls.arma" name="id"></select2>
+		</div>
+  </div>
+</form>
 </mat-card>
