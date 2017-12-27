@@ -11,7 +11,6 @@ import { TableService} from '@utils/table/table.service';
 import { Event } from '@angular/router/src/events';
 import { ResolveEmit,ConfirmSettings} from '@utils/alert/alert.service';
 
-
 @Component({
 	selector    : 'caso-herencia',
   	templateUrl : './component.html'
@@ -21,7 +20,9 @@ export class CasoHerenciaComponent implements OnInit{
 	@Input()
 	public casoId: number;
 	@Input()
-	public form: FormGroup;
+  public form: FormGroup;
+  @Input('heredarFunction')
+	public heredarFunction: any;
   @Output()
   public lugarChange:EventEmitter<string> = new EventEmitter<string>();
   @Output()
@@ -31,7 +32,7 @@ export class CasoHerenciaComponent implements OnInit{
   @Output()
   public delitoChange:EventEmitter<string> = new EventEmitter<string>();
   @Output()
-  public personasChange:EventEmitter<string> = new EventEmitter<string>();
+  public personasChange:EventEmitter<any[]> = new EventEmitter<any[]>();
 
   public settings:ConfirmSettings={
 		overlayClickToClose: false,
@@ -68,10 +69,14 @@ export class CasoHerenciaComponent implements OnInit{
     console.log('Persona Change',_id)
     for (let i=0; i<this.optionsNoticia.personas.length;i++){
       if(this.optionsNoticia.personas[i].value==_id && !this.isInPersonas(_id)){
-        this.personas.push(this.optionsNoticia.personas[i]);
-        (this.form.controls.personas as FormArray).push(new FormGroup({"id":new FormControl(_id,[])}));
-        this.personasChanged(_id);
-        break;
+        this.http.get('/v1/base/personas-casos/'+_id).subscribe(response =>{
+          (this.form.controls.personas as FormArray).push(new FormGroup({"id":new FormControl(_id,[])}));
+          console.log(response);
+          this.personas.push(response);
+          console.log(this.personas);
+          this.personasChanged();
+    });
+      break;
       }
     }
     console.log(this.form)
@@ -103,27 +108,29 @@ export class CasoHerenciaComponent implements OnInit{
     this._confirmation.create('Advertencia','¿Estás seguro de que deseas heradar estos datos?',this.settings).subscribe(
       (ans: ResolveEmit) => {
         if(ans.resolved){
-          console.log("Heredar datos")
+          console.log("Heredar datos", this.heredarFunction)
+          this.heredarFunction();
         }
-        else{ console.log("No heredar datos")
+        else{
+          console.log("No heredar datos")
         }
       });
   }
   public lugarChanged(id){
     this.lugarChange.emit(id);
- }
- public armaChanged(id){
-  this.armaChange.emit(id);
-}
-public delitoChanged(id){
-  this.delitoChange.emit(id);
-}
-public vehiculoChanged(id){
-  this.vehiculoChange.emit(id);
-}
-public personasChanged(id){
-  this.personasChange.emit(id);
-}
+  }
+  public armaChanged(id){
+    this.armaChange.emit(id);
+  }
+  public delitoChanged(id){
+    this.delitoChange.emit(id);
+  }
+  public vehiculoChanged(id){
+    this.vehiculoChange.emit(id);
+  }
+  public personasChanged(){
+    this.personasChange.emit(this.personas);
+  }
 }
 
 

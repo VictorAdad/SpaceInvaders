@@ -9,7 +9,7 @@
           <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="float-right">
               <strong>
-                  <checkbox label="Heredar datos" [group]="form" name="heredar" (valueChange)="setHeredarDatos($event)"></checkbox>
+                  <checkbox label="Heredar datos"  [group]="form" name="heredar" (valueChange)="setHeredarDatos($event)"></checkbox>
               </strong>
             </div>
           </div>
@@ -28,8 +28,16 @@
         <div class="row space">
           <div class="col-md-4">
               <mat-list *ngIf="personas != null">
-                  <mat-list-item *ngFor="let persona of personas">
-                    {{persona.label}}
+                  <mat-list-item *ngFor="let personaCaso of personas">
+                    <div *ngIf="personaCaso.persona.nombre !=null || personaCaso.persona.paterno!=null || personaCaso.persona.materno!=null">
+                        {{personaCaso.persona.nombre?personaCaso.persona.nombre:""}} {{personaCaso.persona.paterno?personaCaso.persona.paterno:""}} {{personaCaso.persona.materno?personaCaso.persona.materno:""}}
+                    </div>
+                    <div *ngIf="personaCaso.persona.nombre ==null &&  personaCaso.persona.paterno==null && personaCaso.persona.materno ==null && personaCaso.tipoInterviniente.tipo == 'Imputado desconocido'">
+                          Quién Resulte Responsable
+                    </div>
+                    <div *ngIf="personaCaso.persona.nombre ==null &&  personaCaso.persona.paterno==null && personaCaso.persona.materno ==null && !(personaCaso.tipoInterviniente.tipo == 'Imputado desconocido')">
+                        Identidad Desconocida
+                    </div>
                   </mat-list-item>
               </mat-list>
           </div>
@@ -48,7 +56,7 @@
        <div class="row space"></div>
       <div class="row justify-content-end space">
           <div class="col-sm-auto" >
-              <button mat-raised-button color="accent" (click)="heredarDatos()" [disabled]="!heredar" >Guardar</button>
+              <button mat-raised-button color="accent" (click)="heredarDatos()" [disabled]="!heredar" >Heredar</button>
           </div>
       </div>
     </div>
