@@ -1,3 +1,4 @@
+import { TipoInterviniente } from './../../../../models/personaCaso';
 import { FormatosGlobal } from './../../solicitud-preliminar/formatos';
 import { Component, ViewChild , Output,Input, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
@@ -23,6 +24,7 @@ import * as moment from 'moment';
 import { CasoService } from '@services/caso/caso.service';
 import { FormatosService } from '@services/formatos/formatos.service';
 import { Logger } from "@services/logger.service";
+import { PersonaService} from '@services/noticia-hecho/persona/persona.service';
 
 
 var eliminaNulos = function(x){
@@ -45,7 +47,9 @@ export class EntrevistaCreateComponent {
 	public breadcrumb = [];
   public entrevistaId: number = null;
   public model:any=null;
-	constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute,
+              public personaServ: PersonaService,
+  ) { }
 
 	ngOnInit() {
 		this.route.params.subscribe(params => {
@@ -78,6 +82,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 	public model: Entrevista;
 	dataSource: TableService | null;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
+  public personasHeredadas:any[];
 
 	constructor(
 		private _fbuilder: FormBuilder,
@@ -86,7 +91,10 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 		private http: HttpService,
 		private router: Router,
 		private db: CIndexedDB,
-		public options: SelectsService
+    public options: SelectsService,
+    public personaServ: PersonaService,
+    public casoService:CasoService
+
 	) { super(); }
 
 	ngOnInit() {
@@ -271,8 +279,70 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 		Logger.log(_data);
 		this.form.patchValue(_data);
 		Logger.log(_data);
-	}
+  }
+  public heredarDatos(){
+    /*
+        ◦ nombre del entrevistado
+        ◦ Sexo
+        ◦ Fecha de nacimiento
+        ◦ Edad
+        ◦ Nacionalidad
+        ◦ CURP
+        ◦ RFC
+        ◦ Ocupación
+        ◦ Lugar de trabajo
+        ◦ Estado Civil
 
+        ◦ Calle
+        ◦ No. exterior
+        ◦ No. Interior
+        ◦ Colonia/asentamiento
+        ◦ CP
+        ◦ Municipio
+        ◦ Nº telefónico particular
+        ◦ Nº telefónico celular
+        ◦ Correo
+        ◦ Narrativa de los hechos ((Hecho narrados de Predenuncia)
+
+    */
+
+   this.personasHeredadas.forEach((personaCaso)=> {
+     // Heradar nombre del entrevistado
+     let nombrePersona=((personaCaso.persona.nombre!=null||personaCaso.persona.nombre!=undefined)?personaCaso.persona.nombre:"")+((personaCaso.persona.paterno!=null||personaCaso.persona.paterno!=undefined)?" "+personaCaso.persona.paterno:"")+((personaCaso.persona.materno!=null||personaCaso.persona.materno!=undefined)?" "+personaCaso.persona.materno:"");
+     if(this.form.controls['nombreEntrevistado'].value==null || this.form.controls['nombreEntrevistado'].value==""||this.form.controls['nombreEntrevistado'].value==undefined)
+        this.form.controls['nombreEntrevistado'].setValue(nombrePersona);
+      else {
+        if(nombrePersona=="" && personaCaso.tipoInterviniente.id==_config.optionValue.tipoInterviniente.imputado){
+          nombrePersona="Quién Resulte Culpable"
+        }
+        if(nombrePersona=="" && !(personaCaso.tipoInterviniente.id==_config.optionValue.tipoInterviniente.imputado)){
+          nombrePersona="Identidad desconocida"
+        }
+        this.form.controls['nombreEntrevistado'].setValue(this.form.controls['nombreEntrevistado'].value+", "+nombrePersona);
+      }
+      console.log("a buscar ",personaCaso.persona.nacionalidadReligion)
+      this.db.searchInCatalogo("nacionalidad_religion", personaCaso.persona.nacionalidadReligion).then(nacionalidadReligion=>{
+        console.log("nacionalidad Religion",nacionalidadReligion);
+       let  nacionalidad =nacionalidadReligion["nacionalidad"];
+       if(nacionalidad){
+        if(this.form.controls['nacionalidad'].value==null || this.form.controls['nacionalidad'].value==""||this.form.controls['nacionalidad'].value==undefined)
+        this.form.controls["nacionalidad"].setValue(nacionalidad);
+        else{
+          this.form.controls["nacionalidad"].setValue(this.form.controls["nacionalidad"].value+", "+nacionalidad);
+        }
+       }
+
+      });
+         //console.log( this.personaServ.nacionalidadReligion.finded[0])
+    });
+
+    //Heredar narrativa de los hechos ((Hecho narrados de Predenuncia)
+    console.log(this.casoService.caso);
+    this.form.controls["narracionHechos"]=this.casoService.caso.predenuncias[0].hechosNarrados
+  }
+  public  personaChanged(_personasHeredadas){
+    this.personasHeredadas=_personasHeredadas;
+}
 	tipoChange(_tipo): void {
 		Logger.log('valor', _tipo);
   }

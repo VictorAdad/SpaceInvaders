@@ -1,6 +1,6 @@
 <div class="row space">
     <div class="col-md-12">
-      <caso-herencia [casoId]="casoId" [form]="form"></caso-herencia>
+      <caso-herencia (personasChange)="personaChanged($event)"[casoId]="casoId" [heredarFunction]="heredarDatos.bind(this)"[form]="form"></caso-herencia>
     </div>
 </div>
 <div class="row">
@@ -20,7 +20,7 @@
                 <h4>Datos del entrevistado</h4>
                 <div class="row">
                     <div class="col-md-3">
-                        <text label="Nombre del entrevistado" name="nombreEntrevistado" [group]="form"></text>
+                        <text label="Nombre del entrevistado" name="nombreEntrevistado" [group]="form"  [max]="1000"></text>
                     </div>
                     <div class="col-md-3">
                         <select2 placeholder="Sexo" [options]="options.sexo" name="id" [group]="form.controls.sexo">
@@ -78,7 +78,7 @@
                         <text label="Grado de escolaridad" name="gradoEscolaridad" [max]="40" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Ocupación" name="ocupacion" [max]="40" [group]="form"></text>
+                        <text label="Ocupación" name="ocupacion" [max]="1000" [group]="form"></text>
                     </div>
                 </div>
                 <div class="row">
