@@ -23,13 +23,17 @@ export class Select2Component{
 	@Input() search: boolean = true;
 	@Input() order : boolean = true;
 	@Input() onOpenFunction: Function=null;
+	@Input() focus: boolean = false;
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<string>();
-  @Output() haveclosed:EventEmitter<string> = new EventEmitter<string>();
+	@Output() haveclosed:EventEmitter<string> = new EventEmitter<string>();
 
-  @ViewChild('searchInput') searchInput;
+	@ViewChild('searchInput') searchInput;
+	@ViewChild('select') select;
 
 	public searchControl: FormControl = new FormControl();
+
 	public filteredOptions: MOption[];
+
 
 	constructor(private renderer : Renderer){
 
@@ -42,6 +46,15 @@ export class Select2Component{
 	ngAfterViewInit(){
 		this.renderer.listen(
 			this.searchInput.nativeElement, 'keyup', this.filter.bind(this));
+
+		let timer = Observable.timer(1);
+
+		timer.subscribe( t => {
+			if(this.focus){
+				this.select.focus();
+
+			}
+		});
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
@@ -112,6 +125,10 @@ export class Select2Component{
    	public closeSelect(){
    		// Logger.log('closeSelect()');
    		this.filteredOptions = this.options;
+   	}
+
+   	public cleanSelect(){
+   		this.value = "";
    	}
 
 }

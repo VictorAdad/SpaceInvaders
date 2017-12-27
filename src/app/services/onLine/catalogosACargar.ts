@@ -1,4 +1,10 @@
+/**
+ * Clase que contienen la lista de las matrices y catalos a sincronizar
+ */
 export class CatalogosACargar {
+    /**
+     * Lista de matrices
+     */
     public static readonly matricesASincronizar=[
         //persona
         {//45
@@ -113,7 +119,9 @@ export class CatalogosACargar {
 
 
     ];
-
+    /**
+     * Lista de catalogos
+     */
     public static readonly catalogosASincronizar=[
         //persona
         {//17

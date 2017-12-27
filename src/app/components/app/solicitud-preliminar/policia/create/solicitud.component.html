@@ -2,9 +2,9 @@
     <h3>Oficio de solicitud de Policía de investigación </h3>
     <div class="col-md-12">
         <form>
-            <text label="Número de oficio" name="noOficio" [group]="form"></text>
-            <text label="Nombre del coordinador de la policía de investigación" name="nombreComisario" [max]="100" [group]="form"></text>
-            <text label="Actuaciones de investigación solicitadas" name="actuacionesSolicitadas" [group]="form" [max]="100"></text>
+            <text label="Número de oficio" name="noOficio" [group]="form" [focus]="true"></text>
+            <text-area label="Nombre del coordinador de la policía de investigación" name="nombreComisario" [group]="form"></text-area>
+            <text-area label="Actuaciones de investigación solicitadas" name="actuacionesSolicitadas" [group]="form"></text-area>
             <div class="row space"></div>
             <div class="row justify-content-end">
                 <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">

@@ -1,7 +1,9 @@
 <div class="row">
     <div class="col-md-12">
         <form [formGroup]="form">
-            <select2 [options]="
+            <select2
+                [focus]="true"
+                [options]="
                 [
                      {label:'Periciales',value:'Periciales'}, 
                      {label:'Psicofísico',value:'Psicofísico'}
@@ -15,9 +17,9 @@
                 <text label="Número de oficio" name="noOficio" [group]="form"></text>
                 <text label="Nombre del director del instituto de servicios periciales" name="directorInstituto" [max]="100" [group]="form"></text>
                 <select2 placeholder="Se solicita al perito en materia de" [options]="options.peritoMateria" name="id" [group]="form.controls.peritoMateria"></select2>
-                <text label="Finalidad del requerimiento" name="finalidad" [max]="100" [group]="form"></text>
+                <text-area label="Finalidad del requerimiento" name="finalidad" [group]="form"></text-area>
                 <text label="Plazo en días para cumplir el informe" name="plazoDias" [max]="30" [group]="form"></text>
-                <text label="Apercibimiento o medidas de apremio" name="apercibimiento" [max]="100" [group]="form"></text>
+                <text-area label="Apercibimiento o medidas de apremio" name="apercibimiento" [group]="form"></text-area>
                 <text-area label="Observaciones/incidencias" name="observaciones" [group]="form"></text-area>
             </div>
             <div *ngIf="isPsicofisico">
@@ -26,7 +28,7 @@
                 <text label="Nombre del médico legista" name="medicoLegista" [max]="100" [group]="form"></text>
                 <text label="A quien se realizará el examen" name="realizadoA" [max]="100" [group]="form"></text>
                 <select2 placeholder="Se solicita examen" [options]="options.tipoExamen" name="id" [group]="form.controls.tipoExamen"></select2>
-                <text label="Apercibimiento o medidas de apremio" name="apercibimiento" [max]="100" [group]="form"></text>
+                <text-area label="Apercibimiento o medidas de apremio" name="apercibimiento" [group]="form"></text-area>
                 <text-area label="Observaciones/incidencias" name="observaciones" [group]="form"></text-area>
             </div> 
 

@@ -30,7 +30,9 @@
             </div>
             <div class="row">
               <div class="col-md-10">
-            <radiobutton class="col-md-3" 
+            <radiobutton
+                class="col-md-3"
+                [focus]="true" 
                 [(value)]="globals.tipoPersona" 
                 [radios]="[
                     {label:'Física',value:'Física'},

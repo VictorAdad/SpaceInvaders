@@ -73,15 +73,15 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 		this.model = new RequerimientoInformacion();
 
 		this.form = new FormGroup({
-			'noOficio': new FormControl(this.model.noOficio),
-			'fechaReq': new FormControl(this.model.fechaReq),
-			'autoridadReq': new FormControl(this.model.autoridadReq),
-			'cargoTurnoAdscripcion': new FormControl(this.model.cargoTurnoAdscripcion),
-			'domicilioAutoridad': new FormControl(this.model.domicilioAutoridad),
-			'infoRequerida': new FormControl(this.model.infoRequerida),
-			'plazoDias': new FormControl(this.model.plazoDias),
-			'apercibimiento': new FormControl(this.model.apercibimiento),
-			'observaciones': new FormControl(this.model.observaciones),
+			'noOficio': new FormControl("", []),
+			'fechaReq': new FormControl("", []),
+			'autoridadReq': new FormControl("", []),
+			'cargoTurnoAdscripcion': new FormControl("", []),
+			'domicilioAutoridad': new FormControl("", []),
+			'infoRequerida': new FormControl("", []),
+			'plazoDias': new FormControl("", []),
+			'apercibimiento': new FormControl("", []),
+			'observaciones': new FormControl("", []),
 			'caso': new FormGroup({
 				'id': new FormControl("", []),
 			})
@@ -147,7 +147,8 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 	}
 
 	public fillForm(_data) {
-		_data.fechaReq = new Date(_data.fechaReq);
+    if(_data.fechaReq !== "" && _data.fechaReq != null && _data.fechaReq != undefined)
+      _data.fechaReq = new Date(_data.fechaReq);
 		this.form.patchValue(_data);
 		Logger.log(_data);
 	}

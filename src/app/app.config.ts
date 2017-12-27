@@ -27,9 +27,11 @@ export var _config = {
       victimaDesconocido:22
 
     },
+    vehiculo:{
+      bicicleta:"BICICLETA"
+    },
     delito:{
       robo:"ROBO"
-
     }
 	},
 	manuales: {
@@ -59,5 +61,23 @@ export var _config = {
                 'src': 'https://dl.dropboxusercontent.com/s/4c1qyfen79zbg7b/SIGI%20%286%29%20-%20Determinaciones.mp4',
             }
         ]
-	}
+	},
+    offLine:{
+        sincronizaCambios:{
+            //numero de intentos para sincronizar una petición
+            numIntentos:5,
+        },
+        //tiempo de la frecuencia con la se chekara la conexión con el servidor
+        tiempoChekeoConexion: 1000, //1 seg
+        sincronizarCatalogos:{
+            //tiempo de la frecuencia de búsqueda de cambios en catálogos mili segundos
+            tiempoSincronizarCatalogos: 1000*60*20,//20 min
+            //Tiempo en el que se iniciará la primera búsqueda de cambios de los catálogos
+            tiempoStartSincronizarCatalogos: 7000,//7 seg
+        },
+        indexedDB:{
+            nameDB:"SIGI"
+        }
+
+    }
 }

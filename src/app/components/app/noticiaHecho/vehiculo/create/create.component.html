@@ -17,6 +17,7 @@
         <div class="row">
             <div class="col-md-3">
                 <select2 placeholder="Motivo por el que se registra"
+                    [focus]="true"
                     [options]="vehiculoServ.motivoColorClase.motivoRegistro"
                     name="motivoRegistro"
                     [group]="form"
@@ -28,7 +29,6 @@
                 <select2 placeholder="Vehículo"
                     name="tipoVehiculo"
                     [options]="vehiculoServ.marcaSubmarca.tipoVehiculo"
-                    hintStart="Campo obligatorio"
                     [group]="form"
                     (valueChange)="tipoVehiculoChange($event)">
 
@@ -90,7 +90,7 @@
 
                 </int>
             </div>
-            <div class="col-md-3">
+            <div *ngIf="!isTipoBicicleta" class="col-md-3">
                 <select2 placeholder="Estado de origen de las placas"
                         [(options)]="optionsServ.estados"
                         name="id"
@@ -98,7 +98,7 @@
 
                 </select2>
             </div>
-            <div class="col-md-3">
+            <div *ngIf="!isTipoBicicleta" class="col-md-3">
                 <text
                     label="Placas"
                     name="placas"
@@ -109,15 +109,15 @@
 
             </text>
             </div>
-            <div class="col-md-3">
+            <div *ngIf="!isTipoBicicleta" class="col-md-3">
                 <text label="Placas adicionales" name="placasAdicionales" [max]="10" [group]="form" [regex]="regexPlaca"></text>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
+            <div  *ngIf="!isTipoBicicleta"class="col-md-3">
                 <text label="Registro federal del vehículo (RFV)" name="registroFederalVehiculo" [max]="20" [group]="form"></text>
             </div>
-            <div class="col-md-3">
+            <div *ngIf="!isTipoBicicleta" class="col-md-3">
                 <text
                     label="Nº serie (VIN)"
                     name="noSerie"
@@ -127,7 +127,7 @@
 
                 </text>
             </div>
-            <div class="col-md-3">
+            <div *ngIf="!isTipoBicicleta" class="col-md-3">
                 <text
                     label="Nº motor"
                     name="noMotor"
@@ -196,7 +196,7 @@
                     <div class="col-md-6">
                         <checkbox label="¿Lleva carga?" name="llevaCarga" [group]="form"></checkbox>
                     </div>
-                    <div class="col-md-6">
+                    <div *ngIf="!isTipoBicicleta" class="col-md-6">
                         <checkbox label="¿Alterado? (Nº serie)" name="alterado" [group]="form"></checkbox>
                     </div>
                 </div>
@@ -214,7 +214,7 @@
             </div>
         </div>
         <div class="row justify-content-end space">
-            <div class="col-sm-auto" [matTooltip]="validateMsg(form)" matTooltipPosition="above">
+            <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" matTooltipPosition="above">
                 <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving] || !isOneFilled" *ngIf="id != null">Guardar</button>
                 <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving] || !isOneFilled" *ngIf="id == null">Guardar</button>
             </div>

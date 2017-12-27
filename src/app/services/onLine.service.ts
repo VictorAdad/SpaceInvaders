@@ -16,14 +16,17 @@ import { Logger } from "@services/logger.service";
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import {SincronizaCambios} from '@services/onLine/sincronizarCambios';
+import { _config} from '@app/app.config';
 
-
+/**
+ * Servicio para verificar la conexion con el servidor que aloja a la web app.
+ */
 @Injectable()
 export class OnLineService {
     onLine: boolean = true;
-    timer = Observable.timer(2000,1000);
+    timer = Observable.timer(2000,_config.offLine.tiempoChekeoConexion);
     //este timer se executa cada hora, la primera se sera a los 14s de iniciar la app
-    timerSincronizarMatrices = Observable.timer(7000,1000*60*20);
+    timerSincronizarMatrices = Observable.timer(_config.offLine.sincronizarCatalogos.tiempoStartSincronizarCatalogos,_config.offLine.sincronizarCatalogos.tiempoSincronizarCatalogos);
     anterior: boolean= true;
 
     
@@ -57,6 +60,13 @@ export class OnLineService {
             }
 
             if (this.anterior!=this.onLine){
+                var url=this.route["url"];
+                if (url=="/")
+                    url=this.onLine?url+"enlinea":url+"sinconexion";
+                else if (url=="/enlinea" || url=="/sinconexion")
+                    url="/";
+                this.route.navigateByUrl(url);
+                
                 this.snackBar.open(message, "", {
                   duration: 10000,
                 });

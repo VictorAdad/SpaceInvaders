@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter , OnInit, AfterViewInit, ViewChild, Renderer} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
 import { BaseInputComponent } from '../base-input.component';
 
 
@@ -25,7 +26,24 @@ export class TextComponent extends BaseInputComponent {
 	}
 
 	ngAfterViewInit(){
+		if (!this["control"])
+			this.renderer.listen(
+				this.input.nativeElement, 'keyup', (event) => { this.inputSliceSinControl(); });
+		if(this.focus){
+			let timer = Observable.timer(1);
 
+			timer.subscribe( t => {
+				this.input.nativeElement.focus();
+			});
+		}
+	}
+
+	inputSliceSinControl(){
+		if (this.value && this.value.toString().length > this.max) {
+			this.value = this.value.toString().trim().slice(0,this.max);
+		}
+		else if  (this.value && this.value.toString().length>0 && (/^\s*$/).test(this.value) )
+				this.value = this.value.toString().trim();
 	}
 
 	update(value) {

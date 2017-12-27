@@ -1,6 +1,7 @@
 <div *ngIf="name==''" >
 	<mat-form-field class="full-width">
 		<mat-select
+			#select
 			placeholder="{{placeholder}}"
 			[(ngModel)]="value" (ngModelChange)="update($event)"
       (onOpen)="setCursor()"
@@ -21,6 +22,7 @@
 <div [formGroup]="group"  *ngIf="name!=''">
 	<mat-form-field class="full-width">
 		<mat-select
+			#select
 			placeholder="{{placeholder}}"
 			[(ngModel)]="value"
 			(ngModelChange)="update($event)"
@@ -32,7 +34,7 @@
 				<input type="text" name="search" placeholder="Buscar" #searchInput>
 				<mat-icon  class="suffix">search</mat-icon>
 			</div>
-			<mat-option>(Limpiar selección)</mat-option>
+			<mat-option (click)="cleanSelect()">(Limpiar selección)</mat-option>
 			<mat-option *ngFor="let option of filteredOptions" [value]="option.value">
 				{{ option.label }}
 			</mat-option>

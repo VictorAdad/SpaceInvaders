@@ -32,6 +32,8 @@ export class BaseInputComponent implements OnInit{
 
 	@Input() readonly: boolean = false;
 
+	@Input() focus: boolean = false;
+
 	@Input() functionChange: Function;
 
 	@Input() regex: RegExp;

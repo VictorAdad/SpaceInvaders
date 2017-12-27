@@ -113,6 +113,9 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
               (this.form.controls.sexo as FormGroup).controls.id.updateValueAndValidity();
               (this.form.controls.ocupacion as FormGroup).controls.id.updateValueAndValidity();
             }
+            if (this.id){//se esta editando
+                this.validateForm(this.form);
+            }
         }
     }
 
@@ -150,15 +153,20 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                             let timer = Observable.timer(500);
                             timer.subscribe(t => {
                                 Logger.log('Es víctima desconocida');
-                                let contentRadios = this.tipoIntervinienteEl.contentRadios.nativeElement
-                                let radio = contentRadios.querySelectorAll('.mat-radio-button[ng-reflect-value="'+_config.optionValue.tipoInterviniente.victima+'"]');
-                                let input = radio[0].querySelectorAll('.mat-radio-input');
-                                let radioDesconocido = contentRadios.querySelectorAll('.mat-radio-button[ng-reflect-value="'+_config.optionValue.tipoInterviniente.victimaDesconocido+'"]');
-                                let inputDesconocido = radioDesconocido[0].querySelectorAll('.mat-radio-input');
+                                let contentRadios = this.tipoIntervinienteEl.contentRadios.nativeElement;
 
-                                radio[0].classList.remove('mat-radio-disabled');
+                                let radio = contentRadios.getElementsByClassName('content-radio '+_config.optionValue.tipoInterviniente.victima);
+                                let input = radio[0].querySelectorAll('.mat-radio-input');
+                                let matradio = radio[0].getElementsByClassName('mat-radio-button');
+
+                                let radioDesconocido = contentRadios.getElementsByClassName('content-radio '+_config.optionValue.tipoInterviniente.victimaDesconocido);
+                                let inputDesconocido = radioDesconocido[0].querySelectorAll('.mat-radio-input');
+                                let matradioDesconocido = radioDesconocido[0].getElementsByClassName('mat-radio-button');
+
+
+                                matradio[0].classList.remove('mat-radio-disabled');
                                 input[0].removeAttribute('disabled');
-                                radioDesconocido[0].classList.remove('mat-radio-disabled');
+                                matradioDesconocido[0].classList.remove('mat-radio-disabled');
                                 inputDesconocido[0].removeAttribute('disabled');
 
                             });
@@ -167,14 +175,18 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                             timer.subscribe(t => {
                                 Logger.log('Es imputado desconocido');
                                 let contentRadios = this.tipoIntervinienteEl.contentRadios.nativeElement
-                                let radio = contentRadios.querySelectorAll('.mat-radio-button[ng-reflect-value="'+_config.optionValue.tipoInterviniente.imputado+'"]');
-                                let input = radio[0].querySelectorAll('.mat-radio-input');
-                                let radioDesconocido = contentRadios.querySelectorAll('.mat-radio-button[ng-reflect-value="'+_config.optionValue.tipoInterviniente.imputadoDesconocido+'"]');
-                                let inputDesconocido = radioDesconocido[0].querySelectorAll('.mat-radio-input');
 
-                                radio[0].classList.remove('mat-radio-disabled');
+                                let radio = contentRadios.getElementsByClassName('content-radio '+_config.optionValue.tipoInterviniente.imputado);
+                                let input = radio[0].querySelectorAll('.mat-radio-input');
+                                let matradio = radio[0].getElementsByClassName('mat-radio-button');
+
+                                let radioDesconocido = contentRadios.getElementsByClassName('content-radio '+_config.optionValue.tipoInterviniente.imputadoDesconocido);
+                                let inputDesconocido = radioDesconocido[0].querySelectorAll('.mat-radio-input');
+                                let matradioDesconocido = radioDesconocido[0].getElementsByClassName('mat-radio-button');
+
+                                matradio[0].classList.remove('mat-radio-disabled');
                                 input[0].removeAttribute('disabled');
-                                radioDesconocido[0].classList.remove('mat-radio-disabled');
+                                matradioDesconocido[0].classList.remove('mat-radio-disabled');
                                 inputDesconocido[0].removeAttribute('disabled');
 
                             });
@@ -226,9 +238,15 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     public fillPersonaCaso(_personaCaso){
+        if (_personaCaso["persona"]["edad"]==0){
+            _personaCaso["persona"]["edad"]=null;
+        }
+        
         this.personaId = _personaCaso["persona"]["id"];
         let pcaso = this.globals.form.get('personaCaso') as FormArray;
         Yason.eliminaNulos(_personaCaso);
+
+        Logger.logColor('---- 1 --->','purple', _personaCaso);
 
         if(_personaCaso.detalleDetenido != null){
             let timerDetenido = Observable.timer(1);
@@ -686,6 +704,12 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
               (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
               Logger.log('lo que envio: '+  (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
              }
+
+             if (this.globals.detenido==false) {
+                 Logger.log('entroooooo!');
+                 delete (_model["personaCaso"])[0].detalleDetenido;
+             }
+
             buscar.push({
                 catalogo:"idioma_identificacion",
                 name:"idiomaIdentificacion",
@@ -847,7 +871,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 this.http.post('/v1/base/personas', _model).subscribe(
                     (response) => {
                         Logger.log(response);
-                        resolve("Se creo la persona con éxito");
+                        resolve("Se creó la persona con éxito");
                         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas' ]);
                         this.casoService.actualizaCaso();
                     },
@@ -910,7 +934,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                             this.tabla.update("casos",caso).then(
                                 ds=>{
                                     Logger.log("Se actualizo registro",ds);
-                                    resolve("Se creo la persona de manera local");
+                                    resolve("Se creó la persona de manera local");
                                     this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas']);
 
                             });

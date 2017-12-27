@@ -17,7 +17,13 @@ export class MatrizMarcaSubmarca extends MatrizGlobal{
     }
 
     public validate(_object: any, _selected: any): boolean{
-        return (_object.marca === _selected.marca && _object.submarca === _selected.submarca);
+        return (_object.tipoVehiculo === _selected.tipoVehiculo 
+            && _object.marca === _selected.marca 
+            && _object.submarca === _selected.submarca);
+    }
+
+    public clean(){
+        this.selected = new MarcaSubmarca();
     }
 }
 

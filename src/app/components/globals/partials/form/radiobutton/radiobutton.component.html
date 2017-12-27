@@ -3,8 +3,8 @@
 	<mat-radio-group [(ngModel)]="value" (ngModelChange)="update($event)">
 
 	<div class="row">
-	<div *ngFor="let radio of radios" class="{{class}}">
-		<mat-radio-button   value="{{radio.value}}" >{{radio.label}}</mat-radio-button>
+	<div *ngFor="let radio of radios" class="content-radio {{class}} {{radio.value}}">
+		<mat-radio-button   value="{{radio.value}}">{{radio.label}}</mat-radio-button>
 	</div>
 	  </div>
 	</mat-radio-group>
@@ -13,8 +13,8 @@
 	<mat-radio-group [(ngModel)]="value" (ngModelChange)="update($event)" formControlName="{{name}}" required="true">
 
 	<div class="row" #contentRadios>
-	<div *ngFor="let radio of radios" class="{{class}}">
-		<mat-radio-button   value="{{radio.value}}" >{{radio.label}}</mat-radio-button>
+	<div *ngFor="let radio of radios" class="content-radio {{class}} {{radio.value}}">
+		<mat-radio-button   value="{{radio.value}}">{{radio.label}}</mat-radio-button>
 	</div>
 	  </div>
 	</mat-radio-group>

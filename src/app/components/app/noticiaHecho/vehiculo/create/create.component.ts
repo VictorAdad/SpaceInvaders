@@ -14,6 +14,7 @@ import { Observable }  from 'rxjs/Observable';
 import { CasoService } from '@services/caso/caso.service';
 import { _config} from '@app/app.config';
 import { Logger } from "@services/logger.service";
+import {Yason} from "@services/utils/yason";
 
 @Component({
     selector: 'vehiculo-create',
@@ -30,6 +31,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     public isProcedenciaExtranjera: boolean =false;
     public regexPlaca = /^(?:\s*[a-zA-Z0-9]{1,}\s*)*$/
     public isOneFilled:boolean=false;
+    public isTipoBicicleta:boolean=false;
     public hintObligatorio="Campo obligatorio";
     public isRobo:boolean=false;
 
@@ -148,6 +150,12 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         });
     }
 
+    ngOnDestroy(){
+        this.vehiculoServ.marcaSubmarca.clean()
+        this.vehiculoServ.marcaSubmarca.marca = [];
+        this.vehiculoServ.marcaSubmarca.submarca = [];
+    }
+
     public validateDelitoRobo(caso){
       console.log('Casoooo',caso)
       let isRoboSecundario=false;
@@ -186,36 +194,31 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
 
     }
 public validate(form: FormGroup){
-  this.validateForm(form)
- console.log('isRobo',this.isRobo);
  if(!this.isRobo)
   {
     this.isOneFilled= this.atLeastOneFilled(form);
   }
- console.log('is one filled',this.isOneFilled)
-
 }
     public atLeastOneFilled(form: FormGroup) {
-      console.log(form);
-      for (let i=1; i<Object.keys(form.controls).length; i++)
+      for (let i=0; i<Object.keys(form.controls).length; i++)
       {  let keys= Object.keys(form.controls)
          const control = form.get(keys[i]);
         if (control instanceof FormControl) {
           if(control.value !== '' && control.value!==undefined )
-            { console.log('true',control);return true;}
+            { return true;}
       } else if (control instanceof FormGroup) {
             if(this.atLeastOneFilled(control))
               return true;
       } else if (control instanceof FormArray){
-        for (let i=1; i<Object.keys(form.controls).length; i++)
+        for (let i=0; i<Object.keys(form.controls).length; i++)
         {  let keys= Object.keys(form.controls)
           const controlArray = control.controls[keys[i]];
           if (controlArray instanceof FormControl) {
             if(control.value !== '' && control.value!==undefined )
-            { console.log('true',control);return true;}
+            { return true;}
           } else if (controlArray instanceof FormGroup) {
               if(this.atLeastOneFilled(controlArray))
-              { console.log('true',control);return true;}
+              { return true;}
             }
          }
       }
@@ -242,18 +245,18 @@ public validate(form: FormGroup){
     }
 
     public save(valid : any, _model : any){
-        if (!isNaN(_model.modelo)) {
+        if (isNaN(_model.modelo) || _model.modelo == "") {
             Logger.logColor('------------>','red',_model);
             _model.modelo = 0;
         }
         Logger.log("SI",this.vehiculoServ.tipoUsoTipoVehiculo.finded);
         if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0]){
             _model.tipoUsoTipoVehiculo.id=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].id;
-            _model.tipoUsoTipoVehiculo["tipoVehiculo"]=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].tipoVehiculo;
         }
         if (this.vehiculoServ.marcaSubmarca.finded[0]){
             _model.marcaSubmarca.id=this.vehiculoServ.marcaSubmarca.finded[0].id;
             _model.marcaSubmarca["marca"]=this.vehiculoServ.marcaSubmarca.finded[0].marca;
+            _model.marcaSubmarca["tipoVehiculo"]=this.vehiculoServ.marcaSubmarca.finded[0].tipoVehiculo;
         }
         if (this.vehiculoServ.procedenciaAseguradora.finded[0])
             _model.procedenciaAseguradora.id=this.vehiculoServ.procedenciaAseguradora.finded[0].id;
@@ -271,7 +274,7 @@ public validate(form: FormGroup){
                 this.http.post('/v1/base/vehiculos', this.model).subscribe(
                     (response) => {
                         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/vehiculos' ]);
-                        resolve("Se creo el vehículo con éxito");
+                        resolve("Se creó el vehículo con éxito");
                         this.vehiculoServ.reset();
                         this.casoService.actualizaCaso();
                     },
@@ -301,7 +304,7 @@ public validate(form: FormGroup){
                             this.model["id"]=temId;
                             caso["vehiculos"].push(this.model);
                             this.db.update("casos",caso).then(t=>{
-                                resolve("Se creo el vehículo de manera local");
+                                resolve("Se creó el vehículo de manera local");
                                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/vehiculos' ]);
                                 this.vehiculoServ.reset();
                             });
@@ -317,18 +320,18 @@ public validate(form: FormGroup){
         var obj=this;
         Logger.logColor('------------>','green',_model);
 
-        if (!isNaN(_model.modelo)) {
+        if (isNaN(_model.modelo) || _model.modelo == "") {
             Logger.logColor('------------>','red',_model);
             _model.modelo = 0;
         }
 
         if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0]){
             _model.tipoUsoTipoVehiculo.id=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].id;
-            _model.tipoUsoTipoVehiculo["tipoVehiculo"]=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].tipoVehiculo;
         }
         if (this.vehiculoServ.marcaSubmarca.finded[0]){
             _model.marcaSubmarca.id=this.vehiculoServ.marcaSubmarca.finded[0].id;
             _model.marcaSubmarca["marca"]=this.vehiculoServ.marcaSubmarca.finded[0].marca;
+            _model.marcaSubmarca["tipoVehiculo"]=this.vehiculoServ.marcaSubmarca.finded[0].tipoVehiculo;
         }
         if (this.vehiculoServ.procedenciaAseguradora.finded[0])
             _model.procedenciaAseguradora.id=this.vehiculoServ.procedenciaAseguradora.finded[0].id;
@@ -383,43 +386,42 @@ public validate(form: FormGroup){
     }
 
     public fillForm(_data){
-        var rec = function(x){
-            if (typeof x == "object"){
-                for(let i in x){
-                    if (x[i]==null || typeof x[i] =="undefined"){
-                        delete x[i];
-                    }
-                    if (typeof x[i]=="object")
-                        rec(x[i]);
-                }
-            }
-        }
-        rec(_data);
-        if(this.onLine.onLine){
-            if (_data.marcaSubmarca){
+        Logger.logColor("VEHICULO","tomato",_data);
+        Yason.eliminaNulos(_data);
+        if (_data.marcaSubmarca){
+            if (!_data["tipoVehiculo"])
                 _data["tipoVehiculo"]=_data.marcaSubmarca.tipoVehiculo;
+            if (!_data["marca"])
                 _data["marca"]=_data.marcaSubmarca.marca;
+            if (!_data["submarca"])
                 _data["submarca"]=_data.marcaSubmarca.submarca;
-                let timer = Observable.timer(500);
-                timer.subscribe(t => {
-                    this.tipoVehiculoChange(_data.marcaSubmarca.tipoVehiculo)
-                    this.marcaChange(_data.marcaSubmarca.marca)
-                });
-            }
-            if (_data.motivoRegistroColorClase){
-                _data["clase"]=_data.motivoRegistroColorClase.clase;
-                _data["color"]=_data.motivoRegistroColorClase.color;
-                _data["motivoRegistro"]=_data.motivoRegistroColorClase.motivoRegistro;
-            }
-            if (_data.procedenciaAseguradora){
-                _data["aseguradora"]=_data.procedenciaAseguradora.aseguradora;
-                _data["procedencia"]=_data.procedenciaAseguradora.procedencia;
-            }
-            if (_data.tipoUsoTipoVehiculo){
-                _data["tipoUso"]=_data.tipoUsoTipoVehiculo.tipoUso;
-                _data["datosTomados"]=_data.tipoUsoTipoVehiculo.datosTomadosDe;
-            }
+            let timer = Observable.timer(500);
+            timer.subscribe(t => {
+                this.tipoVehiculoChange(_data.marcaSubmarca.tipoVehiculo)
+                this.marcaChange(_data.marcaSubmarca.marca)
+            });
         }
+        if (_data.motivoRegistroColorClase){
+            if (!_data["clase"])
+                _data["clase"]=_data.motivoRegistroColorClase.clase;
+            if (!_data["color"])
+                _data["color"]=_data.motivoRegistroColorClase.color;
+            if (!_data["motivoRegistro"])
+                _data["motivoRegistro"]=_data.motivoRegistroColorClase.motivoRegistro;
+        }
+        if (_data.procedenciaAseguradora){
+            if (!_data["aseguradora"])
+                _data["aseguradora"]=_data.procedenciaAseguradora.aseguradora;
+            if (!_data["procedencia"])
+                _data["procedencia"]=_data.procedenciaAseguradora.procedencia;
+        }
+        if (_data.tipoUsoTipoVehiculo){
+            if (!_data["tipoUso"])
+                _data["tipoUso"]=_data.tipoUsoTipoVehiculo.tipoUso;
+            if (!_data["datosTomados"])
+                _data["datosTomados"]=_data.tipoUsoTipoVehiculo.datosTomadosDe;
+        }
+        
         this.form.patchValue(_data);
         let timer = Observable.timer(1);
         timer.subscribe(t => {
@@ -430,13 +432,41 @@ public validate(form: FormGroup){
     }
 
     public tipoVehiculoChange(_event){
-        Logger.log('tipoVehiculoChange()', _event, this.vehiculoServ.marcaSubmarca);
-
         if(_event){
+            this.form.controls.marca.setValue("");
+            this.form.controls.submarca.setValue("");
             this.vehiculoServ.marcaSubmarca.find(_event, 'tipoVehiculo');
             this.vehiculoServ.marcaSubmarca.filterBy(_event, 'tipoVehiculo', 'marca');
+            this.vehiculoServ.marcaSubmarca.submarca = [];
         }
+        if(_event==_config.optionValue.vehiculo.bicicleta){
+            this.isTipoBicicleta=true;
+           if (this.isRobo){               
+               this.form.controls.placas.setValidators([]);
+               this.form.controls.noSerie.setValidators([]);
+               this.form.controls.noMotor.setValidators([]);
 
+               this.form.controls.placas.updateValueAndValidity();
+               this.form.controls.noSerie.updateValueAndValidity();
+               this.form.controls.noMotor.updateValueAndValidity();
+           }
+           
+
+        }else{
+
+            this.isTipoBicicleta=false;
+            if (this.isRobo){
+                  this.form.controls.placas.setValidators([Validators.required]);
+                  this.form.controls.noSerie.setValidators([Validators.required]);
+                  this.form.controls.noMotor.setValidators([Validators.required]);
+
+                  this.form.controls.placas.updateValueAndValidity();
+                  this.form.controls.noSerie.updateValueAndValidity();
+                  this.form.controls.noMotor.updateValueAndValidity();
+
+            }
+          
+        }
         // if(_event == _config.optionValue.automovil)
         //     this.form.controls.submarca.setValidators([Validators.required]);
         // else
@@ -449,7 +479,6 @@ public validate(form: FormGroup){
     }
 
     public marcaChange(_event){
-        console.log('Marca Change',_event)
         if(_event){
             this.vehiculoServ.marcaSubmarca.find(_event, 'marca');
             this.vehiculoServ.marcaSubmarca.filterBy(_event, 'marca', 'submarca');

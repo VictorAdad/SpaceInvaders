@@ -21,6 +21,7 @@
                         placeholder="Tipo de relación"
                         name="tipo"
                         hintStart="Campo obligatorio"
+                        [focus]="true"
                         [(options)]="tiposRelacion"
                         (valueChange)="changeTipoRelacion($event)"
                         [group]="form.controls.tipoRelacionPersona">

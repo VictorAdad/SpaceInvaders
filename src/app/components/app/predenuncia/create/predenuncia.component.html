@@ -4,7 +4,7 @@
 	<div id="f1" *ngIf="authen.user.hasRoles(authen.roles.callCenter)">
 	    <div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Calidad del usuario" name="calidadPersona" [max]="140" [group]="form"></text>
+		    	<text label="Calidad del usuario" name="calidadPersona" [max]="140" [group]="form" [focus]="true"></text>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text label="Número telefónico del que se está llamando" name="noTelefonico" [max]="20" [group]="form"></text>

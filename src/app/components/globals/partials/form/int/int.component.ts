@@ -37,22 +37,22 @@ export class IntComponent extends BaseInputComponent {
 	inputSlice(_value){
 		if (_value && _value != '') {
 			if (!this.regexINT.test(_value)){
-				this.control.setValue(this.backupValue);
+        this.control.setValue(this.backupValue);
 			}else{
 				this.backupValue = _value;
 			}
 
 			if (_value.toString().length > this.max)
-				this.control.setValue(_value.toString().slice(0,this.max));
-			if (this.min && _value.toString().length < this.min){
-				this.invalid();
-			}else{
-				this.valid();
-			}
+        this.control.setValue(_value.toString().slice(0,this.max));
+      if(this.backupValue)
+        if (this.min && this.control.value.toString().length < this.min){
+          this.invalid();
+        }else{
+          this.valid();
+        }
 		}else{
 			this.backupValue = _value;
 			if (!_value){
-				console.log("Valor");
 				this.valid();
 			}
 		}

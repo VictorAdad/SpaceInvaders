@@ -62,12 +62,10 @@ export class FormCreateDelitoCasoComponent {
                 
             ];
 
-    setDelito(value){
-        this.searchDelito = value;
-    }
+    buscar(_event){
 
-    buscar(){
-        
+        this.searchDelito = _event;
+
         if (typeof this.searchDelito == "undefined")
             this.searchDelito="";
         if (this.onLine.onLine)

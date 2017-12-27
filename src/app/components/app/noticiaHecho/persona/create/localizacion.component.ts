@@ -126,7 +126,7 @@ export class LocalizacionFormComponent{
     }
 
 
-    public changePais(id){
+    public changePais(id, j){
         if(id!=null && typeof id !='undefined' && this.antIdPais!=id){
             this.isMexico=id==_config.optionValue.idMexico;
             this.options.getEstadoByPais(id);
@@ -138,6 +138,7 @@ export class LocalizacionFormComponent{
             }
         }
         this.antIdPais=id;
+        this.cleanSelects(j,true);
     }
 
     public buscaColonias(){
