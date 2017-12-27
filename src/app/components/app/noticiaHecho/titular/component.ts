@@ -32,6 +32,7 @@ export class TransferirComponent{
         let users = Object.keys(_usuarios);
         this.form =  new FormGroup({
             'userNamePropietario': new FormControl('Propietario'),
+            'agencia': new FormControl(''),
             'userNameAsignado': new FormControl(''),
             'userNameAsignacion': new FormControl(this.auth.user.username),
             'fechaAsignacion': new FormControl(new Date()),
@@ -46,22 +47,27 @@ export class TransferirComponent{
                 }
             }
         );
-        Logger.log(users);
-        for (let usuario of users) {
-            this.usuarios.push({value: _usuarios[usuario].username, label: _usuarios[usuario].nombreCompleto});
-        }
-    }
+        // Logger.log(users);
+        // for (let usuario of users) {
+        //     this.usuarios.push({value: _usuarios[usuario].username, label: _usuarios[usuario].nombreCompleto});
+        // }
+
+        this.form.controls.agencia.valueChanges.subscribe(value =>{
+            this.findByAgencia(value);
+        });
+    }   
 
     close(){
         this.dialogRef.close();
     }
 
     public findByAgencia(_agencia: string){
+        Logger.logColor('entrada ------>','Green', _agencia, this.usuarios);
         this.http.get(`/v1/administration/ldap/fiscalias/agencias/usuarios?f=${_agencia}`).subscribe(
             response => {
-                // for (let object of response) {
-                //     this.usuarios.push({value: object.name, label: object.name});
-                // }
+                for (let object of response) {
+                    this.usuarios.push({value: object.uid, label: object.displayName});
+                }
             }
         )
     }
