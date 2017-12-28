@@ -251,9 +251,9 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         if(_personaCaso.detalleDetenido != null){
             let timerDetenido = Observable.timer(1);
             timerDetenido.subscribe( t => {
-                this.globals.detenido = true;
+                this.globals.detenido = _personaCaso.detenido;
                 this.globals.form.patchValue({
-                    'detenido': true
+                    'detenido': _personaCaso.detenido
                 });
 
             });
@@ -710,6 +710,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                  delete (_model["personaCaso"])[0].detalleDetenido;
              }
 
+             (_model["personaCaso"])[0].detenido = this.globals.detenido;
+
             buscar.push({
                 catalogo:"idioma_identificacion",
                 name:"idiomaIdentificacion",
@@ -1081,6 +1083,12 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
                 Logger.log('lo que envio: '+  (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
                }
+
+                if (this.globals.detenido==false) {
+                    delete (_model["personaCaso"])[0].detalleDetenido;
+                }
+
+               (_model["personaCaso"])[0].detenido = this.globals.detenido;
 
             buscar.push({
                 catalogo:"idioma_identificacion",
