@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, ResponseContentType } from '@angular/http';
+import { Headers, Http, RequestOptions, Response, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs';
 import { _config} from '@app/app.config';
+import { AuthenticationService } from '@services/auth/authentication.service';
 import { environment } from './../../environments/environment';
 import 'rxjs/add/operator/map'
 /**
@@ -12,7 +13,11 @@ export class HttpService {
 
 	private http: Http;
 
-	constructor(private _http: Http) {
+    private headers: Headers;
+
+	constructor(
+        private _http: Http,
+        public auth: AuthenticationService) {
 		this.http = _http;
 	}
     /**
@@ -20,7 +25,7 @@ export class HttpService {
      * @param _uri uri que se utilizara en el servico
      */
 	public get(_uri: string): Observable<any>{
-        return this.http.get(environment.api.host+_uri)
+        return this.http.get(environment.api.host+_uri, this.getHeaders())
             .map((response: Response) => response.json());
     }
     /**
@@ -29,7 +34,7 @@ export class HttpService {
      * @param _data datos a enviar
      */
     public post(_uri:string, _data: any): Observable<any>{
-        return this.http.post(environment.api.host+_uri, _data)
+        return this.http.post(environment.api.host+_uri, _data, this.getHeaders())
             .map((response: Response) => response.json());
     }
     /**
@@ -38,7 +43,7 @@ export class HttpService {
      * @param _data 
      */
     public put(_uri:string, _data: any): Observable<any>{
-        return this.http.put(environment.api.host+_uri, _data)
+        return this.http.put(environment.api.host+_uri, _data, this.getHeaders())
             .map((response: Response) => response.json());
     }
     /**
@@ -57,4 +62,17 @@ export class HttpService {
         return this.http.get(_uri, { responseType: ResponseContentType.Blob })
             .map((response: Response) => response.blob());
     }
+
+    /**
+     * Función para construir los headers default para las peticiones
+     * @param _headers Objeto con headers adidcionales para la petición
+     */
+    private getHeaders(_headers: any = null){
+        this.headers = new Headers();
+        this.headers.append('SIGI-Token', this.auth.user.token);
+        
+        return new RequestOptions({ headers: this.headers });
+    }
+
+
 }
