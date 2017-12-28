@@ -218,8 +218,11 @@ export class NoticiaHechoService {
                     Logger.log(this.asesoresPrivados);
                 }
                 if(_attr === 'victimas' || _attr === 'ofendidos' || _attr === 'victimaDesconocido'){
-                    this.victimas = this.victimas.concat(this.ofendidos);
-                    this.victimas = this.victimas.concat(this.victimaDesconocido);
+                    if (_attr === 'ofendidos')
+                        this.victimas = this.victimas.concat(this.ofendidos); 
+                    if (_attr === 'victimaDesconocido')                           
+                        this.victimas = this.victimas.concat(this.victimaDesconocido);
+                    
                     Logger.log(this.victimas);
                 }
 
@@ -260,9 +263,10 @@ export class NoticiaHechoService {
                     Logger.log(this.asesoresPrivados);
                 }
                 if(_attr === 'victimas' || _attr === 'ofendidos' || _attr === 'victimaDesconocido'){
-                    this.victimas = this.victimas.concat(this.ofendidos);
-                    this.victimas = this.victimas.concat(this.victimaDesconocido);
-                    Logger.log(this.victimas);
+                    if (_attr === 'ofendidos')
+                        this.victimas = this.victimas.concat(this.ofendidos); 
+                    if (_attr === 'victimaDesconocido')                           
+                        this.victimas = this.victimas.concat(this.victimaDesconocido);
                 }
                 if (_attr === 'imputado' || _attr === 'imputadoDesconocido') {
                      this.imputados = this.imputados.concat(this.imputadoDesconocido);
@@ -335,9 +339,8 @@ export class NoticiaHechoService {
         let options: MOption[] = [];
         Logger.logColor("data","purple",_data);
         if (_data)
-            for (var i in _data){      // code...
+            for (var i in _data){      
                 let object=_data[i];
-                Logger.logColor('----------->','green', object, _data);
                 let nombre = new PersonaNombre().transform(object);
                 
                 options.push(
