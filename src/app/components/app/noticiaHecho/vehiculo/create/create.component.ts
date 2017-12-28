@@ -63,7 +63,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             'marca'                 : new FormControl("", []),
             'submarca'              : new FormControl("", []),
             'color'                 : new FormControl("", []),
-            'modelo'                : new FormControl("", [Validators.required]),
+            'modelo'                : new FormControl(null, [Validators.required]),
             'placas'                : new FormControl("", [Validators.required]),
             'placasAdicionales'     : new FormControl("", []),
             'registroFederalVehiculo': new FormControl("", []),
@@ -245,10 +245,6 @@ public validate(form: FormGroup){
     }
 
     public save(valid : any, _model : any){
-        if (isNaN(_model.modelo) || _model.modelo == "") {
-            Logger.logColor('------------>','red',_model);
-            _model.modelo = 0;
-        }
         Logger.log("SI",this.vehiculoServ.tipoUsoTipoVehiculo.finded);
         if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0]){
             _model.tipoUsoTipoVehiculo.id=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].id;
