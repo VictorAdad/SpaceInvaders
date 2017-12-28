@@ -1,4 +1,4 @@
-<div *ngIf="!auth.user.hasRoles(auth.roles.admin)">    
+<div *ngIf="!auth.user?.hasRoles(auth.roles.admin)">    
     <breadcrumb></breadcrumb>   
     <div class="row justify-content-md-center">
         <div class="col-md-10">
