@@ -48,6 +48,8 @@ export class AuthenticationService {
         if(session != null){
             this.isLoggedin = true;
             let usuario = JSON.parse(localStorage.getItem(environment.oam.session));
+            this.user.username =  usuario.username;
+            this.user.token    =  usuario.token;
             let request = this.getUser(usuario.token);
 
             request.subscribe(

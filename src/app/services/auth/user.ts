@@ -27,7 +27,7 @@ export class Usuario {
             this.agencia = _usuario.Municipio;
             this.autoridad = _usuario.Municipio;
             this.turno = _usuario.Turno;
-            // this.distrito = _usuario.distrito;
+            this.distrito = _usuario.Distrito;
             this.municipio = _usuario.Municipio;
         }
     }
