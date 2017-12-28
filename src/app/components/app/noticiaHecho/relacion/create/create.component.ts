@@ -196,6 +196,10 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         this.validateForm(this.form);
     }
 
+    ngOnDestroy(){
+
+    }
+
     addEfectoDetalle(_val: any,id=null){
         if (_val["detalle"]){
             this.colections.add('efectoDetalle', 'subjectEfectoDetalle', _val);

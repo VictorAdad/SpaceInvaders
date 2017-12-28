@@ -7,16 +7,13 @@
                 [
                     {label:'Acuerdo general',value:'Acuerdo general'},
                     {label:'Registro general', value:'Registro general'},
-                    {label:'Registro de derivación a JR (Justicia Restaurativa)', value:'Registro de derivación'},
                     {label:'Registro de llamada para permitir al imputado comunicarse con su defensor',value:'Registro de llamada'}
                 ]"
                 placeholder="Tipo de solicitud"
                 (valueChange)="tipoChange($event)"
                 [group]="form"
                 name="tipo">
-            </select2>
-            <div *ngIf="tipo === 'Registro de derivación'">
-            </div>    
+            </select2>  
             <div *ngIf="tipo === 'Acuerdo general'">
                 <h4>Fundamento legal</h4>
                 <div class="row">
