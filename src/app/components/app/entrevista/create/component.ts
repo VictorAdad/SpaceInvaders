@@ -83,6 +83,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 	dataSource: TableService | null;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
   public personasHeredadas:any[];
+  public heredar:boolean=false;
 
 	constructor(
 		private _fbuilder: FormBuilder,
@@ -159,7 +160,8 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 			'sexo': new FormGroup({
 				'id': new FormControl("", []),
 			}),
-			'fechaNacimiento': new FormControl(""),
+      'fechaNacimiento': new FormControl(""),
+			'fechasNacimiento': new FormControl(""),
 			'edad': new FormControl("",[Validators.min(0),]),
 			'nacionalidad': new FormControl(""),
 			'originarioDe': new FormControl(""),
@@ -281,6 +283,8 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 		Logger.log(_data);
   }
   public heredarDatos(){
+    console.log("Heredar en entravista")
+
     /*
         ◦ nombre del entrevistado
         ◦ Sexo
@@ -307,10 +311,13 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
     */
 
    this.personasHeredadas.forEach((personaCaso)=> {
+
      // Heradar nombre del entrevistado
-     let nombrePersona=((personaCaso.persona.nombre!=null||personaCaso.persona.nombre!=undefined)?personaCaso.persona.nombre:"")+((personaCaso.persona.paterno!=null||personaCaso.persona.paterno!=undefined)?" "+personaCaso.persona.paterno:"")+((personaCaso.persona.materno!=null||personaCaso.persona.materno!=undefined)?" "+personaCaso.persona.materno:"");
-     if(this.form.controls['nombreEntrevistado'].value==null || this.form.controls['nombreEntrevistado'].value==""||this.form.controls['nombreEntrevistado'].value==undefined)
+     let nombrePersona=(personaCaso.persona.nombre?personaCaso.persona.nombre:"")+(personaCaso.persona.paterno?" "+personaCaso.persona.paterno:"")+(personaCaso.persona.materno?" "+personaCaso.persona.materno:"");
+     if(!this.form.controls['nombreEntrevistado'].value){
         this.form.controls['nombreEntrevistado'].setValue(nombrePersona);
+        console.log(nombrePersona)
+      }
       else {
         if(nombrePersona=="" && personaCaso.tipoInterviniente.id==_config.optionValue.tipoInterviniente.imputado){
           nombrePersona="Quién Resulte Culpable"
@@ -318,31 +325,127 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
         if(nombrePersona=="" && !(personaCaso.tipoInterviniente.id==_config.optionValue.tipoInterviniente.imputado)){
           nombrePersona="Identidad desconocida"
         }
-        this.form.controls['nombreEntrevistado'].setValue(this.form.controls['nombreEntrevistado'].value+", "+nombrePersona);
+        this.form.controls['nombreEntrevistado'].setValue(this.form.controls['nombreEntrevistado'].value+","+nombrePersona);
+        console.log(this.form.controls['nombreEntrevistado'])
       }
-      console.log("a buscar ",personaCaso.persona.nacionalidadReligion)
-      this.db.searchInCatalogo("nacionalidad_religion", personaCaso.persona.nacionalidadReligion).then(nacionalidadReligion=>{
-        console.log("nacionalidad Religion",nacionalidadReligion);
-       let  nacionalidad =nacionalidadReligion["nacionalidad"];
-       if(nacionalidad){
-        if(this.form.controls['nacionalidad'].value==null || this.form.controls['nacionalidad'].value==""||this.form.controls['nacionalidad'].value==undefined)
-        this.form.controls["nacionalidad"].setValue(nacionalidad);
-        else{
-          this.form.controls["nacionalidad"].setValue(this.form.controls["nacionalidad"].value+", "+nacionalidad);
-        }
-       }
 
-      });
-         //console.log( this.personaServ.nacionalidadReligion.finded[0])
+      // Heredar Sexo
+      this.form.controls["sexo"].setValue( this.form.controls["sexo"].value?(personaCaso.persona.sexo?this.form.controls["sexo"].value+","+personaCaso.persona.sexo.nombre:"Sin valor"):personaCaso.persona.sexo.nombre?personaCaso.persona.sexo.nombre:"Sin valor")
+      // Heredar Fecha Nacimiento
+      personaCaso.persona.fechaNacimiento=personaCaso.persona.fechaNacimiento?new Date(personaCaso.persona.fechaNacimiento).toLocaleDateString():null;
+      this.form.controls["fechasNacimiento"].setValue(this.form.controls["fechasNacimiento"].value?(personaCaso.persona.fechaNacimiento?this.form.controls["fechasNacimiento"].value+","+personaCaso.persona.fechaNacimiento:this.form.controls["fechasNacimiento"].value+",Sin valor"):(personaCaso.persona.fechaNacimiento?personaCaso.persona.fechaNacimiento:"Sin valor"))
+      // Heredar Edad
+      this.form.controls["edad"].setValue( this.form.controls["edad"].value?(personaCaso.persona.edad?this.form.controls["edad"].value+","+personaCaso.persona.edad:this.form.controls["edad"].value+"Sin valor"):personaCaso.persona.edad)
+     // heredar Nacionalidad
+      console.log("a buscar ",personaCaso.persona.nacionalidadReligion)
+      let nacionalidad=personaCaso.persona.nacionalidadReligion.nacionalidad;
+      this.form.controls["nacionalidad"].setValue( this.form.controls["nacionalidad"].value?(nacionalidad?this.form.controls["nacionalidad"].value+","+nacionalidad:this.form.controls["nacionalidad"].value+",Sin valor"):(nacionalidad?nacionalidad:"Sin valor"))
+      //Heredar CURP
+        this.form.controls["curp"].setValue( this.form.controls["curp"].value?(personaCaso.persona.curp?this.form.controls["curp"].value+","+personaCaso.persona.curp:this.form.controls["curp"].value+",Sin valor"):(personaCaso.persona.curp?personaCaso.persona.curp:"Sin valor"))
+      //Heredar RFC
+      this.form.controls["rfc"].setValue( this.form.controls["rfc"].value?(personaCaso.persona.rfc?this.form.controls["rfc"].value+","+personaCaso.persona.rfc:this.form.controls["rfc"].value+",Sin valor"):(personaCaso.persona.rfc?personaCaso.persona.rfc:"Sin valor"))
+      //Heredar Ocupacion
+      this.form.controls["ocupacion"].setValue( this.form.controls["ocupacion"].value?(personaCaso.persona.ocupacion?this.form.controls["ocupacion"].value+", "+personaCaso.persona.ocupacion.nombre:this.form.controls["ocupacion"].value+",Sin valor"):(personaCaso.persona.ocupacion.nombre?personaCaso.persona.ocupacion.nombre:"Sin valor"))
+      //Heredar Lugar Ocupacion
+      this.form.controls["lugarOcupacion"].setValue( this.form.controls["lugarOcupacion"].value?(personaCaso.persona.lugarTrabajo?this.form.controls["lugarOcupacion"].value+","+personaCaso.persona.lugarTrabajo:this.form.controls["lugarOcupacion"].value+",Sin valor"):(personaCaso.persona.lugarTrabajo?personaCaso.persona.lugarTrabajo:"Sin valor"))
+      // Heredar estado civil
+      this.form.controls["estadoCivil"].setValue( this.form.controls["estadoCivil"].value?(personaCaso.persona.estadoCivil?this.form.controls["estadoCivil"].value+","+personaCaso.persona.estadoCivil.nombre:this.form.controls["estadoCivil"].value+",Sin valor"):(personaCaso.persona.estadoCivil?personaCaso.persona.estadoCivil.nombre:"Sin valor"))
+      let localizacion = personaCaso.persona.localizacionPersona[0];
+      if(localizacion){
+      // Heredar Calle
+      this.form.controls["calle"].setValue( this.form.controls["calle"].value?(localizacion.calle?this.form.controls["calle"].value+","+localizacion.calle:this.form.controls["calle"].value+",Sin valor"):(localizacion.calle?localizacion.nombre:"Sin valor"))
+      // Heredar No Exterior
+      this.form.controls["noExterior"].setValue( this.form.controls["noExterior"].value?(localizacion.noExterior?this.form.controls["noExterior"].value+","+localizacion.noExterior:this.form.controls["noExterior"].value+",Sin valor"):(localizacion.noExterior?localizacion.noExterior:"Sin valor"))
+      // Heredar No interior
+      this.form.controls["noInterior"].setValue( this.form.controls["noInterior"].value?(localizacion.noInterior?this.form.controls["noInterior"].value+","+localizacion.noInterior:this.form.controls["noInterior"].value+",Sin valor"):(localizacion.noInterior?localizacion.noInterior:"Sin valor"))
+      // Heredar colonia
+      this.form.controls["colonia"].setValue( this.form.controls["colonia"].value?(localizacion.colonia?this.form.controls["colonia"].value+","+localizacion.colonia:this.form.controls["colonia"].value+",Sin valor"):(localizacion.colonia?localizacion.colonia:"Sin valor"))
+      // Heredar CP
+      this.form.controls["cp"].setValue( this.form.controls["cp"].value?(localizacion.cp?this.form.controls["cp"].value+","+localizacion.cp:this.form.controls["cp"].value+",Sin valor"):(localizacion.cp?localizacion.cp:"Sin valor"))
+      // Heredar Municipio
+      this.form.controls["municipio"].setValue( this.form.controls["municipio"].value?(localizacion.municipioOtro?this.form.controls["municipio"].value+","+localizacion.municipioOtro:this.form.controls["municipio"].value+",Sin valor"):(localizacion.municipioOtro?localizacion.municipioOtro:"Sin valor"))
+      // Heredar Estado
+      this.form.controls["estado"].setValue( this.form.controls["estado"].value?(localizacion.estadoOtro?this.form.controls["estado"].value+","+localizacion.estadoOtro:this.form.controls["estado"].value+",Sin valor"):(localizacion.estadoOtro?localizacion.estadoOtro:"Sin valor"))
+      // Heredar Tel particular
+      this.form.controls["noTelefonoParticular"].setValue( this.form.controls["noTelefonoParticular"].value?(localizacion.telParticular?this.form.controls["noTelefonoParticular"].value+","+localizacion.telParticular:this.form.controls["noTelefonoParticular"].value+",Sin valor"):(localizacion.telParticular?localizacion.telParticular:"Sin valor"))
+      // Heredar Tel movil
+      this.form.controls["noTelefonoCelular"].setValue( this.form.controls["noTelefonoCelular"].value?(localizacion.telMovil?this.form.controls["noTelefonoCelular"].value+","+localizacion.telMovil:this.form.controls["noTelefonoCelular"].value+",Sin valor"):(localizacion.telMovil?localizacion.telMovil:"Sin valor"))
+     // Heredar Tel correo
+     this.form.controls["correoElectronico"].setValue( this.form.controls["correoElectronico"].value?(localizacion.correo?this.form.controls["correoElectronico"].value+","+localizacion.correo:this.form.controls["correoElectronico"].value+",Sin valor"):(localizacion.correo?localizacion.correo:"Sin valor"))
+
+     }
+      else{
+        this.setSinValor("calle");
+        this.setSinValor("noExterior");
+        this.setSinValor("noInterior");
+        this.setSinValor("colonia");
+        this.setSinValor("cp");
+        this.setSinValor("municipio");
+        this.setSinValor("estado");
+        this.setSinValor("noTelefonoParticular");
+        this.setSinValor("noTelefonoCelular");
+        this.setSinValor("correoElectronico");
+
+      }
     });
 
     //Heredar narrativa de los hechos ((Hecho narrados de Predenuncia)
     console.log(this.casoService.caso);
-    this.form.controls["narracionHechos"]=this.casoService.caso.predenuncias[0].hechosNarrados
+    this.form.controls["narracionHechos"].setValue(this.casoService.caso.predenuncias.hechosNarrados)
   }
-  public  personaChanged(_personasHeredadas){
+  public setSinValor(key){
+    this.form.controls[key].setValue( this.form.controls[key].value?this.form.controls[key].value+",Sin valor":"Sin valor")
+  }
+
+  public  personasChanged(_personasHeredadas){
     this.personasHeredadas=_personasHeredadas;
-}
+  }
+  public heredarChanged(_heredar){
+    this.heredar=_heredar;
+    console.log("heredar changed")
+    if(_heredar){
+      this.form.removeControl("sexo");
+      this.form.addControl("sexo",new FormControl("",[]));
+      }
+    else{
+        this.form.removeControl("sexo");
+        this.form.addControl("sexo",new FormGroup({
+          'id': new FormControl("", []),
+        }));
+      }
+      this.form.removeControl("edad");
+      this.form.addControl("edad",new FormControl("",[]));
+      this.form.removeControl("curp");
+      this.form.addControl("curp",new FormControl("",[]));
+      this.form.removeControl("rfc");
+      this.form.addControl("rfc",new FormControl("",[]));
+
+      this.form.removeControl("ocupacion");
+      this.form.addControl("ocupacion",new FormControl("",[]));
+      this.form.removeControl("lugarOcupacion");
+      this.form.addControl("lugarOcupacion",new FormControl("",[]));
+      this.form.removeControl("estadoCivil");
+      this.form.addControl("estadoCivil",new FormControl("",[]));
+      this.form.removeControl("calle");
+      this.form.addControl("calle",new FormControl("",[]));
+      this.form.removeControl("noExterior");
+      this.form.addControl("noExterior",new FormControl("",[]));
+      this.form.removeControl("noInterior");
+      this.form.addControl("noInterior",new FormControl("",[]));
+      this.form.removeControl("colonia");
+      this.form.addControl("colonia",new FormControl("",[]));
+
+      this.form.removeControl("cp");
+      this.form.addControl("cp",new FormControl("",[]));
+      this.form.removeControl("noTelefonoParticular");
+      this.form.addControl("noTelefonoParticular",new FormControl("",[]));
+      this.form.removeControl("noTelefonoCelular");
+      this.form.addControl("noTelefonoCelular",new FormControl("",[]));
+      this.form.removeControl("correoElectronico");
+      this.form.addControl("correoElectronico",new FormControl("",[]));
+      console.log("Heredar= ",this.heredar)
+
+  }
 	tipoChange(_tipo): void {
 		Logger.log('valor', _tipo);
   }
