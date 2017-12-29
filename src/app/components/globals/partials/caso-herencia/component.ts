@@ -33,6 +33,8 @@ export class CasoHerenciaComponent implements OnInit{
   public delitoChange:EventEmitter<string> = new EventEmitter<string>();
   @Output()
   public personasChange:EventEmitter<any[]> = new EventEmitter<any[]>();
+  @Output()
+  public heredarChange:EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public settings:ConfirmSettings={
 		overlayClickToClose: false,
@@ -54,6 +56,8 @@ export class CasoHerenciaComponent implements OnInit{
 	}
 
 	ngOnInit(){
+    this.heredar=false;
+    this.setHeredarDatos(this.heredar);
 		this.casoServ.find(this.casoId).then(
       response =>{
         this.caso = this.casoServ.caso
@@ -61,8 +65,7 @@ export class CasoHerenciaComponent implements OnInit{
         this.optionsNoticia.getData();
         this.optionsNoticia.getPersonas();
         this.personas=[];
-        this.heredar=false;
-        this.setHeredarDatos(this.heredar);
+
   })
  };
   public addPersona(_id){
@@ -83,7 +86,7 @@ export class CasoHerenciaComponent implements OnInit{
   }
   public isInPersonas(_id){
     for (let i=0; i<this.personas.length;i++){
-         if(this.personas[i].value==_id)
+         if(this.personas[i].id==_id)
             return true;
     }
    return false;
@@ -103,6 +106,8 @@ export class CasoHerenciaComponent implements OnInit{
       this.form.controls.vehiculo["controls"].id.disable();
       this.form.controls.arma["controls"].id.disable();
     }
+    this.heredarChanged();
+
   }
   public heredarDatos(){
     this._confirmation.create('Advertencia','¿Estás seguro de que deseas heradar estos datos?',this.settings).subscribe(
@@ -110,6 +115,7 @@ export class CasoHerenciaComponent implements OnInit{
         if(ans.resolved){
           console.log("Heredar datos", this.heredarFunction)
           this.heredarFunction();
+          this.heredarChanged();
         }
         else{
           console.log("No heredar datos")
@@ -130,6 +136,9 @@ export class CasoHerenciaComponent implements OnInit{
   }
   public personasChanged(){
     this.personasChange.emit(this.personas);
+  }
+  public heredarChanged(){
+    this.heredarChange.emit(this.heredar);
   }
 }
 
