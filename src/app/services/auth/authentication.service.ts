@@ -48,15 +48,14 @@ export class AuthenticationService {
         if(session != null){
             this.isLoggedin = true;
             let usuario = JSON.parse(localStorage.getItem(environment.oam.session));
-            this.user.username =  usuario.username;
-            this.user.token    =  usuario.token;
+            this.user =  new Usuario(usuario);
             let request = this.getUser(usuario.token);
 
             request.subscribe(
                 responseUser => {
                     responseUser['token'] =  usuario.token;
                     this.user = new Usuario(responseUser);
-                    localStorage.setItem(environment.oam.session, JSON.stringify(this.user));
+                    localStorage.setItem(environment.oam.session, JSON.stringify(responseUser));
                     this.isLoggedin = true;
                 },
                 error => this.isLoggedin = false
@@ -74,27 +73,34 @@ export class AuthenticationService {
         }
     }
 
-    public login(username: string, password: string){
+    public login(username: string, password: string): Promise<any>{
+        return new Promise(
+            (resolve, reject ) =>{ 
+                var requestToken = this.getToken(username, password);
+                requestToken.subscribe(
+                    response => {
+                        let requestUser = this.getUser(response.access_token);
 
-        var requestToken = this.getToken(username, password);
-        requestToken.subscribe(
-            response => {
-                let requestUser = this.getUser(response.access_token);
-
-                requestUser.subscribe(responseUser => {
-                    console.log('Response User '+responseUser );
-                    responseUser['token'] =  response.access_token;
-                    this.user = new Usuario(responseUser);
-                    localStorage.setItem(environment.oam.session, JSON.stringify(this.user));
-                    this.isLoggedin = true;
-                });
+                        requestUser.subscribe(responseUser => {
+                            console.log('Response User '+responseUser );
+                            responseUser['token'] =  response.access_token;
+                            this.user = new Usuario(responseUser);
+                            localStorage.setItem(environment.oam.session, JSON.stringify(responseUser));
+                            resolve("Usuario loguedo con éxito");
+                            // this.isLoggedin = true;
+                        });
+                    },
+                    error => {
+                        reject(error);
+                    }
+                )
             }
-        )
+        );
     }
 
     public logout(): void {
         // Se elimina usuario del almacenamiento local
-        localStorage.removeItem('user');
+        localStorage.removeItem(environment.oam.session);
         this.isLoggedin = false;
     }
 
