@@ -156,6 +156,12 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         this.vehiculoServ.marcaSubmarca.submarca = [];
     }
 
+    public datosTomados(_event, cadena){
+        if (_event) {
+            this.vehiculoServ.tipoUsoTipoVehiculo.find(_event, cadena)            
+        }
+    }
+
     public validateDelitoRobo(caso){
       console.log('Casoooo',caso)
       let isRoboSecundario=false;
