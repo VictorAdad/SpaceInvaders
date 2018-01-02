@@ -1,3 +1,4 @@
+import { _config} from '@app/app.config';
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material';
