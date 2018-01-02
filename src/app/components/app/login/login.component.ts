@@ -10,10 +10,18 @@ import { Logger } from "@services/logger.service";
     styleUrls: ['./styles.css']
 })
 export class LoginComponent implements OnInit{
-    usuario : string;
-    pass    : string;
-    loading : boolean = false;
-    form    : FormGroup; 
+    
+    public usuario: string;
+
+    public pass: string;
+
+    public loginBtn: string = "Iniciar sesión";
+
+    public loading: boolean = false;
+
+    public invalid: boolean = false;
+
+    public form: FormGroup; 
 
     constructor(
         private router: Router,
@@ -30,20 +38,29 @@ export class LoginComponent implements OnInit{
         })
     }
 
+    submitForm(_event){
+        if(_event.keyCode == 13) {
+            this.login(this.form.valid, this.form.value)
+        }
+    }
+
     login(_valid: boolean, _form: any){
-        if(_valid){
-            this.loading = true;
+        if(_valid && !this.loading){
+            this.loading  = true;
+            this.loginBtn = "Autenticando..." 
             //pidiendo al servicio de autenticación la validez de las credenciales
-            this.authenticationService.login(_form.user, _form.pass)
-                // .subscribe(result => {
-                    // if (result === true) {
-                        // Si es valido redirigir al home
-                        this.router.navigate(['/']);
-                    // } else {
-                      // Mostrar mensaje de error
-                        this.loading = false;
-                    // }
-                // });
+            this.authenticationService.login(_form.user, _form.pass).then(
+                response => {
+                    this.loading = false;
+                    this.authenticationService.isLoggedin = true;
+                },
+                error =>{
+                    console.log(error);
+                    this.loading  = false;
+                    this.invalid  = true;
+                    this.loginBtn = "Iniciar sesión"
+                }
+            )
         }else{
             // Logger.log('Elm formulario no pasó la validación D:');
         }      
