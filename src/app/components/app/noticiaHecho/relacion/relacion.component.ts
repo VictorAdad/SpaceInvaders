@@ -79,7 +79,7 @@ export class RelacionComponent extends BasePaginationComponent {
 
     public page(url: string,_e) {
         if (this.onLine)
-            this.http.get(url).subscribe((response) => {
+            this.pageSub = this.http.get(url).subscribe((response) => {
                 //Logger.log('Paginator response', response.data);
                 
                 response.data.forEach(object => {
