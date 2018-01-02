@@ -39,10 +39,10 @@
                     </select2>
                 </div>
                 <div class="col-md-4">
-                    <text label="Calle" name="calle" [max]="300" [group]="form"></text>
+                    <text label="Calle" name="calle" [max]="300" [group]="form" (valueChange)="fillCalle($event)"></text>
                 </div>
                 <div class="col-md-2">
-                    <text label="Nº exterior" name="noExterior" [max]="10" [group]="form"></text>
+                    <text label="Nº exterior" name="noExterior" [max]="10" [group]="form" (valueChange)="fillNum($event)"></text>
                 </div>
                 <div class="col-md-2">
                     <text label="Nº interior" name="noInterior" [max]="10" [group]="form"></text>
