@@ -2,6 +2,7 @@ import { _config} from '@app/app.config';
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material';
+import { BasePaginationComponent } from '@components-app/base/pagination/component';
 import { TableService} from '@utils/table/table.service';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
@@ -16,7 +17,7 @@ import { Logger } from "@services/logger.service";
     selector:'relacion'
 })
 
-export class RelacionComponent{
+export class RelacionComponent extends BasePaginationComponent {
 
     public casoId: number   = null;
 	public displayedColumns = ['Tipo', 'Elementos'];
@@ -33,7 +34,9 @@ export class RelacionComponent{
         private db:CIndexedDB,
         private casoService:CasoService,
         private noticiaHecho: NoticiaHechoService
-        ){}
+        ){
+        super();
+    }
 
 	ngOnInit() {
     	Logger.log('-> Data Source', this.dataSource, _config.optionValue.idMexico);

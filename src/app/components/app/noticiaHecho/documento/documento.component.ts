@@ -3,6 +3,7 @@ import { FormatosGlobal } from './../../solicitud-preliminar/formatos';
 import { Component, ViewChild, Output, Input, EventEmitter} from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
+import { BasePaginationComponent } from '@components-app/base/pagination/component';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';

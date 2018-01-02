@@ -10,7 +10,6 @@ import { HttpService } from '@services/http.service';
 import { TableService } from '@utils/table/table.service';
 import { Caso } from '@models/caso';
 import { _catalogos } from '@components-app/catalogos/catalogos';
-import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     templateUrl: './home.component.html',
@@ -29,8 +28,6 @@ export class HomeComponent extends BasePaginationComponent implements OnInit {
     public catalogos:any;
 
     public catalogosKeys:any[];
-
-    public pageSub: Subscription;
 
 
     constructor(
