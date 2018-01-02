@@ -27,6 +27,8 @@ export class Select2Component{
 	@Input() focus: boolean = false;
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<string>();
 
+	@Output() clean:EventEmitter<string> = new EventEmitter<string>();
+
 	@ViewChild('searchInput') searchInput;
 	@ViewChild('select') select;
 
@@ -76,7 +78,7 @@ export class Select2Component{
   		this.filteredOptions =  this.options.filter(
   			option => {
   				let optNormal = option.label.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "")
-  				return (optNormal.indexOf(valNormal) === 0);
+  				return (optNormal.indexOf(valNormal) === 0 || optNormal.includes(valNormal));
 			}
 		);
    	}
@@ -126,6 +128,7 @@ export class Select2Component{
 
    	public cleanSelect(){
    		this.value = "";
+   		this.clean.emit();
    	}
 
 }

@@ -7,7 +7,9 @@ import { Logger } from "@services/logger.service";
 
 @Injectable()
 export class LugarService extends MatrizGlobal{
-
+    /**
+     * atributos de la matriz
+     */
     public finded         = [];
     public detalleLugar   = [];
     public tipoLugar      = [];
@@ -23,11 +25,15 @@ export class LugarService extends MatrizGlobal{
         this.getData();
     }
 
-
+    /**
+     * Se obtinenen los optios de cada atributo de la matriz
+     */
     public getData(){
         this.getDetalleLugar();
     }
-
+     /**
+     * Se obtinenen los optios de cada atributo de la matriz
+     */
     public getDetalleLugar(){
         this.db.get("catalogos","detalle_lugar").then(response=>{
             Logger.logColor('------>','green', response );
@@ -56,7 +62,11 @@ export class LugarService extends MatrizGlobal{
             this.dia          = orden;
         });
     }
-
+    /**
+     * Agrega al selected el atributo _tipo con valor _e y despues filtra.
+     * @param _e 
+     * @param _tipo 
+     */
     public find(_e, _tipo:string){
         if (typeof _e!=="undefined")
             this.selected[_tipo] = _e;

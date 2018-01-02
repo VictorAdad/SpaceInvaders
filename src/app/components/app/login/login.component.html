@@ -3,6 +3,7 @@
         <mat-list-item>SIGI</mat-list-item>
     </span>
 </mat-toolbar>
+<mat-progress-bar *ngIf="loading" mode="indeterminate" color="accent"></mat-progress-bar>
 <div class="container">
 	<div class="row justify-content-md-center align-items-center" style="height: 75%;">
 		<div class="col-md-8 col">
@@ -11,15 +12,20 @@
 					<h1 class="full-width text-center">Inicio de sesión</h1>
 				</mat-card-header>
 				<mat-card-content>
-					<form>
+					<form (keydown)="submitForm($event)">
 						<div class="space">
-							<text label="Usuario" name="user" [group]="form"></text>
+							<text label="Usuario" name="user" [group]="form" [focus]="true"></text>
 							<password label="Contraseña" name="pass" [group]="form"></password>
 							<checkbox label="Recordarme"></checkbox>
 						</div>
 					</form>
 					<div class="space">
-						<button class="full-width btn-lg" mat-raised-button color="accent" (click)="login(form.valid, form.value)">Iniciar sesión</button>
+						<span *ngIf="invalid" class="text-danger">
+							<mat-icon style="vertical-align: middle !important;">error</mat-icon> Usuario o contraseña invalidos
+						</span>
+					</div>
+					<div class="space">
+						<button class="full-width btn-lg" mat-raised-button color="accent" (click)="login(form.valid, form.value)" [disabled]="loading">{{ loginBtn }}</button>
 					</div>
 					<div class="space text-center">
 						<a href="">¿Olivdaste tu contraseña?</a>

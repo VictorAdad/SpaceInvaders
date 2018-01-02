@@ -113,6 +113,9 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
               (this.form.controls.sexo as FormGroup).controls.id.updateValueAndValidity();
               (this.form.controls.ocupacion as FormGroup).controls.id.updateValueAndValidity();
             }
+            if (this.id){//se esta editando
+                this.validateForm(this.form);
+            }
         }
     }
 
@@ -235,16 +238,22 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     public fillPersonaCaso(_personaCaso){
+        if (_personaCaso["persona"]["edad"]==0){
+            _personaCaso["persona"]["edad"]=null;
+        }
+        
         this.personaId = _personaCaso["persona"]["id"];
         let pcaso = this.globals.form.get('personaCaso') as FormArray;
         Yason.eliminaNulos(_personaCaso);
 
+        Logger.logColor('---- 1 --->','purple', _personaCaso);
+
         if(_personaCaso.detalleDetenido != null){
             let timerDetenido = Observable.timer(1);
             timerDetenido.subscribe( t => {
-                this.globals.detenido = true;
+                this.globals.detenido = _personaCaso.detenido;
                 this.globals.form.patchValue({
-                    'detenido': true
+                    'detenido': _personaCaso.detenido
                 });
 
             });
@@ -695,6 +704,14 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
               (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
               Logger.log('lo que envio: '+  (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
              }
+
+             if (this.globals.detenido==false) {
+                 Logger.log('entroooooo!');
+                 delete (_model["personaCaso"])[0].detalleDetenido;
+             }
+
+             (_model["personaCaso"])[0].detenido = this.globals.detenido;
+
             buscar.push({
                 catalogo:"idioma_identificacion",
                 name:"idiomaIdentificacion",
@@ -943,6 +960,12 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 _model.personaCaso[0].caso.id = this.casoId;
                 (_model.personaCaso[0])["id"]=this.id;
 
+                if (this.personaServ.nacionalidadReligion.finded.length === 0)
+                    _model.nacionalidadReligion.id = "";
+
+                if (this.personaServ.idiomaIdentificacion.finded.length == 0)
+                    _model.idiomaIdentificacion.id = "";
+
                 Logger.log('Model', _model);
                 this.http.put('/v1/base/personas/'+this.globals.personaCaso["id"], _model).subscribe(
                     (response) => {
@@ -1066,6 +1089,12 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
                 Logger.log('lo que envio: '+  (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
                }
+
+                if (this.globals.detenido==false) {
+                    delete (_model["personaCaso"])[0].detalleDetenido;
+                }
+
+               (_model["personaCaso"])[0].detenido = this.globals.detenido;
 
             buscar.push({
                 catalogo:"idioma_identificacion",

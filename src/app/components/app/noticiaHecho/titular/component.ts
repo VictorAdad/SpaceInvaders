@@ -2,6 +2,7 @@ import { Component, ViewChild, Inject} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BasePaginationComponent } from '@components-app/base/pagination/component';
 import { AuthenticationService } from '@services/auth/authentication.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { HttpService } from '@services/http.service';
@@ -14,7 +15,7 @@ import { Logger } from "@services/logger.service";
 @Component({
     templateUrl:'tranferir.component.html'
 })
-export class TransferirComponent{
+export class TransferirComponent extends BasePaginationComponent {
 
     public agencias: MOption[] = [];
     public usuarios: MOption[] = [];
@@ -26,12 +27,15 @@ export class TransferirComponent{
         private http: HttpService,
         private router: Router,
         private auth: AuthenticationService
-       ){}
+       ){
+        super();
+    }
 
     ngOnInit() {
         let users = Object.keys(_usuarios);
         this.form =  new FormGroup({
             'userNamePropietario': new FormControl('Propietario'),
+            'agencia': new FormControl(''),
             'userNameAsignado': new FormControl(''),
             'userNameAsignacion': new FormControl(this.auth.user.username),
             'fechaAsignacion': new FormControl(new Date()),
@@ -46,22 +50,27 @@ export class TransferirComponent{
                 }
             }
         );
-        Logger.log(users);
-        for (let usuario of users) {
-            this.usuarios.push({value: _usuarios[usuario].username, label: _usuarios[usuario].nombreCompleto});
-        }
-    }
+        // Logger.log(users);
+        // for (let usuario of users) {
+        //     this.usuarios.push({value: _usuarios[usuario].username, label: _usuarios[usuario].nombreCompleto});
+        // }
+
+        this.form.controls.agencia.valueChanges.subscribe(value =>{
+            this.findByAgencia(value);
+        });
+    }   
 
     close(){
         this.dialogRef.close();
     }
 
     public findByAgencia(_agencia: string){
+        Logger.logColor('entrada ------>','Green', _agencia, this.usuarios);
         this.http.get(`/v1/administration/ldap/fiscalias/agencias/usuarios?f=${_agencia}`).subscribe(
             response => {
-                // for (let object of response) {
-                //     this.usuarios.push({value: object.name, label: object.name});
-                // }
+                for (let object of response) {
+                    this.usuarios.push({value: object.uid, label: object.displayName});
+                }
             }
         )
     }

@@ -34,8 +34,8 @@ export class HomeComponent extends BasePaginationComponent implements OnInit {
         private route: ActivatedRoute,
         private _db: CIndexedDB,
         private _onLine: OnLineService,
-        private _http: HttpService,
         public auth: AuthenticationService,
+        private _http: HttpService,
         public caso: CasoService
         ) {
         super();
@@ -83,7 +83,11 @@ export class HomeComponent extends BasePaginationComponent implements OnInit {
 
     public page(){
         this.loadList = true;
-        this.http.get(
+
+        if(this.pageSub)
+            this.pageSub.unsubscribe();
+        
+        this.pageSub = this.http.get(
             `/v1/base/casos/titulares/${this.auth.user.username}/page?f=${this.pageFilter}&p=${this.pageIndex}&tr=${this.pageSize}`    
         ).subscribe(
             (response) => {

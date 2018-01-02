@@ -96,7 +96,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
     efectoDetalleArr=[];
 
-    casoOffline=null; 
+    casoOffline=null;
 
 
 
@@ -121,7 +121,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         this.model = new Relacion();
         this.efectoViolenciaGenero= new EfectoViolenciaGenero();
         this.hostigamiento= new HostigamientoAcoso;
-        
+
         this.form  = this.formRelacion.form;
 
         this.optionsService.getPaises();
@@ -136,14 +136,14 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 this.casoService.find(this.casoId).then(r=>{this.casoOffline=this.casoService.caso;});
                 this.optionsRelacion.getData();
                 if(this.onLine.onLine){
-                
+
                     this.casoOffline=this.casoService.caso;
                     this.optionsNoticia.setId(this.casoId, this.casoOffline);
                     this.optionsNoticia.getData();
                     this.optionsService.getData();
                     // this.optionsRelacion.getData();
                     Logger.log("YYYYY",this.optionsNoticia);
-                
+
                 }else{
                     //this.db.list("casos").then(caso=>{
                     this.casoService.find(this.casoId).then(r=>{
@@ -196,6 +196,10 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         this.validateForm(this.form);
     }
 
+    ngOnDestroy(){
+
+    }
+
     addEfectoDetalle(_val: any,id=null){
         if (_val["detalle"]){
             this.colections.add('efectoDetalle', 'subjectEfectoDetalle', _val);
@@ -212,10 +216,10 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             }
         }else{
             this.db.searchInCatalogo("efecto_detalle",_val).then(efectoDetalle=>{
-                this.colections.add('efectoDetalle', 'subjectEfectoDetalle', 
+                this.colections.add('efectoDetalle', 'subjectEfectoDetalle',
                     {
-                        id:efectoDetalle["id"], 
-                        detalle:efectoDetalle["detalle"], 
+                        id:efectoDetalle["id"],
+                        detalle:efectoDetalle["detalle"],
                         efecto:efectoDetalle["efecto"]
                     });
                 let form = this.form.get('efectoViolencia') as FormArray;
@@ -225,7 +229,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             })
         }
         this.formRelacion.efectoDetalle.reset();
-        
+
     }
 
     addTrataPersonas(_val: any){
@@ -233,7 +237,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             _val.tipoTransportacion.id = this.optionsRelacion.matrizTipoTransportacion.finded[0].id;
 
         var obj=this;
-        
+
         var addColections=function(val){
             obj.colections.add(
                 'trataPersonas',
@@ -273,7 +277,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                 _val["modalidadAmbito"]=this.optionsRelacion.matrizModalidadAmbito.finded[0];
             }
         /*
-            TODO: Definir cuales son los campos obligatorios 
+            TODO: Definir cuales son los campos obligatorios
         */
         if (_val["conductaDetalle"] && _val["conductaDetalle"]["detalle"]){
             var testigo=_val["testigo"];
@@ -289,7 +293,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             var idModalidadAmbito=this.optionsRelacion.matrizModalidadAmbito.finded[0]?this.optionsRelacion.matrizModalidadAmbito.finded[0].id:null;
             var idConductaDetalle=this.optionsRelacion.matrizConductaDetalle.finded[0]?this.optionsRelacion.matrizConductaDetalle.finded[0].id:null;
             var idTestigo=_val.testigo?_val.testigo.id:null;
-            
+
             form.push(
                 this.formRelacion.setHostigamientoForm(
                     idModalidadAmbito,
@@ -326,7 +330,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                     var idModalidadAmbito=modalidadAmbito["id"];
                     var idConductaDetalle=conductaDetalle["id"];
                     var idTestigo=_val.testigo?_val.testigo.id:null;
-                    
+
                     form.push(
                         this.formRelacion.setHostigamientoForm(
                             idModalidadAmbito,
@@ -338,8 +342,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             })
         }
         this.formRelacion.hostigamiento.reset();
-        
-        
+
+
     }
 
     save(_valid : any, _model : any){
@@ -408,7 +412,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                     if (item["personaCasoRelacionada"].id){
                         dependeDe.push(item["personaCasoRelacionada"].id);
                     }
-                       
+
                 }
                 Logger.log("SI");
                 for (var i = 0; i < _model["hostigamientoAcoso"].length; ++i) {//FALTA LAS VALIDACIONES
@@ -418,9 +422,9 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                         Logger.log(_model["hostigamientoAcoso"][i]);
                         temId++;
                         var jason = JSON.parse('{"detalleDelito":{"hostigamientoAcoso":{ "'+i+'":{"id":'+temId+'} } } }');
-                        otrosID.push(jason);    
+                        otrosID.push(jason);
                     }
-                    
+
                     //depende de la persona
                     if (_model["hostigamientoAcoso"][i].testigo.id){
                         dependeDe.push(_model["hostigamientoAcoso"][i].testigo.id);
@@ -435,7 +439,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                         var jason = JSON.parse('{"detalleDelito":{"trataPersona":{ "'+i+'":{"id":'+temId+'} } } }');
                         otrosID.push(jason);
                     }
-                    
+
                 }
                 Logger.log("SI");
                 for (var i = 0; i < _model["efectoViolencia"].length; ++i) {
@@ -446,7 +450,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                         var jason = JSON.parse('{"detalleDelito":{"efectoViolencia":{ "'+i+'":{"id":'+temId+'} } } }');
                         otrosID.push(jason);
                     }
-                    
+
                 }
                 Logger.log("SI");
                 let dato={
@@ -490,7 +494,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                                 if (item["vehiculoTipoRelacionPersona"] && item["vehiculoTipoRelacionPersona"][0].vehiculo.id){
                                     copia++;
                                     item["vehiculoTipoRelacionPersona"][0]["id"]=copia;
-                                }  
+                                }
                             }
                             for (var i = 0; i < _model["hostigamientoAcoso"].length; ++i) {
                                 copia++;
@@ -552,12 +556,12 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                             Logger.log("MODELO",_model, caso);
                             this.db.update("casos",caso).then(t=>{
                                 Logger.log("NO",t);
-                                resolve("Se creo la relación con éxito");
+                                resolve("Se creó la relación con éxito");
                                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/relaciones' ]);
                             });
                         }
-                    
-                }); 
+
+                });
             }
         });
     }
@@ -639,7 +643,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                     if (item["personaCasoRelacionada"].id){
                         dependeDe.push(item["personaCasoRelacionada"].id);
                     }
-                       
+
                 }
                 //todos los ids los pongo nulos
                 for (var i = 0; i < _model["hostigamientoAcoso"].length; ++i) {
@@ -726,7 +730,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                                         copia++;
                                         item["vehiculoTipoRelacionPersona"][0]["id"]=copia;
                                     }
-                                }   
+                                }
                             }
                             for (var i = 0; i < _model["hostigamientoAcoso"].length; ++i) {
                                 if (!Number.isInteger(_model["hostigamientoAcoso"][i]["id"])){
@@ -749,7 +753,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                                     item["id"]=copia;
                                 }
                             }
-                                                        
+
                             var relacion={
                                 armaTipoRelacionPersona:_model["tipoRelacionPersona"]["armaTipoRelacionPersona"],
                                 detalleDelito:{
@@ -847,7 +851,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                     armasFormGroup.patchValue({
                         arma: {
                             id: _data.armaTipoRelacionPersona["0"].arma.id,
-                        }    
+                        }
                     })
                 }
             }
@@ -859,8 +863,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                     vehiculoFormGroup.patchValue({
                         vehiculo: {
                             id: _data.vehiculoTipoRelacionPersona["0"].vehiculo.id,
-                        }    
-                    })    
+                        }
+                    })
                 }
             }
             Logger.log('Fill Detalle Delito');

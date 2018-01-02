@@ -5,11 +5,18 @@ import { HttpService} from '@services/http.service';
 import { OnLineService } from '@services/onLine.service';
 import * as moment from 'moment';
 import { Logger } from '@services/logger.service';
-
+/**
+ * Servicio qeu almacena el ultimo caso visto
+ */
 @Injectable()
 export class CasoService{
-
+	/**
+	 * id del caso
+	 */
 	public id: any;
+	/**
+	 * caso
+	 */
 	public caso: Caso = new Caso();
 
 	constructor(
@@ -20,7 +27,10 @@ export class CasoService{
 		onLine.setCaso(this);
 	}
 
-
+	/**
+	 * Busca el caso con id dado, si el _id==this.id no se hace nada 
+	 * @param _id id del caso a buscar
+	 */
 	public find(_id){
 		return new Promise<any>(
 			(resolve, reject) => {
@@ -45,7 +55,10 @@ export class CasoService{
 			}
 		);
 	}
-
+	/**
+	 * Actualiza el caso en indexedDB
+	 * @param response informacion nueva del caso
+	 */
 	public setOnlineCaso(response){
 		// Logger.log('Caso@setOnlineCaso')
 		this.setCaso(response);
@@ -56,11 +69,16 @@ export class CasoService{
         });
         // Logger.log(this.caso);
 	}
-
+	/**
+	 * asigna la informacion del caso
+	 * @param caso 
+	 */
 	public setCaso(caso){
 		Object.assign(this.caso, caso)
 	}
-
+	/**
+	 * actualiza la informacion del caso, esto es necesario cuando se hace alguna operacion en online. Sirve para tener actualizado el caso en caso de que se pierda lo conexion.
+	 */
 	public actualizaCaso(){
 		if(this.onLine.onLine){
 			this.http.get(`/v1/base/casos/${this.id}/all`).subscribe(
@@ -72,7 +90,9 @@ export class CasoService{
 		}
 	}
 }
-
+/**
+ * calse del caso, esta clase guarda la informacion importante del caso para poderla consultar en caso de que se pierda la conexion.
+ */
 export class Caso{
 	
 	public armas: any[];

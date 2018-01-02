@@ -28,12 +28,19 @@ import { DialogSincrinizarService} from "@services/onLine/dialogSincronizar.serv
 import { Logger } from "@services/logger.service";
 import { _config} from '@app/app.config';
 
+/**
+ * Servicio para manejar a indexedDB.
+ */
 @Injectable()
 export class CIndexedDB {
     nameDB:string = _config.offLine.indexedDB.nameDB;
     init: boolean = (localStorage.getItem('initDB') === 'true');
     sincronizarCatalogos:SincronizaCatalogos;
-
+    /**
+     * Constructor de indexedDB. Verifica si existe la base SIGI, si no existe crea todo el schema de tablas necesarias para que funcione.
+     * @param http Instancia http, es necesario para pasar a la clase de SincronizaCatalogos
+     * @param dialog Instancia del dialogo para manejar preguntas. es necesario para SincronizaCatalogos
+     */
     constructor(private http:HttpService, 
         public dialog: DialogSincrinizarService) {
         var obj=this;
@@ -44,6 +51,7 @@ export class CIndexedDB {
             var open = indexedDB.open(this.nameDB, 1);
             var obj=this;
             var newDB=false;
+            //si no existe la base o se actualiza la version se crea todo el schema
             open.onupgradeneeded = () => {
                 Logger.log(" -> Inciando conexión a la BD");
                 var db    = open.result;
@@ -92,7 +100,9 @@ export class CIndexedDB {
             localStorage.setItem('initDB', 'true');
         }
     }
-
+    /**
+     * Funcion para inicializar los catalogos de forma manual. Esto era para trabajar con datos dummies, ya no es necesaria.
+     */
     inicialiazaCatalogos(){
         Logger.log("-> Inicializando carga de los catalogos");
 
@@ -146,7 +156,12 @@ export class CIndexedDB {
             
         }  
     }
-
+    /**
+     * Funcion recursiva para agregar los elemenos del arreglo dentro de la tabla de catalogos, era usadapara cargar datos dummies.
+     * @param i indice del arreglo
+     * @param arr arreglo con catalogos
+     * @param store objecto al que se agregaran los datos del arreglo.
+     */
     nextItem(i,arr, store){
         var obj=this;
         if (i<arr.length) {
@@ -154,7 +169,13 @@ export class CIndexedDB {
             this.nextItem(i+1,arr,store);
         } 
     }
-
+    /**
+     * Esta es la funcion más importante para manejar los accesos a indexedDB. basicamente maneja los insert, update, delete y list
+     * @param _table Tabla a la que se accedera
+     * @param _tipo tipo de operacion
+     * @param _data parametro opcional, trae la informacion que se guardara, actualizara o eliminara. dependiendo del contesto es un kson o una llave(numero).
+     * @param _index parametro opcional. Es el nombre del indice a usar para realizar la busqueda.
+     */
     action(_table: string, _tipo:string, _data:any = null, _index:string=""){
         var obj= this;
         var promesa = new Promise( 
@@ -253,33 +274,68 @@ export class CIndexedDB {
         );
         return promesa;
     }
-    //data tienen que ser un json
+    /**
+     * Agrega un registro a la tabla _table
+     * @param _table tabla con la que se trabajara
+     * @param _datos datos a guardar
+     * @return Una promesa que devuelve los datos agregados o el error
+     */
     add(_table:string, _datos:any){
         return this.action(_table, "add", _datos) 
     }
-    //data tienen que ser un json
+    /**
+     * Actualiza un registro a la tabla _table
+     * @param _table tabla con la que se trabajara
+     * @param _datos datos a guardar
+     * @return Una promesa que devuelve los datos agregados o el error
+     */
     update(_table:string, _datos:any){
         return this.action(_table, "update", _datos);  
     }
-    //llave a eliminar
+    /**
+     * Funcion que elimina un registro a la tabla _table
+     * @param _table tabla con la que se trabajara
+     * @param _key elemento a eliminar
+     * @return Una promesa que devuelve true si se elimina o false si no se pudo
+     */
     delete(_table:string, _key:any){
         return this.action(_table, "delete", _key);
     }
+    /**
+     * Funcion que lista los elementos de latabla dada
+     * @param _table tabla con la que trabajara
+     * @return una promesa que devuelve la lista de elementos de la tabla dada o el error
+     */
     list(_table:string){
         return this.action(_table, "list");
     }
-    //es 
+    /**
+     * Funcion busca un elemento en la tabla dada.
+     * @param _table tabla con la que se trabajara
+     * @param _key llave a buscar
+     * @param _index Parametro opcional el cual sirve para indicar que se utilice algun indice si es que existe alguno.
+     * @return una promesa que contienen el elemento encontrado o el error
+     */
     get(_table:string, _key:any, _index:string=""){
         return this.action(_table, "get", _key,_index);
     }
 
-    //limpia la tabla
+    /**
+     * Funcion para eliminar el contenido de una tabla
+     * @return devuelve una promesa que contienen true o el error.
+     */
     clear(_table:string){
         return this.action(_table, "clear");
     }
-
-    //busca en matrices
+    /**
+     * busca en matrices el elemento exacto
+     * @param _catalogo catalogo a buscar en la tabla de catalogo
+     * @param _item elemento a buscar
+     * @example NOTA
+     * Si necesita buscar una entrada exacta en una matrix puede usar esta funcion.
+     */
     searchInCatalogo(_catalogo, _item){
+        //Logger.log("%cCatalogo","color:red;",_catalogo,_item);
         var obj= this;
         var promesa = new Promise( 
             function(resolve,reject){
@@ -305,7 +361,15 @@ export class CIndexedDB {
             });
         return promesa;
     }
-    //busca en los catalogos los item que son exactos con los datos de item
+    /**
+     * busca en los catalogos los item que son exactos con los datos de item.
+     * @param _catalogo catalogo a buscar
+     * @param _item elemento a buscar
+     * @param like 
+     * @return regresa una promesa con las coincidencias o el error.
+     * @example NOTA
+     * Si necesita buscar los municipios del estado de mexico hay que utilizar esto
+     */
     searchInNotMatrx(_catalogo, _item, like=false){
         /**
         buscamos si el elemento y del catalogo es igual a e 

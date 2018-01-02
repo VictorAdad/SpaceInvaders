@@ -63,7 +63,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             'marca'                 : new FormControl("", []),
             'submarca'              : new FormControl("", []),
             'color'                 : new FormControl("", []),
-            'modelo'                : new FormControl("", [Validators.required]),
+            'modelo'                : new FormControl(null, [Validators.required]),
             'placas'                : new FormControl("", [Validators.required]),
             'placasAdicionales'     : new FormControl("", []),
             'registroFederalVehiculo': new FormControl("", []),
@@ -156,6 +156,12 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         this.vehiculoServ.marcaSubmarca.submarca = [];
     }
 
+    public datosTomados(_event, cadena){
+        if (_event) {
+            this.vehiculoServ.tipoUsoTipoVehiculo.find(_event, cadena)            
+        }
+    }
+
     public validateDelitoRobo(caso){
       console.log('Casoooo',caso)
       let isRoboSecundario=false;
@@ -245,10 +251,6 @@ public validate(form: FormGroup){
     }
 
     public save(valid : any, _model : any){
-        if (isNaN(_model.modelo) || _model.modelo == "") {
-            Logger.logColor('------------>','red',_model);
-            _model.modelo = 0;
-        }
         Logger.log("SI",this.vehiculoServ.tipoUsoTipoVehiculo.finded);
         if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0]){
             _model.tipoUsoTipoVehiculo.id=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].id;
@@ -274,7 +276,7 @@ public validate(form: FormGroup){
                 this.http.post('/v1/base/vehiculos', this.model).subscribe(
                     (response) => {
                         this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/vehiculos' ]);
-                        resolve("Se creo el vehículo con éxito");
+                        resolve("Se creó el vehículo con éxito");
                         this.vehiculoServ.reset();
                         this.casoService.actualizaCaso();
                     },
@@ -304,7 +306,7 @@ public validate(form: FormGroup){
                             this.model["id"]=temId;
                             caso["vehiculos"].push(this.model);
                             this.db.update("casos",caso).then(t=>{
-                                resolve("Se creo el vehículo de manera local");
+                                resolve("Se creó el vehículo de manera local");
                                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/vehiculos' ]);
                                 this.vehiculoServ.reset();
                             });
@@ -319,11 +321,6 @@ public validate(form: FormGroup){
     public edit(_valid : any, _model : any){
         var obj=this;
         Logger.logColor('------------>','green',_model);
-
-        if (isNaN(_model.modelo) || _model.modelo == "") {
-            Logger.logColor('------------>','red',_model);
-            _model.modelo = 0;
-        }
 
         if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0]){
             _model.tipoUsoTipoVehiculo.id=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].id;
@@ -433,8 +430,11 @@ public validate(form: FormGroup){
 
     public tipoVehiculoChange(_event){
         if(_event){
+            this.form.controls.marca.setValue("");
+            this.form.controls.submarca.setValue("");
             this.vehiculoServ.marcaSubmarca.find(_event, 'tipoVehiculo');
             this.vehiculoServ.marcaSubmarca.filterBy(_event, 'tipoVehiculo', 'marca');
+            this.vehiculoServ.marcaSubmarca.submarca = [];
         }
         if(_event==_config.optionValue.vehiculo.bicicleta){
             this.isTipoBicicleta=true;

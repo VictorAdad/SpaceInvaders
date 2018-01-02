@@ -156,7 +156,7 @@
                     name="datosTomados"
                     [options]="vehiculoServ.tipoUsoTipoVehiculo.datosTomadosDe"
                     [group]="form"
-                    (valueChange)="vehiculoServ.tipoUsoTipoVehiculo.find($event, 'datosTomadosDe')"
+                    (valueChange)="datosTomados($event, 'datosTomadosDe')"
                     >
                 </select2>
             </div>
@@ -174,7 +174,7 @@
                         <select2 placeholder="Tipo de uso" name="tipoUso"
                             [options]="vehiculoServ.tipoUsoTipoVehiculo.tipoUso"
                             [group]="form"
-                            (valueChange)="vehiculoServ.tipoUsoTipoVehiculo.find($event, 'tipoUso')">
+                            (valueChange)="datosTomados($event, 'tipoUso')">
                         </select2>
                     </div>
                     <div class="col">

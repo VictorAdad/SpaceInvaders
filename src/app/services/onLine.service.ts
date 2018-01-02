@@ -18,7 +18,9 @@ import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import {SincronizaCambios} from '@services/onLine/sincronizarCambios';
 import { _config} from '@app/app.config';
 
-
+/**
+ * Servicio para verificar la conexion con el servidor que aloja a la web app.
+ */
 @Injectable()
 export class OnLineService {
     onLine: boolean = true;

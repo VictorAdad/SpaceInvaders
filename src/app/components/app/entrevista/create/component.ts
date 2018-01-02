@@ -276,6 +276,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 	}
 
 	public fillForm(_data) {
+  if(_data.fechaNacimiento !== "" && _data.fechaNacimiento != null && _data.fechaNacimiento != undefined)
 		_data.fechaNacimiento = new Date(_data.fechaNacimiento);
 		eliminaNulos(_data);
 		Logger.log(_data);

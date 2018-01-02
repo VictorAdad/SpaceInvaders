@@ -10,12 +10,12 @@
 
         <ng-container matColumnDef="operador">
             <mat-header-cell *matHeaderCellDef> Operador </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.operador}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.propietario?.cargo}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="oficina">
             <mat-header-cell *matHeaderCellDef> Oficina </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.oficina}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.propietario?.municipio}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="titular">
