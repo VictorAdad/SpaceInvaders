@@ -960,6 +960,12 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 _model.personaCaso[0].caso.id = this.casoId;
                 (_model.personaCaso[0])["id"]=this.id;
 
+                if (this.personaServ.nacionalidadReligion.finded.length === 0)
+                    _model.nacionalidadReligion.id = "";
+
+                if (this.personaServ.idiomaIdentificacion.finded.length == 0)
+                    _model.idiomaIdentificacion.id = "";
+
                 Logger.log('Model', _model);
                 this.http.put('/v1/base/personas/'+this.globals.personaCaso["id"], _model).subscribe(
                     (response) => {

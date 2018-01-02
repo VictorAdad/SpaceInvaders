@@ -24,7 +24,7 @@
         <mat-cell style="width: 60%" *matCellDef="let element">
             <strong>Imputado:</strong> {{element.personaCasoRelacionada | personaNombre}} <br>
             <strong>Víctima:</strong> {{element.personaCaso | personaNombre}} <br>
-            <strong>Lugar:</strong> {{element.lugarTipoRelacionPersona["0"]?element.lugarTipoRelacionPersona["0"].lugar.calle +', '+ (element.lugarTipoRelacionPersona["0"].lugar.pais.id == 143 ? element.lugarTipoRelacionPersona["0"].lugar.colonia.nombre : element.lugarTipoRelacionPersona["0"].lugar.coloniaOtro):''}}<br>
+            <strong>Lugar:</strong> {{element.lugarTipoRelacionPersona["0"]?element.lugarTipoRelacionPersona["0"].lugar.calle +', '+ (element.lugarTipoRelacionPersona["0"].lugar.pais.id == idMexico ? element.lugarTipoRelacionPersona["0"].lugar.colonia.nombre : element.lugarTipoRelacionPersona["0"].lugar.coloniaOtro):''}}<br>
             <div style="text-overflow: ellipsis; white-space: pre; overflow: hidden !important;"><strong>Delito:</strong> {{element.detalleDelito.delitoCaso?element.detalleDelito.delitoCaso.delito.nombre:''}}</div>
         </mat-cell>
     </ng-container>

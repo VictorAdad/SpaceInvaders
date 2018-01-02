@@ -102,6 +102,7 @@
                     placeholder="Habla español"
                     name="hablaEspaniol"
                     [group]="globals.form"
+                    (clean)="personaServ.idiomaIdentificacion.find(undefined, 'hablaEspaniol')"
                     (valueChange)="personaServ.idiomaIdentificacion.find($event, 'hablaEspaniol')">
 
                 </select2>
@@ -112,6 +113,7 @@
                     placeholder="Lengua Indígena"
                     name="lenguaIndigena"
                     [group]="globals.form"
+                    (clean)="personaServ.idiomaIdentificacion.find(undefined, 'lenguaIndigena')"
                     (valueChange)="personaServ.idiomaIdentificacion.find($event, 'lenguaIndigena')">
 
                 </select2>
@@ -131,6 +133,7 @@
                     placeholder="Familia lingüística"
                     name="familiaLinguistica"
                     [group]="globals.form"
+                    (clean)="personaServ.idiomaIdentificacion.find(undefined, 'familiaLinguistica')"
                     (valueChange)="personaServ.idiomaIdentificacion.find($event, 'familiaLinguistica')">
 
                 </select2>
