@@ -32,7 +32,8 @@ export class BasePaginationComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(){
-        this.pageSub.unsubscribe();
+        if(this.pageSub)
+            this.pageSub.unsubscribe();
     }
 
 

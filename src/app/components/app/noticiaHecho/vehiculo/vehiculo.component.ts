@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material';
+import { BasePaginationComponent } from '@components-app/base/pagination/component';
 import { TableService} from '@utils/table/table.service';
 import { ActivatedRoute } from '@angular/router';
 import { OnLineService} from '@services/onLine.service';
@@ -13,7 +14,7 @@ import { Logger } from "@services/logger.service";
     templateUrl:'./vehiculo.component.html'
 })
 
-export class VehiculoComponent{
+export class VehiculoComponent extends BasePaginationComponent {
 
     public casoId: number = null;
 	public displayedColumns = ['tipo', 'marca', 'color', 'modelo', 'placa'];
@@ -22,7 +23,14 @@ export class VehiculoComponent{
     public pag: number = 0;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
-    constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB, private casoService:CasoService) { }
+    constructor(
+        private route: ActivatedRoute,
+        private http: HttpService,
+        private onLine: OnLineService,
+        private db:CIndexedDB,
+        private casoService:CasoService) {
+        super();
+    }
 
 	ngOnInit() {
         this.route.parent.params.subscribe(params => {

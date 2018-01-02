@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material';
+import { BasePaginationComponent } from '@components-app/base/pagination/component';
 import { TableService} from '@utils/table/table.service';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
@@ -14,7 +15,7 @@ import { Logger } from "@services/logger.service";
     templateUrl:'./lugar.component.html'
 })
 
-export class LugarComponent{
+export class LugarComponent extends BasePaginationComponent {
 
     public casoId: number = null;
 	public displayedColumns = ['tipo', 'calle', 'colonia', 'localidad', 'estado'];
@@ -23,7 +24,14 @@ export class LugarComponent{
     public pag: number = 0;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB, private casoService:CasoService){}
+    constructor(
+        private route: ActivatedRoute,
+        private http: HttpService,
+        private onLine: OnLineService,
+        private db:CIndexedDB,
+        private casoService:CasoService){
+        super();
+    }
 
     ngOnInit(){
         Logger.log('-> Data Source', this.dataSource);
