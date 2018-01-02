@@ -23,6 +23,7 @@ export class RelacionComponent{
 	public relaciones:Relacion[]  = [];
 	public dataSource: TableService | null;
     public pag: number = 0;
+    public IdMexico = _config.optionValue.idMexico; 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
 	constructor(
@@ -35,7 +36,7 @@ export class RelacionComponent{
         ){}
 
 	ngOnInit() {
-    	Logger.log('-> Data Source', this.dataSource);
+    	Logger.log('-> Data Source', this.dataSource, _config.optionValue.idMexico);
 
         this.route.parent.params.subscribe(params => {
             if(params['id']){
