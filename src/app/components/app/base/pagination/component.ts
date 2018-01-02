@@ -1,11 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
+import { Subscription } from 'rxjs/Subscription';
 
-@Component({
-    templateUrl: './component.html'
-})
-export class BasePaginationComponent implements OnInit {
+export class BasePaginationComponent implements OnInit, OnDestroy {
 
     public loadList: boolean = true;
 
@@ -19,6 +17,8 @@ export class BasePaginationComponent implements OnInit {
 
     public dataSource: TableService;
 
+    public pageSub: Subscription;
+
     @ViewChild(MatPaginator) 
     public paginator: MatPaginator;
     
@@ -30,5 +30,12 @@ export class BasePaginationComponent implements OnInit {
     ngOnInit(){
 
     }
+
+    ngOnDestroy(){
+        if(this.pageSub)
+            this.pageSub.unsubscribe();
+    }
+
+
 
 }

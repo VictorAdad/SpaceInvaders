@@ -1,6 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { BasePaginationComponent } from '@components-app/base/pagination/component';
 import { TableService} from '@utils/table/table.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { Persona } from '@models/persona';
@@ -14,7 +15,7 @@ import { Logger } from "@services/logger.service";
     templateUrl:'./component.html'
 })
 
-export class PersonaComponent implements OnInit{
+export class PersonaComponent extends BasePaginationComponent implements OnInit {
 
     public casoId: number = null;
     public pag: number = 0;
@@ -31,6 +32,7 @@ export class PersonaComponent implements OnInit{
         private http: HttpService,
         private onLine: OnLineService,
         private casoService:CasoService){
+        super();
         this.tabla = _tabla;
     }
 
@@ -49,7 +51,6 @@ export class PersonaComponent implements OnInit{
                             Logger.log("CASO ->",caso);
                             var datos=caso["personaCasos"];
                             this.dataSource = new TableService(this.paginator, datos.slice(0,datos["length"]<10?datos["length"]:10));
-                            // this.dataSource = new TableService(this.paginator, caso["personaCasos"]);
                         }
                         
                     });
@@ -64,7 +65,7 @@ export class PersonaComponent implements OnInit{
 
     public page(url:string,_e=null){
         if (this.onLine.onLine)
-            this.http.get(url).subscribe((response) => {
+            this.pageSub =  this.http.get(url).subscribe((response) => {
                 this.pag = response.totalCount;
                 this.data = response.data as Persona[];
                 this.dataSource = new TableService(this.paginator, this.data);

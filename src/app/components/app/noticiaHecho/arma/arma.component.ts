@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { BasePaginationComponent } from '@components-app/base/pagination/component';
 import { TableService } from '@utils/table/table.service';
-import { Observable } from 'rxjs';
 import { Arma } from '@models/arma';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
@@ -14,7 +14,7 @@ import { Logger } from "@services/logger.service";
     templateUrl:'./arma.component.html',
     selector:'arma'
 })
-export class ArmaComponent{
+export class ArmaComponent extends BasePaginationComponent {
 
     public casoId: number = null;
 	public displayedColumns = ['Arma', 'Tipo', 'Marca', 'Calibre'];
@@ -25,7 +25,14 @@ export class ArmaComponent{
 	@ViewChild(MatPaginator) 
     paginator: MatPaginator;
 
-	constructor(private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private db:CIndexedDB, private casoService:CasoService){}
+	constructor(
+        private route: ActivatedRoute,
+        private http: HttpService,
+        private onLine: OnLineService,
+        private db:CIndexedDB,
+        private casoService:CasoService){
+        super();
+    }
 
 	ngOnInit() {
         Logger.log(this.route)
@@ -59,7 +66,7 @@ export class ArmaComponent{
 
     public page(url: string,_e=null){
         if (this.onLine.onLine){
-            this.http.get(url).subscribe((response) => {
+            this.pageSub = this.http.get(url).subscribe((response) => {
                 this.pag = response.totalCount;
                 this.data = response.data as Arma[];
                 Logger.log("Loading armas..");

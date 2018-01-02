@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions, Response, ResponseContentType } from '@angular/http';
-import { Observable } from 'rxjs';
 import { _config} from '@app/app.config';
 import { AuthenticationService } from '@services/auth/authentication.service';
+import { GlobalService } from "@services/global.service";
 import { environment } from './../../environments/environment';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map'
 /**
  * Servicio para manejar las peticiones http, la ventaja de tener nuestro propio servicio es que podemos agregar desde aqui header addicionales y comunes en todas las peticiones.
@@ -17,7 +18,8 @@ export class HttpService {
 
 	constructor(
         private _http: Http,
-        public auth: AuthenticationService) {
+        public auth: AuthenticationService,
+        public global : GlobalService) {
 		this.http = _http;
 	}
     /**
@@ -26,7 +28,8 @@ export class HttpService {
      */
 	public get(_uri: string): Observable<any>{
         return this.http.get(environment.api.host+_uri, this.getHeaders())
-            .map((response: Response) => response.json());
+            .map((response: Response) => response.json())
+            .catch(this.onError.bind(this));
     }
     /**
      * funcion para hacer el post
@@ -35,7 +38,8 @@ export class HttpService {
      */
     public post(_uri:string, _data: any): Observable<any>{
         return this.http.post(environment.api.host+_uri, _data, this.getHeaders())
-            .map((response: Response) => response.json());
+            .map((response: Response) => response.json())
+            .catch(this.onError.bind(this));
     }
     /**
      * Funcion para hacer un put, nota no hay peticion update.
@@ -44,7 +48,8 @@ export class HttpService {
      */
     public put(_uri:string, _data: any): Observable<any>{
         return this.http.put(environment.api.host+_uri, _data, this.getHeaders())
-            .map((response: Response) => response.json());
+            .map((response: Response) => response.json())
+            .catch(this.onError.bind(this));
     }
     /**
      * Funcion para solicitar un archivo del servio de documentos
@@ -52,7 +57,8 @@ export class HttpService {
      */
     public getFile(_uri: string): Observable<any>{
         return this.http.get(environment.api.host+_uri, { responseType: ResponseContentType.Blob })
-            .map((response: Response) => response.blob());
+            .map((response: Response) => response.blob())
+            .catch(this.onError.bind(this));
     }
     /**
      * No se ocupa de momento
@@ -60,7 +66,8 @@ export class HttpService {
      */
     public getLocal(_uri: string): Observable<any>{
         return this.http.get(_uri, { responseType: ResponseContentType.Blob })
-            .map((response: Response) => response.blob());
+            .map((response: Response) => response.blob())
+            .catch(this.onError.bind(this));
     }
 
     /**
@@ -72,6 +79,21 @@ export class HttpService {
         this.headers.append('SIGI-Token', this.auth.user.token);
         
         return new RequestOptions({ headers: this.headers });
+    }
+
+    /**
+     * Función para manipular el error de la petición HTTP
+     * @param _error Objeto con respuesta de error de la petición
+     */
+    private onError(_error){
+        // console.log('HttpService@onError()', _error);
+        if(_error.status === 401){
+            console.error('La sesión de usuario ha expirado');
+            this.auth.isLoggedin = false;
+            this.global.openSnackBar('Su tiempo de sesión ha expirado');
+        }
+
+        return Observable.throw(_error)
     }
 
 

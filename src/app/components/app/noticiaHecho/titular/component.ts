@@ -2,6 +2,7 @@ import { Component, ViewChild, Inject} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BasePaginationComponent } from '@components-app/base/pagination/component';
 import { AuthenticationService } from '@services/auth/authentication.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { HttpService } from '@services/http.service';
@@ -14,7 +15,7 @@ import { Logger } from "@services/logger.service";
 @Component({
     templateUrl:'tranferir.component.html'
 })
-export class TransferirComponent{
+export class TransferirComponent extends BasePaginationComponent {
 
     public agencias: MOption[] = [];
     public usuarios: MOption[] = [];
@@ -26,7 +27,9 @@ export class TransferirComponent{
         private http: HttpService,
         private router: Router,
         private auth: AuthenticationService
-       ){}
+       ){
+        super();
+    }
 
     ngOnInit() {
         let users = Object.keys(_usuarios);

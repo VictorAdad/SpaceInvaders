@@ -63,7 +63,7 @@ export class InspeccionComponent extends BasePaginationComponent implements OnIn
 
     public page(){
       this.loadList = true;
-      this.http.get(
+      this.pageSub = this.http.get(
           `/v1/base/solicitudes-pre-inspecciones/casos/${this.casoId}/page?f=${this.pageFilter}&p=${this.pageIndex}&tr=${this.pageSize}`
       ).subscribe(
           (response) => {

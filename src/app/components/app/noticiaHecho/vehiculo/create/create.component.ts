@@ -322,11 +322,6 @@ public validate(form: FormGroup){
         var obj=this;
         Logger.logColor('------------>','green',_model);
 
-        if (isNaN(_model.modelo) || _model.modelo == "") {
-            Logger.logColor('------------>','red',_model);
-            _model.modelo = 0;
-        }
-
         if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0]){
             _model.tipoUsoTipoVehiculo.id=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].id;
         }

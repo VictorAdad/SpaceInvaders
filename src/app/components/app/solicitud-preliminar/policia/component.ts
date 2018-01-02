@@ -66,7 +66,7 @@ export class PoliciaComponent extends BasePaginationComponent implements OnInit 
 
     public page(){
       this.loadList = true;
-      this.http.get(
+      this.pageSub = this.http.get(
           `/v1/base/solicitudes-pre-policias/casos/${this.casoId}/page?f=${this.pageFilter}&p=${this.pageIndex}&tr=${this.pageSize}`
       ).subscribe(
           (response) => {

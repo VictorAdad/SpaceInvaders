@@ -27,6 +27,8 @@ export class Select2Component{
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<string>();
 	@Output() haveclosed:EventEmitter<string> = new EventEmitter<string>();
 
+	@Output() clean:EventEmitter<string> = new EventEmitter<string>();
+
 	@ViewChild('searchInput') searchInput;
 	@ViewChild('select') select;
 
@@ -129,6 +131,7 @@ export class Select2Component{
 
    	public cleanSelect(){
    		this.value = "";
+   		this.clean.emit();
    	}
 
 }

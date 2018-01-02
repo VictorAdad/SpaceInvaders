@@ -1,6 +1,8 @@
+import { _config} from '@app/app.config';
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material';
+import { BasePaginationComponent } from '@components-app/base/pagination/component';
 import { TableService} from '@utils/table/table.service';
 import { OnLineService} from '@services/onLine.service';
 import { HttpService} from '@services/http.service';
@@ -15,13 +17,14 @@ import { Logger } from "@services/logger.service";
     selector:'relacion'
 })
 
-export class RelacionComponent{
+export class RelacionComponent extends BasePaginationComponent {
 
     public casoId: number   = null;
 	public displayedColumns = ['Tipo', 'Elementos'];
 	public relaciones:Relacion[]  = [];
 	public dataSource: TableService | null;
     public pag: number = 0;
+    public IdMexico = _config.optionValue.idMexico; 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
 	constructor(
@@ -31,10 +34,12 @@ export class RelacionComponent{
         private db:CIndexedDB,
         private casoService:CasoService,
         private noticiaHecho: NoticiaHechoService
-        ){}
+        ){
+        super();
+    }
 
 	ngOnInit() {
-    	Logger.log('-> Data Source', this.dataSource);
+    	Logger.log('-> Data Source', this.dataSource, _config.optionValue.idMexico);
 
         this.route.parent.params.subscribe(params => {
             if(params['id']){
@@ -74,7 +79,7 @@ export class RelacionComponent{
 
     public page(url: string,_e) {
         if (this.onLine)
-            this.http.get(url).subscribe((response) => {
+            this.pageSub = this.http.get(url).subscribe((response) => {
                 //Logger.log('Paginator response', response.data);
                 
                 response.data.forEach(object => {

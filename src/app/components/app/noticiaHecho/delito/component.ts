@@ -4,6 +4,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { MatPaginator } from '@angular/material';
+import { BasePaginationComponent } from '@components-app/base/pagination/component';
 import { TableService } from '@utils/table/table.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { OnLineService } from '@services/onLine.service';
@@ -20,7 +21,7 @@ import { Logger } from "@services/logger.service";
     selector: 'delito',
     templateUrl: './component.html'
 })
-export class DelitoComponent {
+export class DelitoComponent extends BasePaginationComponent {
     public pag: number = 0;
     public pageIndex: number = 0;
     public pageSize: number = 0;
@@ -51,7 +52,7 @@ export class DelitoComponent {
         public globalService : GlobalService,
         private casoService:CasoService
         ){
-
+        super();
         this.db = _tabla;
         this.activeRoute = _activeRoute;
         this.onLine = _onLine;
