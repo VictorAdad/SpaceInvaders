@@ -114,8 +114,13 @@ export class CasoHerenciaComponent implements OnInit{
       (ans: ResolveEmit) => {
         if(ans.resolved){
           console.log("Heredar datos", this.heredarFunction)
-          this.heredarFunction();
-          this.heredarChanged();
+
+          if (this.heredarFunction) 
+            this.heredarFunction();
+
+          if (this.heredarChanged)
+            this.heredarChanged();
+                        
         }
         else{
           console.log("No heredar datos")
