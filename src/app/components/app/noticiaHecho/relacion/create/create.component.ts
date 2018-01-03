@@ -23,6 +23,7 @@ import { CasoService } from '@services/caso/caso.service';
 import { _config} from '@app/app.config';
 import {Yason} from '@services/utils/yason';
 import { Logger } from "@services/logger.service";
+import { AuthenticationService } from "@services/auth/authentication.service";
 
 @Component({
     selector: 'relacion-create',
@@ -110,7 +111,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
         private db               : CIndexedDB,
         private optionsNoticia   : NoticiaHechoService,
         private optionsService   : SelectsService,
-        private casoService:CasoService
+        private casoService:CasoService,
+        private auth:AuthenticationService
         ) {
         super();
         this.optionsRelacion = new Options(http,db,onLine);
@@ -461,7 +463,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                     pendiente:true,
                     temId: temId,
                     dependeDe:dependeDe,
-                    otrosID:otrosID
+                    otrosID:otrosID,
+                    username: this.auth.user.username
 
                 }
                 Logger.log("MODELO",_model);
@@ -689,7 +692,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                     tipo:"update",
                     pendiente:true,
                     dependeDe:dependeDe,
-                    otrosID:otrosID
+                    otrosID:otrosID,
+                    username: this.auth.user.username
                 }
                 this.db.add("sincronizar",dato).then(p=>{
                     if (this.casoOffline){
