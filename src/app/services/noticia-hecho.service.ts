@@ -145,7 +145,19 @@ export class NoticiaHechoService {
             if (this.caso["personaCasos"]){
                 var arr=[];
                 for (var i = 0; i < this.caso["personaCasos"].length; ++i) {
-                    arr.push({id:this.caso["personaCasos"][i]["persona"]["id"], persona:{nombre:this.caso["personaCasos"][i]["persona"]["nombre"]}});
+                    arr.push(
+                        {
+                            id:this.caso["personaCasos"][i]["persona"]["id"], 
+                            persona:{
+                                nombre:this.caso["personaCasos"][i]["persona"]["nombre"],
+                                paterno:this.caso["personaCasos"][i]["persona"]["paterno"],
+                                materno:this.caso["personaCasos"][i]["persona"]["materno"]
+                            },
+                            tipoInterviniente:{
+                                id:this.caso["personaCasos"][i]["tipoInterviniente"]["id"],
+                                tipo:this.caso["personaCasos"][i]["tipoInterviniente"]["tipo"]
+                            }
+                        });
                 }
                 this.personas = this.constructOptionsPersona(arr);
                 Logger.log("PERSONAS",arr);
