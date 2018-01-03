@@ -45,6 +45,8 @@ export class CasoHerenciaComponent implements OnInit{
 
   public caso: Caso
   public heredar:boolean;
+  public heredarSintesisHechos:boolean;
+
 	constructor(
     public casoServ: CasoService,
     public optionsNoticia: NoticiaHechoService,
@@ -109,18 +111,23 @@ export class CasoHerenciaComponent implements OnInit{
     this.heredarChanged();
 
   }
+  public setHeredarSintesis(checked){
+    console.log(this.form);
+    this.heredarSintesisHechos=checked;
+  }
+
   public heredarDatos(){
     this._confirmation.create('Advertencia','¿Estás seguro de que deseas heradar estos datos?',this.settings).subscribe(
       (ans: ResolveEmit) => {
         if(ans.resolved){
           console.log("Heredar datos", this.heredarFunction)
 
-          if (this.heredarFunction) 
+          if (this.heredarFunction)
             this.heredarFunction();
 
           if (this.heredarChanged)
-            this.heredarChanged();
-                        
+              this.heredarChanged();
+
         }
         else{
           console.log("No heredar datos")
