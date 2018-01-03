@@ -85,7 +85,8 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 			'delito': new FormGroup({
 				'id': new FormControl("", []),
 			}),
-			'heredar':  new FormControl("", []),
+      'heredar':  new FormControl("", []),
+      'heredarSintesisHechos':  new FormControl("", []),
 			'personas': new FormArray([]),
 
 			'noOficio': new FormControl("", []),

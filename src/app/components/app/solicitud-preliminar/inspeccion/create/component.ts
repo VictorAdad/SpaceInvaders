@@ -86,6 +86,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
               'id': new FormControl("", []),
             }),
             'heredar':  new FormControl("", []),
+            'heredarSintesisHechos':  new FormControl("", []),
             'personas': new FormArray([]),
 
             'fechaHoraInspeccion': new FormControl(new Date()),
