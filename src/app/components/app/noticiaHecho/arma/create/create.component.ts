@@ -13,6 +13,7 @@ import { ArmaService } from '@services/noticia-hecho/arma/arma.service';
 import { Observable } from 'rxjs';
 import { CasoService } from '@services/caso/caso.service';
 import { Logger } from "@services/logger.service";
+import { AuthenticationService } from "@services/auth/authentication.service";
 @Component({
   selector: 'arma-create',
   templateUrl: 'create.component.html',
@@ -35,7 +36,8 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
         private router: Router,
         private db:CIndexedDB,
         public armaServ: ArmaService,
-        private casoService: CasoService
+        private casoService: CasoService,
+        public auth:AuthenticationService
         ) {
         super();
         Logger.log(this.armaServ);
@@ -150,7 +152,8 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                     tipo:"post",
                     pendiente:true,
                     dependeDe:[this.casoId],
-                    temId: temId
+                    temId: temId,
+                    username: this.auth.user.username
                 }
                 this.db.add("sincronizar",dato).then(p=>{
                     //this.db.get("casos",this.casoId).then(caso=>{
@@ -210,7 +213,8 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                         options:[],
                         tipo:"update",
                         pendiente:true,
-                        dependeDe:[this.casoId, this.id]
+                        dependeDe:[this.casoId, this.id],
+                        username: this.auth.user.username
                     }
                     this.db.add("sincronizar",dato).then(p=>{
                         //this.db.get("casos",this.casoId).then(t=>{
