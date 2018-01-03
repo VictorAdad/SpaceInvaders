@@ -5,6 +5,7 @@ import {FormCreateDelitoCasoComponent} from "@components-app/noticiaHecho/datos-
 import {SolPreDocComponent} from "@components-app/solicitud-preliminar/formatos"
 import {ProgressDialog} from '@components-app/onLine/progressDialog.component';
 import {savingComponent} from './directives/saving/saving.directive';
+import { LoginDialog } from './components/app/onLine/loginDialog.component';
 
 @NgModule()
 export class DynamicComponentsModule {}
@@ -15,5 +16,6 @@ export const dyanamicComponents = [
     FormCreateDelitoCasoComponent,
     SolPreDocComponent,
     ProgressDialog,
-    savingComponent
+    savingComponent,
+    LoginDialog
 ];
