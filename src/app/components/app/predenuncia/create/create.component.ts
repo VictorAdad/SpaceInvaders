@@ -311,7 +311,8 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                         tipo:"post",
                         pendiente:true,
                         dependeDe:[this.casoId],
-                        temId: temId
+                        temId: temId,
+                        username: this.authen.user.username
                     }
                     this.db.add("sincronizar", dato).then(p=>{
                         this.db.get("casos",this.casoId).then(caso=>{

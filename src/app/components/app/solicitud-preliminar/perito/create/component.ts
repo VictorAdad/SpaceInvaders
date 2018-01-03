@@ -21,6 +21,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
 import { Logger } from "@services/logger.service";
+import { AuthenticationService } from "@services/auth/authentication.service";
 
 @Component({
 	templateUrl: './component.html',
@@ -88,7 +89,8 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 		private router: Router,
 		private db: CIndexedDB,
 		private options: SelectsService,
-        public caso: CasoService
+		public caso: CasoService,
+		private auth:AuthenticationService
 	) { super(); }
 
 	ngOnInit() {
@@ -210,7 +212,8 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
                         tipo:"post",
                         pendiente:true,
                         dependeDe:[this.casoId],
-                        temId: temId
+						temId: temId,
+						username: this.auth.user.username
                     }
                     this.db.add("sincronizar",dato).then(
                         p => {

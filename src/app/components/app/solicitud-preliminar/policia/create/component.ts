@@ -20,6 +20,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
 import { Logger } from "@services/logger.service";
+import { AuthenticationService } from "@services/auth/authentication.service";
 
 @Component({
 	templateUrl: './component.html',
@@ -67,7 +68,8 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 		private onLine: OnLineService,
 		private http: HttpService,
 		private router: Router,
-		private db: CIndexedDB
+		private db: CIndexedDB,
+		private auth:AuthenticationService
 	) { super(); }
 
 	ngOnInit() {
@@ -149,7 +151,8 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 			                    tipo:"post",
 			                    pendiente:true,
 			                    dependeDe:[this.casoId],
-			                    temId: temId
+								temId: temId,
+								username: this.auth.user.username
 			                }
 			                this.db.add("sincronizar",dato).then(p=>{
 			                    this.db.get("casos", this.casoId).then(caso=>{
