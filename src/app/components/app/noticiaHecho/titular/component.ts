@@ -7,6 +7,7 @@ import { AuthenticationService } from '@services/auth/authentication.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { HttpService } from '@services/http.service';
 import { OnLineService} from '@services/onLine.service';
+import { NotifyService} from '@services/notify/notify.service';
 import { TableService} from '@utils/table/table.service';
 import { MOption } from '@partials/form/select2/select2.component'
 import { _usuarios } from '@services/auth/usuarios';
@@ -26,7 +27,8 @@ export class TransferirComponent extends BasePaginationComponent {
         @Inject(MAT_DIALOG_DATA) private data: {casoId:any},
         private http: HttpService,
         private router: Router,
-        private auth: AuthenticationService
+        private auth: AuthenticationService,
+        private notify: NotifyService
        ){
         super();
     }
@@ -50,10 +52,6 @@ export class TransferirComponent extends BasePaginationComponent {
                 }
             }
         );
-        // Logger.log(users);
-        // for (let usuario of users) {
-        //     this.usuarios.push({value: _usuarios[usuario].username, label: _usuarios[usuario].nombreCompleto});
-        // }
 
         this.form.controls.agencia.valueChanges.subscribe(value =>{
             this.findByAgencia(value);
@@ -80,6 +78,7 @@ export class TransferirComponent extends BasePaginationComponent {
         return new Promise<any>((resolve, reject) => {            
             this.http.post('/v1/base/titulares', _form).subscribe(
                 (response) => {
+                    this.notify.emitMessage('Tranferencia Hola');
                     this.router.navigate(['/' ]);
                     resolve("Se cambió de titular del caso");
                 },

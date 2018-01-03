@@ -36,6 +36,7 @@ import { ArmaService } from '@services/noticia-hecho/arma/arma.service';
 import { PersonaService } from '@services/noticia-hecho/persona/persona.service';
 import { FormatosService } from '@services/formatos/formatos.service';
 import { CasoService } from '@services/caso/caso.service';
+import { NotifyService } from '@services/notify/notify.service';
 import { JasperoConfirmationsModule } from '@jaspero/ng2-confirmations';
 
 import { MatNativeDateModule, MatIconModule} from '@angular/material';
@@ -166,6 +167,7 @@ import { pipes } from './pipes/pipe.module';
     ArmaService,
     FormatosService,
     CasoService,
+    NotifyService,
     Logger,
     {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true},
     {provide: MAT_DATE_LOCALE, useValue: 'es-MX'},
