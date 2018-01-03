@@ -88,7 +88,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 		private router: Router,
 		private db: CIndexedDB,
 		private options: SelectsService,
-        public caso: CasoService
+    public casoServ: CasoService
 	) { super(); }
 
 	ngOnInit() {
@@ -181,7 +181,13 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 				'id': new FormControl("", []),
 			})
 		});
-	}
+  }
+  public heredarDatos(){
+    console.log("Heredar en perito")
+    //Heredar narrativa de los hechos ((Hecho narrados de Predenuncia)
+    console.log(this.casoServ.caso);
+    this.form.controls["hechosNarrados"].setValue(this.casoServ.caso.predenuncias.hechosNarrados)
+  }
 
 	public save(valid: any, _model: any){
 		_model.caso.id = this.casoId;
@@ -215,15 +221,15 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
                     }
                     this.db.add("sincronizar",dato).then(
                         p => {
-                            if (this.caso.caso){
-                                if(!this.caso.caso["solicitudPrePericiales"])
-                                    this.caso.caso["solicitudPrePericiales"] = [];
+                            if (this.casoServ.caso){
+                                if(!this.casoServ.caso["solicitudPrePericiales"])
+                                    this.casoServ.caso["solicitudPrePericiales"] = [];
 
                                 _model["id"] = temId;
                                 this.id      = _model['id'];
-                                this.caso.caso["solicitudPrePericiales"].push(_model);
+                                this.casoServ.caso["solicitudPrePericiales"].push(_model);
 
-                                this.db.update("casos",this.caso.caso).then(
+                                this.db.update("casos",this.casoServ.caso).then(
                                     t => {
                                         resolve('Solicitud pericial creada con éxito');
                                         this.router.navigate(['/caso/' + this.casoId + '/perito/' + this.id + '/edit']);
