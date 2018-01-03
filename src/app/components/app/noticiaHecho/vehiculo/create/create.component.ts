@@ -15,6 +15,7 @@ import { CasoService } from '@services/caso/caso.service';
 import { _config} from '@app/app.config';
 import { Logger } from "@services/logger.service";
 import {Yason} from "@services/utils/yason";
+import { AuthenticationService } from "@services/auth/authentication.service";
 
 @Component({
     selector: 'vehiculo-create',
@@ -44,7 +45,8 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         private router: Router,
         private db:CIndexedDB,
         public vehiculoServ: VehiculoService,
-        public casoService:CasoService
+        public casoService:CasoService,
+        public auth:AuthenticationService
         ) {
         super();
         optionsServ.getEstadoByPais(_config.optionValue.idMexico);
@@ -294,7 +296,8 @@ public validate(form: FormGroup){
                     tipo:"post",
                     pendiente:true,
                     dependeDe:[this.casoId],
-                    temId: temId
+                    temId: temId,
+                    username: this.auth.user.username
                 }
                 this.db.add("sincronizar",dato).then(p=>{
                     //this.db.get("casos",this.casoId).then(caso=>{
@@ -357,7 +360,8 @@ public validate(form: FormGroup){
                     options:[],
                     tipo:"update",
                     pendiente:true,
-                    dependeDe:[this.casoId, this.id]
+                    dependeDe:[this.casoId, this.id],
+                    username: this.auth.user.username
                 }
                 this.db.add("sincronizar",dato).then(p=>{
                     //this.db.get("casos",this.casoId).then(t=>{
