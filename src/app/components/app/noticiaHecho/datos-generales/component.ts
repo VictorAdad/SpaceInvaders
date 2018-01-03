@@ -16,7 +16,6 @@ import { _config} from '@app/app.config';
 import { CasoService } from '@services/caso/caso.service'
 import { Observable }                  from 'rxjs/Observable';
 import { Logger } from "@services/logger.service";
-import { AuthenticationService } from "@services/auth/authentication.service";
 
 @Component({
     selector : 'datos-generales',
