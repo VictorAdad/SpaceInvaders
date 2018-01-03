@@ -287,22 +287,22 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
     }
 
    public heredarChanged(_heredar){
-      this.heredar=_heredar;
       console.log("heredar changed")
-
+      this.form.removeControl("tipoPersona");
       if(_heredar){
-        this.form.removeControl("tipoPersona");
-        this.form.addControl("tipoPersona",new FormControl(""));
+        this.form.addControl("tipoPersona",new FormControl());
         }
       else{
-         this.form.removeControl("tipoPersona");
           this.form.addControl("tipoPersona",new FormGroup({
             'id': new FormControl("", []),
           }));
         }
         this.form.removeControl("calidadPersona");
         this.form.addControl("calidadPersona",new FormControl(""));
+        this.form.controls["lugarHechos"].reset();
         console.log(this.form);
+        this.heredar=_heredar;
+
     }
     public  personasChanged(_personasHeredadas){
       this.personasHeredadas=_personasHeredadas;
