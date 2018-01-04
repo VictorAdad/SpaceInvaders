@@ -84,6 +84,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 	@ViewChild(MatPaginator) paginator: MatPaginator;
   public personasHeredadas:any[];
   public heredar:boolean=false;
+  public heredarSintesis:boolean=false;
 
 	constructor(
 		private _fbuilder: FormBuilder,
@@ -151,6 +152,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 				'id': new FormControl("", []),
       }),
       'heredar':  new FormControl("", []),
+      'heredarSintesisHechos':  new FormControl("", []),
       'personas': new FormArray([]),
 
 
@@ -289,8 +291,8 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
     /*
         ◦ nombre del entrevistado
         ◦ Sexo
-        ◦ Fecha de nacimiento
-        ◦ Edad
+        ◦ Fecha de nacimiento*
+        ◦ Edad*
         ◦ Nacionalidad
         ◦ CURP
         ◦ RFC
@@ -302,10 +304,10 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
         ◦ No. exterior
         ◦ No. Interior
         ◦ Colonia/asentamiento
-        ◦ CP
+        ◦ CP*
         ◦ Municipio
-        ◦ Nº telefónico particular
-        ◦ Nº telefónico celular
+        ◦ Nº telefónico particular*
+        ◦ Nº telefónico celular*
         ◦ Correo
         ◦ Narrativa de los hechos ((Hecho narrados de Predenuncia)
 

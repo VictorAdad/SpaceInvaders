@@ -107,20 +107,22 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
 
     public createForm(){
         return new FormGroup({
-            'lugar': new FormGroup({
-              'id': new FormControl("", []),
-            }),
-            'arma': new FormGroup({
-              'id': new FormControl("", []),
-            }),
-            'vehiculo': new FormGroup({
-              'id': new FormControl("", []),
-            }),
-            'delito': new FormGroup({
-              'id': new FormControl("", []),
-            }),
-            'heredar':  new FormControl("", []),
-            'personas': new FormArray([]),
+
+          'lugar': new FormGroup({
+            'id': new FormControl("", []),
+          }),
+          'arma': new FormGroup({
+            'id': new FormControl("", []),
+          }),
+          'vehiculo': new FormGroup({
+            'id': new FormControl("", []),
+          }),
+          'delito': new FormGroup({
+            'id': new FormControl("", []),
+          }),
+          'heredar':  new FormControl("", []),
+          'heredarSintesisHechos':  new FormControl("", []),
+          'personas': new FormArray([]),
 
             'tipo': new FormControl(this.model.tipo),
             'fundamentoLegal': new FormControl(this.model.fundamentoLegal),

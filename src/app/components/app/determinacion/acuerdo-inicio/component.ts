@@ -97,6 +97,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
             'id': new FormControl("", []),
           }),
           'heredar':  new FormControl("", []),
+          'heredarSintesisHechos':  new FormControl("", []),
           'personas': new FormArray([]),
 
             'nombrePersonaAcepta': new FormControl(this.model.nombrePersonaAcepta),
