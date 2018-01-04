@@ -18,6 +18,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
 import { Logger } from "@services/logger.service";
+import { CasoService } from '@services/caso/caso.service';
 
 @Component({
 	templateUrl: './component.html',
@@ -65,7 +66,8 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
 		private onLine: OnLineService,
 		private http: HttpService,
 		private router: Router,
-		private db: CIndexedDB
+    private db: CIndexedDB,
+    private casoService:CasoService
 	) { super(); }
 
 	ngOnInit() {
@@ -117,7 +119,14 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
 			}
 		});
 	}
+  public heredarDatos(){
+    console.log("Heredar en facultad de no investigar")
+    /*
+       • Narración de los hechos (Hecho narrados de Predenuncia))
 
+    */
+    this.form.controls["narracionHechos"].setValue(this.casoService.caso.predenuncias.hechosNarrados)
+  }
 	public save(valid: any, _model: any) {
         Object.assign(this.model, _model);
         this.model.caso.id = this.casoId;
