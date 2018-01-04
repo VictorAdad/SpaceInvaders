@@ -21,6 +21,9 @@ import { TableDataSource } from './../../global.component';
 import { Options } from './option';
 import { Logger } from "@services/logger.service";
 import { Yason } from "@services/utils/yason";
+import { CasoService } from '@services/caso/caso.service';
+import { PersonaNombre } from '@pipes/persona.pipe';
+
 
 @Component({
     templateUrl: './component.html',
@@ -63,7 +66,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
     public model: AcuerdoInicio;
     dataSource: TableService | null;
     @ViewChild(MatPaginator) paginator: MatPaginator;
-
+    public personasHeredadas:any[]=[];
     public options: Options;
 
     constructor(
@@ -73,7 +76,10 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
         private http: HttpService,
         private router: Router,
         private db: CIndexedDB,
-        private auth: AuthenticationService
+        private auth: AuthenticationService,
+        private casoService:CasoService,
+        private personaNombre:PersonaNombre
+
     ) { super();
       this.options = new Options(http,db,onLine);
     }
@@ -117,6 +123,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
             if (params['casoId']){
                 let tipo = 'Acuerdo Inicio';
                 this.casoId = +params['casoId'];
+                this.casoService.find(this.casoId);
                 this.apiUrl=this.apiUrl.replace("{id}",String(this.casoId));
                  this.http.get(`/v1/base/acuerdos/casos/${this.casoId}/tipos?tipo=${tipo}`).subscribe(response => {
                     if(response.length!=0){
@@ -137,6 +144,23 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
             }
 
         });
+    }
+    public heredarDatos(){
+      console.log("Heredar en facultad de no investigar")
+      /*
+         • Narración de los hechos (Hecho narrados de Predenuncia))
+
+      */
+      this.personasHeredadas.forEach((personaCaso)=> {
+        // Heradar Nombre del denunciante
+        console.log(personaCaso)
+        let nombrePersona=this.personaNombre.transform(personaCaso);
+        this.form.controls["nombrePersonaAcepta"].setValue( this.form.controls["nombrePersonaAcepta"].value?(nombrePersona?this.form.controls["nombrePersonaAcepta"].value+","+nombrePersona:this.form.controls["nombrePersonaAcepta"].value+",Sin valor"):nombrePersona)
+       });
+      this.form.controls["sintesisHechos"].setValue(this.casoService.caso.predenuncias.hechosNarrados)
+    }
+    public  personasChanged(_personasHeredadas){
+      this.personasHeredadas=_personasHeredadas;
     }
 
     public save(valid: any, _model: any) {
