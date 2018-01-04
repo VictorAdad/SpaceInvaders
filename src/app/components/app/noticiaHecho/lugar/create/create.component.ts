@@ -20,6 +20,7 @@ import {_config} from '@app/app.config';
 import {Validation} from '@services/validation/validation.service';
 import {CasoService} from '@services/caso/caso.service';
 import {Logger} from '@services/logger.service';
+import { AuthenticationService } from "@services/auth/authentication.service";
 
 
 @Component({
@@ -61,7 +62,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
               private ngZone: NgZone,
               public optionsServ: SelectsService,
               public lugarServ: LugarService,
-              private casoService: CasoService) {
+              private casoService: CasoService,
+              private auth:AuthenticationService) {
     super();
     lugarServ.getData();
   }
@@ -254,7 +256,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
           tipo: 'post',
           pendiente: true,
           dependeDe: [this.casoId],
-          temId: temId
+          temId: temId,
+          username: this.auth.user.username
         };
         this.db.add('sincronizar', dato).then(p => {
           //this.db.get("casos",this.casoId).then(caso=>{
@@ -319,7 +322,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
           options: [],
           tipo: 'update',
           pendiente: true,
-          dependeDe: [this.casoId, this.id]
+          dependeDe: [this.casoId, this.id],
+          username: this.auth.user.username
         };
         this.db.add('sincronizar', dato).then(p => {
           //this.db.get("casos",this.casoId).then(t=>{

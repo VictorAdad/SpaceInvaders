@@ -1,6 +1,28 @@
+<div class="row space">
+    <div class="col-md-12">
+      <caso-herencia [casoId]="casoId" [form]="form"></caso-herencia>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-12">
         <form>
+            <div class="row">
+                <div class="col">
+                  <select2
+                      [focus]="true"
+                      [options]="
+                      [
+                          {label:'Acuerdo general',value:'Acuerdo general'},
+                          {label:'Registro general', value:'Registro general'},
+                          {label:'Registro de llamada para permitir al imputado comunicarse con su defensor',value:'Registro de llamada'}
+                      ]"
+                      placeholder="Tipo de solicitud"
+                      (valueChange)="tipoChange($event)"
+                      [group]="form"
+                      name="tipo">
+                  </select2>
+                </div>
+            </div>
             <select2
                 [focus]="true"
                 [options]="

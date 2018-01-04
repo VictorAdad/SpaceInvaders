@@ -11,6 +11,7 @@ import { TimeComponent } from '@partials/form/time/time.component';
 import { NumberComponent } from '@partials/form/number/component';
 import { PasswordComponent } from '@partials/form/password/component';
 import { LoaderComponent } from '@partials/loader/component';
+import { CasoHerenciaComponent } from '@partials/caso-herencia/component';
 import { CasoNicComponent } from '@partials/caso/component';
 import { SlideToggleComponent} from '@partials/form/slide-toggle/slide-toggle.component';
 import { EmailComponent } from '@partials/form/email/email.component';
@@ -36,6 +37,7 @@ export const partialsComponents = [
 	TimeComponent,
 	PasswordComponent,
 	LoaderComponent,
+	CasoHerenciaComponent,
 	CasoNicComponent,
 	NumberComponent,
 	SlideToggleComponent,

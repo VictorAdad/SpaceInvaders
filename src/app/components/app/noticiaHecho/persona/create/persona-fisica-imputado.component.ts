@@ -19,6 +19,7 @@ import * as moment from 'moment';
 import { CasoService } from '@services/caso/caso.service';
 import { Yason } from '@services/utils/yason';
 import { Logger } from "@services/logger.service";
+import { AuthenticationService } from "@services/auth/authentication.service";
 
 @Component({
     templateUrl : './persona-fisica-imputado.component.html',
@@ -52,7 +53,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         private http: HttpService,
         public options: SelectsService,
         public personaServ: PersonaService,
-        public casoService:CasoService
+        public casoService:CasoService,
+        public auth:AuthenticationService
         ) {
         super();
         this.tabla = _tabla;
@@ -247,7 +249,12 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         Yason.eliminaNulos(_personaCaso);
 
         Logger.logColor('---- 1 --->','purple', _personaCaso);
-
+        if (!_personaCaso.detalleDetenido && _personaCaso.persona.personaCaso && _personaCaso.persona.personaCaso[0]){
+            if (_personaCaso.persona.personaCaso[0].detalleDetenido)
+                _personaCaso["detalleDetenido"]=_personaCaso.persona.personaCaso[0].detalleDetenido;
+                _personaCaso["detenido"]=_personaCaso.persona.personaCaso[0].detenido;
+        }
+        
         if(_personaCaso.detalleDetenido != null){
             let timerDetenido = Observable.timer(1);
             timerDetenido.subscribe( t => {
@@ -907,7 +914,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     pendiente:true,
                     dependeDe:dependeDe,
                     temId: temId,
-                    otrosID: otrosID
+                    otrosID: otrosID,
+                    username: this.auth.user.username
                 }
                 _model["id"]="";
                 Logger.log("MODEL",_model);
@@ -1011,6 +1019,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     tipo:"update",
                     pendiente:true,
                     dependeDe:dependeDe,
+                    username: this.auth.user.username
                 }
                 this.tabla.add("sincronizar",dato).then(response=>{
                         _model["id"]=idModel;

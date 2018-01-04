@@ -21,11 +21,11 @@ export class Select2Component{
 	@Input() hintStart: string="";
 	@Input() hintEnd: string="";
 	@Input() search: boolean = true;
-	@Input() order : boolean = true;
+  @Input() order : boolean = true;
+  @Input() disabled : boolean = false;
 	@Input() onOpenFunction: Function=null;
 	@Input() focus: boolean = false;
 	@Output() valueChange:EventEmitter<string> = new EventEmitter<string>();
-	@Output() haveclosed:EventEmitter<string> = new EventEmitter<string>();
 
 	@Output() clean:EventEmitter<string> = new EventEmitter<string>();
 
@@ -49,7 +49,7 @@ export class Select2Component{
 		this.renderer.listen(
 			this.searchInput.nativeElement, 'keyup', this.filter.bind(this));
 
-		let timer = Observable.timer(1);
+		  let timer = Observable.timer(1);
 
 		timer.subscribe( t => {
 			if(this.focus){
@@ -69,9 +69,6 @@ export class Select2Component{
 	//TODO: Falta ver como sincronizar los cambios los radio.
 	public update(value) {
 		this.valueChange.emit(value);
-  }
-  public onSelected(value){
-    this.valueChange.emit(value);
   }
 
 	public filter(val: any) {

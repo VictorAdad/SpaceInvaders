@@ -12,7 +12,7 @@ import { SolicitudPreliminarGlobal } from '../../global';
 import { _config } from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
 import { SelectsService } from '@services/selects.service';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
@@ -21,6 +21,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
 import { Logger } from "@services/logger.service";
+import { AuthenticationService } from "@services/auth/authentication.service";
 
 @Component({
 	templateUrl: './component.html',
@@ -88,7 +89,8 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 		private router: Router,
 		private db: CIndexedDB,
 		private options: SelectsService,
-        public caso: CasoService
+		private auth:AuthenticationService,
+    	public casoServ: CasoService
 	) { super(); }
 
 	ngOnInit() {
@@ -145,6 +147,22 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 
 	public createForm() {
 		return new FormGroup({
+      'lugar': new FormGroup({
+				'id': new FormControl("", []),
+			}),
+      'arma': new FormGroup({
+				'id': new FormControl("", []),
+      }),
+      'vehiculo': new FormGroup({
+				'id': new FormControl("", []),
+      }),
+      'delito': new FormGroup({
+				'id': new FormControl("", []),
+      }),
+      'heredar':  new FormControl("", []),
+      'heredarSintesisHechos':  new FormControl("", []),
+      'personas': new FormArray([]),
+
 			'tipo': new FormControl(this.model.tipo),
 			'hechosNarrados': new FormControl(this.model.hechosNarrados),
 			'noOficio': new FormControl(this.model.noOficio),
@@ -165,7 +183,13 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 				'id': new FormControl("", []),
 			})
 		});
-	}
+  }
+  public heredarDatos(){
+    console.log("Heredar en perito")
+    //Heredar narrativa de los hechos ((Hecho narrados de Predenuncia)
+    console.log(this.casoServ.caso);
+    this.form.controls["hechosNarrados"].setValue(this.casoServ.caso.predenuncias.hechosNarrados)
+  }
 
 	public save(valid: any, _model: any){
 		_model.caso.id = this.casoId;
@@ -195,19 +219,20 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
                         tipo:"post",
                         pendiente:true,
                         dependeDe:[this.casoId],
-                        temId: temId
+						temId: temId,
+						username: this.auth.user.username
                     }
                     this.db.add("sincronizar",dato).then(
                         p => {
-                            if (this.caso.caso){
-                                if(!this.caso.caso["solicitudPrePericiales"])
-                                    this.caso.caso["solicitudPrePericiales"] = [];
+                            if (this.casoServ.caso){
+                                if(!this.casoServ.caso["solicitudPrePericiales"])
+                                    this.casoServ.caso["solicitudPrePericiales"] = [];
 
                                 _model["id"] = temId;
                                 this.id      = _model['id'];
-                                this.caso.caso["solicitudPrePericiales"].push(_model);
+                                this.casoServ.caso["solicitudPrePericiales"].push(_model);
 
-                                this.db.update("casos",this.caso.caso).then(
+                                this.db.update("casos",this.casoServ.caso).then(
                                     t => {
                                         resolve('Solicitud pericial creada con éxito');
                                         this.router.navigate(['/caso/' + this.casoId + '/perito/' + this.id + '/edit']);

@@ -53,33 +53,55 @@ export class SincronizaCambios {
      * Funcion que inicializa la sincronizacion de cambios. lo que hace es buscar todos los elementos de la tabla sincroizar y luego llama la funcion recursiva sincroniza.
      */
     startSincronizacion(){
+        var obj = this;
 
         if (!this.sincronizando){
             this.seActualizoAlmenosUnRegistro=false;
-            this.db.list("sincronizar").then(lista=>{
-
-                let datos = lista as any[];
-                if (datos.length>0){
-                    this.notificationService.create("Sincronizando",'Sincronizando', 'info', {
-                      timeOut: 5000,
-                      showProgressBar: true,
-                      pauseOnHover: false,
-                      clickToClose: false,
-                      maxLength: 10
-                    });
-                    this.sincronizando=true;
-                    this.sincroniza(0,lista as any[]);
-                    this.notificationService.remove();
-                }else{
+                this.db.list("sincronizar").then(lista=>{
+                    if (this.hayCambios(lista)){
+                        var fun=function(r){
+                            console.log("Resultado->>>>>",r);
+                            let datos = lista as any[];
+                            if (datos.length>0){
+                                obj.notificationService.create("Sincronizando",'Sincronizando', 'info', {
+                                timeOut: 5000,
+                                showProgressBar: true,
+                                pauseOnHover: false,
+                                clickToClose: false,
+                                maxLength: 10
+                                });
+                                obj.sincronizando=true;
+                                obj.sincroniza(0,lista as any[]);
+                                obj.notificationService.remove();
+                            }else{
+                                obj.sincronizando=false;
+                                obj.notificationService.remove();
+                            }
+                        }
+                        this.onLine.loginDialogService.funccionDespues=fun;
+                        this.onLine.loginDialogService.open()
+                        
+                    }
+                }).catch(error=>{
                     this.sincronizando=false;
                     this.notificationService.remove();
-                }
-            }).catch(error=>{
-                this.sincronizando=false;
-                this.notificationService.remove();
-            });
+                });
         }
 
+    }
+    /**
+     * Busca cambios sin sincronizar
+     * @param lista 
+     */
+    hayCambios(lista:any):boolean{
+        let listaSincronizar = lista as any[];
+        for (let i=0; i<listaSincronizar.length;i++){
+            if (listaSincronizar[i].pendiente==true && listaSincronizar[i]["numItentos"]<_config.offLine.sincronizaCambios.numIntentos)
+                return true;
+            if (listaSincronizar[i].pendiente==true && !listaSincronizar[i]["numItentos"])
+                return true;
+        }
+        return false;
     }
     /**
      * Funcion recursiva para atender cada una de las peticiones de la lista. cuando i es igual al tamaño de la lista para la recursion.

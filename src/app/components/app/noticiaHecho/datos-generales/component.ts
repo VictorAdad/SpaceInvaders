@@ -166,7 +166,8 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                         pendiente:true,
                         newId:0,
                         temId:id,
-                        otrosID:[{id:id},{delitoCaso:{id:id+1}}]
+                        otrosID:[{id:id},{delitoCaso:{id:id+1}}],
+                        username: this.auth.user.username
                     }
                     this.db.add("sincronizar",dato).then(p=>{
                         Logger.log('p', p);
@@ -207,7 +208,8 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                     body:_model,
                     options:[],
                     tipo:"update",
-                    pendiente:true
+                    pendiente:true,
+                    username: this.auth.user.username
                 }
                 this.db.add("sincronizar",dato).then(p=>{
                     resolve("Se actualizó el caso de manera local");

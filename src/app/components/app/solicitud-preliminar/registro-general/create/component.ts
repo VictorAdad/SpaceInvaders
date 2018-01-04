@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { RegistroGeneral } from '@models/solicitud-preliminar/registroGeneral';
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
@@ -29,7 +29,7 @@ export class RegistroGeneralCreateComponent {
 	public solicitudId: number = null;
 	public model:any=null;
 	constructor(private route: ActivatedRoute) { }
-	
+
 	ngOnInit() {
 		this.route.params.subscribe(params => {
 			if (params['casoId']) {
@@ -85,6 +85,22 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 		this.model = new RegistroGeneral();
 
 		this.form = new FormGroup({
+      'lugar': new FormGroup({
+				'id': new FormControl("", []),
+			}),
+      'arma': new FormGroup({
+				'id': new FormControl("", []),
+      }),
+      'vehiculo': new FormGroup({
+				'id': new FormControl("", []),
+      }),
+      'delito': new FormGroup({
+				'id': new FormControl("", []),
+      }),
+      'heredar':  new FormControl("", []),
+      'heredarSintesisHechos':  new FormControl("", []),
+      'personas': new FormArray([]),
+
 			'tipo': new FormControl(''),
 			'contenidoConstancia': new FormControl(''),
 			'noTelefonico': new FormControl(''),

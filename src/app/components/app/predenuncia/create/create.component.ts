@@ -1,3 +1,4 @@
+import { LugarService } from '@services/noticia-hecho/lugar.service';
 import { FormatosGlobal } from './../../solicitud-preliminar/formatos';
 import { Predenuncia } from '@models/predenuncia';
 import { Component, ViewChild,Output,Input,EventEmitter } from '@angular/core';
@@ -5,7 +6,7 @@ import { MatPaginator } from '@angular/material';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
 import { SelectsService } from "@services/selects.service";
@@ -106,6 +107,9 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
     public hasPredenuncia:boolean=false;
     public apiUrl:string="/v1/base/predenuncias/casos/";
     @Output() idEmitter = new EventEmitter<any>();
+    public personasHeredadas:any[]=[];
+    public heredar:boolean=false;
+    public heredarSintesis:boolean=false;
 
     constructor(
         private _fbuilder: FormBuilder,
@@ -115,6 +119,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         private route: ActivatedRoute,
         public authen: AuthenticationService,
         public optionsServ: SelectsService,
+        public lugarServ:LugarService,
         public db: CIndexedDB) {
             super();
         }
@@ -130,7 +135,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                          if(parseInt(response.totalCount) !== 0){
                             this.hasPredenuncia = true;
                             Logger.log("Dont have predenuncia");
-                            this.form.disable();
+                            //this.form.disable();
                             this.model= response.data[0] as Predenuncia;
                             var fechaCompleta:Date= new Date(response.fechaHoraInspeccion);
                             // this.model.fechaCanalizacion=fechaCompleta;
@@ -175,6 +180,23 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         //timer.subscribe(t => {
             //if (this.authen.user.hasRoles(this.authen.roles.callCenter)) {
                 this.form  = new FormGroup({
+
+                  'lugar': new FormGroup({
+                    'id': new FormControl("", []),
+                  }),
+                  'arma': new FormGroup({
+                    'id': new FormControl("", []),
+                  }),
+                  'vehiculo': new FormGroup({
+                    'id': new FormControl("", []),
+                  }),
+                  'delito': new FormGroup({
+                    'id': new FormControl("", []),
+                  }),
+                  'heredar':  new FormControl("", []),
+                  'heredarSintesisHechos': new FormControl([]),
+                  'personas': new FormArray([]),
+
                 'caso': new FormGroup({
                     'id': new FormControl()
                 }),
@@ -236,7 +258,55 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
     concatDate(fechaCanalizacion, horaCanalizacion){
         return fechaCanalizacion = new Date(fechaCanalizacion+' '+horaCanalizacion)
     }
+    public heredarDatos(){
+      console.log("Heredar en entravista")
 
+      /*
+        • Tipo de persona
+        • Calidad de persona (Tipo de interviniente)
+        • Lugar de los hechos
+
+
+      */
+
+     this.personasHeredadas.forEach((personaCaso)=> {
+     console.log(personaCaso.persona.tipoPersona)
+     this.form.controls["tipoPersona"].setValue(this.form.controls["tipoPersona"].value?(personaCaso.persona.tipoPersona?this.form.controls["tipoPersona"].value+","+personaCaso.persona.tipoPersona:"Sin valor"):personaCaso.persona.tipoPersona?personaCaso.persona.tipoPersona:"Sin valor")
+     this.form.controls["calidadPersona"].setValue(this.form.controls["calidadPersona"].value?(personaCaso.tipoInterviniente?this.form.controls["calidadPersona"].value+","+personaCaso.tipoInterviniente.tipo:"Sin valor"):personaCaso.tipoInterviniente.tipo?personaCaso.tipoInterviniente.tipo:"Sin valor")
+     console.log( this.form.controls["tipoPersona"])
+      });
+     if(this.form.controls["lugar"].value){
+      this.http.get('/v1/base/lugares/' + this.form.controls["lugar"].value.id).subscribe(response => {
+        Logger.log('Lugar->', response);
+        this.form.controls["lugarHechos"].setValue(response.calle+" "+(response.noExterior?response.noExterior:"")+", "+(response.colonia?response.colonia:response.coloniaOtro)+", "+(response.estado?response.estado:response.estadoOtro))
+
+      });
+    }
+
+
+    }
+
+   public heredarChanged(_heredar){
+      console.log("heredar changed")
+      this.form.removeControl("tipoPersona");
+      if(_heredar){
+        this.form.addControl("tipoPersona",new FormControl());
+        }
+      else{
+          this.form.addControl("tipoPersona",new FormGroup({
+            'id': new FormControl("", []),
+          }));
+        }
+        this.form.removeControl("calidadPersona");
+        this.form.addControl("calidadPersona",new FormControl(""));
+        this.form.controls["lugarHechos"].reset();
+        console.log(this.form);
+        this.heredar=_heredar;
+
+    }
+    public  personasChanged(_personasHeredadas){
+      this.personasHeredadas=_personasHeredadas;
+    }
     public save(valid : any, _model : any){
         return new Promise<any>(
             (resolve, reject) => {
@@ -275,12 +345,12 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                 }else{
                     let temId = Date.now();
                     _model.caso.id = this.casoId;
-                    
+
                     if(_model.fechaCanalizacion){
-                      Logger.log('1.-  -------->',_model.fechaCanalizacion);  
+                      Logger.log('1.-  -------->',_model.fechaCanalizacion);
                       var fechaCompletaOff = new Date (_model.fechaCanalizacion);
-                      Logger.log('2.-  -------->',fechaCompletaOff);  
-                      if(_model.horaCanalizacion){ 
+                      Logger.log('2.-  -------->',fechaCompletaOff);
+                      if(_model.horaCanalizacion){
                         fechaCompletaOff.setMinutes(parseInt(_model.horaCanalizacion.split(':')[1]));
                         fechaCompletaOff.setHours(parseInt(_model.horaCanalizacion.split(':')[0]));
                       }
@@ -295,7 +365,8 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                         tipo:"post",
                         pendiente:true,
                         dependeDe:[this.casoId],
-                        temId: temId
+                        temId: temId,
+                        username: this.authen.user.username
                     }
                     this.db.add("sincronizar", dato).then(p=>{
                         this.db.get("casos",this.casoId).then(caso=>{
@@ -328,11 +399,11 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         }
         _data.fechaCanalizacion = new Date(_data.fechaCanalizacion);
 
-       
+
         var time = _data.fechaCanalizacion.getHours()+':'+_data.fechaCanalizacion.getMinutes();
 
         Logger.log('HH----------------->', time)
-        
+
         this.form.patchValue(_data);
         this.form.controls.horaCanalizacion.setValue(time);
 

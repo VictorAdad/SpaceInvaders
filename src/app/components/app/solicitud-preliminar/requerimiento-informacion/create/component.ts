@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { RequerimientoInformacion } from '@models/solicitud-preliminar/requerimientoInformacion';
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
@@ -73,6 +73,22 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 		this.model = new RequerimientoInformacion();
 
 		this.form = new FormGroup({
+			'lugar': new FormGroup({
+				'id': new FormControl("", []),
+			}),
+			'arma': new FormGroup({
+				'id': new FormControl("", []),
+			}),
+			'vehiculo': new FormGroup({
+				'id': new FormControl("", []),
+			}),
+			'delito': new FormGroup({
+				'id': new FormControl("", []),
+			}),
+      'heredar':  new FormControl("", []),
+      'heredarSintesisHechos':  new FormControl("", []),
+			'personas': new FormArray([]),
+
 			'noOficio': new FormControl("", []),
 			'fechaReq': new FormControl("", []),
 			'autoridadReq': new FormControl("", []),

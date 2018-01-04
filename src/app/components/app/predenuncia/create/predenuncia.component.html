@@ -1,11 +1,17 @@
+<div class="row space">
+    <div class="col-md-12">
+        <caso-herencia (personasChange)="personasChanged($event)"(heredarChange)="heredarChanged($event)"[casoId]="casoId" [heredarFunction]="heredarDatos.bind(this)"[form]="form"></caso-herencia>
+      </div>
+</div>
 <!-- Fromulario para usuario 1-->
 
 <form [formGroup]="form">
 	<div id="f1" *ngIf="authen.user.hasRoles(authen.roles.callCenter)">
 	    <div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Calidad del usuario" name="calidadPersona" [max]="140" [group]="form" [focus]="true"></text>
-		    </div>
+		    	<text  *ngIf="!heredar" label="Calidad del usuario" name="calidadPersona" [max]="140" [group]="form" [focus]="true"></text>
+		    	<text *ngIf="heredar" label="Calidad del usuarios" name="calidadPersona" [max]="1000" [group]="form" [focus]="true"></text>
+        </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text label="Número telefónico del que se está llamando" name="noTelefonico" [max]="20" [group]="form"></text>
 		    </div>
@@ -48,8 +54,12 @@
 	</div>
 
 	<div id="f2" *ngIf="!authen.user.hasRoles(authen.roles.callCenter)">
-		<div class="row space"> <h2>Constancia de lectura de derechos a la víctima u ofendido</h2></div>
-	    <div class="row">
+		<div class="row space">
+        <div class="col">
+         <h2>Constancia de lectura de derechos a la víctima u ofendido</h2></div>
+       </div>
+
+      <div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text label="Número de folio" name="noFolioConstancia" [max]="50" [group]="form"></text>
 		    </div>
@@ -85,17 +95,25 @@
 			    </select2>
 			</div>
 		</div>
-		<div class="row space"> <h2>Registro presencial</h2></div>
+		<div class="row space">
+        <div class="col">
+          <h2>Registro presencial</h2>
+        </div>
+      </div>
 		<div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Calidad de la persona" name="calidadPersona" [max]="150" [group]="form"></text>
-		    </div>
+            <text  *ngIf="!heredar" label="Calidad de la persona" name="calidadPersona" [max]="150" [group]="form" [focus]="true"></text>
+            <text *ngIf="heredar" label="Calidad de la persona" name="calidadPersona" [max]="1000" [group]="form" [focus]="true"></text>
+  		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<select2 [options]="optionsServ.tipoPersona"
-				placeholder="Tipo de persona"
-				name="id"
-				[group]="form.controls.tipoPersona">
-			    </select2>
+            <text *ngIf="heredar; else noheredarTipoPersona" label="Tipo de persona" name="tipoPersona" [max]="1000" [group]="form"></text>
+          <ng-template #noheredarTipoPersona>
+            <select2 [options]="optionsServ.tipoPersona"
+            placeholder="Tipo de persona"
+            name="id"
+            [group]="form.controls.tipoPersona">
+              </select2>
+          </ng-template>
 		    </div>
 		</div>
 		<div class="row">

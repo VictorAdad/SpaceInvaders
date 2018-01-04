@@ -9,6 +9,7 @@ import { HttpService } from '@services/http.service';
 import { OnLineService} from '@services/onLine.service';
 import { CasoService } from '@services/caso/caso.service';
 import { Logger } from "@services/logger.service";
+import { AuthenticationService } from "@services/auth/authentication.service";
 
 @Component({
     templateUrl: 'create.component.html',
@@ -35,7 +36,7 @@ export class DelitoCreateComponent{
     tabla:CIndexedDB;
 
 
-    constructor(public dialog: MatDialog, private _tabla: CIndexedDB, private router:Router, private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private casoService:CasoService) {
+    constructor(public dialog: MatDialog, private _tabla: CIndexedDB, private router:Router, private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private casoService:CasoService,private auth:AuthenticationService) {
         this.tabla=_tabla;
     }
     ngOnInit(){
@@ -132,7 +133,8 @@ export class DelitoCreateComponent{
                             tipo:"post",
                             pendiente:true,
                             dependeDe:[obj.casoId],
-                            temId: temId
+                            temId: temId,
+                            username: this.auth.user.username
                         }
                         obj.tabla.add("sincronizar",dato).then(p=>{
                             //obj.tabla.get("casos",obj.casoId).then(caso=>{

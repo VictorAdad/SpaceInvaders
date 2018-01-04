@@ -7,7 +7,9 @@ import { OnLineService} from '@services/onLine.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { Logger } from "@services/logger.service";
 import { PersonaNombre } from "@pipes/persona.pipe";
-
+/**
+ * Genera la informacion de los selects de relacion.
+ */
 @Injectable()
 export class NoticiaHechoService {
 
@@ -41,43 +43,16 @@ export class NoticiaHechoService {
         private onLine:OnLineService,
         ) {
     }
-
+    /**
+     * agrega el id del caso asi como la informacion de este.
+     * @param _id
+     * @param _caso 
+     */
     public setId(_id: number, _caso){
         this.id = _id;
         this.caso= _caso;
     }
 
-    //crea una copia identica al json original
-    public copiaJson(original){
-        if (typeof original=="object"){
-            var obj={};
-            for(let item in original)
-                obj[item]=this.copiaJson(original[item]);
-            return obj;
-        }else
-            return original;
-    }
-    //busca todos los elementos de la lista que coincidan con el item 
-    public buscaTodosLosElementosEnLista(lista, _item){
-        var rec=function(e,y) {
-            if((typeof e)=="object"){
-                let igual=true;
-                for (var element in e){
-                    igual=igual&&rec(e[element],y[element]);
-                }
-                return igual;
-            }
-            return e==y;
-        }
-        var coincidencias=[];
-        for (let item in lista){
-            if (rec(_item,lista[item]))
-                coincidencias.push(this.copiaJson(lista[item])); 
-        }
-        return coincidencias;
-
-    }
-    
     public llamaDatos(){
         Logger.log("CASO->",this.caso);
         this.getLugares();
@@ -145,7 +120,19 @@ export class NoticiaHechoService {
             if (this.caso["personaCasos"]){
                 var arr=[];
                 for (var i = 0; i < this.caso["personaCasos"].length; ++i) {
-                    arr.push({id:this.caso["personaCasos"][i]["persona"]["id"], persona:{nombre:this.caso["personaCasos"][i]["persona"]["nombre"]}});
+                    arr.push(
+                        {
+                            id:this.caso["personaCasos"][i]["persona"]["id"], 
+                            persona:{
+                                nombre:this.caso["personaCasos"][i]["persona"]["nombre"],
+                                paterno:this.caso["personaCasos"][i]["persona"]["paterno"],
+                                materno:this.caso["personaCasos"][i]["persona"]["materno"]
+                            },
+                            tipoInterviniente:{
+                                id:this.caso["personaCasos"][i]["tipoInterviniente"]["id"],
+                                tipo:this.caso["personaCasos"][i]["tipoInterviniente"]["tipo"]
+                            }
+                        });
                 }
                 this.personas = this.constructOptionsPersona(arr);
                 Logger.log("PERSONAS",arr);

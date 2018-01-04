@@ -17,6 +17,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import {SincronizaCambios} from '@services/onLine/sincronizarCambios';
 import { _config} from '@app/app.config';
+import { LoginDialogService } from './onLine/loginDialog.service';
 
 /**
  * Servicio para verificar la conexion con el servidor que aloja a la web app.
@@ -45,7 +46,8 @@ export class OnLineService {
         public dialogoSincronizar:  DialogSincrinizarService,
         public logger:Logger,
         private route: Router,
-        private _confirmation: ConfirmationService
+        private _confirmation: ConfirmationService,
+        public loginDialogService: LoginDialogService
     ) {
         this.sincronizarCatalogos=new SincronizaCatalogos(db,http,dialogoSincronizar);
         this.sincronizarCambios= new SincronizaCambios(db,http,notificationService,route,_confirmation,this);
@@ -56,6 +58,7 @@ export class OnLineService {
             let message="Se perdió la conexión";
             if(this.onLine){
                 message="Se estableció la conexión";
+                this.loginDialogService.setOnLine(this);
                 this.sincronizarCambios.startSincronizacion();
             }
 

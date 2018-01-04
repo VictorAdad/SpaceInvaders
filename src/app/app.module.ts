@@ -73,6 +73,7 @@ import {Logger} from '@services/logger.service';
 import { MatPaginatorIntlEsp } from '@providers/paginator.provider';
 import 'hammerjs';
 import { pipes } from './pipes/pipe.module';
+import { LoginDialogService } from './services/onLine/loginDialog.service';
 
 
 @NgModule({
@@ -167,6 +168,7 @@ import { pipes } from './pipes/pipe.module';
     FormatosService,
     CasoService,
     Logger,
+    LoginDialogService,
     {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true},
     {provide: MAT_DATE_LOCALE, useValue: 'es-MX'},
     {provide: MatPaginatorIntl, useClass: MatPaginatorIntlEsp}
