@@ -62,7 +62,7 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
     public model: FacultadNoInvestigar;
     dataSource: TableService | null;
     @ViewChild(MatPaginator) paginator: MatPaginator;
-    public personasHeredadas:any[];
+    public personasHeredadas:any[]=[];
     public heredar:boolean=false;
     public heredarSintesis:boolean=false;
     constructor(
