@@ -3,15 +3,19 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AuthenticationService } from '@services/auth/authentication.service';
 import { GlobalService } from '@services/global.service';
-
+import { NotificationsService } from 'angular2-notifications';
+import { NotifyService} from '@services/notify/notify.service';
 import { OnLineService } from "@services/onLine.service";
 import { SelectsService } from "@services/selects.service";
 import { FormatosService } from '@services/formatos/formatos.service';
-import {DomSanitizer} from '@angular/platform-browser';
-import {MatIconRegistry} from '@angular/material';
+import { DomSanitizer} from '@angular/platform-browser';
+import { MatIconRegistry} from '@angular/material';
 import { _config} from '@app/app.config';
 import { Logger } from '@services/logger.service';
 import { environment } from '../environments/environment';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import * as io from 'socket.io-client';
 
 @Component({
   selector: 'app-root',
@@ -20,10 +24,16 @@ import { environment } from '../environments/environment';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
+
 	public isAuthenticated : boolean;
+
     public _SIDEBAR        : boolean;
+
     public _CONFIG: any = _config;
+
     public env = environment;
+
+    public socket: any;
 
 	constructor(
 		public authService: AuthenticationService,
@@ -35,7 +45,9 @@ export class AppComponent {
         private mdIconRegistry: MatIconRegistry, 
         private sanitizer: DomSanitizer,
         private selects: SelectsService,
-        private formatos: FormatosService
+        private formatos: FormatosService,
+        private notification: NotificationsService,
+        private notify:  NotifyService
 	) {
         mdIconRegistry.addSvgIcon('arma',sanitizer.bypassSecurityTrustResourceUrl('./assets/images/iconos/arma.svg'));
         this._SIDEBAR = false;
@@ -45,11 +57,22 @@ export class AppComponent {
 
 	ngOnInit(){
 		this.titleService.setTitle(this.createTitle());
-        window.onbeforeunload = function(event) {
-            // event.preventDefault();
-            return false;
-        }
+
+        this.notify.getMessages().subscribe(
+            message => {
+                if(message['notify']['to'] === this.authService.user.username)
+                    this.notification.create(message['notify']['message'], '', 'info', {
+                        timeOut: 100000,
+                        showProgressBar: true,
+                        pauseOnHover: false,
+                        clickToClose: false,
+                        maxLength: 10
+                    });
+            }
+        );
+
 	}
+
 
     private createTitle() {
         const title = 'SIGI';
@@ -69,6 +92,7 @@ export class AppComponent {
 	logout(){
 		this.authService.logout();
 	}
+
     redireccionSigi(){
         location.href ="http://pgjemsigi.edomex.gob.mx:3002/#/login";
     }
@@ -81,4 +105,5 @@ export class AppComponent {
         location.reload(true);
         // window.location.assign("../")
     }
+
 }
