@@ -338,7 +338,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
       personaCaso.persona.fechaNacimiento=personaCaso.persona.fechaNacimiento?new Date(personaCaso.persona.fechaNacimiento).toLocaleDateString():null;
       this.form.controls["fechasNacimiento"].setValue(this.form.controls["fechasNacimiento"].value?(personaCaso.persona.fechaNacimiento?this.form.controls["fechasNacimiento"].value+","+personaCaso.persona.fechaNacimiento:this.form.controls["fechasNacimiento"].value+",Sin valor"):(personaCaso.persona.fechaNacimiento?personaCaso.persona.fechaNacimiento:"Sin valor"))
       // Heredar Edad
-      this.form.controls["edad"].setValue( this.form.controls["edad"].value?(personaCaso.persona.edad?this.form.controls["edad"].value+","+personaCaso.persona.edad:this.form.controls["edad"].value+"Sin valor"):personaCaso.persona.edad)
+      this.form.controls["edad"].setValue( this.form.controls["edad"].value?(personaCaso.persona.edad?this.form.controls["edad"].value+","+personaCaso.persona.edad:this.form.controls["edad"].value+",Sin valor"):(personaCaso.persona.edad?personaCaso.persona.edad:"Sin valor"))
      // heredar Nacionalidad
       console.log("a buscar ",personaCaso.persona.nacionalidadReligion)
       let nacionalidad=personaCaso.persona.nacionalidadReligion.nacionalidad;

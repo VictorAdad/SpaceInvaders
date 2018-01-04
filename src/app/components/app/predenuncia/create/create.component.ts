@@ -57,7 +57,8 @@ export class PredenunciaCreateComponent {
         private route: ActivatedRoute,
         private http: HttpService,
         private onLine: OnLineService,
-        public db: CIndexedDB){}
+        public db: CIndexedDB,
+      ){}
 
     ngOnInit(){
         this.route.params.subscribe(params => {
@@ -120,6 +121,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         public authen: AuthenticationService,
         public optionsServ: SelectsService,
         public lugarServ:LugarService,
+        private casoService:CasoService,
         public db: CIndexedDB) {
             super();
         }
@@ -128,6 +130,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         this.route.params.subscribe(params => {
             if (params['casoId']){
                 this.casoId = +params['casoId'];
+                this.casoService.find(this.casoId);
                 Logger.log(this.casoId);
                 if(this.onLine.onLine){
                     Logger.log('OnLine------------>',);
@@ -259,15 +262,26 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         return fechaCanalizacion = new Date(fechaCanalizacion+' '+horaCanalizacion)
     }
     public heredarDatos(){
-      console.log("Heredar en entravista")
+      console.log("Heredar en predenuncia")
+      if(this.form.controls["lugar"].value){
+        console.log(this.form.controls["lugar"].value)
+        let lugar="";
+        console.log(this.casoService.caso.lugares)
+        for(let i=0;i<this.casoService.caso.lugares.length;i++){
+             if(this.casoService.caso.lugares[i].id==this.form.controls["lugar"].value.id){
+               lugar=(this.casoService.caso.lugares[i].calle?this.casoService.caso.lugares[i].calle:"")+
+               (this.casoService.caso.lugares[i].noInterior?this.casoService.caso.lugares[i].noInterior:"")+
+               (this.casoService.caso.lugares[i].municipio?this.casoService.caso.lugares[i].municipio.nombre:"");
+               break;
+             }
 
-      /*
-        • Tipo de persona
-        • Calidad de persona (Tipo de interviniente)
-        • Lugar de los hechos
+        }
+
+        this.form.controls["lugarHechos"].setValue(lugar);
+     }
 
 
-      */
+      this.form.controls["tipoPersona"].updateValueAndValidity();
 
      this.personasHeredadas.forEach((personaCaso)=> {
      console.log(personaCaso.persona.tipoPersona)
@@ -275,33 +289,28 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
      this.form.controls["calidadPersona"].setValue(this.form.controls["calidadPersona"].value?(personaCaso.tipoInterviniente?this.form.controls["calidadPersona"].value+","+personaCaso.tipoInterviniente.tipo:"Sin valor"):personaCaso.tipoInterviniente.tipo?personaCaso.tipoInterviniente.tipo:"Sin valor")
      console.log( this.form.controls["tipoPersona"])
       });
-     if(this.form.controls["lugar"].value){
-      this.http.get('/v1/base/lugares/' + this.form.controls["lugar"].value.id).subscribe(response => {
-        Logger.log('Lugar->', response);
-        this.form.controls["lugarHechos"].setValue(response.calle+" "+(response.noExterior?response.noExterior:"")+", "+(response.colonia?response.colonia:response.coloniaOtro)+", "+(response.estado?response.estado:response.estadoOtro))
 
-      });
-    }
+
 
 
     }
 
-   public heredarChanged(_heredar){
+    public heredarChanged(_heredar){
+      this.heredar=_heredar;
       console.log("heredar changed")
-      this.form.removeControl("tipoPersona");
       if(_heredar){
-        this.form.addControl("tipoPersona",new FormControl());
+        this.form.removeControl("tipoPersona");
+        this.form.addControl("tipoPersona",new FormControl("",[]));
         }
       else{
+          this.form.removeControl("tipoPersona");
           this.form.addControl("tipoPersona",new FormGroup({
-            'id': new FormControl("", []),
+            'id': new FormControl(),
           }));
         }
         this.form.removeControl("calidadPersona");
-        this.form.addControl("calidadPersona",new FormControl(""));
-        this.form.controls["lugarHechos"].reset();
-        console.log(this.form);
-        this.heredar=_heredar;
+        this.form.addControl("calidadPersona",new FormControl("",[]));
+        console.log("Heredar= ",this.heredar)
 
     }
     public  personasChanged(_personasHeredadas){
