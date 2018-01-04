@@ -7,6 +7,7 @@ import { LoginDialog } from '../../components/app/onLine/loginDialog.component';
 @Injectable()
 export class LoginDialogService{
     public _LOADER : boolean = false;
+    public funccionDespues:Function=null;
    
 
     constructor(public dialog: MatDialog) {}
@@ -30,8 +31,9 @@ export class LoginDialogService{
   
             dialogRef.afterClosed().subscribe(result => {
                 console.log('The dialog was closed');
+                if (this.funccionDespues)
+                    this.funccionDespues(result);
                 this.isOpen=false;
-                this.onLine.needLogin=false;
             });
             this.isOpen=true;
         }
