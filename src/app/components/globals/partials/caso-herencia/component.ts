@@ -16,6 +16,9 @@ import { ResolveEmit,ConfirmSettings} from '@utils/alert/alert.service';
   	templateUrl : './component.html'
 })
 export class CasoHerenciaComponent implements OnInit{
+  @Input()
+  public people:any[];
+  @Input()
   public personas:any[];
 	@Input()
 	public casoId: number;
@@ -62,26 +65,33 @@ export class CasoHerenciaComponent implements OnInit{
     this.setHeredarDatos(this.heredar);
 		this.casoServ.find(this.casoId).then(
       response =>{
+        console.log('CaseoServ', this.casoServ);
         this.caso = this.casoServ.caso
         this.optionsNoticia.setId(this.casoId, this.caso);
         this.optionsNoticia.getData();
         this.optionsNoticia.getPersonas();
-        this.personas=[];
+        this.personas=[]; 
+        this.people
 
+        if (this.people != undefined){
+          for (let i=0; i<this.people.length; i++){
+            this.addPersona(this.people[i].personaCaso.id);
+          }
+        }
+        
   })
  };
   public addPersona(_id){
     console.log('Persona Change',_id)
-    for (let i=0; i<this.optionsNoticia.personas.length;i++){
-      if(this.optionsNoticia.personas[i].value==_id && !this.isInPersonas(_id)){
-        this.http.get('/v1/base/personas-casos/'+_id).subscribe(response =>{
+    for (let i=0; i<this.casoServ.caso.personaCasos.length;i++){
+      if(this.casoServ.caso.personaCasos[i].id==_id && !this.isInPersonas(_id)){
+        var response = this.casoServ.caso.personaCasos[i];
           (this.form.controls.personas as FormArray).push(new FormGroup({"id":new FormControl(_id,[])}));
-          console.log(response);
+          console.log('paso personas',response, this.form.controls.personas);
           this.personas.push(response);
-          console.log(this.personas);
+          console.log('paso 2',this.personas);
           this.personasChanged();
-    });
-      break;
+          break;
       }
     }
     console.log(this.form)
