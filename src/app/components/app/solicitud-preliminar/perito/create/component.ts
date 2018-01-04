@@ -70,6 +70,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	public apiUrlPre : string = "/v1/base/predenuncias/casos/"
 	public casoId: number = null;
 	public id: number = null;
+	public personas: any[] = [];
     @Output() modelUpdate = new EventEmitter<any>();
     @Output() isPericialesUpdate= new EventEmitter<any>();
 	public form: FormGroup;
@@ -111,7 +112,9 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 						this.isPericiales = this.form.controls.tipo.value === 'Periciales';
 						this.isPsicofisico = this.form.controls.tipo.value === 'Psicofísico';
 	          			this.isPericialesUpdate.emit(this.isPericiales);
-	          			this.modelUpdate.emit(response);
+						this.modelUpdate.emit(response); 
+						this.personas = response.personas;
+						Logger.logColor('<<< personas >>>', 'green', this.personas); 
 	          			this.form.disable();
 
 	        		});
@@ -124,7 +127,9 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
                                 this.isPericiales = this.form.controls.tipo.value === 'Periciales';
                                 this.isPsicofisico = this.form.controls.tipo.value === 'Psicofísico';
                                 this.isPericialesUpdate.emit(this.isPericiales);
-                                this.modelUpdate.emit(sol[i]);
+								this.modelUpdate.emit(sol[i]);
+								this.personas = sol[i].personas;
+								Logger.log('<<<< OffLine >>>>',sol[i])
                                 this.form.disable();
                                 break;
                             }

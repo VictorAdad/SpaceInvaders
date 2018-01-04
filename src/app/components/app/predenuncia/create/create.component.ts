@@ -84,7 +84,7 @@ export class PredenunciaCreateComponent {
                     });
                 }
             }
-
+            //
         });
     }
 
@@ -103,6 +103,7 @@ export class PredenunciaCreateComponent {
 export class PredenunciaComponent  extends PredenunciaGlobal{
 	public form : FormGroup;
     public model : Predenuncia;
+    public personas: any[] = [];
     public isUserX: boolean=false;// cambiar aquí la lógica del usuario
     public casoId: number = null;
     public hasPredenuncia:boolean=false;
@@ -140,6 +141,9 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                             Logger.log("Dont have predenuncia");
                             //this.form.disable();
                             this.model= response.data[0] as Predenuncia;
+                            Logger.logColor('<<< model >>>','red', this.model);
+                            this.personas = response.data[0].personas;
+                            Logger.logColor('<<< personas >>>','purple', this.personas);
                             var fechaCompleta:Date= new Date(response.fechaHoraInspeccion);
                             // this.model.fechaCanalizacion=fechaCompleta;
                             var horas: string=(String(fechaCompleta.getHours()).length==1)?'0'+fechaCompleta.getHours():String(fechaCompleta.getHours());
@@ -169,13 +173,15 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                 Logger.log("Emitiendo id..",this.model.id)
                                 this.idEmitter.emit({id: this.model.id});
                                 Logger.log('4.- OffLine------------>', model);
+                                this.personas = model.personas;
+                                Logger.log('4.- OffLine------------>', this.personas);
                                 this.fillForm(model);
                             }
                         }
                     });
                 }
             }
-
+            
         });
 
         this.model = new Predenuncia();
@@ -253,7 +259,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                 'cargoAutoridadVictima'          :  new FormControl(this.model.victimaOfendidoQuerellante),
                 // 'observaciones'         :  new FormControl(this.model.observaciones),
               });
-
+              
             //}
         //});
     }

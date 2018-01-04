@@ -61,6 +61,7 @@ export class AcuerdoGeneralCreateComponent {
 export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal {
     public apiUrl = "/v1/base/solicitudes-pre-acuerdos";
     public casoId: number = null;
+    public personas: any[] = [];
     public id: number = null;
     @Output() modelUpdate=new EventEmitter<any>();
     public form: FormGroup;
@@ -99,6 +100,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
                     this.isAtencion = (this.form.controls.tipo.value==='Ayuda y atención a víctimas');
                     this.model = response as AcuerdoGeneral;
                     this.modelUpdate.emit(response);
+                    this.personas = response.personas;
                     this.form.disable();
                 });
             }
