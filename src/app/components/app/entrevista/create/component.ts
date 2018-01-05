@@ -76,7 +76,8 @@ export class EntrevistaCreateComponent {
 export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 	public apiUrl: string = "/v1/base/entrevistas";
 	public casoId: number = null;
-	public id: number = null;
+    public id: number = null;
+    public personas: any[] = [];
 	@Output() modelUpdate = new EventEmitter<any>();
 	public form: FormGroup;
 	public model: Entrevista;
@@ -115,7 +116,8 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 				if(this.onLine.onLine){
 					this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 						this.fillForm(response);
-						this.modelUpdate.emit(response);
+                        this.modelUpdate.emit(response);
+                        this.personas = response.personas;
 
 					});
 				}else{
@@ -126,6 +128,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                                 var entrevista = entrevistas[i];
                                 this.fillForm(entrevistas[i]);
                                 this.modelUpdate.emit(entrevistas[i]);
+                                this.personas = entrevistas[i].personas;
                                 break;
                             }
                         }

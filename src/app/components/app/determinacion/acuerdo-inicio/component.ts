@@ -61,6 +61,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
     public casoId: number = null;
     public hasAcuerdoInicio: boolean = false;
     public id: number = null;
+    public personas: any[] = [];
     @Output() modelUpdate=new EventEmitter<any>();
     public form: FormGroup;
     public model: AcuerdoInicio;
@@ -130,6 +131,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
     				    this.hasAcuerdoInicio = true;
                         this.form.disable();
                         this.fillForm(response[0]);
+                        this.personas = response[0].personas;
                         this.modelUpdate.emit(response[0]);
 
     			    }
@@ -138,6 +140,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
                         this.modelUpdate.emit(response[0]);
                         this.hasAcuerdoInicio = true;
                         this.form.disable();
+                        this.personas = response[0].personas;
                         this.fillForm(response[0]);
                     }
                 });
