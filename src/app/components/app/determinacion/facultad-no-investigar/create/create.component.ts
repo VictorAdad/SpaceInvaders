@@ -56,6 +56,7 @@ export class FacultadNoInvestigarCreateComponent {
 export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
     public apiUrl = '/v1/base/facultades-no-investigar';
     public casoId: number = null;
+    public personas: any[] = [];
     public id: number = null;
     @Output() modelUpdate=new EventEmitter<any>();
     public form: FormGroup;
@@ -122,10 +123,9 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
             if (params['id']) {
                 this.id = +params['id'];
                 this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-                        Logger.log('response',response),
+                        this.personas = response.personas;
                         this.fillForm(response);
-                        this.modelUpdate.emit(response);
-
+                        this.modelUpdate.emit(response);                        
                 });
             }
         });
