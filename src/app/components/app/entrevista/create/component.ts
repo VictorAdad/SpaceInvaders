@@ -364,14 +364,19 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
       this.form.controls["noExterior"].setValue( this.form.controls["noExterior"].value?(localizacion.noExterior?this.form.controls["noExterior"].value+","+localizacion.noExterior:this.form.controls["noExterior"].value+",Sin valor"):(localizacion.noExterior?localizacion.noExterior:"Sin valor"))
       // Heredar No interior
       this.form.controls["noInterior"].setValue( this.form.controls["noInterior"].value?(localizacion.noInterior?this.form.controls["noInterior"].value+","+localizacion.noInterior:this.form.controls["noInterior"].value+",Sin valor"):(localizacion.noInterior?localizacion.noInterior:"Sin valor"))
-      // Heredar colonia
-      this.form.controls["colonia"].setValue( this.form.controls["colonia"].value?(localizacion.colonia?this.form.controls["colonia"].value+","+localizacion.colonia:this.form.controls["colonia"].value+",Sin valor"):(localizacion.colonia?localizacion.colonia:"Sin valor"))
-      // Heredar CP
+       // Heredar CP
       this.form.controls["cp"].setValue( this.form.controls["cp"].value?(localizacion.cp?this.form.controls["cp"].value+","+localizacion.cp:this.form.controls["cp"].value+",Sin valor"):(localizacion.cp?localizacion.cp:"Sin valor"))
+
+      let colonia=(localizacion.colonia?localizacion.colonia.nombre:(localizacion.coloniaOtro?localizacion.coloniaOtro:null))
+      let municipio=(localizacion.municipio?localizacion.municipio.nombre:(localizacion.municipioOtro?localizacion.municipioOtro:null))
+      let estado=(localizacion.estado?localizacion.estado.nombre:(localizacion.estadoOtro?localizacion.estadoOtro:null))
+      let pais=localizacion.pais?localizacion.pais.nombre:"";
+       // Heredar colonia
+      this.form.controls["colonia"].setValue( this.form.controls["colonia"].value?(localizacion.colonia?this.form.controls["colonia"].value+","+localizacion.colonia.nombre:this.form.controls["colonia"].value+",Sin valor"):(localizacion.coloniaOtro?localizacion.coloniaOtro:"Sin valor"))
       // Heredar Municipio
-      this.form.controls["municipio"].setValue( this.form.controls["municipio"].value?(localizacion.municipioOtro?this.form.controls["municipio"].value+","+localizacion.municipioOtro:this.form.controls["municipio"].value+",Sin valor"):(localizacion.municipioOtro?localizacion.municipioOtro:"Sin valor"))
+      this.form.controls["municipio"].setValue( this.form.controls["municipio"].value?(municipio?this.form.controls["municipio"].value+","+municipio.nombre:this.form.controls["municipio"].value+",Sin valor"):(municipio?municipio:"Sin valor"))
       // Heredar Estado
-      this.form.controls["estado"].setValue( this.form.controls["estado"].value?(localizacion.estadoOtro?this.form.controls["estado"].value+","+localizacion.estadoOtro:this.form.controls["estado"].value+",Sin valor"):(localizacion.estadoOtro?localizacion.estadoOtro:"Sin valor"))
+      this.form.controls["estado"].setValue( this.form.controls["estado"].value?(estado?this.form.controls["estado"].value+","+estado:this.form.controls["estado"].value+",Sin valor"):(estado?estado:"Sin valor"))
       // Heredar Tel particular
       this.form.controls["noTelefonoParticular"].setValue( this.form.controls["noTelefonoParticular"].value?(localizacion.telParticular?this.form.controls["noTelefonoParticular"].value+","+localizacion.telParticular:this.form.controls["noTelefonoParticular"].value+",Sin valor"):(localizacion.telParticular?localizacion.telParticular:"Sin valor"))
       // Heredar Tel movil
