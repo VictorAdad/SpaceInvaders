@@ -65,3 +65,14 @@ export class PersonaDomicilio implements PipeTransform {
 		return domicilio;
 	}
 }
+@Pipe({name : 'personaOriginario'})
+export class PersonaOriginario implements PipeTransform {
+	transform(personaCaso:any){
+		var originario="";
+    let municipio=(personaCaso.persona.municipio?personaCaso.persona.municipio.nombre:(personaCaso.persona.municipioNacimientoOtro?personaCaso.persona.municipioNacimientoOtro:null))
+    let estado=(personaCaso.persona.estado?personaCaso.persona.estado.nombre:(personaCaso.persona.estadoNacimientoOtro?personaCaso.persona.estadoNacimientoOtro:null))
+    let pais=personaCaso.persona.pais?personaCaso.persona.pais.nombre:"";
+    originario=(municipio?municipio+" ":"")+ (estado?estado+" ":"")+(pais?pais+" ":"");
+		return originario;
+	}
+}
