@@ -1,4 +1,4 @@
-import { PersonaDomicilio,PersonaNombre } from '@pipes/persona.pipe';
+import { PersonaDomicilio,PersonaNombre,PersonaOriginario } from '@pipes/persona.pipe';
 import { FormatosGlobal } from './../../../solicitud-preliminar/formatos';
 import { Component, ViewChild,Output, Input, EventEmitter} from '@angular/core';
 import { MatPaginator } from '@angular/material';
@@ -74,7 +74,8 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
         private db: CIndexedDB,
         private casoService: CasoService,
         private personaDomicilio:PersonaDomicilio,
-        private personaNombre:PersonaNombre
+        private personaNombre:PersonaNombre,
+        private personaOriginario:PersonaOriginario
 
     ) { super(); }
 
@@ -149,6 +150,9 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
         this.form.controls["edadesDenunciante"].setValue( this.form.controls["edadesDenunciante"].value?(edad?this.form.controls["edadesDenunciante"].value+","+edad:this.form.controls["edadesDenunciante"].value+",Sin valor"):edad)
         console.log( this.form.controls["edadesDenunciante"].value);
         this.form.controls["edadesDenunciante"].updateValueAndValidity();
+        let originario=this.personaOriginario.transform(personaCaso);
+        // Heredar originario
+        this.form.controls["originarioDenunciante"].setValue( this.form.controls["originarioDenunciante"].value?(originario?this.form.controls["originarioDenunciante"].value+","+originario:this.form.controls["originarioDenunciante"].value+",Sin valor"):originario)
         // Heredar Domicilio
         let domicilio = this.personaDomicilio.transform(personaCaso,0);
         this.form.controls["domicilioDenunciante"].setValue( this.form.controls["domicilioDenunciante"].value?(domicilio?this.form.controls["domicilioDenunciante"].value+","+domicilio:this.form.controls["domicilioDenunciante"].value+",Sin valor"):domicilio)
