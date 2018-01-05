@@ -98,7 +98,7 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
             'heredar':  new FormControl("", []),
             'heredarSintesisHechos':  new FormControl("", []),
             'personas': new FormArray([]),
-            'edadDenuncianteHeredar':new FormArray([]),
+            'edadDenuncianteHeredar':new FormControl(''),
 
             'observaciones': new FormControl(),
             'sintesisHechos': new FormControl(),
@@ -110,7 +110,6 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
             'nombreDenunciante': new FormControl(''),
             'originarioDenunciante': new FormControl(''),
             'edadDenunciante': new FormControl(''),
-            'edadesDenunciante':new FormControl(''),
             'domicilioDenunciante': new FormControl(''),
             'fraccion': new FormControl(''),
         });
@@ -124,6 +123,7 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
             if (params['id']) {
                 this.id = +params['id'];
                 this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
+                        console.log(response.heredar);
                         this.personas = response.personas;
                         this.fillForm(response);
                         this.modelUpdate.emit(response);
@@ -131,6 +131,8 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
             }
         });
     }
+
+
     public heredarDatos(){
       console.log("Heredar en facultad de no investigar")
       /*
@@ -223,9 +225,18 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
     }
 
     public fillForm(_data) {
+        this.heredarChanged(_data.heredar);
         this.form.patchValue(_data);
+        let timer=Observable.timer(1)
+        timer.subscribe(t=>{
+          if(this.form.controls['edadDenuncianteHeredar']){
+            console.log(_data.edadDenuncianteHeredar);
+            this.form.patchValue({'edadDenuncianteHeredar':_data.edadDenuncianteHeredar})
+          }
+        })
         this.form.disable();
         Logger.log(_data);
+        console.log('after fill form',this.form)
     }
 
 }
