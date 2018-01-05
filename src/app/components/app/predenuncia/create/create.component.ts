@@ -205,6 +205,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                   'heredar':  new FormControl("", []),
                   'heredarSintesisHechos': new FormControl([]),
                   'personas': new FormArray([]),
+                  'tipoPersonaHeredar': new FormArray([]),
                 'caso': new FormGroup({
                     'id': new FormControl()
                 }),
