@@ -15,8 +15,8 @@ export class NotifyService{
 
 	public notify: Notify;
 
-	public getNotify(_to:string, _message:string){
-		this.notify = new Notify(_to, _message);
+	public getNotify(_notify: any){
+		this.notify = new Notify(_notify);
 
 		return this.notify;
 	}
@@ -44,13 +44,19 @@ export class NotifyService{
 
 class Notify {
 
-	public to: string;
+	public username: string;
 
-	public message: string;
+    public titulo: string;
+
+	public contenido: string;
+
+    public tipo: string;
 
 
-	constructor(_to: string, _message: string){
-		this.to      = _to;
-		this.message = _message;
+	constructor(_notify: any){
+		this.username  = _notify['username'];
+		this.titulo    = _notify['titulo'];
+        this.contenido = _notify['contenido'];
+        this.tipo      = _notify['tipo'];
 	}
 }

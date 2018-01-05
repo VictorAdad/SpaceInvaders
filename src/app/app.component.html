@@ -16,8 +16,9 @@
             <mat-icon class="button-menu">signal_wifi_off</mat-icon>
         </button>
 
-        <button mat-icon-button [matMenuTriggerFor]="notify">
+        <button mat-icon-button [matMenuTriggerFor]="notify" style="margin-right: 10px;">
             <mat-icon class="button-menu">notifications</mat-icon>
+            <mat-chip color="primary">{{ authService.user.notificaciones.length }}</mat-chip>
         </button>
 
         <mat-menu #notify="matMenu" class="notification-list">
@@ -33,73 +34,6 @@
                     <div class="col-md-8 not">
                         <label>Robo a casa habitación</label><br/>
                         <label>Por: <strong>Sergio Alejandro Hernández</strong></label><br/>
-                        <label>Hace 2 horas</label>
-                    </div>
-                    <div class="col-md-2 z">
-                        <mat-icon fxHide="false" fxHide.gt-sm>clear</mat-icon>
-                    </div>
-                </div>
-            </button>
-
-            <button mat-menu-item>
-                <div class="row">
-                    <div class="col-md-2">
-                        <mat-icon fxHide="false" fxHide.gt-sm>perm_identity</mat-icon>
-                    </div>
-                    <div class="col-md-8 not">
-                        <label>Robo a casa habitación</label><br/>
-                        <label>Por: <strong>Sergio Alejandro Hernández</strong></label><br/>
-                        <label>Hace 2 horas</label>
-                    </div>
-                    <div class="col-md-2 z">
-                        <mat-icon fxHide="false" fxHide.gt-sm>clear</mat-icon>
-                    </div>
-                </div>
-            </button>
-
-            <button mat-menu-item>
-                <div class="row">
-                    <div class="col-md-2">
-                        <mat-icon fxHide="false" fxHide.gt-sm>perm_identity</mat-icon>
-                    </div>
-                    <div class="col-md-8 not">
-                        <label>Robo a casa habitación</label><br/>
-                        <label>Por: <strong>Sergio Alejandro Hernández</strong></label><br/>
-                        <label>Hace 2 horas</label>
-                    </div>
-                    <div class="col-md-2 z">
-                        <mat-icon fxHide="false" fxHide.gt-sm>clear</mat-icon>
-                    </div>
-                </div>
-            </button>
-
-            <button mat-menu-item>
-                <div class="row">
-                    <div class="col-md-2">
-                        <mat-icon fxHide="false" fxHide.gt-sm>perm_identity</mat-icon>
-                    </div>
-                    <div class="col-md-8 not">
-                        <label>Robo a casa habitación</label><br/>
-                        <label>Por: <strong>Sergio Alejandro Hernández</strong></label><br/>
-                        <label>Hace 2 horas</label>
-                    </div>
-                    <div class="col-md-2 z">
-                        <mat-icon fxHide="false" fxHide.gt-sm>clear</mat-icon>
-                    </div>
-                </div>
-            </button>
-
-            <button mat-menu-item>
-                <div class="row">
-                    <div class="col-md-2">
-                        <mat-icon fxHide="false" fxHide.gt-sm>perm_identity</mat-icon>
-                    </div>
-                    <div class="col-md-8 not">
-                        <label>Robo a casa habitación</label><br/>
-                        <label>Nuevo caso asignado por <strong>Sergio Alejandro Hernández</strong></label><br/>
-                        <div class="row">
-                            <p class="col-md-6">NIC: N/A</p> <p class="col-md-6">NUC: N/A</p>
-                        </div>
                         <label>Hace 2 horas</label>
                     </div>
                     <div class="col-md-2 z">
