@@ -213,8 +213,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
   public save(_valid: any, _model: any) {
     return new Promise<any>((resolve, reject) => {
       _model.caso.id = this.casoId;
-      _model.latitud = this.latMarker;
-      _model.longitud = this.lngMarker;
+      _model.latitud = this.latMarker.toFixed(8);
+      _model.longitud = this.lngMarker.toFixed(8);
       Logger.log('lo que envio: ' + _model.fecha);
 
       if (_model.fecha) {

@@ -3,6 +3,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { Logger } from "@services/logger.service";
 import { FormGroup, FormControl,Validators } from '@angular/forms';
 import { AuthenticationService } from '@services/auth/authentication.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   templateUrl: 'loginDialog.component.html',
@@ -25,15 +26,22 @@ export class LoginDialog {
   constructor(
     public dialogRef: MatDialogRef<LoginDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private authenticationService: AuthenticationService) { 
-    Logger.log("Data",data);
+    public authenticationService: AuthenticationService) { 
+    Logger.log("Data",data);    
   }
 
   ngOnInit(){
+    Logger.logColor("Usuario:", "pink",this.authenticationService.user.username);
     this.form =  new FormGroup({
         'user': new FormControl('', [Validators.required]),
         'pass': new FormControl('', [Validators.required]),
-    })
+    });
+    var timer = Observable.timer(1);
+    timer.subscribe((tik)=>{
+        this.form.controls.user.patchValue(this.authenticationService.user.username);
+        Logger.logColor("Form","orange",this.form.value);
+    });
+    
   }
 
   submitForm(_event){
