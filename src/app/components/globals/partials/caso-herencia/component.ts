@@ -72,13 +72,16 @@ export class CasoHerenciaComponent implements OnInit{
         this.optionsNoticia.getPersonas();
         this.personas=[]; 
         this.people
-
-        if (this.people != undefined){
-          for (let i=0; i<this.people.length; i++){
-            this.addPersona(this.people[i].personaCaso.id);
+        let timer = Observable.timer(10000);
+        timer.subscribe(t => {
+          if (this.people){
+            Logger.log('<<< si entre >>>', this.people)
+            for (let i=0; i<this.people.length; i++){
+              this.addPersona(this.people[i].personaCaso.id);
+            }
           }
-        }
-        
+        })
+  
   })
  };
   public addPersona(_id){

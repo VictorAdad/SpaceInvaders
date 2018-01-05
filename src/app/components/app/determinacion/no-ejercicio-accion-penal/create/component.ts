@@ -53,7 +53,8 @@ export class NoEjercicioAccionPenalCreateComponent {
 export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionGlobal {
 	public apiUrl: string = "/v1/base/no-ejercicio-accion";
 	public casoId: number = null;
-	public id: number = null;
+    public id: number = null;
+    public personas: any[] = [];
   @Output() modelUpdate=new EventEmitter<any>();
 	public form: FormGroup;
 	public model: NoEjercicioAccionPenal;
@@ -114,6 +115,7 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
 					  Logger.log(response.data),
             this.fillForm(response);
             this.modelUpdate.emit(response);
+            this.personas = response.personas;
 
 				});
 			}

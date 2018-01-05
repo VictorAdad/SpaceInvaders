@@ -53,6 +53,7 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 	public apiUrl: string = "/v1/base/archivos-temporales";
 	public casoId: number = null;
 	public id: number = null;
+	public personas: any[] = [];
   @Output() modelUpdate=new EventEmitter<any>();
 	public form: FormGroup;
 	public model: ArchivoTemporal;
@@ -98,7 +99,8 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 					Logger.log(response.data),
             this.fillForm(response);
-            this.modelUpdate.emit(response);
+			this.modelUpdate.emit(response);
+			this.personas = response.personas;
           });
 			}
 		});
