@@ -139,7 +139,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                          if(parseInt(response.totalCount) !== 0){
                             this.hasPredenuncia = true;
                             Logger.log("Dont have predenuncia");
-                            //this.form.disable();
+                            this.form.disable();
                             this.model= response.data[0] as Predenuncia;
                             Logger.logColor('<<< model >>>','red', this.model);
                             this.personas = response.data[0].personas;
