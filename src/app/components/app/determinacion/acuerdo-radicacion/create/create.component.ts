@@ -55,6 +55,7 @@ export class AcuerdoRadicacionComponent extends DeterminacionGlobal{
     public apiUrl:string="/v1/base/acuerdos";
     public casoId: number = null;
     public id: number = null;
+    public personas: any[] = [];
     @Output() modelUpdate=new EventEmitter<any>();
     public form  : FormGroup;
     public model : AcuerdoRadicacion;
@@ -105,6 +106,7 @@ export class AcuerdoRadicacionComponent extends DeterminacionGlobal{
                     Logger.log(response.data),
                         this.fillForm(response);
                         this.modelUpdate.emit(response);
+                        this.personas = response.personas;
                       });
             }
         });

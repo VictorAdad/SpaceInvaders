@@ -52,6 +52,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
 
     public apiUrl:string="/v1/base/solicitudes-pre-inspecciones";
     public casoId: number = null;
+    public personas: any[] = [];
     public id: number = null;
 	  @Output() modelUpdate = new EventEmitter<any>();
     public form  : FormGroup;
@@ -108,6 +109,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
                         var minutos: string=(String(fechaCompleta.getMinutes()).length==1)?'0'+fechaCompleta.getMinutes():String(fechaCompleta.getMinutes());;
                         response.horaInspeccion=horas+':'+minutos;
                         this.modelUpdate.emit(response);
+                        this.personas = response.personas;
                         this.fillForm(response);
                         this.form.disable();
                     });

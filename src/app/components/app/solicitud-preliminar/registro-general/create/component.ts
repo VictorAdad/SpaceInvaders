@@ -62,6 +62,8 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 
 	public tipo: string;
 
+	public personas: any[] = [];
+
 	public form: FormGroup;
 
 	public model: RegistroGeneral;
@@ -127,6 +129,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 					Logger.log(response.data),
 					this.modelUpdate.emit(response);
 					this.fillForm(response);
+					this.personas = response.personas;
 					this.form.disable();
 				});
 			}
