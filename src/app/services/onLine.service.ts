@@ -18,6 +18,7 @@ import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import {SincronizaCambios} from '@services/onLine/sincronizarCambios';
 import { _config} from '@app/app.config';
 import { LoginDialogService } from './onLine/loginDialog.service';
+import { AuthenticationService } from "@services/auth/authentication.service";
 
 /**
  * Servicio para verificar la conexion con el servidor que aloja a la web app.
@@ -47,7 +48,8 @@ export class OnLineService {
         public logger:Logger,
         private route: Router,
         private _confirmation: ConfirmationService,
-        public loginDialogService: LoginDialogService
+        public loginDialogService: LoginDialogService,
+        public auth: AuthenticationService
     ) {
         this.sincronizarCatalogos=new SincronizaCatalogos(db,http,dialogoSincronizar);
         this.sincronizarCambios= new SincronizaCambios(db,http,notificationService,route,_confirmation,this);
@@ -59,7 +61,8 @@ export class OnLineService {
             if(this.onLine){
                 message="Se estableció la conexión";
                 this.loginDialogService.setOnLine(this);
-                this.sincronizarCambios.startSincronizacion();
+                if (auth.isLoggedin)
+                    this.sincronizarCambios.startSincronizacion();
             }
 
             if (this.anterior!=this.onLine){

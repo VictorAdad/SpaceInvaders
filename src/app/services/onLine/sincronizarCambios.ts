@@ -58,7 +58,7 @@ export class SincronizaCambios {
         if (!this.sincronizando){
             this.seActualizoAlmenosUnRegistro=false;
                 this.db.list("sincronizar").then(lista=>{
-                    if (this.hayCambios(lista)){
+                    if (this.hayCambios(lista,this.onLine.auth.user.username)){
                         var fun=function(r){
                             console.log("Resultado->>>>>",r);
                             let datos = lista as any[];
@@ -81,6 +81,8 @@ export class SincronizaCambios {
                         this.onLine.loginDialogService.funccionDespues=fun;
                         this.onLine.loginDialogService.open()
                         
+                    }else{
+                        this.sincronizando=false;
                     }
                 }).catch(error=>{
                     this.sincronizando=false;
@@ -93,12 +95,12 @@ export class SincronizaCambios {
      * Busca cambios sin sincronizar
      * @param lista 
      */
-    hayCambios(lista:any):boolean{
+    hayCambios(lista:any, username:string):boolean{
         let listaSincronizar = lista as any[];
         for (let i=0; i<listaSincronizar.length;i++){
-            if (listaSincronizar[i].pendiente==true && listaSincronizar[i]["numItentos"]<_config.offLine.sincronizaCambios.numIntentos)
+            if (listaSincronizar[i].username == username && listaSincronizar[i].pendiente==true && listaSincronizar[i]["numItentos"]<_config.offLine.sincronizaCambios.numIntentos)
                 return true;
-            if (listaSincronizar[i].pendiente==true && !listaSincronizar[i]["numItentos"])
+            if (listaSincronizar[i].username == username && listaSincronizar[i].pendiente==true && !listaSincronizar[i]["numItentos"])
                 return true;
         }
         return false;
@@ -157,7 +159,7 @@ export class SincronizaCambios {
                 if (!item["numItentos"]){
                     item["numItentos"]=0;
                 }
-                if (item.pendiente==false || item["numItentos"]>_config.offLine.sincronizaCambios.numIntentos){
+                if (item.username!=this.onLine.auth.user.username || item.pendiente==false || item["numItentos"]>_config.offLine.sincronizaCambios.numIntentos){
                     this.sincroniza(i+1,lista);
                 }
 
