@@ -173,7 +173,9 @@ import { LoginDialogService } from './services/onLine/loginDialog.service';
     LoginDialogService,
     {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true},
     {provide: MAT_DATE_LOCALE, useValue: 'es-MX'},
-    {provide: MatPaginatorIntl, useClass: MatPaginatorIntlEsp}
+    {provide: MatPaginatorIntl, useClass: MatPaginatorIntlEsp},
+    pipes,
+
   ],
   entryComponents: [
     dyanamicComponents

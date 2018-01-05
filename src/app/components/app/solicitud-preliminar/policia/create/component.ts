@@ -56,6 +56,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 	public apiUrl = "/v1/base/solicitudes-pre-policias";
 	public casoId: number = null;
 	public id: number = null;
+	public personas: any[] = [];
   @Output() modelUpdate=new EventEmitter<any>();
 	public form: FormGroup;
 	public model: SolicitudServicioPolicial;
@@ -110,6 +111,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 					  	Logger.log(response.data),
 	            		this.fillForm(response);
 						this.modelUpdate.emit(response);
+						this.personas = response.personas;
 						this.form.disable();
 					});
 				}else{
@@ -117,6 +119,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
                         let sol = t["solicitudPrePolicias"] as any[];
                         for (var i = 0; i < sol.length; ++i) {
                             if ((sol[i])["id"]==this.id){
+								this.personas = sol[i].personas;
                                 this.fillForm(sol[i]);
                                 break;
                             }

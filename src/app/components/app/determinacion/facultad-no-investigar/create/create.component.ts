@@ -1,3 +1,4 @@
+import { PersonaDomicilio,PersonaNombre,PersonaOriginario } from '@pipes/persona.pipe';
 import { FormatosGlobal } from './../../../solicitud-preliminar/formatos';
 import { Component, ViewChild,Output, Input, EventEmitter} from '@angular/core';
 import { MatPaginator } from '@angular/material';
@@ -18,6 +19,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
 import { Logger } from "@services/logger.service";
+import { CasoService } from '@services/caso/caso.service';
 
 @Component({
     templateUrl: './create.component.html',
@@ -54,20 +56,28 @@ export class FacultadNoInvestigarCreateComponent {
 export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
     public apiUrl = '/v1/base/facultades-no-investigar';
     public casoId: number = null;
+    public personas: any[] = [];
     public id: number = null;
     @Output() modelUpdate=new EventEmitter<any>();
     public form: FormGroup;
     public model: FacultadNoInvestigar;
     dataSource: TableService | null;
     @ViewChild(MatPaginator) paginator: MatPaginator;
-
+    public personasHeredadas:any[]=[];
+    public heredar:boolean=false;
+    public heredarSintesis:boolean=false;
     constructor(
         private _fbuilder: FormBuilder,
         private route: ActivatedRoute,
         private onLine: OnLineService,
         private http: HttpService,
         private router: Router,
-        private db: CIndexedDB
+        private db: CIndexedDB,
+        private casoService: CasoService,
+        private personaDomicilio:PersonaDomicilio,
+        private personaNombre:PersonaNombre,
+        private personaOriginario:PersonaOriginario
+
     ) { super(); }
 
     ngOnInit() {
@@ -99,24 +109,76 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
             'nombreDenunciante': new FormControl(''),
             'originarioDenunciante': new FormControl(''),
             'edadDenunciante': new FormControl(''),
+            'edadesDenunciante':new FormControl(''),
             'domicilioDenunciante': new FormControl(''),
             'fraccion': new FormControl(''),
         });
 
         this.route.params.subscribe(params => {
             if (params['casoId'])
-                this.casoId = +params['casoId'];
+                {this.casoId = +params['casoId'];
+                this.casoService.find(this.casoId);
+                }
+
             if (params['id']) {
                 this.id = +params['id'];
                 this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-                        Logger.log('response',response),
+                        this.personas = response.personas;
                         this.fillForm(response);
-                        this.modelUpdate.emit(response);
-
+                        this.modelUpdate.emit(response);                        
                 });
             }
         });
     }
+    public heredarDatos(){
+      console.log("Heredar en facultad de no investigar")
+      /*
+              • Nombre del denunciante
+              • Originario de
+              • Edad
+              • Domicilio
+              • Síntesis de los hechos (Síntesis del caso)
+
+      */
+     this.personasHeredadas.forEach((personaCaso)=> {
+       // Heradar Nombre del denunciante
+       console.log(personaCaso)
+       let nombrePersona=this.personaNombre.transform(personaCaso);
+       this.form.controls["nombreDenunciante"].setValue( this.form.controls["nombreDenunciante"].value?(nombrePersona?this.form.controls["nombreDenunciante"].value+","+nombrePersona:this.form.controls["nombreDenunciante"].value+",Sin valor"):nombrePersona)
+        // Heredar edad Denunciante
+        let edad=personaCaso.persona.edad
+        this.form.controls["edadesDenunciante"].setValue( this.form.controls["edadesDenunciante"].value?(edad?this.form.controls["edadesDenunciante"].value+","+edad:this.form.controls["edadesDenunciante"].value+",Sin valor"):edad)
+        console.log( this.form.controls["edadesDenunciante"].value);
+        this.form.controls["edadesDenunciante"].updateValueAndValidity();
+        let originario=this.personaOriginario.transform(personaCaso);
+        // Heredar originario
+        this.form.controls["originarioDenunciante"].setValue( this.form.controls["originarioDenunciante"].value?(originario?this.form.controls["originarioDenunciante"].value+","+originario:this.form.controls["originarioDenunciante"].value+",Sin valor"):originario)
+        // Heredar Domicilio
+        let domicilio = this.personaDomicilio.transform(personaCaso,0);
+        this.form.controls["domicilioDenunciante"].setValue( this.form.controls["domicilioDenunciante"].value?(domicilio?this.form.controls["domicilioDenunciante"].value+","+domicilio:this.form.controls["domicilioDenunciante"].value+",Sin valor"):domicilio)
+      });
+     // Heredar Síntesis de los hechos (Síntesis del caso)
+      this.form.controls["sintesisHechos"].setValue(this.casoService.caso.descripcion)
+    }
+
+
+    public  personasChanged(_personasHeredadas){
+      this.personasHeredadas=_personasHeredadas;
+    }
+    public heredarChanged(_heredar){
+        this.heredar=_heredar;
+        if(_heredar){
+          this.form.removeControl("edadDenunciante");
+          this.form.addControl("edadesDenunciante",new FormControl("",[]));
+        }else{
+          this.form.removeControl("edadesDenunciante");
+          this.form.addControl("edadDenunciante",new FormControl("",[]));
+        }
+
+        console.log("Heredar= ",this.heredar)
+
+    }
+
 
     public save(valid: any, _model: any) {
         Object.assign(this.model, _model);

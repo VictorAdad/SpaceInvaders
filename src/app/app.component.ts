@@ -60,8 +60,8 @@ export class AppComponent {
 
         this.notify.getMessages().subscribe(
             message => {
-                if(message['notify']['to'] === this.authService.user.username)
-                    this.notification.create(message['notify']['message'], '', 'info', {
+                if(message['notify']['username'] === this.authService.user.username)
+                    this.notification.create(message['notify']['titulo'], message['notify']['contenido'], 'info', {
                         timeOut: 100000,
                         showProgressBar: true,
                         pauseOnHover: false,

@@ -78,7 +78,13 @@ export class TransferirComponent extends BasePaginationComponent {
         return new Promise<any>((resolve, reject) => {            
             this.http.post('/v1/base/titulares', _form).subscribe(
                 (response) => {
-                    response['notify'] = this.notify.getNotify(response.userNameAsignado, 'Se le ha transferido un nuevo caso')
+                    response['notify'] = this.notify.getNotify({
+                        username: response.userNameAsignado,
+                        titulo: 'Transferencia de titularidad del caso',
+                        contenido:'Se le ha transferido un nuevo caso',
+                        tipo: ''
+                    });
+                    
                     this.notify.emitMessage(response);
                     this.router.navigate(['/' ]);
                     resolve("Se cambió de titular del caso");

@@ -53,6 +53,7 @@ export class RequerimientoInformacionCreateComponent {
 export class SolicitudRequerimientoInformacionComponent extends SolicitudPreliminarGlobal{
 	public apiUrl: string = "/v1/base/solicitudes-pre-info";
 	public casoId: number = null;
+	public personas: any[] = [];
 	public id: number = null;
   @Output() modelUpdate=new EventEmitter<any>();
 	public form: FormGroup;
@@ -114,6 +115,7 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 					Logger.log('Get reg ',response),
 					this.fillForm(response);
 					this.modelUpdate.emit(response);
+					this.personas = response.personas;
 					this.form.disable();
 				});
 			}

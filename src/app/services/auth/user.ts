@@ -31,6 +31,8 @@ export class Usuario {
     public municipioCompleto: string;
 
     public municipioId: string;
+
+    public notificaciones: any[] = [];
     
     constructor(_usuario: any =  null) {
         if(_usuario != null){

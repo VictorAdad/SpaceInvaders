@@ -18,6 +18,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
 import { Logger } from "@services/logger.service";
+import { CasoService } from '@services/caso/caso.service';
 
 @Component({
 	templateUrl: './component.html',
@@ -52,7 +53,8 @@ export class NoEjercicioAccionPenalCreateComponent {
 export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionGlobal {
 	public apiUrl: string = "/v1/base/no-ejercicio-accion";
 	public casoId: number = null;
-	public id: number = null;
+    public id: number = null;
+    public personas: any[] = [];
   @Output() modelUpdate=new EventEmitter<any>();
 	public form: FormGroup;
 	public model: NoEjercicioAccionPenal;
@@ -65,7 +67,8 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
 		private onLine: OnLineService,
 		private http: HttpService,
 		private router: Router,
-		private db: CIndexedDB
+    private db: CIndexedDB,
+    private casoService:CasoService
 	) { super(); }
 
 	ngOnInit() {
@@ -112,12 +115,20 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
 					  Logger.log(response.data),
             this.fillForm(response);
             this.modelUpdate.emit(response);
+            this.personas = response.personas;
 
 				});
 			}
 		});
 	}
+  public heredarDatos(){
+    console.log("Heredar en facultad de no investigar")
+    /*
+       • Narración de los hechos (Hecho narrados de Predenuncia))
 
+    */
+    this.form.controls["narracionHechos"].setValue(this.casoService.caso.predenuncias.hechosNarrados)
+  }
 	public save(valid: any, _model: any) {
         Object.assign(this.model, _model);
         this.model.caso.id = this.casoId;
