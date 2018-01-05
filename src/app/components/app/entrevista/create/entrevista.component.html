@@ -23,21 +23,19 @@
                         <text label="Nombre del entrevistado" name="nombreEntrevistado" [group]="form"  [max]="1000"></text>
                     </div>
                     <div class="col-md-3">
-                        <text   *ngIf="heredar; else noHeredarSexo" label="Sexo" name="sexo" [group]="form"  [max]="1000"></text>
-                        <ng-template #noHeredarSexo>
-                            <select2  *ngIf="!heredar" placeholder="Sexo" [options]="options.sexo" name="id" [group]="form.controls.sexo">
-                            </select2>
-                        </ng-template>
+                        <text   *ngIf="heredar" label="Sexo" name="sexoHeredar" [group]="form"  [max]="1000"></text>
+                        <select2  *ngIf="!heredar" placeholder="Sexo" [options]="options.sexo" name="id" [group]="form.controls.sexo">
+                        </select2>
 
                     </div>
                     <div class="col-md-3">
                         <!-- <date label="Fecha de nacimiento" name="fechaNacimiento" (valueChange)="calculateAge($event)"[group]="form"></date> -->
-                        <text   *ngIf="heredar" label="Fecha de nacimiento" name="fechasNacimiento" [group]="form"  [max]="1000"></text>
+                        <text   *ngIf="heredar" label="Fecha de nacimiento" name="fechaNacimientoHeredar" [group]="form"  [max]="1000"></text>
                         <date-picker  *ngIf="!heredar" label="Fecha de nacimiento" name="fechaNacimiento" (onDateSelect)="calculateAge($event)" [validateDays]="'post'" [group]="form"></date-picker>
 
                     </div>
                     <div class="col-md-3">
-                        <text  *ngIf="heredar; else noHeredarEdad" label="Edad" name="edad" [max]="1000" [group]="form"></text>
+                        <text  *ngIf="heredar; else noHeredarEdad" label="Edad" name="edadHeredar" [max]="1000" [group]="form"></text>
                           <ng-template #noHeredarEdad>
                               <int label="Edad" name="edad" [max]="2" [group]="form"></int>
                           </ng-template>
@@ -140,7 +138,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        <text  *ngIf="heredar; else noHeredarCP"  label="CP" name="cp" [max]="1000" [group]="form"></text>
+                        <text  *ngIf="heredar; else noHeredarCP"  label="CP" name="cpHeredar" [max]="1000" [group]="form"></text>
                           <ng-template #noHeredarCP>
                               <int label="CP" name="cp" [max]="5" [group]="form"></int>
                           </ng-template>
@@ -156,13 +154,13 @@
                     </div>
                     <div class="col-md-3">
                         <int *ngIf="!heredar" label="Nº telefónico particular" name="noTelefonoParticular" [max]="10" [min]="10" [group]="form"></int>
-                        <text *ngIf="heredar" label="Nº telefónico particular" name="noTelefonoParticular" [max]="1000"  [group]="form"></text>
+                        <text *ngIf="heredar" label="Nº telefónico particular" name="noTelefonoParticularHeredar" [max]="1000"  [group]="form"></text>
                       </div>
                 </div>
                 <div class="row justify-content-start">
                     <div class="col-md-3">
                         <int  *ngIf="!heredar"label="Nº telefónico celular" name="noTelefonoCelular" [max]="10" [min]="10" [group]="form"></int>
-                        <text *ngIf="heredar"label="Nº telefónico celular" name="noTelefonoCelular" [max]="1000" [group]="form"></text>
+                        <text *ngIf="heredar"label="Nº telefónico celular" name="noTelefonoCelularHeredar" [max]="1000" [group]="form"></text>
                       </div>
                     <div class="col-md-3">
                         <email *ngIf="!heredar" label="Correo electrónico" name="correoElectronico" [group]="form"></email>
