@@ -33,7 +33,7 @@ export class Usuario {
     public municipioId: string;
 
     public notificaciones: any[] = [];
-    
+
     constructor(_usuario: any =  null) {
         if(_usuario != null){
             this.nombreCompleto  = _usuario.cn;
@@ -61,14 +61,14 @@ export class Usuario {
         if(this.roles)
             return _roles.some( role => this.roles.includes(role));
         else
-            return false;   
+            return false;
      }
 }
 
 export class Role {
 
     public nombre: string;
-    
+
     constructor(_role: string) {
         this.nombre = _role;
     }

@@ -22,21 +22,20 @@ export class NotifyService{
 	}
 
 	public emitMessage(_message){
-        this.socket.emit('notify', JSON.stringify(_message));    
+        this.socket.onopen =  (event) => {
+            this.socket.send(JSON.stringify(_message));
+        }
     }
 
     public getMessages() {
         let observable = new Observable(
             observer => {
-                this.socket = io(env.api.host);
-                this.socket.on('notify', (data) => {
-                    observer.next(JSON.parse(data));    
-                });
-                return () => {
-                    this.socket.disconnect();
-                };  
+                this.socket = new WebSocket(env.api.ws+'/notification/transferir');
+                this.socket.onmessage =  (event) => {
+                    observer.next(JSON.parse(event.data));
+                }
             }
-        )     
+        )
         return observable;
     }
 

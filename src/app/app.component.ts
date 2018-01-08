@@ -42,7 +42,7 @@ export class AppComponent {
     	public globalService : GlobalService,
     	public servicio: OnLineService,
     	private activeRoute: ActivatedRoute,
-        private mdIconRegistry: MatIconRegistry, 
+        private mdIconRegistry: MatIconRegistry,
         private sanitizer: DomSanitizer,
         private selects: SelectsService,
         private formatos: FormatosService,
@@ -57,20 +57,27 @@ export class AppComponent {
 
 	ngOnInit(){
 		this.titleService.setTitle(this.createTitle());
-
         this.notify.getMessages().subscribe(
             message => {
-                if(message['notify']['username'] === this.authService.user.username)
+                if(message['notify']['username'] === this.authService.user.username){
                     this.notification.create(message['notify']['titulo'], message['notify']['contenido'], 'info', {
-                        timeOut: 100000,
-                        showProgressBar: true,
+                        timeOut: 10000,
+                        showProgressBar: false,
                         pauseOnHover: false,
                         clickToClose: false,
-                        maxLength: 10
+                        maxLength: 100
                     });
+                    this.authService.user.notificaciones.push(message['notify']);
+                }
             }
         );
-
+        this.notify.emitMessage({
+            'notify': {
+                'username': 'call.center.demo',
+                'titulo': 'Prueba',
+                'contenido': 'Notificacion de prueba'
+            }
+        });
 	}
 
 

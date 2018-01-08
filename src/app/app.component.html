@@ -27,16 +27,16 @@
             </button>
 
             <button mat-menu-item>
-                <div class="row">
-                    <div class="col-md-2">
+                <div class="row" *ngFor="let notificacion of authService.user.notificaciones">
+                    <div class="col-sm-2">
                         <mat-icon class="prueba" fxHide="false" fxHide.gt-sm>perm_identity</mat-icon>
                     </div>
-                    <div class="col-md-8 not">
-                        <label>Robo a casa habitación</label><br/>
-                        <label>Por: <strong>Sergio Alejandro Hernández</strong></label><br/>
-                        <label>Hace 2 horas</label>
+                    <div class="col-sm-8 not">
+                        <label>{{ notificacion.titulo }}</label><br/>
+                        <label><strong>{{ notificacion.contenido }}</strong></label><br/>
+                        <label>{{ notificacion.created | fromNow }}</label>
                     </div>
-                    <div class="col-md-2 z">
+                    <div class="col-sm-2 z">
                         <mat-icon fxHide="false" fxHide.gt-sm>clear</mat-icon>
                     </div>
                 </div>
