@@ -151,7 +151,10 @@ export class LocalizacionFormComponent{
         });
         
     }
-
+    /**
+     * En esta funcion van a caer TODAS  las modificaciones del formulario de localizaciones
+     * @param data Es un array con todas las localizaciones
+     */
     public agregaLocalizaciones(data){
             this.data=data;
             this.dataSource = new TableService(this.paginator, this.data);
@@ -241,7 +244,6 @@ export class LocalizacionFormComponent{
             let temForm=LosForm.createFormLocalizacion();
             temForm.patchValue(dato);
             localizaciones.push(temForm);
-            this.data.push(dato);
         }
         this.mensajeBoton="Agregar";
         this.form.reset();
@@ -249,7 +251,6 @@ export class LocalizacionFormComponent{
         this.indiceActual=-1;
         this.radioTipoResidencia=null;
         this.cantidad=this.data.length;
-        this.dataSource = new TableService(this.paginator, this.data);
     }
 
 
