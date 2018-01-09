@@ -57,7 +57,10 @@ export class PredenunciaCreateComponent {
         private route: ActivatedRoute,
         private http: HttpService,
         private onLine: OnLineService,
+        private router: Router,
         public db: CIndexedDB,
+        public casoServ: CasoService,
+        
       ){}
 
     ngOnInit(){
@@ -68,9 +71,11 @@ export class PredenunciaCreateComponent {
 
                 if(this.onLine.onLine){
                     this.http.get(this.apiUrl+params['casoId']+'/page').subscribe(response => {
-                        if(parseInt(response.totalCount) !== 0){
+                        if(parseInt(response.totalCount) !== 0){                            
                             this.hasPredenuncia = true;
                             this.object = response;
+                        }else{
+                            this.router.navigate(['/caso/' + this.casoId + '/detalle']);
                         }
                     });
                 }else{
