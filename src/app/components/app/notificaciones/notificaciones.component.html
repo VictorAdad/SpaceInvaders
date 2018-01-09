@@ -15,9 +15,9 @@
     (page)="changePage($event)">
 </mat-paginator>
 <mat-table #table [dataSource]="dataSource">
-    <ng-container matColumnDef="fundamento">
+    <ng-container matColumnDef="contenido">
         <mat-header-cell *matHeaderCellDef> Fundamento legal</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.fundamentoLegal}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{ element.contenido }} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="columns"></mat-header-row>

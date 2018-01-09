@@ -10,6 +10,8 @@ import { TableService } from '@utils/table/table.service';
 })
 export class NotificacionesComponent extends BasePaginationComponent implements OnInit {
 
+    public columns: any = ['contenido'];
+
     constructor(
         public auth: AuthenticationService,
         private http: HttpService
@@ -45,10 +47,11 @@ export class NotificacionesComponent extends BasePaginationComponent implements 
             this.pageSub.unsubscribe();
 
         this.pageSub = this.http.get(
-            `/v1/base/notificaciones/${this.auth.user.username}/page?f=${this.pageFilter}&p=${this.pageIndex}&tr=${this.pageSize}`
+            `/v1/base/notificaciones/usuario/${this.auth.user.username}/page?f=${this.pageFilter}&p=${this.pageIndex}&tr=${this.pageSize}`
         ).subscribe(
             (response) => {
-
+                this.pag = response.totalCount; 
+                this.dataSource = new TableService(this.paginator, response.data);
             },
             (error) => {
 
