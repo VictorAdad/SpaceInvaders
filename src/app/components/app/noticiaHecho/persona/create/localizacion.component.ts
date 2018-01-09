@@ -141,19 +141,20 @@ export class LocalizacionFormComponent{
         Logger.log('->LocalizacionForm IndexForm', this.indexForm);
         this.options = new Options(this.http, this.onLine, this.db, this.select);
         this.dataSource = new TableService(this.paginator, this.data);
-        let timer = Observable.timer(3500);
+        let timer = Observable.timer(2000);
         timer.subscribe(t=>{
             Logger.logColor("--------->","green", this.globals.form.value,this.options);
-            if  (this.globals.form.value["localizacionPersona"]){
-                for(let i=0;i<this.globals.form.value["localizacionPersona"].length;i++){
-                    this.agregarNombres(this.globals.form.value["localizacionPersona"][i]);
-                    this.data.push(this.globals.form.value["localizacionPersona"][i]);
-                }
-                Logger.log(this.data);
-                this.dataSource = new TableService(this.paginator, this.data);
-            }
+            this.globals.form.controls["localizacionPersona"].valueChanges.subscribe(data => {
+                this.agregaLocalizaciones(data);
+              });
+            
         });
         
+    }
+
+    public agregaLocalizaciones(data){
+            this.data=data;
+            this.dataSource = new TableService(this.paginator, this.data);
     }
     public cancelar(){
         this.mensajeBoton="Agregar";
