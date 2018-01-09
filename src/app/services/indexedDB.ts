@@ -36,6 +36,7 @@ export class CIndexedDB {
     nameDB:string = _config.offLine.indexedDB.nameDB;
     init: boolean = (localStorage.getItem('initDB') === 'true');
     sincronizarCatalogos:SincronizaCatalogos;
+    db=null;
     /**
      * Constructor de indexedDB. Verifica si existe la base SIGI, si no existe crea todo el schema de tablas necesarias para que funcione.
      * @param http Instancia http, es necesario para pasar a la clase de SincronizaCatalogos
@@ -45,12 +46,12 @@ export class CIndexedDB {
         public dialog: DialogSincrinizarService) {
         var obj=this;
         this.sincronizarCatalogos=new SincronizaCatalogos(this,http,dialog);
+        var indexedDB = window.indexedDB ;
+        var open = indexedDB.open(this.nameDB, 1);
+        var obj=this;
         if(!this.init){
-            Logger.log("Creando tablas para la BD");
-            var indexedDB = window.indexedDB ;
-            var open = indexedDB.open(this.nameDB, 1);
-            var obj=this;
             var newDB=false;
+            Logger.log("Creando tablas para la BD");
             //si no existe la base o se actualiza la version se crea todo el schema
             open.onupgradeneeded = () => {
                 Logger.log(" -> Inciando conexión a la BD");
@@ -89,15 +90,17 @@ export class CIndexedDB {
                 Logger.log(" -> Se crearon las tablas");
                 localStorage.setItem('initDB', 'true');
                 newDB=true;
+                obj.db    = open.result;
                 obj.sincronizarCatalogos.nuevo();
-            };
-            open.onsuccess=function(){
-                
-            }
+            };            
         }else{
             Logger.log("La BD ya se encuentra inicializada ;)");
             this.init = true;
             localStorage.setItem('initDB', 'true');
+        }
+        open.onsuccess=function(){
+            obj.db    = open.result;
+            Logger.logColor("wiii","cyan",obj);
         }
     }
     /**
@@ -180,15 +183,27 @@ export class CIndexedDB {
         var obj= this;
         var promesa = new Promise( 
             function(resolve,reject){
-                if(obj.init){
-                    var indexedDB = window.indexedDB ;
-                    var open = indexedDB.open(obj.nameDB, 1);
-                    open.onblocked = function(e){
-                        Logger.logColor("INDEXEDDB BLOQUEDO","red",e);
-                    }
-                    open.onsuccess = function() {
+                if (!obj.db){
+                    let timer = Observable.timer(1000);
+                    timer.subscribe(t=>{
+                        Logger.log("Vuelve a llamar");
+                        obj.action(_table,_tipo,_data,_index).then(d=>{
+                            resolve(d);
+                        }).catch(e=>{
+                            reject(e);
+                        })  
+                    })
+                }
+                else if(obj.init){
+                    // var indexedDB = window.indexedDB ;
+                    // var open = indexedDB.open(obj.nameDB, 1);
+                    // open.onblocked = function(e){
+                    //     Logger.logColor("INDEXEDDB BLOQUEDO","red",e);
+                    // }
+                    //open.onsuccess = function() {
                         // Start a new transaction
-                        var db    = open.result;
+                        //Logger.logColor("BASE","green",_table)
+                        var db    = obj.db;
                         var tx    = db.transaction(_table, "readwrite");
                         var store = tx.objectStore(_table);
 
@@ -213,7 +228,7 @@ export class CIndexedDB {
                                 //var requets=index.get();
                                 var resultado=[];
                                 requets.onsuccess=function(e){
-                                    //Logger.log("#",e);
+                                    Logger.log("#",e);
                                     var cursor = e.target.result;
                                     if(cursor) {
                                         resultado.push(cursor.value);
@@ -261,10 +276,9 @@ export class CIndexedDB {
 
                         
                         tx.oncomplete = function() {
-                            db.close();
-                            //Logger.log("-> cierra la conexion");
+                            //Logger.logColor("-> cierra la transaction","blue",_table);
                         };
-                    }
+                    //}
                 }else{
                     reject("Init es false y la bd no esta inicializada");
                     Logger.warn("No se ha creado la tabla: ", _table, " Con la acción: ", _tipo);
@@ -273,6 +287,60 @@ export class CIndexedDB {
 
         );
         return promesa;
+    }
+    /**
+     * Esta funcion manda el error o la actualizacion hasta que se desocupa la transacion
+     * @param _table Tabla que se actualizara
+     * @param data json con los cambios
+     */
+    update2(_table,_data){
+        var obj=this;
+        var promesa = new Promise( 
+            function(resolve,reject){
+                if(obj.init){
+                        //Logger.logColor("BASE","green",_table)
+                        var db    = obj.db;
+                        var tx    = db.transaction(_table, "readwrite");
+                        var store = tx.objectStore(_table);
+
+                        store.put(_data);
+                        
+                        tx.oncomplete = function() {
+                            resolve(_data);
+                            //Logger.log("-> cierra la conexion");
+                        };
+                    //}
+                }else{
+                    reject("Init es false y la bd no esta inicializada");
+                    Logger.warn("No se ha creado la tabla: ", _table, " Con la acción: update");
+                }
+            });
+        return promesa;
+    }
+    /**
+     * Esta funcion es para que no muera la app cuando se desea actualizar un registro y se esta actualizando otro. mejor actualizamos todo con una sola transacion.
+     * @param _table Tabla que se actualizara
+     * @param cambios arreglo con los cambios
+     */
+    actualizaCambios(_table,cambios){
+        var obj=this;
+        if(obj.init){
+                Logger.logColor("BASE","green",_table)
+                var db    = obj.db;
+                var tx    = db.transaction(_table, "readwrite");
+                var store = tx.objectStore(_table);
+
+                for( var i=0;i<cambios.length;i++)
+                    store.put(cambios[i]);
+                
+                tx.oncomplete = function() {
+                    //db.close();
+                    //Logger.log("-> cierra la conexion");
+                };
+            //}
+        }else{
+            Logger.warn("No se ha creado la tabla: ", _table, " Con la acción: update");
+        }
     }
     /**
      * Agrega un registro a la tabla _table
@@ -290,7 +358,8 @@ export class CIndexedDB {
      * @return Una promesa que devuelve los datos agregados o el error
      */
     update(_table:string, _datos:any){
-        return this.action(_table, "update", _datos);  
+        return this.update2(_table,_datos);
+        //return this.action(_table, "update", _datos);  
     }
     /**
      * Funcion que elimina un registro a la tabla _table
@@ -409,6 +478,35 @@ export class CIndexedDB {
 
             });
         return promesa;
+    }
+    buscaIDsEnJson(json){
+        var arregloIds=[];
+        var rec=function(item){
+           if (typeof item =="object"){
+                for (var obj in item){
+                    if (obj=="id"){
+                        arregloIds.push(obj);
+                    }else
+                        rec(item[obj])
+                }
+            } 
+        }
+        rec(json);
+        return arregloIds;
+        
+    }
+
+    //Elimina casos online, son los que tienen el campo ultima actualizacion
+    eliminaUltimoCaso(){
+        this.list("casos").then(listaCasos=>{
+           var lista = listaCasos as any[];
+           for (var i = 0; i < lista.length; ++i) {
+               var caso=lista[i];
+               Logger.log(caso, this.buscaIDsEnJson(caso) );
+               if (caso["ultimaActualizacion"])
+                   this.delete("casos",caso["id"]);
+           }
+        });
     }
 
 }
