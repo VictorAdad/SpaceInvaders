@@ -1,29 +1,29 @@
-<div [formGroup]="globals.form">
-    <div formArrayName="localizacionPersona">
-        <div [formGroupName]="indexForm">
+<div [formGroup]="form">
+    <div >
+        <div>
             <div class="row" >
                 <div class="col-md-3">
                     <select2 [options]="options.paises"
                         placeholder="País"
                         name="id"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.pais"
-                        (valueChange)="changePais($event,indexForm)">
+                        [group]="form.controls.pais"
+                        (valueChange)="changePais($event)">
                     </select2>
                 </div>
                 <div class="col-md-3" *ngIf="isMexico">
                     <select2 [options]="options.estados"
                         placeholder="Estado"
                         name="id"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.estado"
-                        (valueChange)="changeEstado($event,indexForm)">
+                        [group]="form.controls.estado"
+                        (valueChange)="changeEstado($event)">
                     </select2>
                 </div>
                 <div class="col-md-3" *ngIf="isMexico">
                     <select2 [options]="options.municipios"
                         placeholder="Municipio/Delegación"
                         name="id"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.municipio"
-                        (valueChange)="changeMunicipio($event,indexForm)">
+                        [group]="form.controls.municipio"
+                        (valueChange)="changeMunicipio($event)">
                     </select2>
                 </div>
                 <div class="col-md-3" *ngIf="isMexico">
@@ -31,8 +31,8 @@
                         placeholder="Colonia/Asentamiento"
                         name="idCp"
                         [onOpenFunction]="buscaColonias.bind(this)"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.colonia"
-                        (valueChange)="changeColonia(indexForm,$event)">
+                        [group]="form.controls.colonia"
+                        (valueChange)="changeColonia($event)">
                     </select2>
                 </div>
                 <div class="col-md-3" *ngIf="isMexico">
@@ -40,13 +40,13 @@
                         placeholder="Localidad"
                         [onOpenFunction]="buscaLocalidades.bind(this)"
                         name="id"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.localidad">
+                        [group]="form.controls.localidad">
                     </select2>
                 </div>
                 <div class="col-md-3" *ngIf="!isMexico">
                     <text label="Estado"
                         name="estadoOtro"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]"
+                        [group]="form"
                         [max]="40">
                     </text>
                 </div>
@@ -54,14 +54,14 @@
                 <div class="col-md-3" *ngIf="!isMexico">
                     <text label="Municipio/Delegación"
                         name="municipioOtro"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]"
+                        [group]="form"
                         [max]="40">
                     </text>
                 </div>
                 <div class="col-md-3" *ngIf="!isMexico">
                     <text label="Colonia/Asentamiento"
                         name="coloniaOtro"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]"
+                        [group]="form"
                         [max]="40">
                     </text>
                 </div>
@@ -73,17 +73,17 @@
                     <text label="Localidad"
                         name="localidadOtro"
                         [max]="40"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
+                        [group]="form">
                     </text>
                 </div>
                 <div class="col-md-3">
-                    <text label="Calle" name="calle" [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]"></text>
+                    <text label="Calle" name="calle" [group]="form"></text>
                 </div>
                 <div class="col-md-3">
-                    <text label="No. exterior" name="noExterior" [max]="10" [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]"></text>
+                    <text label="No. exterior" name="noExterior" [max]="10" [group]="form"></text>
                 </div>
                 <div class="col-md-3">
-                    <text label="No. interior" name="noInterior" [max]="10" [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]"></text>
+                    <text label="No. interior" name="noInterior" [max]="10" [group]="form"></text>
                 </div>
             </div>
 
@@ -93,7 +93,7 @@
                         name="cp"
                         [max]="5"
                         [min]="5"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
+                        [group]="form">
 
                     </int>
                 </div>
@@ -101,7 +101,7 @@
                     <select2 placeholder="Tipo de domicilio"
                         [options]="options.tipoDomicilio"
                         name="id"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm].controls.tipoDomicilio">
+                        [group]="form.controls.tipoDomicilio">
                     </select2>
                 </div>
             </div>
@@ -109,7 +109,7 @@
                 <div class="col-md-12">
                     <text-area label="Referencias"
                         name="referencias"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
+                        [group]="form">
                     </text-area>
                 </div>
             </div>
@@ -119,7 +119,7 @@
                         name="telParticular"
                         [max]="10"
                         [min]="10"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
+                        [group]="form">
 
                     </int>
                 </div>
@@ -128,7 +128,7 @@
                         name="telTrabajo"
                         [max]="10"
                         [min]="10"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
+                        [group]="form">
 
                     </int>
                 </div>
@@ -136,7 +136,7 @@
                     <int label="Extensión"
                         name="extension"
                         [max]="5"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
+                        [group]="form">
 
                     </int>
                 </div>
@@ -145,7 +145,7 @@
                         name="telMovil"
                         [max]="10"
                         [min]="10"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
+                        [group]="form">
 
                     </int>
                 </div>
@@ -157,7 +157,7 @@
                         name="fax"
                         [max]="10"
                         [min]="10"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
+                        [group]="form">
 
                     </int>
                 </div>
@@ -165,7 +165,7 @@
                     <text label="Otro medio de contacto"
                         name="otroMedioContacto"
                         [max]="15"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
+                        [group]="form">
 
                     </text>
                 </div>
@@ -173,7 +173,7 @@
                     <email label="Correo"
                         name="correo"
                         [max]="25"
-                        [group]="(globals.form.controls.localizacionPersona)['controls'][indexForm]">
+                        [group]="form">
                     </email>
                 </div>
             </div>
@@ -189,9 +189,9 @@
                         {label:'Residencia habitual',value:'Residencia habitual'},
                         {label:'Domicilio procesal',value:'Domicilio procesal'}]"
 
-                        (valueChange)="changeTipoResida($event,indexForm)"
+                        (valueChange)="changeTipoResida($event)"
 
-                        [value]="globals.tipoResidencia[indexForm]"
+                        [(value)]="radioTipoResidencia"
 
                         >
 
@@ -201,3 +201,41 @@
         </div>
     </div>
 </div>
+
+<div class="row" >
+    <div class="col-md-12">
+        <button mat-raised-button color="accent" (click)="addLocalizacion(form.value)" [disabled]="!form.valid">{{mensajeBoton}}</button>
+        <button *ngIf="mensajeBoton=='Editar'" mat-button  (click)="cancelar()">Cancelar</button>
+    </div>
+</div>
+<div class="row space"></div>
+<mat-table #table [dataSource]="dataSource" class="latabla">
+
+    <ng-container matColumnDef="direccion">
+        <mat-header-cell *matHeaderCellDef> Direccion </mat-header-cell>
+        <mat-cell *matCellDef="let dir"> 
+                
+            <span *ngIf="dir.pais.id==idMexico">
+                {{dir.tipoDomicilio?dir.tipoDomicilio.nombre+":":""}}
+                {{dir.calle}}  {{dir.noExterior?"#"+dir.noExterior:""}} {{dir.noInterior?"int. "+dir.noInterior:""}} 
+                {{dir.localidad?(dir.localidad.nombre?""+dir.localidad.nombre+",":""):""}} 
+                {{dir.colonia?(dir.colonia.nombre?""+dir.colonia.nombre+",":""):""}} 
+                {{dir.municipio?(dir.municipio.nombre?+dir.municipio.nombre+",":""):""}} 
+                {{dir.estado?(dir.estado.nombre?+dir.estado.nombre+",":""):""}} 
+                {{dir.pais?(dir.pais.nombre?dir.pais.nombre:""):""}} 
+            </span>
+            <span *ngIf="dir.pais.id!=idMexico">
+                    {{dir.tipoDomicilio?dir.tipoDomicilio.nombre+":":""}}
+                    {{dir.calle}}  {{dir.noExterior?"#"+dir.noExterior:""}} {{dir.noInterior?"int. "+dir.noInterior:""}} 
+                    {{dir.localidadOtro?dir.localidadOtro+",":""}} 
+                    {{dir.coloniaOtro?dir.coloniaOtro+",":""}} 
+                    {{dir.municipioOtro?dir.municipioOtro+",":""}} 
+                    {{dir.estadoOtro?dir.estadoOtro+",":""}} 
+                    {{dir.pais?(dir.pais.nombre?dir.pais.nombre:""):""}} 
+                </span>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"(click)="editar(row,i)"></mat-row>
+</mat-table>

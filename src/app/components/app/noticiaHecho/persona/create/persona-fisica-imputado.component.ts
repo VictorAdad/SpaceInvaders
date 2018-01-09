@@ -1160,6 +1160,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         if (_data["nacionalidadReligion"]){
             if (!_data["nacionalidadReligion"]["religion"]){
                 this.tabla.searchInCatalogo("nacionalidad_religion",_data["nacionalidadReligion"]).then(d=>{
+                    Logger.logColor("NACIOANLIDAD","pink",d,_data["nacionalidadReligion"]);
                     _data["nacionalidad"]=d["nacionalidad"];
                     _data["religion"]=d["religion"];
                     this.form.patchValue(_data);
@@ -1445,23 +1446,29 @@ export class LosForm{
             'id': new FormControl(),
             'pais': new FormGroup({
                 'id': new FormControl(),
+                'nombre': new FormControl(),
             }),
             'estado': new FormGroup({
                 'id': new FormControl(),
+                'nombre': new FormControl(),
             }),
             'municipio': new FormGroup({
                 'id': new FormControl(),
+                'nombre': new FormControl(),
             }),
             'colonia': new FormGroup({
                 'id': new FormControl(),
                 //campo auxiliar para administrar el id-cp
                 'idCp': new FormControl(),
+                'nombre': new FormControl(),
             }),
             'localidad': new FormGroup({
                 'id': new FormControl(),
+                'nombre': new FormControl(),
             }),
             'tipoDomicilio': new FormGroup({
                 'id': new FormControl(),
+                'nombre': new FormControl(),
             }),
             'calle': new FormControl(),
             'noExterior': new FormControl(),

@@ -1,7 +1,7 @@
 import { LosForm } from './persona-fisica-imputado.component';
 import { PersonaGlobals } from './persona-fisica-imputado.component';
 import { Options } from './options';
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { _config} from '@app/app.config';
 import { CIndexedDB } from '@services/indexedDB';
@@ -10,6 +10,9 @@ import { OnLineService} from '@services/onLine.service';
 import { PersonaService } from '@services/noticia-hecho/persona/persona.service';
 import { SelectsService} from '@services/selects.service';
 import { Logger } from "@services/logger.service";
+import { TableService} from '@utils/table/table.service';
+import { MatPaginator } from '@angular/material';
+import { Observable }  from 'rxjs/Observable';
 
 
 @Component({
@@ -94,7 +97,10 @@ export class LocalizacionComponent{
 
 @Component({
     selector: 'localizacion-form',
-    templateUrl : './localizacion.form.html'
+    templateUrl : './localizacion.form.html',
+    styles :[
+        ".latabla{border-style: solid; border-color: rgb(226, 222, 220); border-width: 2px;}",
+    ]
 })
 export class LocalizacionFormComponent{
     @Input()
@@ -109,6 +115,16 @@ export class LocalizacionFormComponent{
     idMunicipioBuscadoEnLocalidad=null;
     antIdEstado=null;
     antIdPais=null;
+    dataSource=null;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    data=[];
+    public displayedColumns = ['direccion'];
+    mensajeBoton="Agregar";
+    cantidad=0;
+    form=LosForm.createFormLocalizacion();
+    indiceActual=-1;
+    idMexico=-1;
+    radioTipoResidencia=null;
 
     constructor(
         private http: HttpService,
@@ -120,13 +136,123 @@ export class LocalizacionFormComponent{
     }
 
     ngOnInit(){
-        Logger.log('->LocalizacionForm Globals', this.globals);
+        this.idMexico=_config.optionValue.idMexico;
+        Logger.log('->LocalizacionForm Globals', this.globals,this.idMexico);
         Logger.log('->LocalizacionForm IndexForm', this.indexForm);
         this.options = new Options(this.http, this.onLine, this.db, this.select);
+        this.dataSource = new TableService(this.paginator, this.data);
+        let timer = Observable.timer(3500);
+        timer.subscribe(t=>{
+            Logger.logColor("--------->","green", this.globals.form.value,this.options);
+            if  (this.globals.form.value["localizacionPersona"]){
+                for(let i=0;i<this.globals.form.value["localizacionPersona"].length;i++){
+                    this.agregarNombres(this.globals.form.value["localizacionPersona"][i]);
+                    this.data.push(this.globals.form.value["localizacionPersona"][i]);
+                }
+                Logger.log(this.data);
+                this.dataSource = new TableService(this.paginator, this.data);
+            }
+        });
+        
+    }
+    public cancelar(){
+        this.mensajeBoton="Agregar";
+        this.form.reset();
+        this.indiceActual=-1;
+        this.radioTipoResidencia=null;
+    }  
+
+    editar(localizacion,i){
+        Logger.log(localizacion,i);
+        if (i==this.indiceActual)
+            return;
+        this.mensajeBoton="Editar";
+        this.indiceActual=i;
+        this.form.controls.pais.patchValue(localizacion.pais);
+        let timer = Observable.timer(1);
+        timer.subscribe(t=>{
+            this.form.patchValue(localizacion);
+            this.radioTipoResidencia=localizacion.tipoRecidencia;
+        });
+    }
+
+    agregarNombres(dato){
+        if (dato.pais && dato.pais["id"]){
+            for (var i=0; i<this.options.paises.length; i++){
+                if (dato.pais["id"]==this.options.paises[i]["value"]){
+                    dato.pais["nombre"]=""+this.options.paises[i]["label"]
+                    break;
+                }
+            }
+        }
+        if (dato.estado && dato.estado["id"]){
+            for (var i=0; i<this.options.estados.length; i++){
+                if (dato.estado["id"]==this.options.estados[i]["value"]){
+                    dato.estado["nombre"]=""+this.options.estados[i]["label"]
+                    break;
+                }
+            }
+        }
+        if (dato.municipio && dato.municipio["id"]){
+            for (var i=0; i<this.options.municipios.length; i++){
+                if (dato.municipio["id"]==this.options.municipios[i]["value"]){
+                    dato.municipio["nombre"]=""+this.options.municipios[i]["label"]
+                    break;
+                }
+            }
+        }
+        if (dato.colonia && dato.colonia["idCp"]){
+            for (var i=0; i<this.options.colonias.length; i++){
+                if (dato.colonia["idCp"]==this.options.colonias[i]["value"]){
+                    dato.colonia["nombre"]=""+this.options.colonias[i]["label"]
+                    break;
+                }
+            }
+        }
+        if (dato.localidad && dato.localidad["id"]){
+            for (var i=0; i<this.options.localidad.length; i++){
+                if (dato.localidad["id"]==this.options.localidad[i]["value"]){
+                    dato.localidad["nombre"]=""+this.options.localidad[i]["label"]
+                    break;
+                }
+            }
+        }
+        if (dato.tipoDomicilio && dato.tipoDomicilio["id"]){
+            for (var i=0; i<this.options.tipoDomicilio.length; i++){
+                if (dato.tipoDomicilio["id"]==this.options.tipoDomicilio[i]["value"]){
+                    dato.tipoDomicilio["nombre"]=""+this.options.tipoDomicilio[i]["label"]
+                    break;
+                }
+            }
+        }
+    }
+
+    addLocalizacion(dato){
+        let localizaciones = this.globals.form.get('localizacionPersona') as FormArray;
+        this.agregarNombres(dato);
+        //si se esta editando
+        Logger.logColor("Datos","pink",this.indiceActual,this.mensajeBoton,dato,this.idMexico);
+        if (this.mensajeBoton!="Agregar"){
+            //hay que encontar el indice
+            localizaciones.controls[this.indiceActual].patchValue(this.form.value);
+            this.data[this.indiceActual]=dato;
+        }else{//nuevo
+            let temForm=LosForm.createFormLocalizacion();
+            temForm.patchValue(dato);
+            localizaciones.push(temForm);
+            this.data.push(dato);
+        }
+        this.mensajeBoton="Agregar";
+        this.form.reset();
+        this.form.valid;
+        this.indiceActual=-1;
+        this.radioTipoResidencia=null;
+        this.cantidad=this.data.length;
+        this.dataSource = new TableService(this.paginator, this.data);
     }
 
 
-    public changePais(id, j){
+    public changePais(id){
         if(id!=null && typeof id !='undefined' && this.antIdPais!=id){
             this.isMexico=id==_config.optionValue.idMexico;
             this.options.getEstadoByPais(id);
@@ -138,7 +264,7 @@ export class LocalizacionFormComponent{
             }
         }
         this.antIdPais=id;
-        this.cleanSelects(j,true);
+        this.cleanSelects(true);
     }
 
     public buscaColonias(){
@@ -157,23 +283,23 @@ export class LocalizacionFormComponent{
         this.idMunicipioBuscadoEnLocalidad=this.antIdMunicipio;
     }
 
-    private cleanSelects(i,municipio){
+    private cleanSelects(municipio){
         if (municipio)
-            this.globals.form.controls.localizacionPersona["controls"][i].controls.municipio.reset();
-        this.globals.form.controls.localizacionPersona["controls"][i].controls.colonia.reset();
-        this.globals.form.controls.localizacionPersona["controls"][i].controls.localidad.reset();
-        this.globals.form.controls.localizacionPersona["controls"][i].controls.cp.reset();
+            this.form.controls.municipio.reset();
+        this.form.controls.colonia.reset();
+        this.form.controls.localidad.reset();
+        this.form.controls.cp.reset();
     }
 
-    public changeEstado(id,i){
+    public changeEstado(id){
         if(id!=null && typeof id !='undefined' && this.antIdEstado!=id){
             this.options.getMunicipiosByEstado(id);
-            this.cleanSelects(i,true);
+            this.cleanSelects(true);
         }
         this.antIdEstado=id;
     }
 
-    public changeMunicipio(id,i){
+    public changeMunicipio(id){
         Logger.logColor("MUNICIPIO","purple",this.globals.isFillForm);
         if(id!=null && typeof id !='undefined' && id!=this.antIdMunicipio){
             if (!this.globals.isFillForm){
@@ -182,33 +308,36 @@ export class LocalizacionFormComponent{
                 this.idMunicipioBuscadoEnLocalidad=id;
                 this.idMunicipioBuscadoEnColonia=id;
             }else{
-                var _data=this.globals.personaCaso;
-                Logger.logColor("PERSONA","brown",this.globals.personaCaso);
-                if (_data.localizacionPersona[i]['colonia'] && _data.localizacionPersona[i]['colonia']["id"])
-                    this.options.colonias=[{value:_data.localizacionPersona[i]['colonia']['id']+"-"+_data.localizacionPersona[i]['colonia']['cp'],label:_data.localizacionPersona[i]['colonia']['nombre']}];
-                if (_data.localizacionPersona[i]['localidad'] && _data.localizacionPersona[i]['localidad']["id"])
-                    this.options.localidad=[{value:_data.localizacionPersona[i]['localidad']['id'],label:_data.localizacionPersona[i]['localidad']['nombre']}];
+                // var _data=this.globals.personaCaso;
+                // Logger.logColor("PERSONA","brown",this.globals.personaCaso);
+                // if (_data.localizacionPersona[i]['colonia'] && _data.localizacionPersona[i]['colonia']["id"])
+                //     this.options.colonias=[{value:_data.localizacionPersona[i]['colonia']['id']+"-"+_data.localizacionPersona[i]['colonia']['cp'],label:_data.localizacionPersona[i]['colonia']['nombre']}];
+                // if (_data.localizacionPersona[i]['localidad'] && _data.localizacionPersona[i]['localidad']["id"])
+                //     this.options.localidad=[{value:_data.localizacionPersona[i]['localidad']['id'],label:_data.localizacionPersona[i]['localidad']['nombre']}];
             }
-            this.cleanSelects(i,false);
+            this.cleanSelects(false);
         }
         this.antIdMunicipio=id;
     }
 
-    public changeColonia(i,idCp){
+    public changeColonia(idCp){
         Logger.log("Colonia",idCp,this.options);
         if (idCp){
             let arr = idCp.split("-");
-            this.globals.form.controls.localizacionPersona["controls"][i].controls.cp.patchValue(arr[1]);
-            this.globals.form.controls.localizacionPersona["controls"][i].controls.colonia.patchValue({id:arr[0]});
+            this.form.controls.cp.patchValue(arr[1]);
+            this.form.controls.colonia.patchValue({id:arr[0]});
         }
 
     }
 
-    changeTipoResida(value,i){
-        Logger.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i] );
-        Logger.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i].controls );
-        Logger.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i].controls.tipoResidencia );
-        this.globals.form.controls.localizacionPersona["controls"][i].controls.tipoRecidencia.patchValue(value);
+    changeTipoResida(value){
+        Logger.log(this.indiceActual,"TIPOResidencia", value, this.form,this.radioTipoResidencia );
+        this.form.controls.tipoRecidencia.patchValue(value);
+        this.radioTipoResidencia=value;
+        // Logger.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i].controls );
+        // Logger.log(i,"TIPOResidencia", value, this.globals.form.controls.localizacionPersona["controls"][i].controls.tipoResidencia );
+        // this.globals.form.controls.localizacionPersona["controls"][i].controls.tipoRecidencia.patchValue(value);
+        // this.form.controls.tipoRecidencia.patchValue(value);
     }
 
 }
