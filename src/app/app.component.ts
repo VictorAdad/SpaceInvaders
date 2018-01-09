@@ -8,6 +8,7 @@ import { NotifyService} from '@services/notify/notify.service';
 import { OnLineService } from "@services/onLine.service";
 import { SelectsService } from "@services/selects.service";
 import { FormatosService } from '@services/formatos/formatos.service';
+import { HttpService} from '@services/http.service';
 import { DomSanitizer} from '@angular/platform-browser';
 import { MatIconRegistry} from '@angular/material';
 import { _config} from '@app/app.config';
@@ -47,7 +48,8 @@ export class AppComponent {
         private selects: SelectsService,
         private formatos: FormatosService,
         private notification: NotificationsService,
-        private notify:  NotifyService
+        private notify:  NotifyService,
+        private http: HttpService
 	) {
         mdIconRegistry.addSvgIcon('arma',sanitizer.bypassSecurityTrustResourceUrl('./assets/images/iconos/arma.svg'));
         this._SIDEBAR = false;
@@ -104,6 +106,16 @@ export class AppComponent {
         window.indexedDB.deleteDatabase("SIGI");
         location.reload(true);
         // window.location.assign("../")
+    }
+
+    public loadNotifications(_event, _page){
+        if(this.authService.user.notificaciones.length === 0){
+            this.http.get(`/v1/base/notificaciones/usuario/${this.authService.user.username}/page?tr=5`).subscribe(
+                response => {
+                    this.authService.user.notificaciones = response.data;
+                }
+            )
+        }
     }
 
 }

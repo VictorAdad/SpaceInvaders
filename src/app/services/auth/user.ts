@@ -58,8 +58,13 @@ export class Usuario {
 
         this.notificacionesChange.subscribe(
             notificacion => {
-                this.notificaciones.push(notificacion);
-                this.getNotificacionesSinLeer();
+                if(typeof notificacion != 'string'){
+                    this.sinLeer ++;
+                    this.notificaciones.push(notificacion);
+                }else{
+                    this.sinLeer += notificacion.length;
+                }
+
             }
         )
     }
@@ -75,11 +80,6 @@ export class Usuario {
             return _roles.some( role => this.roles.includes(role));
         else
             return false;
-    }
-
-    public getNotificacionesSinLeer(){
-        let filter = this.notificaciones.filter( o => !o.leido);
-        this.sinLeer = filter.length;
     }
 }
 
