@@ -67,17 +67,10 @@ export class AppComponent {
                         clickToClose: false,
                         maxLength: 100
                     });
-                    this.authService.user.notificaciones.push(message['notify']);
+                    this.authService.user.notificacionesChange.next(message['notify']);
                 }
             }
         );
-        this.notify.emitMessage({
-            'notify': {
-                'username': 'call.center.demo',
-                'titulo': 'Prueba',
-                'contenido': 'Notificacion de prueba'
-            }
-        });
 	}
 
 

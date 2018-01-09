@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs/Subject';
+
 export class Usuario {
 
     public nombreCompleto: string;
@@ -34,6 +36,10 @@ export class Usuario {
 
     public notificaciones: any[] = [];
 
+    public sinLeer: number = 0;
+
+    public notificacionesChange: Subject<any> =  new Subject<any>();
+
     constructor(_usuario: any =  null) {
         if(_usuario != null){
             this.nombreCompleto  = _usuario.cn;
@@ -49,6 +55,13 @@ export class Usuario {
             this.municipio       = _usuario.Municipio;
             this.municipioId     = _usuario.municipioId;
         }
+
+        this.notificacionesChange.subscribe(
+            notificacion => {
+                this.notificaciones.push(notificacion);
+                this.getNotificacionesSinLeer();
+            }
+        )
     }
 
     public setRoles(_roles: string): string[]{
@@ -62,7 +75,12 @@ export class Usuario {
             return _roles.some( role => this.roles.includes(role));
         else
             return false;
-     }
+    }
+
+    public getNotificacionesSinLeer(){
+        let filter = this.notificaciones.filter( o => !o.leido);
+        this.sinLeer = filter.length;
+    }
 }
 
 export class Role {
