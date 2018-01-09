@@ -1,42 +1,58 @@
-import { Component, ViewChild } from '@angular/core';
-
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material';
-import { TableService} from '@utils/table/table.service';
-import { MiservicioService,MDato } from '@services/miservicio.service';
-
-import {DataSource} from '@angular/cdk/collections';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import { Logger } from "@services/logger.service";
+import { BasePaginationComponent } from '@components-app/base/pagination/component';
+import { AuthenticationService } from '@services/auth/authentication.service';
+import { HttpService } from '@services/http.service';
+import { TableService } from '@utils/table/table.service';
 
 @Component({
-    selector:'notificaciones',
-    templateUrl:'./notificaciones.component.html'
+    templateUrl: './notificaciones.component.html',
 })
+export class NotificacionesComponent extends BasePaginationComponent implements OnInit {
 
-export class NotificacionesComponent{
-	displayedColumns = ['Fecha y Hora', 'Titulo del caso', 'NIC', 'NUC', 'Asignado por'];
-    data: notificaciones[];
-    //dataSource: TableService | null;
-    dataSource: TableService | null;
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-
-    ngOnInit(){
-        this.data = data;
-        this.dataSource = new TableService(this.paginator, this.data);
-        Logger.log('-> Data Source', this.dataSource);
+    constructor(
+        public auth: AuthenticationService,
+        private http: HttpService
+        ) {
+        super();
     }
 
+    ngOnInit(){
+        this.dataSource = new TableService(this.paginator, []);
+        this.page();
+    }
+
+    public changePage(_e){
+        console.log('changePage()', _e);
+        this.dataSource = null;
+        this.pageIndex  = _e.pageIndex;
+        this.pageSize   = _e.pageSize; 
+        this.page();
+    }
+
+    public filterPage(_event){
+        if(typeof _event == 'string'){
+            this.dataSource = null;
+            this.pageFilter = _event;
+            this.page();
+        }
+    }
+
+    public page(){
+        this.loadList = true;
+
+        if(this.pageSub)
+            this.pageSub.unsubscribe();
+
+        this.pageSub = this.http.get(
+            `/v1/base/notificaciones/${this.auth.user.username}/page?f=${this.pageFilter}&p=${this.pageIndex}&tr=${this.pageSize}`
+        ).subscribe(
+            (response) => {
+
+            },
+            (error) => {
+
+            }
+        );
+    }
 }
-
-export interface notificaciones {
-    fecha: string;
-    titulo: string;
-    nic: string;
-    nuc: string;
-    asignado: string;
-  }
-
-  const data: notificaciones[] = [
-      {fecha: '12/02/1993', titulo: 'Robo a casa habitación', nic: 'CAI/AIN/00/UAI/268/00126/17/08', nuc:'CAI/AIN/00/UAI/268/00126/17/08', asignado: 'Sergio Alejandro Hernández'}
-  ];
