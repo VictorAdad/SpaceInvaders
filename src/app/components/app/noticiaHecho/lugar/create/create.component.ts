@@ -52,7 +52,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
   public geoMmunicipio:any;
   public geoEstado:any;
   public geoPais:any;
-  public geocoder: any=null; 
+  public geocoder: any=null;
+  public editFlag: boolean = false; 
 
 
   constructor(private _fbuilder: FormBuilder,
@@ -92,6 +93,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
       }
       if (params['id']) {
         this.id = +params['id'];
+        this.editFlag = true;
         if (this.onLine.onLine) {
           this.http.get('/v1/base/lugares/' + this.id).subscribe(response => {
             Logger.log('Lugar->', response);
@@ -430,68 +432,100 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
   public fillCalle(value){
     if(value != null && value != undefined){
       this.geoCalle=value;
-      this.fillAddress();
+      if(!this.editFlag){
+        if(this.geoCalle.length > 3){
+          // this.fillAddress();
+        }
+      }
     }    
   }
 
   public fillNum(value){
     if(value != null && value != undefined){    
       this.geoNumero=value;
-      this.fillAddress();
+      if(!this.editFlag){
+        this.fillAddress();
+      }
     }  
   }
 
   public fillColonia(value){
       if(value != null && value != undefined){
+        this.editFlag = false;
         if (this.isMexico){
-          for(var i=0; i<this.optionsServ.colonias.length; i++){
-            if(value == this.optionsServ.colonias[i]["value"]){
-              this.geoColonia = this.optionsServ.colonias[i]["label"]
-              this.fillAddress();
-              break;
+          let timer = Observable.timer(3333);
+          timer.subscribe(t => {
+          Logger.logColor('<<<<< Direccion >>>>>', this.geoNumero,this.geoCalle,this.geoColonia,this.geoMmunicipio,this.geoEstado,this.geoPais)  
+            for(var i=0; i<this.optionsServ.colonias.length; i++){            
+              if(value == this.optionsServ.colonias[i]["value"]){
+                this.geoColonia = this.optionsServ.colonias[i]["label"]
+                this.fillAddress();
+                break;
+              }
             }
-          }
+          });  
         }else{
           this.geoColonia=value;
-          this.fillAddress();
+          if(this.geoColonia.length > 3){
+            this.fillAddress();
+          }
+          
         }
       }
   }
 
   public fillMunicipio(value){
     if(value != null && value != undefined){
-      if (!isNaN(value)){
-        for(var i=0; i<this.optionsServ.municipios.length; i++){
-          if(value == this.optionsServ.municipios[i]["value"]){
-            value = this.optionsServ.municipios[i]["label"]
-            this.geoMmunicipio=value;
-            Logger.logColor("geomunicipio","green",this.geoMmunicipio);
-            this.fillAddress();
-            break;
+      let timer = Observable.timer(3333);
+      timer.subscribe(t => {
+        if (!isNaN(value)){
+          for(var i=0; i<this.optionsServ.municipios.length; i++){
+            if(value == this.optionsServ.municipios[i]["value"]){
+              value = this.optionsServ.municipios[i]["label"]
+              this.geoMmunicipio=value;
+              Logger.logColor("geomunicipio","green",this.geoMmunicipio);
+              if(!this.editFlag){
+                this.fillAddress();
+              }  
+              break;
+            }
           }
+        }else{
+          this.geoMmunicipio=value;
+          if(!this.editFlag){
+            if(this.geoMmunicipio.length > 3){
+              // this.fillAddress();
+            }            
+          }  
         }
-      }else{
-        this.geoMmunicipio=value;
-        this.fillAddress();
-      }
+      });  
     }  
   }
 
   public fillEstado(value){
     if(value != null && value != undefined){
-      if (!isNaN(value)){
-        for(var i=0; i<this.optionsServ.estados.length; i++){
-          if(value == this.optionsServ.estados[i]["value"]){
-            value = this.optionsServ.estados[i]["label"]
-            this.geoEstado=value;
-            this.fillAddress();
-            break;
+      let timer = Observable.timer(3333);
+      timer.subscribe(t => {
+        if (!isNaN(value)){
+          for(var i=0; i<this.optionsServ.estados.length; i++){
+            if(value == this.optionsServ.estados[i]["value"]){
+              value = this.optionsServ.estados[i]["label"]
+              this.geoEstado=value;
+              if(!this.editFlag){
+                this.fillAddress();
+              }  
+              break;
+            }
+          }
+        }else{
+          this.geoEstado=value;
+          if(!this.editFlag){
+            if(this.geoEstado.length > 3){
+              // this.fillAddress();
+            }
           }
         }
-      }else{
-        this.geoEstado=value;
-        this.fillAddress();
-      }
+      });
     }  
   }
 
@@ -504,7 +538,9 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
         }
       }
       this.geoPais=value;
-      this.fillAddress();
+      if(!this.editFlag){
+        this.fillAddress();
+      }      
     }
   }
 
@@ -532,12 +568,15 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
           var place;
           if (this.geocoder) {
             this.geocoder.geocode({'address': address}, (results, status) => {
-              if (status) {
-                Logger.logColor('<<<< Respuesta >>>>','Red', results)
+              if (status && results) {
                 place = results[0];
-                if (place.geometry === undefined || place.geometry === null) {
+                if(!place === undefined || place === null){                
+                  if (place.geometry === undefined || place.geometry === null) {
+                    return;
+                  }
+                }else{
                   return;
-                }
+                }                
                 this.lat = place.geometry.location.lat();
                 this.lng = place.geometry.location.lng();
                 this.latMarker = place.geometry.location.lat();
