@@ -38,6 +38,8 @@ export class AppComponent {
 
     public pageNotification: number = 1;
 
+    public loadNotification: boolean = false;
+
 	constructor(
 		public authService: AuthenticationService,
 		private router : Router,
@@ -111,19 +113,19 @@ export class AppComponent {
     }
 
     public loadNotifications(_event){
-        // if(this.authService.user.notificaciones.length === 0){
-            this.http.get(`/v1/base/notificaciones/usuario/${this.authService.user.username}/page?p=${this.pageNotification}`).subscribe(
-                response => {
-                    this.pageNotification ++;
-                    if(this.authService.user.notificaciones.length === 0)
-                        this.authService.user.notificaciones = response.data;
-                    else
-                        this.authService.user.notificaciones = this.authService.user.notificaciones.concat(response.data);
+        this.loadNotification = true;
+        this.http.get(`/v1/base/notificaciones/usuario/${this.authService.user.username}/page?p=${this.pageNotification}`).subscribe(
+            response => {
+                this.loadNotification = false;
+                this.pageNotification ++;
+                if(this.authService.user.notificaciones.length === 0)
+                    this.authService.user.notificaciones = response.data;
+                else
+                    this.authService.user.notificaciones = this.authService.user.notificaciones.concat(response.data);
 
-                    console.log('-> Notificaciones', (this.authService.user.notificaciones.length), this.authService.user.notificaciones);
-                }
-            )
-        // }
+                console.log('-> Notificaciones', (this.authService.user.notificaciones.length), this.authService.user.notificaciones);
+            }
+        )
     }
 
     public onScrollNotification(_event){
