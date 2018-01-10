@@ -116,6 +116,7 @@ export class Caso{
 	public lugares: any[];
 	public nuc: string
 	public tipoRelacionPersonas: any[];
+	public IdMexico = _config.optionValue.idMexico;
 
 
 
@@ -194,8 +195,26 @@ export class Caso{
 			}
 		}
 		return options;
-		
 	}
+	public optionsLugares(){
+		let options: MOption[] = [];
+		let complement;
+		if (this.lugares) {
+			for(let i in this.lugares){
+				let paisId = this.lugares[i].pais.id;
+				if (paisId == this.IdMexico) {
+					complement = this.lugares[i].colonia.nombre+","+this.lugares[i].estado.nombre;
+				}else{
+					complement = this.lugares[i].coloniaOtro+","+this.lugares[i].estadoOtro;
+				}
+				let lugar = this.lugares[i].detalleLugar.tipoLugar+" - "+this.lugares[i].calle+","+this.lugares[i].noExterior+","+complement;
 
+				options.push(
+					{value:this.lugares[i].id , label:lugar}
+				);
+			}
+		}
+		return options;		
+	}
 
 }
