@@ -118,7 +118,7 @@ export class AppComponent {
                     if(this.authService.user.notificaciones.length === 0)
                         this.authService.user.notificaciones = response.data;
                     else
-                        this.authService.user.notificaciones.push.apply(response.data);
+                        this.authService.user.notificaciones = this.authService.user.notificaciones.concat(response.data);
 
                     console.log('-> Notificaciones', (this.authService.user.notificaciones.length), this.authService.user.notificaciones);
                 }
