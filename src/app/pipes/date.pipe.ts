@@ -36,3 +36,11 @@ export class LongDate implements PipeTransform {
 		return moment(date).format('LLL');
 	}
 }
+
+@Pipe({name : 'fromNow'})
+export class FromNowPipe implements PipeTransform {
+	transform(date:Date){
+		moment.locale('es');
+		return moment(date).fromNow();
+	}
+}

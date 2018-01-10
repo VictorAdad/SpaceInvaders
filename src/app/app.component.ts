@@ -8,6 +8,7 @@ import { NotifyService} from '@services/notify/notify.service';
 import { OnLineService } from "@services/onLine.service";
 import { SelectsService } from "@services/selects.service";
 import { FormatosService } from '@services/formatos/formatos.service';
+import { HttpService} from '@services/http.service';
 import { DomSanitizer} from '@angular/platform-browser';
 import { MatIconRegistry} from '@angular/material';
 import { _config} from '@app/app.config';
@@ -35,6 +36,10 @@ export class AppComponent {
 
     public socket: any;
 
+    public pageNotification: number = 1;
+
+    public loadNotification: boolean = false;
+
 	constructor(
 		public authService: AuthenticationService,
 		private router : Router,
@@ -42,12 +47,13 @@ export class AppComponent {
     	public globalService : GlobalService,
     	public servicio: OnLineService,
     	private activeRoute: ActivatedRoute,
-        private mdIconRegistry: MatIconRegistry, 
+        private mdIconRegistry: MatIconRegistry,
         private sanitizer: DomSanitizer,
         private selects: SelectsService,
         private formatos: FormatosService,
         private notification: NotificationsService,
-        private notify:  NotifyService
+        private notify:  NotifyService,
+        private http: HttpService
 	) {
         mdIconRegistry.addSvgIcon('arma',sanitizer.bypassSecurityTrustResourceUrl('./assets/images/iconos/arma.svg'));
         this._SIDEBAR = false;
@@ -57,20 +63,20 @@ export class AppComponent {
 
 	ngOnInit(){
 		this.titleService.setTitle(this.createTitle());
-
         this.notify.getMessages().subscribe(
             message => {
-                if(message['notify']['username'] === this.authService.user.username)
+                if(message['notify']['username'] === this.authService.user.username){
                     this.notification.create(message['notify']['titulo'], message['notify']['contenido'], 'info', {
-                        timeOut: 100000,
-                        showProgressBar: true,
+                        timeOut: 10000,
+                        showProgressBar: false,
                         pauseOnHover: false,
                         clickToClose: false,
-                        maxLength: 10
+                        maxLength: 100
                     });
+                    this.authService.user.notificacionesChange.next(message['notify']);
+                }
             }
         );
-
 	}
 
 
@@ -104,6 +110,27 @@ export class AppComponent {
         window.indexedDB.deleteDatabase("SIGI");
         location.reload(true);
         // window.location.assign("../")
+    }
+
+    public loadNotifications(_event){
+        this.loadNotification = true;
+        this.http.get(`/v1/base/notificaciones/usuario/${this.authService.user.username}/page?p=${this.pageNotification}`).subscribe(
+            response => {
+                this.loadNotification = false;
+                this.pageNotification ++;
+                if(this.authService.user.notificaciones.length === 0)
+                    this.authService.user.notificaciones = response.data;
+                else
+                    this.authService.user.notificaciones = this.authService.user.notificaciones.concat(response.data);
+
+                console.log('-> Notificaciones', (this.authService.user.notificaciones.length), this.authService.user.notificaciones);
+            }
+        )
+    }
+
+    public onScrollNotification(_event){
+        if((_event.target.scrollTop + 430) === _event.target.scrollHeight)
+            this.loadNotifications(null);
     }
 
 }

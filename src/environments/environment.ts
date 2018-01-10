@@ -6,17 +6,18 @@
 export const environment = {
   production: false,
   api : {
-    host : 'http://10.0.2.21:9000'
+    host : 'http://localhost:9000',
+    ws : 'ws://localhost:9000',
   },
   app: {
-  	host: 'http://10.0.2.21:4200'
+  	host: 'http://localhost:4200'
   },
   oam: {
   	tokenApp: 'b2F1dGhzaWdpY2xpZW50OmZjODFmZGFmNjlhYjQ4NjZhMmZjODU3NWMwZGIwYmQ2',
   	domainName: 'OAuthSIGIDomain',
   	grantType: 'PASSWORD',
   	scope: 'AttributesOUD.attrs',
-  	host: 'http://10.0.30.12',
+  	host: 'http://sigi-api.evomatik.net',
     session: '_USER'
   }
 };

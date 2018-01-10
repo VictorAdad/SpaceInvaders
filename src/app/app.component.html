@@ -16,33 +16,45 @@
             <mat-icon class="button-menu">signal_wifi_off</mat-icon>
         </button>
 
-        <button mat-icon-button [matMenuTriggerFor]="notify" style="margin-right: 10px;">
+        <button mat-icon-button [matMenuTriggerFor]="notify" (onMenuOpen)="loadNotifications($event, 1)" style="margin-right: 20px;">
             <mat-icon class="button-menu">notifications</mat-icon>
-            <mat-chip color="primary">{{ authService.user.notificaciones.length }}</mat-chip>
+            <mat-chip color="accent">{{ authService.user.sinLeer }}</mat-chip>
         </button>
 
         <mat-menu #notify="matMenu" class="notification-list">
             <button class="titulo" mat-menu-item>
                 <h4>Notificaciones</h4>
             </button>
-
-            <button mat-menu-item>
-                <div class="row">
-                    <div class="col-md-2">
-                        <mat-icon class="prueba" fxHide="false" fxHide.gt-sm>perm_identity</mat-icon>
-                    </div>
-                    <div class="col-md-8 not">
-                        <label>Robo a casa habitación</label><br/>
-                        <label>Por: <strong>Sergio Alejandro Hernández</strong></label><br/>
-                        <label>Hace 2 horas</label>
-                    </div>
-                    <div class="col-md-2 z">
-                        <mat-icon fxHide="false" fxHide.gt-sm>clear</mat-icon>
-                    </div>
+            <ng-template #list [ngIf]="authService.user.notificaciones.length > 0 " [ngIfElse]="noNotification">
+                <div class="notification-content" (scroll)="onScrollNotification($event)">
+                    <button mat-menu-item *ngFor="let notificacion of authService.user.notificaciones">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <mat-icon class="prueba" fxHide="false" fxHide.gt-sm>perm_identity</mat-icon>
+                            </div>
+                            <div class="col-sm-8 not">
+                                <label>{{ notificacion.titulo }}</label><br/>
+                                <label><strong>{{ notificacion.contenido }}</strong></label><br/>
+                                <label>{{ notificacion.created | fromNow }}</label>
+                            </div>
+                            <div class="col-sm-2 z">
+                                <mat-icon fxHide="false" fxHide.gt-sm>clear</mat-icon>
+                            </div>
+                        </div>
+                    </button>
                 </div>
-            </button>
-
-            <button class="titulo" mat-menu-item>
+            </ng-template>
+            <ng-template #noNotification>
+                <button mat-menu-item>
+                    <div class="row">
+                        <div class="col">
+                            <label>No tiene notificaciones</label>
+                        </div>
+                    </div>
+                </button>
+            </ng-template>
+            <mat-progress-bar *ngIf="loadNotification" mode="indeterminate" color="accent"></mat-progress-bar>
+            <button class="titulo" mat-menu-item routerLink="/notificaciones">
                 <h4>Ver todas</h4>
             </button>
 
