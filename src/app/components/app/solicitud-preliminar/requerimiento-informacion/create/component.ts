@@ -18,6 +18,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
 import { Logger } from "@services/logger.service";
+import { Yason } from '@services/utils/yason';
 
 @Component({
     templateUrl:'./component.html',
@@ -112,10 +113,10 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 				this.id = +params['id'];
 				Logger.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-					Logger.log('Get reg ',response),
-					this.fillForm(response);
+					Logger.log('<<<< Get reg >>>>',response),
 					this.modelUpdate.emit(response);
 					this.personas = response.personas;
+					this.fillForm(response);
 					this.form.disable();
 				});
 			}
@@ -165,10 +166,16 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 	}
 
 	public fillForm(_data) {
-    if(_data.fechaReq !== "" && _data.fechaReq != null && _data.fechaReq != undefined)
-      _data.fechaReq = new Date(_data.fechaReq);
+    	if(_data.fechaReq !== "" && _data.fechaReq != null && _data.fechaReq != undefined){
+			_data.fechaReq = new Date(_data.fechaReq);
+			Yason.eliminaNulos(_data);
+		}else{
+			_data.fechaReq = "";  
+			Yason.eliminaNulos(_data);
+			_data.fechaReq = null;
+		}
 		this.form.patchValue(_data);
-		Logger.log(_data);
+		
 	}
 }
 

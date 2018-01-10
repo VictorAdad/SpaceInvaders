@@ -60,20 +60,20 @@
                         [options]="optionsServ.paises"
                         name="id"
                         [group]="form.controls.pais"
-                        (valueChange)="changePais($event)"
+                        (valueChange)="changePais($event); fillPais($event)"
                         hintStart="Campo obligatorio"
                         >
 
                     </select2>
                 </div>
                 <div class="col-md-3" *ngIf="!isMexico">
-                    <text label="Estado" name="estadoOtro" [max]="40" [group]="form"></text>
+                    <text label="Estado" name="estadoOtro" [max]="40" [group]="form" (valueChange)="fillEstado($event)"></text>
                 </div>
                 <div class="col-md-3" *ngIf="!isMexico">
-                    <text label="Municipio/Delegación" name="municipioOtro" [max]="40" [group]="form"></text>
+                    <text label="Municipio/Delegación" name="municipioOtro" [max]="40" [group]="form" (valueChange)="fillMunicipio($event)"></text>
                 </div>
                 <div class="col-md-3" *ngIf="!isMexico">
-                    <text label="Colonia/Asentamiento" name="coloniaOtro" [max]="40" [group]="form"></text>
+                    <text label="Colonia/Asentamiento" name="coloniaOtro" [max]="40" [group]="form" (valueChange)="fillColonia($event)"></text>
                 </div>
                 <div class="col-md-3" *ngIf="isMexico">
                     <select2
@@ -81,7 +81,7 @@
                         [options]="optionsServ.estados"
                         name="id"
                         [group]="form.controls.estado"
-                        (valueChange)="changeEstado($event)"
+                        (valueChange)="changeEstado($event); fillEstado($event)"
                         hintStart="Campo obligatorio"
                         >
 
@@ -93,14 +93,14 @@
                          [options]="optionsServ.municipios"
                          name="id"
                          [group]="form.controls.municipio"
-                         (valueChange)="changeMunicipio($event)"
+                         (valueChange)="changeMunicipio($event); fillMunicipio($event)"
                          hintStart="Campo obligatorio"
                          >
 
                     </select2>
                 </div>
                 <div class="col-md-3" *ngIf="isMexico">
-                    <select2 placeholder="Colonia" [options]="optionsServ.colonias" name="idCp" [group]="form.controls.colonia" (valueChange)="changeColonia($event)" hintStart="Campo obligatorio"></select2>
+                    <select2 placeholder="Colonia" [options]="optionsServ.colonias" name="idCp" [group]="form.controls.colonia" (valueChange)="changeColonia($event); fillColonia($event)" hintStart="Campo obligatorio"></select2>
                 </div>
             </div>
             <div class="row">

@@ -114,10 +114,16 @@ export class DatePicker implements OnInit, ControlValueAccessor {
             this.datePicker.nativeElement, 'focus', event => this.popover = true);
     }
 
+    cleanValue(){
+        this.datePicker.nativeElement.value = "";
+        this.control.patchValue(null);
+        this.popover = false;
+    }
+
     onClick(event) {
         if (event.target.parentElement != null) {
             if (!this.elementRef.nativeElement.contains(event.target) && event.target.parentElement.className != "years-list-view") 
-                this.popover = false;
+                this.popover = false; 
         }
     }
 

@@ -197,14 +197,12 @@ export class SincronizaCatalogos {
         var obj=this;
             this.http.get("/v1/catalogos/sincronizacion").subscribe(listaRemota=>{
                 var lista = listaRemota as any[];
+                var cambios=[];
                 for (var i = 0; i < lista.length; ++i) {
                     let dato={id:(lista[i])["nombreCatalogo"],uuid:(lista[i])["uuid"]};
-                    obj.db.update("catalogoLlave",dato).then(E=>{
-                        //Logger.log(E);
-                    });
-                
+                    cambios.push(dato);
                 }
-                
+                obj.db.actualizaCambios("catalogoLlave",cambios);
             });
        
     }

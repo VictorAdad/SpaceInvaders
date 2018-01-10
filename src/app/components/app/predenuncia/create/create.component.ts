@@ -57,7 +57,10 @@ export class PredenunciaCreateComponent {
         private route: ActivatedRoute,
         private http: HttpService,
         private onLine: OnLineService,
+        private router: Router,
         public db: CIndexedDB,
+        public casoServ: CasoService,
+        
       ){}
 
     ngOnInit(){
@@ -68,9 +71,11 @@ export class PredenunciaCreateComponent {
 
                 if(this.onLine.onLine){
                     this.http.get(this.apiUrl+params['casoId']+'/page').subscribe(response => {
-                        if(parseInt(response.totalCount) !== 0){
+                        if(parseInt(response.totalCount) !== 0){                            
                             this.hasPredenuncia = true;
                             this.object = response;
+                        }else{
+                            this.router.navigate(['/caso/' + this.casoId + '/detalle']);
                         }
                     });
                 }else{
@@ -139,7 +144,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                          if(parseInt(response.totalCount) !== 0){
                             this.hasPredenuncia = true;
                             Logger.log("Dont have predenuncia");
-                            //this.form.disable();
+                            this.form.disable();
                             this.model= response.data[0] as Predenuncia;
                             Logger.logColor('<<< model >>>','red', this.model);
                             this.personas = response.data[0].personas;
@@ -181,7 +186,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                     });
                 }
             }
-            
+
         });
 
         this.model = new Predenuncia();
@@ -205,7 +210,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                   'heredar':  new FormControl("", []),
                   'heredarSintesisHechos': new FormControl([]),
                   'personas': new FormArray([]),
-
+                  'tipoPersonaHeredar': new FormArray([]),
                 'caso': new FormGroup({
                     'id': new FormControl()
                 }),
@@ -259,7 +264,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                 'cargoAutoridadVictima'          :  new FormControl(this.model.victimaOfendidoQuerellante),
                 // 'observaciones'         :  new FormControl(this.model.observaciones),
               });
-              
+
             //}
         //});
     }
@@ -275,9 +280,11 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         console.log(this.casoService.caso.lugares)
         for(let i=0;i<this.casoService.caso.lugares.length;i++){
              if(this.casoService.caso.lugares[i].id==this.form.controls["lugar"].value.id){
-               lugar=(this.casoService.caso.lugares[i].calle?this.casoService.caso.lugares[i].calle:"")+
-               (this.casoService.caso.lugares[i].noInterior?this.casoService.caso.lugares[i].noInterior:"")+
-               (this.casoService.caso.lugares[i].municipio?this.casoService.caso.lugares[i].municipio.nombre:"");
+               lugar=(this.casoService.caso.lugares[i].calle?this.casoService.caso.lugares[i].calle:"")+" "+
+               (this.casoService.caso.lugares[i].noInterior?this.casoService.caso.lugares[i].noInterior:"")+" "+
+               (this.casoService.caso.lugares[i].municipio?this.casoService.caso.lugares[i].municipio.nombre:(this.casoService.caso.lugares[i].municipioOtro?this.casoService.caso.lugares[i].municipioOtro:""))+" "+
+               (this.casoService.caso.lugares[i].estado?this.casoService.caso.lugares[i].estado.nombre:(this.casoService.caso.lugares[i].estadoOtro?this.casoService.caso.lugares[i].estadoOtro:""))+" "+
+               (this.casoService.caso.lugares[i].pais?this.casoService.caso.lugares[i].pais.nombre:"");
                break;
              }
 
@@ -286,30 +293,24 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         this.form.controls["lugarHechos"].setValue(lugar);
      }
 
-
-      this.form.controls["tipoPersona"].updateValueAndValidity();
-
-     this.personasHeredadas.forEach((personaCaso)=> {
-     console.log(personaCaso.persona.tipoPersona)
-     this.form.controls["tipoPersona"].setValue(this.form.controls["tipoPersona"].value?(personaCaso.persona.tipoPersona?this.form.controls["tipoPersona"].value+","+personaCaso.persona.tipoPersona:"Sin valor"):personaCaso.persona.tipoPersona?personaCaso.persona.tipoPersona:"Sin valor")
-     this.form.controls["calidadPersona"].setValue(this.form.controls["calidadPersona"].value?(personaCaso.tipoInterviniente?this.form.controls["calidadPersona"].value+","+personaCaso.tipoInterviniente.tipo:"Sin valor"):personaCaso.tipoInterviniente.tipo?personaCaso.tipoInterviniente.tipo:"Sin valor")
-     console.log( this.form.controls["tipoPersona"])
-      });
-
-
-
+      this.personasHeredadas.forEach((personaCaso)=> {
+        console.log(personaCaso.persona.tipoPersona)
+        this.form.controls["tipoPersonaHeredar"].setValue(this.form.controls["tipoPersonaHeredar"].value?(personaCaso.persona.tipoPersona?this.form.controls["tipoPersonaHeredar"].value+","+personaCaso.persona.tipoPersona:"Sin valor"):personaCaso.persona.tipoPersona?personaCaso.persona.tipoPersona:"Sin valor")
+        this.form.controls["calidadPersona"].setValue(this.form.controls["calidadPersona"].value?(personaCaso.tipoInterviniente?this.form.controls["calidadPersona"].value+","+personaCaso.tipoInterviniente.tipo:"Sin valor"):personaCaso.tipoInterviniente.tipo?personaCaso.tipoInterviniente.tipo:"Sin valor")
+        console.log( this.form.controls["tipoPersona"])
+         });
 
     }
 
     public heredarChanged(_heredar){
-      this.heredar=_heredar;
       console.log("heredar changed")
+      this.heredar=_heredar;
       if(_heredar){
         this.form.removeControl("tipoPersona");
-        this.form.addControl("tipoPersona",new FormControl("",[]));
+        this.form.addControl("tipoPersonaHeredar",new FormControl("",[]));
         }
       else{
-          this.form.removeControl("tipoPersona");
+          this.form.removeControl("tipoPersonaHeredar");
           this.form.addControl("tipoPersona",new FormGroup({
             'id': new FormControl(),
           }));

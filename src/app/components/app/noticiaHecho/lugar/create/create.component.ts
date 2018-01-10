@@ -21,6 +21,7 @@ import {Validation} from '@services/validation/validation.service';
 import {CasoService} from '@services/caso/caso.service';
 import {Logger} from '@services/logger.service';
 import { AuthenticationService } from "@services/auth/authentication.service";
+import { forEach } from '@angular/router/src/utils/collection';
 
 
 @Component({
@@ -45,12 +46,15 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
   public breadcrumb = [];
   public colonia: any;
   public autocomplete: any;
-  public geoCalle: null;
-  public geoNumero:null;
-  public geoColonia:null;
-  public geoMmunicipio:null;
-  public geoEstado:null;
-  public geoPais;null;
+  public geoCalle: any;
+  public geoNumero:any;
+  public geoColonia:any;
+  public geoMmunicipio:any;
+  public geoEstado:any;
+  public geoPais:any;
+  public geocoder: any=null;
+  public editFlag: boolean = false; 
+
 
   constructor(private _fbuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -89,6 +93,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
       }
       if (params['id']) {
         this.id = +params['id'];
+        this.editFlag = true;
         if (this.onLine.onLine) {
           this.http.get('/v1/base/lugares/' + this.id).subscribe(response => {
             Logger.log('Lugar->', response);
@@ -113,28 +118,34 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
 
       }
     });
-    this.mapsAPILoader.load().then(() => {
-      this.autocomplete= new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ['address']
-      });
-      this.autocomplete.addListener('place_changed', () => {
-        this.ngZone.run(() => {
-          //get the place result
-          let place: google.maps.places.PlaceResult = this.autocomplete.getPlace();
-          //verify result
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-          }
 
-          //set latitude, longitude and zoom
-          this.lat = place.geometry.location.lat();
-          this.lng = place.geometry.location.lng();
-          this.latMarker = place.geometry.location.lat();
-          this.lngMarker = place.geometry.location.lng();
-          this.zoom = 17;
+    if(this.onLine.onLine){
+      this.mapsAPILoader.load().then(() => {
+        this.autocomplete= new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+          types: ['address']
+        });
+        this.autocomplete.addListener('place_changed', () => {
+          this.ngZone.run(() => {
+            //get the place result
+            let place: google.maps.places.PlaceResult = this.autocomplete.getPlace();
+            //verify result
+            if (place.geometry === undefined || place.geometry === null) {
+              return;
+            }
+  
+            //set latitude, longitude and zoom
+            this.lat = place.geometry.location.lat();
+            this.lng = place.geometry.location.lng();
+            this.latMarker = place.geometry.location.lat();
+            this.lngMarker = place.geometry.location.lng();
+            this.zoom = 17;
+          });
         });
       });
-    });
+
+      //this.geocoder = new google.maps.Geocoder();
+    }
+    
     let timer = Observable.timer(1);
     timer.subscribe(t => {
       this.validateForm(this.form);
@@ -213,8 +224,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
   public save(_valid: any, _model: any) {
     return new Promise<any>((resolve, reject) => {
       _model.caso.id = this.casoId;
-      _model.latitud = this.latMarker;
-      _model.longitud = this.lngMarker;
+      _model.latitud = this.latMarker.toFixed(8);
+      _model.longitud = this.lngMarker.toFixed(8);
       Logger.log('lo que envio: ' + _model.fecha);
 
       if (_model.fecha) {
@@ -419,33 +430,118 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
   }
 
   public fillCalle(value){
-    this.geoCalle=value;
-    this.fillAddress();
+    if(value != null && value != undefined){
+      this.geoCalle=value;
+      if(!this.editFlag){
+        if(this.geoCalle.length > 3){
+          // this.fillAddress();
+        }
+      }
+    }    
   }
 
   public fillNum(value){
-    this.geoNumero=value;
-    this.fillAddress();
+    if(value != null && value != undefined){    
+      this.geoNumero=value;
+      if(!this.editFlag){
+        this.fillAddress();
+      }
+    }  
   }
 
   public fillColonia(value){
-    this.geoColonia=value;
-    this.fillAddress();
+      if(value != null && value != undefined){
+        this.editFlag = false;
+        if (this.isMexico){
+          let timer = Observable.timer(3333);
+          timer.subscribe(t => {
+          Logger.logColor('<<<<< Direccion >>>>>', this.geoNumero,this.geoCalle,this.geoColonia,this.geoMmunicipio,this.geoEstado,this.geoPais)  
+            for(var i=0; i<this.optionsServ.colonias.length; i++){            
+              if(value == this.optionsServ.colonias[i]["value"]){
+                this.geoColonia = this.optionsServ.colonias[i]["label"]
+                this.fillAddress();
+                break;
+              }
+            }
+          });  
+        }else{
+          this.geoColonia=value;
+          if(this.geoColonia.length > 3){
+            this.fillAddress();
+          }
+          
+        }
+      }
   }
 
   public fillMunicipio(value){
-    this.geoMmunicipio=value;
-    this.fillAddress();
+    if(value != null && value != undefined){
+      let timer = Observable.timer(3333);
+      timer.subscribe(t => {
+        if (!isNaN(value)){
+          for(var i=0; i<this.optionsServ.municipios.length; i++){
+            if(value == this.optionsServ.municipios[i]["value"]){
+              value = this.optionsServ.municipios[i]["label"]
+              this.geoMmunicipio=value;
+              Logger.logColor("geomunicipio","green",this.geoMmunicipio);
+              if(!this.editFlag){
+                this.fillAddress();
+              }  
+              break;
+            }
+          }
+        }else{
+          this.geoMmunicipio=value;
+          if(!this.editFlag){
+            if(this.geoMmunicipio.length > 3){
+              // this.fillAddress();
+            }            
+          }  
+        }
+      });  
+    }  
   }
 
   public fillEstado(value){
-    this.geoEstado=value;
-    this.fillAddress();
+    if(value != null && value != undefined){
+      let timer = Observable.timer(3333);
+      timer.subscribe(t => {
+        if (!isNaN(value)){
+          for(var i=0; i<this.optionsServ.estados.length; i++){
+            if(value == this.optionsServ.estados[i]["value"]){
+              value = this.optionsServ.estados[i]["label"]
+              this.geoEstado=value;
+              if(!this.editFlag){
+                this.fillAddress();
+              }  
+              break;
+            }
+          }
+        }else{
+          this.geoEstado=value;
+          if(!this.editFlag){
+            if(this.geoEstado.length > 3){
+              // this.fillAddress();
+            }
+          }
+        }
+      });
+    }  
   }
 
   public fillPais(value){
-    this.geoEstado=value;
-    this.fillAddress();
+    if(value != null && value != undefined){
+      for(var i=0; i<this.optionsServ.paises.length; i++){
+        if(value == this.optionsServ.paises[i]["value"]){
+          value = this.optionsServ.paises[i]["label"]
+          break;
+        }
+      }
+      this.geoPais=value;
+      if(!this.editFlag){
+        this.fillAddress();
+      }      
+    }
   }
 
   public buildAddress(){
@@ -456,31 +552,45 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
     address=this.geoMmunicipio!==null&&this.geoMmunicipio!==undefined?(address!==""?address+",":"")+this.geoMmunicipio:address;
     address=this.geoEstado!==null&&this.geoEstado!==undefined?(address!==""?address+",":"")+this.geoEstado:address;
     address=this.geoPais!==null&&this.geoPais!==undefined?(address!==""?address+",":"")+this.geoPais:address;
+
+    Logger.logColor('<<< Addresss >>>','green', address)
     return address;
   }
   public fillAddress() {
-    let address = this.buildAddress();
-    this.searchElementRef.nativeElement.value = address;
-    let geocoder = new google.maps.Geocoder();
-    this.ngZone.run(() => {
-      var place;
-      geocoder.geocode({'address': address}, (results, status) => {
-        if (status) {
-          place = results[0];
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
+    if (this.onLine.onLine) {
+      let timer = Observable.timer(3500);
+      timer.subscribe(t => {
+        let address = this.buildAddress();
+        this.searchElementRef.nativeElement.value = address;
+        if (this.geocoder==null)
+          this.geocoder = new google.maps.Geocoder();
+          this.ngZone.run(() => {
+          var place;
+          if (this.geocoder) {
+            this.geocoder.geocode({'address': address}, (results, status) => {
+              if (status && results) {
+                place = results[0];
+                if(!place === undefined || place === null){                
+                  if (place.geometry === undefined || place.geometry === null) {
+                    return;
+                  }
+                }else{
+                  return;
+                }                
+                this.lat = place.geometry.location.lat();
+                this.lng = place.geometry.location.lng();
+                this.latMarker = place.geometry.location.lat();
+                this.lngMarker = place.geometry.location.lng();
+                this.zoom = 17;
+              } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+              }
+            });  
           }
-          this.lat = place.geometry.location.lat();
-          this.lng = place.geometry.location.lng();
-          this.latMarker = place.geometry.location.lat();
-          this.lngMarker = place.geometry.location.lng();
-          this.zoom = 17;
-        } else {
-          alert('Geocode was not successful for the following reason: ' + status);
-        }
-      });
-    });
-
+          
+        });
+      });  
+    }
   }
 
   public changePais(id) {

@@ -30,7 +30,7 @@ export class LoginDialogService{
             });
   
             dialogRef.afterClosed().subscribe(result => {
-                console.log('The dialog was closed');
+                console.log('The dialog was closed',this.funccionDespues);
                 if (this.funccionDespues)
                     this.funccionDespues(result);
                 this.isOpen=false;

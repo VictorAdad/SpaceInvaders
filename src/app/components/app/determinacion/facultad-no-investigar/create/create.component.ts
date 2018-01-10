@@ -98,6 +98,7 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
             'heredar':  new FormControl("", []),
             'heredarSintesisHechos':  new FormControl("", []),
             'personas': new FormArray([]),
+            'edadDenuncianteHeredar':new FormControl(''),
 
             'observaciones': new FormControl(),
             'sintesisHechos': new FormControl(),
@@ -109,7 +110,6 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
             'nombreDenunciante': new FormControl(''),
             'originarioDenunciante': new FormControl(''),
             'edadDenunciante': new FormControl(''),
-            'edadesDenunciante':new FormControl(''),
             'domicilioDenunciante': new FormControl(''),
             'fraccion': new FormControl(''),
         });
@@ -123,13 +123,16 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
             if (params['id']) {
                 this.id = +params['id'];
                 this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
+                        console.log(response.heredar);
                         this.personas = response.personas;
                         this.fillForm(response);
-                        this.modelUpdate.emit(response);                        
+                        this.modelUpdate.emit(response);
                 });
             }
         });
     }
+
+
     public heredarDatos(){
       console.log("Heredar en facultad de no investigar")
       /*
@@ -147,9 +150,9 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
        this.form.controls["nombreDenunciante"].setValue( this.form.controls["nombreDenunciante"].value?(nombrePersona?this.form.controls["nombreDenunciante"].value+","+nombrePersona:this.form.controls["nombreDenunciante"].value+",Sin valor"):nombrePersona)
         // Heredar edad Denunciante
         let edad=personaCaso.persona.edad
-        this.form.controls["edadesDenunciante"].setValue( this.form.controls["edadesDenunciante"].value?(edad?this.form.controls["edadesDenunciante"].value+","+edad:this.form.controls["edadesDenunciante"].value+",Sin valor"):edad)
-        console.log( this.form.controls["edadesDenunciante"].value);
-        this.form.controls["edadesDenunciante"].updateValueAndValidity();
+        this.form.controls["edadDenuncianteHeredar"].setValue( this.form.controls["edadDenuncianteHeredar"].value?(edad?this.form.controls["edadDenuncianteHeredar"].value+","+edad:this.form.controls["edadDenuncianteHeredar"].value+",Sin valor"):edad)
+        console.log( this.form.controls["edadDenuncianteHeredar"].value);
+        this.form.controls["edadDenuncianteHeredar"].updateValueAndValidity();
         let originario=this.personaOriginario.transform(personaCaso);
         // Heredar originario
         this.form.controls["originarioDenunciante"].setValue( this.form.controls["originarioDenunciante"].value?(originario?this.form.controls["originarioDenunciante"].value+","+originario:this.form.controls["originarioDenunciante"].value+",Sin valor"):originario)
@@ -169,9 +172,9 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
         this.heredar=_heredar;
         if(_heredar){
           this.form.removeControl("edadDenunciante");
-          this.form.addControl("edadesDenunciante",new FormControl("",[]));
+          this.form.addControl("edadDenuncianteHeredar",new FormControl("",[]));
         }else{
-          this.form.removeControl("edadesDenunciante");
+          this.form.removeControl("edadDenuncianteHeredar");
           this.form.addControl("edadDenunciante",new FormControl("",[]));
         }
 
@@ -222,9 +225,18 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
     }
 
     public fillForm(_data) {
+        this.heredarChanged(_data.heredar);
         this.form.patchValue(_data);
+        let timer=Observable.timer(1)
+        timer.subscribe(t=>{
+          if(this.form.controls['edadDenuncianteHeredar']){
+            console.log(_data.edadDenuncianteHeredar);
+            this.form.patchValue({'edadDenuncianteHeredar':_data.edadDenuncianteHeredar})
+          }
+        })
         this.form.disable();
         Logger.log(_data);
+        console.log('after fill form',this.form)
     }
 
 }

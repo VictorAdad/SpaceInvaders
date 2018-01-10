@@ -80,7 +80,7 @@ export class DelitoCreateComponent{
         }
 
     guardar(){
-
+        var obj=this;
         return new Promise((resolve,reject)=>{
             if (this.listaDelitos.length>0){
                 // if (!this.caso["delito"])
@@ -134,7 +134,7 @@ export class DelitoCreateComponent{
                             pendiente:true,
                             dependeDe:[obj.casoId],
                             temId: temId,
-                            username: this.auth.user.username
+                            username: obj.auth.user.username
                         }
                         obj.tabla.add("sincronizar",dato).then(p=>{
                             //obj.tabla.get("casos",obj.casoId).then(caso=>{

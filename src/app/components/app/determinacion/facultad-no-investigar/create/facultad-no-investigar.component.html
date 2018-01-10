@@ -14,10 +14,8 @@
           <text-area label="Originario de " name="originarioDenunciante" [group]="form"></text-area>
         </div>
         <div class="col-md-4 col-sm-12 col-lg-4">
-          <text  *ngIf="heredar; else noHeredarEdad" label="Edad" name="edadesDenunciante" [max]="1000" [group]="form"></text>
-          <ng-template #noHeredarEdad>
-            <int label="Edad" name="edadDenunciante" [max]="3" [group]="form"></int>
-          </ng-template>
+          <text  *ngIf="heredar" label="Edad" name="edadDenuncianteHeredar" [max]="1000" [group]="form"></text>
+          <int   *ngIf="!heredar" label="Edad" name="edadDenunciante" [max]="3" [group]="form"></int>
         </div>
       </div>
    <div class="row">

@@ -106,14 +106,12 @@
             <text *ngIf="heredar" label="Calidad de la persona" name="calidadPersona" [max]="1000" [group]="form" [focus]="true"></text>
   		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-            <text *ngIf="heredar; else noheredarTipoPersona" label="Tipo de persona" name="tipoPersona" [max]="1000" [group]="form"></text>
-          <ng-template #noheredarTipoPersona>
-            <select2 [options]="optionsServ.tipoPersona"
+            <text *ngIf="heredar" label="Tipo de persona" name="tipoPersonaHeredar" [max]="1000" [group]="form"></text>
+            <select2 *ngIf="!heredar" [options]="optionsServ.tipoPersona"
             placeholder="Tipo de persona"
             name="id"
             [group]="form.controls.tipoPersona">
-              </select2>
-          </ng-template>
+            </select2>
 		    </div>
 		</div>
 		<div class="row">

@@ -3,6 +3,7 @@ import { MOption } from '@partials/form/select2/select2.component'
 import { OnLineService} from '@services/onLine.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { SelectsService } from '@services/selects.service';
+import { Observable } from 'rxjs/Observable';
 
 export class Options {
 
@@ -20,7 +21,14 @@ export class Options {
         private db: CIndexedDB,
         private select: SelectsService
         ) {
-        this.paises      = this.select.paises;
+        if (this.select.paises.length==0){
+            this.select.getPaises();
+            let timer = Observable.timer(1000);
+            timer.subscribe(t=>{
+                this.paises = this.select.paises;
+            });
+        }else
+            this.paises      = this.select.paises;
         this.estados     = this.select.estados;
         this.municipios  = this.select.municipios;
         this.colonias    = this.select.colonias;
