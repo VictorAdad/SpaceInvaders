@@ -129,7 +129,7 @@ export class AppComponent {
     }
 
     public onScrollNotification(_event){
-        if((_event.target.scrollTop + 400) === _event.target.scrollHeight)
+        if((_event.target.scrollTop + 430) === _event.target.scrollHeight)
             this.loadNotifications(null);
     }
 

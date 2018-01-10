@@ -22,9 +22,7 @@ export class NotifyService{
 	}
 
 	public emitMessage(_message){
-        this.socket.onopen =  (event) => {
-            this.socket.send(JSON.stringify(_message));
-        }
+        this.socket.send(JSON.stringify(_message));
     }
 
     public getMessages() {
