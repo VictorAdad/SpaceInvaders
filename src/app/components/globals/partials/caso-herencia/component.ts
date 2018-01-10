@@ -10,6 +10,7 @@ import { Logger } from "@services/logger.service";
 import { TableService} from '@utils/table/table.service';
 import { Event } from '@angular/router/src/events';
 import { ResolveEmit,ConfirmSettings} from '@utils/alert/alert.service';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
 	selector    : 'caso-herencia',
@@ -19,6 +20,9 @@ export class CasoHerenciaComponent implements OnInit{
 
   panelOpenState: boolean = true;
 
+  public personasTipo:any[] =[];
+  @Input()
+  public optionPersonas:any[];
   @Input()
   public people:any[];
   @Input()
@@ -72,19 +76,19 @@ export class CasoHerenciaComponent implements OnInit{
         this.caso = this.casoServ.caso
         this.optionsNoticia.setId(this.casoId, this.caso);
         this.optionsNoticia.getData();
-        this.optionsNoticia.getPersonas();
+        this.optionsNoticia.getPersonas();       
+        this.personasTipo = this.casoServ.caso.optionsPersonasTipo(); 
         this.personas=[]; 
         this.people
         let timer = Observable.timer(10000);
         timer.subscribe(t => {
           if (this.people){
-            Logger.log('<<< si entre >>>', this.people)
             for (let i=0; i<this.people.length; i++){
               this.addPersona(this.people[i].personaCaso.id);
             }
           }
         })
-  
+
   })
  };
   public addPersona(_id){
@@ -93,9 +97,7 @@ export class CasoHerenciaComponent implements OnInit{
       if(this.casoServ.caso.personaCasos[i].id==_id && !this.isInPersonas(_id)){
         var response = this.casoServ.caso.personaCasos[i];
           (this.form.controls.personas as FormArray).push(new FormGroup({"id":new FormControl(_id,[])}));
-          console.log('paso personas',response, this.form.controls.personas);
           this.personas.push(response);
-          console.log('paso 2',this.personas);
           this.personasChanged();
           break;
       }
@@ -145,7 +147,6 @@ export class CasoHerenciaComponent implements OnInit{
               this.heredarChanged();
 
           this.panelOpenState= false;
-          console.log('por que no lo hace la segunda vez',this.panelOpenState);
 
         }
         else{

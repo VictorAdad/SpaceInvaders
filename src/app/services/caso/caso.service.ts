@@ -5,6 +5,8 @@ import { HttpService} from '@services/http.service';
 import { OnLineService } from '@services/onLine.service';
 import * as moment from 'moment';
 import { Logger } from '@services/logger.service';
+import { PersonaNombre } from "@pipes/persona.pipe";
+import { MOption } from '../../components/globals/partials/form/select2/select2.component';
 /**
  * Servicio qeu almacena el ultimo caso visto
  */
@@ -176,6 +178,23 @@ export class Caso{
 		}
 
 		return domicilios.toString();
+	}
+
+	public optionsPersonasTipo(){
+		let options: MOption[] = [];
+		if(this.personaCasos){
+			for(let i in this.personaCasos){
+				let object = this.personaCasos[i];
+				let nombre = new PersonaNombre().transform(object);
+				nombre = nombre+" - "+this.personaCasos[i].tipoInterviniente.tipo;
+
+				options.push(
+					{value:this.personaCasos[i].id , label: nombre}
+				);
+			}
+		}
+		return options;
+		
 	}
 
 
