@@ -69,13 +69,19 @@ export class PredenunciaCreateComponent {
                 this.casoId = +params['casoId'];
                 this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle del caso"});
 
+                this.casoServ.find(this.casoId).then(
+                    caso => {
+                        if(!this.casoServ.caso.hasRelacionVictimaImputado)
+                            this.router.navigate(['/caso/' + this.casoId + '/detalle']);
+
+                    }
+                )
+
                 if(this.onLine.onLine){
                     this.http.get(this.apiUrl+params['casoId']+'/page').subscribe(response => {
                         if(parseInt(response.totalCount) !== 0){                            
                             this.hasPredenuncia = true;
                             this.object = response;
-                        }else{
-                            this.router.navigate(['/caso/' + this.casoId + '/detalle']);
                         }
                     });
                 }else{
