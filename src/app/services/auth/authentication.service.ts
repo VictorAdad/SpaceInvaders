@@ -57,6 +57,9 @@ export class AuthenticationService {
                     this.user = new Usuario(responseUser);
                     localStorage.setItem(environment.oam.session, JSON.stringify(responseUser));
                     this.isLoggedin = true;
+                    this.http.get(environment.api.host+'/v1/base/notificaciones/usuario/'+this.user.username+'/sin-leer')
+                    .map((response: Response) => response.json())
+                    .subscribe( response =>  this.user.sinLeer = response.count );
                 },
                 error => this.isLoggedin = false
             );
@@ -86,8 +89,11 @@ export class AuthenticationService {
                             responseUser['token'] =  response.access_token;
                             this.user = new Usuario(responseUser);
                             localStorage.setItem(environment.oam.session, JSON.stringify(responseUser));
+                            this.http.get(environment.api.host+'/v1/base/notificaciones/usuario/'+this.user.username+'/sin-leer')
+                            .map((response: Response) => response.json())
+                            .subscribe( response =>  this.user.sinLeer = response.count );
+
                             resolve("Usuario loguedo con éxito");
-                            // this.isLoggedin = true;
                         });
                     },
                     error => {
