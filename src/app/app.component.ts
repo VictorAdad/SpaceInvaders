@@ -36,6 +36,8 @@ export class AppComponent {
 
     public socket: any;
 
+    public pageNotification: number = 1;
+
 	constructor(
 		public authService: AuthenticationService,
 		private router : Router,
@@ -108,14 +110,25 @@ export class AppComponent {
         // window.location.assign("../")
     }
 
-    public loadNotifications(_event, _page){
-        if(this.authService.user.notificaciones.length === 0){
-            this.http.get(`/v1/base/notificaciones/usuario/${this.authService.user.username}/page?tr=5`).subscribe(
+    public loadNotifications(_event){
+        // if(this.authService.user.notificaciones.length === 0){
+            this.http.get(`/v1/base/notificaciones/usuario/${this.authService.user.username}/page?p=${this.pageNotification}`).subscribe(
                 response => {
-                    this.authService.user.notificaciones = response.data;
+                    this.pageNotification ++;
+                    if(this.authService.user.notificaciones.length === 0)
+                        this.authService.user.notificaciones = response.data;
+                    else
+                        this.authService.user.notificaciones.push.apply(response.data);
+
+                    console.log('-> Notificaciones', (this.authService.user.notificaciones.length), this.authService.user.notificaciones);
                 }
             )
-        }
+        // }
+    }
+
+    public onScrollNotification(_event){
+        if((_event.target.scrollTop + 400) === _event.target.scrollHeight)
+            this.loadNotifications(null);
     }
 
 }

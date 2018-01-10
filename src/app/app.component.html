@@ -26,21 +26,28 @@
                 <h4>Notificaciones</h4>
             </button>
             <ng-template #list [ngIf]="authService.user.notificaciones.length > 0 " [ngIfElse]="noNotification">
-                <button mat-menu-item *ngFor="let notificacion of authService.user.notificaciones">
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <mat-icon class="prueba" fxHide="false" fxHide.gt-sm>perm_identity</mat-icon>
+                <div class="notification-content" (scroll)="onScrollNotification($event)">
+                    <button mat-menu-item *ngFor="let notificacion of authService.user.notificaciones">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <mat-icon class="prueba" fxHide="false" fxHide.gt-sm>perm_identity</mat-icon>
+                            </div>
+                            <div class="col-sm-8 not">
+                                <label>{{ notificacion.titulo }}</label><br/>
+                                <label><strong>{{ notificacion.contenido }}</strong></label><br/>
+                                <label>{{ notificacion.created | fromNow }}</label>
+                            </div>
+                            <div class="col-sm-2 z">
+                                <mat-icon fxHide="false" fxHide.gt-sm>clear</mat-icon>
+                            </div>
                         </div>
-                        <div class="col-sm-8 not">
-                            <label>{{ notificacion.titulo }}</label><br/>
-                            <label><strong>{{ notificacion.contenido }}</strong></label><br/>
-                            <label>{{ notificacion.created | fromNow }}</label>
-                        </div>
-                        <div class="col-sm-2 z">
-                            <mat-icon fxHide="false" fxHide.gt-sm>clear</mat-icon>
+                    </button>
+                    <div class="row justify-content-center align-items-center" *ngIf="loadNotification" style="height: 50px;">
+                        <div class="col-auto">
+                            <mat-spinner></mat-spinner>
                         </div>
                     </div>
-                </button>
+                </div>
             </ng-template>
             <ng-template #noNotification>
                 <button mat-menu-item>

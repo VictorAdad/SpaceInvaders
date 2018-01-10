@@ -6,6 +6,10 @@
 	padding: 0;
 	width: auto;
 
+	.notification-content{
+		height: 400px;
+		overflow: auto;
+	}
 
 	.mat-menu-item{
 		height: auto;
@@ -17,10 +21,10 @@
 	}
 
 	.titulo{
-	background: #CF455D;
-	text-align: center !important;
-	color: #FFF;
-	height: 30px;
+		background: #CF455D;
+		text-align: center !important;
+		color: #FFF;
+		height: 30px;
 
 		h4{
 			height: 100%;
