@@ -4,6 +4,7 @@ import { MOption } from '@partials/form/select2/select2.component'
 import { OnLineService} from '@services/onLine.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { Logger } from "@services/logger.service";
+import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class SelectsService {
@@ -31,6 +32,8 @@ export class SelectsService {
     public victimaQuerellante: MOption[] = [];
     public tipoPersona: MOption[] = [];
     public tipoLinea: MOption[] = [];
+
+    private subscription: Subscription;
 
     constructor(
         private http: HttpService,
@@ -255,7 +258,10 @@ export class SelectsService {
 
     public getEstadoByPais(idPais: number){
         if(this.onLine.onLine){
-            this.http.get('/v1/catalogos/estado/pais/'+idPais+'/options').subscribe((response) => {
+            if(this.subscription)
+                this.subscription.unsubscribe();
+
+            this.subscription = this.http.get('/v1/catalogos/estado/pais/'+idPais+'/options').subscribe((response) => {
                 this.estados = this.constructOptions(response);
             });
         }else{
@@ -271,7 +277,10 @@ export class SelectsService {
     public getEstadoByPaisService(idPais: number){
         return new Promise((resolve,reject)=>{
             if (this.onLine.onLine){
-                this.http.get('/v1/catalogos/estado/pais/'+idPais+'/options').subscribe(response=>{
+                if(this.subscription)
+                    this.subscription.unsubscribe();
+
+                this.subscription = this.http.get('/v1/catalogos/estado/pais/'+idPais+'/options').subscribe(response=>{
                     resolve(response);
                 },error=>{
                     reject(error);
@@ -293,7 +302,10 @@ export class SelectsService {
 
     public getMunicipiosByEstado(idEstado: number){
         if(this.onLine.onLine){
-            this.http.get('/v1/catalogos/municipio/estado/'+idEstado+'/options').subscribe((response) => {
+            if(this.subscription)
+                this.subscription.unsubscribe();
+
+            this.subscription = this.http.get('/v1/catalogos/municipio/estado/'+idEstado+'/options').subscribe((response) => {
                 this.municipios = this.constructOptions(response);
             });
         }else{
@@ -310,7 +322,10 @@ export class SelectsService {
     public getMunicipiosByEstadoService(idEstado: number){
         return new Promise( (resolve, reject) =>{
             if (this.onLine.onLine){
-                this.http.get('/v1/catalogos/municipio/estado/'+idEstado+'/options').subscribe((response)=>{
+                if(this.subscription)
+                    this.subscription.unsubscribe();
+
+                this.subscription = this.http.get('/v1/catalogos/municipio/estado/'+idEstado+'/options').subscribe((response)=>{
                     resolve(response);
                 },error=>{
                     reject(error);
@@ -331,7 +346,10 @@ export class SelectsService {
 
     public getColoniasByMunicipio(idMunicipio: number){
         if(this.onLine.onLine){
-            this.http.get('/v1/catalogos/colonia/municipio/'+idMunicipio).subscribe((response) => {
+            if(this.subscription)
+                this.subscription.unsubscribe();
+
+            this.subscription = this.http.get('/v1/catalogos/colonia/municipio/'+idMunicipio).subscribe((response) => {
                 this.colonias = this.constructOptionsColonia(response,true);
             });
         }else{
