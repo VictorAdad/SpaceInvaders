@@ -1,4 +1,4 @@
-<mat-expansion-panel>
+<mat-expansion-panel [expanded]="panelOpenState" (opened)="changeState()">
     <mat-expansion-panel-header>
         <mat-panel-title>
             <strong>Datos de herencia</strong>

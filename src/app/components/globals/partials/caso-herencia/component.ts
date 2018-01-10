@@ -16,6 +16,9 @@ import { ResolveEmit,ConfirmSettings} from '@utils/alert/alert.service';
   	templateUrl : './component.html'
 })
 export class CasoHerenciaComponent implements OnInit{
+
+  panelOpenState: boolean = true;
+
   @Input()
   public people:any[];
   @Input()
@@ -141,11 +144,17 @@ export class CasoHerenciaComponent implements OnInit{
           if (this.heredarChanged)
               this.heredarChanged();
 
+          this.panelOpenState= false;
+          console.log('por que no lo hace la segunda vez',this.panelOpenState);
+
         }
         else{
           console.log("No heredar datos")
         }
       });
+  }
+  public changeState(){
+    this.panelOpenState= true;
   }
   public lugarChanged(id){
     this.lugarChange.emit(id);
