@@ -216,7 +216,7 @@
         <mat-cell *matCellDef="let dir"> 
                 
             <span *ngIf="dir.pais.id==idMexico">
-                {{dir.tipoDomicilio?dir.tipoDomicilio.nombre+":":""}}
+                {{dir.tipoDomicilio?(dir.tipoDomicilio.nombre?dir.tipoDomicilio.nombre+":":""):""}}
                 {{dir.calle}}  {{dir.noExterior?"#"+dir.noExterior:""}} {{dir.noInterior?"int. "+dir.noInterior:""}} 
                 {{dir.localidad?(dir.localidad.nombre?""+dir.localidad.nombre+",":""):""}} 
                 {{dir.colonia?(dir.colonia.nombre?""+dir.colonia.nombre+",":""):""}} 
@@ -225,7 +225,7 @@
                 {{dir.pais?(dir.pais.nombre?dir.pais.nombre:""):""}} 
             </span>
             <span *ngIf="dir.pais.id!=idMexico">
-                    {{dir.tipoDomicilio?dir.tipoDomicilio.nombre+":":""}}
+                    {{dir.tipoDomicilio?(dir.tipoDomicilio.nombre?dir.tipoDomicilio.nombre+":":""):""}}
                     {{dir.calle}}  {{dir.noExterior?"#"+dir.noExterior:""}} {{dir.noInterior?"int. "+dir.noInterior:""}} 
                     {{dir.localidadOtro?dir.localidadOtro+",":""}} 
                     {{dir.coloniaOtro?dir.coloniaOtro+",":""}} 
