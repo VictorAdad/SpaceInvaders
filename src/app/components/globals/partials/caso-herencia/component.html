@@ -5,15 +5,10 @@
         </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-8 col-md-8 col-sm-12">
+        <div class="row space">
+          <div class="col">
               <strong class="float-right">
                   <checkbox label="Heredar datos" [group]="form" name="heredar" (valueChange)="setHeredarDatos($event)"></checkbox>
-              </strong>
-          </div>
-          <div class="col-lg-4 col-md-4 col-sm-12">
-              <strong class="float-right">
-                  <checkbox label="Heredar síntesis del caso" [group]="form" name="heredarSintesisHechos" (valueChange)="setHeredarSintesis($event)"></checkbox>
               </strong>
           </div>
          </div>
@@ -28,7 +23,7 @@
             <select2 placeholder="Delito" [disabled]="!heredar"  [options]="optionsNoticia.delitos" [group]="form.controls.delito" name="id"  (valueChange)="delitoChanged($event)"></select2>
           </div>
         </div>
-        <div class="row space">
+        <div class="row">
           <div class="col-md-4">
               <mat-list *ngIf="personas != null">
                   <mat-list-item *ngFor="let personaCaso of personas">
@@ -49,6 +44,13 @@
           </div>
           <div class="col-md-4">
             <select2 placeholder="Arma" [disabled]="!heredar"  [options]="optionsNoticia.armas" [group]="form.controls.arma" name="id" (valueChange)="armaChanged($event)"></select2>
+          </div>
+        </div>
+        <div class="row space">
+            <div class="col">
+              <strong class="float-right">
+                  <checkbox label="Heredar síntesis del caso" [group]="form" name="heredarSintesisHechos" (valueChange)="setHeredarSintesis($event)"></checkbox>
+              </strong>
           </div>
         </div>
         <div class="row  space">
