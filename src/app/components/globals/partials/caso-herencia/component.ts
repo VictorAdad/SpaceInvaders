@@ -20,6 +20,7 @@ export class CasoHerenciaComponent implements OnInit{
 
   panelOpenState: boolean = true;
 
+  public lugares:any[]=[];
   public personasTipo:any[] =[];
   @Input()
   public optionPersonas:any[];
@@ -76,8 +77,9 @@ export class CasoHerenciaComponent implements OnInit{
         this.caso = this.casoServ.caso
         this.optionsNoticia.setId(this.casoId, this.caso);
         this.optionsNoticia.getData();
-        this.optionsNoticia.getPersonas();       
-        this.personasTipo = this.casoServ.caso.optionsPersonasTipo(); 
+        this.optionsNoticia.getPersonas();
+        this.personasTipo = this.casoServ.caso.optionsPersonasTipo();
+        this.lugares = this.casoServ.caso.optionsLugares();
         this.personas=[]; 
         this.people
         let timer = Observable.timer(10000);
@@ -87,8 +89,8 @@ export class CasoHerenciaComponent implements OnInit{
               this.addPersona(this.people[i].personaCaso.id);
             }
           }
-        })
-
+        })   
+        
   })
  };
   public addPersona(_id){
