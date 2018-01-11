@@ -111,8 +111,11 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 				this.casoId = +params['casoId'];
 			Logger.log('casoId', this.casoId);
 			if (params['id']) {
-				this.id = + params['id'];
-				this.form.disable();
+                this.id = + params['id'];
+                let timer = Observable.timer(1);
+                timer.subscribe(t => {
+                    this.form.disable();
+                })				
 				Logger.log('id', this.id);
 
 				if(this.onLine.onLine){
