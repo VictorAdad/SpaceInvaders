@@ -298,7 +298,18 @@ export class CIndexedDB {
         var obj=this;
         var promesa = new Promise( 
             function(resolve,reject){
-                if(obj.init){
+                if (!obj.db){
+                    let timer = Observable.timer(1000);
+                    timer.subscribe(t=>{
+                        obj.update2(_table,_data).then(d=>{
+                            Logger.log("Vuelve a llamar",d);
+                            resolve(d);
+                        }).catch(e=>{
+                            reject(e);
+                        })  
+                    })
+                }
+                else if(obj.init){
                         //Logger.logColor("BASE","green",_table)
                         var db    = obj.db;
                         var tx    = db.transaction(_table, "readwrite");
