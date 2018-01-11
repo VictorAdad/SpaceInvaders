@@ -51,6 +51,8 @@ export class OnLineService {
         public loginDialogService: LoginDialogService,
         public auth: AuthenticationService
     ) {
+        auth.setDb(db);
+        auth.setOnLine(this);
         this.sincronizarCatalogos=new SincronizaCatalogos(db,http,dialogoSincronizar);
         this.sincronizarCambios= new SincronizaCambios(db,http,notificationService,route,_confirmation,this);
         // timer = Observable.timer(2000,1000);
