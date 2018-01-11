@@ -35,6 +35,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     public isTipoBicicleta:boolean=false;
     public hintObligatorio="Campo obligatorio";
     public isRobo:boolean=false;
+    public masDe3Dias:any;
 
     constructor(
         public optionsServ: SelectsService,
@@ -54,6 +55,10 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     }
 
     ngOnInit() {
+        this.auth.masDe3DiasSinConexion().then(r=>{
+            let x= r as boolean;
+            this.masDe3Dias=r;
+        });
         this.model = new Vehiculo();
         this.form = new FormGroup({
             'id'  : new FormControl("",[]),

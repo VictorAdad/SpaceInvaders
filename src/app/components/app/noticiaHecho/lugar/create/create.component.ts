@@ -53,7 +53,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
   public geoEstado:any;
   public geoPais:any;
   public geocoder: any=null;
-  public editFlag: boolean = false; 
+  public editFlag: boolean = false;
+  public masDe3Dias:any; 
 
 
   constructor(private _fbuilder: FormBuilder,
@@ -79,6 +80,10 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
   ];
 
   ngOnInit() {
+    this.auth.masDe3DiasSinConexion().then(r=>{
+      let x= r as boolean;
+      this.masDe3Dias=r;
+    });
     this.model = new Lugar();
     this.searchControl = new FormControl();
     this.form = this.createForm();
@@ -444,7 +449,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
     if(value != null && value != undefined){    
       this.geoNumero=value;
       if(!this.editFlag){
-        this.fillAddress();
+        // this.fillAddress();
       }
     }  
   }
