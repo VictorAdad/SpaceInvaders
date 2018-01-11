@@ -36,7 +36,7 @@ export class AppComponent {
 
     public socket: any;
 
-    public pageNotification: number = 1;
+    public pageNotification: number = 0;
 
     public loadNotification: boolean = false;
 

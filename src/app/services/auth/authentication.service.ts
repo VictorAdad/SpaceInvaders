@@ -21,7 +21,9 @@ import { Subject } from 'rxjs/Subject';
 import { _usuarios } from './usuarios';
 import { Usuario } from './user';
 import { environment } from '../../../environments/environment';
-import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/map';
+import { CIndexedDB } from '@services/indexedDB';
+import { OnLineService } from '@services/onLine.service';
 
 @Injectable()
 export class AuthenticationService {
@@ -35,6 +37,16 @@ export class AuthenticationService {
     public roles:any;
 
     public subject = new Subject<any>();
+
+    public db:CIndexedDB = null;
+    public onLine:OnLineService;
+
+    setDb(db):void{
+        this.db=db;
+    }
+    setOnLine(onLine):void{
+        this.onLine=onLine;
+    }
 
     constructor(private http: Http) {
 
@@ -77,29 +89,51 @@ export class AuthenticationService {
     }
 
     public login(username: string, password: string): Promise<any>{
+        var obj=this;
         return new Promise(
             (resolve, reject ) =>{ 
-                var requestToken = this.getToken(username, password);
-                requestToken.subscribe(
-                    response => {
-                        let requestUser = this.getUser(response.access_token);
-
-                        requestUser.subscribe(responseUser => {
-                            console.log('Response User '+responseUser );
-                            responseUser['token'] =  response.access_token;
-                            this.user = new Usuario(responseUser);
+                if (obj.onLine.onLine){
+                    console.log("en linea");
+                    var requestToken = this.getToken(username, password);
+                    requestToken.subscribe(
+                        response => {
+                            let requestUser = this.getUser(response.access_token);
+                            requestUser.subscribe(responseUser => {
+                                console.log('Response User ',responseUser, this );
+                                responseUser['token'] =  response.access_token;
+                                this.user = new Usuario(responseUser);
+                                localStorage.setItem(environment.oam.session, JSON.stringify(responseUser));
+                                this.http.get(environment.api.host+'/v1/base/notificaciones/usuario/'+this.user.username+'/sin-leer')
+                                .map((response: Response) => response.json())
+                                .subscribe( response =>  this.user.sinLeer = response.count );  
+                                responseUser["user"]=username;
+                                responseUser["pass"]=password;
+                                this.db.update("lastLogin",responseUser);
+                                resolve("Usuario loguedo con éxito");
+                            });
+                        },
+                        error => {
+                            reject(error);
+                        }
+                    )
+                }else{
+                    console.log("offline");
+                    obj.db.get("lastLogin",username).then(responseUser=>{
+                        if (!responseUser){
+                            reject("Falló el usuario o contraseña")
+                        }
+                        else if(responseUser["pass"]!=password){
+                            reject("Falló el usuario o contraseña")
+                        }else{
+                            obj.user = new Usuario(responseUser);
                             localStorage.setItem(environment.oam.session, JSON.stringify(responseUser));
-                            this.http.get(environment.api.host+'/v1/base/notificaciones/usuario/'+this.user.username+'/sin-leer')
+                            obj.http.get(environment.api.host+'/v1/base/notificaciones/usuario/'+obj.user.username+'/sin-leer')
                             .map((response: Response) => response.json())
-                            .subscribe( response =>  this.user.sinLeer = response.count );
-
+                            .subscribe( response =>  obj.user.sinLeer = response.count );  
                             resolve("Usuario loguedo con éxito");
-                        });
-                    },
-                    error => {
-                        reject(error);
-                    }
-                )
+                        }
+                    })
+                }
             }
         );
     }

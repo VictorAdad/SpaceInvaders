@@ -84,6 +84,7 @@ export class CIndexedDB {
                 db.createObjectStore("newId", {keyPath: "id"});
                 db.createObjectStore("blobs", {keyPath: "id"});
                 db.createObjectStore("catalogoLlave", {keyPath: "id"});
+                db.createObjectStore("lastLogin", {keyPath: "user"});
 
 
                 this.init = true;

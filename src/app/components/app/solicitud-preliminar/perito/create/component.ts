@@ -192,8 +192,10 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
   public heredarDatos(){
     console.log("Heredar en perito")
     //Heredar narrativa de los hechos ((Hecho narrados de Predenuncia)
-    console.log(this.casoServ.caso);
-    this.form.controls["hechosNarrados"].setValue(this.casoServ.caso.predenuncias.hechosNarrados)
+	console.log(this.casoServ.caso);
+	if(this.casoServ.caso.predenuncias.hechosNarrados){
+		this.form.controls["hechosNarrados"].setValue(this.casoServ.caso.predenuncias.hechosNarrados)
+	}
   }
 
 	public save(valid: any, _model: any){

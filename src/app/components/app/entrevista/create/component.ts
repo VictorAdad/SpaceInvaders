@@ -86,6 +86,8 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
   public personasHeredadas:any[];
   public heredar:boolean=false;
   public heredarSintesis:boolean=false;
+  public hintStart: String = "Campo obligatorio";
+  public hintEnd: String = "150 carácteres mínimo";
 
 	constructor(
 		private _fbuilder: FormBuilder,
@@ -267,7 +269,22 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 				}
 			}
 		);
-	}
+    }
+    
+    public validateNarraccion(_heredar){
+        this.heredar=_heredar;
+        if (this.heredar){
+            this.hintStart = "";
+            this.hintEnd = "";
+            this.form.controls.narracionHechos.setValidators([]);
+            this.form.controls.narracionHechos.updateValueAndValidity();
+        }else{
+            this.hintStart = "Campo obligatorio";
+            this.hintEnd = "150 carácteres mínimo";
+            this.form.controls.narracionHechos.setValidators([Validators.required, Validators.minLength(150)]);
+            this.form.controls.narracionHechos.updateValueAndValidity();
+        }
+    }
 
 	public edit(_valid: any, _model: any) {
 		this.model.sexo.id = 2;
@@ -432,6 +449,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
   }
   public heredarChanged(_heredar){
     this.heredar=_heredar;
+    this.validateNarraccion(_heredar);
     console.log("heredar changed")
 
     if(_heredar){

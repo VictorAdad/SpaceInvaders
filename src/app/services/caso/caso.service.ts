@@ -5,6 +5,8 @@ import { HttpService} from '@services/http.service';
 import { OnLineService } from '@services/onLine.service';
 import * as moment from 'moment';
 import { Logger } from '@services/logger.service';
+import { PersonaNombre } from "@pipes/persona.pipe";
+import { MOption } from '../../components/globals/partials/form/select2/select2.component';
 /**
  * Servicio qeu almacena el ultimo caso visto
  */
@@ -114,6 +116,7 @@ export class Caso{
 	public lugares: any[];
 	public nuc: string
 	public tipoRelacionPersonas: any[];
+	public IdMexico = _config.optionValue.idMexico;
 
 
 
@@ -178,5 +181,40 @@ export class Caso{
 		return domicilios.toString();
 	}
 
+	public optionsPersonasTipo(){
+		let options: MOption[] = [];
+		if(this.personaCasos){
+			for(let i in this.personaCasos){
+				let object = this.personaCasos[i];
+				let nombre = new PersonaNombre().transform(object);
+				nombre = nombre+" - "+this.personaCasos[i].tipoInterviniente.tipo;
+
+				options.push(
+					{value:this.personaCasos[i].id , label: nombre}
+				);
+			}
+		}
+		return options;
+	}
+	public optionsLugares(){
+		let options: MOption[] = [];
+		let complement;
+		if (this.lugares) {
+			for(let i in this.lugares){
+				let paisId = this.lugares[i].pais.id;
+				if (paisId == this.IdMexico) {
+					complement = this.lugares[i].colonia.nombre+","+this.lugares[i].estado.nombre;
+				}else{
+					complement = this.lugares[i].coloniaOtro+","+this.lugares[i].estadoOtro;
+				}
+				let lugar = this.lugares[i].detalleLugar.tipoLugar+" - "+this.lugares[i].calle+","+this.lugares[i].noExterior+","+complement;
+
+				options.push(
+					{value:this.lugares[i].id , label:lugar}
+				);
+			}
+		}
+		return options;		
+	}
 
 }

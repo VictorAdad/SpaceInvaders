@@ -1,45 +1,40 @@
-<mat-expansion-panel>
+<mat-expansion-panel [expanded]="panelOpenState" (opened)="changeState()">
     <mat-expansion-panel-header>
         <mat-panel-title>
             <strong>Datos de herencia</strong>
         </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-8 col-md-8 col-sm-12">
+        <div class="row space">
+          <div class="col">
               <strong class="float-right">
                   <checkbox label="Heredar datos" [group]="form" name="heredar" (valueChange)="setHeredarDatos($event)"></checkbox>
-              </strong>
-          </div>
-          <div class="col-lg-4 col-md-4 col-sm-12">
-              <strong class="float-right">
-                  <checkbox label="Heredar síntesis del caso" [group]="form" name="heredarSintesisHechos" (valueChange)="setHeredarSintesis($event)"></checkbox>
               </strong>
           </div>
          </div>
         <div class="row">
           <div class="col-md-4">
-              <select2 placeholder="Persona" [disabled]="!heredar" [options]="optionsNoticia.personas" [group]="" name=""  (valueChange)="addPersona($event)"></select2>
+              <select2 placeholder="Persona" [disabled]="!heredar" [options]="personasTipo" [group]="" name=""  (valueChange)="addPersona($event)"></select2>
           </div>
           <div class="col-md-4">
-            <select2 placeholder="Lugar" [disabled]="!heredar" [options]="optionsNoticia.lugares" [group]="form.controls.lugar" name="id"  (valueChange)="lugarChanged($event)"></select2>
+            <select2 placeholder="Lugar" [disabled]="!heredar" [options]="lugares" [group]="form.controls.lugar" name="id"  (valueChange)="lugarChanged($event)"></select2>
           </div>
           <div class="col-md-4">
             <select2 placeholder="Delito" [disabled]="!heredar"  [options]="optionsNoticia.delitos" [group]="form.controls.delito" name="id"  (valueChange)="delitoChanged($event)"></select2>
           </div>
         </div>
-        <div class="row space">
+        <div class="row">
           <div class="col-md-4">
               <mat-list *ngIf="personas != null">
                   <mat-list-item *ngFor="let personaCaso of personas">
                     <div *ngIf="personaCaso.persona.nombre !=null || personaCaso.persona.paterno!=null || personaCaso.persona.materno!=null">
-                        {{personaCaso.persona.nombre?personaCaso.persona.nombre:""}} {{personaCaso.persona.paterno?personaCaso.persona.paterno:""}} {{personaCaso.persona.materno?personaCaso.persona.materno:""}}
+                        {{personaCaso.persona.nombre?personaCaso.persona.nombre:""}} {{personaCaso.persona.paterno?personaCaso.persona.paterno:""}} {{personaCaso.persona.materno?personaCaso.persona.materno:""}} - {{personaCaso.tipoInterviniente.tipo}}
                     </div>
                     <div *ngIf="personaCaso.persona.nombre ==null &&  personaCaso.persona.paterno==null && personaCaso.persona.materno ==null && personaCaso.tipoInterviniente.tipo == 'Imputado desconocido'">
-                          Quién Resulte Responsable
+                          Quién Resulte Responsable - {{personaCaso.tipoInterviniente.tipo}}
                     </div>
                     <div *ngIf="personaCaso.persona.nombre ==null &&  personaCaso.persona.paterno==null && personaCaso.persona.materno ==null && !(personaCaso.tipoInterviniente.tipo == 'Imputado desconocido')">
-                        Identidad Desconocida
+                        Identidad Desconocida - {{personaCaso.tipoInterviniente.tipo}}
                     </div>
                   </mat-list-item>
               </mat-list>
@@ -49,6 +44,13 @@
           </div>
           <div class="col-md-4">
             <select2 placeholder="Arma" [disabled]="!heredar"  [options]="optionsNoticia.armas" [group]="form.controls.arma" name="id" (valueChange)="armaChanged($event)"></select2>
+          </div>
+        </div>
+        <div class="row space">
+            <div class="col">
+              <strong class="float-right">
+                  <checkbox label="Heredar síntesis del caso" [group]="form" name="heredarSintesisHechos" (valueChange)="setHeredarSintesis($event)"></checkbox>
+              </strong>
           </div>
         </div>
         <div class="row  space">
