@@ -7,7 +7,7 @@ function capitalize(string) {
 
 @Pipe({name : 'dayPipe'})
 export class DayPipe implements PipeTransform {
-	transform(date:Date){
+	transform(date:any){
 		moment.locale('es');
 		return capitalize(moment(date).format('dddd'));
 	}
@@ -15,7 +15,7 @@ export class DayPipe implements PipeTransform {
 
 @Pipe({name : 'monthPipe'})
 export class MonthPipe implements PipeTransform {
-	transform(date:Date){
+	transform(date:any){
 		moment.locale('es');
 		return capitalize(moment(date).format('MMMM'));
 	}
@@ -23,7 +23,7 @@ export class MonthPipe implements PipeTransform {
 
 @Pipe({name : 'inputPipe'})
 export class InputPipe implements PipeTransform {
-	transform(date:Date){
+	transform(date:any){
 		moment.locale('es');
 		return moment(date).format('L');
 	}
@@ -31,7 +31,7 @@ export class InputPipe implements PipeTransform {
 
 @Pipe({name : 'longDate'})
 export class LongDate implements PipeTransform {
-	transform(date:Date){
+	transform(date:any){
 		moment.locale('es');
 		return moment(date).format('LLL');
 	}
@@ -39,7 +39,7 @@ export class LongDate implements PipeTransform {
 
 @Pipe({name : 'fromNow'})
 export class FromNowPipe implements PipeTransform {
-	transform(date:Date){
+	transform(date:any){
 		moment.locale('es');
 		return moment(date).fromNow();
 	}

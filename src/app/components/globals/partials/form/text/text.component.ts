@@ -17,11 +17,14 @@ export class TextComponent extends BaseInputComponent {
 	ngOnInit(){
 		if (this.group !=null && this.name != null && this.name != '') {
 			this.control = this.group.get(this.name) as FormControl;
-			this.control.valueChanges.subscribe(this.inputSlice.bind(this));
 
-			if(this.control.errors)
-				if(this.control.errors.required)
-					this.hintStart = 'Campo requerido';
+			if(this.control != null){
+				this.control.valueChanges.subscribe(this.inputSlice.bind(this));
+
+				if(this.control.errors)
+					if(this.control.errors.required)
+						this.hintStart = 'Campo requerido';
+			}
 		}
 	}
 

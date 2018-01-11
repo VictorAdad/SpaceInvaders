@@ -38,7 +38,9 @@ export class CurpRfcComponent extends BaseInputComponent implements OnInit{
 
 	public validate(_value){
 		// Logger.log('CURP RFC validate() ', _value.length);
-		_value = _value.toUpperCase();
+		if(_value)
+			_value = _value.toUpperCase();
+
 		if (_value != null){
 			if(_value.length > 0)
 				if (this.curp == true)
