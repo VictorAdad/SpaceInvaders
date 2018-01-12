@@ -28,6 +28,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
     isArmaBlanca :boolean=false;
     public form  : FormGroup;
     public model : Arma;
+    public masDe3Dias:any;
 
     constructor(
         private route: ActivatedRoute,
@@ -44,6 +45,10 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
     }
 
     ngOnInit(){
+        this.auth.masDe3DiasSinConexion().then(r=>{
+            let x= r as boolean;
+            this.masDe3Dias=r;
+        });
         this.model=new Arma();
         this.form  = new FormGroup({
             'id': new FormControl(''),

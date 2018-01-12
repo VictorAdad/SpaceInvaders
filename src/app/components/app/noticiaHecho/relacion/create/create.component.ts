@@ -46,6 +46,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     public detalleDelitoId=null;
 
     public breadcrumb = [];
+    public masDe3Dias:any;
 
     isMexicoPaisDestino:boolean = false;
     isMexicoPaisOrigen:boolean = false;
@@ -120,6 +121,10 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     }
 
     ngOnInit(){
+        this.auth.masDe3DiasSinConexion().then(r=>{
+            let x= r as boolean;
+            this.masDe3Dias=r;
+        });
         this.model = new Relacion();
         this.efectoViolenciaGenero= new EfectoViolenciaGenero();
         this.hostigamiento= new HostigamientoAcoso;

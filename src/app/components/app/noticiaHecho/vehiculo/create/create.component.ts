@@ -35,6 +35,9 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     public isTipoBicicleta:boolean=false;
     public hintObligatorio="Campo obligatorio";
     public isRobo:boolean=false;
+    public masDe3Dias:any;
+    public primeravez:boolean = false;
+
 
     constructor(
         public optionsServ: SelectsService,
@@ -54,6 +57,10 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     }
 
     ngOnInit() {
+        this.auth.masDe3DiasSinConexion().then(r=>{
+            let x= r as boolean;
+            this.masDe3Dias=r;
+        });
         this.model = new Vehiculo();
         this.form = new FormGroup({
             'id'  : new FormControl("",[]),
@@ -120,6 +127,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
              }
             if(params['id']){
                 this.id = +params['id'];
+                this.primeravez=true;
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/vehiculos/'+this.id).subscribe(response =>{
                         this.fillForm(response);
@@ -427,6 +435,10 @@ public validate(form: FormGroup){
         let timer = Observable.timer(1);
         timer.subscribe(t => {
             this.form.controls.pedimentoImportancion.setValue(_data.pedimentoImportancion);
+            Logger.logColor("VEHICULO","pink",this.form.value);
+            let timer2 = Observable.timer(1500);
+            timer2.subscribe(t=>{ this.primeravez=false;});
+
         });
 
 
@@ -434,8 +446,10 @@ public validate(form: FormGroup){
 
     public tipoVehiculoChange(_event){
         if(_event){
-            this.form.controls.marca.setValue("");
-            this.form.controls.submarca.setValue("");
+            if (!this.primeravez){
+                this.form.controls.marca.setValue("");
+                this.form.controls.submarca.setValue("");
+            }
             this.vehiculoServ.marcaSubmarca.find(_event, 'tipoVehiculo');
             this.vehiculoServ.marcaSubmarca.filterBy(_event, 'tipoVehiculo', 'marca');
             this.vehiculoServ.marcaSubmarca.submarca = [];

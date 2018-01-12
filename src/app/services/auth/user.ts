@@ -38,6 +38,8 @@ export class Usuario {
 
     public sinLeer: number = 0;
 
+    public lastLogin: number=-1;
+
     public notificacionesChange: Subject<any> =  new Subject<any>();
 
     constructor(_usuario: any =  null) {

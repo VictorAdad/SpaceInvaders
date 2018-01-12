@@ -24,6 +24,7 @@ import { Logger } from "@services/logger.service";
 export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnInit{
     public form    : FormGroup;
     public id      : number = null;
+    public masDe3Dias:any;
     private db     : CIndexedDB;
     private router : Router;
     private dialog : MatDialog;
@@ -53,6 +54,10 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
     }
 
     ngOnInit(){
+        this.auth.masDe3DiasSinConexion().then(r=>{
+            let x= r as boolean;
+            this.masDe3Dias=r;
+        });
         this.form  = new FormGroup({
             'titulo'   : new FormControl('', [Validators.required]),
             'descripcion' : new FormControl('', [Validators.required]),

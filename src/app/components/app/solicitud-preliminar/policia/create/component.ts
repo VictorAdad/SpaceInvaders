@@ -57,6 +57,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 	public casoId: number = null;
 	public id: number = null;
 	public personas: any[] = [];
+	public masDe3Dias:any;
   @Output() modelUpdate=new EventEmitter<any>();
 	public form: FormGroup;
 	public model: SolicitudServicioPolicial;
@@ -74,6 +75,10 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 	) { super(); }
 
 	ngOnInit() {
+		this.auth.masDe3DiasSinConexion().then(r=>{
+            let x= r as boolean;
+            this.masDe3Dias=r;
+        });
 		this.model = new SolicitudServicioPolicial();
 
 		this.form = new FormGroup({

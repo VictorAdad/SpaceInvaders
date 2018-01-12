@@ -82,6 +82,7 @@ export class CasoHerenciaComponent implements OnInit{
         this.lugares = this.casoServ.caso.optionsLugares();
         this.personas=[]; 
         this.people
+        this.fillCampos();
         let timer = Observable.timer(10000);
         timer.subscribe(t => {
           if (this.people){
@@ -90,7 +91,6 @@ export class CasoHerenciaComponent implements OnInit{
             }
           }
         })   
-        
   })
  };
   public addPersona(_id){
@@ -136,6 +136,28 @@ export class CasoHerenciaComponent implements OnInit{
     this.heredarSintesisHechos=checked;
   }
 
+  public fillCampos(){
+    let timer = Observable.timer(1000);
+    timer.subscribe(t => {
+      this.personas.push(this.caso.personaCasos[0]);
+      this.form.patchValue({
+        'personas':[{
+          'id':this.personasTipo[0].value
+        }],
+        'lugar':{
+          'id':this.lugares[0].value 
+        },
+        'delito':this.caso,
+        'vehiculo':{
+          'id':this.optionsNoticia.vehiculos[0].value
+        },
+        'arma':{
+          'id':this.optionsNoticia.armas[0].value
+        }
+      });
+    });
+  }
+
   public heredarDatos(){
     this._confirmation.create('Advertencia','¿Estás seguro de que deseas heradar estos datos?',this.settings).subscribe(
       (ans: ResolveEmit) => {
@@ -178,6 +200,7 @@ export class CasoHerenciaComponent implements OnInit{
     this.heredarChange.emit(this.heredar);
   }
 }
+
 
 
 export class MOption{

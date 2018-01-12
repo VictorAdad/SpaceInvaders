@@ -1,4 +1,4 @@
-import { Component, ViewChild, Inject} from '@angular/core';
+import { Component, ViewChild, Inject, OnInit} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,9 +14,9 @@ import { _usuarios } from '@services/auth/usuarios';
 import { Logger } from "@services/logger.service";
 
 @Component({
-    templateUrl:'tranferir.component.html'
+    templateUrl: 'tranferir.component.html'
 })
-export class TransferirComponent extends BasePaginationComponent {
+export class TransferirComponent extends BasePaginationComponent implements OnInit {
 
     public agencias: MOption[] = [];
     public usuarios: MOption[] = [];
@@ -24,70 +24,72 @@ export class TransferirComponent extends BasePaginationComponent {
 
     constructor(
         public dialogRef: MatDialogRef<TransferirComponent>,
-        @Inject(MAT_DIALOG_DATA) private data: {casoId:any},
+        @Inject(MAT_DIALOG_DATA) private data: {casoId: any},
         private http: HttpService,
         private router: Router,
         private auth: AuthenticationService,
         private notify: NotifyService
-       ){
+       ) {
         super();
     }
 
     ngOnInit() {
-        let users = Object.keys(_usuarios);
+        const users = Object.keys(_usuarios);
         this.form =  new FormGroup({
             'userNamePropietario': new FormControl('Propietario'),
-            'agencia': new FormControl(''),
-            'userNameAsignado': new FormControl(''),
+            'agencia': new FormControl('', [Validators.required]),
+            'userNameAsignado': new FormControl('', [Validators.required]),
             'userNameAsignacion': new FormControl(this.auth.user.username),
             'fechaAsignacion': new FormControl(new Date()),
             'caso': new FormGroup({
-                'id':new FormControl(''),
+                'id': new FormControl(''),
             })
-        })
+        });
+
         this.http.get('/v1/administration/ldap/agencias').subscribe(
             response => {
-                for (let object of response) {
+                for (const object of response) {
                     this.agencias.push({value: object.name, label: object.name});
                 }
             }
         );
 
-        this.form.controls.agencia.valueChanges.subscribe(value =>{
-            this.findByAgencia(value);
-        });
-    }   
+        this.form.controls.agencia.valueChanges.subscribe(this.findByAgencia.bind(this));
+    }
 
-    close(){
+    public close() {
         this.dialogRef.close();
     }
 
-    public findByAgencia(_agencia: string){
-        Logger.logColor('entrada ------>','Green', _agencia, this.usuarios);
-        this.http.get(`/v1/administration/ldap/fiscalias/agencias/usuarios?f=${_agencia}`).subscribe(
-            response => {
-                for (let object of response) {
-                    this.usuarios.push({value: object.uid, label: object.displayName});
+    public findByAgencia(_agencia: string) {
+        console.log('findAgencia()', _agencia);
+        if (_agencia) {
+            Logger.logColor('entrada ------>', 'Green', _agencia, this.usuarios);
+            this.http.get(`/v1/administration/ldap/fiscalias/agencias/usuarios?f=${_agencia}`).subscribe(
+                response => {
+                    for (const object of response) {
+                        this.usuarios.push({value: object.uid, label: object.displayName});
+                    }
                 }
-            }
-        )
+            );
+        }
     }
 
-    public save(_form){
+    public save(_form) {
         _form.caso.id = this.data.casoId;
-        return new Promise<any>((resolve, reject) => {            
+        return new Promise<any>((resolve, reject) => {
             this.http.post('/v1/base/titulares', _form).subscribe(
                 (response) => {
                     response['notify'] = this.notify.getNotify({
                         username: response.userNameAsignado,
                         titulo: 'Transferencia de titularidad del caso',
-                        contenido:'Se le ha transferido un nuevo caso',
+                        contenido: 'Se le ha transferido un nuevo caso',
                         tipo: 'transferencia'
                     });
-                    
+
                     this.notify.emitMessage(response);
                     this.router.navigate(['/' ]);
-                    resolve("Se cambió de titular del caso");
+                    resolve('Se cambió de titular del caso');
                 },
                 (error) => {
 
@@ -99,10 +101,10 @@ export class TransferirComponent extends BasePaginationComponent {
 }
 
 @Component({
-    templateUrl:'./component.html',
-    selector:'titular'
+    templateUrl: './component.html',
+    selector: 'titular'
 })
-export class TitularComponent{
+export class TitularComponent {
 
     pag: number = 0;
     columns = ['operador', 'oficina', 'titular', 'asignacion', 'nic', 'transferir'];

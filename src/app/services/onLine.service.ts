@@ -19,6 +19,7 @@ import {SincronizaCambios} from '@services/onLine/sincronizarCambios';
 import { _config} from '@app/app.config';
 import { LoginDialogService } from './onLine/loginDialog.service';
 import { AuthenticationService } from "@services/auth/authentication.service";
+import * as moment from 'moment';
 
 /**
  * Servicio para verificar la conexion con el servidor que aloja a la web app.
@@ -62,6 +63,14 @@ export class OnLineService {
             let message="Se perdió la conexión";
             if(this.onLine){
                 message="Se estableció la conexión";
+                if (auth.user && auth.user.username && auth.user.username.length>0){
+                    this.db.get("lastLogin",this.auth.user.username).then(user=>{
+                        if (user){
+                            user["lastLogin"]=moment().valueOf();
+                            db.update("lastLogin",user);
+                        }
+                    })
+                }
                 this.loginDialogService.setOnLine(this);
                 if (auth.isLoggedin)
                     this.sincronizarCambios.startSincronizacion();
