@@ -115,6 +115,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
 	public form : FormGroup;
     public model : Predenuncia;
     public personas: any[] = [];
+    public masDe3Dias:any;
     public isUserX: boolean=false;// cambiar aquí la lógica del usuario
     public casoId: number = null;
     public hasPredenuncia:boolean=false;
@@ -139,6 +140,10 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         }
 
     ngOnInit(){
+        this.authen.masDe3DiasSinConexion().then(r=>{
+            let x= r as boolean;
+            this.masDe3Dias=r;
+        });
         this.route.params.subscribe(params => {
             if (params['casoId']){
                 this.casoId = +params['casoId'];

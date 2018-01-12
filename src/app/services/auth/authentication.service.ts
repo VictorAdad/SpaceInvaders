@@ -24,6 +24,7 @@ import { environment } from '../../../environments/environment';
 import 'rxjs/add/operator/map';
 import { CIndexedDB } from '@services/indexedDB';
 import { OnLineService } from '@services/onLine.service';
+import * as moment from 'moment';
 
 @Injectable()
 export class AuthenticationService {
@@ -169,6 +170,20 @@ export class AuthenticationService {
         else {
             return true;
         }
+    }
+
+    public masDe3DiasSinConexion(){
+        return new Promise( 
+            (resolve,reject)=>{
+                this.db.get("lastLogin", this.user.username).then(usuario=>{
+                    var a=moment(usuario["lastLogin"]);
+                    var hoy=moment();
+                    var horas=hoy.diff(a, 'hours');
+                    resolve(horas>72);
+                }).catch(e=>{
+                    reject(e);
+                });
+            });
     }
 }
 

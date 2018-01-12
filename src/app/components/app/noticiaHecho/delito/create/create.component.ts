@@ -28,6 +28,7 @@ export class DelitoCreateComponent{
 
     public casoId: number = null;
     public breadcrumb = [];
+    public masDe3Dias:any;
 
     id:number;
     caso:Caso;
@@ -40,6 +41,10 @@ export class DelitoCreateComponent{
         this.tabla=_tabla;
     }
     ngOnInit(){
+        this.auth.masDe3DiasSinConexion().then(r=>{
+            let x= r as boolean;
+            this.masDe3Dias=r;
+        });
         this.route.params.subscribe(params => {
             Logger.log("params",params);
             if(params['casoId']){

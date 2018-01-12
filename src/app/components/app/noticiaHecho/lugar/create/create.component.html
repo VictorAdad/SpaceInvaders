@@ -152,11 +152,16 @@
             <input name="id" formControlName="id" [formGroup]="form" hidden>
             <div class="row justify-content-end">
                 <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" matTooltipPosition="above">
-                    <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id != null">Guardar</button>
-                    <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving]" *ngIf="id == null">Guardar</button>
+                    <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving] || masDe3Dias==true" *ngIf="id != null">Guardar</button>
+                    <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving] || masDe3Dias==true" *ngIf="id == null">Guardar</button>
                 </div>
                 <div class="col-sm-auto">
                     <button mat-button routerLink="/caso/{{casoId}}/noticia-hecho/lugares">Cancelar</button>
+                </div>
+            </div>
+            <div class="row justify-content-end space">
+                <div class="col-sm-auto" *ngIf="!onLine.onLine && masDe3Dias==true">
+                    Más de tres dias sin conexión, favor de conectarse a internet
                 </div>
             </div>
         </form>

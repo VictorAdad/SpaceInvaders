@@ -69,6 +69,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	public apiUrl: string = "/v1/base/solicitudes-pre-pericial";
 	public apiUrlPre : string = "/v1/base/predenuncias/casos/"
 	public casoId: number = null;
+	public masDe3Dias:any;
 	public id: number = null;
 	public personas: any[] = [];
     @Output() modelUpdate = new EventEmitter<any>();
@@ -95,6 +96,10 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	) { super(); }
 
 	ngOnInit() {
+		this.auth.masDe3DiasSinConexion().then(r=>{
+            let x= r as boolean;
+            this.masDe3Dias=r;
+        });
 		this.model = new Perito();
 		this.form = this.createForm();
 
