@@ -25,6 +25,7 @@ import { CasoService } from '@services/caso/caso.service';
 import { FormatosService } from '@services/formatos/formatos.service';
 import { Logger } from "@services/logger.service";
 import { PersonaService} from '@services/noticia-hecho/persona/persona.service';
+import { AuthenticationService } from '@services/auth/authentication.service';
 
 
 var eliminaNulos = function(x){
@@ -78,6 +79,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 	public casoId: number = null;
     public id: number = null;
     public personas: any[] = [];
+    public masDe3Dias:any;
 	@Output() modelUpdate = new EventEmitter<any>();
 	public form: FormGroup;
 	public model: Entrevista;
@@ -98,11 +100,16 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 		private db: CIndexedDB,
 		public options: SelectsService,
 		public personaServ: PersonaService,
-		public casoService:CasoService
+        public casoService:CasoService,
+        private auth: AuthenticationService,
 
 	) { super(); }
 
 	ngOnInit() {
+        this.auth.masDe3DiasSinConexion().then(r=>{
+            let x= r as boolean;
+            this.masDe3Dias=r;
+        });
 		this.model = new Entrevista();
 		this.form = this.createForm();
 
@@ -254,7 +261,8 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 	                    tipo:"post",
 	                    pendiente:true,
 	                    dependeDe:[this.casoId],
-	                    temId: temId
+                        temId: temId,
+                        username: this.auth.user.username
 	                }
 	                this.db.add("sincronizar",dato).then(p=>{
 	                    this.db.get("casos", this.casoId).then(caso=>{

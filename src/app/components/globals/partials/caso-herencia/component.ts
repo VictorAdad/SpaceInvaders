@@ -82,6 +82,7 @@ export class CasoHerenciaComponent implements OnInit{
         this.lugares = this.casoServ.caso.optionsLugares();
         this.personas=[]; 
         this.people
+        this.fillCampos();
         let timer = Observable.timer(10000);
         timer.subscribe(t => {
           if (this.people){
@@ -89,9 +90,7 @@ export class CasoHerenciaComponent implements OnInit{
               this.addPersona(this.people[i].personaCaso.id);
             }
           }
-        })
-        this.fillCampos();   
-        
+        })   
   })
  };
   public addPersona(_id){
