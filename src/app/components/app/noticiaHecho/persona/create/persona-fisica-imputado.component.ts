@@ -14,7 +14,7 @@ import { NoticiaHechoGlobal } from '../../global';
 import { _config} from '@app/app.config';
 import { Form } from './form';
 import { Options } from './options';
-import { Observable }                  from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import * as moment from 'moment';
 import { CasoService } from '@services/caso/caso.service';
 import { Yason } from '@services/utils/yason';
@@ -155,52 +155,9 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         this.globals.form.controls.personaCaso["controls"][0].controls.tipoInterviniente.disable();
                         Logger.log('Form', this.globals);
                         Logger.log("Coco",this.tipoPersona,this.tipoInterviniente);
-
-                        if(this.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victimaDesconocido){
-                            let timer = Observable.timer(500);
-                            timer.subscribe(t => {
-                                Logger.log('Es víctima desconocida');
-                                let contentRadios = this.tipoIntervinienteEl.contentRadios.nativeElement;
-
-                                let radio = contentRadios.getElementsByClassName('content-radio '+_config.optionValue.tipoInterviniente.victima);
-                                let input = radio[0].querySelectorAll('.mat-radio-input');
-                                let matradio = radio[0].getElementsByClassName('mat-radio-button');
-
-                                let radioDesconocido = contentRadios.getElementsByClassName('content-radio '+_config.optionValue.tipoInterviniente.victimaDesconocido);
-                                let inputDesconocido = radioDesconocido[0].querySelectorAll('.mat-radio-input');
-                                let matradioDesconocido = radioDesconocido[0].getElementsByClassName('mat-radio-button');
-
-
-                                matradio[0].classList.remove('mat-radio-disabled');
-                                input[0].removeAttribute('disabled');
-                                matradioDesconocido[0].classList.remove('mat-radio-disabled');
-                                inputDesconocido[0].removeAttribute('disabled');
-
-                            });
-                        }else if(this.tipoInterviniente.id === _config.optionValue.tipoInterviniente.imputadoDesconocido){
-                            let timer = Observable.timer(500);
-                            timer.subscribe(t => {
-                                Logger.log('Es imputado desconocido');
-                                let contentRadios = this.tipoIntervinienteEl.contentRadios.nativeElement
-
-                                let radio = contentRadios.getElementsByClassName('content-radio '+_config.optionValue.tipoInterviniente.imputado);
-                                let input = radio[0].querySelectorAll('.mat-radio-input');
-                                let matradio = radio[0].getElementsByClassName('mat-radio-button');
-
-                                let radioDesconocido = contentRadios.getElementsByClassName('content-radio '+_config.optionValue.tipoInterviniente.imputadoDesconocido);
-                                let inputDesconocido = radioDesconocido[0].querySelectorAll('.mat-radio-input');
-                                let matradioDesconocido = radioDesconocido[0].getElementsByClassName('mat-radio-button');
-
-                                matradio[0].classList.remove('mat-radio-disabled');
-                                input[0].removeAttribute('disabled');
-                                matradioDesconocido[0].classList.remove('mat-radio-disabled');
-                                inputDesconocido[0].removeAttribute('disabled');
-
-                            });
-                        }
+                        this.validateTipoPersona();
                     });
                 }else{
-                    //this.tabla.get("casos",this.casoId).then(caso => {
                     this.casoService.find(this.casoId).then(r=>{
                         var caso=this.casoService.caso;
                         Logger.log("CASO ->",caso);
@@ -224,6 +181,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         this.globals.form.controls.personaCaso["controls"][0].controls.tipoInterviniente.disable();
                         this.form.controls.tipoPersona.disable();
                         Logger.log("Coco",this.tipoPersona,this.tipoInterviniente);
+                        this.validateTipoPersona();
                     });
                 }
             }else{
@@ -234,6 +192,53 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         timer.subscribe(t => {
             this.validateForm(this.form);
         });
+    }
+
+    public validateTipoPersona() {
+        if(this.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victimaDesconocido){
+            let timer = Observable.timer(500);
+            timer.subscribe(t => {
+                Logger.log('Es víctima desconocida');
+                let contentRadios = this.tipoIntervinienteEl.contentRadios.nativeElement;
+
+                let radio = contentRadios.getElementsByClassName('content-radio '+_config.optionValue.tipoInterviniente.victima);
+                let input = radio[0].querySelectorAll('.mat-radio-input');
+                let matradio = radio[0].getElementsByClassName('mat-radio-button');
+
+                let radioDesconocido
+                    = contentRadios.getElementsByClassName('content-radio '+_config.optionValue.tipoInterviniente.victimaDesconocido);
+                let inputDesconocido = radioDesconocido[0].querySelectorAll('.mat-radio-input');
+                let matradioDesconocido = radioDesconocido[0].getElementsByClassName('mat-radio-button');
+
+
+                matradio[0].classList.remove('mat-radio-disabled');
+                input[0].removeAttribute('disabled');
+                matradioDesconocido[0].classList.remove('mat-radio-disabled');
+                inputDesconocido[0].removeAttribute('disabled');
+
+            });
+        }else if(this.tipoInterviniente.id === _config.optionValue.tipoInterviniente.imputadoDesconocido){
+            let timer = Observable.timer(500);
+            timer.subscribe(t => {
+                Logger.log('Es imputado desconocido');
+                let contentRadios = this.tipoIntervinienteEl.contentRadios.nativeElement
+
+                let radio = contentRadios.getElementsByClassName('content-radio '+_config.optionValue.tipoInterviniente.imputado);
+                let input = radio[0].querySelectorAll('.mat-radio-input');
+                let matradio = radio[0].getElementsByClassName('mat-radio-button');
+
+                let radioDesconocido
+                    = contentRadios.getElementsByClassName('content-radio '+_config.optionValue.tipoInterviniente.imputadoDesconocido);
+                let inputDesconocido = radioDesconocido[0].querySelectorAll('.mat-radio-input');
+                let matradioDesconocido = radioDesconocido[0].getElementsByClassName('mat-radio-button');
+
+                matradio[0].classList.remove('mat-radio-disabled');
+                input[0].removeAttribute('disabled');
+                matradioDesconocido[0].classList.remove('mat-radio-disabled');
+                inputDesconocido[0].removeAttribute('disabled');
+
+            });
+        }
     }
 
     public compare(a,b) {
