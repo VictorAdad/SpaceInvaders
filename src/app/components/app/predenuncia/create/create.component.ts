@@ -127,7 +127,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
 
     constructor(
         private _fbuilder: FormBuilder,
-        private onLine: OnLineService,
+        public onLine: OnLineService,
         private http: HttpService,
         private router: Router,
         private route: ActivatedRoute,
