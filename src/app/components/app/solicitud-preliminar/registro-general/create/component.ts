@@ -137,31 +137,33 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 	}
 
 	public save(valid: any, _model: any) {
+		if(valid){
+			Object.assign(this.model, _model);
+			this.model.caso.id = this.casoId;
+			Logger.log('-> RegistroGeneral@save()', this.model);
 
-		Object.assign(this.model, _model);
-		this.model.caso.id = this.casoId;
-		Logger.log('-> RegistroGeneral@save()', this.model);
+			return new Promise<any>(
+	            (resolve, reject) => {
+					this.http.post(this.apiUrl, this.model).subscribe(
 
-		return new Promise<any>(
-            (resolve, reject) => {
-				this.http.post(this.apiUrl, this.model).subscribe(
-
-					(response) => {
-            			Logger.log('registro guardado->',response);
-						if(this.casoId!=null){
-							this.id=response.id;
-							this.router.navigate(['/caso/' + this.casoId + '/registro-general/' + this.id + '/edit']);
+						(response) => {
+	            			Logger.log('registro guardado->',response);
+							if(this.casoId!=null){
+								this.id=response.id;
+								this.router.navigate(['/caso/' + this.casoId + '/registro-general/' + this.id + '/edit']);
+							}
+							resolve('Solicitud de registro general creada con éxito');
+						},
+						(error) => {
+							Logger.error('Error', error);
+							reject(error)
 						}
-						resolve('Solicitud de registro general creada con éxito');
-					},
-					(error) => {
-						Logger.error('Error', error);
-						reject(error)
-					}
-				);
-			}
-		);
-
+					);
+				}
+			);
+		}else{
+            console.error('El formulario no pasó la validación D:')
+        }
 	}
 
 	public edit(_valid: any, _model: any) {

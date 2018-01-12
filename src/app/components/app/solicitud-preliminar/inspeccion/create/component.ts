@@ -118,44 +118,46 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
     }
 
     public save(valid : any, _model : any){
+            if(valid){
+              Object.assign(this.model, _model);
+              this.model.caso.id = this.casoId;
+              Logger.log('-> Inspeccion@save()', this.model);
 
-            Object.assign(this.model, _model);
-            this.model.caso.id = this.casoId;
-            Logger.log('-> Inspeccion@save()', this.model);
+              var fechaCompleta = new Date (this.model.fechaHoraInspeccion);
+              if(this.model['horaInspeccion'])
+              {fechaCompleta.setMinutes(parseInt(this.model['horaInspeccion'].split(':')[1]));
+              fechaCompleta.setHours(parseInt(this.model['horaInspeccion'].split(':')[0]));
+               }
+              var mes:number=fechaCompleta.getMonth()+1;
+              this.model.fechaHoraInspeccion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
+              Logger.log('lo que envio: '+  this.model.fechaHoraInspeccion);
 
-            var fechaCompleta = new Date (this.model.fechaHoraInspeccion);
-            if(this.model['horaInspeccion'])
-            {fechaCompleta.setMinutes(parseInt(this.model['horaInspeccion'].split(':')[1]));
-            fechaCompleta.setHours(parseInt(this.model['horaInspeccion'].split(':')[0]));
-             }
-            var mes:number=fechaCompleta.getMonth()+1;
-            this.model.fechaHoraInspeccion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
-            Logger.log('lo que envio: '+  this.model.fechaHoraInspeccion);
+          return new Promise<any>(
+              (resolve, reject) => {
+                  this.http.post(this.apiUrl, this.model).subscribe(
 
-        return new Promise<any>(
-            (resolve, reject) => {
-                this.http.post(this.apiUrl, this.model).subscribe(
-
-                    (response) => {
-                        //Logger.log(response);
-                      //Logger.log('lo que recibo: '+ new Date(response.fechaHoraInspeccion));
-                      if(this.casoId!=null){
-    					this.id=response.id;
-                        this.router.navigate(['/caso/'+this.casoId+'/inspeccion/'+this.id+'/edit' ]);
+                      (response) => {
+                          //Logger.log(response);
+                        //Logger.log('lo que recibo: '+ new Date(response.fechaHoraInspeccion));
+                        if(this.casoId!=null){
+      					this.id=response.id;
+                          this.router.navigate(['/caso/'+this.casoId+'/inspeccion/'+this.id+'/edit' ]);
+                        }
+                        else {
+                          this.router.navigate(['/inspecciones/'+this.casoId+'/edit' ]);
+                        }
+                        resolve('Solicitud de inspección creada con éxito');
+                      },
+                      (error) => {
+                          Logger.error('Error', error);
+                          reject(error);
                       }
-                      else {
-                        this.router.navigate(['/inspecciones/'+this.casoId+'/edit' ]);
-                      }
-                      resolve('Solicitud de inspección creada con éxito');
-                    },
-                    (error) => {
-                        Logger.error('Error', error);
-                        reject(error);
-                    }
-                );
-            }
-        );
-
+                  );
+              }
+          );
+        }else{
+            console.error('El formulario no pasó la validación D:')
+        }
     }
 
     public edit(_valid : any, _model : any){

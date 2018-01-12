@@ -677,78 +677,81 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     save(valid : any, _model : any){
-        return new Promise<any>((resolve, reject) => {
+        if(valid){
+            return new Promise<any>((resolve, reject) => {
 
-            Logger.log('%cSave@Model','color:cyan;',_model);
-            if (!_model["edad"]){//quiere decir que solo viene la edad calculada
-                _model["edad"]=this.globals.form.controls.edad["value"];
-            }
-
-            var buscar=[];
-            var obj=this;
-
-            buscar.push({
-                catalogo:"nacionalidad_religion",
-                name:"nacionalidadReligion",
-                data:{
-                    nacionalidad:this.form.controls.nacionalidad.value,
-                    religion:this.form.controls.religion.value,
+                Logger.log('%cSave@Model','color:cyan;',_model);
+                if (!_model["edad"]){//quiere decir que solo viene la edad calculada
+                    _model["edad"]=this.globals.form.controls.edad["value"];
                 }
-            });
 
-            this.personaServ.nacionalidadReligion.find(this.form.controls.nacionalidad.value,"nacionalidad");
-            this.personaServ.nacionalidadReligion.find(this.form.controls.religion.value,"religion");
-            if (this.personaServ.nacionalidadReligion.finded[0])
-                _model["nacionalidadReligion"]={id:this.personaServ.nacionalidadReligion.finded[0].id};
-            if (this.personaServ.tipoDetenido.finded[0]){
-                (_model["personaCaso"])[0].detalleDetenido["tipoDetenido"].id=this.personaServ.tipoDetenido.finded[0].id
-            }
-            if((_model["personaCaso"])[0].detalleDetenido['fechaDetencion']){
-              var fechaCompleta = new Date ((_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
-              console.log('1.- fechaCompleta', fechaCompleta );
-              var hora=(_model["personaCaso"])[0].detalleDetenido['horaDetenido'];
-              console.log('2.- Hora', hora );
+                var buscar=[];
+                var obj=this;
 
-              fechaCompleta.setMinutes(parseInt(hora.split(':')[1]));
-              fechaCompleta.setHours(parseInt(hora.split(':')[0]));
-              console.log('3.- Hora', fechaCompleta );
-              var mes:number=fechaCompleta.getMonth()+1;
-              (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
-              Logger.log('lo que envio: '+  (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
-             }
-
-             if (this.globals.detenido==false) {
-                 Logger.log('entroooooo!');
-                 delete (_model["personaCaso"])[0].detalleDetenido;
-             }
-
-             (_model["personaCaso"])[0].detenido = this.globals.detenido;
-
-            buscar.push({
-                catalogo:"idioma_identificacion",
-                name:"idiomaIdentificacion",
-                data:{
-                    hablaEspaniol:this.form.controls.hablaEspaniol.value,
-                    lenguaIndigena:this.form.controls.lenguaIndigena.value,
-                    familiaLinguistica:this.form.controls.familiaLinguistica.value,
-                    identificacion:this.form.controls.identificacion.value
-                }
-            });
-            this.searchCatalogos(buscar).then(e=>{
-                for(let key in e){
-                    if (e[key]!=null){
-                        _model[key]={id:e[key].id};
+                buscar.push({
+                    catalogo:"nacionalidad_religion",
+                    name:"nacionalidadReligion",
+                    data:{
+                        nacionalidad:this.form.controls.nacionalidad.value,
+                        religion:this.form.controls.religion.value,
                     }
+                });
+
+                this.personaServ.nacionalidadReligion.find(this.form.controls.nacionalidad.value,"nacionalidad");
+                this.personaServ.nacionalidadReligion.find(this.form.controls.religion.value,"religion");
+                if (this.personaServ.nacionalidadReligion.finded[0])
+                    _model["nacionalidadReligion"]={id:this.personaServ.nacionalidadReligion.finded[0].id};
+                if (this.personaServ.tipoDetenido.finded[0]){
+                    (_model["personaCaso"])[0].detalleDetenido["tipoDetenido"].id=this.personaServ.tipoDetenido.finded[0].id
                 }
-                this.buscaMediaFiliacion(_model).then(datos=>{
-                    Logger.log("Model",datos);
-                    obj.doSave(datos).then(r=>{
-                        resolve(r);
-                    }).catch(e=>reject(e));
+                if((_model["personaCaso"])[0].detalleDetenido['fechaDetencion']){
+                  var fechaCompleta = new Date ((_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
+                  console.log('1.- fechaCompleta', fechaCompleta );
+                  var hora=(_model["personaCaso"])[0].detalleDetenido['horaDetenido'];
+                  console.log('2.- Hora', hora );
+
+                  fechaCompleta.setMinutes(parseInt(hora.split(':')[1]));
+                  fechaCompleta.setHours(parseInt(hora.split(':')[0]));
+                  console.log('3.- Hora', fechaCompleta );
+                  var mes:number=fechaCompleta.getMonth()+1;
+                  (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
+                  Logger.log('lo que envio: '+  (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
+                 }
+
+                 if (this.globals.detenido==false) {
+                     Logger.log('entroooooo!');
+                     delete (_model["personaCaso"])[0].detalleDetenido;
+                 }
+
+                 (_model["personaCaso"])[0].detenido = this.globals.detenido;
+
+                buscar.push({
+                    catalogo:"idioma_identificacion",
+                    name:"idiomaIdentificacion",
+                    data:{
+                        hablaEspaniol:this.form.controls.hablaEspaniol.value,
+                        lenguaIndigena:this.form.controls.lenguaIndigena.value,
+                        familiaLinguistica:this.form.controls.familiaLinguistica.value,
+                        identificacion:this.form.controls.identificacion.value
+                    }
+                });
+                this.searchCatalogos(buscar).then(e=>{
+                    for(let key in e){
+                        if (e[key]!=null){
+                            _model[key]={id:e[key].id};
+                        }
+                    }
+                    this.buscaMediaFiliacion(_model).then(datos=>{
+                        Logger.log("Model",datos);
+                        obj.doSave(datos).then(r=>{
+                            resolve(r);
+                        }).catch(e=>reject(e));
+                    });
                 });
             });
-        });
-
+        }else{
+            console.error('El formulario no pasó la validación D:')
+        }
     }
     /**
     agrega al model los ids temporales para que funcione esto,

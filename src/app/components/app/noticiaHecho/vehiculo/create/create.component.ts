@@ -261,72 +261,76 @@ public validate(form: FormGroup){
     }
 
     public save(valid : any, _model : any){
-        Logger.log("SI",this.vehiculoServ.tipoUsoTipoVehiculo.finded);
-        if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0]){
-            _model.tipoUsoTipoVehiculo.id=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].id;
-        }
-        if (this.vehiculoServ.marcaSubmarca.finded[0]){
-            _model.marcaSubmarca.id=this.vehiculoServ.marcaSubmarca.finded[0].id;
-            _model.marcaSubmarca["marca"]=this.vehiculoServ.marcaSubmarca.finded[0].marca;
-            _model.marcaSubmarca["tipoVehiculo"]=this.vehiculoServ.marcaSubmarca.finded[0].tipoVehiculo;
-        }
-        if (this.vehiculoServ.procedenciaAseguradora.finded[0])
-            _model.procedenciaAseguradora.id=this.vehiculoServ.procedenciaAseguradora.finded[0].id;
-        if (this.vehiculoServ.motivoColorClase.finded[0]){
-            _model.motivoRegistroColorClase.id=this.vehiculoServ.motivoColorClase.finded[0].id;
-            _model.motivoRegistroColorClase["color"]=this.vehiculoServ.motivoColorClase.finded[0].color;
-        }
-        Logger.log("MODEL@SAVE=>",_model);
-        Logger.log(this.vehiculoServ);
-        return new Promise<any>((resolve, reject)=>{
-            if(this.onLine.onLine){
-                Object.assign(this.model, _model);
-                this.model.caso.id = this.casoId;
-                // this.model.caso.created = null;
-                this.http.post('/v1/base/vehiculos', this.model).subscribe(
-                    (response) => {
-                        this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/vehiculos' ]);
-                        resolve("Se creó el vehículo con éxito");
-                        this.vehiculoServ.reset();
-                        this.casoService.actualizaCaso();
-                    },
-                    (error) => reject(error)
-                );
-            }else{
-                Object.assign(this.model, _model);
-                this.model.caso.id = this.casoId;
-                // this.model.caso.created = null;
-                let temId=Date.now();
-                let dato={
-                    url:'/v1/base/vehiculos',
-                    body:this.model,
-                    options:[],
-                    tipo:"post",
-                    pendiente:true,
-                    dependeDe:[this.casoId],
-                    temId: temId,
-                    username: this.auth.user.username
-                }
-                this.db.add("sincronizar",dato).then(p=>{
-                    //this.db.get("casos",this.casoId).then(caso=>{
-                        var caso=this.casoService.caso;
-                        if (caso){
-                            if(!caso["vehiculos"]){
-                                caso["vehiculos"]=[];
-                            }
-                            this.model["id"]=temId;
-                            caso["vehiculos"].push(this.model);
-                            this.db.update("casos",caso).then(t=>{
-                                resolve("Se creó el vehículo de manera local");
-                                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/vehiculos' ]);
-                                this.vehiculoServ.reset();
-                            });
-                        }
-                    //});
-                });
-
+        if(valid){
+            Logger.log("SI",this.vehiculoServ.tipoUsoTipoVehiculo.finded);
+            if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0]){
+                _model.tipoUsoTipoVehiculo.id=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].id;
             }
-        });
+            if (this.vehiculoServ.marcaSubmarca.finded[0]){
+                _model.marcaSubmarca.id=this.vehiculoServ.marcaSubmarca.finded[0].id;
+                _model.marcaSubmarca["marca"]=this.vehiculoServ.marcaSubmarca.finded[0].marca;
+                _model.marcaSubmarca["tipoVehiculo"]=this.vehiculoServ.marcaSubmarca.finded[0].tipoVehiculo;
+            }
+            if (this.vehiculoServ.procedenciaAseguradora.finded[0])
+                _model.procedenciaAseguradora.id=this.vehiculoServ.procedenciaAseguradora.finded[0].id;
+            if (this.vehiculoServ.motivoColorClase.finded[0]){
+                _model.motivoRegistroColorClase.id=this.vehiculoServ.motivoColorClase.finded[0].id;
+                _model.motivoRegistroColorClase["color"]=this.vehiculoServ.motivoColorClase.finded[0].color;
+            }
+            Logger.log("MODEL@SAVE=>",_model);
+            Logger.log(this.vehiculoServ);
+            return new Promise<any>((resolve, reject)=>{
+                if(this.onLine.onLine){
+                    Object.assign(this.model, _model);
+                    this.model.caso.id = this.casoId;
+                    // this.model.caso.created = null;
+                    this.http.post('/v1/base/vehiculos', this.model).subscribe(
+                        (response) => {
+                            this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/vehiculos' ]);
+                            resolve("Se creó el vehículo con éxito");
+                            this.vehiculoServ.reset();
+                            this.casoService.actualizaCaso();
+                        },
+                        (error) => reject(error)
+                    );
+                }else{
+                    Object.assign(this.model, _model);
+                    this.model.caso.id = this.casoId;
+                    // this.model.caso.created = null;
+                    let temId=Date.now();
+                    let dato={
+                        url:'/v1/base/vehiculos',
+                        body:this.model,
+                        options:[],
+                        tipo:"post",
+                        pendiente:true,
+                        dependeDe:[this.casoId],
+                        temId: temId,
+                        username: this.auth.user.username
+                    }
+                    this.db.add("sincronizar",dato).then(p=>{
+                        //this.db.get("casos",this.casoId).then(caso=>{
+                            var caso=this.casoService.caso;
+                            if (caso){
+                                if(!caso["vehiculos"]){
+                                    caso["vehiculos"]=[];
+                                }
+                                this.model["id"]=temId;
+                                caso["vehiculos"].push(this.model);
+                                this.db.update("casos",caso).then(t=>{
+                                    resolve("Se creó el vehículo de manera local");
+                                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/vehiculos' ]);
+                                    this.vehiculoServ.reset();
+                                });
+                            }
+                        //});
+                    });
+
+                }
+            });
+        }else{
+            console.error('El formulario no pasó la validación D:')
+        }
 	}
 
     public edit(_valid : any, _model : any){
@@ -397,6 +401,7 @@ public validate(form: FormGroup){
     public fillForm(_data){
         Logger.logColor("VEHICULO","tomato",_data);
         Yason.eliminaNulos(_data);
+        Logger.logColor("marcaSubmarca","tomato",_data.marcaSubmarca);
         if (_data.marcaSubmarca){
             if (!_data["tipoVehiculo"])
                 _data["tipoVehiculo"]=_data.marcaSubmarca.tipoVehiculo;
