@@ -136,59 +136,61 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 	}
 
 	public save(valid: any, _model: any) {
+		if(valid){
+			Object.assign(this.model, _model);
+			this.model.caso.id = this.casoId;
 
-		Object.assign(this.model, _model);
-		this.model.caso.id = this.casoId;
-
-		return new Promise<any>(
-			(resolve, reject) => {
-				Logger.log('-> Policia@save()', this.model);
-				this.http.post(this.apiUrl, this.model).subscribe(
-					(response) => {
-						if (this.onLine.onLine) {
-							if(this.casoId!=null){
-								this.id=response.id;
-								this.router.navigate(['/caso/' + this.casoId + '/policia/' + this.id + '/edit']);
+			return new Promise<any>(
+				(resolve, reject) => {
+					Logger.log('-> Policia@save()', this.model);
+					this.http.post(this.apiUrl, this.model).subscribe(
+						(response) => {
+							if (this.onLine.onLine) {
+								if(this.casoId!=null){
+									this.id=response.id;
+									this.router.navigate(['/caso/' + this.casoId + '/policia/' + this.id + '/edit']);
+								}
+								resolve('Solicitud de policía creada con éxito');
+							}else{
+								let temId=Date.now();
+				                let dato={
+				                    url: this.apiUrl,
+				                    body:_model,
+				                    options:[],
+				                    tipo:"post",
+				                    pendiente:true,
+				                    dependeDe:[this.casoId],
+									temId: temId,
+									username: this.auth.user.username
+				                }
+				                this.db.add("sincronizar",dato).then(p=>{
+				                    this.db.get("casos", this.casoId).then(caso=>{
+				                        if (caso){
+				                            if(!caso["solicitudPrePolicias"]){
+			                        			caso["solicitudPrePolicias"]=[];
+				                            }
+				                            _model["id"]=temId;
+				                            this.id= _model['id'];
+				                            caso["solicitudPrePolicias"].push(_model);
+				                            this.db.update("casos",caso).then(t=>{
+				                                resolve('Solicitud de policía creada con éxito');
+				                                this.router.navigate(['/caso/' + this.casoId + '/policia/' + this.id + '/edit']);
+				                            });
+				                        }
+				                    });
+				                });
 							}
-							resolve('Solicitud de policía creada con éxito');
-						}else{
-							let temId=Date.now();
-			                let dato={
-			                    url: this.apiUrl,
-			                    body:_model,
-			                    options:[],
-			                    tipo:"post",
-			                    pendiente:true,
-			                    dependeDe:[this.casoId],
-								temId: temId,
-								username: this.auth.user.username
-			                }
-			                this.db.add("sincronizar",dato).then(p=>{
-			                    this.db.get("casos", this.casoId).then(caso=>{
-			                        if (caso){
-			                            if(!caso["solicitudPrePolicias"]){
-		                        			caso["solicitudPrePolicias"]=[];
-			                            }
-			                            _model["id"]=temId;
-			                            this.id= _model['id'];
-			                            caso["solicitudPrePolicias"].push(_model);
-			                            this.db.update("casos",caso).then(t=>{
-			                                resolve('Solicitud de policía creada con éxito');
-			                                this.router.navigate(['/caso/' + this.casoId + '/policia/' + this.id + '/edit']);
-			                            });
-			                        }
-			                    });
-			                });
+						},
+						(error) => {
+							Logger.error('Error', error);
+							reject(error);
 						}
-					},
-					(error) => {
-						Logger.error('Error', error);
-						reject(error);
-					}
-				);
-			}
-		);
-
+					);
+				}
+			);
+		}else{
+            console.error('El formulario no pasó la validación D:')
+        }
 	}
 
 	public edit(_valid: any, _model: any) {

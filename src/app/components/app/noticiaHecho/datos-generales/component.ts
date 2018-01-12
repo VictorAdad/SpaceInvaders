@@ -212,14 +212,20 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                     url:'/v1/base/casos/'+this.id,
                     body:_model,
                     options:[],
-                    tipo:"update",
+                    tipo: 'update',
                     pendiente:true,
                     username: this.auth.user.username
                 }
-                this.db.add("sincronizar",dato).then(p=>{
-                    resolve("Se actualizó el caso de manera local");
-                    Logger.log('-> Registro acutualizado');
-                }); 
+                this.db.add('sincronizar', dato).then(p => {
+                    var t = this.casoService.caso;
+                    t['titulo'] = _model['titulo'];
+                    t['descripcion'] = _model['descripcion'];
+                    this.db.update('casos', t).then(e => {
+                        Logger.log('caso', t);
+                        resolve('Se actualizó el caso de manera local');
+                        Logger.log('-> Registro acutualizado');
+                    });
+                });
             }
         });
     }

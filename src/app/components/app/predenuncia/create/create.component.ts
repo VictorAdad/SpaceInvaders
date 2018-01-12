@@ -335,87 +335,91 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
       this.personasHeredadas=_personasHeredadas;
     }
     public save(valid : any, _model : any){
-        return new Promise<any>(
-            (resolve, reject) => {
-                if(this.onLine.onLine){
-                    Logger.log('--------------->', this.model.fechaCanalizacion);
-                    this.model.fechaCanalizacion = this.concatDate(this.model.fechaCanalizacion, this.model.horaCanalizacion);
-                    Object.assign(this.model, _model);
-                    this.model.caso.id = this.casoId;
-                    Logger.log(this.model);
-                    this.model.tipo="Predenuncia";// temporalmente
-                    if(this.model.fechaCanalizacion){
-                      var fechaCompleta = new Date (this.model.fechaCanalizacion);
-                      if(this.model.horaCanalizacion)
-                      { fechaCompleta.setMinutes(parseInt(this.model.horaCanalizacion.split(':')[1]));
-                        fechaCompleta.setHours(parseInt(this.model.horaCanalizacion.split(':')[0]));
-                      }
-                      var mes:number=fechaCompleta.getMonth()+1;
-                      this.model.fechaCanalizacion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
-                      Logger.log('lo que envio: '+  this.model.fechaCanalizacion);
-                     }
+        if(valid){
+            return new Promise<any>(
+                (resolve, reject) => {
+                    if(this.onLine.onLine){
+                        Logger.log('--------------->', this.model.fechaCanalizacion);
+                        this.model.fechaCanalizacion = this.concatDate(this.model.fechaCanalizacion, this.model.horaCanalizacion);
+                        Object.assign(this.model, _model);
+                        this.model.caso.id = this.casoId;
+                        Logger.log(this.model);
+                        this.model.tipo="Predenuncia";// temporalmente
+                        if(this.model.fechaCanalizacion){
+                          var fechaCompleta = new Date (this.model.fechaCanalizacion);
+                          if(this.model.horaCanalizacion)
+                          { fechaCompleta.setMinutes(parseInt(this.model.horaCanalizacion.split(':')[1]));
+                            fechaCompleta.setHours(parseInt(this.model.horaCanalizacion.split(':')[0]));
+                          }
+                          var mes:number=fechaCompleta.getMonth()+1;
+                          this.model.fechaCanalizacion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
+                          Logger.log('lo que envio: '+  this.model.fechaCanalizacion);
+                         }
 
 
 
-                    this.http.post('/v1/base/predenuncias', this.model).subscribe(
-                        (response) => {
-                            Logger.log(response);
+                        this.http.post('/v1/base/predenuncias', this.model).subscribe(
+                            (response) => {
+                                Logger.log(response);
 
-                            resolve('Predenuncia creada con éxito');
-                            this.router.navigate(['/caso/'+this.casoId+'/detalle' ]);
-                         },
-                        (error) => {
-                            Logger.error('Error', error);
-                            reject(error);
-                        }
-                    );
-                }else{
-                    let temId = Date.now();
-                    _model.caso.id = this.casoId;
-
-                    if(_model.fechaCanalizacion){
-                      Logger.log('1.-  -------->',_model.fechaCanalizacion);
-                      var fechaCompletaOff = new Date (_model.fechaCanalizacion);
-                      Logger.log('2.-  -------->',fechaCompletaOff);
-                      if(_model.horaCanalizacion){
-                        fechaCompletaOff.setMinutes(parseInt(_model.horaCanalizacion.split(':')[1]));
-                        fechaCompletaOff.setHours(parseInt(_model.horaCanalizacion.split(':')[0]));
-                      }
-                      var mes:number=fechaCompletaOff.getMonth()+1;
-                      _model.fechaCanalizacion=fechaCompletaOff.getFullYear()+'-'+mes+'-'+fechaCompletaOff.getDate()+' '+fechaCompletaOff.getHours()+':'+fechaCompletaOff.getMinutes()+':00.000';
-                      Logger.log('lo que envio: '+  _model.fechaCanalizacion);
-                     }
-                    let dato = {
-                        url:'/v1/base/predenuncias',
-                        body:_model,
-                        options:[],
-                        tipo:"post",
-                        pendiente:true,
-                        dependeDe:[this.casoId],
-                        temId: temId,
-                        username: this.authen.user.username
-                    }
-                    this.db.add("sincronizar", dato).then(p=>{
-                        this.db.get("casos",this.casoId).then(caso=>{
-                            if (caso){
-                                if(!caso["predenuncias"]){
-                                    caso["predenuncias"];
-                                }
-                                _model["id"]=temId;
-                                caso["predenuncias"] = _model;
-                                Logger.log("caso arma", caso["predenuncia"]);
-                                this.db.update("casos",caso).then(t=>{
-                                    Logger.log("caso arma", t["arma"]);
-                                    resolve("Se agregó la arma de manera local");
-                                    this.router.navigate(['/caso/'+this.casoId+'/detalle']);
-                                });
+                                resolve('Predenuncia creada con éxito');
+                                this.router.navigate(['/caso/'+this.casoId+'/detalle' ]);
+                             },
+                            (error) => {
+                                Logger.error('Error', error);
+                                reject(error);
                             }
+                        );
+                    }else{
+                        let temId = Date.now();
+                        _model.caso.id = this.casoId;
+
+                        if(_model.fechaCanalizacion){
+                          Logger.log('1.-  -------->',_model.fechaCanalizacion);
+                          var fechaCompletaOff = new Date (_model.fechaCanalizacion);
+                          Logger.log('2.-  -------->',fechaCompletaOff);
+                          if(_model.horaCanalizacion){
+                            fechaCompletaOff.setMinutes(parseInt(_model.horaCanalizacion.split(':')[1]));
+                            fechaCompletaOff.setHours(parseInt(_model.horaCanalizacion.split(':')[0]));
+                          }
+                          var mes:number=fechaCompletaOff.getMonth()+1;
+                          _model.fechaCanalizacion=fechaCompletaOff.getFullYear()+'-'+mes+'-'+fechaCompletaOff.getDate()+' '+fechaCompletaOff.getHours()+':'+fechaCompletaOff.getMinutes()+':00.000';
+                          Logger.log('lo que envio: '+  _model.fechaCanalizacion);
+                         }
+                        let dato = {
+                            url:'/v1/base/predenuncias',
+                            body:_model,
+                            options:[],
+                            tipo:"post",
+                            pendiente:true,
+                            dependeDe:[this.casoId],
+                            temId: temId,
+                            username: this.authen.user.username
+                        }
+                        this.db.add("sincronizar", dato).then(p=>{
+                            this.db.get("casos",this.casoId).then(caso=>{
+                                if (caso){
+                                    if(!caso["predenuncias"]){
+                                        caso["predenuncias"];
+                                    }
+                                    _model["id"]=temId;
+                                    caso["predenuncias"] = _model;
+                                    Logger.log("caso arma", caso["predenuncia"]);
+                                    this.db.update("casos",caso).then(t=>{
+                                        Logger.log("caso arma", t["arma"]);
+                                        resolve("Se agregó la arma de manera local");
+                                        this.router.navigate(['/caso/'+this.casoId+'/detalle']);
+                                    });
+                                }
+                            });
                         });
-                    });
+                    }
+                    Logger.log('--------------->', this.model.fechaCanalizacion);
                 }
-                Logger.log('--------------->', this.model.fechaCanalizacion);
-            }
-        );
+            );
+        }else{
+            console.error('El formulario no pasó la validación D:')
+        }
     }
 
     public fillForm(_data) {

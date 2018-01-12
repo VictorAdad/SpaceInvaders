@@ -11,14 +11,14 @@ import { CasoService } from '@services/caso/caso.service';
 import { Logger } from "@services/logger.service";
 
 @Component({
-    selector:'lugar',
-    templateUrl:'./lugar.component.html'
+    selector: 'lugar',
+    templateUrl: './lugar.component.html'
 })
 
 export class LugarComponent extends BasePaginationComponent {
 
     public casoId: number = null;
-	public displayedColumns = ['tipo', 'calle', 'colonia', 'localidad', 'estado'];
+    public displayedColumns = ['tipo', 'calle', 'colonia', 'localidad', 'estado'];
     public data: Lugar[] = [];
     public dataSource: TableService | null;
     public pag: number = 0;
@@ -56,7 +56,6 @@ export class LugarComponent extends BasePaginationComponent {
                             }
                         }
                     });
-                        
                     //});
                 }
             }

@@ -204,59 +204,63 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
   }
 
 	public save(valid: any, _model: any){
-		_model.caso.id = this.casoId;
-		return new Promise<any>(
-			(resolve, reject) => {
-				Logger.log('-> Perito@save()', _model);
-                if (this.onLine.onLine) {
-    				this.http.post(this.apiUrl, _model).subscribe(
-    					(response) => {
-    							if(this.casoId!=null){
-    								this.id=response.id;
-    								this.router.navigate(['/caso/' + this.casoId + '/perito/' + this.id + '/edit']);
-    							}
-    							resolve('Solicitud pericial creada con éxito');
-    					},
-    					(error) => {
-    						Logger.error('Error', error);
-    						reject(error);
-    					}
-    				);
-                }else{
-                    let temId = Date.now();
-                    let dato  = {
-                        url: this.apiUrl,
-                        body:_model,
-                        options:[],
-                        tipo:"post",
-                        pendiente:true,
-                        dependeDe:[this.casoId],
-						temId: temId,
-						username: this.auth.user.username
-                    }
-                    this.db.add("sincronizar",dato).then(
-                        p => {
-                            if (this.casoServ.caso){
-                                if(!this.casoServ.caso["solicitudPrePericiales"])
-                                    this.casoServ.caso["solicitudPrePericiales"] = [];
+		if(valid){
+			_model.caso.id = this.casoId;
+			return new Promise<any>(
+				(resolve, reject) => {
+					Logger.log('-> Perito@save()', _model);
+	                if (this.onLine.onLine) {
+	    				this.http.post(this.apiUrl, _model).subscribe(
+	    					(response) => {
+	    							if(this.casoId!=null){
+	    								this.id=response.id;
+	    								this.router.navigate(['/caso/' + this.casoId + '/perito/' + this.id + '/edit']);
+	    							}
+	    							resolve('Solicitud pericial creada con éxito');
+	    					},
+	    					(error) => {
+	    						Logger.error('Error', error);
+	    						reject(error);
+	    					}
+	    				);
+	                }else{
+	                    let temId = Date.now();
+	                    let dato  = {
+	                        url: this.apiUrl,
+	                        body:_model,
+	                        options:[],
+	                        tipo:"post",
+	                        pendiente:true,
+	                        dependeDe:[this.casoId],
+							temId: temId,
+							username: this.auth.user.username
+	                    }
+	                    this.db.add("sincronizar",dato).then(
+	                        p => {
+	                            if (this.casoServ.caso){
+	                                if(!this.casoServ.caso["solicitudPrePericiales"])
+	                                    this.casoServ.caso["solicitudPrePericiales"] = [];
 
-                                _model["id"] = temId;
-                                this.id      = _model['id'];
-                                this.casoServ.caso["solicitudPrePericiales"].push(_model);
+	                                _model["id"] = temId;
+	                                this.id      = _model['id'];
+	                                this.casoServ.caso["solicitudPrePericiales"].push(_model);
 
-                                this.db.update("casos",this.casoServ.caso).then(
-                                    t => {
-                                        resolve('Solicitud pericial creada con éxito');
-                                        this.router.navigate(['/caso/' + this.casoId + '/perito/' + this.id + '/edit']);
-                                    }
-                                );
-                            }
-                        }
-                    );
+	                                this.db.update("casos",this.casoServ.caso).then(
+	                                    t => {
+	                                        resolve('Solicitud pericial creada con éxito');
+	                                        this.router.navigate(['/caso/' + this.casoId + '/perito/' + this.id + '/edit']);
+	                                    }
+	                                );
+	                            }
+	                        }
+	                    );
 
-                }
-			}
-		);
+	                }
+				}
+			);
+		}else{
+            console.error('El formulario no pasó la validación D:')
+        }
 	}
 
 	public edit(_valid: any, _model: any){

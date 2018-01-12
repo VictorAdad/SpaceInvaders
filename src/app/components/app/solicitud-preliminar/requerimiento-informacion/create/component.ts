@@ -124,29 +124,32 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 	}
 
 	public save(valid: any, _model: any) {
+		if(valid){
+			_model.caso.id = this.casoId;
+			Logger.log('-> RequerimientoInformacion@save()', _model);
 
-		_model.caso.id = this.casoId;
-		Logger.log('-> RequerimientoInformacion@save()', _model);
+			return new Promise<any>(
+	            (resolve, reject) => {
+					this.http.post(this.apiUrl, _model).subscribe(
 
-		return new Promise<any>(
-            (resolve, reject) => {
-				this.http.post(this.apiUrl, _model).subscribe(
+						(response) => {
+							Logger.log(response);
+							Logger.log('here');
+							this.id=response.id;
+							this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion/' + this.id + '/edit']);
+							resolve('Solicitud de requerimiento de información creada con éxito');
 
-					(response) => {
-						Logger.log(response);
-						Logger.log('here');
-						this.id=response.id;
-						this.router.navigate(['/caso/' + this.casoId + '/requerimiento-informacion/' + this.id + '/edit']);
-						resolve('Solicitud de requerimiento de información creada con éxito');
-
-					},
-					(error) => {
-						Logger.error('Error', error);
-						reject(error);
-					}
-				);
-			}
-		);
+						},
+						(error) => {
+							Logger.error('Error', error);
+							reject(error);
+						}
+					);
+				}
+			);
+		}else{
+            console.error('El formulario no pasó la validación D:')
+        }
 
 	}
 

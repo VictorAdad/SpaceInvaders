@@ -354,224 +354,228 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     }
 
     save(_valid : any, _model : any){
-        return new Promise((resolve,reject)=>{
-            _model.tipoRelacionPersona.caso.id = this.casoId;
-            _model.tieneViolenciaGenero = this.isViolenciaGenero;
-            if(_model.tieneViolenciaGenero)
-                if(this.optionsRelacion.matrizViolenciaGenero.finded[0])
-                    _model.violenciaGenero.id = this.optionsRelacion.matrizViolenciaGenero.finded[0].id;
-            if (this.optionsRelacion.matrizDesaparicionConsumacion.finded[0]){
-                _model["desaparicionConsumacion"]["id"]=this.optionsRelacion.matrizDesaparicionConsumacion.finded[0].id;
-            }
-            Logger.log("MODELO",_model,this.optionsRelacion.matrizDesaparicionConsumacion);
-            if(this.onLine.onLine){
-                this.http.post('/v1/base/tipo-relacion-persona', _model).subscribe(
-                    (response) => {
-                        this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/relaciones' ]);
-                        resolve("Se creo la relación con éxito");
-                        this.casoService.actualizaCaso();
-                    },
-                    (error) => {reject(error)}
-                );
-            }else{
-
-                let temId = Date.now();
-                let copia = temId;
-                let dependeDe=[];
-                var otrosID=[];
-                otrosID.push({detalleDelito:{id:temId}});
-                //solo se depende del caso cuando se crea
-                dependeDe.push(this.casoId);
-                //depende del delito del caso
-                if (_model["delitoCaso"])
-                    dependeDe.push(_model["delitoCaso"].id);
-
-                var losIds={};
-                if (_model["tipoRelacionPersona"]){
-                    let item=_model["tipoRelacionPersona"];
-                    Logger.log("ITEM",item);
-                    //depende del arma del caso
-                    if (item["armaTipoRelacionPersona"] && item["armaTipoRelacionPersona"][0].arma.id){
-                        dependeDe.push(item["armaTipoRelacionPersona"][0].arma.id);
-                        temId++;
-                        var jason = JSON.parse('{"armaTipoRelacionPersona":{ "'+0+'":{"id":'+temId+'} } }');
-                        otrosID.push(jason);
-                    }
-                    //depende del lugar del caso
-                    if (item["lugarTipoRelacionPersona"] && item["lugarTipoRelacionPersona"][0].lugar.id){
-                        dependeDe.push(item["lugarTipoRelacionPersona"][0].lugar.id);
-                        temId++;
-                        var jason = JSON.parse('{"lugarTipoRelacionPersona":{ "'+0+'":{"id":'+temId+'} } }');
-                        otrosID.push(jason);
-                    }
-                    //depende del lugar del vehiculo
-                    if (item["vehiculoTipoRelacionPersona"] && item["vehiculoTipoRelacionPersona"][0].vehiculo.id){
-                        dependeDe.push(item["vehiculoTipoRelacionPersona"][0].vehiculo.id);
-                        temId++;
-                        var jason = JSON.parse('{"vehiculoTipoRelacionPersona":{ "'+0+'":{"id":'+temId+'} } }');
-                        otrosID.push(jason);
-                    }
-                    //depende de la persona
-                    if (item["personaCaso"].id){
-                        dependeDe.push(item["personaCaso"].id);
-                    }
-                    //depende de la persona
-                    if (item["personaCasoRelacionada"].id){
-                        dependeDe.push(item["personaCasoRelacionada"].id);
-                    }
-
+        if(_valid){
+            return new Promise((resolve,reject)=>{
+                _model.tipoRelacionPersona.caso.id = this.casoId;
+                _model.tieneViolenciaGenero = this.isViolenciaGenero;
+                if(_model.tieneViolenciaGenero)
+                    if(this.optionsRelacion.matrizViolenciaGenero.finded[0])
+                        _model.violenciaGenero.id = this.optionsRelacion.matrizViolenciaGenero.finded[0].id;
+                if (this.optionsRelacion.matrizDesaparicionConsumacion.finded[0]){
+                    _model["desaparicionConsumacion"]["id"]=this.optionsRelacion.matrizDesaparicionConsumacion.finded[0].id;
                 }
-                Logger.log("SI");
-                for (var i = 0; i < _model["hostigamientoAcoso"].length; ++i) {//FALTA LAS VALIDACIONES
-                    if (_model["hostigamientoAcoso"][i]["id"]){//tiene el id
-                        dependeDe.push(_model["hostigamientoAcoso"][i].id);
-                    }else{
-                        Logger.log(_model["hostigamientoAcoso"][i]);
-                        temId++;
-                        var jason = JSON.parse('{"detalleDelito":{"hostigamientoAcoso":{ "'+i+'":{"id":'+temId+'} } } }');
-                        otrosID.push(jason);
-                    }
+                Logger.log("MODELO",_model,this.optionsRelacion.matrizDesaparicionConsumacion);
+                if(this.onLine.onLine){
+                    this.http.post('/v1/base/tipo-relacion-persona', _model).subscribe(
+                        (response) => {
+                            this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/relaciones' ]);
+                            resolve("Se creo la relación con éxito");
+                            this.casoService.actualizaCaso();
+                        },
+                        (error) => {reject(error)}
+                    );
+                }else{
 
-                    //depende de la persona
-                    if (_model["hostigamientoAcoso"][i].testigo.id){
-                        dependeDe.push(_model["hostigamientoAcoso"][i].testigo.id);
-                    }
-                }
-                Logger.log("SI");
-                for (var i = 0; i < _model["trataPersona"].length; ++i) {
-                    if (_model["trataPersona"]["id"]){
-                        dependeDe.push(_model["hostigamientoAcoso"][i]["id"]);
-                    }else{//no existe el id
-                        temId++;
-                        var jason = JSON.parse('{"detalleDelito":{"trataPersona":{ "'+i+'":{"id":'+temId+'} } } }');
-                        otrosID.push(jason);
-                    }
+                    let temId = Date.now();
+                    let copia = temId;
+                    let dependeDe=[];
+                    var otrosID=[];
+                    otrosID.push({detalleDelito:{id:temId}});
+                    //solo se depende del caso cuando se crea
+                    dependeDe.push(this.casoId);
+                    //depende del delito del caso
+                    if (_model["delitoCaso"])
+                        dependeDe.push(_model["delitoCaso"].id);
 
-                }
-                Logger.log("SI");
-                for (var i = 0; i < _model["efectoViolencia"].length; ++i) {
-                    if (_model["efectoViolencia"][i]["id"]){
-                        dependeDe.push(_model["hostigamientoAcoso"][i]["id"]);
-                    }else{
-                        temId++;
-                        var jason = JSON.parse('{"detalleDelito":{"efectoViolencia":{ "'+i+'":{"id":'+temId+'} } } }');
-                        otrosID.push(jason);
-                    }
-
-                }
-                Logger.log("SI");
-                let dato={
-                    url:'/v1/base/tipo-relacion-persona',
-                    body:_model,
-                    options:[],
-                    tipo:"post",
-                    pendiente:true,
-                    temId: temId,
-                    dependeDe:dependeDe,
-                    otrosID:otrosID,
-                    username: this.auth.user.username
-
-                }
-                Logger.log("MODELO",_model);
-                this.db.add("sincronizar",dato).then(p=>{
-
-                  Logger.log("NO",this.casoId);
-                      Logger.log("NO",this.casoOffline);
-                        if (this.casoOffline){
-                            let caso=this.casoOffline;
-                            if(!caso["tipoRelacionPersonas"]){
-                                let x:Array<any>=[];
-                                caso["tipoRelacionPersonas"]=x;
-                            }
-                            _model["id"]=copia;
-
-                            if (_model["tipoRelacionPersona"]){
-                                let item=_model["tipoRelacionPersona"];
-                                Logger.log("ITEM",item);
-                                //depende del arma del caso
-                                if (item["armaTipoRelacionPersona"] && item["armaTipoRelacionPersona"][0].arma.id){
-                                    copia++;
-                                    item["armaTipoRelacionPersona"][0]["id"]=copia;
-                                }
-                                //depende del lugar del caso
-                                if (item["lugarTipoRelacionPersona"] && item["lugarTipoRelacionPersona"][0].lugar.id){
-                                    copia++;
-                                    item["lugarTipoRelacionPersona"][0]["id"]=copia;
-                                }
-                                //depende del lugar del vehiculo
-                                if (item["vehiculoTipoRelacionPersona"] && item["vehiculoTipoRelacionPersona"][0].vehiculo.id){
-                                    copia++;
-                                    item["vehiculoTipoRelacionPersona"][0]["id"]=copia;
-                                }
-                            }
-                            for (var i = 0; i < _model["hostigamientoAcoso"].length; ++i) {
-                                copia++;
-                                let item = (_model["hostigamientoAcoso"])[i];
-                                item["id"]=copia;
-                            }
-                            for (var i = 0; i < _model["trataPersona"].length; ++i) {
-                                copia++;
-                                let item = (_model["trataPersona"])[i];
-                                item["id"]=copia;
-                            }
-                            for (var i = 0; i < _model["efectoViolencia"].length; ++i) {
-                                copia++;
-                                let item = (_model["efectoViolencia"])[i];
-                                item["id"]=copia;
-                            }
-                            Logger.log(_model);
-                            var relacion={
-                                armaTipoRelacionPersona:_model["tipoRelacionPersona"]["armaTipoRelacionPersona"],
-                                detalleDelito:{
-                                    clasificacionDelito:_model["clasificacionDelito"],
-                                    clasificacionDelitoOrden:_model["clasificacionDelitoOrden"],
-                                    concursoDelito:_model["concursoDelito"],
-                                    delitoCaso:this.optionsNoticia.getDelitoCaso(_model["delitoCaso"]["id"]),
-                                    desaparicionConsumacion:_model["desaparicionConsumacion"],
-                                    efectoViolencia:_model["efectoViolencia"],
-                                    elementoComision:_model["elementoComision"],
-                                    flagrancia:_model["flagrancia"],
-                                    formaAccion:_model["formaAccion"],
-                                    formaComision:_model["formaComision"],
-                                    formaConducta:_model["formaConducta"],
-                                    hostigamientoAcoso:_model["hostigamientoAcoso"],
-                                    id:_model["id"],
-                                    modalidadDelito:_model["modalidadDelito"],
-                                    tieneViolenciaGenero:_model["tieneViolenciaGenero"],
-                                    trataPersona:_model["trataPersona"],
-                                    gradoParticipacion:_model["gradoParticipacion"]?_model["gradoParticipacion"]:null,
-                                    violenciaGenero:_model.tieneViolenciaGenero && this.optionsRelacion.matrizViolenciaGenero.finded[0]?{
-                                        id: this.optionsRelacion.matrizViolenciaGenero.finded[0].id,
-                                        delincuenciaOrganizada: this.optionsRelacion.matrizViolenciaGenero.finded[0].delincuenciaOrganizada,
-                                        ordenProteccion:  this.optionsRelacion.matrizViolenciaGenero.finded[0].ordenProteccion,
-                                        victimaAcoso:  this.optionsRelacion.matrizViolenciaGenero.finded[0].victimaAcoso,
-                                        violenciaGenero:  this.optionsRelacion.matrizViolenciaGenero.finded[0].violenciaGenero,
-                                        victimaTrata: this.optionsRelacion.matrizViolenciaGenero.finded[0].victimaTrata
-                                    }:null
-                                },
-                                id:_model["id"],
-                                lugarTipoRelacionPersona:[{
-                                    id:_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"][0]["id"],
-                                    lugar:this.optionsNoticia.getLugarCaso(_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"][0]["lugar"]["id"])
-                                }],
-                                personaCaso:this.optionsNoticia.getPersonaCaso(_model["tipoRelacionPersona"]["personaCaso"]["id"]),
-                                personaCasoRelacionada:this.optionsNoticia.getPersonaCaso(_model["tipoRelacionPersona"]["personaCasoRelacionada"]["id"]),
-                                tipo:_model["tipoRelacionPersona"]["tipo"],
-                                vehiculoTipoRelacion:_model["tipoRelacionPersona"]["vehiculoTipoRelacionPersona"]
-                            }
-                            caso["tipoRelacionPersonas"].push(relacion);
-                            Logger.log("NO");
-                            Logger.log("MODELO",_model, caso);
-                            this.db.update("casos",caso).then(t=>{
-                                Logger.log("NO",t);
-                                resolve("Se creó la relación con éxito");
-                                this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/relaciones' ]);
-                            });
+                    var losIds={};
+                    if (_model["tipoRelacionPersona"]){
+                        let item=_model["tipoRelacionPersona"];
+                        Logger.log("ITEM",item);
+                        //depende del arma del caso
+                        if (item["armaTipoRelacionPersona"] && item["armaTipoRelacionPersona"][0].arma.id){
+                            dependeDe.push(item["armaTipoRelacionPersona"][0].arma.id);
+                            temId++;
+                            var jason = JSON.parse('{"armaTipoRelacionPersona":{ "'+0+'":{"id":'+temId+'} } }');
+                            otrosID.push(jason);
+                        }
+                        //depende del lugar del caso
+                        if (item["lugarTipoRelacionPersona"] && item["lugarTipoRelacionPersona"][0].lugar.id){
+                            dependeDe.push(item["lugarTipoRelacionPersona"][0].lugar.id);
+                            temId++;
+                            var jason = JSON.parse('{"lugarTipoRelacionPersona":{ "'+0+'":{"id":'+temId+'} } }');
+                            otrosID.push(jason);
+                        }
+                        //depende del lugar del vehiculo
+                        if (item["vehiculoTipoRelacionPersona"] && item["vehiculoTipoRelacionPersona"][0].vehiculo.id){
+                            dependeDe.push(item["vehiculoTipoRelacionPersona"][0].vehiculo.id);
+                            temId++;
+                            var jason = JSON.parse('{"vehiculoTipoRelacionPersona":{ "'+0+'":{"id":'+temId+'} } }');
+                            otrosID.push(jason);
+                        }
+                        //depende de la persona
+                        if (item["personaCaso"].id){
+                            dependeDe.push(item["personaCaso"].id);
+                        }
+                        //depende de la persona
+                        if (item["personaCasoRelacionada"].id){
+                            dependeDe.push(item["personaCasoRelacionada"].id);
                         }
 
-                });
-            }
-        });
+                    }
+                    Logger.log("SI");
+                    for (var i = 0; i < _model["hostigamientoAcoso"].length; ++i) {//FALTA LAS VALIDACIONES
+                        if (_model["hostigamientoAcoso"][i]["id"]){//tiene el id
+                            dependeDe.push(_model["hostigamientoAcoso"][i].id);
+                        }else{
+                            Logger.log(_model["hostigamientoAcoso"][i]);
+                            temId++;
+                            var jason = JSON.parse('{"detalleDelito":{"hostigamientoAcoso":{ "'+i+'":{"id":'+temId+'} } } }');
+                            otrosID.push(jason);
+                        }
+
+                        //depende de la persona
+                        if (_model["hostigamientoAcoso"][i].testigo.id){
+                            dependeDe.push(_model["hostigamientoAcoso"][i].testigo.id);
+                        }
+                    }
+                    Logger.log("SI");
+                    for (var i = 0; i < _model["trataPersona"].length; ++i) {
+                        if (_model["trataPersona"]["id"]){
+                            dependeDe.push(_model["hostigamientoAcoso"][i]["id"]);
+                        }else{//no existe el id
+                            temId++;
+                            var jason = JSON.parse('{"detalleDelito":{"trataPersona":{ "'+i+'":{"id":'+temId+'} } } }');
+                            otrosID.push(jason);
+                        }
+
+                    }
+                    Logger.log("SI");
+                    for (var i = 0; i < _model["efectoViolencia"].length; ++i) {
+                        if (_model["efectoViolencia"][i]["id"]){
+                            dependeDe.push(_model["hostigamientoAcoso"][i]["id"]);
+                        }else{
+                            temId++;
+                            var jason = JSON.parse('{"detalleDelito":{"efectoViolencia":{ "'+i+'":{"id":'+temId+'} } } }');
+                            otrosID.push(jason);
+                        }
+
+                    }
+                    Logger.log("SI");
+                    let dato={
+                        url:'/v1/base/tipo-relacion-persona',
+                        body:_model,
+                        options:[],
+                        tipo:"post",
+                        pendiente:true,
+                        temId: temId,
+                        dependeDe:dependeDe,
+                        otrosID:otrosID,
+                        username: this.auth.user.username
+
+                    }
+                    Logger.log("MODELO",_model);
+                    this.db.add("sincronizar",dato).then(p=>{
+
+                      Logger.log("NO",this.casoId);
+                          Logger.log("NO",this.casoOffline);
+                            if (this.casoOffline){
+                                let caso=this.casoOffline;
+                                if(!caso["tipoRelacionPersonas"]){
+                                    let x:Array<any>=[];
+                                    caso["tipoRelacionPersonas"]=x;
+                                }
+                                _model["id"]=copia;
+
+                                if (_model["tipoRelacionPersona"]){
+                                    let item=_model["tipoRelacionPersona"];
+                                    Logger.log("ITEM",item);
+                                    //depende del arma del caso
+                                    if (item["armaTipoRelacionPersona"] && item["armaTipoRelacionPersona"][0].arma.id){
+                                        copia++;
+                                        item["armaTipoRelacionPersona"][0]["id"]=copia;
+                                    }
+                                    //depende del lugar del caso
+                                    if (item["lugarTipoRelacionPersona"] && item["lugarTipoRelacionPersona"][0].lugar.id){
+                                        copia++;
+                                        item["lugarTipoRelacionPersona"][0]["id"]=copia;
+                                    }
+                                    //depende del lugar del vehiculo
+                                    if (item["vehiculoTipoRelacionPersona"] && item["vehiculoTipoRelacionPersona"][0].vehiculo.id){
+                                        copia++;
+                                        item["vehiculoTipoRelacionPersona"][0]["id"]=copia;
+                                    }
+                                }
+                                for (var i = 0; i < _model["hostigamientoAcoso"].length; ++i) {
+                                    copia++;
+                                    let item = (_model["hostigamientoAcoso"])[i];
+                                    item["id"]=copia;
+                                }
+                                for (var i = 0; i < _model["trataPersona"].length; ++i) {
+                                    copia++;
+                                    let item = (_model["trataPersona"])[i];
+                                    item["id"]=copia;
+                                }
+                                for (var i = 0; i < _model["efectoViolencia"].length; ++i) {
+                                    copia++;
+                                    let item = (_model["efectoViolencia"])[i];
+                                    item["id"]=copia;
+                                }
+                                Logger.log(_model);
+                                var relacion={
+                                    armaTipoRelacionPersona:_model["tipoRelacionPersona"]["armaTipoRelacionPersona"],
+                                    detalleDelito:{
+                                        clasificacionDelito:_model["clasificacionDelito"],
+                                        clasificacionDelitoOrden:_model["clasificacionDelitoOrden"],
+                                        concursoDelito:_model["concursoDelito"],
+                                        delitoCaso:this.optionsNoticia.getDelitoCaso(_model["delitoCaso"]["id"]),
+                                        desaparicionConsumacion:_model["desaparicionConsumacion"],
+                                        efectoViolencia:_model["efectoViolencia"],
+                                        elementoComision:_model["elementoComision"],
+                                        flagrancia:_model["flagrancia"],
+                                        formaAccion:_model["formaAccion"],
+                                        formaComision:_model["formaComision"],
+                                        formaConducta:_model["formaConducta"],
+                                        hostigamientoAcoso:_model["hostigamientoAcoso"],
+                                        id:_model["id"],
+                                        modalidadDelito:_model["modalidadDelito"],
+                                        tieneViolenciaGenero:_model["tieneViolenciaGenero"],
+                                        trataPersona:_model["trataPersona"],
+                                        gradoParticipacion:_model["gradoParticipacion"]?_model["gradoParticipacion"]:null,
+                                        violenciaGenero:_model.tieneViolenciaGenero && this.optionsRelacion.matrizViolenciaGenero.finded[0]?{
+                                            id: this.optionsRelacion.matrizViolenciaGenero.finded[0].id,
+                                            delincuenciaOrganizada: this.optionsRelacion.matrizViolenciaGenero.finded[0].delincuenciaOrganizada,
+                                            ordenProteccion:  this.optionsRelacion.matrizViolenciaGenero.finded[0].ordenProteccion,
+                                            victimaAcoso:  this.optionsRelacion.matrizViolenciaGenero.finded[0].victimaAcoso,
+                                            violenciaGenero:  this.optionsRelacion.matrizViolenciaGenero.finded[0].violenciaGenero,
+                                            victimaTrata: this.optionsRelacion.matrizViolenciaGenero.finded[0].victimaTrata
+                                        }:null
+                                    },
+                                    id:_model["id"],
+                                    lugarTipoRelacionPersona:[{
+                                        id:_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"][0]["id"],
+                                        lugar:this.optionsNoticia.getLugarCaso(_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"][0]["lugar"]["id"])
+                                    }],
+                                    personaCaso:this.optionsNoticia.getPersonaCaso(_model["tipoRelacionPersona"]["personaCaso"]["id"]),
+                                    personaCasoRelacionada:this.optionsNoticia.getPersonaCaso(_model["tipoRelacionPersona"]["personaCasoRelacionada"]["id"]),
+                                    tipo:_model["tipoRelacionPersona"]["tipo"],
+                                    vehiculoTipoRelacion:_model["tipoRelacionPersona"]["vehiculoTipoRelacionPersona"]
+                                }
+                                caso["tipoRelacionPersonas"].push(relacion);
+                                Logger.log("NO");
+                                Logger.log("MODELO",_model, caso);
+                                this.db.update("casos",caso).then(t=>{
+                                    Logger.log("NO",t);
+                                    resolve("Se creó la relación con éxito");
+                                    this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/relaciones' ]);
+                                });
+                            }
+
+                    });
+                }
+            });
+        }else{
+            console.error('El formulario no pasó la validación D:')
+        }
     }
 
     public edit(_valid : any, _model : any){
