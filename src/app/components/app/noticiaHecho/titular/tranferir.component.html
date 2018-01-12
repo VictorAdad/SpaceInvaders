@@ -9,10 +9,10 @@
 	<div class="container">
 		<div class="row justify-content-end">
 	        <div class="col-md-auto">
-	            <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.value)" (click)="dialogRef.close()">Guardar</button>
+	            <button mat-button (click)="close()">Cancelar</button>
 	        </div>
 	        <div class="col-md-auto">
-	            <button mat-button (click)="close()">Cancelar</button>
+	            <button mat-raised-button color="accent" _saving [disabled]="!form.valid" [saveFn]="save.bind(this, form.value)" (click)="dialogRef.close()">Guardar</button>
 	        </div>
 	    </div>
 	</div>
