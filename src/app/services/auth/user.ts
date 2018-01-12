@@ -36,14 +36,14 @@ export class Usuario {
 
     public notificaciones: any[] = [];
 
-    public sinLeer: number = 0;
+    public sinLeer = 0;
 
-    public lastLogin: number=-1;
+    public lastLogin: number= -1;
 
     public notificacionesChange: Subject<any> =  new Subject<any>();
 
     constructor(_usuario: any =  null) {
-        if(_usuario != null){
+        if (_usuario != null) {
             this.nombreCompleto  = _usuario.cn;
             this.username        = _usuario.sub;
             this.roles           = this.setRoles(_usuario.Roles);
@@ -51,7 +51,7 @@ export class Usuario {
             this.fiscalia        = _usuario.fiscaliaAcronimo;
             this.agencia         = _usuario.agenciaAcronimo;
             this.agenciaCompleto = _usuario.agenciaCompleto;
-            this.autoridad       = _usuario.Municipio;
+            this.autoridad       = _usuario.autoridadCompleto;
             this.turno           = _usuario.Turno;
             this.distrito        = _usuario.Distrito;
             this.municipio       = _usuario.Municipio;
@@ -60,28 +60,29 @@ export class Usuario {
 
         this.notificacionesChange.subscribe(
             notificacion => {
-                if(typeof notificacion != 'string'){
+                if (typeof notificacion !== 'string') {
                     this.sinLeer ++;
                     this.notificaciones.push(notificacion);
-                }else{
+                } else {
                     this.sinLeer += notificacion.length;
                 }
 
             }
-        )
+        );
     }
 
-    public setRoles(_roles: string): string[]{
-        let roles: string[] = _roles.split('\\,');
+    public setRoles(_roles: string): string[] {
+        const roles: string[] = _roles.split('\\,');
 
         return roles;
     }
 
-    public hasRoles(..._roles): boolean{
-        if(this.roles)
+    public hasRoles(..._roles): boolean {
+        if (this.roles) {
             return _roles.some( role => this.roles.includes(role));
-        else
+        } else {
             return false;
+        }
     }
 }
 
