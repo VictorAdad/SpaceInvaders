@@ -87,6 +87,7 @@ export class DatePicker implements OnInit, ControlValueAccessor {
     }
 
     ngOnInit(){
+        console.log('datePicker@ngOnInit()');
         this.settings = Object.assign(this.defaultSettings, this.settings);
         this.writeValue(new Date());
         if(this.settings.defaultOpen){
@@ -102,9 +103,11 @@ export class DatePicker implements OnInit, ControlValueAccessor {
         this.control = this.group.get(this.name)  as FormControl;
         this.control.valueChanges.subscribe(val => {
             Logger.log('Date valueChanges()', val);
-            if(val != null && val != 'Invalid Date'){
-                this.date = new Date(val);
-                this.onDateSelect.emit(this.date);
+            if (val) {
+                if(val != null && val !== 'Invalid Date') {
+                    this.date = new Date(val);
+                    this.onDateSelect.emit(this.date);
+                }
             }
         });
     }
