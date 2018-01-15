@@ -88,9 +88,13 @@ export class UsuarioCreateComponent{
     }
 
     public save(valid : any, model : any):void{
-         Logger.log(this._confirmation);
-         let resolved=this._confirmation.create('','¿Estás seguro de continuar con el registro de este usuario?',this.settings)
-         .subscribe((ans: ResolveEmit) => ans.resolved?Logger.log('Usuario@save()'):Logger.log('cancel'));
+         if(valid){
+           Logger.log(this._confirmation);
+           let resolved=this._confirmation.create('','¿Estás seguro de continuar con el registro de este usuario?',this.settings)
+           .subscribe((ans: ResolveEmit) => ans.resolved?Logger.log('Usuario@save()'):Logger.log('cancel'));
+         }else{
+            console.error('El formulario no pasó la validación D:')
+        }
     }
     public edit(valid : any, model : any):void{
          let resolved=this._confirmation.create('','¿Estás seguro guardar los cambios de este usuario?',this.settings)

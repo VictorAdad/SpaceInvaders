@@ -227,76 +227,80 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
   }
 
   public save(_valid: any, _model: any) {
-    return new Promise<any>((resolve, reject) => {
-      _model.caso.id = this.casoId;
-      _model.latitud = this.latMarker.toFixed(8);
-      _model.longitud = this.lngMarker.toFixed(8);
-      Logger.log('lo que envio: ' + _model.fecha);
-
-      if (_model.fecha) {
-        var hora = _model.hora;
-        let fechaCompleta = new Date(_model.fecha);
-        fechaCompleta.setMinutes(parseInt(hora.split(':')[1]));
-        fechaCompleta.setHours(parseInt(hora.split(':')[0]));
-        var mes: number = fechaCompleta.getMonth() + 1;
-        _model.fecha = fechaCompleta.getFullYear() + '-' + mes + '-' + fechaCompleta.getDate() + ' ' + fechaCompleta.getHours() + ':' + fechaCompleta.getMinutes() + ':00.000';
+    if(_valid){
+      return new Promise<any>((resolve, reject) => {
+        _model.caso.id = this.casoId;
+        _model.latitud = this.latMarker.toFixed(8);
+        _model.longitud = this.lngMarker.toFixed(8);
         Logger.log('lo que envio: ' + _model.fecha);
-      }
-      if (this.lugarServ.finded.length > 0) {
-        _model.detalleLugar.id = this.lugarServ.finded[0].id;
-      }
-      Logger.logColor('Options', 'cyan', this.optionsServ);
 
-      if (this.onLine.onLine) {
-        Logger.log('MODELO', _model);
-        this.http.post('/v1/base/lugares', _model).subscribe(
-          (response) => {
-            Logger.log('-> registro guardado', response);
-            Logger.log('hora guardada', new Date(response.fecha));
-            resolve('Se creó un nuevo lugar con éxito');
-            this.router.navigate(['/caso/' + this.casoId + '/noticia-hecho/lugares']);
-            this.casoService.actualizaCaso();
-          },
-          (error) => {
-            Logger.error('Error', error);
-            reject(error);
-          }
-        );
-      } else {
-        this.addNombres(_model);
-        let temId = Date.now();
-        let dato = {
-          url: '/v1/base/lugares',
-          body: _model,
-          options: [],
-          tipo: 'post',
-          pendiente: true,
-          dependeDe: [this.casoId],
-          temId: temId,
-          username: this.auth.user.username
-        };
-        this.db.add('sincronizar', dato).then(p => {
-          //this.db.get("casos",this.casoId).then(caso=>{
-          var caso = this.casoService.caso;
-          if (caso) {
-            if (!caso['lugares']) {
-              caso['lugares'] = [];
-            }
-            _model['id'] = temId;
-            _model.detalleLugar['dia'] = _model['dia'];
-            _model.detalleLugar['tipoLugar'] = _model['tipo'];
-            _model.detalleLugar['tipoZona'] = _model['tipoZona'];
+        if (_model.fecha) {
+          var hora = _model.hora;
+          let fechaCompleta = new Date(_model.fecha);
+          fechaCompleta.setMinutes(parseInt(hora.split(':')[1]));
+          fechaCompleta.setHours(parseInt(hora.split(':')[0]));
+          var mes: number = fechaCompleta.getMonth() + 1;
+          _model.fecha = fechaCompleta.getFullYear() + '-' + mes + '-' + fechaCompleta.getDate() + ' ' + fechaCompleta.getHours() + ':' + fechaCompleta.getMinutes() + ':00.000';
+          Logger.log('lo que envio: ' + _model.fecha);
+        }
+        if (this.lugarServ.finded.length > 0) {
+          _model.detalleLugar.id = this.lugarServ.finded[0].id;
+        }
+        Logger.logColor('Options', 'cyan', this.optionsServ);
 
-            caso['lugares'].push(_model);
-            this.db.update('casos', caso).then(t => {
-              resolve('Se creo un nuevo lugar con éxito');
+        if (this.onLine.onLine) {
+          Logger.log('MODELO', _model);
+          this.http.post('/v1/base/lugares', _model).subscribe(
+            (response) => {
+              Logger.log('-> registro guardado', response);
+              Logger.log('hora guardada', new Date(response.fecha));
+              resolve('Se creó un nuevo lugar con éxito');
               this.router.navigate(['/caso/' + this.casoId + '/noticia-hecho/lugares']);
-            });
-          }
-          //});
-        });
-      }
-    });
+              this.casoService.actualizaCaso();
+            },
+            (error) => {
+              Logger.error('Error', error);
+              reject(error);
+            }
+          );
+        } else {
+          this.addNombres(_model);
+          let temId = Date.now();
+          let dato = {
+            url: '/v1/base/lugares',
+            body: _model,
+            options: [],
+            tipo: 'post',
+            pendiente: true,
+            dependeDe: [this.casoId],
+            temId: temId,
+            username: this.auth.user.username
+          };
+          this.db.add('sincronizar', dato).then(p => {
+            //this.db.get("casos",this.casoId).then(caso=>{
+            var caso = this.casoService.caso;
+            if (caso) {
+              if (!caso['lugares']) {
+                caso['lugares'] = [];
+              }
+              _model['id'] = temId;
+              _model.detalleLugar['dia'] = _model['dia'];
+              _model.detalleLugar['tipoLugar'] = _model['tipo'];
+              _model.detalleLugar['tipoZona'] = _model['tipoZona'];
+
+              caso['lugares'].push(_model);
+              this.db.update('casos', caso).then(t => {
+                resolve('Se creo un nuevo lugar con éxito');
+                this.router.navigate(['/caso/' + this.casoId + '/noticia-hecho/lugares']);
+              });
+            }
+            //});
+          });
+        }
+      });
+    }else{
+      console.error('El formulario no pasó la validación D:')
+    }
   }
 
   public edit(_valid: any, _model: any) {

@@ -84,21 +84,25 @@ export class ColoniaCreateComponent extends NoticiaHechoGlobal{
     }
 
     public save(_valid: boolean, _form:any){
-        return new Promise( (resolve, reject) => {
-            if(_valid)
-                this.http.post(this.url, _form).subscribe(
-                    response => {
-                        this.router.navigate(['/catalogos/'+this.tipo]);
-                        resolve('Registro creado con éxito');
-                    },
-                    error => {
-                        Logger.error('Error', error);
-                        reject('Ocurrió un error al guardar la información');
-                    }
-                );
-            else
-                reject('El formulario no pasó la validación');
-        });
+        if(_valid){
+            return new Promise( (resolve, reject) => {
+                if(_valid)
+                    this.http.post(this.url, _form).subscribe(
+                        response => {
+                            this.router.navigate(['/catalogos/'+this.tipo]);
+                            resolve('Registro creado con éxito');
+                        },
+                        error => {
+                            Logger.error('Error', error);
+                            reject('Ocurrió un error al guardar la información');
+                        }
+                    );
+                else
+                    reject('El formulario no pasó la validación');
+            });
+        }else{
+            console.error('El formulario no pasó la validación D:')
+        }
     }
 
     public edit(_valid: boolean, _form:any){

@@ -107,28 +107,32 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 	}
 
 	public save(valid: any, _model: any) {
-		Object.assign(this.model, _model);
-		this.model.caso.id = this.casoId;
-		//var _date = new Date();
-		//this.model.fechaCreacion = _date.toString();
-		Logger.log('-> ArchivoTemporal@save()', this.model);
-		return new Promise<any>(
-            (resolve, reject) => {
-				this.http.post(this.apiUrl, this.model).subscribe(
-					(response) => {
-						this.id=response.id;
-						Logger.log(response);
-						if (this.casoId!=null) {
-							this.router.navigate(['/caso/' + this.casoId + '/archivo-temporal/'+this.id+'/edit']);
+		if(valid){
+			Object.assign(this.model, _model);
+			this.model.caso.id = this.casoId;
+			//var _date = new Date();
+			//this.model.fechaCreacion = _date.toString();
+			Logger.log('-> ArchivoTemporal@save()', this.model);
+			return new Promise<any>(
+	            (resolve, reject) => {
+					this.http.post(this.apiUrl, this.model).subscribe(
+						(response) => {
+							this.id=response.id;
+							Logger.log(response);
+							if (this.casoId!=null) {
+								this.router.navigate(['/caso/' + this.casoId + '/archivo-temporal/'+this.id+'/edit']);
+							}
+							resolve('Archivo temporal creado con éxito');
+						},
+						(error) => {
+							reject(error);
 						}
-						resolve('Archivo temporal creado con éxito');
-					},
-					(error) => {
-						reject(error);
-					}
-				);
-			}
-		);
+					);
+				}
+			);
+		}else{
+            console.error('El formulario no pasó la validación D:')
+        }
 
 	}
 

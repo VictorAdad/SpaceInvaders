@@ -113,29 +113,32 @@ export class AcuerdoRadicacionComponent extends DeterminacionGlobal{
     }
 
     public save(valid : any, _model : any){
-        Object.assign(this.model, _model);
-        this.model.caso.id = this.casoId;
-        Logger.log('-> AcuerdoRadicacion@save()', this.model);
+        if(valid){
+          Object.assign(this.model, _model);
+          this.model.caso.id = this.casoId;
+          Logger.log('-> AcuerdoRadicacion@save()', this.model);
 
-        return new Promise<any>(
-            (resolve, reject) => {
-                this.http.post(this.apiUrl, this.model).subscribe(
-                    (response) => {
-                        Logger.log(response);
-                       this.id=response.id;
-                      if(this.casoId!=null){
-                        this.router.navigate(['/caso/'+this.casoId+'/acuerdo-radicacion/'+this.id+'/edit' ]);
+          return new Promise<any>(
+              (resolve, reject) => {
+                  this.http.post(this.apiUrl, this.model).subscribe(
+                      (response) => {
+                          Logger.log(response);
+                         this.id=response.id;
+                        if(this.casoId!=null){
+                          this.router.navigate(['/caso/'+this.casoId+'/acuerdo-radicacion/'+this.id+'/edit' ]);
+                        }
+                        resolve('Acuerdo de radicación creado con éxito')
+                      },
+                      (error) => {
+                          Logger.error('Error', error);
+                          reject(error);
                       }
-                      resolve('Acuerdo de radicación creado con éxito')
-                    },
-                    (error) => {
-                        Logger.error('Error', error);
-                        reject(error);
-                    }
-                );
-            }
-        );
-
+                  );
+              }
+          );
+        }else{
+            console.error('El formulario no pasó la validación D:')
+        }
     }
 
     public edit(_valid : any, _model : any){

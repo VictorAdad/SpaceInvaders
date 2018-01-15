@@ -130,28 +130,31 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
     this.form.controls["narracionHechos"].setValue(this.casoService.caso.predenuncias.hechosNarrados)
   }
 	public save(valid: any, _model: any) {
-        Object.assign(this.model, _model);
-        this.model.caso.id = this.casoId;
-        Logger.log('->AccionPenal@save()', this.model);
+        if (valid){
+          Object.assign(this.model, _model);
+          this.model.caso.id = this.casoId;
+          Logger.log('->AccionPenal@save()', this.model);
 
-        return new Promise<any>(
-            (resolve, reject) => {
-		        this.http.post(this.apiUrl, this.model).subscribe(
-		            (response) => {
-		                Logger.log(response);
-						this.id=response.id;
-		                if (this.casoId) {
-		                    this.router.navigate(['/caso/' + this.casoId + '/no-ejercicio-accion-penal/'+this.id+'/edit']);
-		                }
-		                resolve('Registro creado con éxito');
-		            },
-		            (error) => {
-	            		reject(error)
-		            }
-		        );
-	        }
-        );
-
+          return new Promise<any>(
+              (resolve, reject) => {
+  		        this.http.post(this.apiUrl, this.model).subscribe(
+  		            (response) => {
+  		                Logger.log(response);
+  						this.id=response.id;
+  		                if (this.casoId) {
+  		                    this.router.navigate(['/caso/' + this.casoId + '/no-ejercicio-accion-penal/'+this.id+'/edit']);
+  		                }
+  		                resolve('Registro creado con éxito');
+  		            },
+  		            (error) => {
+  	            		reject(error)
+  		            }
+  		        );
+  	        }
+          );
+        }else{
+            console.error('El formulario no pasó la validación D:')
+        }
     }
 
     public edit(_valid: any, _model: any) {

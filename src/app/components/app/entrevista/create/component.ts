@@ -231,58 +231,61 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 	}
 
 	public save(valid: any, _model: any) {
+		if(valid){
+			_model.caso.id = this.casoId;
+			Logger.log('-> Entrevista@save()', _model);
+			return new Promise<any>(
+	            (resolve, reject) => {
+					if (this.onLine.onLine) {
+						this.http.post(this.apiUrl, _model).subscribe(
 
-		_model.caso.id = this.casoId;
-		Logger.log('-> Entrevista@save()', _model);
-		return new Promise<any>(
-            (resolve, reject) => {
-				if (this.onLine.onLine) {
-					this.http.post(this.apiUrl, _model).subscribe(
-
-						(response) => {
-							this.id=response.id;
-							if (this.casoId!=null) {
-							    Logger.log(response);
-								this.router.navigate(['/caso/' + this.casoId + '/entrevista/'+this.id+'/view']);
+							(response) => {
+								this.id=response.id;
+								if (this.casoId!=null) {
+								    Logger.log(response);
+									this.router.navigate(['/caso/' + this.casoId + '/entrevista/'+this.id+'/view']);
+								}
+								resolve('Entrevista creada con éxito');
+							},
+							(error) => {
+								Logger.error('Error', error);
+								reject(error);
 							}
-							resolve('Entrevista creada con éxito');
-						},
-						(error) => {
-							Logger.error('Error', error);
-							reject(error);
-						}
-					);
-				}else{
-					let temId=Date.now();
-	                let dato={
-	                    url: this.apiUrl,
-	                    body:_model,
-	                    options:[],
-	                    tipo:"post",
-	                    pendiente:true,
-	                    dependeDe:[this.casoId],
-                        temId: temId,
-                        username: this.auth.user.username
-	                }
-	                this.db.add("sincronizar",dato).then(p=>{
-	                    this.db.get("casos", this.casoId).then(caso=>{
-	                        if (caso){
-	                            if(!caso["entrevistas"]){
-                        			caso["entrevistas"]=[];
-	                            }
-	                            _model["id"]=temId;
-	                            this.id= _model['id'];
-	                            caso["entrevistas"].push(_model);
-	                            this.db.update("casos",caso).then(t=>{
-	                                resolve("Se agregó la entrevista de manera local");
-	                                this.router.navigate(['/caso/' + this.casoId + '/entrevista/'+this.id+'/view']);
-	                            });
-	                        }
-	                    });
-	                });
+						);
+					}else{
+						let temId=Date.now();
+		                let dato={
+		                    url: this.apiUrl,
+		                    body:_model,
+		                    options:[],
+		                    tipo:"post",
+		                    pendiente:true,
+		                    dependeDe:[this.casoId],
+	                        temId: temId,
+	                        username: this.auth.user.username
+		                }
+		                this.db.add("sincronizar",dato).then(p=>{
+		                    this.db.get("casos", this.casoId).then(caso=>{
+		                        if (caso){
+		                            if(!caso["entrevistas"]){
+	                        			caso["entrevistas"]=[];
+		                            }
+		                            _model["id"]=temId;
+		                            this.id= _model['id'];
+		                            caso["entrevistas"].push(_model);
+		                            this.db.update("casos",caso).then(t=>{
+		                                resolve("Se agregó la entrevista de manera local");
+		                                this.router.navigate(['/caso/' + this.casoId + '/entrevista/'+this.id+'/view']);
+		                            });
+		                        }
+		                    });
+		                });
+					}
 				}
-			}
-		);
+			);
+		}else{
+            console.error('El formulario no pasó la validación D:')
+        }
     }
     
     public validateNarraccion(_heredar){
