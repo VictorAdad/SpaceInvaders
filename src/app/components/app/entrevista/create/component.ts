@@ -356,7 +356,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
     */
     var hasALocalizacion=false;
 
-   this.personasHeredadas.forEach((personaCaso)=> {
+   this.personas.forEach((personaCaso)=> {
 
      // Heradar nombre del entrevistado
      let nombrePersona=(personaCaso.persona.nombre?personaCaso.persona.nombre:"")+(personaCaso.persona.paterno?" "+personaCaso.persona.paterno:"")+(personaCaso.persona.materno?" "+personaCaso.persona.materno:"");
