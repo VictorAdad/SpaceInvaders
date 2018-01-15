@@ -1094,24 +1094,24 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 _model["nacionalidadReligion"]={id:this.personaServ.nacionalidadReligion.finded[0].id};
             }
             if (this.personaServ.tipoDetenido.finded[0]){
-                (_model["personaCaso"])[0].detalleDetenido["tipoDetenido"].id=this.personaServ.tipoDetenido.finded[0].id
+                (_model["personaCaso"])[0]["tipoDetenido"].id=this.personaServ.tipoDetenido.finded[0].id
                 Logger.log('Tipo de detenido service',this.personaServ.tipoDetenido);
 
               }
-              if((_model["personaCaso"])[0].detalleDetenido['fechaDetencion']){
-                var fechaCompleta = new Date ((_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
-                var hora=(_model["personaCaso"])[0].detalleDetenido['horaDetenido'];
+              if((_model["personaCaso"])[0]['fechaDetencion']){
+                var fechaCompleta = new Date ((_model["personaCaso"])[0]['fechaDetencion']);
+                var hora=(_model["personaCaso"])[0]['horaDetenido'];
 
                 fechaCompleta.setMinutes(parseInt(hora.split(':')[1]));
                 fechaCompleta.setHours(parseInt(hora.split(':')[0]));
                 var mes:number=fechaCompleta.getMonth()+1;
-                (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
-                Logger.log('lo que envio: '+  (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
+                (_model["personaCaso"])[0]['fechaDetencion']=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
+                Logger.log('lo que envio: '+  (_model["personaCaso"])[0]['fechaDetencion']);
                }
 
-                if (this.globals.detenido==false) {
-                    delete (_model["personaCaso"])[0].detalleDetenido;
-                }
+                // if (this.globals.detenido==false) {
+                //     delete (_model["personaCaso"])[0];
+                // }
 
                (_model["personaCaso"])[0].detenido = this.globals.detenido;
 
