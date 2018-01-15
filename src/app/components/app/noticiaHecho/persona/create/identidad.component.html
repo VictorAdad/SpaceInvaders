@@ -151,10 +151,10 @@
                 <checkbox label="Detenido" name="detenido" [group]="globals.form" (valueChange)="changeDetenido($event)" ></checkbox>
             </div>
             <div class="col-md-2" *ngIf="globals.detenido">
-                <date-picker label="Fecha de detención" name="fechaDetencion" [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido"></date-picker>
+                <date-picker label="Fecha de detención" name="fechaDetencion" [group]="globals.form.controls.personaCaso.controls[0]"></date-picker>
             </div>
             <div class="col-md-2" *ngIf="globals.detenido">
-                <time label="Hora de detención" name="horaDetenido" [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido"></time>
+                <time label="Hora de detención" name="horaDetenido" [group]="globals.form.controls.personaCaso.controls[0]"></time>
             </div>
 
             <div class="col-md-2" *ngIf="globals.detenido">
@@ -162,23 +162,22 @@
                     [options]="personaServ.tipoDetenido.tipoDetencion"
                     placeholder="Tipo de detención"
                     name="tipoDetencion"
-                    [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido.controls.tipoDetenido"
+                    [group]="globals.form.controls.personaCaso.controls[0].controls.tipoDetenido"
                     (valueChange)="personaServ.tipoDetenido.find($event, 'tipoDetencion')">
 
                 </select2>
             </div>
 
             <div class="col-md-2" *ngIf="globals.detenido">
-                <date-picker label="Fecha de declaración" name="fechaDeclaracion" [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido"></date-picker>
+                <date-picker label="Fecha de declaración" name="fechaDeclaracion" [group]="globals.form.controls.personaCaso.controls[0]"></date-picker>
             </div>
             <div class="col-md-2" *ngIf="globals.detenido">
                 <select2
                     [options]="personaServ.tipoDetenido.tipoReincidencia"
                     placeholder="Tipo de reincidencia"
                     name="tipoReincidencia"
-                    [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido.controls.tipoDetenido"
+                    [group]="globals.form.controls.personaCaso.controls[0].controls.tipoDetenido"
                     (valueChange)="personaServ.tipoDetenido.find($event, 'tipoReincidencia')">
-
                 </select2>
             </div>
             <div class="col-md-2" *ngIf="globals.detenido">
@@ -186,7 +185,7 @@
                     [options]="personaServ.tipoDetenido.cereso"
                     placeholder="Cereso"
                     name="cereso"
-                    [group]="globals.form.controls.personaCaso.controls[0].controls.detalleDetenido.controls.tipoDetenido"
+                    [group]="globals.form.controls.personaCaso.controls[0].controls.tipoDetenido"
                     (valueChange)="personaServ.tipoDetenido.find($event, 'cereso')">
 
                 </select2>

@@ -259,13 +259,13 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         Yason.eliminaNulos(_personaCaso);
 
         Logger.logColor('---- 1 --->','purple', _personaCaso);
-        if (!_personaCaso.detalleDetenido && _personaCaso.persona.personaCaso && _personaCaso.persona.personaCaso[0]){
-            if (_personaCaso.persona.personaCaso[0].detalleDetenido)
-                _personaCaso["detalleDetenido"]=_personaCaso.persona.personaCaso[0].detalleDetenido;
+        if (!_personaCaso && _personaCaso.persona.personaCaso && _personaCaso.persona.personaCaso[0]){
+            if (_personaCaso.persona.personaCaso[0])
+                _personaCaso = _personaCaso.persona.personaCaso[0];
                 _personaCaso["detenido"]=_personaCaso.persona.personaCaso[0].detenido;
         }
         
-        if(_personaCaso.detalleDetenido != null){
+        if(_personaCaso != null){
             let timerDetenido = Observable.timer(1);
             timerDetenido.subscribe( t => {
                 this.globals.detenido = _personaCaso.detenido;
@@ -274,19 +274,19 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 });
 
             });
-            var fechaDeclaracion = new Date(_personaCaso.detalleDetenido.fechaDeclaracion);
+            var fechaDeclaracion = new Date(_personaCaso.fechaDeclaracion);
             if (isNaN(fechaDeclaracion.getTime())) {
-                _personaCaso.detalleDetenido.fechaDeclaracion = null;
+                _personaCaso.fechaDeclaracion = null;
             }else{
-                _personaCaso.detalleDetenido.fechaDeclaracion = fechaDeclaracion;
+                _personaCaso.fechaDeclaracion = fechaDeclaracion;
             }
-            Logger.log(_personaCaso.detalleDetenido);
+            Logger.log(_personaCaso);
 
-            var fechaDetencion = new Date(_personaCaso.detalleDetenido.fechaDetencion);
+            var fechaDetencion = new Date(_personaCaso.fechaDetencion);
             if (isNaN(fechaDetencion.getTime())) {
-                _personaCaso.detalleDetenido.fechaDetencion = null;
+                _personaCaso.fechaDetencion = null;
             }else{
-                _personaCaso.detalleDetenido.fechaDetencion = fechaDetencion;
+                _personaCaso.fechaDetencion = fechaDetencion;
             }
             // this.model.fechaCanalizacion=fechaCompleta;
             var horas: string=(String(fechaDetencion.getHours()).length==1)?'0'+fechaDetencion.getHours():String(fechaDetencion.getHours());
@@ -296,13 +296,13 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
             let timer3 = Observable.timer(1);
             timer3.subscribe( t => {
-                pcaso["controls"][0]["controls"].detalleDetenido.controls.horaDetenido.setValue(horaDetencion);
-                ((pcaso["controls"][0] as FormGroup).controls.detalleDetenido as FormGroup).controls.tipoDetenido.patchValue(
+                pcaso["controls"][0]["controls"].horaDetenido.setValue(horaDetencion);
+                (pcaso["controls"][0] as FormGroup).controls.tipoDetenido.patchValue(
                 {
-                'id' : _personaCaso.detalleDetenido.tipoDetenido? _personaCaso.detalleDetenido.tipoDetenido.id : "",
-                'tipoDetencion'   : _personaCaso.detalleDetenido.tipoDetenido? _personaCaso.detalleDetenido.tipoDetenido.tipoDetencion : "",
-                'tipoReincidencia': _personaCaso.detalleDetenido.tipoDetenido? _personaCaso.detalleDetenido.tipoDetenido.tipoReincidencia : "",
-                'cereso'          : _personaCaso.detalleDetenido.tipoDetenido? _personaCaso.detalleDetenido.tipoDetenido.cereso : ""
+                'id' : _personaCaso.tipoDetenido? _personaCaso.tipoDetenido.id : "",
+                'tipoDetencion'   : _personaCaso.tipoDetenido? _personaCaso.tipoDetenido.tipoDetencion : "",
+                'tipoReincidencia': _personaCaso.tipoDetenido? _personaCaso.tipoDetenido.tipoReincidencia : "",
+                'cereso'          : _personaCaso.tipoDetenido? _personaCaso.tipoDetenido.cereso : ""
               }
               );
 
@@ -707,25 +707,20 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 if (this.personaServ.nacionalidadReligion.finded[0])
                     _model["nacionalidadReligion"]={id:this.personaServ.nacionalidadReligion.finded[0].id};
                 if (this.personaServ.tipoDetenido.finded[0]){
-                    (_model["personaCaso"])[0].detalleDetenido["tipoDetenido"].id=this.personaServ.tipoDetenido.finded[0].id
+                    (_model["personaCaso"])[0]["tipoDetenido"].id=this.personaServ.tipoDetenido.finded[0].id
                 }
-                if((_model["personaCaso"])[0].detalleDetenido['fechaDetencion']){
-                  var fechaCompleta = new Date ((_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
+                if((_model["personaCaso"])[0]['fechaDetencion']){
+                  var fechaCompleta = new Date ((_model["personaCaso"])[0]['fechaDetencion']);
                   console.log('1.- fechaCompleta', fechaCompleta );
-                  var hora=(_model["personaCaso"])[0].detalleDetenido['horaDetenido'];
+                  var hora=(_model["personaCaso"])[0]['horaDetenido'];
                   console.log('2.- Hora', hora );
 
                   fechaCompleta.setMinutes(parseInt(hora.split(':')[1]));
                   fechaCompleta.setHours(parseInt(hora.split(':')[0]));
                   console.log('3.- Hora', fechaCompleta );
                   var mes:number=fechaCompleta.getMonth()+1;
-                  (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
-                  Logger.log('lo que envio: '+  (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
-                 }
-
-                 if (this.globals.detenido==false) {
-                     Logger.log('entroooooo!');
-                     delete (_model["personaCaso"])[0].detalleDetenido;
+                  (_model["personaCaso"])[0]['fechaDetencion']=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
+                  Logger.log('lo que envio: '+  (_model["personaCaso"])[0]['fechaDetencion']);
                  }
 
                  (_model["personaCaso"])[0].detenido = this.globals.detenido;
@@ -1099,24 +1094,24 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 _model["nacionalidadReligion"]={id:this.personaServ.nacionalidadReligion.finded[0].id};
             }
             if (this.personaServ.tipoDetenido.finded[0]){
-                (_model["personaCaso"])[0].detalleDetenido["tipoDetenido"].id=this.personaServ.tipoDetenido.finded[0].id
+                (_model["personaCaso"])[0]["tipoDetenido"].id=this.personaServ.tipoDetenido.finded[0].id
                 Logger.log('Tipo de detenido service',this.personaServ.tipoDetenido);
 
               }
-              if((_model["personaCaso"])[0].detalleDetenido['fechaDetencion']){
-                var fechaCompleta = new Date ((_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
-                var hora=(_model["personaCaso"])[0].detalleDetenido['horaDetenido'];
+              if((_model["personaCaso"])[0]['fechaDetencion']){
+                var fechaCompleta = new Date ((_model["personaCaso"])[0]['fechaDetencion']);
+                var hora=(_model["personaCaso"])[0]['horaDetenido'];
 
                 fechaCompleta.setMinutes(parseInt(hora.split(':')[1]));
                 fechaCompleta.setHours(parseInt(hora.split(':')[0]));
                 var mes:number=fechaCompleta.getMonth()+1;
-                (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
-                Logger.log('lo que envio: '+  (_model["personaCaso"])[0].detalleDetenido['fechaDetencion']);
+                (_model["personaCaso"])[0]['fechaDetencion']=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
+                Logger.log('lo que envio: '+  (_model["personaCaso"])[0]['fechaDetencion']);
                }
 
-                if (this.globals.detenido==false) {
-                    delete (_model["personaCaso"])[0].detalleDetenido;
-                }
+                // if (this.globals.detenido==false) {
+                //     delete (_model["personaCaso"])[0];
+                // }
 
                (_model["personaCaso"])[0].detenido = this.globals.detenido;
 
@@ -1687,24 +1682,23 @@ export class LosForm{
             'estadoCivil': new FormGroup({
                 'id': new FormControl("",[]),
             }),
-            'personaCaso': new FormArray([
+            'personaCaso': new FormArray([                
                 new FormGroup({
+                    'id': new FormControl(),
+                    'fechaDetencion'   : new FormControl(),
+                    'fechaDeclaracion' : new FormControl(),
+                    'horaDetenido'     : new FormControl("",[]),
+                    'tipoDetenido' : new FormGroup({
+                        'id' : new FormControl("", []),
+                        'tipoDetencion'         : new FormControl("",[]),
+                        'tipoReincidencia'         : new FormControl("",[]),
+                        'cereso'         : new FormControl("",[])                         
+                     }),
                     'caso': new FormGroup({
                         'id': new FormControl("",[]),
                     }),
                     'tipoInterviniente': new FormGroup({
                         'id': new FormControl("",[Validators.required,])
-                    }),
-                    'detalleDetenido': new FormGroup({
-                        'id'               : new FormControl(),
-                        'fechaDetencion'   : new FormControl(),
-                        'fechaDeclaracion' : new FormControl(),
-                        'horaDetenido'     : new FormControl("",[]),
-                        'tipoDetenido' : new FormGroup({
-                          'id' : new FormControl("", []),
-                          'tipoDetencion'         : new FormControl("",[]),
-                          'tipoReincidencia'         : new FormControl("",[]),
-                          'cereso'         : new FormControl("",[])                        })
                     }),
                 })
             ]),
