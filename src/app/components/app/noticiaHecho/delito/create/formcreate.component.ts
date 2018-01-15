@@ -77,7 +77,7 @@ export class FormCreateDelitoComponent {
                 if (response && response["arreglo"]){
                     var lista=response["arreglo"] as any[];
                     for (var i = 0; i < lista.length; ++i) {
-                        if (lista[i]["nombre"].indexOf(this.searchDelito.toUpperCase())>=0){
+                        if (typeof this.searchDelito == 'string'  && lista[i]["nombre"].indexOf(this.searchDelito.toUpperCase())>=0){
                             delitos.push(lista[i]);
                         }
                     }
