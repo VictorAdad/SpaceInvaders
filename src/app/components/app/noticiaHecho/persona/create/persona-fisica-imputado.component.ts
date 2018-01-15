@@ -958,6 +958,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                                 ds=>{
                                     Logger.log("Se actualizo registro",ds);
                                     resolve("Se creó la persona de manera local");
+                                    this.casoService.actualizaCasoOffline(ds);
                                     this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas']);
 
                             });
@@ -1063,6 +1064,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                             ds=>{
                                 Logger.log("Se actualizo registro",ds);
                                 resolve("Se creo la persona de manera local");
+                                this.casoService.actualizaCasoOffline(ds);
                                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas']);
 
                         });

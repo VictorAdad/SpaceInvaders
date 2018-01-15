@@ -174,6 +174,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                                 this.db.update("casos",caso).then(t=>{
                                     Logger.log("caso arma", t["armas"]);
                                     resolve("Se agregó la arma de manera local");
+                                    this.casoService.actualizaCasoOffline(t);
                                     this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/armas' ]);
                                 });
                             }
@@ -237,6 +238,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                             }
                             this.db.update("casos",t).then(e=>{
                                 Logger.log("caso",t);
+                                this.casoService.actualizaCasoOffline(e);
                                 resolve("Se actualizó la información del arma de manera local");
                             });
 

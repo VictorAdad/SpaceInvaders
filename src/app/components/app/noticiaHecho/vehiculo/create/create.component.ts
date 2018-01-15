@@ -329,6 +329,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                             caso["vehiculos"].push(this.model);
                             this.db.update("casos",caso).then(t=>{
                                 resolve("Se creó el vehículo de manera local");
+                                this.casoService.actualizaCasoOffline(t);
                                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/vehiculos' ]);
                                 this.vehiculoServ.reset();
                             });
@@ -398,6 +399,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                         }
                         this.db.update("casos", t).then(r=>{
                             resolve("vehiculo actualizado");
+                            this.casoService.actualizaCasoOffline(t);
                             this.vehiculoServ.reset();
                             Logger.log('-> Registro acutualizado');
                         });
