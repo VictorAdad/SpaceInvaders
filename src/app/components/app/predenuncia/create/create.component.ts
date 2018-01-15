@@ -346,18 +346,15 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                         Logger.log(this.model);
                         this.model.tipo="Predenuncia";// temporalmente
                         if(this.model.fechaCanalizacion){
-                          var fechaCompleta = new Date (this.model.fechaCanalizacion);
-                          if(this.model.horaCanalizacion)
-                          { fechaCompleta.setMinutes(parseInt(this.model.horaCanalizacion.split(':')[1]));
-                            fechaCompleta.setHours(parseInt(this.model.horaCanalizacion.split(':')[0]));
-                          }
-                          var mes:number=fechaCompleta.getMonth()+1;
-                          this.model.fechaCanalizacion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
-                          Logger.log('lo que envio: '+  this.model.fechaCanalizacion);
-                         }
-
-
-
+                            var fechaCompleta = new Date (this.model.fechaCanalizacion);
+                            if(this.model.horaCanalizacion)
+                            { fechaCompleta.setMinutes(parseInt(this.model.horaCanalizacion.split(':')[1]));
+                                fechaCompleta.setHours(parseInt(this.model.horaCanalizacion.split(':')[0]));
+                            }
+                            var mes:number=fechaCompleta.getMonth()+1;
+                            this.model.fechaCanalizacion=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
+                            Logger.log('lo que envio: '+  this.model.fechaCanalizacion);
+                        }
                         this.http.post('/v1/base/predenuncias', this.model).subscribe(
                             (response) => {
                                 Logger.log(response);
@@ -375,20 +372,22 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                         _model.caso.id = this.casoId;
 
                         if(_model.fechaCanalizacion){
-                          Logger.log('1.-  -------->',_model.fechaCanalizacion);
-                          var fechaCompletaOff = new Date (_model.fechaCanalizacion);
-                          Logger.log('2.-  -------->',fechaCompletaOff);
-                          if(_model.horaCanalizacion){
-                            fechaCompletaOff.setMinutes(parseInt(_model.horaCanalizacion.split(':')[1]));
-                            fechaCompletaOff.setHours(parseInt(_model.horaCanalizacion.split(':')[0]));
-                          }
-                          var mes:number=fechaCompletaOff.getMonth()+1;
-                          _model.fechaCanalizacion=fechaCompletaOff.getFullYear()+'-'+mes+'-'+fechaCompletaOff.getDate()+' '+fechaCompletaOff.getHours()+':'+fechaCompletaOff.getMinutes()+':00.000';
-                          Logger.log('lo que envio: '+  _model.fechaCanalizacion);
-                         }
+                            Logger.log('1.-  -------->',_model.fechaCanalizacion);
+                            var fechaCompletaOff = new Date (_model.fechaCanalizacion);
+                            Logger.log('2.-  -------->',fechaCompletaOff);
+                            if(_model.horaCanalizacion){
+                                fechaCompletaOff.setMinutes(parseInt(_model.horaCanalizacion.split(':')[1]));
+                                fechaCompletaOff.setHours(parseInt(_model.horaCanalizacion.split(':')[0]));
+                            }
+                            var mes:number=fechaCompletaOff.getMonth()+1;
+                            _model.fechaCanalizacion=fechaCompletaOff.getFullYear()+'-'+mes+'-'+fechaCompletaOff.getDate()+' '+fechaCompletaOff.getHours()+':'+fechaCompletaOff.getMinutes()+':00.000';
+                            Logger.log('lo que envio: '+  _model.fechaCanalizacion);
+                        }
+                        Object.assign(this.model, _model);
+                        Logger.logColor('MODEL@SAVE', 'green', _model, this.model);
                         let dato = {
                             url:'/v1/base/predenuncias',
-                            body:_model,
+                            body:this.model,
                             options:[],
                             tipo:"post",
                             pendiente:true,
@@ -408,6 +407,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                     this.db.update("casos",caso).then(t=>{
                                         Logger.log("caso arma", t["arma"]);
                                         resolve("Se agregó la arma de manera local");
+                                        this.casoService.actualizaCasoOffline(t);
                                         this.router.navigate(['/caso/'+this.casoId+'/detalle']);
                                     });
                                 }
