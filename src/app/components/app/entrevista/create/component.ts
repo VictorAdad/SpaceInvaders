@@ -54,6 +54,8 @@ export class EntrevistaCreateComponent {
 
     constructor(
         private route: ActivatedRoute,
+        public casoServ: CasoService,
+    	private router: Router ,
         public personaServ: PersonaService,
     ) { }
 
@@ -61,6 +63,13 @@ export class EntrevistaCreateComponent {
         this.route.params.subscribe(params => {
             if (params['casoId']) {
                 this.casoId = +params['casoId'];
+                this.casoServ.find(this.casoId).then(
+                    caso => {
+                        if(!this.casoServ.caso.hasRelacionVictimaImputado && !this.casoServ.caso.hasPredenuncia)
+                            this.router.navigate(['/caso/' + this.casoId + '/detalle']);
+
+                    }
+                )
                 this.breadcrumb.push({ path: `/caso/${this.casoId}/detalle`, label: "Detalle de caso" });
                 this.breadcrumb.push({ path: `/caso/${this.casoId}/entrevista`, label: "Entrevistas" });
             }

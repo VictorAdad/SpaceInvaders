@@ -124,6 +124,13 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
             if (params['casoId']){
                 let tipo = 'Acuerdo Inicio';
                 this.casoId = +params['casoId'];
+                this.casoService.find(this.casoId).then(
+                    caso => {
+                        if(!this.casoService.caso.hasRelacionVictimaImputado && !this.casoService.caso.hasPredenuncia)
+                            this.router.navigate(['/caso/' + this.casoId + '/detalle']);
+
+                    }
+                )
                 this.casoService.find(this.casoId);
                 this.apiUrl=this.apiUrl.replace("{id}",String(this.casoId));
                  this.http.get(`/v1/base/acuerdos/casos/${this.casoId}/tipos?tipo=${tipo}`).subscribe(response => {
