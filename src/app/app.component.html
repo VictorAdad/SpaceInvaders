@@ -16,7 +16,7 @@
             <mat-icon class="button-menu">signal_wifi_off</mat-icon>
         </button>
 
-        <button mat-icon-button [matMenuTriggerFor]="notify" (onMenuOpen)="loadNotifications($event, 1)" style="margin-right: 20px;">
+        <button mat-icon-button [matMenuTriggerFor]="notify" [disabled]="!servicio.onLine" (onMenuOpen)="loadNotifications($event, 1)" style="margin-right: 20px;">
             <mat-icon class="button-menu">notifications</mat-icon>
             <mat-chip color="accent">{{ authService.user.sinLeer }}</mat-chip>
         </button>
@@ -83,9 +83,6 @@
                 <mat-icon fxHide="false" fxHide.gt-sm>delete</mat-icon>Borrar BD local
             </button>
             <mat-divider></mat-divider>
-            <button mat-menu-item>
-                <mat-icon fxHide="false" fxHide.gt-sm>autorenew</mat-icon>
-            </button>
             <button (click)="logout()" mat-menu-item>
                 <mat-icon fxHide="false" fxHide.gt-sm>highlight_off</mat-icon>Cerrar sesión
             </button>

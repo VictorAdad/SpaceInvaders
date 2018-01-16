@@ -188,6 +188,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                             Logger.log("actualizacion",p);
                             this.casoService.caso=copiaModel;
                             this.casoService.id=copiaModel["id"];
+                            this.casoService.actualizaCasoOffline(p);
                             this.router.navigate(['/caso/'+id+'/noticia-hecho/datos-generales' ]);
                         });
                     });
@@ -223,6 +224,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                     this.db.update('casos', t).then(e => {
                         Logger.log('caso', t);
                         resolve('Se actualizó el caso de manera local');
+                        this.casoService.actualizaCasoOffline(p);
                         Logger.log('-> Registro acutualizado');
                     });
                 });

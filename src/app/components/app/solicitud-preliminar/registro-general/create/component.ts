@@ -18,6 +18,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
 import { Logger } from "@services/logger.service";
+import { CasoService } from '@services/caso/caso.service';
 
 @Component({
 	templateUrl: './component.html',
@@ -28,12 +29,22 @@ export class RegistroGeneralCreateComponent {
 	public breadcrumb = [];
 	public solicitudId: number = null;
 	public model:any=null;
-	constructor(private route: ActivatedRoute) { }
+	constructor(
+		public casoServ: CasoService,
+      	private router: Router ,
+		private route: ActivatedRoute) { }
 
 	ngOnInit() {
 		this.route.params.subscribe(params => {
 			if (params['casoId']) {
 				this.casoId = +params['casoId'];
+				this.casoServ.find(this.casoId).then(
+                    caso => {
+                        if(!this.casoServ.caso.hasRelacionVictimaImputado && !this.casoServ.caso.hasPredenuncia)
+                            this.router.navigate(['/caso/' + this.casoId + '/detalle']);
+
+                    }
+                )
 				this.breadcrumb.push({ path: `/caso/${this.casoId}/detalle`, label: "Detalle del caso" })
 				this.breadcrumb.push({ path: `/caso/${this.casoId}/registro-general`, label: "Solicitudes de registro general" })
 			}

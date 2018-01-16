@@ -1,6 +1,6 @@
 import { BasePaginationComponent } from './../../base/pagination/component';
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator } from '@angular/material';
 import { TableService } from '@utils/table/table.service';
 import { Perito } from '@models/solicitud-preliminar/perito';
@@ -8,6 +8,7 @@ import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { Logger } from "@services/logger.service";
+import { CasoService } from '@services/caso/caso.service';
 
 @Component({
 	templateUrl: './component.html',
@@ -31,6 +32,8 @@ export class PeritoComponent extends BasePaginationComponent implements OnInit {
 		private route: ActivatedRoute,
 		private http: HttpService,
 		private onLine: OnLineService,
+        public casoServ: CasoService,
+        private router: Router ,
 		private db: CIndexedDB) {
       super();
     }
@@ -41,6 +44,13 @@ export class PeritoComponent extends BasePaginationComponent implements OnInit {
 			if (params['casoId']) {
 				this.hasCaso = true;
 				this.casoId = +params['casoId'];
+                this.casoServ.find(this.casoId).then(
+                    caso => {
+                        if(!this.casoServ.caso.hasRelacionVictimaImputado && !this.casoServ.caso.hasPredenuncia)
+                            this.router.navigate(['/caso/' + this.casoId + '/detalle']);
+
+                    }
+                )
 			//	this.apiUrl = this.apiUrl.replace("{id}", String(this.casoId));
 				this.breadcrumb.push({ path: `/caso/${this.casoId}/detalle`, label: "Detalle del caso" })
 				if(this.onLine.onLine){

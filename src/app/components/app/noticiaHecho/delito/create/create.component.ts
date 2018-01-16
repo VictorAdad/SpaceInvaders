@@ -152,7 +152,8 @@ export class DelitoCreateComponent{
                                     var dat={id:temId,delito:item, principal:false}
                                     caso["delitoCaso"].push(dat);
                                     obj.tabla.update("casos",caso).then(t=>{
-                                        guardaLista(i+1,obj.listaDelitos, listaErrores);
+                                        obj.casoService.actualizaCasoOffline(t);
+                                        guardaLista(i + 1, obj.listaDelitos, listaErrores);
                                     });
                                 }
                             //});

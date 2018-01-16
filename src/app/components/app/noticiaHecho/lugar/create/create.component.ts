@@ -233,7 +233,6 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
         _model.latitud = this.latMarker.toFixed(8);
         _model.longitud = this.lngMarker.toFixed(8);
         Logger.log('lo que envio: ' + _model.fecha);
-
         if (_model.fecha) {
           var hora = _model.hora;
           let fechaCompleta = new Date(_model.fecha);
@@ -255,6 +254,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
               Logger.log('-> registro guardado', response);
               Logger.log('hora guardada', new Date(response.fecha));
               resolve('Se creó un nuevo lugar con éxito');
+              this.casoService.actualizaCaso();
               this.router.navigate(['/caso/' + this.casoId + '/noticia-hecho/lugares']);
               this.casoService.actualizaCaso();
             },
@@ -291,6 +291,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
               caso['lugares'].push(_model);
               this.db.update('casos', caso).then(t => {
                 resolve('Se creo un nuevo lugar con éxito');
+                this.casoService.actualizaCasoOffline(t);
                 this.router.navigate(['/caso/' + this.casoId + '/noticia-hecho/lugares']);
               });
             }
@@ -359,8 +360,9 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
               break;
             }
           }
-          this.db.update('casos', t).then(t => {
+          this.db.update('casos', t).then(ts => {
             resolve('Se actualizo el lugar de manera local');
+            this.casoService.actualizaCasoOffline(ts);
           });
           Logger.log('caso', t);
           //});

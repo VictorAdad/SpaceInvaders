@@ -566,10 +566,10 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                                 this.db.update("casos",caso).then(t=>{
                                     Logger.log("NO",t);
                                     resolve("Se creó la relación con éxito");
+                                    this.casoService.actualizaCasoOffline(t);
                                     this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/relaciones' ]);
                                 });
                             }
-
                     });
                 }
             });
@@ -811,6 +811,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                             this.db.update("casos",caso).then(t=>{
                                 Logger.log("NO",t);
                                 resolve("Se creo la relación con éxito");
+                                this.casoService.actualizaCasoOffline(t);
                                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/relaciones' ]);
                             });
                         }

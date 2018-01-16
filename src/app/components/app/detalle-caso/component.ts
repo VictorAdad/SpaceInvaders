@@ -2,13 +2,14 @@ import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
-import { Caso } from '@models/caso';
+//import { Caso } from '@models/caso';
 import { Persona } from '@models/persona';
 import { DelitoCaso } from '@models/delitoCaso';
 import { Predenuncia } from '@models/predenuncia';
 import { AuthenticationService } from '@services/auth/authentication.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { Logger } from "@services/logger.service";
+import { CasoService, Caso } from '@services/caso/caso.service';
 
 @Component({
 	templateUrl:'./component.html'
@@ -34,7 +35,8 @@ export class DetalleCasoComponent implements OnInit{
 		public _onLine: OnLineService,
 		private _http: HttpService,
 		public auth: AuthenticationService,
-		private db:CIndexedDB
+		private db:CIndexedDB,
+        private casoService: CasoService
 		){
 		this.route = _route;
 		this.onLine = _onLine;
@@ -82,17 +84,7 @@ export class DetalleCasoComponent implements OnInit{
 
 
         }else{
-        	this.db.get("casos", this.id).then(
-        		t => {
-        			// Logger.log('T', t);
-        			let relaciones = t['tipoRelacionPersonas'].filter(object => object['tipo'] === "Imputado víctima delito");
-            		this.caso = t as Caso;
-					this.hasPredenuncia = (typeof t['predenuncias'] !== 'undefined');
-					this.hasRelacionVictimaImputado = (relaciones.length > 0);
-
-					// Logger.log('Predenuncia', this.hasPredenuncia);
-                }
-            );
+			this.caso = this.casoService.caso as Caso;
         }    
 
 	}

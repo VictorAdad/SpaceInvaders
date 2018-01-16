@@ -144,15 +144,15 @@ export class CasoHerenciaComponent implements OnInit{
         'personas':[{
           'id':this.personasTipo[0].value
         }],
-        'lugar':{
-          'id':this.lugares[0].value 
+        'lugar': {
+          'id': this.lugares[0].value
         },
-        'delito':this.caso,
-        'vehiculo':{
-          'id':this.optionsNoticia.vehiculos[0].value
+        'delito': this.caso,
+        'vehiculo': {
+          'id': this.optionsNoticia.vehiculos.length > 0 ? this.optionsNoticia.vehiculos[0].value : ''
         },
-        'arma':{
-          'id':this.optionsNoticia.armas[0].value
+        'arma': {
+          'id': this.optionsNoticia.armas.length > 0 ? this.optionsNoticia.armas[0].value : ''
         }
       });
     });

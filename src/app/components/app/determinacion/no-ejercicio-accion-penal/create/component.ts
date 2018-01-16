@@ -29,11 +29,21 @@ export class NoEjercicioAccionPenalCreateComponent {
 	public breadcrumb = [];
   public model:any=null;
 
-	constructor(private route: ActivatedRoute) { }
+	constructor(
+    public casoServ: CasoService,
+    private router: Router ,
+    private route: ActivatedRoute) { }
 	ngOnInit() {
 		this.route.params.subscribe(params => {
 			if (params['casoId']){
 				this.casoId = +params['casoId'];
+        this.casoServ.find(this.casoId).then(
+                    caso => {
+                        if(!this.casoServ.caso.hasRelacionVictimaImputado && !this.casoServ.caso.hasPredenuncia)
+                            this.router.navigate(['/caso/' + this.casoId + '/detalle']);
+
+                    }
+                )
 				this.breadcrumb.push({path:`/caso/${this.casoId}/detalle`,label:"Detalle de caso"});
 				this.breadcrumb.push({path:`/caso/${this.casoId}/no-ejercicio-accion-penal`,label:"No ejercicio de la acción penal"});
 			}

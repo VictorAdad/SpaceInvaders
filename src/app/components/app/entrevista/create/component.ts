@@ -29,116 +29,133 @@ import { AuthenticationService } from '@services/auth/authentication.service';
 
 
 var eliminaNulos = function(x){
-            if (typeof x == "object"){
-                for(let i in x){
-                    if (x[i]==null || typeof x[i] =="undefined"){
-                        delete x[i];
-                    }
-                    if (typeof x[i]=="object")
-                        eliminaNulos(x[i]);
+    if (typeof x == "object"){
+        for(let i in x){
+            if (x.hasOwnProperty(i)) {
+                if (x[i]==null || typeof x[i] =="undefined"){
+                    delete x[i];
+                }
+                if (typeof x[i]=="object") {
+                    eliminaNulos(x[i]);
                 }
             }
         }
+    }
+}
 
 @Component({
-	templateUrl: './component.html',
+    templateUrl: './component.html',
 })
 export class EntrevistaCreateComponent {
-	public casoId: number = null;
-	public breadcrumb = [];
-  public entrevistaId: number = null;
-  public model:any=null;
-  constructor(private route: ActivatedRoute,
-              public personaServ: PersonaService,
-  ) { }
+    public casoId: number = null;
+    public breadcrumb = [];
+    public entrevistaId: number = null;
+    public model:any=null;
 
-	ngOnInit() {
-		this.route.params.subscribe(params => {
-			if (params['casoId']) {
-				this.casoId = +params['casoId'];
-				this.breadcrumb.push({ path: `/caso/${this.casoId}/detalle`, label: "Detalle de caso" });
-				this.breadcrumb.push({ path: `/caso/${this.casoId}/entrevista`, label: "Entrevistas" });
-			}
+    constructor(
+        private route: ActivatedRoute,
+        public casoServ: CasoService,
+    	private router: Router ,
+        public personaServ: PersonaService,
+    ) { }
 
-		});
-	}
-  modelUpdate(_model: any) {
-    this.entrevistaId = _model.id;
-    this.model=_model;
-	  Logger.log(_model);
-  }
+    ngOnInit() {
+        this.route.params.subscribe(params => {
+            if (params['casoId']) {
+                this.casoId = +params['casoId'];
+                this.casoServ.find(this.casoId).then(
+                    caso => {
+                        if(!this.casoServ.caso.hasRelacionVictimaImputado && !this.casoServ.caso.hasPredenuncia)
+                            this.router.navigate(['/caso/' + this.casoId + '/detalle']);
+
+                    }
+                )
+                this.breadcrumb.push({ path: `/caso/${this.casoId}/detalle`, label: "Detalle de caso" });
+                this.breadcrumb.push({ path: `/caso/${this.casoId}/entrevista`, label: "Entrevistas" });
+            }
+
+        });
+    }
+
+    modelUpdate(_model: any) {
+        this.entrevistaId = _model.id;
+        this.model=_model;
+        Logger.log(_model);
+    }
 
 }
 
 @Component({
-	selector: 'entrevista-entrevista',
-	templateUrl: './entrevista.component.html',
+    selector: 'entrevista-entrevista',
+    templateUrl: './entrevista.component.html',
 })
 export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
-	public apiUrl: string = "/v1/base/entrevistas";
-	public casoId: number = null;
+    public apiUrl = "/v1/base/entrevistas";
+    public casoId: number = null;
     public id: number = null;
     public personas: any[] = [];
     public masDe3Dias:any;
-	@Output() modelUpdate = new EventEmitter<any>();
-	public form: FormGroup;
-	public model: Entrevista;
-	dataSource: TableService | null;
-	@ViewChild(MatPaginator) paginator: MatPaginator;
-	public personasHeredadas:any[];
-	public heredar:boolean=false;
-	public heredarSintesis:boolean=false;
-	public hintStart: String = "Campo obligatorio";
-	public hintEnd: String = "150 carácteres mínimo";
+    @Output() modelUpdate = new EventEmitter<any>();
+    public form: FormGroup;
+    public model: Entrevista;
+    dataSource: TableService | null;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    public personasHeredadas:any[];
+    public heredar = false;
+    public heredarSintesis = false;
+    public hintStart: String = "Campo obligatorio";
+    public hintEnd: String = "150 carácteres mínimo";
 
-	constructor(
-		private _fbuilder: FormBuilder,
-		private route: ActivatedRoute,
-		public onLine: OnLineService,
-		private http: HttpService,
-		private router: Router,
-		private db: CIndexedDB,
-		public options: SelectsService,
-		public personaServ: PersonaService,
+    constructor(
+        private _fbuilder: FormBuilder,
+        private route: ActivatedRoute,
+        public onLine: OnLineService,
+        private http: HttpService,
+        private router: Router,
+        private db: CIndexedDB,
+        public options: SelectsService,
+        public personaServ: PersonaService,
         public casoService:CasoService,
         private auth: AuthenticationService,
 
-	) { super(); }
+    ) { super(); }
 
-	ngOnInit() {
-        this.auth.masDe3DiasSinConexion().then(r=>{
+    ngOnInit() {
+        this.auth.masDe3DiasSinConexion().then( r => {
             let x= r as boolean;
             this.masDe3Dias=r;
         });
-		this.model = new Entrevista();
-		this.form = this.createForm();
 
-		this.route.params.subscribe(params => {
-			if (params['casoId'])
-				this.casoId = +params['casoId'];
-			Logger.log('casoId', this.casoId);
-			if (params['id']) {
+        this.model = new Entrevista();
+        this.form = this.createForm();
+
+        this.route.params.subscribe(params => {
+            if (params['casoId']) {
+                this.casoId = +params['casoId'];
+            }
+
+            Logger.log('casoId', this.casoId);
+            if (params['id']) {
                 this.id = + params['id'];
                 let timer = Observable.timer(1);
                 timer.subscribe(t => {
                     this.form.disable();
-                })				
-				Logger.log('id', this.id);
+                });
+                Logger.log('id', this.id);
 
-				if(this.onLine.onLine){
-					this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-						this.heredar = response['heredar'];
-						this.fillForm(response);
+                if(this.onLine.onLine) {
+                    this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
+                        this.heredar = response['heredar'];
+                        // this.fillForm(response);
                         this.modelUpdate.emit(response);
                         this.personas = response.personas;
-
-					});
-				}else{
-					this.db.get("casos", this.casoId).then(t=>{
+                    });
+                }else {
+                    this.db.get("casos", this.casoId).then(t => {
                         let entrevistas = t["entrevistas"] as any[];
-                        for (var i = 0; i < entrevistas.length; ++i) {
-                            if ((entrevistas[i])["id"]==this.id){
-                                var entrevista = entrevistas[i];
+                        for (let i = 0; i < entrevistas.length; ++i) {
+                            if ((entrevistas[i])["id"] == this.id)    {
+                                const entrevista = entrevistas[i];
                                 this.fillForm(entrevistas[i]);
                                 this.modelUpdate.emit(entrevistas[i]);
                                 this.personas = entrevistas[i].personas;
@@ -146,11 +163,11 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                             }
                         }
                     });
-				}
-			}
-		});
+                }
+            }
+        });
 
-		this.validateForm(this.form);
+    this.validateForm(this.form);
 	}
 
 	public createForm() {
@@ -356,7 +373,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
     */
     var hasALocalizacion=false;
 
-   this.personasHeredadas.forEach((personaCaso)=> {
+   this.personas.forEach((personaCaso)=> {
 
      // Heradar nombre del entrevistado
      let nombrePersona=(personaCaso.persona.nombre?personaCaso.persona.nombre:"")+(personaCaso.persona.paterno?" "+personaCaso.persona.paterno:"")+(personaCaso.persona.materno?" "+personaCaso.persona.materno:"");
