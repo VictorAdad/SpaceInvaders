@@ -85,6 +85,8 @@ export class DetalleCasoComponent implements OnInit{
 
         }else{
 			this.caso = this.casoService.caso as Caso;
+			this.hasRelacionVictimaImputado = this.caso.hasRelacionVictimaImputado;
+			this.hasPredenuncia = this.caso['hasPredenuncia'] ? this.caso.hasPredenuncia : false;
         }    
 
 	}
