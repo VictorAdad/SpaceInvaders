@@ -95,6 +95,9 @@ export class CasoService{
     public actualizaCasoOffline(caso) {
         var temCaso = new Caso();
         Object.assign(temCaso, caso);
+        if (temCaso['predenuncias']) {
+            temCaso['hasPredenuncia'] = !Number.isNaN(temCaso['predenuncias']['id']);
+        }
         if (temCaso['tipoRelacionPersonas']){
             console.log('log', temCaso['tipoRelacionPersonas']);
             for (let i = 0; i < temCaso['tipoRelacionPersonas'].length; i++) {
@@ -130,11 +133,13 @@ export class Caso{
     public delitoPrincipal: any;
     public predenuncias: any;
     public delitoCaso: any[];
+    public delito: string;
     public id: number;
     public lugares: any[];
-    public nuc: string
+    public nuc: string;
     public tipoRelacionPersonas: any[];
     public IdMexico = _config.optionValue.idMexico;
+    public sintesis: string;
 
 
 
