@@ -20,6 +20,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
 import { Logger } from "@services/logger.service";
+import { Yason } from '@services/utils/yason';
 import { AuthenticationService } from "@services/auth/authentication.service";
 
 @Component({
@@ -225,8 +226,10 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 	}
 
 	public fillForm(_data) {
+		Yason.eliminaNulos(_data);
+		Logger.logColor('<<< DATA >>>','green',_data);
 		this.form.patchValue(_data);
-		Logger.log(_data);
+		
 	}
 
 }
