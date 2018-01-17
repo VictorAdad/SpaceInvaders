@@ -113,7 +113,16 @@ export class CasoService{
                 }
             }
         }
-        console.log(temCaso, caso);
+        if (temCaso['delitoCaso']){
+            Logger.logColor('ANTES DE DELITO', 'orange',temCaso['delitoCaso']);
+            for (let i = 0; i < temCaso.delitoCaso.length; i++){
+                console.log(temCaso.delitoCaso[i]);
+                if (temCaso.delitoCaso[i]['principal']){
+                    temCaso['delitoPrincipal'] = temCaso.delitoCaso[i]['delito'];
+                    break;
+                }
+            }
+        }
         this.caso = temCaso;
         Logger.logColor('CASO@Update', 'purple', this.caso);
     }
