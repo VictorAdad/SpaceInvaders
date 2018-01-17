@@ -134,22 +134,26 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 
 	        		});
         		}else{
-        			this.db.get("casos", this.casoId).then(t=>{
+        			// this.db.get("casos", this.casoId).then(t=>{
+                        const t = this.casoServ.caso;
                         let sol = t["solicitudPrePericiales"] as any[];
                         for (var i = 0; i < sol.length; ++i) {
                             if ((sol[i])["id"]==this.id){
-                                this.fillForm(sol[i]);
-                                this.isPericiales = this.form.controls.tipo.value === 'Periciales';
-                                this.isPsicofisico = this.form.controls.tipo.value === 'Psicofísico';
-                                this.isPericialesUpdate.emit(this.isPericiales);
-								this.modelUpdate.emit(sol[i]);
-								this.personas = sol[i].personas;
-								Logger.log('<<<< OffLine >>>>',sol[i])
-                                this.form.disable();
+								this.fillForm(sol[i]);
+								const timer = Observable.timer(100);
+								timer.subscribe(t=> {
+									this.isPericiales = this.form.controls.tipo.value === 'Periciales';
+									this.isPsicofisico = this.form.controls.tipo.value === 'Psicofísico';
+									this.isPericialesUpdate.emit(this.isPericiales);
+									this.modelUpdate.emit(sol[i]);
+									this.personas = sol[i].personas;
+									Logger.log('<<<< OffLine >>>>',sol[i])
+									this.form.disable();
+								});
                                 break;
                             }
                         }
-                    });
+                    // });
         		}
 			}
 		});
