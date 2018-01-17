@@ -22,6 +22,7 @@ import { GlobalService } from "@services/global.service";
 import { TableDataSource } from './../../global.component';
 import { AuthenticationService } from '@services/auth/authentication.service.ts';
 import { Logger } from "@services/logger.service";
+import { Yason } from '../../../../services/utils/yason';
 
 
 
@@ -144,62 +145,6 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             let x= r as boolean;
             this.masDe3Dias=r;
         });
-        this.route.params.subscribe(params => {
-            if (params['casoId']){
-                this.casoId = +params['casoId'];
-                this.casoService.find(this.casoId);
-                Logger.log(this.casoId);
-                if(this.onLine.onLine){
-                    Logger.log('OnLine------------>',);
-                    this.http.get(this.apiUrl+this.casoId+'/page').subscribe(response => {
-                         if(parseInt(response.totalCount) !== 0){
-                            this.hasPredenuncia = true;
-                            Logger.log("Dont have predenuncia");
-                            this.form.disable();
-                            this.model= response.data[0] as Predenuncia;
-                            Logger.logColor('<<< model >>>','red', this.model);
-                            this.personas = response.data[0].personas;
-                            Logger.logColor('<<< personas >>>','purple', this.personas);
-                            var fechaCompleta:Date= new Date(response.fechaHoraInspeccion);
-                            // this.model.fechaCanalizacion=fechaCompleta;
-                            var horas: string=(String(fechaCompleta.getHours()).length==1)?'0'+fechaCompleta.getHours():String(fechaCompleta.getHours());
-                            var minutos: string=(String(fechaCompleta.getMinutes()).length==1)?'0'+fechaCompleta.getMinutes():String(fechaCompleta.getMinutes());;
-                            this.model.horaConlcusionLlamada=horas+':'+minutos;
-                            Logger.log("Emitiendo id..",this.model.id)
-                            this.idEmitter.emit({id: this.model.id});
-                            Logger.log('PP----------->',this.model);
-                            this.fillForm(this.model);
-                        }
-                    });
-                }else{
-                    Logger.log('1.-OffLine------------>');
-                    this.db.get("casos", this.casoId).then(caso=>{
-                        Logger.log("Caso en armas ->",caso);
-                        if (caso){
-                            if(caso["predenuncias"]){
-                                this.hasPredenuncia = true;
-                                Logger.log("Have predenuncias");
-                                this.form.disable();
-                                let model = caso['predenuncias'];
-                                var fechaCompleta: Date = new Date(model.fechaHoraInspeccion);
-                                this.model.fechaCanalizacion=fechaCompleta;
-                                var horas: string=(String(fechaCompleta.getHours()).length==1)?'0'+fechaCompleta.getHours():String(fechaCompleta.getHours());
-                                var minutos: string=(String(fechaCompleta.getMinutes()).length==1)?'0'+fechaCompleta.getMinutes():String(fechaCompleta.getMinutes());;
-                                this.model.horaConlcusionLlamada=horas+':'+minutos;
-                                Logger.log("Emitiendo id..",this.model.id)
-                                this.idEmitter.emit({id: this.model.id});
-                                Logger.log('4.- OffLine------------>', model);
-                                this.personas = model.personas;
-                                Logger.log('4.- OffLine------------>', this.personas);
-                                this.fillForm(model);
-                            }
-                        }
-                    });
-                }
-            }
-
-        });
-
         this.model = new Predenuncia();
         let timer = Observable.timer(1);
         //timer.subscribe(t => {
@@ -260,8 +205,8 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                 'canalizacion'          :  new FormControl(this.model.canalizacion),
                 'institucion'          :  new FormControl(this.model.institucionCanalizacion),
                 'motivoCanalizacion'          :  new FormControl(this.model.motivocanalizacion),
-                'fechaCanalizacion'          :  new FormControl(this.model.fechaCanalizacion),
-                'horaCanalizacion'          :  new FormControl(this.model.horaCanalizacion),
+                'fechaCanalizacion'          :  new FormControl(),
+                'horaCanalizacion'          :  new FormControl(),
                 'horaConclusionLlamada'          :  new FormControl(''),
                 'nombreCausante'          :  new FormControl(this.model.personaCausohecho),
                 'domicilioCausante'          :  new FormControl(this.model.domicilioQuienCauso),
@@ -278,6 +223,61 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
 
             //}
         //});
+        this.route.params.subscribe(params => {
+            if (params['casoId']){
+                this.casoId = +params['casoId'];
+                this.casoService.find(this.casoId);
+                Logger.log(this.casoId);
+                if(this.onLine.onLine){
+                    Logger.log('OnLine------------>',);
+                    this.http.get(this.apiUrl+this.casoId+'/page').subscribe(response => {
+                         if(parseInt(response.totalCount) !== 0){
+                            this.hasPredenuncia = true;
+                            Logger.log("Dont have predenuncia");
+                            this.form.disable();
+                            this.model= response.data[0] as Predenuncia;
+                            Logger.logColor('<<< model >>>','red', this.model);
+                            this.personas = response.data[0].personas;
+                            Logger.logColor('<<< personas >>>','purple', this.personas);
+                            var fechaCompleta:Date= new Date(response.fechaHoraInspeccion);
+                            // this.model.fechaCanalizacion=fechaCompleta;
+                            var horas: string=(String(fechaCompleta.getHours()).length==1)?'0'+fechaCompleta.getHours():String(fechaCompleta.getHours());
+                            var minutos: string=(String(fechaCompleta.getMinutes()).length==1)?'0'+fechaCompleta.getMinutes():String(fechaCompleta.getMinutes());;
+                            this.model.horaConlcusionLlamada=horas+':'+minutos;
+                            Logger.log("Emitiendo id..",this.model.id)
+                            this.idEmitter.emit({id: this.model.id});
+                            Logger.log('PP----------->',this.model);
+                            this.fillForm(this.model);
+                        }
+                    });
+                }else{
+                    Logger.log('1.-OffLine------------>');
+                    this.db.get("casos", this.casoId).then(caso=>{
+                        Logger.log("Caso en armas ->",caso);
+                        if (caso){
+                            if(caso["predenuncias"]){
+                                this.hasPredenuncia = true;
+                                Logger.log("Have predenuncias");
+                                this.form.disable();
+                                let model = caso['predenuncias'];
+                                var fechaCompleta: Date = new Date(model.fechaHoraInspeccion);
+                                this.model.fechaCanalizacion=fechaCompleta;
+                                var horas: string=(String(fechaCompleta.getHours()).length==1)?'0'+fechaCompleta.getHours():String(fechaCompleta.getHours());
+                                var minutos: string=(String(fechaCompleta.getMinutes()).length==1)?'0'+fechaCompleta.getMinutes():String(fechaCompleta.getMinutes());;
+                                this.model.horaConlcusionLlamada=horas+':'+minutos;
+                                Logger.log("Emitiendo id..",this.model.id)
+                                this.idEmitter.emit({id: this.model.id});
+                                Logger.log('4.- OffLine------------>', model);
+                                this.personas = model.personas;
+                                Logger.log('4.- OffLine------------>', this.personas);
+                                this.fillForm(model);
+                            }
+                        }
+                    });
+                }
+            }
+
+        });
     }
 
     concatDate(fechaCanalizacion, horaCanalizacion){
@@ -424,21 +424,15 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
     }
 
     public fillForm(_data) {
-        Logger.logColor('<<< DATA >>>','green',_data);
-        for (var propName in _data) {
-            if (_data[propName] === null || _data[propName] === undefined) {
-              delete (_data)[propName];
-            }
-        }
-        _data.fechaCanalizacion = new Date(_data.fechaCanalizacion);
-
-        var time = _data.fechaCanalizacion.getHours()+':'+_data.fechaCanalizacion.getMinutes();
-
+        Yason.eliminaNulos(_data);
         this.form.patchValue(_data);
-        this.form.controls.horaCanalizacion.setValue(time);
-
+        if (_data['fechaCanalizacion']) {
+            _data.fechaCanalizacion = new Date(_data.fechaCanalizacion);
+            const time = _data.fechaCanalizacion.getHours()+':'+_data.fechaCanalizacion.getMinutes();
+            this.form.controls.horaCanalizacion.setValue(time);
+            Logger.log('HH----------------->', time, _data)
+        }
     }
-
 }
 
 @Component({
