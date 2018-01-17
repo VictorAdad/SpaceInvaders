@@ -61,7 +61,6 @@ export class OnLineService {
         this.timer.subscribe(t=>{
             this.anterior = this.onLine;
             this.onLine = navigator.onLine;
-            console.log('En linea', navigator.onLine);
             let message="Se perdió la conexión";
             if(this.onLine){
                 message = "Se estableció la conexión";
