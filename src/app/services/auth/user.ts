@@ -10,6 +10,8 @@ export class Usuario {
 
     public token: string;
 
+    public refreshToken: string;
+
     public fiscalia: string;
 
     public fiscaliaCompleto: string;
@@ -48,6 +50,7 @@ export class Usuario {
             this.username        = _usuario.sub;
             this.roles           = this.setRoles(_usuario.Roles);
             this.token           = _usuario.token;
+            this.refreshToken    = _usuario.refreshToken;
             this.fiscalia        = _usuario.fiscaliaAcronimo;
             this.agencia         = _usuario.agenciaAcronimo;
             this.agenciaCompleto = _usuario.agenciaCompleto;

@@ -66,6 +66,7 @@ import {VgCoreModule} from 'videogular2/core';
 import {VgControlsModule} from 'videogular2/controls';
 import {VgOverlayPlayModule} from 'videogular2/overlay-play';
 import {VgBufferingModule} from 'videogular2/buffering';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 
 // import { MaterialModule} from '@angular/material';
 
@@ -145,6 +146,7 @@ import { LoginDialogService } from './services/onLine/loginDialog.service';
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
+    NgIdleKeepaliveModule.forRoot(),
     CatalogosModule,
 
     AgmCoreModule.forRoot({

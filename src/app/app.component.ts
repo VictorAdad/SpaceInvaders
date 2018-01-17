@@ -1,6 +1,8 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
+import { Keepalive } from '@ng-idle/keepalive';
 import { AuthenticationService } from '@services/auth/authentication.service';
 import { GlobalService } from '@services/global.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -24,11 +26,11 @@ import * as io from 'socket.io-client';
   styleUrls: ['./app.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-	public isAuthenticated : boolean;
+    public isAuthenticated: boolean;
 
-    public _SIDEBAR        : boolean;
+    public _SIDEBAR: boolean;
 
     public _CONFIG: any = _config;
 
@@ -36,36 +38,76 @@ export class AppComponent {
 
     public socket: any;
 
-    public pageNotification: number = 0;
+    public pageNotification = 0;
 
-    public loadNotification: boolean = false;
+    public loadNotification = false;
 
-	constructor(
-		public authService: AuthenticationService,
-		private router : Router,
-		private titleService: Title,
-    	public globalService : GlobalService,
-    	public servicio: OnLineService,
-    	private activeRoute: ActivatedRoute,
+    public inIdleTimeout = false;
+
+    constructor(
+        public authService: AuthenticationService,
+        private router: Router,
+        private titleService: Title,
+        public globalService: GlobalService,
+        public servicio: OnLineService,
+        private activeRoute: ActivatedRoute,
         private mdIconRegistry: MatIconRegistry,
         private sanitizer: DomSanitizer,
         private selects: SelectsService,
         private formatos: FormatosService,
         private notification: NotificationsService,
         private notify:  NotifyService,
-        private http: HttpService
-	) {
-        mdIconRegistry.addSvgIcon('arma',sanitizer.bypassSecurityTrustResourceUrl('./assets/images/iconos/arma.svg'));
+        private http: HttpService,
+        private idle: Idle,
+        private keepalive: Keepalive
+    ) {
+        mdIconRegistry.addSvgIcon('arma', sanitizer.bypassSecurityTrustResourceUrl('./assets/images/iconos/arma.svg'));
         this._SIDEBAR = false;
         this.selects.getData();
         this.formatos.getFormatos();
+
+        // Se coloca el tiempo de inactividad de la aplicación.
+        idle.setIdle(environment.oam.idle);
+
+        // Se coloca el timeout de inactidad de la aplicación
+        idle.setTimeout(environment.oam.idleTimeout);
+
+        // Se colocan los interruotires de inactividad
+        idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+
+        idle.onIdleStart.subscribe(() => Logger.log('-> Comienza la inactividad'));
+
+        idle.onInterrupt.subscribe(() => {
+            if (this.inIdleTimeout) {
+                Logger.log('-> Interrupt inIdleTimeout');
+                this.authService.refreshToken();
+            }
+            this.inIdleTimeout = false;
+        });
+
+        idle.onTimeout.subscribe(() => {
+            Logger.log('-> Sessión Timeout!');
+            this.authService.isLoggedin = false;
+        });
+
+        // idle.onIdleEnd.subscribe(() => { });
+
+        idle.onTimeoutWarning.subscribe((countdown) => {
+            Logger.log('-> La sesión expirará en ' + countdown);
+            this.inIdleTimeout = true;
+        });
+
+        // sets the ping interval to 15 seconds
+        // keepalive.interval(15);
+        // keepalive.onPing.subscribe(() => );
+        // this.reset();
     }
 
-	ngOnInit(){
-		this.titleService.setTitle(this.createTitle());
+    ngOnInit() {
+        this.titleService.setTitle(this.createTitle());
         this.notify.getMessages().subscribe(
             message => {
-                if(message['notify']['username'] === this.authService.user.username){
+                if (message['notify']['username'] === this.authService.user.username) {
                     this.notification.create(message['notify']['titulo'], message['notify']['contenido'], 'info', {
                         timeOut: 10000,
                         showProgressBar: false,
@@ -77,7 +119,7 @@ export class AppComponent {
                 }
             }
         );
-	}
+    }
 
 
     private createTitle() {
@@ -128,9 +170,15 @@ export class AppComponent {
         )
     }
 
-    public onScrollNotification(_event){
-        if((_event.target.scrollTop + 430) === _event.target.scrollHeight)
+    public onScrollNotification(_event: any) {
+        if ((_event.target.scrollTop + 430) === _event.target.scrollHeight) {
             this.loadNotifications(null);
+        }
+    }
+
+    public reset() {
+        this.idle.watch();
+
     }
 
 }

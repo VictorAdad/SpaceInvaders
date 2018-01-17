@@ -1,21 +1,7 @@
-﻿/*
-
-El servicio de autenticación JWT se utiliza para iniciar sesión y 
-cerrar la sesión de la aplicación, para iniciar la sesión registra 
-las credenciales de los usuarios en en la api  de l backend falso y 
-comprueba la respuesta de un token JWT, si hay una significa que la 
-autenticación se ha completado con éxito. 
-Almacenamiento y el token guardado en la propiedad AuthenticationService.token. 
-La propiedad token es utilizada por otros servicios en la aplicación para establecer 
-el encabezado de autorización de las solicitudes HTTP hechas para proteger los puntos 
-finales de api. Los detalles de usuario registrados se almacenan en almacenamiento 
-local para que el usuario se mantenga conectado si actualizan el navegador y también 
-entre sesiones de explorador hasta que se desconecten. Si no desea que el usuario 
-permanezca conectado entre actualizaciones o sesiones, el comportamiento podría cambiarse fácilmente almacenando detalles de usuario en algún lugar menos persistente, como el almacenamiento de sesión o en una propiedad del servicio de autenticación.
-
-*/
-import { Injectable } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
+import { Keepalive } from '@ng-idle/keepalive';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 import { _usuarios } from './usuarios';
@@ -49,28 +35,31 @@ export class AuthenticationService {
         this.onLine=onLine;
     }
 
-    constructor(private http: Http) {
+    constructor(
+        private http: Http,
+        private idle: Idle) {
 
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
         this.headers.append('Authorization', 'Basic '+environment.oam.tokenApp);
         this.headers.append('X-OAUTH-IDENTITY-DOMAIN-NAME', environment.oam.domainName);
 
-        let session = localStorage.getItem(environment.oam.session);
+        const session = localStorage.getItem(environment.oam.session);
 
-        if(session != null){
+        if (session != null) {
             this.isLoggedin = true;
-            let usuario = JSON.parse(localStorage.getItem(environment.oam.session));
+            const usuario = JSON.parse(localStorage.getItem(environment.oam.session));
             this.user =  new Usuario(usuario);
-            let request = this.getUser(usuario.token);
+            const request = this.getUser(usuario.token);
 
             request.subscribe(
                 responseUser => {
+                    this.idle.watch();
                     responseUser['token'] =  usuario.token;
                     this.user = new Usuario(responseUser);
                     localStorage.setItem(environment.oam.session, JSON.stringify(responseUser));
                     this.isLoggedin = true;
-                    this.http.get(environment.api.host+'/v1/base/notificaciones/usuario/'+this.user.username+'/sin-leer')
+                    this.http.get(environment.api.host + '/v1/base/notificaciones/usuario/' + this.user.username + '/sin-leer')
                     .map((response: Response) => response.json())
                     .subscribe( response =>  this.user.sinLeer = response.count );
                 },
@@ -100,8 +89,9 @@ export class AuthenticationService {
                         response => {
                             let requestUser = this.getUser(response.access_token);
                             requestUser.subscribe(responseUser => {
-                                console.log('Response User ',responseUser, this );
+                                this.idle.watch();
                                 responseUser['token'] =  response.access_token;
+                                responseUser['refreshToken'] = response.refresh_token;
                                 this.user = new Usuario(responseUser);
                                 localStorage.setItem(environment.oam.session, JSON.stringify(responseUser));
                                 this.http.get(environment.api.host+'/v1/base/notificaciones/usuario/'+this.user.username+'/sin-leer')
@@ -145,20 +135,40 @@ export class AuthenticationService {
         this.isLoggedin = false;
     }
 
-    private getToken(_username, _password){
-        let body = `grant_type=PASSWORD&username=${_username}&password=${_password}&scope=AttributesOUD.attrs`
-        let options = new RequestOptions({ headers: this.headers });
+    private getToken(_username, _password) {
+        const body = `grant_type=PASSWORD&username=${_username}&password=${_password}&scope=AttributesOUD.attrs`
+        const options = new RequestOptions({ headers: this.headers });
 
-        return this.http.post(environment.oam.host+'/oauth2/rest/token', body, options)
+        return this.http.post(environment.oam.host + '/oauth2/rest/token', body, options)
             .map((response: Response) => response.json());
     }
 
-    private getUser(_token){
-        let options = new RequestOptions({ headers: this.headers });
+    private getUser(_token) {
+        const options = new RequestOptions({ headers: this.headers });
 
-        return this.http.get(environment.oam.host+'/oauth2/rest/token/info?access_token='+_token, options)
+        return this.http.get(environment.oam.host + '/oauth2/rest/token/info?access_token=' + _token, options)
             .map((response: Response) => response.json());
 
+    }
+
+    public refreshToken() {
+        const body = `grant_type=REFRESH_TOKEN&scope=AttributesOUD.attrs&refresh_token=${encodeURIComponent(this.user.refreshToken)}`;
+        const options = new RequestOptions({ headers: this.headers });
+        const refresh = this.http.post(environment.oam.host + '/oauth2/rest/token', body, options)
+                        .map((response: Response) => response.json());
+
+        refresh.subscribe(
+            response => {
+                const requestUser = this.getUser(response.access_token);
+                requestUser.subscribe(responseUser => {
+                    this.idle.watch();
+                    responseUser['token'] =  response.access_token;
+                    responseUser['refreshToken'] = response.refresh_token;
+                    this.user = new Usuario(responseUser);
+                    localStorage.setItem(environment.oam.session, JSON.stringify(responseUser));
+                });
+            }
+        );
     }
 
     isLoggedIn(): boolean{

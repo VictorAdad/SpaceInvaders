@@ -87,11 +87,11 @@ export class HttpService {
      */
     private onError(_error){
         // console.log('HttpService@onError()', _error);
-        if(_error.status === 401){
-            console.error('La sesión de usuario ha expirado');
-            this.auth.isLoggedin = false;
-            this.global.openSnackBar('Su tiempo de sesión ha expirado');
-        }
+        // if(_error.status === 401){
+        //     console.error('La sesión de usuario ha expirado');
+        //     this.auth.isLoggedin = false;
+        //     this.global.openSnackBar('Su tiempo de sesión ha expirado');
+        // }
 
         return Observable.throw(_error)
     }
