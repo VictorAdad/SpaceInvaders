@@ -199,7 +199,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
   }
 
   public addNombres(_model) {
-    if (this.optionsServ.colonias) {
+    if (this.optionsServ.colonias && _model['colonia']) {
       for (var i = 0; i < this.optionsServ.colonias.length; ++i) {
         if (this.optionsServ.colonias[i]['value'].split('-')[0].indexOf(_model['colonia']['id'])) {
           _model['colonia']['nombre'] = this.optionsServ.colonias[i]['label'];
@@ -208,7 +208,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
         }
       }
     }
-    if (this.optionsServ.municipios) {
+    if (this.optionsServ.municipios && _model['municipio']) {
       for (var i = 0; i < this.optionsServ.municipios.length; ++i) {
         if (this.optionsServ.municipios[i]['value'] == _model['municipio']['id']) {
           _model['municipio']['nombre'] = this.optionsServ.municipios[i]['label'];
@@ -216,7 +216,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
         }
       }
     }
-    if (this.optionsServ.estados) {
+    if (this.optionsServ.estados && _model['estado']) {
       for (var i = 0; i < this.optionsServ.estados.length; ++i) {
         if (this.optionsServ.estados[i]['value'] == _model['estado']['id']) {
           _model['estado']['nombre'] = this.optionsServ.estados[i]['label'];
