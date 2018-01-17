@@ -236,20 +236,17 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                             Logger.log("Dont have predenuncia");
                             this.model= response.data[0] as Predenuncia;
                             let x=response.data[0].heredar; 
-                            const timer = Observable.timer(8000);
+                            const timer = Observable.timer(1000);
                             timer.subscribe(t=>{
                                 console.log("RESPONSE HEREDAR ->>>>>>>><",x, this.form,response.data[0].tipoPersonaHeredar);
                                 this.heredar = x; 
                                 this.heredarChanged(x,response.data[0].tipoPersonaHeredar);
-                                //this.form.controls.tipoPersonaHeredar.setValue(response.data[0].tipoPersonaHeredar);
-                                // this.form.controls.calidadPersona.patchValue(this.model.calidadPersona);
-                                this.form.disable();
                                 const timer2 = Observable.timer(100);
-                                // timer2.subscribe(t=>{
-                                //     this.heredarChanged(x);
-                                //     this.heredarDatos();
-                                //     this.form.disable();
-                                // });
+                                timer2.subscribe( t => {
+                                    this.form.controls.tipoPersonaHeredar.setValue(response.data[0].tipoPersonaHeredar);
+                                    console.log('############', this.form.controls.tipoPersonaHeredar);
+                                    this.form.disable();
+                                });
                                 
                             })
                             Logger.logColor('<<< model >>>','red', this.model);
