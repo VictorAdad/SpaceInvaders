@@ -303,8 +303,10 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         }
 
         this.form.controls["lugarHechos"].setValue(lugar);
+        this.form.controls["tipoPersonaHeredar"].setValue('');
+        this.form.controls["calidadPersona"].setValue('');
      }
-
+     
       this.personasHeredadas.forEach((personaCaso)=> {
         console.log(personaCaso.persona.tipoPersona)
         this.form.controls["tipoPersonaHeredar"].setValue(this.form.controls["tipoPersonaHeredar"].value?(personaCaso.persona.tipoPersona?this.form.controls["tipoPersonaHeredar"].value+","+personaCaso.persona.tipoPersona:"Sin valor"):personaCaso.persona.tipoPersona?personaCaso.persona.tipoPersona:"Sin valor")
