@@ -81,13 +81,17 @@ export class CasoHerenciaComponent implements OnInit{
         this.personasTipo = this.casoServ.caso.optionsPersonasTipo();
         this.lugares = this.casoServ.caso.optionsLugares();
         this.personas=[]; 
-        this.people
         this.fillCampos();
         let timer = Observable.timer(10000);
         timer.subscribe(t => {
           if (this.people){
             for (let i=0; i<this.people.length; i++){
-              this.addPersona(this.people[i].personaCaso.id);
+              if(navigator.onLine){
+                this.addPersona(this.people[i].personaCaso.id);
+              }else{
+                this.addPersona(this.people[i].id);
+              }
+              
             }
           }
         })   
