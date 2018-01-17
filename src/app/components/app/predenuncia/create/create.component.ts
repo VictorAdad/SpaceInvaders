@@ -424,6 +424,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
     }
 
     public fillForm(_data) {
+        Logger.logColor('<<< DATA >>>','green',_data);
         for (var propName in _data) {
             if (_data[propName] === null || _data[propName] === undefined) {
               delete (_data)[propName];
@@ -433,18 +434,8 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
 
         var time = _data.fechaCanalizacion.getHours()+':'+_data.fechaCanalizacion.getMinutes();
 
-        Logger.log('HH----------------->', time)
         this.form.patchValue(_data);
         this.form.controls.horaCanalizacion.setValue(time);
-
-        if (_data.heredar){
-            this.personasHeredadas.forEach((personaCaso)=> {
-                console.log(personaCaso.persona.tipoPersona)
-                this.form.controls["tipoPersonaHeredar"].setValue(this.form.controls["tipoPersonaHeredar"].value?(personaCaso.persona.tipoPersona?this.form.controls["tipoPersonaHeredar"].value+","+personaCaso.persona.tipoPersona:"Sin valor"):personaCaso.persona.tipoPersona?personaCaso.persona.tipoPersona:"Sin valor")
-                this.form.controls["calidadPersona"].setValue(this.form.controls["calidadPersona"].value?(personaCaso.tipoInterviniente?this.form.controls["calidadPersona"].value+","+personaCaso.tipoInterviniente.tipo:"Sin valor"):personaCaso.tipoInterviniente.tipo?personaCaso.tipoInterviniente.tipo:"Sin valor")
-                console.log( this.form.controls["tipoPersona"])
-            });
-        }
 
     }
 
