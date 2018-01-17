@@ -85,10 +85,10 @@ export class DetalleCasoComponent implements OnInit{
 
 
         }else{
-			this.casoService.actualizaCasoOffline(this.casoService.caso);
-			this.caso = this.casoService.caso as Caso;
+			this.casoService.actualizaCasoOffline(this.caso = this.casoService.caso);
             const timer = Observable.timer(1000);
             timer.subscribe(t=> {
+				this.caso = this.casoService.caso;
 				console.log("CASO->", this.caso);
 				this.hasRelacionVictimaImputado = this.caso.hasRelacionVictimaImputado;
 				this.hasPredenuncia = this.caso['hasPredenuncia'] ? this.caso.hasPredenuncia : false;
