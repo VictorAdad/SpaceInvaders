@@ -47,8 +47,13 @@ export class CasoService{
                     }else{
                         this.db.get("casos", this.id).then(
                             response => {
-                                console.log('rsponse', response);
-                                resolve(this.setCaso(response));
+                                if (response !== undefined) {
+                                    console.log('rsponse', response);
+                                    this.setCaso(response);
+                                    resolve(this.actualizaCasoOffline(response));
+                                }else {
+                                    resolve();
+                                }
                             }
                         );
                     }
@@ -144,10 +149,10 @@ export class Caso{
 
 
     public findVictima(){
-        Logger.log('Caso@findVictima', this.personaCasos);
+        Logger.log('Caso@findVictima', this.personaCasos, _config.optionValue.tipoInterviniente.victima);
         let personas = this.personaCasos.filter(
             object => { 
-                return object.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victima
+                return object.tipoInterviniente.id == _config.optionValue.tipoInterviniente.victima;
             }
         );
         return personas[0];
