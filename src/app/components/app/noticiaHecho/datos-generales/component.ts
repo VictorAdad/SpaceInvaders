@@ -190,6 +190,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                             this.casoService.id=copiaModel["id"];
                             this.casoService.actualizaCasoOffline(p);
                             this.router.navigate(['/caso/'+id+'/noticia-hecho/datos-generales' ]);
+                            this.casoService.actualizaCasoOffline(p);
                         });
                     });
 
