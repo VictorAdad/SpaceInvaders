@@ -236,6 +236,12 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                             Logger.log("Dont have predenuncia");
                             this.form.disable();
                             this.model= response.data[0] as Predenuncia;
+                            let x=response.data[0].heredar; 
+                            const timer = Observable.timer(1000);
+                            timer.subscribe(t=>{
+                                console.log("RESPONSE HEREDAR ->>>>>>>><",x);
+                                this.heredar = x; 
+                            })
                             Logger.logColor('<<< model >>>','red', this.model);
                             this.personas = response.data[0].personas;
                             Logger.logColor('<<< personas >>>','purple', this.personas);
@@ -317,7 +323,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
     }
 
     public heredarChanged(_heredar){
-      console.log("heredar changed")
+      console.log("%cheredar changed",'color:red',_heredar)
       this.heredar=_heredar;
       if(_heredar){
         this.form.removeControl("tipoPersona");
@@ -335,6 +341,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
 
     }
     public  personasChanged(_personasHeredadas){
+        Logger.logColor('PERSONAS HEREDADAS','orange',_personasHeredadas);
       this.personasHeredadas=_personasHeredadas;
     }
     public save(valid : any, _model : any){
@@ -426,10 +433,12 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
     }
 
     public fillForm(_data) {
+        if (_data['fechaCanalizacion']) {
+            _data.fechaCanalizacion = new Date(_data.fechaCanalizacion);
+        }
         Yason.eliminaNulos(_data);
         this.form.patchValue(_data);
         if (_data['fechaCanalizacion']) {
-            _data.fechaCanalizacion = new Date(_data.fechaCanalizacion);
             const time = _data.fechaCanalizacion.getHours()+':'+_data.fechaCanalizacion.getMinutes();
             this.form.controls.horaCanalizacion.setValue(time);
             Logger.log('HH----------------->', time, _data)
