@@ -293,6 +293,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
              if(this.casoService.caso.lugares[i].id==this.form.controls["lugar"].value.id){
                lugar=(this.casoService.caso.lugares[i].calle?this.casoService.caso.lugares[i].calle:"")+" "+
                (this.casoService.caso.lugares[i].noInterior?this.casoService.caso.lugares[i].noInterior:"")+" "+
+               (this.casoService.caso.lugares[i].colonia?this.casoService.caso.lugares[i].colonia.nombre:(this.casoService.caso.lugares[i].coloniaOtro?this.casoService.caso.lugares[i].coloniaOtro:""))+" "+
                (this.casoService.caso.lugares[i].municipio?this.casoService.caso.lugares[i].municipio.nombre:(this.casoService.caso.lugares[i].municipioOtro?this.casoService.caso.lugares[i].municipioOtro:""))+" "+
                (this.casoService.caso.lugares[i].estado?this.casoService.caso.lugares[i].estado.nombre:(this.casoService.caso.lugares[i].estadoOtro?this.casoService.caso.lugares[i].estadoOtro:""))+" "+
                (this.casoService.caso.lugares[i].pais?this.casoService.caso.lugares[i].pais.nombre:"");
@@ -309,7 +310,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         this.form.controls["tipoPersonaHeredar"].setValue(this.form.controls["tipoPersonaHeredar"].value?(personaCaso.persona.tipoPersona?this.form.controls["tipoPersonaHeredar"].value+","+personaCaso.persona.tipoPersona:"Sin valor"):personaCaso.persona.tipoPersona?personaCaso.persona.tipoPersona:"Sin valor")
         this.form.controls["calidadPersona"].setValue(this.form.controls["calidadPersona"].value?(personaCaso.tipoInterviniente?this.form.controls["calidadPersona"].value+","+personaCaso.tipoInterviniente.tipo:"Sin valor"):personaCaso.tipoInterviniente.tipo?personaCaso.tipoInterviniente.tipo:"Sin valor")
         console.log( this.form.controls["tipoPersona"])
-         });
+      });
 
     }
 
@@ -430,13 +431,20 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         }
         _data.fechaCanalizacion = new Date(_data.fechaCanalizacion);
 
-
         var time = _data.fechaCanalizacion.getHours()+':'+_data.fechaCanalizacion.getMinutes();
 
         Logger.log('HH----------------->', time)
-
         this.form.patchValue(_data);
         this.form.controls.horaCanalizacion.setValue(time);
+
+        if (_data.heredar){
+            this.personasHeredadas.forEach((personaCaso)=> {
+                console.log(personaCaso.persona.tipoPersona)
+                this.form.controls["tipoPersonaHeredar"].setValue(this.form.controls["tipoPersonaHeredar"].value?(personaCaso.persona.tipoPersona?this.form.controls["tipoPersonaHeredar"].value+","+personaCaso.persona.tipoPersona:"Sin valor"):personaCaso.persona.tipoPersona?personaCaso.persona.tipoPersona:"Sin valor")
+                this.form.controls["calidadPersona"].setValue(this.form.controls["calidadPersona"].value?(personaCaso.tipoInterviniente?this.form.controls["calidadPersona"].value+","+personaCaso.tipoInterviniente.tipo:"Sin valor"):personaCaso.tipoInterviniente.tipo?personaCaso.tipoInterviniente.tipo:"Sin valor")
+                console.log( this.form.controls["tipoPersona"])
+            });
+        }
 
     }
 
