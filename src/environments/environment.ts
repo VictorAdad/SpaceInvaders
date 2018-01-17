@@ -18,7 +18,6 @@ export const environment = {
   	grantType: 'PASSWORD',
   	scope: 'AttributesOUD.attrs',
   	host: 'http://sigi-api.evomatik.net',
-    session: '_USER'
     session: '_USER',
     idle: 240,
     idleTimeout: 60
