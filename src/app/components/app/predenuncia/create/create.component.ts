@@ -270,11 +270,24 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                         if (caso){
                             if(caso["predenuncias"]){
                                 this.hasPredenuncia = true;
-                                Logger.log("Have predenuncias");
-                                this.form.disable();
+                                Logger.log("Have predenuncias");                                
                                 let model = caso['predenuncias'];
                                 var fechaCompleta: Date = new Date(model.fechaHoraInspeccion);
                                 this.model.fechaCanalizacion=fechaCompleta;
+                                let x=model.heredar; 
+                                const timer = Observable.timer(1000);
+                                timer.subscribe(t=>{
+                                    console.log("RESPONSE HEREDAR ->>>>>>>><",x, this.form,model.tipoPersonaHeredar);
+                                    this.heredar = x; 
+                                    this.heredarChanged(x,model.tipoPersonaHeredar);
+                                    const timer2 = Observable.timer(100);
+                                    timer2.subscribe( t => {
+                                        this.form.controls.tipoPersonaHeredar.setValue(model.tipoPersonaHeredar);
+                                        console.log('############', this.form.controls.tipoPersonaHeredar);
+                                        this.form.disable();
+                                    });
+                                    
+                                })
                                 var horas: string=(String(fechaCompleta.getHours()).length==1)?'0'+fechaCompleta.getHours():String(fechaCompleta.getHours());
                                 var minutos: string=(String(fechaCompleta.getMinutes()).length==1)?'0'+fechaCompleta.getMinutes():String(fechaCompleta.getMinutes());;
                                 this.model.horaConlcusionLlamada=horas+':'+minutos;
