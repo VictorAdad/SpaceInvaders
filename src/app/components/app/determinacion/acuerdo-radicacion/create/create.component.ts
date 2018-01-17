@@ -19,6 +19,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
 import { Logger } from "@services/logger.service";
 import { CasoService } from '@services/caso/caso.service';
+import { Yason } from '@services/utils/yason';
 
 @Component({
     templateUrl:'./create.component.html',
@@ -165,9 +166,11 @@ export class AcuerdoRadicacionComponent extends DeterminacionGlobal{
      }
 
     public fillForm(_data){
+        Yason.eliminaNulos(_data);
+        Logger.logColor('<<< DATA >>>','red',_data);
         this.form.patchValue(_data);
         this.form.controls.observaciones.disable();
-        Logger.log(_data);
+        
     }
 
 
