@@ -243,7 +243,9 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                 this.heredarChanged(x,response.data[0].tipoPersonaHeredar);
                                 const timer2 = Observable.timer(100);
                                 timer2.subscribe( t => {
-                                    this.form.controls.tipoPersonaHeredar.setValue(response.data[0].tipoPersonaHeredar);
+                                    if (response.data[0].tipoPersonaHeredar != null && response.data[0].tipoPersonaHeredar != undefined){
+                                        this.form.controls.tipoPersonaHeredar.setValue(response.data[0].tipoPersonaHeredar);
+                                    }
                                     console.log('############', this.form.controls.tipoPersonaHeredar);
                                     this.form.disable();
                                 });
@@ -282,7 +284,9 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                     this.heredarChanged(x,model.tipoPersonaHeredar);
                                     const timer2 = Observable.timer(100);
                                     timer2.subscribe( t => {
-                                        this.form.controls.tipoPersonaHeredar.setValue(model.tipoPersonaHeredar);
+                                        if (model.tipoPersonaHeredar != null && model.tipoPersonaHeredar != undefined){
+                                            this.form.controls.tipoPersonaHeredar.setValue(model.tipoPersonaHeredar);
+                                        }
                                         console.log('############', this.form.controls.tipoPersonaHeredar);
                                         this.form.disable();
                                     });
@@ -357,6 +361,9 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         }
         this.form.removeControl("calidadPersona");
         this.form.addControl("calidadPersona",new FormControl("",[]));
+        if (this.casoId) {
+            this.form.controls.calidadPersona.disable();
+        }
         console.log("Heredar= ",this.heredar)
 
     }
