@@ -48,8 +48,8 @@
         </div>
         <div class="row space">
             <div class="col">
-              <strong class="float-right">
-                  <checkbox label="Heredar síntesis del caso" [group]="form" name="heredarSintesisHechos" (valueChange)="setHeredarSintesis($event)"></checkbox>
+              <strong class="float-right" *ngIf="heredar">
+                <checkbox label="Heredar síntesis del caso" [disabled]="!heredar" [group]="form" name="heredarSintesisHechos" (valueChange)="setHeredarSintesis($event)"></checkbox>
               </strong>
           </div>
         </div>
