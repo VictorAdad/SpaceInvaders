@@ -10,6 +10,7 @@ import { AuthenticationService } from '@services/auth/authentication.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { Logger } from "@services/logger.service";
 import { CasoService, Caso } from '@services/caso/caso.service';
+import { Observable} from 'rxjs/Observable';
 
 @Component({
 	templateUrl:'./component.html'
@@ -84,7 +85,14 @@ export class DetalleCasoComponent implements OnInit{
 
 
         }else{
-			this.caso = this.casoService.caso as Caso;
+			this.casoService.actualizaCasoOffline(this.caso = this.casoService.caso);
+            const timer = Observable.timer(1000);
+            timer.subscribe(t=> {
+				this.caso = this.casoService.caso;
+				console.log("CASO->", this.caso);
+				this.hasRelacionVictimaImputado = this.caso.hasRelacionVictimaImputado;
+				this.hasPredenuncia = this.caso['hasPredenuncia'] ? this.caso.hasPredenuncia : false;
+			});
         }    
 
 	}

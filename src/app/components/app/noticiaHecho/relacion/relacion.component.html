@@ -25,7 +25,7 @@
             <span *ngIf="element.tipo == 'Asesor jurídico de la víctima'"><strong>Asesor jurídico:</strong> {{element.personaCasoRelacionada | personaNombre}} </span>            
             <span *ngIf="element.tipo == 'Representante de la víctima'"><strong>Representante:</strong> {{element.personaCasoRelacionada | personaNombre}} </span>
             <span *ngIf="element.tipo == 'Defensor del imputado'"><strong>Defensor:</strong> {{element.personaCasoRelacionada | personaNombre}} </span> <br *ngIf="element.tipo == 'Defensor del imputado'">
-            <span *ngIf="element.tipo == 'Defensor del imputado' || element.tipo == 'Imputado víctima delito'"> <strong>Imputado:</strong> {{element.personaCaso | personaNombre}} </span> <br>
+            <span *ngIf="element.tipo == 'Defensor del imputado' || element.tipo == 'Imputado víctima delito'"> <strong>Imputado:</strong> {{element.personaCasoRelacionada | personaNombre}} </span> <br>
             <span *ngIf="element.tipo != 'Defensor del imputado'"> <strong>Víctima:</strong> {{element.personaCaso | personaNombre}} </span>            
             <br>        
             <span *ngIf="element.tipo == 'Imputado víctima delito'"><strong>Lugar:</strong> {{element.lugarTipoRelacionPersona["0"]?element.lugarTipoRelacionPersona["0"].lugar.calle +', '+ (element.lugarTipoRelacionPersona["0"].lugar.pais.id == IdMexico ? element.lugarTipoRelacionPersona["0"].lugar.colonia.nombre : element.lugarTipoRelacionPersona["0"].lugar.coloniaOtro):''}}</span> <br>

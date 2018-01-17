@@ -22,6 +22,7 @@ import { GlobalService } from "@services/global.service";
 import { TableDataSource } from './../../global.component';
 import { AuthenticationService } from '@services/auth/authentication.service.ts';
 import { Logger } from "@services/logger.service";
+import { Yason } from '../../../../services/utils/yason';
 
 
 
@@ -144,6 +145,84 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             let x= r as boolean;
             this.masDe3Dias=r;
         });
+        this.model = new Predenuncia();
+        let timer = Observable.timer(1);
+        //timer.subscribe(t => {
+            //if (this.authen.user.hasRoles(this.authen.roles.callCenter)) {
+                this.form  = new FormGroup({
+
+                  'lugar': new FormGroup({
+                    'id': new FormControl("", []),
+                  }),
+                  'arma': new FormGroup({
+                    'id': new FormControl("", []),
+                  }),
+                  'vehiculo': new FormGroup({
+                    'id': new FormControl("", []),
+                  }),
+                  'delito': new FormGroup({
+                    'id': new FormControl("", []),
+                  }),
+                  'heredar':  new FormControl("", []),
+                  'heredarSintesisHechos': new FormControl([]),
+                  'personas': new FormArray([]),
+                'tipoPersonaHeredar': new FormControl('',[]),
+                'caso': new FormGroup({
+                    'id': new FormControl()
+                }),
+                // 'calidadUsuario'        :  new FormControl(this.model.calidadUsuario),
+                'noTelefonico'        :  new FormControl(this.model.numeroTelefono),
+                'tipoLinea'   :  new FormGroup({
+                    'id': new FormControl(null),
+                }),
+                'lugarLlamada'          :  new FormControl(this.model.lugarLlamada),
+                'hechosNarrados'        :  new FormControl(this.model.hechosNarrados),
+                'comunicado'               :  new FormControl(this.model.usuario),
+                'horaConlcusionLlamada' :  new FormControl(this.model.horaConlcusionLlamada),
+                'duracionLlamada'       :  new FormControl(this.model.duracionLlamada),
+                'nombreServidorPublico' :  new FormControl(this.model.nombreServidorPublico),
+                'observaciones'         :  new FormControl(this.model.observaciones),
+                //Constancia de lectura de Derechos
+                'noFolioConstancia'              :  new FormControl(this.model.numeroFolio),
+                'hablaEspaniol'                   :  new FormControl(this.model.hablaEspanol),
+                'lenguaIdioma'                         :  new FormControl(this.model.idioma),
+                'nombreInterprete'               :  new FormControl(this.model.nombreInterprete),
+                'compredioDerechos'             :  new FormControl(this.model.comprendioDerechos),
+                'proporcionoCopia'                  :  new FormControl(this.model.copiaDerechos),
+                //Oficio de asignación de asesor jurídico
+                'autoridadOficioAsignacion'      :  new FormControl(this.model.autoridadOficioAsignacion),
+                'denunciaQuerella'               :  new FormControl(this.model.denunciaQuerella),
+                'ubicacionUnidadInmediata'       :  new FormControl(this.model.ubicacionUnidadInmediata),
+                'victimaOfendidoQuerellante'     :  new FormControl(this.model.victimaOfendidoQuerellante),
+                'cargoAutoridadOficioAsignacion' :  new FormControl(this.model.cargoAutoridadOficioAsignacion),
+                 // Registro presenial
+                'calidadPersona'          :  new FormControl(this.model.calidadPersona),
+                'tipoPersona'          :  new FormGroup({
+                     'id' : new FormControl(''),
+                 }),
+                'lugarHechos'          :  new FormControl(this.model.lugarHechos),
+                'conclusion'          :  new FormControl(this.model.conclusionHechos),
+                'canalizacion'          :  new FormControl(this.model.canalizacion),
+                'institucion'          :  new FormControl(this.model.institucionCanalizacion),
+                'motivoCanalizacion'          :  new FormControl(this.model.motivocanalizacion),
+                'fechaCanalizacion'          :  new FormControl(),
+                'horaCanalizacion'          :  new FormControl(),
+                'horaConclusionLlamada'          :  new FormControl(''),
+                'nombreCausante'          :  new FormControl(this.model.personaCausohecho),
+                'domicilioCausante'          :  new FormControl(this.model.domicilioQuienCauso),
+                'quienRegistro'          :  new FormControl(''),
+                 // Oficio Ayuda atencion victima
+
+                'oficio'                         :  new FormControl(this.model.victimaOfendidoQuerellante),
+                'nombreAutoridadDirigeOficio'    :  new FormControl(this.model.victimaOfendidoQuerellante),
+                'necesidadesCubrir'              :  new FormControl(this.model.victimaOfendidoQuerellante),
+                'ubicacionUnidadInmediataVictima':  new FormControl(this.model.victimaOfendidoQuerellante),
+                'cargoAutoridadVictima'          :  new FormControl(this.model.victimaOfendidoQuerellante),
+                // 'observaciones'         :  new FormControl(this.model.observaciones),
+              });
+
+            //}
+        //});
         this.route.params.subscribe(params => {
             if (params['casoId']){
                 this.casoId = +params['casoId'];
@@ -155,8 +234,21 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                          if(parseInt(response.totalCount) !== 0){
                             this.hasPredenuncia = true;
                             Logger.log("Dont have predenuncia");
-                            this.form.disable();
                             this.model= response.data[0] as Predenuncia;
+                            let x=response.data[0].heredar; 
+                            const timer = Observable.timer(1000);
+                            timer.subscribe(t=>{
+                                console.log("RESPONSE HEREDAR ->>>>>>>><",x, this.form,response.data[0].tipoPersonaHeredar);
+                                this.heredar = x; 
+                                this.heredarChanged(x,response.data[0].tipoPersonaHeredar);
+                                const timer2 = Observable.timer(100);
+                                timer2.subscribe( t => {
+                                    this.form.controls.tipoPersonaHeredar.setValue(response.data[0].tipoPersonaHeredar);
+                                    console.log('############', this.form.controls.tipoPersonaHeredar);
+                                    this.form.disable();
+                                });
+                                
+                            })
                             Logger.logColor('<<< model >>>','red', this.model);
                             this.personas = response.data[0].personas;
                             Logger.logColor('<<< personas >>>','purple', this.personas);
@@ -199,85 +291,6 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             }
 
         });
-
-        this.model = new Predenuncia();
-        let timer = Observable.timer(1);
-        //timer.subscribe(t => {
-            //if (this.authen.user.hasRoles(this.authen.roles.callCenter)) {
-                this.form  = new FormGroup({
-
-                  'lugar': new FormGroup({
-                    'id': new FormControl("", []),
-                  }),
-                  'arma': new FormGroup({
-                    'id': new FormControl("", []),
-                  }),
-                  'vehiculo': new FormGroup({
-                    'id': new FormControl("", []),
-                  }),
-                  'delito': new FormGroup({
-                    'id': new FormControl("", []),
-                  }),
-                  'heredar':  new FormControl("", []),
-                  'heredarSintesisHechos': new FormControl([]),
-                  'personas': new FormArray([]),
-                  'tipoPersonaHeredar': new FormArray([]),
-                'caso': new FormGroup({
-                    'id': new FormControl()
-                }),
-                // 'calidadUsuario'        :  new FormControl(this.model.calidadUsuario),
-                'noTelefonico'        :  new FormControl(this.model.numeroTelefono),
-                'tipoLinea'   :  new FormGroup({
-                    'id': new FormControl(null),
-                }),
-                'lugarLlamada'          :  new FormControl(this.model.lugarLlamada),
-                'hechosNarrados'        :  new FormControl(this.model.hechosNarrados),
-                'comunicado'               :  new FormControl(this.model.usuario),
-                'horaConlcusionLlamada' :  new FormControl(this.model.horaConlcusionLlamada),
-                'duracionLlamada'       :  new FormControl(this.model.duracionLlamada),
-                'nombreServidorPublico' :  new FormControl(this.model.nombreServidorPublico),
-                'observaciones'         :  new FormControl(this.model.observaciones),
-                //Constancia de lectura de Derechos
-                'noFolioConstancia'              :  new FormControl(this.model.numeroFolio),
-                'hablaEspaniol'                   :  new FormControl(this.model.hablaEspanol),
-                'lenguaIdioma'                         :  new FormControl(this.model.idioma),
-                'nombreInterprete'               :  new FormControl(this.model.nombreInterprete),
-                'compredioDerechos'             :  new FormControl(this.model.comprendioDerechos),
-                'proporcionoCopia'                  :  new FormControl(this.model.copiaDerechos),
-                //Oficio de asignación de asesor jurídico
-                'autoridadOficioAsignacion'      :  new FormControl(this.model.autoridadOficioAsignacion),
-                'denunciaQuerella'               :  new FormControl(this.model.denunciaQuerella),
-                'ubicacionUnidadInmediata'       :  new FormControl(this.model.ubicacionUnidadInmediata),
-                'victimaOfendidoQuerellante'     :  new FormControl(this.model.victimaOfendidoQuerellante),
-                'cargoAutoridadOficioAsignacion' :  new FormControl(this.model.cargoAutoridadOficioAsignacion),
-                 // Registro presenial
-                'calidadPersona'          :  new FormControl(this.model.calidadPersona),
-                'tipoPersona'          :  new FormGroup({
-                     'id' : new FormControl(''),
-                 }),
-                'lugarHechos'          :  new FormControl(this.model.lugarHechos),
-                'conclusion'          :  new FormControl(this.model.conclusionHechos),
-                'canalizacion'          :  new FormControl(this.model.canalizacion),
-                'institucion'          :  new FormControl(this.model.institucionCanalizacion),
-                'motivoCanalizacion'          :  new FormControl(this.model.motivocanalizacion),
-                'fechaCanalizacion'          :  new FormControl(this.model.fechaCanalizacion),
-                'horaCanalizacion'          :  new FormControl(this.model.horaCanalizacion),
-                'horaConclusionLlamada'          :  new FormControl(''),
-                'nombreCausante'          :  new FormControl(this.model.personaCausohecho),
-                'domicilioCausante'          :  new FormControl(this.model.domicilioQuienCauso),
-                'quienRegistro'          :  new FormControl(''),
-                 // Oficio Ayuda atencion victima
-
-                'oficio'                         :  new FormControl(this.model.victimaOfendidoQuerellante),
-                'nombreAutoridadDirigeOficio'    :  new FormControl(this.model.victimaOfendidoQuerellante),
-                'necesidadesCubrir'              :  new FormControl(this.model.victimaOfendidoQuerellante),
-                'ubicacionUnidadInmediataVictima':  new FormControl(this.model.victimaOfendidoQuerellante),
-                'cargoAutoridadVictima'          :  new FormControl(this.model.victimaOfendidoQuerellante),
-                // 'observaciones'         :  new FormControl(this.model.observaciones),
-              });
-
-            //}
-        //});
     }
 
     concatDate(fechaCanalizacion, horaCanalizacion){
@@ -293,6 +306,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
              if(this.casoService.caso.lugares[i].id==this.form.controls["lugar"].value.id){
                lugar=(this.casoService.caso.lugares[i].calle?this.casoService.caso.lugares[i].calle:"")+" "+
                (this.casoService.caso.lugares[i].noInterior?this.casoService.caso.lugares[i].noInterior:"")+" "+
+               (this.casoService.caso.lugares[i].colonia?this.casoService.caso.lugares[i].colonia.nombre:(this.casoService.caso.lugares[i].coloniaOtro?this.casoService.caso.lugares[i].coloniaOtro:""))+" "+
                (this.casoService.caso.lugares[i].municipio?this.casoService.caso.lugares[i].municipio.nombre:(this.casoService.caso.lugares[i].municipioOtro?this.casoService.caso.lugares[i].municipioOtro:""))+" "+
                (this.casoService.caso.lugares[i].estado?this.casoService.caso.lugares[i].estado.nombre:(this.casoService.caso.lugares[i].estadoOtro?this.casoService.caso.lugares[i].estadoOtro:""))+" "+
                (this.casoService.caso.lugares[i].pais?this.casoService.caso.lugares[i].pais.nombre:"");
@@ -302,23 +316,25 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         }
 
         this.form.controls["lugarHechos"].setValue(lugar);
+        this.form.controls["tipoPersonaHeredar"].setValue('');
+        this.form.controls["calidadPersona"].setValue('');
      }
-
+     
       this.personasHeredadas.forEach((personaCaso)=> {
         console.log(personaCaso.persona.tipoPersona)
         this.form.controls["tipoPersonaHeredar"].setValue(this.form.controls["tipoPersonaHeredar"].value?(personaCaso.persona.tipoPersona?this.form.controls["tipoPersonaHeredar"].value+","+personaCaso.persona.tipoPersona:"Sin valor"):personaCaso.persona.tipoPersona?personaCaso.persona.tipoPersona:"Sin valor")
         this.form.controls["calidadPersona"].setValue(this.form.controls["calidadPersona"].value?(personaCaso.tipoInterviniente?this.form.controls["calidadPersona"].value+","+personaCaso.tipoInterviniente.tipo:"Sin valor"):personaCaso.tipoInterviniente.tipo?personaCaso.tipoInterviniente.tipo:"Sin valor")
         console.log( this.form.controls["tipoPersona"])
-         });
+      });
 
     }
 
-    public heredarChanged(_heredar){
-      console.log("heredar changed")
+    public heredarChanged(_heredar, _tipoPersonaHeredar=''){
+      console.log("%cheredar changed",'color:red',_heredar)
       this.heredar=_heredar;
       if(_heredar){
         this.form.removeControl("tipoPersona");
-        this.form.addControl("tipoPersonaHeredar",new FormControl("",[]));
+        this.form.addControl("tipoPersonaHeredar",new FormControl(_tipoPersonaHeredar,[]));
         }
       else{
           this.form.removeControl("tipoPersonaHeredar");
@@ -332,6 +348,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
 
     }
     public  personasChanged(_personasHeredadas){
+        Logger.logColor('PERSONAS HEREDADAS','orange',_personasHeredadas);
       this.personasHeredadas=_personasHeredadas;
     }
     public save(valid : any, _model : any){
@@ -423,23 +440,17 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
     }
 
     public fillForm(_data) {
-        for (var propName in _data) {
-            if (_data[propName] === null || _data[propName] === undefined) {
-              delete (_data)[propName];
-            }
+        if (_data['fechaCanalizacion']) {
+            _data.fechaCanalizacion = new Date(_data.fechaCanalizacion);
         }
-        _data.fechaCanalizacion = new Date(_data.fechaCanalizacion);
-
-
-        var time = _data.fechaCanalizacion.getHours()+':'+_data.fechaCanalizacion.getMinutes();
-
-        Logger.log('HH----------------->', time)
-
+        Yason.eliminaNulos(_data);
         this.form.patchValue(_data);
-        this.form.controls.horaCanalizacion.setValue(time);
-
+        if (_data['fechaCanalizacion']) {
+            const time = _data.fechaCanalizacion.getHours()+':'+_data.fechaCanalizacion.getMinutes();
+            this.form.controls.horaCanalizacion.setValue(time);
+            Logger.log('HH----------------->', time, _data)
+        }
     }
-
 }
 
 @Component({

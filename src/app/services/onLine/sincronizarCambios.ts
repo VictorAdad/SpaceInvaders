@@ -7,6 +7,7 @@ import { Router} from '@angular/router';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { _config} from '@app/app.config';
 import {Yason} from '@services/utils/yason';
+import {Observable} from 'rxjs/Rx';
 
 /**
  * Clase para subir todos los cambios hechos en offline
@@ -24,6 +25,11 @@ export class SincronizaCambios {
      * Intstancia del casoService, se utilizara para actualizar el caso cuando se termine de sincronizar y se seActualizoAlmenosUnRegistro es verdadero
      */
     casoService=null;
+    /**
+     * Variable pasaber si ya esta loggeado, despues de un minuto de estar en true cambia a false.
+     * Esta variable se tienen que poner en false despues del logout
+     */
+    isLogin=false;
 
     /** configuracion del dialogo de confirmacion de jaspero */
     public settings={
@@ -50,20 +56,21 @@ export class SincronizaCambios {
         this.casoService=casoService;
     }
     /**
-     * Funcion que inicializa la sincronizacion de cambios. lo que hace es buscar todos los elementos de la tabla sincroizar y luego llama la funcion recursiva sincroniza.
+     * Funcion que inicializa la sincronizacion de cambios. lo que hace es buscar todos los elementos de la tabla 
+     * sincroizar y luego llama la funcion recursiva sincroniza.
      */
     startSincronizacion(){
         var obj = this;
 
         if (!this.sincronizando){
             this.seActualizoAlmenosUnRegistro=false;
-                this.db.list("sincronizar").then(lista=>{
+                this.db.list('sincronizar').then(lista=>{
                     if (this.hayCambios(lista,this.onLine.auth.user.username)){
                         var fun=function(r){
                             console.log("Resultado->>>>>",r);
                             let datos = lista as any[];
                             if (datos.length>0){
-                                obj.notificationService.create("Sincronizando",'Sincronizando', 'info', {
+                                obj.notificationService.create('Sincronizando','Sincronizando', 'info', {
                                 timeOut: 5000,
                                 showProgressBar: true,
                                 pauseOnHover: false,
@@ -77,14 +84,24 @@ export class SincronizaCambios {
                                 obj.sincronizando=false;
                                 obj.notificationService.remove();
                             }
+                            obj.isLogin = true;
+                            // 30 s de tolerancia para tener abierta la seccion
+                            let timerLogout = Observable.timer(30*1000);
+                            timerLogout.subscribe(t=> {
+                                obj.isLogin = false;
+                            });
                         }
-                        this.onLine.loginDialogService.funccionDespues=fun;
-                        this.onLine.loginDialogService.open()
-                        
-                    }else{
+                        // preguntamos si ya pedimos el login de sincronizar
+                        if (!obj.isLogin) {
+                            this.onLine.loginDialogService.funccionDespues=fun;
+                            this.onLine.loginDialogService.open()
+                        }else {
+                            fun(1);
+                        }
+                    }else {
                         this.sincronizando=false;
                     }
-                }).catch(error=>{
+                }).catch(error=> {
                     this.sincronizando=false;
                     this.notificationService.remove();
                 });

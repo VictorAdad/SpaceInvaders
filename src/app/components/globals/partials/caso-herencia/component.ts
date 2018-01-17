@@ -81,13 +81,17 @@ export class CasoHerenciaComponent implements OnInit{
         this.personasTipo = this.casoServ.caso.optionsPersonasTipo();
         this.lugares = this.casoServ.caso.optionsLugares();
         this.personas=[]; 
-        this.people
         this.fillCampos();
         let timer = Observable.timer(10000);
         timer.subscribe(t => {
           if (this.people){
             for (let i=0; i<this.people.length; i++){
-              this.addPersona(this.people[i].personaCaso.id);
+              if(navigator.onLine){
+                this.addPersona(this.people[i].personaCaso.id);
+              }else{
+                this.addPersona(this.people[i].id);
+              }
+              
             }
           }
         })   
@@ -139,22 +143,24 @@ export class CasoHerenciaComponent implements OnInit{
   public fillCampos(){
     let timer = Observable.timer(1000);
     timer.subscribe(t => {
-      this.personas.push(this.caso.personaCasos[0]);
-      this.form.patchValue({
-        'personas':[{
-          'id':this.personasTipo[0].value
-        }],
-        'lugar': {
-          'id': this.lugares[0].value
-        },
-        'delito': this.caso,
-        'vehiculo': {
-          'id': this.optionsNoticia.vehiculos.length > 0 ? this.optionsNoticia.vehiculos[0].value : ''
-        },
-        'arma': {
-          'id': this.optionsNoticia.armas.length > 0 ? this.optionsNoticia.armas[0].value : ''
-        }
-      });
+      if(this.caso.personaCasos){
+        this.personas.push(this.caso.personaCasos[0]);
+        this.form.patchValue({
+          'personas':[{
+            'id':this.personasTipo[0].value
+          }],
+          'lugar': {
+            'id': this.lugares[0].value
+          },
+          'delito': this.caso,
+          'vehiculo': {
+            'id': this.optionsNoticia.vehiculos.length > 0 ? this.optionsNoticia.vehiculos[0].value : ''
+          },
+          'arma': {
+            'id': this.optionsNoticia.armas.length > 0 ? this.optionsNoticia.armas[0].value : ''
+          }
+        });
+      }
     });
   }
 

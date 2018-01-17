@@ -270,8 +270,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             timerDetenido.subscribe( t => {
                 if (this.onLine.onLine) {
                     this.globals.detenido = _personaCaso.detenido;    
-                }else{
-                    this.globals.detenido = _personaCaso.persona.detenido;
+                }else if(_personaCaso.detenido || _personaCaso.persona.detenido){
+                    this.globals.detenido = true;
                 }                 
                 this.globals.form.patchValue({
                     'detenido': _personaCaso.detenido
@@ -284,7 +284,6 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             }else{
                 _personaCaso.fechaDeclaracion = fechaDeclaracion;
             }
-            Logger.log(_personaCaso);
 
             var fechaDetencion = new Date(_personaCaso.fechaDetencion);
             if (isNaN(fechaDetencion.getTime())) {
@@ -292,15 +291,12 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             }else{
                 _personaCaso.fechaDetencion = fechaDetencion;
             }
-            // this.model.fechaCanalizacion=fechaCompleta;
-            var horas: string=(String(fechaDetencion.getHours()).length==1)?'0'+fechaDetencion.getHours():String(fechaDetencion.getHours());
-            var minutos: string=(String(fechaDetencion.getMinutes()).length==1)?'0'+fechaDetencion.getMinutes():String(fechaDetencion.getMinutes());
-            let horaDetencion=horas+':'+minutos;
-            // _personaCaso.detalleDetenido['horaDetenido']=horaDetencion;
 
             let timer3 = Observable.timer(1);
             timer3.subscribe( t => {
-                pcaso["controls"][0]["controls"].horaDetenido.setValue(horaDetencion);
+                if (_personaCaso.horaDetencion != null && typeof _personaCaso.horaDetencion != undefined ) {
+                    this.globals.form.controls.personaCaso["controls"]["0"].controls.horaDetencion.setValue(_personaCaso.horaDetencion);    
+                }
                 (pcaso["controls"][0] as FormGroup).controls.tipoDetenido.patchValue(
                 {
                 'id' : _personaCaso.tipoDetenido? _personaCaso.tipoDetenido.id : "",
@@ -715,15 +711,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                 }
                 if((_model["personaCaso"])[0]['fechaDetencion']){
                   var fechaCompleta = new Date ((_model["personaCaso"])[0]['fechaDetencion']);
-                  console.log('1.- fechaCompleta', fechaCompleta );
-                  var hora=(_model["personaCaso"])[0]['horaDetenido'];
-                  console.log('2.- Hora', hora );
-
-                  fechaCompleta.setMinutes(parseInt(hora.split(':')[1]));
-                  fechaCompleta.setHours(parseInt(hora.split(':')[0]));
-                  console.log('3.- Hora', fechaCompleta );
                   var mes:number=fechaCompleta.getMonth()+1;
-                  let fechaArreglada = new Date(fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000');
+                  let fechaArreglada = new Date(fechaCompleta); //new Date(fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000');
                   (_model["personaCaso"])[0]['fechaDetencion']=fechaArreglada;
                   Logger.log('lo que envio: '+  (_model["personaCaso"])[0]['fechaDetencion']);
                  }
@@ -1105,12 +1094,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
               }
               if((_model["personaCaso"])[0]['fechaDetencion']){
                 var fechaCompleta = new Date ((_model["personaCaso"])[0]['fechaDetencion']);
-                var hora=(_model["personaCaso"])[0]['horaDetenido'];
-
-                fechaCompleta.setMinutes(parseInt(hora.split(':')[1]));
-                fechaCompleta.setHours(parseInt(hora.split(':')[0]));
                 var mes:number=fechaCompleta.getMonth()+1;
-                (_model["personaCaso"])[0]['fechaDetencion']=fechaCompleta.getFullYear()+'-'+mes+'-'+fechaCompleta.getDate()+' '+fechaCompleta.getHours()+':'+fechaCompleta.getMinutes()+':00.000';
+                (_model["personaCaso"])[0]['fechaDetencion']=fechaCompleta;
                 Logger.log('lo que envio: '+  (_model["personaCaso"])[0]['fechaDetencion']);
                }
 
@@ -1692,7 +1677,7 @@ export class LosForm{
                     'id': new FormControl(),
                     'fechaDetencion'   : new FormControl(),
                     'fechaDeclaracion' : new FormControl(),
-                    'horaDetenido'     : new FormControl("",[]),
+                    'horaDetencion'     : new FormControl("",[]),
                     'tipoDetenido' : new FormGroup({
                         'id' : new FormControl("", []),
                         'tipoDetencion'         : new FormControl("",[]),

@@ -47,8 +47,13 @@ export class CasoService{
                     }else{
                         this.db.get("casos", this.id).then(
                             response => {
-                                console.log('rsponse', response);
-                                resolve(this.setCaso(response));
+                                if (response !== undefined) {
+                                    console.log('rsponse', response);
+                                    this.setCaso(response);
+                                    resolve(this.actualizaCasoOffline(response));
+                                }else {
+                                    resolve();
+                                }
                             }
                         );
                     }
@@ -95,6 +100,9 @@ export class CasoService{
     public actualizaCasoOffline(caso) {
         var temCaso = new Caso();
         Object.assign(temCaso, caso);
+        if (temCaso['predenuncias']) {
+            temCaso['hasPredenuncia'] = !Number.isNaN(temCaso['predenuncias']['id']);
+        }
         if (temCaso['tipoRelacionPersonas']){
             console.log('log', temCaso['tipoRelacionPersonas']);
             for (let i = 0; i < temCaso['tipoRelacionPersonas'].length; i++) {
@@ -105,7 +113,16 @@ export class CasoService{
                 }
             }
         }
-        console.log(temCaso, caso);
+        if (temCaso['delitoCaso']){
+            Logger.logColor('ANTES DE DELITO', 'orange',temCaso['delitoCaso']);
+            for (let i = 0; i < temCaso.delitoCaso.length; i++){
+                console.log(temCaso.delitoCaso[i]);
+                if (temCaso.delitoCaso[i]['principal']){
+                    temCaso['delitoPrincipal'] = temCaso.delitoCaso[i]['delito'];
+                    break;
+                }
+            }
+        }
         this.caso = temCaso;
         Logger.logColor('CASO@Update', 'purple', this.caso);
     }
@@ -130,19 +147,21 @@ export class Caso{
     public delitoPrincipal: any;
     public predenuncias: any;
     public delitoCaso: any[];
+    public delito: string;
     public id: number;
     public lugares: any[];
-    public nuc: string
+    public nuc: string;
     public tipoRelacionPersonas: any[];
     public IdMexico = _config.optionValue.idMexico;
+    public sintesis: string;
 
 
 
     public findVictima(){
-        Logger.log('Caso@findVictima', this.personaCasos);
+        Logger.log('Caso@findVictima', this.personaCasos, _config.optionValue.tipoInterviniente.victima);
         let personas = this.personaCasos.filter(
             object => { 
-                return object.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victima
+                return object.tipoInterviniente.id == _config.optionValue.tipoInterviniente.victima;
             }
         );
         return personas[0];

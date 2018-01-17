@@ -57,12 +57,13 @@ export class OnLineService {
         this.sincronizarCatalogos=new SincronizaCatalogos(db,http,dialogoSincronizar);
         this.sincronizarCambios= new SincronizaCambios(db,http,notificationService,route,_confirmation,this);
         // timer = Observable.timer(2000,1000);
+        var primeraVez=true;
         this.timer.subscribe(t=>{
-            this.anterior=this.onLine;
-            this.onLine=navigator.onLine;
+            this.anterior = this.onLine;
+            this.onLine = navigator.onLine;
             let message="Se perdió la conexión";
             if(this.onLine){
-                message="Se estableció la conexión";
+                message = "Se estableció la conexión";
                 if (auth.user && auth.user.username && auth.user.username.length>0){
                     this.db.get("lastLogin",this.auth.user.username).then(user=>{
                         if (user){
@@ -72,8 +73,13 @@ export class OnLineService {
                     })
                 }
                 this.loginDialogService.setOnLine(this);
-                if (auth.isLoggedin)
+                if (auth.isLoggedin){
                     this.sincronizarCambios.startSincronizacion();
+                    if (primeraVez){
+                        primeraVez = false;
+                        this.sincronizarCatalogos.searchChange();
+                    }
+                }
             }
 
             if (this.anterior!=this.onLine){
@@ -91,8 +97,9 @@ export class OnLineService {
         });
         // if(localStorage.getItem('sincronizacion') !== 'true')
             this.timerSincronizarMatrices.subscribe(t=>{
-                if (this.onLine)
+                if (this.onLine && auth.isLoggedin && !primeraVez) {
                     this.sincronizarCatalogos.searchChange();
+                }
             });
         // else
         //     Logger.log('Ya existen catalogos sincroinzados');
