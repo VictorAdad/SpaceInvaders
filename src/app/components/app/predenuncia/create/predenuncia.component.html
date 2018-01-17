@@ -169,7 +169,7 @@
 
 	<div class="row space"></div>
     <div class="row justify-content-end">
-        <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
+        <div class="col-sm-auto" (mouseenter)="validateForm(form)">
             <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || masDe3Dias==true" *ngIf="!hasPredenuncia">Guardar</button>
         </div>
         <div class="col-sm-auto">

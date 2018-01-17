@@ -166,7 +166,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                   'heredar':  new FormControl("", []),
                   'heredarSintesisHechos': new FormControl([]),
                   'personas': new FormArray([]),
-                  'tipoPersonaHeredar': new FormArray([]),
+                'tipoPersonaHeredar': new FormControl('',[]),
                 'caso': new FormGroup({
                     'id': new FormControl()
                 }),
@@ -234,13 +234,23 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                          if(parseInt(response.totalCount) !== 0){
                             this.hasPredenuncia = true;
                             Logger.log("Dont have predenuncia");
-                            this.form.disable();
                             this.model= response.data[0] as Predenuncia;
                             let x=response.data[0].heredar; 
-                            const timer = Observable.timer(1000);
+                            const timer = Observable.timer(8000);
                             timer.subscribe(t=>{
-                                console.log("RESPONSE HEREDAR ->>>>>>>><",x);
+                                console.log("RESPONSE HEREDAR ->>>>>>>><",x, this.form,response.data[0].tipoPersonaHeredar);
                                 this.heredar = x; 
+                                this.heredarChanged(x,response.data[0].tipoPersonaHeredar);
+                                //this.form.controls.tipoPersonaHeredar.setValue(response.data[0].tipoPersonaHeredar);
+                                // this.form.controls.calidadPersona.patchValue(this.model.calidadPersona);
+                                this.form.disable();
+                                const timer2 = Observable.timer(100);
+                                // timer2.subscribe(t=>{
+                                //     this.heredarChanged(x);
+                                //     this.heredarDatos();
+                                //     this.form.disable();
+                                // });
+                                
                             })
                             Logger.logColor('<<< model >>>','red', this.model);
                             this.personas = response.data[0].personas;
@@ -322,12 +332,12 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
 
     }
 
-    public heredarChanged(_heredar){
+    public heredarChanged(_heredar, _tipoPersonaHeredar=''){
       console.log("%cheredar changed",'color:red',_heredar)
       this.heredar=_heredar;
       if(_heredar){
         this.form.removeControl("tipoPersona");
-        this.form.addControl("tipoPersonaHeredar",new FormControl("",[]));
+        this.form.addControl("tipoPersonaHeredar",new FormControl(_tipoPersonaHeredar,[]));
         }
       else{
           this.form.removeControl("tipoPersonaHeredar");
