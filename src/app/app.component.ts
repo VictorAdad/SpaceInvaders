@@ -93,7 +93,7 @@ export class AppComponent implements OnInit {
         // idle.onIdleEnd.subscribe(() => { });
 
         idle.onTimeoutWarning.subscribe((countdown) => {
-            Logger.log('-> La sesión expirará en ' + countdown);
+            // Logger.log('-> La sesión expirará en ' + countdown);
             this.inIdleTimeout = true;
         });
 

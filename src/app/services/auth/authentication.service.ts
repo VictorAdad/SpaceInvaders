@@ -163,7 +163,7 @@ export class AuthenticationService {
                 requestUser.subscribe(responseUser => {
                     this.idle.watch();
                     responseUser['token'] =  response.access_token;
-                    responseUser['refreshToken'] = response.refresh_token;
+                    responseUser['refreshToken'] = this.user.refreshToken;
                     this.user = new Usuario(responseUser);
                     localStorage.setItem(environment.oam.session, JSON.stringify(responseUser));
                 });
