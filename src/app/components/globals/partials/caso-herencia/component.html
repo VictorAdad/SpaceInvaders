@@ -20,7 +20,7 @@
             <select2 placeholder="Lugar" [disabled]="!heredar" [options]="lugares" [group]="form.controls.lugar" name="id"  (valueChange)="lugarChanged($event)"></select2>
           </div>
           <div class="col-md-4">
-            <select2 placeholder="Delito" [disabled]="!heredar"  [options]="optionsNoticia.delitos" [group]="form.controls.delito" name="id"  (valueChange)="delitoChanged($event)"></select2>
+            <select2 placeholder="Delito" [disabled]="!heredar"  [options]="delitos" [group]="form.controls.delito" name="id"  (valueChange)="delitoChanged($event)"></select2>
           </div>
         </div>
         <div class="row">
@@ -40,10 +40,10 @@
               </mat-list>
           </div>
           <div class="col-md-4">
-            <select2 placeholder="Vehiculo" [disabled]="!heredar" [options]="optionsNoticia.vehiculos" [group]="form.controls.vehiculo" name="id"  (valueChange)="vehiculoChanged($event)"></select2>
+            <select2 placeholder="Vehiculo" [disabled]="!heredar" [options]="vehiculos" [group]="form.controls.vehiculo" name="id"  (valueChange)="vehiculoChanged($event)"></select2>
           </div>
           <div class="col-md-4">
-            <select2 placeholder="Arma" [disabled]="!heredar"  [options]="optionsNoticia.armas" [group]="form.controls.arma" name="id" (valueChange)="armaChanged($event)"></select2>
+            <select2 placeholder="Arma" [disabled]="!heredar"  [options]="armas" [group]="form.controls.arma" name="id" (valueChange)="armaChanged($event)"></select2>
           </div>
         </div>
         <div class="row space">
