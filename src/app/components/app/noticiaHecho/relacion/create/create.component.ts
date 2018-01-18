@@ -521,13 +521,15 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                                     item["id"]=copia;
                                 }
                                 Logger.log(_model);
-                                var relacion={
+                                const relacion={
                                     armaTipoRelacionPersona:_model["tipoRelacionPersona"]["armaTipoRelacionPersona"],
                                     detalleDelito:{
                                         clasificacionDelito:_model["clasificacionDelito"],
                                         clasificacionDelitoOrden:_model["clasificacionDelitoOrden"],
                                         concursoDelito:_model["concursoDelito"],
-                                        delitoCaso:this.optionsNoticia.getDelitoCaso(_model["delitoCaso"]["id"]),
+                                        delitoCaso:_model["delitoCaso"] ?
+                                            (_model["delitoCaso"]["id"] ?
+                                                this.optionsNoticia.getDelitoCaso(_model["delitoCaso"]["id"]) : '' ):'',
                                         desaparicionConsumacion:_model["desaparicionConsumacion"],
                                         efectoViolencia:_model["efectoViolencia"],
                                         elementoComision:_model["elementoComision"],
@@ -551,12 +553,22 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                                         }:null
                                     },
                                     id:_model["id"],
-                                    lugarTipoRelacionPersona:[{
-                                        id:_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"][0]["id"],
-                                        lugar:this.optionsNoticia.getLugarCaso(_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"][0]["lugar"]["id"])
-                                    }],
+                                    lugarTipoRelacionPersona:_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"]
+                                        && _model["tipoRelacionPersona"]["lugarTipoRelacionPersona"] ?
+                                        [{
+                                            id:_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"][0]["id"],
+                                            lugar:
+                                                this.optionsNoticia.getLugarCaso(
+                                                    _model["tipoRelacionPersona"]["lugarTipoRelacionPersona"][0]["lugar"]["id"]
+                                                )
+                                        }] : '',
                                     personaCaso:this.optionsNoticia.getPersonaCaso(_model["tipoRelacionPersona"]["personaCaso"]["id"]),
-                                    personaCasoRelacionada:this.optionsNoticia.getPersonaCaso(_model["tipoRelacionPersona"]["personaCasoRelacionada"]["id"]),
+                                    personaCasoRelacionada: _model["tipoRelacionPersona"]["personaCasoRelacionada"]
+                                        && _model["tipoRelacionPersona"]["personaCasoRelacionada"]['id'] ?
+                                            this.optionsNoticia.getPersonaCaso(
+                                                _model["tipoRelacionPersona"]["personaCasoRelacionada"]["id"]
+                                            )
+                                            : '',
                                     tipo:_model["tipoRelacionPersona"]["tipo"],
                                     vehiculoTipoRelacion:_model["tipoRelacionPersona"]["vehiculoTipoRelacionPersona"]
                                 }
@@ -774,7 +786,9 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                                     clasificacionDelito:_model["clasificacionDelito"],
                                     clasificacionDelitoOrden:_model["clasificacionDelitoOrden"],
                                     concursoDelito:_model["concursoDelito"],
-                                    delitoCaso:this.optionsNoticia.getDelitoCaso(_model["delitoCaso"]["id"]),
+                                    delitoCaso:_model["delitoCaso"] ?
+                                        (_model["delitoCaso"]["id"] ?
+                                            this.optionsNoticia.getDelitoCaso(_model["delitoCaso"]["id"]) : '' ):'',
                                     desaparicionConsumacion:_model["desaparicionConsumacion"],
                                     efectoViolencia:_model["efectoViolencia"],
                                     elementoComision:_model["elementoComision"],
@@ -792,12 +806,18 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                                     }:null):null
                                 },
                                 id:this.id,
-                                lugarTipoRelacionPersona:[{
-                                    id:_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"][0]["id"],
-                                    lugar:this.optionsNoticia.getLugarCaso(_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"][0]["lugar"]["id"])
-                                }],
+                                lugarTipoRelacionPersona:_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"]
+                                    && _model["tipoRelacionPersona"]["lugarTipoRelacionPersona"] ?
+                                    [{
+                                        id:_model["tipoRelacionPersona"]["lugarTipoRelacionPersona"][0]["id"],
+                                        lugar:
+                                            this.optionsNoticia.getLugarCaso(
+                                                _model["tipoRelacionPersona"]["lugarTipoRelacionPersona"][0]["lugar"]["id"]
+                                            )
+                                    }] : '',
                                 personaCaso:this.optionsNoticia.getPersonaCaso(_model["tipoRelacionPersona"]["personaCaso"]["id"]),
-                                personaCasoRelacionada:this.optionsNoticia.getPersonaCaso(_model["tipoRelacionPersona"]["personaCasoRelacionada"]["id"]),
+                                personaCasoRelacionada:
+                                    this.optionsNoticia.getPersonaCaso(_model["tipoRelacionPersona"]["personaCasoRelacionada"]["id"]),
                                 tipo:_model["tipoRelacionPersona"]["tipo"],
                                 vehiculoTipoRelacion:_model["tipoRelacionPersona"]["vehiculoTipoRelacionPersona"]
                             }
