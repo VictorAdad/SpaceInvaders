@@ -111,7 +111,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 				'id': new FormControl("", []),
       }),
       'heredar':  new FormControl("", []),
-      'heredarSintesisHechos':  new FormControl("", []),
+      'heredarSintesisHechos':  new FormControl(false, []),
       'personas': new FormArray([]),
 
 			'tipo': new FormControl(''),

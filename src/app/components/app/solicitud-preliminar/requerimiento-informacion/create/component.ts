@@ -99,7 +99,7 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 				'id': new FormControl("", []),
 			}),
       'heredar':  new FormControl("", []),
-      'heredarSintesisHechos':  new FormControl("", []),
+      'heredarSintesisHechos':  new FormControl(false, []),
 			'personas': new FormArray([]),
 
 			'noOficio': new FormControl("", []),
