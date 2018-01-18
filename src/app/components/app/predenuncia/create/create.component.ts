@@ -243,7 +243,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                 this.heredarChanged(x,response.data[0].tipoPersonaHeredar);
                                 const timer2 = Observable.timer(100);
                                 timer2.subscribe( t => {
-                                    if (response.data[0].tipoPersonaHeredar != null && response.data[0].tipoPersonaHeredar != undefined){
+                                    if (x && response.data[0].tipoPersonaHeredar != null && response.data[0].tipoPersonaHeredar != undefined){
                                         this.form.controls.tipoPersonaHeredar.setValue(response.data[0].tipoPersonaHeredar);
                                     }
                                     console.log('############', this.form.controls.tipoPersonaHeredar);
@@ -349,22 +349,22 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
     public heredarChanged(_heredar, _tipoPersonaHeredar=''){
       console.log("%cheredar changed",'color:red',_heredar)
       this.heredar=_heredar;
-      if(_heredar){
-        this.form.removeControl("tipoPersona");
-        this.form.addControl("tipoPersonaHeredar",new FormControl(_tipoPersonaHeredar,[]));
-        }
-      else{
-          this.form.removeControl("tipoPersonaHeredar");
-          this.form.addControl("tipoPersona",new FormGroup({
-            'id': new FormControl(),
-          }));
-        }
-        this.form.removeControl("calidadPersona");
-        this.form.addControl("calidadPersona",new FormControl("",[]));
-        if (this.casoId) {
-            this.form.controls.calidadPersona.disable();
-        }
-        console.log("Heredar= ",this.heredar)
+    // //   if(_heredar){
+    // //     this.form.removeControl("tipoPersona");
+    // //     this.form.addControl("tipoPersonaHeredar",new FormControl(_tipoPersonaHeredar,[]));
+    // //     }
+    // //   else{
+    // //       this.form.removeControl("tipoPersonaHeredar");
+    // //       this.form.addControl("tipoPersona",new FormGroup({
+    // //         'id': new FormControl(),
+    // //       }));
+    //     //}
+    //     // this.form.removeControl("calidadPersona");
+    //     // this.form.addControl("calidadPersona",new FormControl("",[]));
+    //     // if (this.casoId) {
+    //         this.form.controls.calidadPersona.disable();
+    //     }
+    //     console.log("Heredar= ",this.heredar)
 
     }
     public  personasChanged(_personasHeredadas){
