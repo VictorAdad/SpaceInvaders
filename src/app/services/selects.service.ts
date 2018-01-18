@@ -258,10 +258,7 @@ export class SelectsService {
 
     public getEstadoByPais(idPais: number){
         if(this.onLine.onLine){
-            if(this.subscription)
-                this.subscription.unsubscribe();
-
-            this.subscription = this.http.get('/v1/catalogos/estado/pais/'+idPais+'/options').subscribe((response) => {
+            this.http.get('/v1/catalogos/estado/pais/'+idPais+'/options').subscribe((response) => {
                 this.estados = this.constructOptions(response);
             });
         }else{
