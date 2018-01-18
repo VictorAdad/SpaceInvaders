@@ -315,7 +315,8 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         return fechaCanalizacion = new Date(fechaCanalizacion+' '+horaCanalizacion)
     }
     public heredarDatos(){
-      console.log("Heredar en predenuncia")
+      console.log("<<< Heredar en predenuncia >>>", this.casoService.caso);
+      
       if(this.form.controls["lugar"].value){
         console.log(this.form.controls["lugar"].value)
         let lugar="";
@@ -336,6 +337,11 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         this.form.controls["lugarHechos"].setValue(lugar);
         this.form.controls["tipoPersonaHeredar"].setValue('');
         this.form.controls["calidadPersona"].setValue('');
+        if(this.casoService.caso){
+            this.form.controls["hechosNarrados"].setValue(this.casoService.caso.descripcion);
+        }
+        
+
      }
      
       this.personasHeredadas.forEach((personaCaso)=> {
