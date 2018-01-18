@@ -110,7 +110,10 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
                     this.model = response as AcuerdoGeneral;
                     this.modelUpdate.emit(response);
                     this.personas = response.personas;
-                    this.form.disable();
+                    let timer = Observable.timer(1);
+						timer.subscribe(t=>{
+							this.form.disable();
+					});
                 });
             }
         });

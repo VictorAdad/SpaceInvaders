@@ -130,7 +130,11 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 						this.modelUpdate.emit(response); 
 						this.personas = response.personas;
 						Logger.logColor('<<< personas >>>', 'green', this.personas); 
-	          			this.form.disable();
+						let timer = Observable.timer(1);
+						timer.subscribe(t=>{
+							this.form.disable();
+						});
+	          			
 
 	        		});
         		}else{

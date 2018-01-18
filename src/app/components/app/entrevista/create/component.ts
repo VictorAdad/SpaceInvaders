@@ -185,7 +185,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 				'id': new FormControl("", []),
 			}),
 			'heredar':  new FormControl("", []),
-			'heredarSintesisHechos':  new FormControl("", []),
+			'heredarSintesisHechos':  new FormControl(false, []),
 			'personas': new FormArray([]),
 			'sexoHeredar': new FormControl('', []),
 			'edadHeredar': new FormControl('', []),
