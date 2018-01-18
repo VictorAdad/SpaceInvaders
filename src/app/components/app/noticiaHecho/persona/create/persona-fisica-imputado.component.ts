@@ -729,6 +729,10 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                         identificacion:this.form.controls.identificacion.value
                     }
                 });
+                if (_model['pais'] && _model['pais']['id']!=_config.optionValue.idMexico) {
+                    _model['estado']={id: ''};
+                    _model['municipio']={id: ''};
+                }
                 this.searchCatalogos(buscar).then(e=>{
                     for(let key in e){
                         if (e[key]!=null){
@@ -1115,6 +1119,10 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                     identificacion:this.form.controls.identificacion.value
                 }
             });
+            if (_model['pais'] && _model['pais']['id']!=_config.optionValue.idMexico) {
+                _model['estado']={id: ''};
+                _model['municipio']={id: ''};
+            }
             this.searchCatalogos(buscar).then(e=>{
                 for(let key in e){
                     if (e[key]!=null){
