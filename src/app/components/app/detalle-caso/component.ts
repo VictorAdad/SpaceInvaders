@@ -92,8 +92,14 @@ export class DetalleCasoComponent implements OnInit{
 				console.log("CASO->", this.caso);
 				this.hasRelacionVictimaImputado = this.caso.hasRelacionVictimaImputado;
 				this.hasPredenuncia = this.caso['hasPredenuncia'] ? this.caso.hasPredenuncia : false;
+				if (this.caso['personaCasos']) {
+                    this.involucrados = this.caso.personaCasos as Persona[];
+				}
+				if (this.caso['delitoCaso']) {
+                    this.delitos = this.caso.delitoCaso as DelitoCaso[];
+				}
 			});
-        }    
+        }
 
 	}
 }
