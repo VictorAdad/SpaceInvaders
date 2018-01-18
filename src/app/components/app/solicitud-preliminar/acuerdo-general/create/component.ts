@@ -141,7 +141,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
           'heredarSintesisHechos':  new FormControl(false, []),
           'personas': new FormArray([]),
 
-            'tipo': new FormControl(this.model.tipo),
+            'tipo': new FormControl(this.model.tipo, [Validators.required,]),
             'fundamentoLegal': new FormControl(this.model.fundamentoLegal),
             'contenidoAcuerdo': new FormControl(this.model.contenidoAcuerdo),
             'finalidad': new FormControl(this.model.finalidad),
