@@ -81,6 +81,8 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
     dataSource: TableService | null;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
+    public precarga = true;
+
     constructor(
         private _fbuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -101,6 +103,7 @@ export class SolicitudAcuerdoGeneralComponent extends SolicitudPreliminarGlobal 
                 this.casoId = +params['casoId'];
             if (params['id']) {
                 this.id = +params['id'];
+                this.precarga = false;
                 this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
                     Logger.log(response)
                     this.fillForm(response);

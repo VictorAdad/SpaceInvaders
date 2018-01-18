@@ -106,6 +106,8 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
     public hintStart: String = "Campo obligatorio";
     public hintEnd: String = "150 carácteres mínimo";
 
+    public precarga = true;
+
     constructor(
         private _fbuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -137,6 +139,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
             Logger.log('casoId', this.casoId);
             if (params['id']) {
                 this.id = + params['id'];
+                this.precarga = false;
                 let timer = Observable.timer(1);
                 timer.subscribe(t => {
                     this.form.disable();

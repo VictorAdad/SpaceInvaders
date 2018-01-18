@@ -75,6 +75,8 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 	dataSource: TableService | null;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
+	public precarga = true;
+
 	constructor(
 		private _fbuilder: FormBuilder,
 		private route: ActivatedRoute,
@@ -120,6 +122,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 			Logger.log('casoId', this.casoId);
 			if (params['id']) {
 				this.id = +params['id'];
+				this.precarga = false;
 				Logger.log('id', this.id);
 
 				if(this.onLine.onLine){

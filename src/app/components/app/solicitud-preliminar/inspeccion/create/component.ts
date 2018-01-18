@@ -27,6 +27,7 @@ export class InspeccionCreateComponent {
     public breadcrumb = [];
     public solicitudId: number = null;
     public model:any=null;
+
 	constructor(
     public casoServ: CasoService,
     private router: Router ,
@@ -72,6 +73,8 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
     dataSource: TableService | null;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
+    public precarga = true;
+
     constructor(
         private _fbuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -113,6 +116,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
                 Logger.log('casoId', this.casoId);
             if(params['id']){
                 this.id = +params['id'];
+                this.precarga = false;
                 Logger.log('id', this.id);
                 this.http.get(this.apiUrl+'/'+this.id).subscribe(response =>{
                         var fechaCompleta:Date= new Date(response.fechaHoraInspeccion);

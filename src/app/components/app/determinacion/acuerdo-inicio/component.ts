@@ -70,6 +70,8 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
     public personasHeredadas:any[]=[];
     public options: Options;
 
+    public precarga = true;
+
     constructor(
         private _fbuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -135,6 +137,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
                 this.apiUrl=this.apiUrl.replace("{id}",String(this.casoId));
                  this.http.get(`/v1/base/acuerdos/casos/${this.casoId}/tipos?tipo=${tipo}`).subscribe(response => {
                     if(response.length!=0){
+                        this.precarga = false;
     				    this.hasAcuerdoInicio = true;
                         this.form.disable();
                         this.fillForm(response[0]);
