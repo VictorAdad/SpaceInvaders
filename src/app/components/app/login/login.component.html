@@ -16,7 +16,7 @@
 						<div class="space">
 							<text label="Usuario" name="user" [group]="form" [focus]="true"></text>
 							<password label="Contraseña" name="pass" [group]="form"></password>
-							<checkbox label="Recordarme"></checkbox>
+							<!-- <checkbox label="Recordarme"></checkbox> -->
 						</div>
 					</form>
 					<div class="space">
@@ -24,12 +24,14 @@
 							<mat-icon style="vertical-align: middle !important;">error</mat-icon> Usuario o contraseña invalidos
 						</span>
 					</div>
+					<div class="space"></div>
+					<div class="space"></div>
 					<div class="space">
 						<button class="full-width btn-lg" mat-raised-button color="accent" (click)="login(form.valid, form.value)" [disabled]="loading">{{ loginBtn }}</button>
 					</div>
-					<div class="space text-center">
+					<!-- <div class="space text-center">
 						<a href="">¿Olivdaste tu contraseña?</a>
-					</div>
+					</div> -->
 				</mat-card-content>
 				<mat-card-actions>
 				</mat-card-actions>
