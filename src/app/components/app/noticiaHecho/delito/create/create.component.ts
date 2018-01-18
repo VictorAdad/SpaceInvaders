@@ -4,10 +4,9 @@ import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import {FormCreateDelitoComponent} from "./formcreate.component"
 import { CIndexedDB } from '@services/indexedDB';
 import {Router} from '@angular/router';
-import {Caso} from '@models/caso';
 import { HttpService } from '@services/http.service';
 import { OnLineService} from '@services/onLine.service';
-import { CasoService } from '@services/caso/caso.service';
+import { CasoService, Caso } from '@services/caso/caso.service';
 import { Logger } from "@services/logger.service";
 import { AuthenticationService } from "@services/auth/authentication.service";
 
@@ -130,47 +129,62 @@ export class DelitoCreateComponent{
                                 listaErrores.push(error);
                             });
                     else{
-                        let temId=Date.now();
-                        let dato={
-                            url:'/v1/base/delitos-casos',
-                            body:data,
-                            options:[],
-                            tipo:"post",
-                            pendiente:true,
-                            dependeDe:[obj.casoId],
-                            temId: temId,
-                            username: obj.auth.user.username
+                        var caso = obj.casoService.caso;
+                        if (!caso['delitoCaso']) {
+                            caso['delitoCaso'] = [];
+                            Logger.log('ITEM', item);
                         }
-                        obj.tabla.add("sincronizar",dato).then(p=>{
-                            //obj.tabla.get("casos",obj.casoId).then(caso=>{
-                                var caso = obj.casoService.caso;
+                        if ( obj.delitoDuplicado(caso['delitoCaso'], item)) {
+                            Logger.logColor('Delito duplicado', 'red');
+                            guardaLista(i + 1, obj.listaDelitos, listaErrores);
+                        }else {
+                            let temId = Date.now();
+                            let dato = {
+                                url: '/v1/base/delitos-casos',
+                                body: data,
+                                options: [],
+                                tipo: 'post',
+                                pendiente:true,
+                                dependeDe:[obj.casoId],
+                                temId: temId,
+                                username: obj.auth.user.username
+                            };
+                            obj.tabla.add('sincronizar', dato).then(p => {
                                 if (caso){
-                                    if(!caso["delitoCaso"]){
-                                        caso["delitoCaso"]=[];
-                                        Logger.log("ITEM",item)
-                                    }
-                                    var dat={id:temId,delito:item, principal:false}
-                                    caso["delitoCaso"].push(dat);
-                                    obj.tabla.update("casos",caso).then(t=>{
-                                        obj.casoService.actualizaCasoOffline(t);
-                                        guardaLista(i + 1, obj.listaDelitos, listaErrores);
+                                    let dat = {id: temId, delito: item, principal: false};
+                                    caso['delitoCaso'].push(dat);
+                                    obj.tabla.update('casos', caso).then(t => {
+                                    obj.casoService.actualizaCasoOffline(t);
+                                            guardaLista(i + 1, obj.listaDelitos, listaErrores);
                                     });
                                 }
-                            //});
-                        });
+                            });
+                        }
                     }
 
                 }
-                guardaLista(0,this.listaDelitos,listaErrores);
-            }else{
-                resolve("No hay delitos para guardar");
+                guardaLista(0, this.listaDelitos, listaErrores);
+            }else {
+                resolve('No hay delitos para guardar');
             }
 
         });
     }
+    /**
+     * Busca si existe un delito duplicado, si no existe regresa false, de lo contrario true
+     * @param lista lista de delitos
+     * @param delito delito a buscar
+     */
+    public delitoDuplicado(lista: any[], delito) {
+        for (let i = 0; i < lista.length; i++) {
+            if (lista[i]['delito']['id'] == delito['id']) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
-
 
 export class Delito{
     id:number;
