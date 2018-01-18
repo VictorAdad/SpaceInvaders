@@ -19,6 +19,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
 import { Logger } from "@services/logger.service";
 import { CasoService } from '@services/caso/caso.service';
+import { Yason } from '@services/utils/yason';
 
 @Component({
 	templateUrl: './component.html',
@@ -193,6 +194,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 	}
 
 	public fillForm(_data) {
+		Yason.eliminaNulos(_data);
 		let timer = Observable.timer(1);
 		this.form.controls.tipo.setValue(_data.tipo);
 		timer.subscribe(t => {

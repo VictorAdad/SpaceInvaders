@@ -17,6 +17,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TableDataSource } from './../../../global.component';
 import { Logger } from "@services/logger.service";
 import { CasoService } from '@services/caso/caso.service';
+import { Yason } from '@services/utils/yason';
 
 @Component({
     templateUrl:'./component.html',
@@ -197,6 +198,7 @@ export class SolicitudInspeccionComponent extends SolicitudPreliminarGlobal {
      }
 
     public fillForm(_data){
+        Yason.eliminaNulos(_data);
         this.form.patchValue(_data);
         Logger.log(_data);
     }
