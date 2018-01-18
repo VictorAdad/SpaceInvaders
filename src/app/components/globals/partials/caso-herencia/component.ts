@@ -171,12 +171,7 @@ export class CasoHerenciaComponent implements OnInit {
 
     public fillCampos() {
         if (this.caso.personaCasos) {
-            this.personas.push(this.caso.personaCasos[0]);
-            this.form.patchValue({
-                'personas': [{
-                    'id': this.personasTipo[0].value
-                }]
-            });
+            this.addPersona(this.caso.personaCasos[0].id);
         }
         this.form.patchValue({
             'lugar': {
