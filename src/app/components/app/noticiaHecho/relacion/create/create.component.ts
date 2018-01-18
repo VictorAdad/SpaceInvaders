@@ -287,20 +287,26 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             TODO: Definir cuales son los campos obligatorios
         */
         if (_val["conductaDetalle"] && _val["conductaDetalle"]["detalle"]){
-            var testigo=_val["testigo"];
-                    for (let i=0;i<this.casoOffline["personaCasos"].length; ++i){
-                        if (testigo==this.casoOffline["personaCasos"][i]["persona"]["id"]){
-                            testigo=this.casoOffline["personaCasos"][i]["persona"];
+            let testigo=_val["testigo"];
+            const idTestigo = Number.isInteger(_val["testigo"]) ? _val["testigo"] : _val["testigo"]['id'];
+            Logger.logColor('HOSTIGAMIENTO', 'blue',  this.optionsNoticia.testigos, _val);
+                    for (let i=0;i<this.optionsNoticia.testigos.length; ++i){
+                        if (idTestigo==this.optionsNoticia.testigos[i]['value']) {
+                            testigo = {
+                                id: this.optionsNoticia.testigos[i]['value'],
+                                nombre: this.optionsNoticia.testigos[i]['label'],
+                            };
                             break;
                         }
                     }
+            Logger.logColor('HOSTIGAMIENTO', 'red',  this.optionsNoticia.testigos, testigo, idTestigo);
             _val["testigo"]=testigo;
             this.colections.add('hostigamiento', 'subjectHostigamiento', _val);
             let form = this.form.get('hostigamientoAcoso') as FormArray;
-            var idModalidadAmbito=this.optionsRelacion.matrizModalidadAmbito.finded[0]?this.optionsRelacion.matrizModalidadAmbito.finded[0].id:null;
-            var idConductaDetalle=this.optionsRelacion.matrizConductaDetalle.finded[0]?this.optionsRelacion.matrizConductaDetalle.finded[0].id:null;
-            var idTestigo=_val.testigo?_val.testigo.id:null;
-
+            const idModalidadAmbito =
+                this.optionsRelacion.matrizModalidadAmbito.finded[0]?this.optionsRelacion.matrizModalidadAmbito.finded[0].id:null;
+            const idConductaDetalle =
+                this.optionsRelacion.matrizConductaDetalle.finded[0]?this.optionsRelacion.matrizConductaDetalle.finded[0].id:null;
             form.push(
                 this.formRelacion.setHostigamientoForm(
                     idModalidadAmbito,
@@ -312,10 +318,14 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
             this.db.searchInCatalogo("conducta_detalle",_val["conductaDetalle"]).then(conductaDetalle=>{
                 this.db.searchInCatalogo("modalidad_ambito",_val["modalidadAmbito"]).then(modalidadAmbito=>{
                     Logger.log("HOSTIGAMIENTO CHUNGO=>",_val);
-                    var testigo=_val["testigo"];
-                    for (let i=0;i<this.casoOffline["personaCasos"].length; ++i){
-                        if (testigo.id==this.casoOffline["personaCasos"][i]["persona"]["id"]){
-                            testigo=this.casoOffline["personaCasos"][i]["persona"];
+                    let testigo=_val["testigo"];
+                    const idTestigo = Number.isInteger(_val["testigo"]) ? _val["testigo"] : _val["testigo"]['id'];
+                    for (let i=0;i<this.optionsNoticia.testigos.length; ++i) {
+                        if (idTestigo==this.optionsNoticia.testigos[i]['value']) {
+                            testigo = {
+                                id: this.optionsNoticia.testigos[i]['value'],
+                                nombre: this.optionsNoticia.testigos[i]['label'],
+                            };
                             break;
                         }
                     }
@@ -334,9 +344,8 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                         testigo:testigo
                     });
                     let form = this.form.get('hostigamientoAcoso') as FormArray;
-                    var idModalidadAmbito=modalidadAmbito["id"];
-                    var idConductaDetalle=conductaDetalle["id"];
-                    var idTestigo=_val.testigo?_val.testigo.id:null;
+                    const idModalidadAmbito=modalidadAmbito["id"];
+                    const idConductaDetalle=conductaDetalle["id"];
 
                     form.push(
                         this.formRelacion.setHostigamientoForm(
