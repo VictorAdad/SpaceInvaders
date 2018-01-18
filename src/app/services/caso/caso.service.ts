@@ -233,6 +233,7 @@ export class Caso{
         }
         return options;
     }
+
     public optionsLugares(){
         let options: MOption[] = [];
         let complement;
@@ -252,6 +253,71 @@ export class Caso{
             }
         }
         return options;		
+    }
+
+    public optionsDelito() {
+        let options: MOption[] = [];
+
+        if (this.delitoCaso) {
+            for (const i in this.delitoCaso) {
+                if (this.delitoCaso.hasOwnProperty(i)) {
+                    const object = this.delitoCaso[i];
+                    options.push({value: object.id, label: object.delito.nombre});
+                }
+            }
+        }
+
+        options = this.sortOptions(options);
+
+        return options;
+    }
+
+    public optionsArma() {
+        let options: MOption[] = [];
+
+        if (this.armas) {
+            for (const i in this.armas) {
+                if (this.armas.hasOwnProperty(i)) {
+                    const object = this.armas[i];
+                    options.push({value: object.id, label: object.delito.nombre});
+                }
+            }
+        }
+
+        options = this.sortOptions(options);
+
+        return options;
+    }
+
+    public optionsVehiculo() {
+        let options: MOption[] = [];
+
+        if (this.vehiculos) {
+            for (const i in this.vehiculos) {
+                if (this.vehiculos.hasOwnProperty(i)) {
+                    const object = this.vehiculos[i];
+                    options.push({value: object.id, label: object.delito.nombre});
+                }
+            }
+        }
+
+        options = this.sortOptions(options);
+
+        return options;
+    }
+
+    private sortOptions(_options) {
+        _options.sort((a, b) => {
+            if (a.label > b.label) {
+                return 1;
+            }
+            if (a.label < b.label) {
+                return -1;
+            }
+
+            return 0;
+        });
+        return _options;
     }
 
 }
