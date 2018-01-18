@@ -279,7 +279,9 @@ export class Caso{
             for (const i in this.armas) {
                 if (this.armas.hasOwnProperty(i)) {
                     const object = this.armas[i];
-                    options.push({value: object.id, label: object.delito.nombre});
+                    const clase = object.claseArma != null  ? object.claseArma.claseArma  : '';
+                    const tipo = object.claseArma.tipo != null  ? ' - ' + object.claseArma.tipo  : '';
+                    options.push({value: object.id, label: `${clase} ${tipo}`});
                 }
             }
         }
@@ -296,7 +298,9 @@ export class Caso{
             for (const i in this.vehiculos) {
                 if (this.vehiculos.hasOwnProperty(i)) {
                     const object = this.vehiculos[i];
-                    options.push({value: object.id, label: object.delito.nombre});
+                    const marca = object.marcaSubmarca != null  ? (object.marcaSubmarca.marca ? object.marcaSubmarca.marca: 'SIN MARCA') : 'SIN MARCA';
+                    const color = object.motivoRegistroColorClase != null  ? (object.motivoRegistroColorClase.color? object.motivoRegistroColorClase.color:'SIN COLOR') : 'SIN COLOR';
+                    options.push({value: object.id, label: `${marca} ${color}`});
                 }
             }
         }
