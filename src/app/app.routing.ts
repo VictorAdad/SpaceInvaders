@@ -48,7 +48,6 @@ import { NoEjercicioAccionPenalCreateComponent } from '@components-app/determina
 // Predenuncia
 import { PredenunciaCreateComponent} from '@components-app/predenuncia/create/create.component';
 
-
 //Notificaciones
 import { NotificacionesComponent } from '@components-app/notificaciones/notificaciones.component';
 
@@ -82,6 +81,10 @@ import {TurnoCatalogosCreateComponent} from '@components-app/catalogos/turno/cre
 import {AyudaComponent} from '@components-app/ayuda/component';
 
 import {Nothing} from '@components-app/home/nothing.component';
+
+//Informe Homologado
+import { PaginadorHomologado} from '@components-app/informe-homologado/component';
+import { InformeHomologadoCreate} from '@components-app/informe-homologado/create/create.component';
 
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
@@ -224,6 +227,10 @@ const routes: Routes = [
     { path : 'mecanismo-accion', component : MecanismoAccionComponent, data : { breadcrumb : 'Mecanismo de Acción', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"}] } },
     { path : 'mecanismo-accion/create', component : CreateArmaComponent, data : { breadcrumb : 'Agregar Mecanismo', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/mecanismo-accion',label:"Mecanismo de Acción"}] }  },
     { path : 'mecanismo-accion/:id/edit', component : CreateArmaComponent, data : { breadcrumb : 'Editar Mecanismo', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Calibre de Armas"}] }  },
+
+    //informe homologado
+    { path : 'caso/:casoId/informe-homologado', component : PaginadorHomologado, data : { breadcrumb : 'Informe Homologado'}},
+    { path : 'caso/:casoId/informe-homologado/create', component : InformeHomologadoCreate, data : { breadcrumb : 'Informe Homologado Create'}},
 ];
 
 @NgModule({
@@ -303,5 +310,9 @@ export const routingComponents = [
   TipoArmaComponent,
   CreateArmaComponent,
   CalibreArmaComponent,
-  MecanismoAccionComponent
+  MecanismoAccionComponent,
+
+  //informe Homologado
+  PaginadorHomologado,
+  InformeHomologadoCreate
 ];

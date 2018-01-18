@@ -1,0 +1,49 @@
+<breadcrumb [rutas]="breadcrumb"></breadcrumb>
+
+<caso-nic [id]="casoId"></caso-nic>
+
+<div class="row space">
+    <div class="col-md-6">
+        <h2>Informe policial homologado</h2>
+    </div>
+    <div class="col-md-6">
+        <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
+    </div>
+</div>
+
+<div class="row space justify-content-end">
+    <div class="col-md-auto">
+        <search (search)="filterPage($event)"></search>
+      </div>
+    <div class="col-md-auto">
+        <button mat-raised-button color="accent" routerLink="/caso/{{casoId}}/perito/create">Agregar</button>
+    </div>
+</div>
+
+<mat-paginator #paginator
+    [length]="pag"
+    [pageIndex]="0"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="changePage($event)">
+  </mat-paginator>
+<mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef> Nombre</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fecha">
+        <mat-header-cell *matHeaderCellDef>Fecha de creación</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.fecha}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="accion">
+        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+        <mat-cell *matCellDef="let element"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">local_printshop</mat-icon></span> </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+    <!-- <mat-row *matRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/perito/{{row.id}}/edit"></mat-row> -->
+</mat-table>
