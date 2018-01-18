@@ -93,6 +93,8 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	dataSource: TableService | null;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
+	public precarga = true;
+
 	constructor(
 		private _fbuilder: FormBuilder,
 		private route: ActivatedRoute,
@@ -119,6 +121,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 			Logger.log('casoId', this.casoId);
 			if (params['id']) {
 				this.id = +params['id'];
+				this.precarga = false;
 				Logger.log('id', this.id);
 				if(this.onLine.onLine){
 					this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {

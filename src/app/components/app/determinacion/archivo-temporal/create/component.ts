@@ -72,6 +72,8 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 	dataSource: TableService | null;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
+	public precarga = true;
+
 	constructor(
 		private _fbuilder: FormBuilder,
 		private route: ActivatedRoute,
@@ -108,6 +110,7 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 				this.casoId = +params['casoId'];
 			if (params['id']) {
 				this.id = +params['id'];
+				this.precarga = false;
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 					Logger.log(response.data),
             this.fillForm(response);

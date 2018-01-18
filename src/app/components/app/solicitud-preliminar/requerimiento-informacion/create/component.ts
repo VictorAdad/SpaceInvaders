@@ -73,6 +73,8 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 	dataSource: TableService | null;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
+	public precarga = true;
+
 	constructor(
 		private _fbuilder: FormBuilder,
 		private route: ActivatedRoute,
@@ -122,6 +124,7 @@ export class SolicitudRequerimientoInformacionComponent extends SolicitudPrelimi
 			Logger.log('casoId', this.casoId);
 			if (params['id']) {
 				this.id = +params['id'];
+				this.precarga = false;
 				Logger.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 					Logger.log('<<<< Get reg >>>>',response),

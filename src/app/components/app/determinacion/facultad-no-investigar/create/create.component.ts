@@ -77,6 +77,9 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
     public personasHeredadas:any[]=[];
     public heredar:boolean=false;
     public heredarSintesis:boolean=false;
+
+    public precarga = true;
+
     constructor(
         private _fbuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -133,6 +136,7 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
 
             if (params['id']) {
                 this.id = +params['id'];
+                this.precarga = false;
                 this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
                         console.log(response.heredar);
                         this.personas = response.personas;

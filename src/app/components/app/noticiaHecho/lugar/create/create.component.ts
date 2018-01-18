@@ -579,6 +579,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
           var place;
           if (this.geocoder) {
             this.geocoder.geocode({'address': address}, (results, status) => {
+              console.log('geocode', results, status);
               if (status && results) {
                 place = results[0];
                 if(!place === undefined || place === null){                

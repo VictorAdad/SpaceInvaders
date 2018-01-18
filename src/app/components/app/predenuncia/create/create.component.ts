@@ -126,6 +126,8 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
     public heredar:boolean=false;
     public heredarSintesis:boolean=false;
 
+    public precarga = true;
+
     constructor(
         private _fbuilder: FormBuilder,
         public onLine: OnLineService,
@@ -233,6 +235,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                     Logger.log('OnLine------------>',);
                     this.http.get(this.apiUrl+this.casoId+'/page').subscribe(response => {
                          if(parseInt(response.totalCount) !== 0){
+                            this.precarga = false;
                             this.hasPredenuncia = true;
                             Logger.log("Dont have predenuncia");
                             this.model= response.data[0] as Predenuncia;

@@ -40,6 +40,9 @@ export class CasoHerenciaComponent implements OnInit {
     public personas: any[];
 
     @Input()
+    public precarga = false;
+
+    @Input()
     public casoId: number;
 
     @Input()
@@ -82,7 +85,6 @@ export class CasoHerenciaComponent implements OnInit {
 
     constructor(
         public casoServ: CasoService,
-        public optionsNoticia: NoticiaHechoService,
         private http: HttpService,
         private _confirmation: ConfirmationService,
         public dialog: MatDialog
@@ -102,8 +104,11 @@ export class CasoHerenciaComponent implements OnInit {
                 this.armas = this.caso.optionsArma();
                 this.delitos = this.caso.optionsDelito();
                 this.personas = [];
-                this.fillCampos();
-                Logger.log('Caso finded', this.caso);
+
+                if (this.precarga) {
+                    this.fillCampos();
+                }
+
                 timer.subscribe(t => {
                     if (this.people) {
                         for (let i = 0; i < this.people.length; i++) {

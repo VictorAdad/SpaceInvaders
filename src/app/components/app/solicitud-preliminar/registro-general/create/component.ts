@@ -86,6 +86,8 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 
 	@Output() modelUpdate=new EventEmitter<any>();
 
+	public precarga = true;
+
 	constructor(
 		private _fbuilder: FormBuilder,
 		private route: ActivatedRoute,
@@ -136,6 +138,7 @@ export class SolicitudRegistroGeneralComponent extends SolicitudPreliminarGlobal
 
 			if (params['id']) {
 				this.id = +params['id'];
+				this.precarga = false;
 				Logger.log('id', this.id);
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 					Logger.log(response.data),

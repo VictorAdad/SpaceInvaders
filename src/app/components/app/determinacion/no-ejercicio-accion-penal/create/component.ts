@@ -70,7 +70,9 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
 	public form: FormGroup;
 	public model: NoEjercicioAccionPenal;
 	dataSource: TableService | null;
-	@ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+
+    public precarga = true;
 
 	constructor(
 		private _fbuilder: FormBuilder,
@@ -121,7 +123,8 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
 			if (params['casoId'])
 				this.casoId = +params['casoId'];
 			if (params['id']) {
-				this.id = +params['id'];
+                this.id = +params['id'];
+                this.precarga = false;
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 					  Logger.log(response.data),
             this.fillForm(response);
