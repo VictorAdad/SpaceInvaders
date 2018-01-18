@@ -101,7 +101,7 @@ export class AcuerdoRadicacionComponent extends DeterminacionGlobal{
             'id': new FormControl("", []),
           }),
           'heredar':  new FormControl("", []),
-          'heredarSintesisHechos':  new FormControl("", []),
+          'heredarSintesisHechos':  new FormControl(false, []),
           'personas': new FormArray([]),
 
 

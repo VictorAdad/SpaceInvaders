@@ -106,7 +106,7 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
               'id': new FormControl("", []),
             }),
             'heredar':  new FormControl("", []),
-            'heredarSintesisHechos':  new FormControl("", []),
+            'heredarSintesisHechos':  new FormControl(false, []),
             'personas': new FormArray([]),
             'edadDenuncianteHeredar':new FormControl(''),
 

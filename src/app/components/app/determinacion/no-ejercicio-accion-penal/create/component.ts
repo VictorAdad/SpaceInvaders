@@ -98,7 +98,7 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
         'id': new FormControl("", []),
       }),
       'heredar':  new FormControl("", []),
-      'heredarSintesisHechos':  new FormControl("", []),
+      'heredarSintesisHechos':  new FormControl(false, []),
       'personas': new FormArray([]),
 
 			'narracionHechos': new FormControl(this.model.narracionHechos),
