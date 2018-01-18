@@ -106,7 +106,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 				'id': new FormControl("", []),
       }),
       'heredar':  new FormControl("", []),
-      'heredarSintesisHechos':  new FormControl("", []),
+      'heredarSintesisHechos':  new FormControl(false, []),
       'personas': new FormArray([]),
 
 			'noOficio': new FormControl(this.model.noOficio),
