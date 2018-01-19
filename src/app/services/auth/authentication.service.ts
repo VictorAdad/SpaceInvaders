@@ -69,12 +69,14 @@ export class AuthenticationService {
 
 
         this.roles = {
-            'callCenter': 'Call Center',
+            'callCenter': 'callCenter',
             'uai': 'uai',
-            'express': 'express',
+            'express': 'moduloExpress',
             'mpuai': 'mpuai',
-            'mpi': 'M.P.I',
-            'admin': 'Admin',
+            'mpi': 'mpi',
+            'admin': 'admin',
+            'perito': 'perito',
+            'policiaInvestigacion': 'policiaInvestigacion',
         }
     }
 
