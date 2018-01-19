@@ -480,7 +480,6 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
           if(this.geoColonia.length > 3){
             this.fillAddress();
           }
-          
         }
       }
   }
@@ -495,9 +494,9 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
               value = this.optionsServ.municipios[i]["label"]
               this.geoMmunicipio=value;
               Logger.logColor("geomunicipio","green",this.geoMmunicipio);
-              if(!this.editFlag){
-                this.fillAddress();
-              }  
+              // if(!this.editFlag){
+              //   this.fillAddress();
+              // }  
               break;
             }
           }
@@ -522,9 +521,9 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
             if(value == this.optionsServ.estados[i]["value"]){
               value = this.optionsServ.estados[i]["label"]
               this.geoEstado=value;
-              if(!this.editFlag){
-                this.fillAddress();
-              }  
+              // if(!this.editFlag){
+              //   this.fillAddress();
+              // }  
               break;
             }
           }
@@ -549,9 +548,9 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
         }
       }
       this.geoPais=value;
-      if(!this.editFlag){
-        this.fillAddress();
-      }      
+      // if(!this.editFlag){
+      //   this.fillAddress();
+      // }      
     }
   }
 
@@ -568,6 +567,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
     return address;
   }
   public fillAddress() {
+    Logger.logColor('<<< FillAddresss >>>','red')
     if (this.onLine.onLine) {
       let timer = Observable.timer(3500);
       timer.subscribe(t => {
@@ -582,20 +582,21 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
               console.log('geocode', results, status);
               if (status && results) {
                 place = results[0];
-                if(!place === undefined || place === null){                
+                if(place !== null || place !== undefined){ 
                   if (place.geometry === undefined || place.geometry === null) {
                     return;
                   }
                 }else{
                   return;
-                }                
+                }
+                Logger.logColor('<<< FillAddresss 7 >>>','red')                
                 this.lat = place.geometry.location.lat();
                 this.lng = place.geometry.location.lng();
                 this.latMarker = place.geometry.location.lat();
                 this.lngMarker = place.geometry.location.lng();
                 this.zoom = 17;
               } else {
-                alert('Geocode was not successful for the following reason: ' + status);
+                // alert('Geocode was not successful for the following reason: ' + status);
               }
             });  
           }

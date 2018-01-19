@@ -6,45 +6,45 @@
     </mat-expansion-panel-header>
     <div class="container-fluid">
         <div class="row space">
-          <div class="col">
-              <strong class="float-right">
-                  <checkbox label="Heredar datos" [group]="form" name="heredar" (valueChange)="setHeredarDatos($event)"></checkbox>
-              </strong>
-          </div>
+            <div class="col">
+                <strong class="float-right">
+                    <checkbox label="Heredar datos" [group]="form" name="heredar" (valueChange)="setHeredarDatos($event)"></checkbox>
+                </strong>
+            </div>
          </div>
         <div class="row">
-          <div class="col-md-4">
-              <select2 placeholder="Persona" [disabled]="!heredar" [options]="personasTipo" [group]="" name=""  (valueChange)="addPersona($event)"></select2>
-          </div>
-          <div class="col-md-4">
-            <select2 placeholder="Lugar" [disabled]="!heredar" [options]="lugares" [group]="form.controls.lugar" name="id"  (valueChange)="lugarChanged($event)"></select2>
-          </div>
-          <div class="col-md-4">
-            <select2 placeholder="Delito" [disabled]="!heredar"  [options]="delitos" [group]="form.controls.delito" name="id"  (valueChange)="delitoChanged($event)"></select2>
-          </div>
+            <div class="col-md-4">
+                <select2 placeholder="Persona" [disabled]="!heredar" [options]="personasTipo" [group]="" name=""  (valueChange)="addPersona($event)"></select2>
+            </div>
+            <div class="col-md-4">
+                <select2 placeholder="Lugar" [disabled]="!heredar" [options]="lugares" [group]="form.controls.lugar" name="id"  (valueChange)="lugarChanged($event)"></select2>
+            </div>
+            <div class="col-md-4">
+                <select2 placeholder="Delito" [disabled]="!heredar"  [options]="delitos" [group]="form.controls.delito" name="id"  (valueChange)="delitoChanged($event)"></select2>
+            </div>
         </div>
         <div class="row">
-          <div class="col-md-4">
-              <mat-list *ngIf="personas != null">
-                  <mat-list-item *ngFor="let personaCaso of personas">
-                    <div *ngIf="personaCaso.persona.nombre !=null || personaCaso.persona.paterno!=null || personaCaso.persona.materno!=null">
-                        {{personaCaso.persona.nombre?personaCaso.persona.nombre:""}} {{personaCaso.persona.paterno?personaCaso.persona.paterno:""}} {{personaCaso.persona.materno?personaCaso.persona.materno:""}} - {{personaCaso.tipoInterviniente.tipo}}
-                    </div>
-                    <div *ngIf="personaCaso.persona.nombre ==null &&  personaCaso.persona.paterno==null && personaCaso.persona.materno ==null && personaCaso.tipoInterviniente.tipo == 'Imputado desconocido'">
-                          Quién Resulte Responsable - {{personaCaso.tipoInterviniente.tipo}}
-                    </div>
-                    <div *ngIf="personaCaso.persona.nombre ==null &&  personaCaso.persona.paterno==null && personaCaso.persona.materno ==null && !(personaCaso.tipoInterviniente.tipo == 'Imputado desconocido')">
-                        Identidad Desconocida - {{personaCaso.tipoInterviniente.tipo}}
-                    </div>
-                  </mat-list-item>
-              </mat-list>
-          </div>
-          <div class="col-md-4">
-            <select2 placeholder="Vehiculo" [disabled]="!heredar" [options]="vehiculos" [group]="form.controls.vehiculo" name="id"  (valueChange)="vehiculoChanged($event)"></select2>
-          </div>
-          <div class="col-md-4">
-            <select2 placeholder="Arma" [disabled]="!heredar"  [options]="armas" [group]="form.controls.arma" name="id" (valueChange)="armaChanged($event)"></select2>
-          </div>
+            <div class="col-md-4">
+                <mat-list *ngIf="personas != null">
+                    <mat-list-item *ngFor="let personaCaso of personas">
+                        <div *ngIf="personaCaso.persona.nombre !=null || personaCaso.persona.paterno!=null || personaCaso.persona.materno!=null">
+                            {{personaCaso | personaNombre }} - {{personaCaso.tipoInterviniente.tipo}} <button mat-icon-button (click)="removePersona($event, personaCaso.id)"><mat-icon style="vertical-align: middle">close</mat-icon></button>
+                        </div>
+                        <div *ngIf="personaCaso.persona.nombre ==null &&  personaCaso.persona.paterno==null && personaCaso.persona.materno ==null && personaCaso.tipoInterviniente.tipo == 'Imputado desconocido'">
+                            Quién Resulte Responsable - {{personaCaso.tipoInterviniente.tipo}} <button mat-icon-button (click)="removePersona($event, personaCaso.id)"><mat-icon style="vertical-align: middle">close</mat-icon></button>
+                        </div>
+                        <div *ngIf="personaCaso.persona.nombre ==null &&  personaCaso.persona.paterno==null && personaCaso.persona.materno ==null && !(personaCaso.tipoInterviniente.tipo == 'Imputado desconocido')">
+                            Identidad Desconocida - {{personaCaso.tipoInterviniente.tipo}} <button mat-icon-button (click)="removePersona($event, personaCaso.id)"><mat-icon style="vertical-align: middle">close</mat-icon></button>
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+            <div class="col-md-4">
+                <select2 placeholder="Vehiculo" [disabled]="!heredar" [options]="vehiculos" [group]="form.controls.vehiculo" name="id"  (valueChange)="vehiculoChanged($event)"></select2>
+            </div>
+            <div class="col-md-4">
+                <select2 placeholder="Arma" [disabled]="!heredar"  [options]="armas" [group]="form.controls.arma" name="id" (valueChange)="armaChanged($event)"></select2>
+            </div>
         </div>
         <div class="row space">
             <div class="col">
