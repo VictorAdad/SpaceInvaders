@@ -272,7 +272,6 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
 
     public save(_valid: any, _model: any) {
         if(_valid) {
-            Logger.log("SI",this.vehiculoServ.tipoUsoTipoVehiculo.finded);
             if (this.vehiculoServ.tipoUsoTipoVehiculo.finded[0]){
                 _model.tipoUsoTipoVehiculo.id=this.vehiculoServ.tipoUsoTipoVehiculo.finded[0].id;
             }
@@ -480,6 +479,9 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
         }
         if(_event === _config.optionValue.vehiculo.bicicleta) {
             this.isTipoBicicleta=true;
+            this.vehiculoServ.marcaSubmarca.find(_event, 'tipoVehiculo');
+            this.vehiculoServ.marcaSubmarca.find(null, 'marca');
+            this.vehiculoServ.marcaSubmarca.find(null, 'submarca');
            if (this.isRobo) {
                this.form.controls.placas.setValidators([]);
                this.form.controls.noSerie.setValidators([]);
