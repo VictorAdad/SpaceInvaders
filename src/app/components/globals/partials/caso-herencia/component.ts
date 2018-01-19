@@ -94,20 +94,16 @@ export class CasoHerenciaComponent implements OnInit {
     ngOnInit() {
         this.heredar = false;
         this.setHeredarDatos(this.heredar);
+        this.casoServ.casoChange.subscribe(
+            caso => {
+                Logger.log('Caso change');
+                this.setCaso(caso);
+            }
+        );
         this.casoServ.find(this.casoId).then(
             response => {
                 const timer = Observable.timer(10000);
-                this.caso = this.casoServ.caso;
-                this.personasTipo = this.caso.optionsPersonasTipo();
-                this.lugares = this.caso.optionsLugares();
-                this.vehiculos = this.caso.optionsVehiculo();
-                this.armas = this.caso.optionsArma();
-                this.delitos = this.caso.optionsDelito();
-                this.personas = [];
-
-                if (this.precarga) {
-                    this.fillCampos();
-                }
+                this.setCaso(response);
 
                 timer.subscribe(t => {
                     if (this.people) {
@@ -122,6 +118,21 @@ export class CasoHerenciaComponent implements OnInit {
                 });
             }
         );
+    }
+
+    public setCaso(_caso) {
+        Logger.log('Herencia@setCaso()', _caso);
+        this.caso = _caso;
+        this.personasTipo = this.caso.optionsPersonasTipo();
+        this.lugares = this.caso.optionsLugares();
+        this.vehiculos = this.caso.optionsVehiculo();
+        this.armas = this.caso.optionsArma();
+        this.delitos = this.caso.optionsDelito();
+        this.personas = [];
+
+        if (this.precarga) {
+            this.fillCampos();
+        }
     }
 
     public addPersona(_id) {
