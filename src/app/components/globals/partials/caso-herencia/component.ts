@@ -151,6 +151,7 @@ export class CasoHerenciaComponent implements OnInit {
         this.personas = this.personas.filter( o => o.id !== _id);
         (this.form.controls.personas as FormArray).controls
             = (this.form.controls.personas as FormArray).controls.filter( o => o.value.id !== _id);
+            this.personasChanged();
     }
 
     public isInPersonas(_id) {

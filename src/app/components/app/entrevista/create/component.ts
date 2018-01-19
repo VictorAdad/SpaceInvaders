@@ -382,6 +382,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
         */
         let hasALocalizacion = false;
 
+        this.cleanCamposHeredar();
         this.personasHeredadas.forEach((personaCaso)=> {
 
             // Heradar nombre del entrevistado
@@ -508,21 +509,35 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
         Logger.log('valor', _tipo);
     }
 
-  calculateAge(e){
+    public calculateAge(e){
 
-            var m = moment(e);
-            Logger.log(typeof e,m.isValid());
-            if (m.isValid()){
-                var a=moment(e);
-                var hoy=moment();
-                var edad=hoy.diff(a, 'years');
-                this.form.patchValue({edad:edad});
-                this.form.controls.edad.disable();
-            }else{
-                this.form.controls.edad.enable();
-            }
-
+        var m = moment(e);
+        Logger.log(typeof e,m.isValid());
+        if (m.isValid()){
+            var a=moment(e);
+            var hoy=moment();
+            var edad=hoy.diff(a, 'years');
+            this.form.patchValue({edad:edad});
+            this.form.controls.edad.disable();
+        }else{
+            this.form.controls.edad.enable();
         }
+
+    }
+
+    public cleanCamposHeredar() {
+        this.form.controls['nombreEntrevistado'].setValue('');
+        this.form.controls['nombreEntrevistado'].setValue('');
+        this.form.controls["sexoHeredar"].setValue('');
+        this.form.controls["fechaNacimientoHeredar"].setValue('');
+        this.form.controls["edadHeredar"].setValue('');
+        this.form.controls["nacionalidad"].setValue('');
+        this.form.controls["curpHeredar"].setValue('');
+        this.form.controls["rfcHeredar"].setValue('');
+        this.form.controls["ocupacion"].setValue('');
+        this.form.controls["lugarOcupacion"].setValue('');
+        this.form.controls["estadoCivil"].setValue('');
+    }
 
 }
 
