@@ -317,66 +317,47 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
     concatDate(fechaCanalizacion, horaCanalizacion){
         return fechaCanalizacion = new Date(fechaCanalizacion+' '+horaCanalizacion)
     }
-    public heredarDatos(){
-      console.log("<<< Heredar en predenuncia >>>", this.casoService.caso);
-      
-      if(this.form.controls["lugar"].value){
-        console.log(this.form.controls["lugar"].value)
-        let lugar="";
-        console.log(this.casoService.caso.lugares)
-        for(let i=0;i<this.casoService.caso.lugares.length;i++){
-             if(this.casoService.caso.lugares[i].id==this.form.controls["lugar"].value.id){
-               lugar=(this.casoService.caso.lugares[i].calle?this.casoService.caso.lugares[i].calle:"")+" "+
-               (this.casoService.caso.lugares[i].noInterior?this.casoService.caso.lugares[i].noInterior:"")+" "+
-               (this.casoService.caso.lugares[i].colonia?this.casoService.caso.lugares[i].colonia.nombre:(this.casoService.caso.lugares[i].coloniaOtro?this.casoService.caso.lugares[i].coloniaOtro:""))+" "+
-               (this.casoService.caso.lugares[i].municipio?this.casoService.caso.lugares[i].municipio.nombre:(this.casoService.caso.lugares[i].municipioOtro?this.casoService.caso.lugares[i].municipioOtro:""))+" "+
-               (this.casoService.caso.lugares[i].estado?this.casoService.caso.lugares[i].estado.nombre:(this.casoService.caso.lugares[i].estadoOtro?this.casoService.caso.lugares[i].estadoOtro:""))+" "+
-               (this.casoService.caso.lugares[i].pais?this.casoService.caso.lugares[i].pais.nombre:"");
-               break;
-             }
+
+    public heredarDatos() {
+
+        if (this.form.controls['lugar'].value) {
+            let lugar='';
+
+            for(let i=0;i<this.casoService.caso.lugares.length;i++){
+                if(this.casoService.caso.lugares[i].id === this.form.controls["lugar"].value.id){
+                    lugar=(this.casoService.caso.lugares[i].calle?this.casoService.caso.lugares[i].calle:"")+" "+
+                    (this.casoService.caso.lugares[i].noInterior?this.casoService.caso.lugares[i].noInterior:"")+" "+
+                    (this.casoService.caso.lugares[i].colonia?this.casoService.caso.lugares[i].colonia.nombre:(this.casoService.caso.lugares[i].coloniaOtro?this.casoService.caso.lugares[i].coloniaOtro:""))+" "+
+                    (this.casoService.caso.lugares[i].municipio?this.casoService.caso.lugares[i].municipio.nombre:(this.casoService.caso.lugares[i].municipioOtro?this.casoService.caso.lugares[i].municipioOtro:""))+" "+
+                    (this.casoService.caso.lugares[i].estado?this.casoService.caso.lugares[i].estado.nombre:(this.casoService.caso.lugares[i].estadoOtro?this.casoService.caso.lugares[i].estadoOtro:""))+" "+
+                    (this.casoService.caso.lugares[i].pais?this.casoService.caso.lugares[i].pais.nombre:"");
+                    break;
+                }
+
+            }
+
+            this.form.controls['lugarHechos'].setValue(lugar);
+            this.form.controls['tipoPersonaHeredar'].setValue('');
+            this.form.controls['calidadPersonaHeredar'].setValue('');
+
+            if (this.casoService.caso)  {
+                this.form.controls['hechosNarrados'].setValue(this.casoService.caso.descripcion);
+            }
+
 
         }
 
-        this.form.controls["lugarHechos"].setValue(lugar);
-        this.form.controls["tipoPersonaHeredar"].setValue('');
-        this.form.controls["calidadPersona"].setValue('');
-        if(this.casoService.caso){
-            this.form.controls["hechosNarrados"].setValue(this.casoService.caso.descripcion);
-        }
-        
-
-     }
-     
-      this.personasHeredadas.forEach((personaCaso)=> {
-        console.log(personaCaso.persona.tipoPersona)
-        this.form.controls["tipoPersonaHeredar"].setValue(this.form.controls["tipoPersonaHeredar"].value?(personaCaso.persona.tipoPersona?this.form.controls["tipoPersonaHeredar"].value+","+personaCaso.persona.tipoPersona:"Sin valor"):personaCaso.persona.tipoPersona?personaCaso.persona.tipoPersona:"Sin valor")
-        this.form.controls["calidadPersona"].setValue(this.form.controls["calidadPersona"].value?(personaCaso.tipoInterviniente?this.form.controls["calidadPersona"].value+","+personaCaso.tipoInterviniente.tipo:"Sin valor"):personaCaso.tipoInterviniente.tipo?personaCaso.tipoInterviniente.tipo:"Sin valor")
-        console.log( this.form.controls["tipoPersona"])
-      });
+        this.personasHeredadas.forEach((personaCaso)=> {
+            this.form.controls["tipoPersonaHeredar"].setValue(this.form.controls["tipoPersonaHeredar"].value?(personaCaso.persona.tipoPersona?this.form.controls["tipoPersonaHeredar"].value+","+personaCaso.persona.tipoPersona:"Sin valor"):personaCaso.persona.tipoPersona?personaCaso.persona.tipoPersona:"Sin valor")
+            this.form.controls["calidadPersonaHeredar"].setValue(this.form.controls["calidadPersonaHeredar"].value?(personaCaso.tipoInterviniente?this.form.controls["calidadPersonaHeredar"].value+","+personaCaso.tipoInterviniente.tipo:"Sin valor"):personaCaso.tipoInterviniente.tipo?personaCaso.tipoInterviniente.tipo:"Sin valor")
+        });
 
     }
 
-    public heredarChanged(_heredar, _tipoPersonaHeredar=''){
-      console.log("%cheredar changed",'color:red',_heredar)
-      this.heredar=_heredar;
-    // //   if(_heredar){
-    // //     this.form.removeControl("tipoPersona");
-    // //     this.form.addControl("tipoPersonaHeredar",new FormControl(_tipoPersonaHeredar,[]));
-    // //     }
-    // //   else{
-    // //       this.form.removeControl("tipoPersonaHeredar");
-    // //       this.form.addControl("tipoPersona",new FormGroup({
-    // //         'id': new FormControl(),
-    // //       }));
-    //     //}
-    //     // this.form.removeControl("calidadPersona");
-    //     // this.form.addControl("calidadPersona",new FormControl("",[]));
-    //     // if (this.casoId) {
-    //         this.form.controls.calidadPersona.disable();
-    //     }
-    //     console.log("Heredar= ",this.heredar)
-
+    public heredarChanged(_heredar, _tipoPersonaHeredar='') {
+        this.heredar = _heredar;
     }
+
     public  personasChanged(_personasHeredadas){
         Logger.logColor('PERSONAS HEREDADAS','orange',_personasHeredadas);
       this.personasHeredadas=_personasHeredadas;

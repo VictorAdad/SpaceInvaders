@@ -94,7 +94,7 @@ export class MatrizGlobal {
      * @param _tipo llave
      */
     public find(_e, _tipo:string){
-        if (typeof _e!=="undefined")
+        if (typeof _e!=="undefined" && _e!='')
             this.selected[_tipo] = _e;
         else
             this.selected[_tipo] = null;
