@@ -121,7 +121,7 @@ export class DatePicker implements OnInit, ControlValueAccessor {
     cleanValue(){
         this.onClean.emit();
         this.datePicker.nativeElement.value = "";
-        this.control.patchValue(null);
+        this.control.reset();
         this.popover = false;
     }
 
