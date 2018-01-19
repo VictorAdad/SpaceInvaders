@@ -10,7 +10,7 @@
 	    <div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text  *ngIf="!heredar" label="Calidad del usuario" name="calidadPersona" [max]="140" [group]="form" [focus]="true"></text>
-		    	<text *ngIf="heredar" label="Calidad del usuario" name="calidadPersona" [max]="1000" [group]="form" [focus]="true"></text>
+		    	<text *ngIf="heredar" label="Calidad del usuario" name="calidadPersonaHeredar" [max]="1000" [group]="form" [focus]="true"></text>
         </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<int label="Número telefónico del que se está llamando" name="noTelefonico" [min]='10' [max]="10" [group]="form"></int>
@@ -102,8 +102,8 @@
       </div>
 		<div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-            <text  *ngIf="!heredar" label="Calidad de la persona" name="calidadPersona" [max]="150" [group]="form" [focus]="true"></text>
-            <text *ngIf="heredar" label="Calidad de la persona" name="calidadPersonaHeredar" [max]="1000" [group]="form" [focus]="true"></text>
+            <text  *ngIf="!heredar" label="Calidad de la persona" name="calidadPersona" [max]="150" [group]="form"></text>
+            <text *ngIf="heredar" label="Calidad de la persona" name="calidadPersonaHeredar" [max]="1000" [group]="form"></text>
   		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
             <text *ngIf="heredar" label="Tipo de persona" name="tipoPersonaHeredar" [max]="1000" [group]="form"></text>
