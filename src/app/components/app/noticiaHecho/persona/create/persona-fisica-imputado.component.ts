@@ -81,7 +81,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     public  validateIntervinienteDesconocido(tipoInterviniente){
         if(typeof tipoInterviniente != 'undefined'){
             if(tipoInterviniente ==_config.optionValue.tipoInterviniente.imputadoDesconocido || tipoInterviniente ==_config.optionValue.tipoInterviniente.victimaDesconocido)
-            { this.globals.isIntervinienteDesconocido=true;
+            { 
+              this.globals.isIntervinienteDesconocido=true;
               this.globals.hintsObligatorio="";
               this.form.controls.nombre.setValidators([]);
               this.form.controls.paterno.setValidators([]);
@@ -195,6 +196,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     public validateTipoPersona() {
+        this.tipoInterviniente.id = parseInt(this.tipoInterviniente.id); 
         if(this.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victimaDesconocido){
             let timer = Observable.timer(500);
             timer.subscribe(t => {
