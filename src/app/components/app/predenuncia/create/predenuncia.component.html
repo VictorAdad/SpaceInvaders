@@ -10,10 +10,10 @@
 	    <div class="row">
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<text  *ngIf="!heredar" label="Calidad del usuario" name="calidadPersona" [max]="140" [group]="form" [focus]="true"></text>
-		    	<text *ngIf="heredar" label="Calidad del usuarios" name="calidadPersona" [max]="1000" [group]="form" [focus]="true"></text>
+		    	<text *ngIf="heredar" label="Calidad del usuario" name="calidadPersona" [max]="1000" [group]="form" [focus]="true"></text>
         </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
-		    	<text label="Número telefónico del que se está llamando" name="noTelefonico" [max]="20" [group]="form"></text>
+		    	<int label="Número telefónico del que se está llamando" name="noTelefonico" [min]='10' [max]="10" [group]="form"></int>
 		    </div>
 		    <div class="col-md-3 col-sm-12 col-lg-3">
 		    	<select2 [options]="optionsServ.tipoLinea"

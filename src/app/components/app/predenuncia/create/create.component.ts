@@ -511,7 +511,8 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
         public onLine: OnLineService,
         public formatos: FormatosService,
         public db: CIndexedDB,
-        public caso: CasoService
+        public caso: CasoService,
+        public authen: AuthenticationService,
         ){
         super(
             http,
@@ -524,7 +525,10 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
         this.vista="predenuncia";
     }
 
-    ngOnInit() {
+    ngOnInit() {        
+        if(this.authen.user.roles[0] == "Call Center"){
+            this.isCallCenter = true;
+        }
         var obj=this;
         if(this.onLine.onLine){
             if(this.object.data)
