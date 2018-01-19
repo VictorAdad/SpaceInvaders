@@ -136,6 +136,12 @@ export class CasoHerenciaComponent implements OnInit {
         }
     }
 
+    public removePersona(_event: any, _id: number) {
+        this.personas = this.personas.filter( o => o.id !== _id);
+        (this.form.controls.personas as FormArray).controls
+            = (this.form.controls.personas as FormArray).controls.filter( o => o.value.id !== _id);
+    }
+
     public isInPersonas(_id) {
         for (let i = 0; i < this.personas.length; i++) {
             if (this.personas[i].id === _id) {
