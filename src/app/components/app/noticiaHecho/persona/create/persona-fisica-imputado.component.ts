@@ -966,6 +966,14 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     }
 
     doEdit(_model){
+        if (_model['personaCaso'] && _model['personaCaso'][0]) {
+            if (_model['personaCaso'][0]['fechaDeclaracion'] == null) {
+                 _model['personaCaso'][0]['fechaDeclaracion']='';
+            }
+            if (_model['personaCaso'][0]['fechaDetencion'] == null) {
+                _model['personaCaso'][0]['fechaDetencion']='';
+           }
+        }
         return new Promise((resolve,reject)=>{
             if(this.onLine.onLine&&this.globals.inicioOnline){
                 if(this.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victimaDesconocido || this.tipoInterviniente.id === _config.optionValue.tipoInterviniente.imputadoDesconocido){
@@ -1091,6 +1099,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
             if (this.personaServ.nacionalidadReligion.finded[0]){
                 _model["nacionalidadReligion"]={id:this.personaServ.nacionalidadReligion.finded[0].id};
             }
+            Logger.logColor('Tipo de detenido service','purple',this.personaServ.tipoDetenido);
             if (this.personaServ.tipoDetenido.finded[0]){
                 (_model["personaCaso"])[0]["tipoDetenido"].id=this.personaServ.tipoDetenido.finded[0].id
                 Logger.log('Tipo de detenido service',this.personaServ.tipoDetenido);
