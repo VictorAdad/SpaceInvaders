@@ -383,6 +383,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
         let hasALocalizacion = false;
 
         this.cleanCamposHeredar();
+        this.form.controls["narracionHechos"].setValue(this.casoService.caso.predenuncias.hechosNarrados)
         this.personasHeredadas.forEach((personaCaso)=> {
 
             // Heradar nombre del entrevistado
@@ -488,7 +489,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 
         // Heredar narrativa de los hechos ((Hecho narrados de Predenuncia)
         console.log(this.casoService.caso);
-        this.form.controls["narracionHechos"].setValue(this.casoService.caso.predenuncias.hechosNarrados)
+        // this.form.controls["narracionHechos"].setValue(this.casoService.caso.predenuncias.hechosNarrados)
     }
 
     public setSinValor(key) {
@@ -537,6 +538,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
         this.form.controls["ocupacion"].setValue('');
         this.form.controls["lugarOcupacion"].setValue('');
         this.form.controls["estadoCivil"].setValue('');
+        this.form.controls["narracionHechos"].setValue('');
     }
 
 }
