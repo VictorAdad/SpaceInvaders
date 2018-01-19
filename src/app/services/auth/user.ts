@@ -56,7 +56,7 @@ export class Usuario {
             this.agenciaCompleto = _usuario.agenciaCompleto;
             this.autoridad       = _usuario.autoridadCompleto;
             this.turno           = _usuario.Turno;
-            this.distrito        = _usuario.Distrito;
+            this.distrito        = _usuario.distritoAcronimo;
             this.municipio       = _usuario.Municipio;
             this.municipioId     = _usuario.municipioId;
         }
