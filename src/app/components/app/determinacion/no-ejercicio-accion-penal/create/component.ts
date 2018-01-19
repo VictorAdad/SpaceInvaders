@@ -67,7 +67,8 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
     public id: number = null;
     public personas: any[] = [];
   @Output() modelUpdate=new EventEmitter<any>();
-	public form: FormGroup;
+    public form: FormGroup;
+    public heredarSintesis = false;
 	public model: NoEjercicioAccionPenal;
 	dataSource: TableService | null;
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -134,14 +135,22 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
 				});
 			}
 		});
-	}
+    }
+    public heredarFlag(_event){
+        this.heredarSintesis = _event;
+    }
+
   public heredarDatos(){
     console.log("Heredar en facultad de no investigar")
+    
     /*
        • Narración de los hechos (Hecho narrados de Predenuncia))
 
     */
-    this.form.controls["narracionHechos"].setValue(this.casoService.caso.predenuncias.hechosNarrados)
+    if(this.heredarSintesis){
+        this.form.controls["narracionHechos"].setValue(this.casoService.caso.predenuncias.hechosNarrados)
+    }
+    
   }
 	public save(valid: any, _model: any) {
         if (valid){

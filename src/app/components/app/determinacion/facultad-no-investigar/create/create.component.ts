@@ -147,6 +147,10 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
         });
     }
 
+    public heredarFlag(_event){
+        this.heredarSintesis = _event;
+    }
+
 
     public heredarDatos(){
       /*
@@ -175,7 +179,9 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
             this.form.controls["domicilioDenunciante"].setValue( this.form.controls["domicilioDenunciante"].value?(domicilio?this.form.controls["domicilioDenunciante"].value+","+domicilio:this.form.controls["domicilioDenunciante"].value+",Sin valor"):domicilio)
         });
         // Heredar Síntesis de los hechos (Síntesis del caso)
-        this.form.controls["sintesisHechos"].setValue(this.casoService.caso.descripcion)
+        if (this.heredarSintesis) {
+            this.form.controls['sintesisHechos'].setValue(this.casoService.caso.descripcion);
+        }
     }
 
 
