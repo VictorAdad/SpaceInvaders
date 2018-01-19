@@ -203,7 +203,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
             'correoElectronicoHeredar': new FormControl('', []),
             'curpHeredar': new FormControl(""),
             'rfcHeredar': new FormControl(""),
-
+            'calleHeredar': new FormControl(""),
             'autoridadRealizaEntrevista': new FormControl(""),
             'lugarRealizaEntrevista': new FormControl(""),
             'nombreEntrevistado': new FormControl(""),
@@ -438,7 +438,9 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
             if(localizacion){
                 hasALocalizacion=true;
                 // Heredar Calle
-                this.form.controls["calle"].setValue( this.form.controls["calle"].value?(localizacion.calle?this.form.controls["calle"].value+","+localizacion.calle:this.form.controls["calle"].value+",Sin valor"):(localizacion.calle?localizacion.nombre:"Sin valor"))
+                this.form.controls["calleHeredar"].setValue(
+                    this.form.controls["calleHeredar"].value ? (localizacion.calle?this.form.controls["calleHeredar"].value+","+localizacion.calle:this.form.controls["calleHeredar"].value+",Sin valor") : (localizacion.calle ? localizacion.calle:"Sin valor")
+                );
                 // Heredar No Exterior
                 this.form.controls["noExterior"].setValue( this.form.controls["noExterior"].value?(localizacion.noExterior?this.form.controls["noExterior"].value+","+localizacion.noExterior:this.form.controls["noExterior"].value+",Sin valor"):(localizacion.noExterior?localizacion.noExterior:"Sin valor"))
                 // Heredar No interior
@@ -463,7 +465,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                 this.form.controls["correoElectronicoHeredar"].setValue( this.form.controls["correoElectronicoHeredar"].value?(localizacion.correo?this.form.controls["correoElectronicoHeredar"].value+","+localizacion.correo:this.form.controls["correoElectronicoHeredar"].value+",Sin valor"):(localizacion.correo?localizacion.correo:"Sin valor"))
 
             } else {
-                this.setSinValor("calle");
+                this.setSinValor("calleHeredar");
                 this.setSinValor("noExterior");
                 this.setSinValor("noInterior");
                 this.setSinValor("colonia");
@@ -478,7 +480,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
         });
 
         if (!hasALocalizacion) {
-            this.form.controls["calle"].setValue(null)
+            this.form.controls["calleHeredar"].setValue(null)
             this.form.controls["noExterior"].setValue(null)
             this.form.controls["noInterior"].setValue(null)
             this.form.controls["cpHeredar"].setValue(null)
