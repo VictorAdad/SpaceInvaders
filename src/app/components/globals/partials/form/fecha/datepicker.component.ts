@@ -35,6 +35,7 @@ export class DatePicker implements OnInit, ControlValueAccessor {
     @Input() sufixIcon : string;
     @Input() validateDays : string ="";
     @Output() onDateSelect:EventEmitter<Date> = new EventEmitter<Date>();
+    @Output() onClean : EventEmitter<any> = new EventEmitter<any>();  
 
     selectedYear: any;
     selectedMonth: any;
@@ -118,8 +119,9 @@ export class DatePicker implements OnInit, ControlValueAccessor {
     }
 
     cleanValue(){
+        this.onClean.emit();
         this.datePicker.nativeElement.value = "";
-        this.control.patchValue(null);
+        this.control.setValue("");
         this.popover = false;
     }
 
