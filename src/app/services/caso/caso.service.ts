@@ -262,7 +262,8 @@ export class Caso {
                     }else{
                         complement = this.lugares[i].coloniaOtro+","+this.lugares[i].estadoOtro;
                     }
-                    let lugar = this.lugares[i].detalleLugar.tipoLugar+" - "+this.lugares[i].calle+","+this.lugares[i].noExterior+","+complement;
+                    Logger.logColor('<<< Lugares >>>','red',this.lugares[i]);
+                    let lugar = this.lugares[i].detalleLugar.tipoLugar+" - "+this.lugares[i].calle+","+ ((this.lugares[i].noExterior != null) ? this.lugares[i].noExterior +"," : '')+complement;
 
                     options.push(
                         {value:this.lugares[i].id , label:lugar}
