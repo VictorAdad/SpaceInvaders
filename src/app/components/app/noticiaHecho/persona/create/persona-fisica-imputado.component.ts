@@ -1292,6 +1292,10 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
         // });
     }
 
+    public disableEdad(){
+        this.globals.form.controls.edad.enable();
+    }
+
     edad(e){
 
         var m = moment(e);
