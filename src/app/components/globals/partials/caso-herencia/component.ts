@@ -69,6 +69,9 @@ export class CasoHerenciaComponent implements OnInit {
     @Output()
     public heredarChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    @Output()
+    public heredarSintesisChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
 
     public settings: ConfirmSettings = {
         overlayClickToClose: false,
@@ -185,6 +188,7 @@ export class CasoHerenciaComponent implements OnInit {
     public setHeredarSintesis(checked) {
         console.log(this.form);
         this.heredarSintesisHechos = checked;
+        this.heredarSintesisChange.emit(this.heredarSintesisHechos);
     }
 
     public fillCampos() {
