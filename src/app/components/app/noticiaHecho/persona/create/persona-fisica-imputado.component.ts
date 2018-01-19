@@ -1253,7 +1253,7 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
     }
 
     changePais(id){
-      if(id!=null && typeof id !='undefined'){
+      if(id!=null && typeof id !='undefined' && id != ""){
         this.isMexico=id==_config.optionValue.idMexico;
         if (this.isMexico)
             this.options.getEstadoByPais(id);
@@ -1268,14 +1268,14 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
     }
 
     changeEstado(id){
-        if(id != null && typeof id !='undefined'){
+        if(id != null && typeof id !='undefined' && id != ""){
             this.options.getMunicipiosByEstado(id);
             this.globals.form.controls.municipio.reset();
         }
     }
 
     changeMunicipio(id){
-        if(id!=null && typeof id !='undefined')
+        if(id!=null && typeof id !='undefined' && id != "")
             this.options.getColoniasByMunicipio(id);
     }
 

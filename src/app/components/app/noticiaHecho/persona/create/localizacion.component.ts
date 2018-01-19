@@ -43,7 +43,7 @@ export class LocalizacionComponent{
     }
 
     changePais(id){
-      if(id!=null && typeof id !='undefined'){
+      if(id!=null && typeof id !='undefined' && id != ""){
       this.isMexico=id==_config.optionValue.idMexico;
       this.options.getEstadoByPais(id);
         for (var i = 0; i < this.options.paises.length; ++i) {
@@ -60,12 +60,12 @@ export class LocalizacionComponent{
     }
 
     changeEstado(id){
-        if(id!=null && typeof id !='undefined')
+        if(id!=null && typeof id !='undefined' && id != "")
         this.options.getMunicipiosByEstado(id);
     }
 
     changeMunicipio(id){
-        if(id!=null && typeof id !='undefined'){
+        if(id!=null && typeof id !='undefined' && id != ""){
             this.options.getColoniasByMunicipio(id);
             this.options.getLocalidadByMunicipio(id);
         }
@@ -255,7 +255,7 @@ export class LocalizacionFormComponent{
 
 
     public changePais(id){
-        if(id!=null && typeof id !='undefined' && this.antIdPais!=id){
+        if(id!=null && typeof id !='undefined' && this.antIdPais!=id && id != ""){
             this.isMexico=id==_config.optionValue.idMexico;
             this.options.getEstadoByPais(id);
             for (var i = 0; i < this.options.paises.length; ++i) {
@@ -294,7 +294,7 @@ export class LocalizacionFormComponent{
     }
 
     public changeEstado(id){
-        if(id!=null && typeof id !='undefined' && this.antIdEstado!=id){
+        if(id!=null && typeof id !='undefined' && this.antIdEstado!=id && id != ""){
             this.options.getMunicipiosByEstado(id);
             this.cleanSelects(true);
         }
@@ -303,7 +303,7 @@ export class LocalizacionFormComponent{
 
     public changeMunicipio(id){
         Logger.logColor("MUNICIPIO","purple",this.globals.isFillForm);
-        if(id!=null && typeof id !='undefined' && id!=this.antIdMunicipio){
+        if(id!=null && typeof id !='undefined' && id!=this.antIdMunicipio && id != ""){
             if (!this.globals.isFillForm){
                 this.options.getColoniasByMunicipio(id);
                 this.options.getLocalidadByMunicipio(id);
