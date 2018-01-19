@@ -28,13 +28,16 @@
                 <mat-list *ngIf="personas != null">
                     <mat-list-item *ngFor="let personaCaso of personas">
                         <div *ngIf="personaCaso.persona.nombre !=null || personaCaso.persona.paterno!=null || personaCaso.persona.materno!=null">
-                            {{personaCaso | personaNombre }} - {{personaCaso.tipoInterviniente.tipo}} <button mat-icon-button (click)="removePersona($event, personaCaso.id)"><mat-icon style="vertical-align: middle">close</mat-icon></button>
+                            <small [ngClass]="{ 'text-muted': !heredar}">{{personaCaso | personaNombre }} - {{personaCaso.tipoInterviniente.tipo}}</small> 
+                            <button mat-icon-button [disabled]="!heredar" (click)="removePersona($event, personaCaso.id)"><mat-icon style="vertical-align: middle">close</mat-icon></button>
                         </div>
                         <div *ngIf="personaCaso.persona.nombre ==null &&  personaCaso.persona.paterno==null && personaCaso.persona.materno ==null && personaCaso.tipoInterviniente.tipo == 'Imputado desconocido'">
-                            Quién Resulte Responsable - {{personaCaso.tipoInterviniente.tipo}} <button mat-icon-button (click)="removePersona($event, personaCaso.id)"><mat-icon style="vertical-align: middle">close</mat-icon></button>
+                            <small [ngClass]="{ 'text-muted': !heredar}">Quién Resulte Responsable - {{personaCaso.tipoInterviniente.tipo}}</small> 
+                            <button mat-icon-button [disabled]="!heredar" (click)="removePersona($event, personaCaso.id)"><mat-icon style="vertical-align: middle">close</mat-icon></button>
                         </div>
                         <div *ngIf="personaCaso.persona.nombre ==null &&  personaCaso.persona.paterno==null && personaCaso.persona.materno ==null && !(personaCaso.tipoInterviniente.tipo == 'Imputado desconocido')">
-                            Identidad Desconocida - {{personaCaso.tipoInterviniente.tipo}} <button mat-icon-button (click)="removePersona($event, personaCaso.id)"><mat-icon style="vertical-align: middle">close</mat-icon></button>
+                            <small [ngClass]="{ 'text-muted': !heredar}">Identidad Desconocida - {{personaCaso.tipoInterviniente.tipo}}</small> 
+                            <button mat-icon-button [disabled]="!heredar" (click)="removePersona($event, personaCaso.id)"><mat-icon style="vertical-align: middle">close</mat-icon></button>
                         </div>
                     </mat-list-item>
                 </mat-list>
