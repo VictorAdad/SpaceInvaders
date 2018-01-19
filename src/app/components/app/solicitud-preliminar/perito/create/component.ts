@@ -194,7 +194,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
       'heredarSintesisHechos':  new FormControl(false, []),
       'personas': new FormArray([]),
 
-			'tipo': new FormControl(this.model.tipo),
+			'tipo': new FormControl(this.model.tipo, [Validators.required,]),
 			'hechosNarrados': new FormControl(this.model.hechosNarrados),
 			'noOficio': new FormControl(this.model.noOficio),
 			'directorInstituto': new FormControl(this.model.directorInstituto),

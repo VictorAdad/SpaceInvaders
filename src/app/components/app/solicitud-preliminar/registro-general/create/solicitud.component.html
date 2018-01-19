@@ -81,7 +81,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <phone label="Especificar número teléfonico" name="noTelefonico" [max]="20" [group]="form"></phone>
+                        <int label="Especificar número teléfonico" name="noTelefonico" [min]="10" [max]="10"  [group]="form"></int>
                     </div>
                     <div class="col">
                         <text label="Nombre de la persona que atiende la llamada telefónica" name="atencionLlamada" [max]="100" [group]="form"></text>
