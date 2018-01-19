@@ -6,20 +6,28 @@ import { OnLineService } from '@services/onLine.service';
 import * as moment from 'moment';
 import { Logger } from '@services/logger.service';
 import { PersonaNombre } from "@pipes/persona.pipe";
+import { Subject } from 'rxjs/Subject';
 import { MOption } from '../../components/globals/partials/form/select2/select2.component';
 /**
  * Servicio qeu almacena el ultimo caso visto
  */
 @Injectable()
 export class CasoService{
+
     /**
      * id del caso
      */
     public id: any;
+
     /**
      * caso
      */
     public caso: Caso = new Caso();
+
+    /**
+     * Subject del caso
+     */
+    public casoChange = new Subject<Caso>();
 
     constructor(
         private db: CIndexedDB,
@@ -30,25 +38,27 @@ export class CasoService{
     }
 
     /**
-     * Busca el caso con id dado, si el _id==this.id no se hace nada 
+     * Busca el caso con id dado, si el _id==this.id no se hace nada
      * @param _id id del caso a buscar
      */
-    public find(_id){
+    public find(_id) {
         return new Promise<any>(
             (resolve, reject) => {
-                if(this.id !== _id){
+                if (this.id !== _id) {
                     this.id = _id;
-                    if(this.onLine.onLine){
+                    if (this.onLine.onLine) {
                         this.http.get(`/v1/base/casos/${this.id}/all`).subscribe(
                             response => {
+                                this.casoChange.next(Object.assign(this.caso, response));
                                 resolve(this.setOnlineCaso(response));
                             }
-                        )
-                    }else{
-                        this.db.get("casos", this.id).then(
+                        );
+                    } else {
+                        this.db.get('casos', this.id).then(
                             response => {
                                 if (response !== undefined) {
                                     console.log('rsponse', response);
+                                    this.casoChange.next(Object.assign(this.caso, response));
                                     this.setCaso(response);
                                     resolve(this.actualizaCasoOffline(response));
                                 }else {
@@ -57,8 +67,8 @@ export class CasoService{
                             }
                         );
                     }
-                }else{
-                    resolve("El caso ya esta");
+                } else {
+                    resolve(this.caso);
                 }
             }
         );
@@ -130,13 +140,13 @@ export class CasoService{
 /**
  * calse del caso, esta clase guarda la informacion importante del caso para poderla consultar en caso de que se pierda la conexion.
  */
-export class Caso{
-    
+export class Caso {
+
     public armas: any[];
-    public descripcion: string
-    public hasRelacionVictimaImputado: boolean
-    public hasPredenuncia: boolean
-    public hasAcuerdoInicio: boolean
+    public descripcion: string;
+    public hasRelacionVictimaImputado: boolean;
+    public hasPredenuncia: boolean;
+    public hasAcuerdoInicio: boolean;
     public entrevistas: any[];
     public created: number;
     public titulo: string;
@@ -161,7 +171,7 @@ export class Caso{
         Logger.log('Caso@findVictima', this.personaCasos, _config.optionValue.tipoInterviniente.victima);
         let personas = this.personaCasos.filter(
             object => { 
-                return object.tipoInterviniente.id == _config.optionValue.tipoInterviniente.victima;
+                return object.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victima;
             }
         );
         return personas[0];
@@ -169,7 +179,7 @@ export class Caso{
 
     public formatCreated (){
         moment.locale('es');
-       return moment(this.created).format('LL'); 
+       return moment(this.created).format('LL');
     }
 
     public formatHoraCreated(){
@@ -185,32 +195,36 @@ export class Caso{
         return date;
     }
 
-    //Metódos de persona
-    public getAlias(_persona){
+    // Metódos de persona
+    public getAlias(_persona) {
         Logger.log('Caso@getAlias()', _persona);
-        if(_persona.persona.aliasNombrePersona.length > 0){
-            let nombres =  _persona.persona.aliasNombrePersona.map(object => { return object.nombre });
+        if (_persona.persona.aliasNombrePersona.length > 0) {
+            const nombres =  _persona.persona.aliasNombrePersona.map(object =>  object.nombre );
             return nombres.toString();
-        }else{
+        } else {
             return '';
         }
     }
 
-    public getDomicilios(_persona){
+    public getDomicilios(_persona) {
         Logger.log('Caso@getDomicilios()', _persona);
-        let domicilios:any[] = [];
+        const domicilios: any[] = [];
 
-        for (let localizacion of _persona.persona.localizacionPersona) {
+        for (const localizacion of _persona.persona.localizacionPersona) {
             let domicilio = '';
-            domicilio += ' '+localizacion.calle;
-            domicilio += ' '+localizacion.noInterior;
-            domicilio += ' '+localizacion.noExterior;
-            if(localizacion.colonia != null)
-                domicilio += ' '+localizacion.colonia.nombre;
-            if(localizacion.municipio  != null)
-                domicilio += ' '+localizacion.municipio.nombre;
-            if(localizacion.estado)
-                domicilio += ' '+localizacion.estado.nombre;
+            domicilio += ' ' + localizacion.calle;
+            domicilio += ' ' + localizacion.noInterior;
+            domicilio += ' ' + localizacion.noExterior;
+            if (localizacion.colonia != null) {
+                domicilio += ' ' + localizacion.colonia.nombre;
+            }
+
+            if (localizacion.municipio  != null) {
+                domicilio += ' ' + localizacion.municipio.nombre;
+            }
+            if (localizacion.estado) {
+                domicilio += ' ' + localizacion.estado.nombre;
+            }
 
             domicilios.push(domicilio);
         }
@@ -222,13 +236,15 @@ export class Caso{
         let options: MOption[] = [];
         if(this.personaCasos){
             for(let i in this.personaCasos){
-                let object = this.personaCasos[i];
-                let nombre = new PersonaNombre().transform(object);
-                nombre = nombre+" - "+this.personaCasos[i].tipoInterviniente.tipo;
+                if (this.personaCasos.hasOwnProperty(i)) {
+                    let object = this.personaCasos[i];
+                    let nombre = new PersonaNombre().transform(object);
+                    nombre = nombre+" - "+this.personaCasos[i].tipoInterviniente.tipo;
 
-                options.push(
-                    {value:this.personaCasos[i].id , label: nombre}
-                );
+                    options.push(
+                        {value:this.personaCasos[i].id , label: nombre}
+                    );
+                }
             }
         }
         return options;
@@ -239,17 +255,19 @@ export class Caso{
         let complement;
         if (this.lugares) {
             for(let i in this.lugares){
-                let paisId = this.lugares[i].pais.id;
-                if (paisId == this.IdMexico) {
-                    complement = this.lugares[i].colonia.nombre+","+this.lugares[i].estado.nombre;
-                }else{
-                    complement = this.lugares[i].coloniaOtro+","+this.lugares[i].estadoOtro;
-                }
-                let lugar = this.lugares[i].detalleLugar.tipoLugar+" - "+this.lugares[i].calle+","+this.lugares[i].noExterior+","+complement;
+                if (this.lugares.hasOwnProperty(i)) {
+                    let paisId = this.lugares[i].pais.id;
+                    if (paisId == this.IdMexico) {
+                        complement = this.lugares[i].colonia.nombre+","+this.lugares[i].estado.nombre;
+                    }else{
+                        complement = this.lugares[i].coloniaOtro+","+this.lugares[i].estadoOtro;
+                    }
+                    let lugar = this.lugares[i].detalleLugar.tipoLugar+" - "+this.lugares[i].calle+","+this.lugares[i].noExterior+","+complement;
 
-                options.push(
-                    {value:this.lugares[i].id , label:lugar}
-                );
+                    options.push(
+                        {value:this.lugares[i].id , label:lugar}
+                    );
+                }
             }
         }
         return options;		
