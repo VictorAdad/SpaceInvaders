@@ -581,20 +581,16 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
             this.geocoder.geocode({'address': address}, (results, status) => {
               console.log('geocode', results, status);
               if (status && results) {
-                place = results[0];
-                if(place !== null || place !== undefined){ 
-                  if (place.geometry === undefined || place.geometry === null) {
-                    return;
-                  }
-                }else{
+                if(results[0] == undefined){
                   return;
-                }
-                Logger.logColor('<<< FillAddresss 7 >>>','red')                
-                this.lat = place.geometry.location.lat();
-                this.lng = place.geometry.location.lng();
-                this.latMarker = place.geometry.location.lat();
-                this.lngMarker = place.geometry.location.lng();
-                this.zoom = 17;
+                }else{
+                  place = results[0];
+                  this.lat = place.geometry.location.lat();
+                  this.lng = place.geometry.location.lng();
+                  this.latMarker = place.geometry.location.lat();
+                  this.lngMarker = place.geometry.location.lng();
+                  this.zoom = 17;
+                }                  
               } else {
                 // alert('Geocode was not successful for the following reason: ' + status);
               }
@@ -609,7 +605,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
   public changePais(id) {
 
     Logger.log('-------->', id);
-    if (id != null && typeof id != 'undefined') {
+    if (id != null && typeof id != 'undefined' && id != "") {
       this.optionsServ.getEstadoByPais(id);
       this.isMexico = (id == _config.optionValue.idMexico);
       Logger.log(this.optionsServ.paises);
@@ -636,7 +632,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
 
   public changeEstado(id) {
     Logger.log('Id de estado', id);
-    if (id != null && typeof id != 'undefined') {
+    if (id != null && typeof id != 'undefined' && id != "") {
       this.optionsServ.getMunicipiosByEstado(id);
       this.form.controls.estado.patchValue(id);
       Logger.log(this.form.controls);
@@ -645,7 +641,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
   }
 
   public changeMunicipio(id) {
-    if (id != null && typeof id != 'undefined')
+    if (id != null && typeof id != 'undefined' && id != "")
       this.optionsServ.getColoniasByMunicipio(id);
     this.cleanSelects(false);
   }
