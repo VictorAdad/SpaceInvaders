@@ -149,7 +149,6 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
 
 
     public heredarDatos(){
-      console.log("Heredar en facultad de no investigar")
       /*
               • Nombre del denunciante
               • Originario de
@@ -158,31 +157,32 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
               • Síntesis de los hechos (Síntesis del caso)
 
       */
-     this.personasHeredadas.forEach((personaCaso)=> {
-       // Heradar Nombre del denunciante
-       console.log(personaCaso)
-       let nombrePersona=this.personaNombre.transform(personaCaso);
-       this.form.controls["nombreDenunciante"].setValue( this.form.controls["nombreDenunciante"].value?(nombrePersona?this.form.controls["nombreDenunciante"].value+","+nombrePersona:this.form.controls["nombreDenunciante"].value+",Sin valor"):nombrePersona)
-        // Heredar edad Denunciante
-        let edad=personaCaso.persona.edad
-        this.form.controls["edadDenuncianteHeredar"].setValue( this.form.controls["edadDenuncianteHeredar"].value?(edad?this.form.controls["edadDenuncianteHeredar"].value+","+edad:this.form.controls["edadDenuncianteHeredar"].value+",Sin valor"):edad)
-        console.log( this.form.controls["edadDenuncianteHeredar"].value);
-        this.form.controls["edadDenuncianteHeredar"].updateValueAndValidity();
-        let originario=this.personaOriginario.transform(personaCaso);
-        // Heredar originario
-        this.form.controls["originarioDenunciante"].setValue( this.form.controls["originarioDenunciante"].value?(originario?this.form.controls["originarioDenunciante"].value+","+originario:this.form.controls["originarioDenunciante"].value+",Sin valor"):originario)
-        // Heredar Domicilio
-        let domicilio = this.personaDomicilio.transform(personaCaso,0);
-        this.form.controls["domicilioDenunciante"].setValue( this.form.controls["domicilioDenunciante"].value?(domicilio?this.form.controls["domicilioDenunciante"].value+","+domicilio:this.form.controls["domicilioDenunciante"].value+",Sin valor"):domicilio)
-      });
-     // Heredar Síntesis de los hechos (Síntesis del caso)
-      this.form.controls["sintesisHechos"].setValue(this.casoService.caso.descripcion)
+        this.cleanCamposHeredar();
+        this.personasHeredadas.forEach((personaCaso)=> {
+            // Heradar Nombre del denunciante
+            let nombrePersona=this.personaNombre.transform(personaCaso);
+            this.form.controls["nombreDenunciante"].setValue( this.form.controls["nombreDenunciante"].value?(nombrePersona?this.form.controls["nombreDenunciante"].value+","+nombrePersona:this.form.controls["nombreDenunciante"].value+",Sin valor"):nombrePersona)
+            // Heredar edad Denunciante
+            let edad=personaCaso.persona.edad
+            this.form.controls["edadDenuncianteHeredar"].setValue( this.form.controls["edadDenuncianteHeredar"].value?(edad?this.form.controls["edadDenuncianteHeredar"].value+","+edad:this.form.controls["edadDenuncianteHeredar"].value+",Sin valor"):edad)
+            console.log( this.form.controls["edadDenuncianteHeredar"].value);
+            this.form.controls["edadDenuncianteHeredar"].updateValueAndValidity();
+            let originario=this.personaOriginario.transform(personaCaso);
+            // Heredar originario
+            this.form.controls["originarioDenunciante"].setValue( this.form.controls["originarioDenunciante"].value?(originario?this.form.controls["originarioDenunciante"].value+","+originario:this.form.controls["originarioDenunciante"].value+",Sin valor"):originario)
+            // Heredar Domicilio
+            let domicilio = this.personaDomicilio.transform(personaCaso,0);
+            this.form.controls["domicilioDenunciante"].setValue( this.form.controls["domicilioDenunciante"].value?(domicilio?this.form.controls["domicilioDenunciante"].value+","+domicilio:this.form.controls["domicilioDenunciante"].value+",Sin valor"):domicilio)
+        });
+        // Heredar Síntesis de los hechos (Síntesis del caso)
+        this.form.controls["sintesisHechos"].setValue(this.casoService.caso.descripcion)
     }
 
 
     public  personasChanged(_personasHeredadas){
-      this.personasHeredadas=_personasHeredadas;
+        this.personasHeredadas = _personasHeredadas;
     }
+
     public heredarChanged(_heredar){
         this.heredar=_heredar;
         if(_heredar){
@@ -195,6 +195,13 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
 
         console.log("Heredar= ",this.heredar)
 
+    }
+
+    public cleanCamposHeredar() {
+        this.form.controls['nombreDenunciante'].setValue('');
+        this.form.controls['edadDenuncianteHeredar'].setValue('');
+        this.form.controls['originarioDenunciante'].setValue('');
+        this.form.controls['domicilioDenunciante'].setValue('');
     }
 
 

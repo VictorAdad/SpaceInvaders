@@ -544,6 +544,16 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
         this.form.controls["lugarOcupacion"].setValue('');
         this.form.controls["estadoCivil"].setValue('');
         this.form.controls["narracionHechos"].setValue('');
+        this.form.controls["calleHeredar"].setValue('')
+        this.form.controls["noExterior"].setValue('')
+        this.form.controls["noInterior"].setValue('')
+        this.form.controls["cpHeredar"].setValue('')
+        this.form.controls["colonia"].setValue('')
+        this.form.controls["municipio"].setValue('')
+        this.form.controls["estado"].setValue('')
+        this.form.controls["noTelefonoParticularHeredar"].setValue('')
+        this.form.controls["noTelefonoCelularHeredar"].setValue('')
+        this.form.controls["correoElectronicoHeredar"].setValue('')
     }
 
     public heredarSintesisChange(_event: boolean) {
