@@ -100,8 +100,7 @@ export class MatrizGlobal {
             this.selected[_tipo] = null;
         this.finded = this.objects.filter(object => {
             return this.validate(object, this.selected);
-        });
-        // Logger.log('Find', this);
+        });      
     }
     /**
      * Funcion para saber si dos objectos son iguales. Necesitan sobreescribir todos las clases hijas
