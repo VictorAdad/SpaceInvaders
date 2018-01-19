@@ -149,7 +149,11 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                 if(this.onLine.onLine) {
                     this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
                         this.heredar = response['heredar'];
-                        this.fillForm(response);
+                        const timer = Observable.timer(1000);
+
+                        timer.subscribe(t=>{
+                            this.fillForm(response);
+                        });
                         this.modelUpdate.emit(response);
                         this.personas = response.personas;
                     });
