@@ -1,7 +1,7 @@
 
 <div class="row space">
     <div class="col-md-12">
-        <caso-herencia [casoId]="casoId" (personasChange)="personasChanged($event)" (heredarChange)="heredarChanged($event)" [heredarFunction]="heredarDatos.bind(this)" [people]="personas" [form]="form" [precarga]="precarga"></caso-herencia>
+        <caso-herencia [casoId]="casoId" (personasChange)="personasChanged($event)" (heredarChange)="heredarChanged($event)" [heredarFunction]="heredarDatos.bind(this)" [people]="personas" [form]="form" (heredarSintesisChange)="heredarFlag($event)" [precarga]="precarga"></caso-herencia>
       </div>
 </div>
 
