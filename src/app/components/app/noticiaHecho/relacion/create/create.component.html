@@ -351,6 +351,7 @@
                         <div class="col-md-3">
                             <select2 placeholder="Detalle"
                                 name="detalle"
+                                hintStart="Campo obligatorio"
                                 [group]="formRelacion.efectoDetalle"
                                 [options]="optionsRelacion.matrizEfectoDetalle.detalle"
                                 (valueChange)="optionsRelacion.matrizEfectoDetalle.find($event, 'detalle')">
@@ -484,6 +485,7 @@
                                 <select2 placeholder="Transportación"
                                     [options]="optionsRelacion.matrizTipoTransportacion.transportacion"
                                     name="transportacion"
+                                    hintStart="Campo obligatorio"
                                     [group]="formRelacion.trataPersonasForm"
                                     (valueChange)="optionsRelacion.matrizTipoTransportacion.find($event, 'transportacion')">
                                 </select2>
@@ -604,6 +606,7 @@
                         <div class="col">
                             <select2 placeholder="Detalle de conducta"
                                 name="detalle"
+                                hintStart="Campo obligatorio"
                                 [group]="formRelacion.hostigamiento"
                                 [options]="optionsRelacion.matrizConductaDetalle.detalle"
                                 (valueChange)="optionsRelacion.matrizConductaDetalle.find($event, 'detalle')">
@@ -612,6 +615,7 @@
                         <div class="col">
                             <select2 placeholder="Testigo"
                                 name="testigo"
+                                hintStart="Campo obligatorio"
                                 [group]="formRelacion.hostigamiento"
                                 [(options)]="optionsNoticia.testigos">
                             </select2>
