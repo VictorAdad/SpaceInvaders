@@ -16,7 +16,7 @@ export class TextareaComponent implements OnInit{
 	@Input() functionChange: Function;
 	@Input() hintStart: string="";
 	@Input() hintEnd: string="";
-	@Input() max :number = 15000;
+	@Input() max :number = 30000;
 	@Input() rows :number = 10;
 	@Input() readonly :boolean = false;
 	@Input() focus :boolean = false;
