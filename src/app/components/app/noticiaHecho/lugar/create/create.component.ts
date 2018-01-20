@@ -175,7 +175,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
       'notas': new FormControl('', []),
       'noExterior': new FormControl('', []),
       'noInterior': new FormControl('', []),
-      'refeGeograficas': new FormControl('', []),
+      'referenciasGeograficas': new FormControl('', []),
       'detalleLugar': new FormGroup({
         'id': new FormControl('', [])
       }),
@@ -396,7 +396,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
         'hora': _data.hora,
         'descripcionLugar': _data.descripcionLugar,
         'notas': _data.notas,
-        'refeGeograficas': _data.refeGeograficas,
+        'referenciasGeograficas': _data.referenciasGeograficas,
         'calle': _data.calle,
         'noExterior': _data.noExterior,
         'noInterior': _data.noInterior,
