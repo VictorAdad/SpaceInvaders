@@ -314,6 +314,10 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         return fechaCanalizacion = new Date(fechaCanalizacion+' '+horaCanalizacion)
     }
 
+    public heredarSistesisChange(_event){
+        this.heredarSintesis = _event;
+    }
+
     public heredarDatos() {
 
         if (this.form.controls['lugar'].value) {
@@ -336,7 +340,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             this.form.controls['tipoPersonaHeredar'].setValue('');
             this.form.controls['calidadPersonaHeredar'].setValue('');
 
-            if (this.casoService.caso)  {
+            if (this.casoService.caso && this.heredarSintesis)  {
                 this.form.controls['hechosNarrados'].setValue(this.casoService.caso.descripcion);
             }
 
