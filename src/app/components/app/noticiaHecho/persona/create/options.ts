@@ -109,7 +109,8 @@ export class Options {
         }
         else{
             for (var i=0; i<_data["length"]; i++) {
-                options.push({value: ""+_data[i]["id"]+"-"+_data[i]["cp"], label: _data[i]["nombre"]});
+                const localidad = _data[i]["localidad"] ? _data[i]["localidad"]['id'] : '';
+                options.push({value: ""+_data[i]["id"]+"-"+_data[i]["cp"]+"-"+localidad, label: _data[i]["nombre"]});
             }
         }
 
