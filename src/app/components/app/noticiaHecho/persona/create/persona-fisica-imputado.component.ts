@@ -389,11 +389,12 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
                                 }
                             });
                         if((_data.localizacionPersona[i])['colonia'] != null){
-                            _data.localizacionPersona[i]['colonia']['idCp']=(_data.localizacionPersona[i])['colonia']['id']+"-"+(_data.localizacionPersona[i])['colonia']['cp'];
+                            const _localidad = _data.localizacionPersona[i]["localidad"] ? _data.localizacionPersona[i]["localidad"]['id'] : '';
+                            _data.localizacionPersona[i]['colonia']['idCp']=(_data.localizacionPersona[i])['colonia']['id']+"-"+(_data.localizacionPersona[i])['colonia']['cp']+"-"+_localidad;
                             formLoc.patchValue({
                                 'colonia':{
                                     'id': (_data.localizacionPersona[i])['colonia']['id'],
-                                    'idCp':(_data.localizacionPersona[i])['colonia']['id']+"-"+(_data.localizacionPersona[i])['colonia']['cp']
+                                    'idCp':(_data.localizacionPersona[i])['colonia']['id']+"-"+(_data.localizacionPersona[i])['colonia']['cp']+"-"+_localidad 
                                 }
                             });
                         }

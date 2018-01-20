@@ -137,6 +137,7 @@ export class LocalizacionFormComponent{
     }
 
     ngOnInit(){
+        console.log('<<<<<<Localidades>>>>>', this.select);
         this.idMexico=_config.optionValue.idMexico;
         Logger.log('->LocalizacionForm Globals', this.globals,this.idMexico);
         Logger.log('->LocalizacionForm IndexForm', this.indexForm);
@@ -332,8 +333,11 @@ export class LocalizacionFormComponent{
         Logger.log("Colonia",idCp,this.options);
         if (idCp){
             let arr = idCp.split("-");
+            console.log('çç',arr, this.options.localidad);
             this.form.controls.cp.patchValue(arr[1]);
             this.form.controls.colonia.patchValue({id:arr[0]});
+            let localidadId=parseInt( arr[2] );
+            this.form.controls.localidad.patchValue({id: localidadId });
         }
 
     }

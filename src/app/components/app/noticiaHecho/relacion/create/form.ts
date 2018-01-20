@@ -237,7 +237,7 @@ export class Form {
             'ambito': new FormControl('', [Validators.required]),
             'conducta': new FormControl('', [Validators.required]),
             'detalle': new FormControl('', [Validators.required]),
-            'testigo': new FormControl('', []),
+            'testigo': new FormControl('', [Validators.required]),
         });
     }
 
