@@ -508,7 +508,7 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
     }
 
     ngOnInit() {        
-        if(this.authen.user.roles[0] == "Call Center"){
+        if (this.authen.user.roles[0] === this.authen.roles.callCenter) {
             this.isCallCenter = true;
         }
         var obj=this;
