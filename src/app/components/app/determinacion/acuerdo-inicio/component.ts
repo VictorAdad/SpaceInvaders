@@ -72,6 +72,8 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
 
     public precarga = true;
 
+    public heredarSintesis = false;
+
     constructor(
         private _fbuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -80,11 +82,11 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
         private router: Router,
         private db: CIndexedDB,
         private auth: AuthenticationService,
-        private casoService:CasoService,
-        private personaNombre:PersonaNombre
+        private casoService: CasoService,
+        private personaNombre: PersonaNombre
 
     ) { super();
-      this.options = new Options(http,db,onLine);
+        this.options = new Options(http, db, onLine);
     }
 
 
@@ -158,22 +160,34 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
 
         });
     }
-    public heredarDatos(){
-      console.log("Heredar en facultad de no investigar")
-      /*
-         • Narración de los hechos (Hecho narrados de Predenuncia))
 
-      */
-      this.personasHeredadas.forEach((personaCaso)=> {
-        // Heradar Nombre del denunciante
-        console.log(personaCaso)
-        let nombrePersona=this.personaNombre.transform(personaCaso);
-        this.form.controls["nombrePersonaAcepta"].setValue( this.form.controls["nombrePersonaAcepta"].value?(nombrePersona?this.form.controls["nombrePersonaAcepta"].value+","+nombrePersona:this.form.controls["nombrePersonaAcepta"].value+",Sin valor"):nombrePersona)
-       });
-      this.form.controls["sintesisHechos"].setValue(this.casoService.caso.predenuncias.hechosNarrados)
+    public heredarDatos() {
+        /*
+        • Narración de los hechos (Hecho narrados de Predenuncia))
+
+        */
+        this.cleanCamposHeredar();
+        this.personasHeredadas.forEach((personaCaso) => {
+            // Heradar Nombre del denunciante
+            const nombrePersona = this.personaNombre.transform(personaCaso);
+            this.form.controls["nombrePersonaAcepta"].setValue( this.form.controls["nombrePersonaAcepta"].value?(nombrePersona?this.form.controls["nombrePersonaAcepta"].value+","+nombrePersona:this.form.controls["nombrePersonaAcepta"].value+",Sin valor"):nombrePersona);
+        });
+
+        if (this.heredarSintesis) {
+            this.form.controls['sintesisHechos'].setValue(this.casoService.caso.predenuncias.hechosNarrados);
+        }
     }
-    public  personasChanged(_personasHeredadas){
-      this.personasHeredadas=_personasHeredadas;
+
+    public heredarSintesisChange(_event) {
+        this.heredarSintesis = _event;
+    }
+
+    public cleanCamposHeredar() {
+        this.form.controls['nombrePersonaAcepta'].setValue('');
+    }
+
+    public  personasChanged(_personasHeredadas) {
+        this.personasHeredadas = _personasHeredadas;
     }
 
     public save(valid: any, _model: any) {
