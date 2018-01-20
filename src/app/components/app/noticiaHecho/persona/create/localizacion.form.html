@@ -209,12 +209,16 @@
     </div>
 </div>
 <div class="row space"></div>
-<mat-table #table [dataSource]="dataSource" class="latabla">
+<div class="row justify-content-center align-items-center" *ngIf="loadListLocalidades" style="height: 200px;">
+        <div class="col-auto">
+            <mat-spinner></mat-spinner>
+        </div>
+    </div>
+<mat-table #table [dataSource]="dataSource" class="latabla" *ngIf="!loadListLocalidades">
 
     <ng-container matColumnDef="direccion">
-        <mat-header-cell *matHeaderCellDef> Direccion </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> Direccion  </mat-header-cell>
         <mat-cell *matCellDef="let dir"> 
-                
             <span *ngIf="dir.pais.id==idMexico">
                 {{dir.tipoDomicilio?(dir.tipoDomicilio.nombre?dir.tipoDomicilio.nombre+":":""):""}}
                 {{dir.calle}}  {{dir.noExterior?"#"+dir.noExterior:""}} {{dir.noInterior?"int. "+dir.noInterior:""}} 

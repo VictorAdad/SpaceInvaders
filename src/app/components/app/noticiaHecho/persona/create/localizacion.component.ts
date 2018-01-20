@@ -125,6 +125,7 @@ export class LocalizacionFormComponent{
     indiceActual=-1;
     idMexico=-1;
     radioTipoResidencia=null;
+    loadListLocalidades=false;
 
     constructor(
         private http: HttpService,
@@ -142,12 +143,17 @@ export class LocalizacionFormComponent{
         this.options = new Options(this.http, this.onLine, this.db, this.select);
         this.dataSource = new TableService(this.paginator, this.data);
         let timer = Observable.timer(2000);
+        this.globals.form.controls["id"].valueChanges.subscribe(data => {
+            Logger.logColor('ID FORM','red',data);
+            this.loadListLocalidades=Number.isInteger(data);
+            //this.loadListLocalidades=false;
+          });
         timer.subscribe(t=>{
             Logger.logColor("--------->","green", this.globals.form.value,this.options);
             this.globals.form.controls["localizacionPersona"].valueChanges.subscribe(data => {
                 this.agregaLocalizaciones(data);
+                this.loadListLocalidades=false;
               });
-            
         });
         
     }
