@@ -63,18 +63,22 @@
                         <text label="En su caso, estado migratorio" name="estadoMigratorio" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <select2 placeholder="Calidad de interviniente" [options]="options.tipoInterviniente" name="id" [group]="form.controls.tipoInterviniente"></select2>
+                        <select2 *ngIf="!heredar" placeholder="Calidad de interviniente" [options]="options.tipoInterviniente" name="id" [group]="form.controls.tipoInterviniente"></select2>
+                        <text *ngIf="heredar" label="Calidad de interviniente" name="calidadIntervinienteHeredar" [max]="1000" [group]="form"></text>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        <text label="Tipo de identificación" name="tipoIdentificacion" [group]="form"></text>
+                        <text *ngIf="!heredar" label="Tipo de identificación" name="tipoIdentificacion" [group]="form"></text>
+                        <text *ngIf="heredar" label="Tipo de identificación" name="tipoIdentificacionHeredar" [max]="1000" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Emisor de la identificación" name="emisorIdentificacion" [group]="form"></text>
+                        <text *ngIf="!heredar" label="Emisor de la identificación" name="emisorIdentificacion" [group]="form"></text>
+                        <text *ngIf="heredar" label="Emisor de la identificación" name="emisorIdentificacionHeredar" [max]="1000" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Nº de la identificación" name="noIdentificacion" [group]="form"></text>
+                        <text *ngIf="!heredar" label="Nº de la identificación" name="noIdentificacion" [group]="form"></text>
+                        <text *ngIf="heredar" label="Nº de la identificación" name="noIdentificacionHeredar" [max]="1000" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
                         <text *ngIf="heredar; else noHeredarCURP" label='CURP' name="curpHeredar" [max]="1000" [group]="form"></text>
@@ -100,7 +104,8 @@
                         ]" name="sabeLeerEscribir" [group]="form"></select2>
                     </div>
                     <div class="col-md-3">
-                        <text label="Grado de escolaridad" name="gradoEscolaridad" [max]="40" [group]="form"></text>
+                        <text *ngIf="!heredar" label="Grado de escolaridad" name="gradoEscolaridad" [max]="40" [group]="form"></text>
+                        <text *ngIf="heredar" label="Grado de escolaridad" name="gradoEscolaridadHeredar" [max]="1000" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
                         <text label="Ocupación"  *ngIf="!heredar" name="ocupacion" [group]="form"></text>
@@ -118,7 +123,8 @@
                         <text  *ngIf="heredar" label="Estado civil" name="estadoCivil" [max]="1000" [group]="form"></text>
                     </div>
                     <div class="col-md-4">
-                        <number label="Salario semanal" name="salarioSemanal" [group]="form"></number>
+                        <number *ngIf="!heredar" label="Salario semanal" name="salarioSemanal" [group]="form"></number>
+                        <text *ngIf="heredar" label="Salario semanal" name="salarioHeredar" [max]="1000" [group]="form"></text>
                     </div>
                     <div class="col-md-4">
                         <text label="Relación del entrevistado con alguna de las partes" name="relacionEntrevistado" [max]="40" [group]="form"></text>

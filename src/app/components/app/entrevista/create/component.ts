@@ -207,6 +207,13 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
             'autoridadRealizaEntrevista': new FormControl(""),
             'lugarRealizaEntrevista': new FormControl(""),
             'nombreEntrevistado': new FormControl(""),
+            'calidadIntervinienteHeredar': new FormControl('', []),
+            'tipoIdentificacionHeredar': new FormControl('', []),
+            'emisorIdentificacionHeredar': new FormControl('', []),
+            'noIdentificacionHeredar': new FormControl('', []),
+            'gradoEscolaridadHeredar': new FormControl('', []),
+            'salarioHeredar': new FormControl('', []),
+
             'sexo': new FormGroup({
                 'id': new FormControl("", []),
             }),
@@ -409,6 +416,8 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 
             let sexo=personaCaso.persona.sexo?personaCaso.persona.sexo.nombre:null;
 
+            let salarioSemanal = personaCaso.persona.ingresoMensual / 4;
+
             // Heredar Sexo
             this.form.controls["sexoHeredar"].setValue(
                 this.form.controls["sexoHeredar"].value ? (sexo?this.form.controls["sexoHeredar"].value+","+sexo:this.form.controls["sexoHeredar"].value+",Sin valor"):sexo?sexo:"Sin valor"
@@ -433,6 +442,25 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
             this.form.controls["lugarOcupacion"].setValue( this.form.controls["lugarOcupacion"].value?(personaCaso.persona.lugarTrabajo?this.form.controls["lugarOcupacion"].value+","+personaCaso.persona.lugarTrabajo:this.form.controls["lugarOcupacion"].value+",Sin valor"):(personaCaso.persona.lugarTrabajo?personaCaso.persona.lugarTrabajo:"Sin valor"))
             // Heredar estado civil
             this.form.controls["estadoCivil"].setValue( this.form.controls["estadoCivil"].value?(personaCaso.persona.estadoCivil?this.form.controls["estadoCivil"].value+","+personaCaso.persona.estadoCivil.nombre:this.form.controls["estadoCivil"].value+",Sin valor"):(personaCaso.persona.estadoCivil?personaCaso.persona.estadoCivil.nombre:"Sin valor"))
+            
+            // Heredar calidad interviniente
+            this.form.controls["calidadIntervinienteHeredar"].setValue( this.form.controls["calidadIntervinienteHeredar"].value?(personaCaso.tipoInterviniente?this.form.controls["calidadIntervinienteHeredar"].value+","+personaCaso.tipoInterviniente.tipo:this.form.controls["calidadIntervinienteHeredar"].value+",Sin valor"):(personaCaso.tipoInterviniente?personaCaso.tipoInterviniente.tipo:"Sin valor"))
+
+            // Heredar tipo identificacion 
+            this.form.controls["tipoIdentificacionHeredar"].setValue( this.form.controls["tipoIdentificacionHeredar"].value?(personaCaso.persona.idiomaIdentificacion?this.form.controls["tipoIdentificacionHeredar"].value+","+personaCaso.persona.idiomaIdentificacion.identificacion:this.form.controls["tipoIdentificacionHeredar"].value+",Sin valor"):(personaCaso.persona.idiomaIdentificacion?personaCaso.persona.idiomaIdentificacion.identificacion:"Sin valor"))
+            
+            // Heredar emisor identificacion
+            this.form.controls["emisorIdentificacionHeredar"].setValue( this.form.controls["emisorIdentificacionHeredar"].value?(personaCaso.persona.autoridadEmisora?this.form.controls["emisorIdentificacionHeredar"].value+","+personaCaso.persona.autoridadEmisora:this.form.controls["emisorIdentificacionHeredar"].value+",Sin valor"):(personaCaso.persona.autoridadEmisora?personaCaso.persona.autoridadEmisora:"Sin valor"))
+
+            // Heredar noIdentificacion
+            this.form.controls["noIdentificacionHeredar"].setValue( this.form.controls["noIdentificacionHeredar"].value?(personaCaso.persona.folioIdentificacion?this.form.controls["noIdentificacionHeredar"].value+","+personaCaso.persona.folioIdentificacion:this.form.controls["noIdentificacionHeredar"].value+",Sin valor"):(personaCaso.persona.folioIdentificacion?personaCaso.persona.folioIdentificacion:"Sin valor"))
+
+            // Heredar grado Escolaridad
+            this.form.controls["gradoEscolaridadHeredar"].setValue( this.form.controls["gradoEscolaridadHeredar"].value?(personaCaso.persona.escolaridad?this.form.controls["gradoEscolaridadHeredar"].value+","+personaCaso.persona.escolaridad.nombre:this.form.controls["gradoEscolaridadHeredar"].value+",Sin valor"):(personaCaso.persona.escolaridad?personaCaso.persona.escolaridad.nombre:"Sin valor"))
+
+            // Heredar salarioHeredar
+            this.form.controls["salarioHeredar"].setValue( this.form.controls["salarioHeredar"].value?(personaCaso.persona.ingresoMensual?this.form.controls["salarioHeredar"].value+","+salarioSemanal:this.form.controls["salarioHeredar"].value+",Sin valor"):(personaCaso.persona.ingresoMensual?salarioSemanal:"Sin valor"))
+
             let localizacion = personaCaso.persona.localizacionPersona? personaCaso.persona.localizacionPersona[0]:null;
 
             if(localizacion){
@@ -475,6 +503,13 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                 this.setSinValor("noTelefonoParticularHeredar");
                 this.setSinValor("noTelefonoCelularHeredar");
                 this.setSinValor("correoElectronicoHeredar");
+
+                this.setSinValor("calidadIntervinienteHeredar");
+                this.setSinValor("tipoIdentificacionHeredar");
+                this.setSinValor("emisorIdentificacionHeredar");
+                this.setSinValor("noIdentificacionHeredar");
+                this.setSinValor("gradoEscolaridadHeredar");
+                this.setSinValor("salarioHeredar");
 
             }
         });
@@ -552,6 +587,13 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
         this.form.controls["noTelefonoParticularHeredar"].setValue('')
         this.form.controls["noTelefonoCelularHeredar"].setValue('')
         this.form.controls["correoElectronicoHeredar"].setValue('')
+
+        this.form.controls["calidadIntervinienteHeredar"].setValue('')
+        this.form.controls["tipoIdentificacionHeredar"].setValue('')
+        this.form.controls["emisorIdentificacionHeredar"].setValue('')
+        this.form.controls["noIdentificacionHeredar"].setValue('')
+        this.form.controls["gradoEscolaridadHeredar"].setValue('')
+        this.form.controls["salarioHeredar"].setValue('')
     }
 
     public heredarSintesisChange(_event: boolean) {
