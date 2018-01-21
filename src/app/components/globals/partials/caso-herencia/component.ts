@@ -148,13 +148,23 @@ export class CasoHerenciaComponent implements OnInit {
                 break;
             }
         }
+        // Logger.log('-> Removed person', this.form.controls.personas, this.form);
     }
 
     public removePersona(_event: any, _id: number) {
+        const newPersonas = [];
         this.personas = this.personas.filter( o => o.id !== _id);
         (this.form.controls.personas as FormArray).controls
             = (this.form.controls.personas as FormArray).controls.filter( o => o.value.id !== _id);
-            this.personasChanged();
+
+        this.personas.forEach(
+            o => newPersonas.push({id: o.id})
+        );
+        (this.form.controls.personas).setValue(
+            newPersonas
+        );
+        // Logger.log('-> Removed person', this.form.controls.personas, this.form);
+        this.personasChanged();
     }
 
     public isInPersonas(_id) {
@@ -171,22 +181,21 @@ export class CasoHerenciaComponent implements OnInit {
         this.heredar = checked;
 
         if (this.heredar) {
-            this.form.controls.lugar["controls"].id.enable();
-            this.form.controls.delito["controls"].id.enable();
-            this.form.controls.vehiculo["controls"].id.enable();
-            this.form.controls.arma["controls"].id.enable();
+            this.form.controls.lugar['controls'].id.enable();
+            this.form.controls.delito['controls'].id.enable();
+            this.form.controls.vehiculo['controls'].id.enable();
+            this.form.controls.arma['controls'].id.enable();
         } else {
-            this.form.controls.lugar["controls"].id.disable();
-            this.form.controls.delito["controls"].id.disable();
-            this.form.controls.vehiculo["controls"].id.disable();
-            this.form.controls.arma["controls"].id.disable();
+            this.form.controls.lugar['controls'].id.disable();
+            this.form.controls.delito['controls'].id.disable();
+            this.form.controls.vehiculo['controls'].id.disable();
+            this.form.controls.arma['controls'].id.disable();
         }
 
         this.heredarChanged();
     }
 
     public setHeredarSintesis(checked) {
-        console.log(this.form);
         this.heredarSintesisHechos = checked;
         this.heredarSintesisChange.emit(this.heredarSintesisHechos);
     }

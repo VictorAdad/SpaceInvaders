@@ -499,6 +499,8 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
     }
 
     public  personasChanged(_personasHeredadas) {
+        this.form.updateValueAndValidity();
+        Logger.log('-> personasChanged()', this.form, this.form.value);
         this.personasHeredadas = _personasHeredadas;
     }
 
