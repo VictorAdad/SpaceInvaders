@@ -26,7 +26,13 @@
                             <div class="col-md-4">
                                 <strong>Información general</strong>
                                 <p>{{caso.titulo}}</p>
-                                <p class="text-justify">{{caso.descripcion}}</p>
+                                <p class="text-justify" style="
+                                    display: -webkit-box;
+                                    -webkit-line-clamp: 5;
+                                    -webkit-box-orient: vertical;
+                                    overflow: hidden;">
+                                    {{caso.descripcion}}
+                                </p>
                             </div>
                             <div class="col-md-3">
                                 <strong>Involucrados</strong>
