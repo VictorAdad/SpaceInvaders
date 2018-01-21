@@ -9,31 +9,34 @@ import * as io from 'socket.io-client';
  * Servicio para enviar notificaciones vía sockets
  */
 @Injectable()
-export class NotifyService{
+export class NotifyService {
 
-	public socket: any;
+    public socket: any;
 
-	public notify: Notify;
+    public notify: Notify;
 
-	public getNotify(_notify: any){
-		this.notify = new Notify(_notify);
+    public getNotify(_notify: any) {
+        this.notify = new Notify(_notify);
 
-		return this.notify;
-	}
+        return this.notify;
+    }
 
-	public emitMessage(_message){
+    public emitMessage(_message) {
+        Logger.log('-> NotifyService@emitMessage()');
         this.socket.send(JSON.stringify(_message));
     }
 
     public getMessages() {
-        let observable = new Observable(
+        const observable = new Observable(
             observer => {
-                this.socket = new WebSocket(env.api.ws+'/notification/transferir');
+                this.socket = new WebSocket(env.api.ws + '/notification/transferir');
                 this.socket.onmessage =  (event) => {
                     observer.next(JSON.parse(event.data));
-                }
+                };
+                this.socket.onclose = (event) => this.socket = new WebSocket(env.api.ws + '/notification/transferir');
             }
-        )
+        );
+
         return observable;
     }
 
@@ -41,19 +44,19 @@ export class NotifyService{
 
 class Notify {
 
-	public username: string;
+    public username: string;
 
     public titulo: string;
 
-	public contenido: string;
+    public contenido: string;
 
     public tipo: string;
 
 
-	constructor(_notify: any){
-		this.username  = _notify['username'];
-		this.titulo    = _notify['titulo'];
+    constructor(_notify: any) {
+        this.username  = _notify['username'];
+        this.titulo    = _notify['titulo'];
         this.contenido = _notify['contenido'];
         this.tipo      = _notify['tipo'];
-	}
+    }
 }
