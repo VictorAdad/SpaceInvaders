@@ -140,17 +140,17 @@ export class DeterminacionNoEjercicioAccionPenalComponent extends DeterminacionG
         this.heredarSintesis = _event;
     }
 
-  public heredarDatos(){
-    console.log("Heredar en facultad de no investigar")
-    
+  public heredarDatos() {
     /*
        • Narración de los hechos (Hecho narrados de Predenuncia))
 
     */
-    if(this.heredarSintesis){
-        this.form.controls["narracionHechos"].setValue(this.casoService.caso.predenuncias.hechosNarrados)
+    if (this.heredarSintesis) {
+        this.form.controls["narracionHechos"].setValue(this.casoService.caso.predenuncias.hechosNarrados);
+    } else {
+        this.form.controls['narracionHechos'].setValue('');
     }
-    
+
   }
 	public save(valid: any, _model: any) {
         if (valid){

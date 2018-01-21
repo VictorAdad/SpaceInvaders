@@ -184,6 +184,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
 
     public cleanCamposHeredar() {
         this.form.controls['nombrePersonaAcepta'].setValue('');
+        this.form.controls['sintesisHechos'].setValue('');
     }
 
     public  personasChanged(_personasHeredadas) {

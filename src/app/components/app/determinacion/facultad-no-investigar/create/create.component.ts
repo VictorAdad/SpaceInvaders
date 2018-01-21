@@ -208,6 +208,7 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
         this.form.controls['edadDenuncianteHeredar'].setValue('');
         this.form.controls['originarioDenunciante'].setValue('');
         this.form.controls['domicilioDenunciante'].setValue('');
+        this.form.controls['sintesisHechos'].setValue('');
     }
 
 

@@ -342,6 +342,8 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
 
             if (this.casoService.caso && this.heredarSintesis)  {
                 this.form.controls['hechosNarrados'].setValue(this.casoService.caso.descripcion);
+            } else {
+                this.form.controls['hechosNarrados'].setValue('');
             }
 
 
