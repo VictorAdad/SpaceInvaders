@@ -107,7 +107,7 @@ export class AppComponent implements OnInit {
         this.titleService.setTitle(this.createTitle());
         this.notify.getMessages().subscribe(
             message => {
-                if (message['notify']['username'] === this.authService.user.username) {
+                if (message['notify'] && message['notify']['username'] === this.authService.user.username) {
                     this.notification.create(message['notify']['titulo'], message['notify']['contenido'], 'info', {
                         timeOut: 10000,
                         showProgressBar: false,

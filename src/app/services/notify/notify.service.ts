@@ -33,7 +33,13 @@ export class NotifyService {
                 this.socket.onmessage =  (event) => {
                     observer.next(JSON.parse(event.data));
                 };
-                this.socket.onclose = (event) => this.socket = new WebSocket(env.api.ws + '/notification/transferir');
+                this.socket.onopen = (event) => {
+                    Logger.log('-> Socket open connection');
+                    const timer = Observable.timer(1000, 15000);
+                    timer.subscribe(
+                        t => this.socket.send('{}')
+                    );
+                };
             }
         );
 
