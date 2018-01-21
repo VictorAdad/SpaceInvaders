@@ -33,7 +33,7 @@
       [disabled]="disabled"
 			(onClose)="closeSelect()">
 			<div class="md-custom-search">
-				<input type="text" name="search" placeholder="Buscar" #searchInput>
+				<input type="text" name="search" placeholder="Buscar" autocomplete="off" #searchInput>
 				<mat-icon  class="suffix">search</mat-icon>
 			</div>
 			<mat-option (click)="cleanSelect()">(Limpiar selección)</mat-option>
