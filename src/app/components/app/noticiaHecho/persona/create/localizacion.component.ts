@@ -143,20 +143,24 @@ export class LocalizacionFormComponent{
         Logger.log('->LocalizacionForm IndexForm', this.indexForm);
         this.options = new Options(this.http, this.onLine, this.db, this.select);
         this.dataSource = new TableService(this.paginator, this.data);
-        let timer = Observable.timer(2000);
-        this.globals.form.controls["id"].valueChanges.subscribe(data => {
+        const timer = Observable.timer(2000);
+        this.globals.form.controls['id'].valueChanges.subscribe(data => {
             Logger.logColor('ID FORM','red',data);
-            this.loadListLocalidades=Number.isInteger(data);
-            //this.loadListLocalidades=false;
+            this.loadListLocalidades = Number.isInteger(data);
           });
-        timer.subscribe(t=>{
-            Logger.logColor("--------->","green", this.globals.form.value,this.options);
-            this.globals.form.controls["localizacionPersona"].valueChanges.subscribe(data => {
+        Logger.logColor('--------->','green', this.globals.form.value,this.options);
+        this.globals.form.controls['localizacionPersona'].valueChanges.subscribe(data => {
+            if (data.length > 0 ) {
                 this.agregaLocalizaciones(data);
-                this.loadListLocalidades=false;
-              });
+                this.loadListLocalidades = false;
+            }else {
+                const timer2 = Observable.timer(2000);
+                timer2.subscribe(t => {
+                    this.loadListLocalidades = false;
+                });
+            }
+            Logger.logColor('Entre aqui','red');
         });
-        
     }
     /**
      * En esta funcion van a caer TODAS  las modificaciones del formulario de localizaciones
