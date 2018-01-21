@@ -369,7 +369,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             if(this.onLine.onLine){
                 this.http.put('/v1/base/vehiculos/'+this.id, _model).subscribe((response) => {
                     Logger.log('-> Registro acutualizado', response);
-                    resolve("Se actualizo el vehiculo");
+                    resolve("Se actualizó el vehículo");
                     obj.vehiculoServ.reset();
                     obj.casoService.actualizaCaso();
                 },e=>{
