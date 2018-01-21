@@ -55,7 +55,8 @@ export class DetalleCasoComponent implements OnInit{
                 if (this.onLine.onLine) {
                     this.casoService.find(this.id).then(
                         caso => {
-                            this.caso = caso;
+                            Logger.log('-> Caso encontrado', this.casoService.caso);
+                            this.caso = this.casoService.caso;
                             this.hasPredenuncia = this.caso.hasPredenuncia;
                             this.hasAcuerdoInicio = this.caso.hasAcuerdoInicio;
                             this.hasRelacionVictimaImputado = this.caso.hasRelacionVictimaImputado;
@@ -66,26 +67,7 @@ export class DetalleCasoComponent implements OnInit{
                             this.delitos = this.caso.delitoCaso as DelitoCaso[];
                         }
                     );
-                    // this.http.get('/v1/base/casos/'+this.id).subscribe((response) => {
-                    //     this.caso = response as Caso;
-                    //     this.hasPredenuncia = this.caso.hasPredenuncia;
-                    //     this.hasAcuerdoInicio = this.caso.hasAcuerdoInicio;
-                    //     this.hasRelacionVictimaImputado = this.caso.hasRelacionVictimaImputado;
-                    //     // Logger.log(this.caso)
-                    // });
-
-                    // this.http.get('/v1/base/casos/'+this.id+'/all').subscribe((response) =>{
-                    //     if (response.predenuncias) {
-                    //         this.detalleFecha = response.predenuncias.created;            		
-                    //     }
-                    //     this.involucrados = response.personaCasos as Persona[];
-                    //     this.delitos = response.delitoCaso as DelitoCaso[];
-                    
-                    // })
-
-
-
-                }else{
+                } else {
                     this.casoService.actualizaCasoOffline(this.caso = this.casoService.caso);
                     const timer = Observable.timer(1000);
                     timer.subscribe(t=> {
