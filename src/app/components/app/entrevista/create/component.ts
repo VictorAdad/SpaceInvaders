@@ -240,7 +240,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
             'estado': new FormControl(""),
             'noTelefonoParticular': new FormControl(""),
             'noTelefonoCelular': new FormControl(""),
-            'correoElectronico': new FormControl(""),
+            'correoElectronico': new FormControl(null),
             'tieneRepresentanteLegal': new FormControl(""),
             'nombreRepresentanteLegal': new FormControl(""),
             'medioTecnologicoRegistro': new FormControl(""),
@@ -474,7 +474,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                 this.setSinValor("estado");
                 this.setSinValor("noTelefonoParticularHeredar");
                 this.setSinValor("noTelefonoCelularHeredar");
-                this.setSinValor("correoElectronico");
+                this.setSinValor("correoElectronicoHeredar");
 
             }
         });
@@ -491,10 +491,6 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
             this.form.controls["noTelefonoCelularHeredar"].setValue(null)
             this.form.controls["correoElectronico"].setValue(null)
         }
-
-        // Heredar narrativa de los hechos ((Hecho narrados de Predenuncia)
-        console.log(this.casoService.caso);
-        // this.form.controls["narracionHechos"].setValue(this.casoService.caso.predenuncias.hechosNarrados)
     }
 
     public setSinValor(key) {
