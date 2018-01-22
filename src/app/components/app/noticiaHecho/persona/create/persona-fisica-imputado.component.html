@@ -80,7 +80,7 @@
         </div>
 
         <!-- Media de filiación -->
-        <div class="row  justify-content-md-center align-items-center space" *ngIf="globals.tipoInterviniente==globals.imputado">
+        <div class="row  justify-content-md-center align-items-center space" *ngIf="this.globals.isImputadoAny">
             <media-filacion [globals]="globals"  [options]="options" style="width: 95%"></media-filacion>
         </div>
         <div class="row space">

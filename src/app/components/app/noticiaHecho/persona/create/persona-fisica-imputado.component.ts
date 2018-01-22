@@ -65,11 +65,15 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         return true;
     }
 
-    public changeTipoInterviniente(tipoInterviniente){
-        this.globals.tipoInterviniente=tipoInterviniente;
+    public changeTipoInterviniente(tipoInterviniente){    
+
         Logger.log("TIPOINTERVINIENTE->",tipoInterviniente);
 
         if(typeof tipoInterviniente != 'undefined' && tipoInterviniente != ''){
+            this.globals.isImputadoAny = 
+                (tipoInterviniente == _config.optionValue.tipoInterviniente.imputado) || 
+                (tipoInterviniente == _config.optionValue.tipoInterviniente.imputadoDesconocido);
+            Logger.log('<<< Hola!!! >>>',this.globals.isImputadoAny); 
             if(this.form.controls.tipoPersona.value=="Moral")
                  this.form.controls.razonSocial.enable();
         }
@@ -134,6 +138,9 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         this.globals = new PersonaGlobals(this.form,this.persona);
         this.globals.form.controls.razonSocial.disable();
         this.globals.formLocalizacion = LosForm.createFormLocalizacion();
+
+        Logger.logColor('<<<< Intervinenete >>>>','Blue', this.globals.tipoInterviniente, this.globals.imputado );
+
         this.route.params.subscribe(params => {
             if(params['casoId']){
                 this.casoId = +params['casoId'];
@@ -1429,6 +1436,7 @@ export class PersonaGlobals{
     public imputado = _config.optionValue.imputado;
     public isIntervinienteDesconocido: boolean=false;
     public hintsObligatorio="Campo obligatorio";
+    public isImputadoAny=false;
 
 
     public otrosNombres={
