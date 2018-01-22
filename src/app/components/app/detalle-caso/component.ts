@@ -53,20 +53,21 @@ export class DetalleCasoComponent implements OnInit{
                 this.id = +params['id'];
 
                 if (this.onLine.onLine) {
-                    this.casoService.find(this.id).then(
+                    this.casoService.casoChange.subscribe(
                         caso => {
-                            Logger.log('-> Caso encontrado', this.casoService.caso);
+                            Logger.log('casoChange()', caso);
                             this.caso = this.casoService.caso;
-                            this.hasPredenuncia = this.caso.hasPredenuncia;
-                            this.hasAcuerdoInicio = this.caso.hasAcuerdoInicio;
-                            this.hasRelacionVictimaImputado = this.caso.hasRelacionVictimaImputado;
-                            if (this.caso.predenuncias) {
-                                this.detalleFecha = this.caso.predenuncias.created;
+                            this.hasPredenuncia = caso.hasPredenuncia;
+                            this.hasAcuerdoInicio = caso.hasAcuerdoInicio;
+                            this.hasRelacionVictimaImputado = caso.hasRelacionVictimaImputado;
+                            if (caso.predenuncias) {
+                                this.detalleFecha = caso.predenuncias.created;
                             }
-                            this.involucrados = this.caso.personaCasos as Persona[];
-                            this.delitos = this.caso.delitoCaso as DelitoCaso[];
+                            this.involucrados = caso.personaCasos as Persona[];
+                            this.delitos = caso.delitoCaso as DelitoCaso[];
                         }
                     );
+                    this.casoService.find(this.id).then(t => this.caso = this.casoService.caso);
                 } else {
                     this.casoService.actualizaCasoOffline(this.caso = this.casoService.caso);
                     const timer = Observable.timer(1000);
