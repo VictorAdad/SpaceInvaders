@@ -31,7 +31,7 @@
 
     <ng-container matColumnDef="calidadEntrevistado">
         <mat-header-cell *matHeaderCellDef> Calidad entrevistado </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element?.tipoInterviniente?.tipo || "No tiene"}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element?.tipoInterviniente?.tipo || element?.calidadIntervinienteHeredar || "No tiene"}} </mat-cell>
     </ng-container>
 <!--
     <ng-container matColumnDef="creadoPor">
