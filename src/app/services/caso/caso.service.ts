@@ -77,7 +77,17 @@ export class CasoService{
 
     public addPredenuncia(_predenuncia) {
         this.caso.predenuncias = _predenuncia;
+        this.caso.hasPredenuncia = true;
+        this.caso.hasRelacionVictimaImputado = true;
         return this.db.update('casos', this.caso);
+
+    }
+
+    public addAcuerdoInicio() {
+        this.caso.hasAcuerdoInicio = true;
+        this.caso.hasRelacionVictimaImputado = true;
+        return this.db.update('casos', this.caso);
+
     }
 
     /**
