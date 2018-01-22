@@ -395,7 +395,6 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
         }
 
         this.personasHeredadas.forEach((personaCaso)=> {
-            console.log('PErsonaCAso@FOR', personaCaso);
             // Heradar nombre del entrevistado
             let nombrePersona =
                 (personaCaso.persona.nombre ? personaCaso.persona.nombre : "")
@@ -416,7 +415,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 
             let sexo=personaCaso.persona.sexo?personaCaso.persona.sexo.nombre:null;
 
-            let salarioSemanal = personaCaso.persona.ingresoMensual / 4;
+            let salarioSemanal = personaCaso.persona.ingresoMensual;
 
             // Heredar Sexo
             this.form.controls["sexoHeredar"].setValue(
@@ -447,7 +446,6 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
             this.form.controls["estadoCivil"].setValue( this.form.controls["estadoCivil"].value?(personaCaso.persona.estadoCivil?this.form.controls["estadoCivil"].value+","+personaCaso.persona.estadoCivil.nombre:this.form.controls["estadoCivil"].value+",Sin valor"):(personaCaso.persona.estadoCivil?personaCaso.persona.estadoCivil.nombre:"Sin valor"))
             
             // Heredar calidad interviniente
-            Logger.log('<<<<< moco >>>>>>>',personaCaso.tipoInterviniente);
             this.form.controls["calidadIntervinienteHeredar"].setValue( 
                 this.form.controls["calidadIntervinienteHeredar"].value?
                 (personaCaso.tipoInterviniente ?
@@ -509,7 +507,6 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                 this.form.controls["correoElectronicoHeredar"].setValue( this.form.controls["correoElectronicoHeredar"].value?(localizacion.correo?this.form.controls["correoElectronicoHeredar"].value+","+localizacion.correo:this.form.controls["correoElectronicoHeredar"].value+",Sin valor"):(localizacion.correo?localizacion.correo:"Sin valor"))
 
             } else {
-                Logger.log('<<<<< moco con sangre >>>>>>>',personaCaso.tipoInterviniente);
                 this.setSinValor("calleHeredar");
                 this.setSinValor("noExterior");
                 this.setSinValor("noInterior");
