@@ -42,6 +42,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
     @ViewChild('tipoInterviniente')
     public tipoIntervinienteEl;
+    public masDe3Dias:any;
 
 
     constructor(
@@ -123,6 +124,10 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
 
     ngOnInit(){
         // this.options.getData();
+        this.auth.masDe3DiasSinConexion().then(r=>{
+            let x= r as boolean;
+            this.masDe3Dias=r;
+        });
         this.persona= new Persona();
         this.form  = LosForm.createForm();
         this.globals = new PersonaGlobals(this.form,this.persona);
