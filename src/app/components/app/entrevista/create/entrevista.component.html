@@ -123,8 +123,8 @@
                         <text  *ngIf="heredar" label="Estado civil" name="estadoCivil" [max]="1000" [group]="form"></text>
                     </div>
                     <div class="col-md-4">
-                        <number *ngIf="!heredar" label="Salario semanal" name="salarioSemanal" [group]="form"></number>
-                        <text *ngIf="heredar" label="Salario semanal" name="salarioHeredar" [max]="1000" [group]="form"></text>
+                        <number *ngIf="!heredar" label="Salario mensual" name="salarioSemanal" [group]="form"></number>
+                        <text *ngIf="heredar" label="Salario mensual" name="salarioHeredar" [max]="1000" [group]="form"></text>
                     </div>
                     <div class="col-md-4">
                         <text label="Relación del entrevistado con alguna de las partes" name="relacionEntrevistado" [max]="40" [group]="form"></text>

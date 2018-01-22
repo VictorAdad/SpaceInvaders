@@ -387,10 +387,11 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                         }
                         this.http.post('/v1/base/predenuncias', this.model).subscribe(
                             (response) => {
-                                Logger.log(response);
-
-                                resolve('Predenuncia creada con éxito');
-                                this.router.navigate(['/caso/'+this.casoId+'/detalle' ]);
+                                Logger.logColor('<<< RESPONSE >>>','RED',response);
+                                this.casoService.addPredenuncia(response).then( t =>{
+                                    resolve('Predenuncia creada con éxito');
+                                    this.router.navigate(['/caso/'+this.casoId+'/detalle' ]);
+                                });
                              },
                             (error) => {
                                 Logger.error('Error', error);
@@ -450,6 +451,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         }else{
             console.error('El formulario no pasó la validación D:')
         }
+
     }
 
     public fillForm(_data) {

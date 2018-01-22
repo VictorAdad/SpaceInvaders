@@ -68,11 +68,18 @@ export class CasoService{
                         );
                     }
                 } else {
+                    this.casoChange.next(this.caso);
                     resolve(this.caso);
                 }
             }
         );
     }
+
+    public addPredenuncia(_predenuncia) {
+        this.caso.predenuncias = _predenuncia;
+        return this.db.update('casos', this.caso);
+    }
+
     /**
      * Actualiza el caso en indexedDB
      * @param response informacion nueva del caso

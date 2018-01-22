@@ -60,6 +60,17 @@ export class NoticiaHechoService {
         this.getArmas();
         // this.getPersonas();
         this.getDelitos()
+        this.imputados = [];
+        this.testigos  = [];
+        this.victimas  = [];
+        this.apoderadosLegales = [];
+        this.defensoresPublicos  = [];
+        this.defensoresPrivados  = [];
+        this.representantesLegales  = [];
+        this.asesoresPublicos  = [];
+        this.asesoresPrivados  = [];
+        this.ofendidos  = [];
+        this.policias  = [];
         this.getInterviniente('apoderadosLegales', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.apoderadoLegal}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.apoderadoLegal);
         this.getInterviniente('defensoresPublicos', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.defensorPublico}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.defensorPublico);
         this.getInterviniente('representantesLegales', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.representanteLegal}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.representanteLegal);
@@ -67,8 +78,8 @@ export class NoticiaHechoService {
         this.getInterviniente('imputados', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.imputado}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.imputado);
         this.getInterviniente('testigos', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.testigo}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.testigo);
         this.getInterviniente('asesoresPublicos', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.asesorPublico}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.asesorPublico);
-        this.getInterviniente('ofendidos', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.ofendido}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.ofendido);
         this.getInterviniente('victimas', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.victima}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.victima);
+        this.getInterviniente('ofendidos', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.ofendido}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.ofendido);
         this.getInterviniente('defensoresPrivados', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.defensorPrivado}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.defensorPrivado);
         this.getInterviniente('policias', `/v1/base/personas-casos/casos/${this.id}/tipos-intervinientes/${_config.optionValue.tipoInterviniente.policia}`, this.constructOptionsPersona,_config.optionValue.tipoInterviniente.policia);
 
@@ -192,34 +203,52 @@ export class NoticiaHechoService {
                 this.delitos = this.constructOptionsDelito(this.caso["delitoCaso"]);
     }
     
-    public getInterviniente(_attr:string, _url:string, _call:any, idInterviniente:number=null){
-        if (this.onLine.onLine)
+    public getInterviniente(_attr:string, _url:string, _call:any, idInterviniente:number=null) {
+        if (this.onLine.onLine) {
             this.http.get(_url).subscribe((response) => {
-                this[_attr] = _call(response);
-                if(_attr === 'defensoresPublicos' || _attr === 'defensoresPrivados'){
-                    this.defensoresPublicos = this.defensoresPublicos.concat(this.defensoresPrivados);
-                    Logger.log(this.defensoresPrivados);
-                }
-                if(_attr === 'asesoresPublicos' || _attr === 'asesoresPrivados'){
-                    this.asesoresPublicos = this.asesoresPublicos.concat(this.asesoresPrivados);
-                    Logger.log(this.asesoresPrivados);
-                }
-                if(_attr === 'victimas' || _attr === 'ofendidos' || _attr === 'victimaDesconocido'){
-                    if (_attr === 'ofendidos')
-                        this.victimas = this.victimas.concat(this.ofendidos); 
-                    if (_attr === 'victimaDesconocido')                           
+                if(_attr === 'defensoresPublicos' || _attr === 'defensoresPrivados') {
+                    if (_attr === 'defensoresPublicos') {
+                        this.defensoresPublicos = this.defensoresPublicos.concat(_call(response));
+                    }
+                    if (_attr === 'defensoresPrivados') {
+                        this[_attr] = _call(response);
+                        this.defensoresPublicos = this.defensoresPublicos.concat(this.defensoresPrivados);
+                    }
+                }else if(_attr === 'asesoresPublicos' || _attr === 'asesoresPrivados') {
+                    if (_attr === 'asesoresPublicos') {
+                        this.asesoresPublicos = this.asesoresPublicos.concat(_call(response));
+                    }
+                    if ( _attr === 'asesoresPrivados') {
+                        this[_attr] = _call(response);
+                        this.asesoresPublicos = this.asesoresPublicos.concat(this.asesoresPrivados);
+                    }
+                }else if(_attr === 'victimas' || _attr === 'ofendidos' || _attr === 'victimaDesconocido') {
+                    if (_attr === 'victimas') {
+                        this.victimas = this.victimas.concat(_call(response));
+                    }
+                    if (_attr === 'ofendidos') {
+                        this[_attr] = _call(response);
+                        this.victimas = this.victimas.concat(this.ofendidos);
+                    }
+                    if (_attr === 'victimaDesconocido') {
+                        this[_attr] = _call(response);
                         this.victimas = this.victimas.concat(this.victimaDesconocido);
-                    
-                    Logger.log(this.victimas);
-                }
-
-                if (_attr === 'imputado' || _attr === 'imputadoDesconocido') {
-                     this.imputados = this.imputados.concat(this.imputadoDesconocido);
-                     Logger.log(this.imputados);   
+                    }
+                }else if (_attr === 'imputado' || _attr === 'imputadoDesconocido') {
+                    if (_attr === 'imputado') {
+                        console.log('Entre');
+                        this.imputados = this.imputados.concat(_call(response));
+                    }
+                    if (_attr === 'imputadoDesconocido') {
+                        this[_attr] = _call(response);
+                        this.imputados = this.imputados.concat(this.imputadoDesconocido);
+                    }
+                }else {
+                    this[_attr] = _call(response);
                 }
 
             });
-        else{
+        } else {
             if (this.caso["personaCasos"]){
                 var arr=[];
                 for (var i = 0; i < this.caso["personaCasos"].length; ++i) {
@@ -324,7 +353,6 @@ export class NoticiaHechoService {
 
     private constructOptionsPersona(_data:any){
         let options: MOption[] = [];
-        Logger.logColor("data","purple",_data);
         if (_data)
             for (var i in _data){      
                 let object=_data[i];
