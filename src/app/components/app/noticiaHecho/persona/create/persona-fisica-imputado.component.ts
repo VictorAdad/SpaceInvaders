@@ -2,6 +2,7 @@ import { TipoInterviniente } from './../../../../../models/personaCaso';
 import { DetalleDetenido, TipoDetenido } from './../../../../../models/persona';
 import { Component, ElementRef, Input, ViewChild} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { CIndexedDB } from '@services/indexedDB';
 import { Persona} from '@models/persona';
@@ -20,11 +21,12 @@ import { CasoService } from '@services/caso/caso.service';
 import { Yason } from '@services/utils/yason';
 import { Logger } from "@services/logger.service";
 import { AuthenticationService } from "@services/auth/authentication.service";
+import { PersonaPreSaveComponent } from './pre-save-component';
 
 @Component({
     templateUrl : './persona-fisica-imputado.component.html',
 })
-export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
+export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal {
 
     public form  : FormGroup;
     public casoId: number = null;
@@ -32,8 +34,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
     public personaId: number = null;
     public globals: PersonaGlobals;
     public isMexico: boolean=false;
-    persona:Persona;
-    tabla: CIndexedDB;
+    public persona:Persona;
+    public tabla: CIndexedDB;
     public breadcrumb = [];
     public tipoInter = [];
     public detalleDetenido=null;
@@ -55,7 +57,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         public options: SelectsService,
         public personaServ: PersonaService,
         public casoService:CasoService,
-        public auth:AuthenticationService
+        public auth:AuthenticationService,
+        public dialog: MatDialog
         ) {
         super();
         this.tabla = _tabla;
@@ -1227,6 +1230,21 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         Logger.log("datos ->",_data);
         this.form.patchValue(_data);
         Logger.log('After patch', this.form);
+    }
+
+    public preSave(_save:any) {
+        if (this.formAtLeatsOneValue(this.globals.formLocalizacion)) {
+            const dialog = this.dialog.open(PersonaPreSaveComponent, {
+                width: '400px',
+                height: '400px',
+                data: { 
+                    action: _save.bind(this),
+                    title: 'Se han valores en la sección de Datos de Localización sin agregar. ¿Desea continuar sin agregar estos valores?'
+                }
+            });
+        } else {
+            _save();
+        }
     }
 
 }

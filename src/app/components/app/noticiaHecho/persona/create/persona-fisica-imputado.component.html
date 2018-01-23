@@ -89,8 +89,8 @@
           <input name="id" formControlName="id" [formGroup]="globals.form" hidden>
         <div class="row justify-content-end space">
             <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" matTooltipPosition="above">
-                <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid || masDe3Dias==true" *ngIf="id != null">Guardar</button> 
-                <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || masDe3Dias==true" *ngIf="id == null">Guardar</button>
+                <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid || masDe3Dias==true" [preSave]="preSave.bind(this)" *ngIf="id != null">Guardar</button> 
+                <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || masDe3Dias==true" [preSave]="preSave.bind(this)" *ngIf="id == null">Guardar</button>
             </div>
             <div class="col-sm-auto">
                 <button class="float-right" mat-button routerLink="/caso/{{casoId}}/noticia-hecho/personas">Cancelar</button> 

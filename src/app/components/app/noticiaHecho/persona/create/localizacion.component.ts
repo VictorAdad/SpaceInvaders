@@ -161,6 +161,10 @@ export class LocalizacionFormComponent{
             }
             Logger.logColor('Entre aqui','red');
         });
+
+        this.form.valueChanges.subscribe(
+            change => this.globals.formLocalizacion = this.form
+        );
     }
     /**
      * En esta funcion van a caer TODAS  las modificaciones del formulario de localizaciones

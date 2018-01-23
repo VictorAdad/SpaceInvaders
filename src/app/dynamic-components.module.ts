@@ -6,6 +6,7 @@ import {SolPreDocComponent} from "@components-app/solicitud-preliminar/formatos"
 import {ProgressDialog} from '@components-app/onLine/progressDialog.component';
 import {savingComponent} from './directives/saving/saving.directive';
 import { LoginDialog } from './components/app/onLine/loginDialog.component';
+import { PersonaPreSaveComponent } from './components/app/noticiaHecho/persona/create/pre-save-component';
 
 @NgModule()
 export class DynamicComponentsModule {}
@@ -15,6 +16,7 @@ export const dyanamicComponents = [
     FormCreateDelitoComponent,
     FormCreateDelitoCasoComponent,
     SolPreDocComponent,
+    PersonaPreSaveComponent,
     ProgressDialog,
     savingComponent,
     LoginDialog
