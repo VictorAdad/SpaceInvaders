@@ -44,7 +44,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         private http: HttpService,
         private auth: AuthenticationService,
         private casoService: CasoService
-    ) { 
+    ) {
         super();
         this.db = _db;
         this.router = _router;
@@ -85,7 +85,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                                     'delito' : response.delitoPrincipal.nombre
                                 });
                             }
-                            
+
                         });
                     }else{
                         //this.db.get("casos", this.id).then(object => {
@@ -94,23 +94,23 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                                 if (this.casoService.caso){
                                     let model = this.casoService.caso;
                                     Logger.log(model);
-                                    this.form.patchValue(model); 
+                                    this.form.patchValue(model);
                                     if (model["delitoPrincipal"] != null) {
                                         Logger.log("DELITO principal");
                                         this.form.patchValue({
                                             'delito' : model["delitoPrincipal"].nombre
                                         });
-                                    }   
+                                    }
                                 }
                             });
-                           
+
                         //});
                     }
                 }
-                
+
             }
         });
-        this.validateForm(this.form);  
+        this.validateForm(this.form);
     }
 
     public openDialog() {
@@ -146,7 +146,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         _model.delitoCaso.delito.id =  this.delito.id;
         return new Promise((resolve,reject)=>{
             if(this.onLine.onLine){
-                
+
                 this.http.post('/v1/base/casos', _model).subscribe((response) => {
                     resolve("Se creó con éxito el Caso");
                     this.router.navigate(['/caso/'+response.id+'/noticia-hecho/datos-generales' ]);
@@ -155,7 +155,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                 });
             }else{
                 delete _model["created"];
-                
+
                 let temId=Date.now();
                 Logger.log('temID', temId);
                 Logger.log("MODEL",_model);
@@ -184,6 +184,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                         copiaModel["titulares"]=[{a:0}];
                         copiaModel["titulares"].pop();
                         copiaModel["titulares"].push((_model["titulares"])["0"]);
+                        copiaModel['username'] = this.auth.user.username
                         this.db.update('casos', copiaModel).then(p=>{
                             Logger.log("actualizacion",p);
                             this.casoService.caso=copiaModel;
