@@ -15,15 +15,21 @@ export class TimeComponent extends BaseInputComponent implements OnInit{
 
 	public regexTime: RegExp = /^[0-9():{1}]*$/;
 
+	public rules : any
+
 	constructor(public renderer: Renderer){
 		super(renderer);
 	}
 
 	ngOnInit(){
+
 		if(this.name != ''){
 			this.control = this.group.get(this.name) as FormControl;
 			this.control.valueChanges.subscribe(this.validate.bind(this));
+			this.rules = this.control.errors;
 		}
+		Logger.log('<<< rules >>>', this.control);
+
 	}
 
 
@@ -46,7 +52,7 @@ export class TimeComponent extends BaseInputComponent implements OnInit{
 							// this.control.setValue(this.backupValue);
 						}else{
 							this.hintEnd = "";
-							this.control.setErrors(null);
+							this.control.setErrors(null);							
 						}
 						this.backupValue = _val;
 					}else{
@@ -59,6 +65,7 @@ export class TimeComponent extends BaseInputComponent implements OnInit{
 				this.backupValue = _val;
 				this.hintEnd = "";
 				this.control.setErrors(null);
+				this.control.setErrors(this.rules);
 			}
 
 	}
