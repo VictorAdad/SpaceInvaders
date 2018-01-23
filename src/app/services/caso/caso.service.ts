@@ -8,6 +8,7 @@ import { Logger } from '@services/logger.service';
 import { PersonaNombre } from "@pipes/persona.pipe";
 import { Subject } from 'rxjs/Subject';
 import { MOption } from '../../components/globals/partials/form/select2/select2.component';
+import { AuthenticationService } from '@services/auth/authentication.service';
 /**
  * Servicio qeu almacena el ultimo caso visto
  */
@@ -32,7 +33,8 @@ export class CasoService{
     constructor(
         private db: CIndexedDB,
         private http: HttpService,
-        private onLine: OnLineService
+        private onLine: OnLineService,
+        private auth: AuthenticationService
         ) {
         onLine.setCaso(this);
     }
@@ -49,6 +51,7 @@ export class CasoService{
                     if (this.onLine.onLine) {
                         this.http.get(`/v1/base/casos/${this.id}/all`).subscribe(
                             response => {
+                                this.addExtraInfoCaso(response);
                                 this.casoChange.next(Object.assign(this.caso, response));
                                 resolve(this.setOnlineCaso(response));
                             }
@@ -89,7 +92,35 @@ export class CasoService{
         return this.db.update('casos', this.caso);
 
     }
-
+    /**
+     * Elimina los casos que no estan sincronizados, del usuario que esta identificado
+     * @return nada
+     */
+    eliminaCasosDelUsuario(){
+        var obj = this;
+        return new Promise(
+            (resolve,reject) => {
+                obj.db.list("casos").then(listaCasos=>{
+                   var lista = (listaCasos as any[]).filter(caso => caso.username == obj.auth.user.username);
+                   var fun = function(i, lista:any[]){
+                       if (i == lista.length || i > lista.length) {
+                            resolve('Casos eliminados');
+                            return;
+                       }
+                       const caso = lista[i];
+                       if (caso['ultimaActualizacion'] != undefined && caso['ultimaActualizacion'] != null) {
+                           obj.db.delete("casos",caso["id"]).then( p => {
+                               fun(i+1,lista);
+                           }).catch( e => { return reject(e);});
+                       }else {
+                           fun(i+1,lista);
+                       }
+                   }
+                   Logger.logColor('Casos@eliminar','pink', lista);
+                   fun(0, lista);
+               }).catch( e => { reject(e); });
+            });
+    }
     /**
      * Actualiza el caso en indexedDB
      * @param response informacion nueva del caso
@@ -97,7 +128,8 @@ export class CasoService{
     public setOnlineCaso(response){
         // Logger.log('Caso@setOnlineCaso')
         this.setCaso(response);
-        this.db.clear("casos").then( t =>{
+        this.eliminaCasosDelUsuario().then( info =>{
+            Logger.log(info);
             this.db.update("casos",this.caso).then( t =>{
                 // Logger.log('Indexed Caso actualizado');
             });
@@ -106,10 +138,20 @@ export class CasoService{
     }
     /**
      * asigna la informacion del caso
-     * @param caso 
+     * @param caso
      */
     public setCaso(caso){
         Object.assign(this.caso, caso)
+    }
+    /**
+     * Agrega informacion extra al caso
+     * @param  caso Caso al que se añadira l info
+     * @return      nada
+     */
+    public addExtraInfoCaso(caso) {
+        Logger.logColor('CASO@LINEA','blue',caso);
+        caso['ultimaActualizacion'] = Date.now();
+        caso['username'] = this.auth.user.username;
     }
     /**
      * actualiza la informacion del caso, esto es necesario cuando se hace alguna operacion en online. Sirve para tener actualizado el caso en caso de que se pierda lo conexion.
@@ -118,12 +160,19 @@ export class CasoService{
         if(this.onLine.onLine){
             this.http.get(`/v1/base/casos/${this.id}/all`).subscribe(
                 response => {
+                    this.addExtraInfoCaso(response);
                     this.setOnlineCaso(response);
                     Logger.log("%cCaso "+this.id+" actualizado","color:green;");
                 }
             )
         }
     }
+    /**
+     * Actualiza el caso offline, en algunos casos es necesario tener
+     * actualizado el caso, para esto utilizamos esto.
+     * @param  caso caso a actualizar
+     * @return      nada
+     */
     public actualizaCasoOffline(caso) {
         var temCaso = new Caso();
         Object.assign(temCaso, caso);
@@ -181,13 +230,15 @@ export class Caso {
     public tipoRelacionPersonas: any[];
     public IdMexico = _config.optionValue.idMexico;
     public sintesis: string;
+    public ultimaActualizacion: Date = null;
+    public username: string;
 
 
 
     public findVictima(){
         Logger.log('Caso@findVictima', this.personaCasos, _config.optionValue.tipoInterviniente.victima);
         let personas = this.personaCasos.filter(
-            object => { 
+            object => {
                 return object.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victima;
             }
         );
@@ -288,7 +339,7 @@ export class Caso {
                 }
             }
         }
-        return options;		
+        return options;
     }
 
     public optionsDelito() {
