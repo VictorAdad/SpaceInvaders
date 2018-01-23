@@ -29,7 +29,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
     private router : Router;
     private dialog : MatDialog;
     private activeRoute : ActivatedRoute;
-    private onLine : OnLineService;
+    public onLine : OnLineService;
     @Input()
     public model   : Caso =  new Caso();
     public delitos : Delito[] = [];

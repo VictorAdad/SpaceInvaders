@@ -37,7 +37,7 @@ export class DelitoCreateComponent{
     tabla:CIndexedDB;
 
 
-    constructor(public dialog: MatDialog, private _tabla: CIndexedDB, private router:Router, private route: ActivatedRoute, private http: HttpService, private onLine: OnLineService, private casoService:CasoService,private auth:AuthenticationService) {
+    constructor(public dialog: MatDialog, private _tabla: CIndexedDB, private router:Router, private route: ActivatedRoute, private http: HttpService, public onLine: OnLineService, private casoService:CasoService,private auth:AuthenticationService) {
         this.tabla=_tabla;
     }
     ngOnInit(){

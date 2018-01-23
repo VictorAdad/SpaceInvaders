@@ -50,7 +50,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal{
         private router:Router,
         private _tabla: CIndexedDB,
         private route: ActivatedRoute,
-        private onLine: OnLineService,
+        public onLine: OnLineService,
         private http: HttpService,
         public options: SelectsService,
         public personaServ: PersonaService,

@@ -32,7 +32,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
 
     constructor(
         private route: ActivatedRoute,
-        private onLine: OnLineService,
+        public onLine: OnLineService,
         private http: HttpService,
         private router: Router,
         private db:CIndexedDB,
