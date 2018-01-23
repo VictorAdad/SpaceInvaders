@@ -127,6 +127,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
              }
             if(params['id']){
                 this.id = +params['id'];
+                this.primeravez=true;
                 if(this.onLine.onLine){
                     this.http.get('/v1/base/vehiculos/'+this.id).subscribe(response =>{
                         this.fillForm(response);
@@ -139,7 +140,6 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                         let vehiculos=t["vehiculos"] as any[];
                         for (var i = 0; i < vehiculos.length; ++i) {
                             if ((vehiculos[i])["id"]==this.id){
-                                this.primeravez=true;
                                 this.fillForm(vehiculos[i]);
                                 this.form.controls.id.patchValue(this.id);
                                 break;
