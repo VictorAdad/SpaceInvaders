@@ -26,6 +26,7 @@ export class Select2Component implements AfterViewInit {
     @Input() disabled : boolean = false;
     @Input() onOpenFunction: Function=null;
     @Input() focus: boolean = false;
+    @Input() afterClean: boolean = false;
     @Output() valueChange:EventEmitter<string> = new EventEmitter<string>();
 
     @Output() clean:EventEmitter<string> = new EventEmitter<string>();
@@ -75,6 +76,9 @@ export class Select2Component implements AfterViewInit {
     //TODO: Falta ver como sincronizar los cambios los radio.
     public update(value) {
         this.valueChange.emit(value);
+        if (this.afterClean) {
+            this.select.value = '';
+        }
   }
 
     public filter(val: any) {

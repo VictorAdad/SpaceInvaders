@@ -139,6 +139,9 @@ export class CasoHerenciaComponent implements OnInit {
     }
 
     public addPersona(_id) {
+        if (_id === '') {
+            return
+        }
         for (let i = 0; i < this.casoServ.caso.personaCasos.length; i++) {
             if (this.casoServ.caso.personaCasos[i].id === _id && !this.isInPersonas(_id)) {
                 const response = this.casoServ.caso.personaCasos[i];
