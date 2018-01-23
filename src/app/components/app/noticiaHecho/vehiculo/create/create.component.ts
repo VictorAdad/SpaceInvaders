@@ -36,6 +36,8 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
     public hintObligatorio="Campo obligatorio";
     public isRobo:boolean=false;
     public masDe3Dias:any;
+    public primeravez:boolean = false;
+
 
     constructor(
         public optionsServ: SelectsService,
@@ -137,6 +139,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                         let vehiculos=t["vehiculos"] as any[];
                         for (var i = 0; i < vehiculos.length; ++i) {
                             if ((vehiculos[i])["id"]==this.id){
+                                this.primeravez=true;
                                 this.fillForm(vehiculos[i]);
                                 this.form.controls.id.patchValue(this.id);
                                 break;
@@ -432,6 +435,10 @@ public validate(form: FormGroup){
         let timer = Observable.timer(1);
         timer.subscribe(t => {
             this.form.controls.pedimentoImportancion.setValue(_data.pedimentoImportancion);
+            Logger.logColor("VEHICULO","pink",this.form.value);
+            let timer2 = Observable.timer(1500);
+            timer2.subscribe(t=>{ this.primeravez=false;});
+
         });
 
 
@@ -439,8 +446,10 @@ public validate(form: FormGroup){
 
     public tipoVehiculoChange(_event){
         if(_event){
-            this.form.controls.marca.setValue("");
-            this.form.controls.submarca.setValue("");
+            if (!this.primeravez){
+                this.form.controls.marca.setValue("");
+                this.form.controls.submarca.setValue("");
+            }
             this.vehiculoServ.marcaSubmarca.find(_event, 'tipoVehiculo');
             this.vehiculoServ.marcaSubmarca.filterBy(_event, 'tipoVehiculo', 'marca');
             this.vehiculoServ.marcaSubmarca.submarca = [];
