@@ -34,7 +34,7 @@
                         <date-picker label="Fecha de nacimiento" name="fechaNacimiento" (onClean)="disableEdad()" [validateDays]="'post'" [group]="globals.form" (onDateSelect)="edad($event)"></date-picker>
                     </div>
                     <div class="col">
-                      <int label="Edad" name="edad" hintStart="{{globals.hintsObligatorio}}"   [max]="2" [group]="globals.form"></int>
+                      <int label="Edad" name="edad" hintStart="{{globals.hintsObligatorio}}"   [max]="3" [group]="globals.form"></int>
                     </div>
 
                     <div class="col">
