@@ -1279,8 +1279,13 @@ export class IdentidadComponent extends NoticiaHechoGlobal{
     changePais(id){
       if(id!=null && typeof id !='undefined' && id != ""){
         this.isMexico=id==_config.optionValue.idMexico;
-        if (this.isMexico)
+        if (this.isMexico) {
             this.options.getEstadoByPais(id);
+            this.options.municipios = [];
+        } else{
+            this.globals.form.controls.estado.reset();
+            this.globals.form.controls.municipio.reset();
+        }
         for (var i = 0; i < this.options.paises.length; ++i) {
             var pais=this.options.paises[i]
             if(pais.value==id && pais.label=="ME"){
