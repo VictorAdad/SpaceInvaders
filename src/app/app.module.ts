@@ -79,6 +79,7 @@ import { LoginDialogService } from './services/onLine/loginDialog.service';
 
 //Informe Homologado
 import { PrincipalInformeHomologadoCreate} from '@components-app/informe-homologado/principal/principal.component';
+import { anexo1Component} from '@components-app/informe-homologado/anexo1/anexo1.component';
 
 @NgModule({
   declarations: [
