@@ -239,7 +239,8 @@ export class Caso {
         Logger.log('Caso@findVictima', this.personaCasos, _config.optionValue.tipoInterviniente.victima);
         let personas = this.personaCasos.filter(
             object => {
-                return object.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victima;
+                return (object.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victima
+                    || object.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victimaDesconocido);
             }
         );
         return personas[0];
