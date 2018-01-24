@@ -248,7 +248,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
         let nuc: string = '';
         const user = this.auth.user;
 
-        nuc = `${user.distrito}/${user.fiscalia}/${user.agencia}/${user.municipioId}/${this.pad(this.casoId, 6)}/${(new Date()).getFullYear().toString().substr(-2)}/${this.pad((new Date()).getMonth(), 2)}`
+        nuc = `${user.distrito}/${user.fiscalia}/${user.agencia}/${user.municipioId}/${this.pad(this.casoId, 6)}/${(new Date()).getFullYear().toString().substr(-2)}/${this.pad((new Date()).getMonth()+1, 2)}`
 
         return nuc;
     }

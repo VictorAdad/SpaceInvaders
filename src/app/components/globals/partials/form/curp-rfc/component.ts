@@ -2,6 +2,8 @@ import { Component, Input, Output, EventEmitter , OnInit, AfterViewInit, ViewChi
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { BaseInputComponent } from '../base-input.component';
 import { Logger } from "@services/logger.service";
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 
 
 @Component({
@@ -13,6 +15,10 @@ export class CurpRfcComponent extends BaseInputComponent implements OnInit{
 	@Input() max: number = 18;
 
 	@Input() curp : boolean = true;
+
+	@Input() persona: string;
+
+	@Input() personaChange = new Subject<any>();
 
 	public regexCURP: RegExp = /^[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[HM]{1}(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[B-DF-HJ-NP-TV-Z]{3}[0-9A-Z]{1}[0-9]{1}$/;
 
@@ -33,11 +39,18 @@ export class CurpRfcComponent extends BaseInputComponent implements OnInit{
 		// Logger.log(this);
 		this.control = this.group.get(this.name) as FormControl;
 		this.control.valueChanges.subscribe(this.validate.bind(this));
+		this.personaChange.subscribe(tipoPersona => {
+			Logger.logColor('<<< tipo Persona >>>','red', tipoPersona);
+			let timer = Observable.timer(1);
+			timer.subscribe(t => {
+				this.persona = tipoPersona;
+				this.validate(this.control.value);
+			});	
+		});
 	}
 
-
 	public validate(_value){
-		// Logger.log('CURP RFC validate() ', _value.length);
+		Logger.log('CURP RFC validate() ', _value.length, this.max);
 		if(_value)
 			_value = _value.toUpperCase();
 
@@ -55,15 +68,21 @@ export class CurpRfcComponent extends BaseInputComponent implements OnInit{
 							this.valid();
 						else if ((_value.length == 10 && this.regexRFC10.test(_value)))
 							this.valid();
-						else
+						else{
+							console.log('xxxx');
 							this.invalid();
+						}
 					else
 						if ((_value.length == 12 && this.regexRFC12.test(_value)))
 							this.valid();
 						else if ((_value.length == 9 && this.regexRFC9.test(_value)))
 							this.valid();
-						else
-							this.invalid();
+						else{
+							console.log('hola');
+					        this.invalid();
+					        //this.validateForm(this.form);					        
+							
+						}	
 			else
 				this.valid();
 

@@ -8,6 +8,7 @@ import * as docxtemplater from 'docxtemplater';
 import { forEach } from '@angular/router/src/utils/collection';
 import { environment } from '../../../environments/environment';
 import { Logger } from "@services/logger.service";
+import { _config } from '@app/app.config';
 
 @Injectable()
 export class FormatosService {
@@ -302,15 +303,20 @@ export class FormatosLocal {
 
     public setVictimaInfo(_caso){
         let victima = _caso.findVictima();
-        let nombreVictima =
-            `${victima.persona.nombre} ${victima.persona.paterno} ${victima.persona.materno ? victima.persona.materno :'' }`;
+        let nombreVictima = '';
+        if (victima.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victimaDesconocido) {
+            nombreVictima = 'Identidad desconocida';
+        }else {
+            nombreVictima =
+                `${victima.persona.nombre} ${victima.persona.paterno} ${victima.persona.materno ? victima.persona.materno :'' }`;
+        }
         this.data['xVictima']         = nombreVictima;
         this.data['xFolioVictima']    = victima.persona.folioIdentificacion ? victima.persona.folioIdentificacion : '';
         this.data['xSeIdentificaCon'] = _caso.getAlias(victima);
         this.data['xDomicilio']       = _caso.getDomicilios(victima);
         this.data['xOriginario']      = victima.persona.pais ? victima.persona.pais.nombre : '';
         this.data['xEdad']            = victima.persona.edad;
-        this.data['xSexo']            = victima.persona.sexo.nombre;
+        this.data['xSexo']            = victima.persona.sexo ? victima.persona.sexo.nombre : '';
         this.data['xFechaNacimiento'] = _caso.formatFecha(victima.personafechaNacimiento);
         this.data['xRFC']             = victima.persona.rfc ? victima.persona.rfc : '';
         this.data['xCURP']            = victima.persona.curp ? victima.persona.curp : '';

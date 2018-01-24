@@ -501,24 +501,11 @@ export class CIndexedDB {
                     }else
                         rec(item[obj])
                 }
-            } 
+            }
         }
         rec(json);
         return arregloIds;
-        
-    }
 
-    //Elimina casos online, son los que tienen el campo ultima actualizacion
-    eliminaUltimoCaso(){
-        this.list("casos").then(listaCasos=>{
-           var lista = listaCasos as any[];
-           for (var i = 0; i < lista.length; ++i) {
-               var caso=lista[i];
-               Logger.log(caso, this.buscaIDsEnJson(caso) );
-               if (caso["ultimaActualizacion"])
-                   this.delete("casos",caso["id"]);
-           }
-        });
     }
 
 }

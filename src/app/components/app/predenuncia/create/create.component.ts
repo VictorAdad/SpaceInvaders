@@ -23,7 +23,7 @@ import { TableDataSource } from './../../global.component';
 import { AuthenticationService } from '@services/auth/authentication.service.ts';
 import { Logger } from "@services/logger.service";
 import { Yason } from '../../../../services/utils/yason';
-
+import * as moment from 'moment'
 
 
 export class PredenunciaGlobal{
@@ -61,7 +61,7 @@ export class PredenunciaCreateComponent {
         private router: Router,
         public db: CIndexedDB,
         public casoServ: CasoService,
-        
+
       ){}
 
     ngOnInit(){
@@ -80,7 +80,7 @@ export class PredenunciaCreateComponent {
 
                 if(this.onLine.onLine){
                     this.http.get(this.apiUrl+params['casoId']+'/page').subscribe(response => {
-                        if(parseInt(response.totalCount) !== 0){                            
+                        if(parseInt(response.totalCount) !== 0){
                             this.hasPredenuncia = true;
                             this.object = response;
                         }
@@ -233,11 +233,11 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                             this.hasPredenuncia = true;
                             Logger.log("Dont have predenuncia");
                             this.model= response.data[0] as Predenuncia;
-                            let x=response.data[0].heredar; 
+                            let x=response.data[0].heredar;
                             const timer = Observable.timer(1000);
                             timer.subscribe(t=>{
                                 console.log("RESPONSE HEREDAR ->>>>>>>><",x, this.form,response.data[0].tipoPersonaHeredar);
-                                this.heredar = x; 
+                                this.heredar = x;
                                 const timer2 = Observable.timer(100);
 
                                 timer2.subscribe( t => {
@@ -249,7 +249,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                     }
                                     this.form.disable();
                                 });
-                                
+
                             })
                             Logger.logColor('<<< model >>>','red', this.model);
                             this.personas = response.data[0].personas;
@@ -272,15 +272,15 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                         if (caso){
                             if(caso["predenuncias"]){
                                 this.hasPredenuncia = true;
-                                Logger.log("Have predenuncias");                                
+                                Logger.log("Have predenuncias");
                                 let model = caso['predenuncias'];
                                 var fechaCompleta: Date = new Date(model.fechaHoraInspeccion);
                                 this.model.fechaCanalizacion=fechaCompleta;
-                                let x=model.heredar; 
+                                let x=model.heredar;
                                 const timer = Observable.timer(1000);
                                 timer.subscribe(t=>{
                                     console.log("RESPONSE HEREDAR ->>>>>>>><",x, this.form,model.tipoPersonaHeredar);
-                                    this.heredar = x; 
+                                    this.heredar = x;
                                     this.heredarChanged(x,model.tipoPersonaHeredar);
                                     const timer2 = Observable.timer(100);
                                     timer2.subscribe( t => {
@@ -290,7 +290,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                         console.log('############', this.form.controls.tipoPersonaHeredar);
                                         this.form.disable();
                                     });
-                                    
+
                                 })
                                 var horas: string=(String(fechaCompleta.getHours()).length==1)?'0'+fechaCompleta.getHours():String(fechaCompleta.getHours());
                                 var minutos: string=(String(fechaCompleta.getMinutes()).length==1)?'0'+fechaCompleta.getMinutes():String(fechaCompleta.getMinutes());;
@@ -459,7 +459,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             _data.fechaCanalizacion = new Date(_data.fechaCanalizacion);
         }
         Yason.eliminaNulos(_data);
-        Logger.log('Predenuncia@fillForm()', _data); 
+        Logger.log('Predenuncia@fillForm()', _data);
         this.form.patchValue(_data);
         if (_data['fechaCanalizacion']) {
             const time = _data.fechaCanalizacion.getHours()+':'+_data.fechaCanalizacion.getMinutes();
@@ -511,7 +511,7 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
         this.vista="predenuncia";
     }
 
-    ngOnInit() {        
+    ngOnInit() {
         if (this.authen.user.roles[0] === this.authen.roles.callCenter) {
             this.isCallCenter = true;
         }
@@ -523,6 +523,7 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
             if(this.object.documentos){
                 this.dataSource = this.source;
                 for (let object of this.object.documentos) {
+                    object['fechaCreacion'] = moment(this.object.documentos["0"].created).format('DD/MM/YYYY');
                     this.data.push(object);
                     this.subject.next(this.data);
                 }
@@ -569,7 +570,8 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
     }
 
     public setData(_object){
-        Logger.log('setData()');
+        Logger.log('setData()',_object);
+        _object['fechaCreacion'] = moment(_object.created).format('DD/MM/YYYY');
         this.data.push(_object);
         this.subject.next(this.data);
     }
@@ -588,5 +590,3 @@ export class DocumentoPredenuncia {
 	procedimiento: string;
 	created: Date;
 }
-
-
