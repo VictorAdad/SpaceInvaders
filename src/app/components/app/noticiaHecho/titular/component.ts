@@ -163,7 +163,7 @@ export class TitularComponent {
     transferirDialog() {
         this.dialog.open(TransferirComponent, {
             height: 'auto',
-            width: '500px',
+            width: '550px',
             data: {
               casoId: this.casoId
             }
