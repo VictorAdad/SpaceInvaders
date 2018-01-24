@@ -20,12 +20,42 @@
             <text label="Entidad, Municipio" id=""></text>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-4">
+    <div class="row justify-content-end">
+        <div class="col-md-5">
             <text label="Clave Única de Identificación Policial (CUIP)" id=""></text>
         </div>
-        <div class="col-md-4">
-            <button class="float-right" mat-raised-button color="accent">Agregar</button>
+        <div class="col-md-5">
+            <button mat-raised-button color="accent">Agregar</button>
         </div>
     </div>    
+
+    <mat-table #table [dataSource]="dataSource">
+        <ng-container matColumnDef="cuip">
+            <mat-header-cell *matHeaderCellDef> CUIP</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.cuip}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="institucion">
+            <mat-header-cell *matHeaderCellDef>Institución</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.institucion}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="entidadMunicipio">
+            <mat-header-cell *matHeaderCellDef>Entidad, Municipio</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.entidadMunicipio}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="accion">
+            <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+            <mat-cell *matCellDef="let element"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon></span> </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+    </mat-table>
 </div>

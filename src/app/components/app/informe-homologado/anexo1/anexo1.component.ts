@@ -4,10 +4,10 @@ import { HttpService} from '@services/http.service';
 
 @Component({
     selector: 'anexo1',
-    templateUrl: './anexo1/anexo1.component.html'
+    templateUrl: './anexo1.component.html'
 })
 
-export class anexo1Component {
+export class Anexo1Component {
 
     public breadcrumb = [];
 
