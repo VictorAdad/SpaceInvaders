@@ -14,9 +14,12 @@ export class PrincipalInformeHomologadoCreate {
 
     public breadcrumb = [];
     columns = ['cuip', 'nombre', 'institucion', "entidadMunicipio", "accion"];
+    columns2 = ['riesgoPara', 'tipo', "accion"];
     dataSource: TableService | null;
+    dataSource2: TableService | null;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatPaginator) paginator2: MatPaginator;
 
     constructor(
         private route: ActivatedRoute,
@@ -33,6 +36,12 @@ export class PrincipalInformeHomologadoCreate {
         rows['entidadMunicipio'] = "Xalapa, Veracruz (10,018)"
         
         this.dataSource = new TableService(this.paginator, [rows]);
+
+        var rows2 = {};
+        rows2['riesgoPara'] = "Víctima" 
+        rows2['tipo'] = "Salud"
+
+        this.dataSource2 = new TableService(this.paginator2, [rows2]);
     }
 
 }

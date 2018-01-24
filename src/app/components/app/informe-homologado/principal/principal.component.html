@@ -28,34 +28,189 @@
             <button mat-raised-button color="accent">Agregar</button>
         </div>
     </div>    
+    
+    <div class="row justify-content-center">
+        <div class="col-md-11">
+            <mat-table #table [dataSource]="dataSource">
+                <ng-container matColumnDef="cuip">
+                    <mat-header-cell *matHeaderCellDef> CUIP</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.cuip}} </mat-cell>
+                </ng-container>
 
-    <mat-table #table [dataSource]="dataSource">
-        <ng-container matColumnDef="cuip">
-            <mat-header-cell *matHeaderCellDef> CUIP</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.cuip}} </mat-cell>
-        </ng-container>
+                <ng-container matColumnDef="nombre">
+                    <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+                </ng-container>
 
-        <ng-container matColumnDef="nombre">
-            <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
-        </ng-container>
+                <ng-container matColumnDef="institucion">
+                    <mat-header-cell *matHeaderCellDef>Institución</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.institucion}} </mat-cell>
+                </ng-container>
 
-        <ng-container matColumnDef="institucion">
-            <mat-header-cell *matHeaderCellDef>Institución</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.institucion}} </mat-cell>
-        </ng-container>
+                <ng-container matColumnDef="entidadMunicipio">
+                    <mat-header-cell *matHeaderCellDef>Entidad, Municipio</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.entidadMunicipio}} </mat-cell>
+                </ng-container>
 
-        <ng-container matColumnDef="entidadMunicipio">
-            <mat-header-cell *matHeaderCellDef>Entidad, Municipio</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.entidadMunicipio}} </mat-cell>
-        </ng-container>
+                <ng-container matColumnDef="accion">
+                    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon></span> </mat-cell>
+                </ng-container>
 
-        <ng-container matColumnDef="accion">
-            <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-            <mat-cell *matCellDef="let element"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon></span> </mat-cell>
-        </ng-container>
+                <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+            </mat-table>
+        </div>
+    </div>
+    <br>
 
-        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
-    </mat-table>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>II. Conocimientoel hecho al primer responsable</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <select2 placeholder="¿Cómo se enteró del hecho?" name="" [options]="
+                [
+                    {label:'Fragrancia',value:'Fragrancia'},
+                    {label:'Fragrancia_1',value:'Fragrancia_1'}
+                ]">
+            </select2>
+        </div>
+        <div class="col-md-4">
+            <text label="Especifique" id="Especifique" name=""> </text>
+        </div>
+        <div class="col-md-3">
+            <date label="Fecha de conocimiento" name="" placeholder="dd/mm/aaaa"></date>
+        </div>
+        <div class="col-md-2">
+            <text label="Hora de conocimiento" name="" placeholder="hh:mm"> </text>
+        </div>
+    </div>
+    <br>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>III. Arribo al lugar de la intervención e identificación de riesgos</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <date label="Fecha de arribo" name="" placeholder="dd/mm/aaaa"></date>
+        </div>
+        <div class="col-md-1">
+            <text label="Hora de arribo" name="" placeholder="hh:mm"> </text>
+        </div>
+        <div class="col-md-3">
+            <select2 placeholder="Entidad" name="" [options]="
+                [
+                    {label:'Veracruz',value:'Veracruz'},
+                    {label:'Puebla',value:'Puebla'}
+                ]">
+            </select2>
+        </div>
+        <div class="col-md-3">
+            <select2 placeholder="Municipio" name="" [options]="
+                [
+                    {label:'Xalapa',value:'Xalapa'},
+                    {label:'Veracruz',value:'Veracruz'}
+                ]">
+            </select2>
+        </div>
+        <div class="col-md-2">
+            <text label="Localidad" name=""> </text>
+        </div>
+
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            <text label="Calle" name=""> </text>
+        </div>
+        <div class="col-md-1">
+            <text label="Num. Interior" name=""> </text>
+        </div>
+        <div class="col-md-1">
+            <text label="Num. Exterior" name=""> </text>
+        </div>
+        <div class="col-md-3">
+            <text label="Entre calle y calle" name=""> </text>
+        </div>
+        <div class="col-md-3">
+            <text label="Tramo carretero (Si aplica)" name=""> </text>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <text label="Tipo" name=""> </text>
+        </div>
+        <div class="col-md-3">
+            <text label="KM" name=""> </text>
+        </div>
+        <div class="col-md-3">
+            <text label="Latitud (Con 6 decimales)" name=""> </text>
+        </div>
+        <div class="col-md-3">
+            <text label="Longitud (Con 6 decimales)" name=""> </text>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Tipos de riesgos identificados en el lugar</h2>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-3">
+            <select2 placeholder="Riesgo para" name="" [options]="
+                [
+                    {label:'Víctimas',value:'Víctimas'},
+                    {label:'Personas',value:'Personas'}
+                ]">
+            </select2>
+        </div>
+        <div class="col-md-3">
+            <select2 placeholder="Tipo" name="" [options]="
+                [
+                    {label:'Salud',value:'Salud'},
+                    {label:'Hogar',value:'Hogar'}
+                ]">
+            </select2>
+        </div>
+        <div class="col-md-3">
+            <text label="Especifique" name=""> </text>
+        </div>
+        <div class="col-md-3">
+            <button mat-raised-button color="accent">Agregar</button>
+        </div>
+    </div>
+
+    <div class="row justify-content-end">
+        <div class="col-md-9">
+            <mat-table [dataSource]="dataSource2">
+                <ng-container matColumnDef="riesgoPara">
+                    <mat-header-cell *matHeaderCellDef> Riesgo para</mat-header-cell>
+                    <mat-cell *matCellDef="let element2"> {{element2.riesgoPara}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="tipo">
+                    <mat-header-cell *matHeaderCellDef>Tipo</mat-header-cell>
+                    <mat-cell *matCellDef="let element2"> {{element2.tipo}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="accion">
+                    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                    <mat-cell *matCellDef="let element2"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon></span> </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="columns2"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columns2;" routerLink=""></mat-row>
+            </mat-table>
+        </div>
+    </div>
+    <br>
+
 </div>
