@@ -213,6 +213,8 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
             'noIdentificacionHeredar': new FormControl('', []),
             'gradoEscolaridadHeredar': new FormControl('', []),
             'salarioHeredar': new FormControl('', []),
+            'originarioDeHeredar': new FormControl('', []),
+            'sabeLeerEscribirHeredar': new FormControl('', []),
 
             'sexo': new FormGroup({
                 'id': new FormControl("", []),
@@ -413,14 +415,27 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                 this.form.controls['nombreEntrevistado'].setValue(this.form.controls['nombreEntrevistado'].value+","+nombrePersona);
             }
 
-            let sexo=personaCaso.persona.sexo?personaCaso.persona.sexo.nombre:null;
-
+            let sexo = personaCaso.persona.sexo ? personaCaso.persona.sexo.nombre : null;
             let salarioSemanal = personaCaso.persona.ingresoMensual;
+            let originarioEstado = `${personaCaso.persona.estado ? personaCaso.persona.estado.nombre : (personaCaso.persona.estadoNacimientoOtro ? personaCaso.persona.estadoNacimientoOtro : 'Sin estado')}`;
+            let originarioMunicipio = `${personaCaso.persona.municipio ? personaCaso.persona.municipio.nombre : (personaCaso.persona.municipioNacimientoOtro ? personaCaso.persona.municipioNacimientoOtro : 'Sin municipio')}`;
+            let originarioDe = `${originarioEstado} - ${originarioMunicipio}`;
+            let originarioDeControl = this.form.controls['originarioDeHeredar'];
+            let sabeLeerEscribir = personaCaso.persona.sabeLeerEscribir;
+            let sabeLeerEscribirControl = this.form.controls['sabeLeerEscribirHeredar'];
 
             // Heredar Sexo
             this.form.controls["sexoHeredar"].setValue(
                 this.form.controls["sexoHeredar"].value ? (sexo?this.form.controls["sexoHeredar"].value+","+sexo:this.form.controls["sexoHeredar"].value+",Sin valor"):sexo?sexo:"Sin valor"
             );
+            // Heredar originarioDe
+            originarioDeControl.setValue(
+                originarioDeControl.value ? (originarioDeControl.value+", " + originarioDe) : originarioDe
+            );
+            // Heredar sabeLeerEscribir
+            // sabeLeerEscribirControl.setValue(
+            //     sabeLeerEscribirControl.value ? (sabeLeerEscribir ? sabeLeerEscribirControl.value + ", " + sabeLeerEscribir : sabeLeerEscribirControl.value + ", Sin valor") : sabeLeerEscribir ? sabeLeerEscribir : "Sin valor"
+            // );
 
             // Heredar Fecha Nacimiento
             // Logger.log('-> fecha de nacimiento ', personaCaso.persona.fechaNacimiento);

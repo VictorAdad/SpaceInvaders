@@ -39,7 +39,7 @@
                     </div>
                     <div class="col-md-3">
                         <!-- <date label="Fecha de nacimiento" name="fechaNacimiento" (valueChange)="calculateAge($event)"[group]="form"></date> -->
-                        <text   *ngIf="heredar" label="Fecha de nacimiento" name="fechaNacimientoHeredar" [group]="form"  [max]="1000"></text>
+                        <text *ngIf="heredar" label="Fecha de nacimiento" name="fechaNacimientoHeredar" [group]="form"  [max]="1000"></text>
                         <date-picker  *ngIf="!heredar" label="Fecha de nacimiento" name="fechaNacimiento" (onDateSelect)="calculateAge($event)" [validateDays]="'post'" [group]="form"></date-picker>
 
                     </div>
@@ -57,7 +57,8 @@
                         <text *ngIf="heredar" label="Nacionalidad" name="nacionalidad" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
-                        <text label="Originario de" name="originarioDe" [group]="form"></text>
+                        <text *ngIf="!heredar" label="Originario de" name="originarioDe" [group]="form"></text>
+                        <text *ngIf="heredar" label="Originario de" name="originarioDeHeredar" [group]="form" [max]="1000"></text>
                     </div>
                     <div class="col-md-3">
                         <text label="En su caso, estado migratorio" name="estadoMigratorio" [group]="form"></text>
@@ -96,12 +97,17 @@
 
                       </div>
                     <div class="col-md-3">
-                        <select2 placeholder="¿Sabe leer y escribir?"
-                        [options]="
-                        [
-                             {label:'No',value:false},
-                             {label:'Si',value:true}
-                        ]" name="sabeLeerEscribir" [group]="form"></select2>
+                        <select2
+                            placeholder="¿Sabe leer y escribir?"
+                            [options]="
+                            [
+                                {label:'No',value:false},
+                                {label:'Sí',value:true}
+                            ]"
+                            name="sabeLeerEscribir"
+                            [group]="form">
+                        </select2>
+                        <!-- <text *ngIf="heredar" label='¿Sabe leer y escribir?' name="sabeLeerEscribirHeredar" [max]="1000"  [group]="form"></text> -->
                     </div>
                     <div class="col-md-3">
                         <text *ngIf="!heredar" label="Grado de escolaridad" name="gradoEscolaridad" [max]="40" [group]="form"></text>
