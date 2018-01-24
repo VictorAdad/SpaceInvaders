@@ -1,26 +1,69 @@
-<div class="row">
+<div class="container">
     <div class="row">
         <div class="col-md-12">
             <h2>Anexo 1 Constancia de derecho de lectura de derechos del detenido</h2>
         </div>
     </div>
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-md-4">
-            <text label="Nombre del primer responsable" id=""></text>
+            <select2 placeholder="Detenido" id=""
+            [options]="[
+                {label:'Saul Roman',value:'Saul Roman'},
+                {label:'Diego Lopez',value:'Diego Lopez'}
+            ]">
+                
+            </select2>
         </div>
         <div class="col-md-4">
-            <text label="Institución de la que proviene" id=""></text>
-        </div>
-        <div class="col-md-4">
-            <text label="Entidad, Municipio" id=""></text>
+            <span>Comprendió sus derechos</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-4">
-            <text label="Clave Única de Identificación Policial (CUIP)" id=""></text>
+
+    <div class="row justify-content-center">
+        <div class="col-md-auto">
+            <span class="float-rigth">Primer respondiente que realiza la lectura de derechos (Llenar sólo en caso de no ser el mismo que llena este formato)</span>
         </div>
-        <div class="col-md-4">
-            <button class="float-right" mat-raised-button color="accent">Agregar</button>
+    </div>
+
+    <div class="row space"></div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-3">
+            <text label="CUIP" name="" ></text>
         </div>
+        o
+        <div class="col-md-2">
+            <text label="Apellido paterno" name="" ></text>
+        </div>        
+        <div class="col-md-2">
+            <text label="Apellido materno" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Nombre(s)" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Adcripción" name="" ></text>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-auto">
+            <button class="" mat-raised-button color="accent">Agregar</button>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        
     </div>
 </div>
+    
+    
+    

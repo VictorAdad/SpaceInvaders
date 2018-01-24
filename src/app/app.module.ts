@@ -97,10 +97,9 @@ import { Anexo1Component} from '@components-app/informe-homologado/anexo1/anexo1
     PredenunciaComponent,
     DocumentoPredenunciaComponent,
     PredenunciaCreateComponent,
-    EntrevistaComponents,
-
     PrincipalInformeHomologadoCreate,
     Anexo1Component,
+    EntrevistaComponents,
 
     catalogosComponents,
     pipes,
