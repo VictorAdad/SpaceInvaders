@@ -4,7 +4,7 @@ import { HttpService} from '@services/http.service';
 
 @Component({
     selector: 'principal',
-    templateUrl: './principal/principal.component.html'
+    templateUrl: './principal.component.html'
 })
 
 export class PrincipalInformeHomologadoCreate {
@@ -15,6 +15,7 @@ export class PrincipalInformeHomologadoCreate {
         private route: ActivatedRoute,
         private http: HttpService){
         // super();
+        
     }
 
 }

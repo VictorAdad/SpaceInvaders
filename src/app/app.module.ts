@@ -77,6 +77,8 @@ import 'hammerjs';
 import { pipes } from './pipes/pipe.module';
 import { LoginDialogService } from './services/onLine/loginDialog.service';
 
+//Informe Homologado
+import { PrincipalInformeHomologadoCreate} from '@components-app/informe-homologado/principal/principal.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +96,7 @@ import { LoginDialogService } from './services/onLine/loginDialog.service';
     PredenunciaComponent,
     DocumentoPredenunciaComponent,
     PredenunciaCreateComponent,
-
+    PrincipalInformeHomologadoCreate,
     EntrevistaComponents,
 
     catalogosComponents,
