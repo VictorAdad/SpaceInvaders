@@ -6,8 +6,8 @@
 export const environment = {
   production: false,
   api : {
-    host : 'http://localhost:9000',
-    ws : 'ws://localhost:9000',
+    host : 'http://10.0.2.40:9000',
+    ws : 'ws://10.0.2.40:9000',
   },
   app: {
   	host: 'http://localhost:4200'
