@@ -22,6 +22,7 @@ import { Yason } from '@services/utils/yason';
 import { Logger } from "@services/logger.service";
 import { AuthenticationService } from "@services/auth/authentication.service";
 import { PersonaPreSaveComponent } from './pre-save-component';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
     templateUrl : './persona-fisica-imputado.component.html',
@@ -514,7 +515,6 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal {
 
 
     activaRazonSocial(value){
-        Logger.log('activaRazonSocial', value);
         if (value=="Moral"){
             this.form.controls.razonSocial.enable();
             this.globals.maxRFC = 12;
@@ -531,8 +531,8 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal {
             this.globals.maxRFC = 13;
             if(this.globals.tipoInterviniente != '')
               this.validateIntervinienteDesconocido(this.globals.tipoInterviniente);
-
         }
+        this.globals.personaChange.next(value);
     }
 
     searchCatalogos(datos:any[]){
@@ -1455,6 +1455,7 @@ export class PersonaGlobals{
     public isIntervinienteDesconocido: boolean=false;
     public hintsObligatorio="Campo obligatorio";
     public isImputadoAny=false;
+    public personaChange = new Subject<any>();
 
 
     public otrosNombres={
