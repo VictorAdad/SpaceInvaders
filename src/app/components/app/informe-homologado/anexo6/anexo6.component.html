@@ -1,42 +1,28 @@
 <div class="row justify-content-start">
     <div class="col-md-12">
-        <h2>Anexo 1 Constancia de derecho de lectura de derechos del detenido</h2>
+        <h2>Anexo 6 Constancia de lectura de derechos de la víctima</h2>
     </div>
 </div>
+
 <div class="container">
-    <div class="row space"></div>
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <select2 placeholder="Detenido" id=""
-            [options]="[
-                {label:'Saul Roman',value:'Saul Roman'},
-                {label:'Diego Lopez',value:'Diego Lopez'}
-            ]">
-                
-            </select2>
+	<div class="row">
+		<p>Datos de la víctima</p>
+	</div>
+	<div class="row">
+        <div class="col-md-3">
+            <text label="Apellido paterno" name="" ></text>
+        </div>        
+        <div class="col-md-3">
+            <text label="Apellido materno" name="" ></text>
         </div>
-        <div class="col-md-4">
-            <span>Comprendió sus derechos</span>
-            <radiobutton
-                class="col-md-3"
-                [radios]="[
-                    {label:'Sí',value:'Sí'},
-                    {label:'No',value:'No'}
-                ]" 
-                name="">    
-            </radiobutton>
+        <div class="col-md-3">
+            <text label="Nombre(s)" name="" ></text>
         </div>
-    </div>
-
-    <div class="row justify-content-center">
-        <div class="col-md-auto">
-            <span class="float-rigth">Primer respondiente que realiza la lectura de derechos (Llenar sólo en caso de no ser el mismo que llena este formato)</span>
-        </div>
-    </div>
-
-    <div class="row space"></div>
-
-    <div class="row justify-content-center">
+	</div>
+	<div class="row">
+		<p>Primer respondiente que realiza la lectura de derechos (Llenar sólo en caso de no ser el mismo que llena este formato)</p>
+	</div>
+	<div class="row">
         <div class="col-md-3">
             <text label="CUIP" name="" ></text>
         </div>
@@ -54,29 +40,23 @@
             <text label="Adcripción" name="" ></text>
         </div>
     </div>
-
     <div class="row justify-content-center">
         <div class="col-md-auto">
             <button class="" mat-raised-button color="accent">Agregar</button>
         </div>
     </div>
-
+    <div class="row space"></div>
     <div class="row justify-content-center">
         <div class="col-md-10">
             <mat-table #table [dataSource]="dataSource">
-                <ng-container matColumnDef="detenido">
-                    <mat-header-cell *matHeaderCellDef>Detenido</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.detenido}} </mat-cell>
+                <ng-container matColumnDef="victima">
+                    <mat-header-cell *matHeaderCellDef>Víctima</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.victima}} </mat-cell>
                 </ng-container>
 
-                <ng-container matColumnDef="comprendio">
-                    <mat-header-cell *matHeaderCellDef>Comprendio sus derechos</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.comprendio}} </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="primer">
+                <ng-container matColumnDef="responsable">
                     <mat-header-cell *matHeaderCellDef>Primer responsable</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.primer}} </mat-cell>
+                    <mat-cell *matCellDef="let element"> {{element.responsable}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="accion">
@@ -90,7 +70,6 @@
         </div>
     </div>
     <div class="row space"></div>
-    <div class="row space"></div>
     <div class="row justify-content-end">
         <div class="col-sm-auto">
             <button class="" mat-raised-button color="accent">Guardar</button>
@@ -100,6 +79,3 @@
         </div>
     </div>
 </div>
-    
-    
-    
