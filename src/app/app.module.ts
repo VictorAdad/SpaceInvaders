@@ -89,6 +89,7 @@ import { Anexo7Component} from '@components-app/informe-homologado/anexo7/anexo7
 import { Anexo8Component} from '@components-app/informe-homologado/anexo8/anexo8.component';
 import { Anexo9Component} from '@components-app/informe-homologado/anexo9/anexo9.component';
 import { Anexo10Component} from '@components-app/informe-homologado/anexo10/anexo10.component';
+import { Anexo11Component} from '@components-app/informe-homologado/anexo11/anexo11.component';
 
 @NgModule({
   declarations: [
@@ -117,6 +118,7 @@ import { Anexo10Component} from '@components-app/informe-homologado/anexo10/anex
     Anexo8Component,
     Anexo9Component,
     Anexo10Component,
+    Anexo11Component,
     EntrevistaComponents,
 
     catalogosComponents,
