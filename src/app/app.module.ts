@@ -80,6 +80,8 @@ import { LoginDialogService } from './services/onLine/loginDialog.service';
 //Informe Homologado
 import { PrincipalInformeHomologadoCreate} from '@components-app/informe-homologado/principal/principal.component';
 import { Anexo1Component} from '@components-app/informe-homologado/anexo1/anexo1.component';
+import { Anexo2Component} from '@components-app/informe-homologado/anexo2/anexo2.component';
+import { Anexo3Component} from '@components-app/informe-homologado/anexo3/anexo3.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +101,8 @@ import { Anexo1Component} from '@components-app/informe-homologado/anexo1/anexo1
     PredenunciaCreateComponent,
     PrincipalInformeHomologadoCreate,
     Anexo1Component,
+    Anexo2Component,
+    Anexo3Component,
     EntrevistaComponents,
 
     catalogosComponents,
