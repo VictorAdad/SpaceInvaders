@@ -69,7 +69,29 @@
 		<div class="col-md-4">
             <span>Armas</span>
             <radiobutton
-                class="col-md-3"
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-4">
+            <span>Dinero</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-4">
+            <span>Persona</span>
+            <radiobutton
+                class="col-md-4"
                 [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
@@ -78,4 +100,35 @@
             </radiobutton>
         </div>
 	</div>
+    <div class="row">
+        <div class="col-md-2">
+            <select2 placeholder="Tipo:" id=""
+            [options]="[
+                {label:'Corta',value:'corta'},
+                {label:'Arma larga',value:'larga'}
+            ]">                
+            </select2>
+        </div>
+        <div class="col-md-2">
+            <text label="Cantidad" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <select2 placeholder="Moneda:" id=""
+            [options]="[
+                {label:'Corta',value:'corta'},
+                {label:'Arma larga',value:'larga'}
+            ]">                
+            </select2>
+        </div>
+        <div class="col-md-1">
+            <text label="Otra" name="" ></text>
+        </div>
+        <div class="col-md-1">
+            <text label="Cantidad" name="" ></text>
+        </div>
+        <div class="col-md-4">
+            <text label="Cantidad" name="" ></text>
+        </div>
+    </div>
 </div>
+

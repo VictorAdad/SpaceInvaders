@@ -3,7 +3,7 @@ import { BasePaginationComponent } from '@components-app/base/pagination/compone
 import { TableService } from '@utils/table/table.service';
 import { MatPaginator } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { HttpService} from '@services/http.service';
+import { HttpService } from '@services/http.service';
 
 @Component({
     selector: 'anexo8',
