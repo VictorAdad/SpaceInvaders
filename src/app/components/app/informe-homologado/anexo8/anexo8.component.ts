@@ -13,7 +13,7 @@ import { HttpService } from '@services/http.service';
 export class Anexo8Component {
 
     public breadcrumb = [];
-    columns = ['detenido', 'descripcion', 'cantidad', 'accion'];
+    columns = ['nombre', 'objeto', 'accion'];
     dataSource: TableService | null;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -26,9 +26,8 @@ export class Anexo8Component {
 
     ngOnInit(){
         var rows = {};
-        rows['detenido'] = "Yair Ruiz" 
-        rows['descripcion'] = "Control de contacto"
-        rows['cantidad'] = "4"
+        rows['nombre'] = "Yair Ruiz" 
+        rows['objeto'] = "Arma de fuego"
         
         this.dataSource = new TableService(this.paginator, [rows]);
     }
