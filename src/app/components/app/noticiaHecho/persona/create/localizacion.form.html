@@ -217,8 +217,10 @@
 <mat-table #table [dataSource]="dataSource" class="latabla" *ngIf="!loadListLocalidades">
 
     <ng-container matColumnDef="direccion">
-        <mat-header-cell *matHeaderCellDef> Direccion  </mat-header-cell>
-        <mat-cell *matCellDef="let dir"> 
+        <mat-header-cell *matHeaderCellDef> Domicilios guardados  </mat-header-cell>
+        <mat-cell *matCellDef="let dir">
+            <p>
+                <b>Dirección: </b> 
             <span *ngIf="dir.pais.id==idMexico">
                 {{dir.tipoDomicilio?(dir.tipoDomicilio.nombre?dir.tipoDomicilio.nombre+":":""):""}}
                 {{dir.calle}}  {{dir.noExterior?"#"+dir.noExterior:""}} {{dir.noInterior?"int. "+dir.noInterior:""}} 
@@ -237,6 +239,13 @@
                     {{dir.estadoOtro?dir.estadoOtro+",":""}} 
                     {{dir.pais?(dir.pais.nombre?dir.pais.nombre:""):""}} 
                 </span>
+            </p>
+            <p><b>Telefonos:</b> {{ dir?.telParticular }} {{ dir?.telMovil }} {{ dir?.telTrabajo }}</p>
+            <p><b>Correo eléctronico:</b> {{ dir?.correo }}</p>
+            <p><b>Referencias:</b> {{ dir?.referencias }}</p>
+        </mat-cell>
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let dir"> 
         </mat-cell>
     </ng-container>
 

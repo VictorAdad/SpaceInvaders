@@ -742,6 +742,11 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal {
                     _model['estado']={id: ''};
                     _model['municipio']={id: ''};
                 }
+
+                if (this.formAtLeatsOneValue(this.globals.formLocalizacion)) {
+                    _model.localizacionPersona.push(this.globals.formLocalizacion.value);
+                }
+
                 this.searchCatalogos(buscar).then(e=>{
                     for(let key in e){
                         if (e[key]!=null){
@@ -1235,7 +1240,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal {
                 height: '400px',
                 data: { 
                     action: _save.bind(this),
-                    title: 'Se han valores en la sección de Datos de Localización sin agregar. ¿Desea continuar sin agregar estos valores?'
+                    title: 'Se han valores en la sección de Datos de Localización sin agregar. Se guardará la información insertada'
                 }
             });
         } else {
