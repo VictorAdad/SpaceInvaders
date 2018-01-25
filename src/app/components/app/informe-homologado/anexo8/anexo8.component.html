@@ -1,0 +1,81 @@
+<div class="row justify-content-start">
+    <div class="col-md-12">
+        <h2>Anexo 8 Inspecciónes</h2>
+    </div>
+</div>
+<div class="container">
+	<div class="row">
+		<p>Inspección del lugar de la intervención</p>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+            <select2 placeholder="Tipo de lugar:" id=""
+            [options]="[
+                {label:'Casa',value:'Casa'},
+                {label:'Casa',value:'Casa'}
+            ]">                
+            </select2>
+        </div>
+        <div class="col-md-3">
+            <text label="Otro" name="" ></text>
+        </div>
+        <div class="col-md-3">
+            <select2 placeholder="Características del lugar:" id=""
+            [options]="[
+                {label:'Abierto',value:'Abierto'},
+                {label:'Cerrado',value:'Cerrado'}
+            ]">                
+            </select2>
+        </div>
+        <div class="col-md-3">
+            <select2 placeholder="Suelo:" id=""
+            [options]="[
+                {label:'Pavimento',value:'Pavimento'},
+                {label:'Terracería',value:'Terracería'}
+            ]">                
+            </select2>
+        </div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+            <select2 placeholder="Condiciones:" id=""
+            [options]="[
+                {label:'Seco',value:'Seco'},
+                {label:'Mojado',value:'Mojado'}
+            ]">                
+            </select2>
+        </div>
+        <div class="col-md-3">
+            <select2 placeholder="Iluminación:" id=""
+            [options]="[
+                {label:'Natural',value:'Natural'},
+                {label:'Artificial',value:'Artificial'}
+            ]">                
+            </select2>
+        </div>
+        <div class="col-md-3">
+            <select2 placeholder="¿Encontró objetos relacionados con la comisión del delito?:" id=""
+            [options]="[
+                {label:'Sí',value:'si'},
+                {label:'No',value:'no'}
+            ]">                
+            </select2>
+        </div>
+	</div>
+	<div class="row">
+		<p>Tipo de objetos encontrados</p>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+            <span>Armas</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+	</div>
+</div>
