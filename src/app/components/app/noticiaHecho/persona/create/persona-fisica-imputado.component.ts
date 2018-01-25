@@ -41,6 +41,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal {
     public tipoInter = [];
     public detalleDetenido=null;
     public tipoInterviniente =null;
+    public tipoIntervinienteTemp =null;
     public tipoPersona=null;
 
     @ViewChild('tipoInterviniente')
@@ -80,6 +81,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal {
             Logger.log('<<< Hola!!! >>>',this.globals.isImputadoAny); 
             if(this.form.controls.tipoPersona.value=="Moral")
                  this.form.controls.razonSocial.enable();
+            this.tipoIntervinienteTemp = {id:tipoInterviniente};
         }
 
         this.validateIntervinienteDesconocido(tipoInterviniente)
@@ -1028,8 +1030,9 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal {
                 _model.personaCaso[0]["tipoInterviniente"]=this.tipoInterviniente;
                 _model["tipoPersona"]=this.tipoPersona;
                 for (var i = 0; i < lista.length; ++i) {
-                    if((lista[i])["value"]==_model.personaCaso[0].tipoInterviniente["id"])
+                    if((lista[i])["value"]==this.tipoIntervinienteTemp["id"])
                     {
+                        _model.personaCaso[0].tipoInterviniente["id"] = this.tipoIntervinienteTemp["id"];
                         _model.personaCaso[0].tipoInterviniente["tipo"] = (lista[i])["label"];
                         break;
                     }

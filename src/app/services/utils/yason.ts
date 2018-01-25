@@ -72,5 +72,16 @@ export class Yason {
         return coincidencias;
 
     }
+    /**
+     * Regresa verdadero o falso dependiendo si esta o no el item en la lista
+     * @param _item El elemento que se buscara
+     * @param _lista La lista de elementos
+     */
+    public static itemInArray(_item,_lista:any[]) {
+        const encontrado = _lista.find(function(element) {
+            return element == _item;
+          });
+        return typeof encontrado != 'undefined';
+    }
 
 }

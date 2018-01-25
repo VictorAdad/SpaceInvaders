@@ -18,7 +18,13 @@ export class Colections {
 
 	constructor() {
 
-	}
+    }
+    
+    public del(_arr: string, _subject: string, _source: string, _indice:number){
+        this[_arr].splice(_indice,1);
+        this[_subject] = new BehaviorSubject<EfectoDetalle[]>(this[_arr]);
+        this[_source] =new RelDataSource(this[_subject]);
+    }
 
     public add(_arr: string, _subject: string, _data:any){
         this[_arr].push(_data);

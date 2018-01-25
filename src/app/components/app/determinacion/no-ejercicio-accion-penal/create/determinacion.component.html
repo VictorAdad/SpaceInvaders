@@ -33,16 +33,22 @@
                 <text-area label="Fracción que corresponda del artículo 327" name="fraccionArticulo"  [group]="form"></text-area>
             </div>
             <div class="col-md-3">
-                <select2 placeholder="Hipótesis de sobreseímiento que se actualiza" [options]="
-                [{label:'I. El hecho no se cometió',value:'I'},
-                {label:'II. El hecho cometido no contituye delito',value:'II'},
-                {label:'III. Apareciera claramente establecida la inocencia del imputado',value:'III'},
-                {label:'IV. El imputado esté excento de responsabilidad penal',value:'IV'},
-                {label:'V. Agotada la investigación, el ministerio público estime que no cuenta con los elementos suficientes para fundar una acusación',value:'V'},
-                {label:'VI. Se hubiere extinguido la acción penal por alguno de los motivos establecidos por la ley',value:'VI'},
-                {label:'VII. Una ley o reforma posterior derogue el delito por el que se sigue proceso',value:'VII'},
-                {label:'VIII. El hecho de que se trata haya sido materia de un proceso penal en el que se hubiera dictado sentencia firme respecto del imputado',value:'VIII'},
-                {label:'IX. Por muerte del imputado',value:'IX'}]" name="hipotesisSobreseimiento" [(value)]="model.hipotesisSobreseimiento" [group]="form"></select2>
+                <select2 placeholder="Hipótesis de sobreseímiento que se actualiza"
+                    [options]="
+                    [{label:'I. El hecho no se cometió',value:'I. El hecho no se cometió'},
+                    {label:'II. El hecho cometido no contituye delito',value:'II. El hecho cometido no contituye delito'},
+                    {label:'III. Apareciera claramente establecida la inocencia del imputado',value:'III. Apareciera claramente establecida la inocencia del imputado'},
+                    {label:'IV. El imputado esté excento de responsabilidad penal',value:'IV. El imputado esté excento de responsabilidad penal'},
+                    {label:'V. Agotada la investigación, el ministerio público estime que no cuenta con los elementos suficientes para fundar una acusación',value:'V. Agotada la investigación, el ministerio público estime que no cuenta con los elementos suficientes para fundar una acusación'},
+                    {label:'VI. Se hubiere extinguido la acción penal por alguno de los motivos establecidos por la ley',value:'VI. Se hubiere extinguido la acción penal por alguno de los motivos establecidos por la ley'},
+                    {label:'VII. Una ley o reforma posterior derogue el delito por el que se sigue proceso',value:'VII. Una ley o reforma posterior derogue el delito por el que se sigue proceso'},
+                    {label:'VIII. El hecho de que se trata haya sido materia de un proceso penal en el que se hubiera dictado sentencia firme respecto del imputado',value:'VIII. El hecho de que se trata haya sido materia de un proceso penal en el que se hubiera dictado sentencia firme respecto del imputado'},
+                    {label:'IX. Por muerte del imputado',value:'IX. Por muerte del imputado'}]"
+                    name="hipotesisSobreseimiento"
+                    [(value)]="model.hipotesisSobreseimiento"
+                    [group]="form"
+                    [order]="false">
+                </select2>
 
             </div>
             <div  class="col-md-12">
@@ -58,8 +64,8 @@
         <div class="row">
             <div class="col-md-6">
                 <select2 placeholder="Los hechos son del ámbito de" [options]="
-                [{label:'Competencia',value:'competencia'},
-                {label:'Jurisdicción',value:'jurisdicción'}]" name="ambitoHechos" [(value)]="model.ambitoHechos" [group]="form"></select2>
+                [{label:'Competencia',value:'Competencia'},
+                {label:'Jurisdicción',value:'Jurisdicción'}]" name="ambitoHechos" [(value)]="model.ambitoHechos" [group]="form"></select2>
             </div>
             <div  class="col-md-12">
                 <text-area label="Nombre de la autoridad competente" name="autoridadCompetente" [group]="form"></text-area>
