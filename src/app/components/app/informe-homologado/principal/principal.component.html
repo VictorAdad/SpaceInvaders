@@ -236,16 +236,16 @@
             <mat-table [dataSource]="dataSource3">
                 <ng-container matColumnDef="apoyo">
                     <mat-header-cell *matHeaderCellDef>Apoyo de</mat-header-cell>
-                    <mat-cell *matCellDef="let element">{{element.apoyo}}</mat-cell>
+                    <mat-cell *matCellDef="let element3"> {{element3.apoyo}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="nEconomico">
                     <mat-header-cell *matHeaderCellDef>Número económico</mat-header-cell>
-                    <mat-cell *matCellDef="let element">{{element.nEconomico}}</mat-cell>
+                    <mat-cell *matCellDef="let element3"> {{element3.nEconomico}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="accion">
                     <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon></span> </mat-cell>
+                    <mat-cell *matCellDef="let element3"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon></span> </mat-cell>
                 </ng-container>
 
                 <mat-header-row *matHeaderRowDef="columns3"></mat-header-row>
@@ -301,5 +301,390 @@
             </mat-table>
         </div>
     </div>
+    <div class="row space"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Narración de los hechos por el primer responsable</h2>
+        </div>
+        <div class="col-md-12">
+            <text label="Narración" name=""  [group]=""></text>
+        </div>
+    </div>
+    <div class="row space"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Acciones realizadas</h2>
+        </div>
+    </div>
+    <div class="row space"></div>
+    <div class="row">
+        <div class="col-md-3">
+            <span>Protección</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'},
+                    {label:'N/A',value:'NA'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-3">
+            <span>Resguardo</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'},
+                    {label:'N/A',value:'NA'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-3">
+            <span>Preservanción del lugar de intervención llenar sección 6</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'},
+                    {label:'N/A',value:'NA'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-3">
+            <span>Informar sobre echos a favor(anexo 1)</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Detenido',value:'Sí'},
+                    {label:'N/A',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+    </div>
+    <div class="row space"></div>
+    <div class="row">
+        <div class="col-md-3">
+            <span>Protección</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'},
+                    {label:'N/A',value:'NA'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-3">
+            <span>Resguardo</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'},
+                    {label:'N/A',value:'NA'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-3">
+            <span>Preservanción del lugar de intervención llenar sección 6</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'},
+                    {label:'N/A',value:'NA'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-3">
+            <span>Informar sobre echos a favor(anexo 1)</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Detenido',value:'Sí'},
+                    {label:'N/A',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+    </div>
+    <div class="row space"></div>
+    <div class="row">
+        <div class="col-md-3">
+            <span>Protección</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'},
+                    {label:'N/A',value:'NA'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-3">
+            <span>Resguardo</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'},
+                    {label:'N/A',value:'NA'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-3">
+            <span>Preservanción del lugar de intervención llenar sección 6</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'},
+                    {label:'N/A',value:'NA'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-3">
+            <span>Informar sobre echos a favor(anexo 1)</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Detenido',value:'Sí'},
+                    {label:'N/A',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+    </div>
+    <div class="row space"></div>
+    <div class="row">
+        <div class="col-md-3">
+            <span>Protección</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'},
+                    {label:'N/A',value:'NA'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-3">
+            <span>Resguardo</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'},
+                    {label:'N/A',value:'NA'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-3">
+            <span>Preservanción del lugar de intervención llenar sección 6</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'},
+                    {label:'N/A',value:'NA'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-3">
+            <span>Informar sobre echos a favor(anexo 1)</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Detenido',value:'Sí'},
+                    {label:'N/A',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+    </div>
+    <div class="row space"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>VI. Preservación del lugar de la inverción</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <date label="Fecha de conocimiento" name="" placeholder="dd/mm/aaaa"></date>
+        </div>
+        <div class="col-md-3">
+            <text label="Hora de conocimiento" name="" placeholder="hh:mm"> </text>
+        </div>
+        <div class="col-md-12">
+            <p>Primer respondiente que realiza el acordonamiento del lugar de la intervención (Llenar sólo en caso de no ser el mismo que llena este formato)</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <span>Acordonamiento</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-2">
+            <text label="CUIP" name=""> </text>
+        </div>
+        o
+        <div class="col-md-2">
+            <text label="Apellido paterno" name=""> </text>
+        </div>
+        <div class="col-md-2">
+            <text label="Apellido materno" name=""> </text>
+        </div>
+        <div class="col-md-2">
+            <text label="Nombre(s)" name=""> </text>
+        </div>
+        <div class="col-md-2">
+            <text label="Adcripción" name=""> </text>
+        </div>
+        <div class="col-md-12">
+            <p>Primer respondiente que realiza el acordonamiento del lugar de la intervención (Llenar sólo en caso de no ser el mismo que llena este formato)</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <span>Resguardo</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-2">
+            <text label="CUIP" name=""> </text>
+        </div>
+        o
+        <div class="col-md-2">
+            <text label="Apellido paterno" name=""> </text>
+        </div>
+        <div class="col-md-2">
+            <text label="Apellido materno" name=""> </text>
+        </div>
+        <div class="col-md-2">
+            <text label="Nombre(s)" name=""> </text>
+        </div>
+        <div class="col-md-2">
+            <text label="Adcripción" name=""> </text>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <h2>VI. Solicitud de certificado(s) médico(s)</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <date label="Fecha de conocimiento" name="" placeholder="dd/mm/aaaa"></date>
+        </div>
+        <div class="col-md-2">
+            <text label="Hora de conocimiento" name="" placeholder="hh:mm"> </text>
+        </div>
+        <div class="col-md-6">
+            <text label="Médico de la agencia del ministerio público en la que se realiza la puesta a disposición" name="" placeholder="hh:mm"> </text>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <span>Médico de otra agencia del ministerio público</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-2">
+            <text label="Nombre de la agencia" name=""> </text>
+        </div>
+        <div class="col-md-2">
+            <text label="Municipio" name=""> </text>
+        </div>
+        <div class="col-md-2">
+            <text label="Calle" name=""> </text>
+        </div>
+        <div class="col-md-2">
+            <text label="Número" name=""> </text>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <span>Médico particular</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-2">
+            <text label="Municipio" name=""> </text>
+        </div>
+        <div class="col-md-2">
+            <text label="Calle" name=""> </text>
+        </div>
+        <div class="col-md-2">
+            <text label="Número" name=""> </text>
+        </div>
+        <div class="col-md-12">
+            <p>Primer respondiente que realiza la solicitud (Llenar sólo en caso de no ser el mismo que llena este formato)</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <text label="CUIP" name=""> </text>
+        </div>
+        o
+        <div class="col-md-2">
+            <text label="Apellido paterno" name=""> </text>
+        </div>
+        <div class="col-md-2">
+            <text label="Apellido materno" name=""> </text>
+        </div>
+        <div class="col-md-2">
+            <text label="Nombre(s)" name=""> </text>
+        </div>
+        <div class="col-md-2">
+            <text label="Adcripción" name=""> </text>
+        </div>
+    </div>
+    <div class="row justify-content-end">
+        <div class="col-sm-auto">
+            <button class="" mat-raised-button color="accent">Guardar</button>
+        </div>
+        <div class="col-sm-auto">
+            <button class="" mat-raised-button color="">Cancelar</button> 
+        </div>
+    </div>
 </div>
