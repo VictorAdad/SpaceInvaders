@@ -47,13 +47,13 @@ export class PrincipalInformeHomologadoCreate {
         rows['institucion'] = "Policia Federal"
         rows['entidadMunicipio'] = "Xalapa, Veracruz (10,018)"
         
-        this.dataSource = new TableService(this.paginator, [rows]);
+        this.dataSource = new TableService(this.paginator, [rows,rows]);
 
         var rows2 = {};
         rows2['riesgoPara'] = "Víctima" 
         rows2['tipo'] = "Salud"
 
-        this.dataSource2 = new TableService(this.paginator2, [rows2]);
+        this.dataSource2 = new TableService(this.paginator2, [rows2,rows2]);
 
         var rows3 = {};
         rows3['apoyo'] = "Bomberos" 
@@ -61,14 +61,13 @@ export class PrincipalInformeHomologadoCreate {
 
         this.dataSource3 = new TableService(this.paginator3, [rows3,rows3]);
 
-        console.log('<<<<< hola >>>>>', this.dataSource3);
 
         var rows4 = {};
         rows4['evento'] = "Conocimiento del hecho" 
         rows4['fecha'] = "24/01/2018"
         rows4['hora'] = "11:35"
 
-        this.dataSource3 = new TableService(this.paginator4, [rows4]);
+        this.dataSource4= new TableService(this.paginator4, [rows4,rows4]);
     }
 
 }
