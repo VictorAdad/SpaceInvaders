@@ -6,14 +6,14 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpService} from '@services/http.service';
 
 @Component({
-    selector: 'anexo5',
-    templateUrl: './anexo5.component.html'
+    selector: 'anexo6',
+    templateUrl: './anexo6.component.html'
 })
 
-export class Anexo5Component {
+export class Anexo6Component {
 
     public breadcrumb = [];
-    columns = ['detenido', 'descripcion', 'cantidad', 'accion'];
+    columns = ['victima', 'responsable', 'accion'];
     dataSource: TableService | null;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -26,9 +26,8 @@ export class Anexo5Component {
 
     ngOnInit(){
         var rows = {};
-        rows['detenido'] = "Yair Ruiz" 
-        rows['descripcion'] = "Control de contacto"
-        rows['cantidad'] = "4"
+        rows['victima'] = "Humberto Sánchez" 
+        rows['responsable'] = "Noé Robles Camacho"
         
         this.dataSource = new TableService(this.paginator, [rows]);
     }

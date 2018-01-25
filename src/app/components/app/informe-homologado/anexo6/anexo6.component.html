@@ -1,26 +1,46 @@
 <div class="row justify-content-start">
     <div class="col-md-12">
-        <h2>Anexo 5 inventario de pertenencias del detenido</h2>
+        <h2>Anexo 6 Constancia de lectura de derechos de la víctima</h2>
     </div>
 </div>
+
 <div class="container">
-	<div class="row justify-content-center">
-		<div class="col-md-3">
-            <select2 placeholder="Detenido" id=""
-            [options]="[
-                {label:'Saul Roman',value:'Saul Roman'},
-                {label:'Diego Lopez',value:'Diego Lopez'}
-            ]">                
-            </select2>
+	<div class="row">
+		<p>Datos de la víctima</p>
+	</div>
+	<div class="row">
+        <div class="col-md-3">
+            <text label="Apellido paterno" name="" ></text>
+        </div>        
+        <div class="col-md-3">
+            <text label="Apellido materno" name="" ></text>
         </div>
-        <div class="col-md-4">
-            <text label="Descripción del objeto" name="" ></text>
-        </div>
-        <div class="col-md-4">
-            <text label="Cantidad" name="" ></text>
+        <div class="col-md-3">
+            <text label="Nombre(s)" name="" ></text>
         </div>
 	</div>
-	<div class="row justify-content-center">
+	<div class="row">
+		<p>Primer respondiente que realiza la lectura de derechos (Llenar sólo en caso de no ser el mismo que llena este formato)</p>
+	</div>
+	<div class="row">
+        <div class="col-md-3">
+            <text label="CUIP" name="" ></text>
+        </div>
+        o
+        <div class="col-md-2">
+            <text label="Apellido paterno" name="" ></text>
+        </div>        
+        <div class="col-md-2">
+            <text label="Apellido materno" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Nombre(s)" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Adcripción" name="" ></text>
+        </div>
+    </div>
+    <div class="row justify-content-center">
         <div class="col-md-auto">
             <button class="" mat-raised-button color="accent">Agregar</button>
         </div>
@@ -29,19 +49,14 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <mat-table #table [dataSource]="dataSource">
-                <ng-container matColumnDef="detenido">
-                    <mat-header-cell *matHeaderCellDef>Detenido</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.detenido}} </mat-cell>
+                <ng-container matColumnDef="victima">
+                    <mat-header-cell *matHeaderCellDef>Víctima</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.victima}} </mat-cell>
                 </ng-container>
 
-                <ng-container matColumnDef="descripcion">
-                    <mat-header-cell *matHeaderCellDef>Comprendio sus derechos</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="cantidad">
+                <ng-container matColumnDef="responsable">
                     <mat-header-cell *matHeaderCellDef>Primer responsable</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.cantidad}} </mat-cell>
+                    <mat-cell *matCellDef="let element"> {{element.responsable}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="accion">
