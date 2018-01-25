@@ -5,7 +5,7 @@
         </div>
     </div>
 	<div class="row">
-		<p>Inspección del lugar de la intervención</p>
+		<p><strong>Inspección del lugar de la intervención</strong></p>
 	</div>
 	<div class="row">
 		<div class="col-md-3">
@@ -63,7 +63,7 @@
         </div>
 	</div>
 	<div class="row">
-		<p>Tipo de objetos encontrados</p>
+		<p><strong>Tipo de objetos encontrados</strong></p>
 	</div>
 	<div class="row">
 		<div class="col-md-4">
@@ -128,6 +128,580 @@
         </div>
         <div class="col-md-4">
             <text label="Cantidad" name="" ></text>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <span>Cadaver</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-4">
+            <span>Restos humanos</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-4">
+            <span>Documentos</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <text label="Cantidad" name="" ></text>
+        </div>
+        <div class="col-md-4">
+            <text label="Cantidad" name="" ></text>
+        </div>
+        <div class="col-md-4">
+            <text label="Cantidad" name="" ></text>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <span>Otro objeto/sustancia</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-4">
+            <span>Con caracteristicas de los narcóticos</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <text label="Cantidad" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <select2 placeholder="Del tipo:" id=""
+            [options]="[
+                {label:'Corta',value:'corta'},
+                {label:'Arma larga',value:'larga'}
+            ]">                
+            </select2>
+        </div>
+        <div class="col-md-2">
+            <text label="Cantidad" name="" ></text>
+        </div>
+    </div>
+    <div class="row">
+        <p><strong>Personas</strong></p>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <span>¿Realizó inspección(es) de personas?</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <text label="Apellido paterno" name="" ></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Apellido materno" name="" ></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Nombre(s)" name="" ></text>
+        </div>
+        <div class="col-md-3">
+            <span>¿Le encontró algún objeto relacionado con la comisión del delito?(anexo 4)</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <span>Armas</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-4">
+            <span>Dinero</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-4">
+            <span>Con caracteristicas de los narcóticos</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <select2 placeholder="Tipo:" id=""
+            [options]="[
+                {label:'Corta',value:'corta'},
+                {label:'Arma larga',value:'larga'}
+            ]">                
+            </select2>
+        </div>
+        <div class="col-md-2">
+            <text label="Cantidad" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <select2 placeholder="Moneda:" id=""
+            [options]="[
+                {label:'Corta',value:'corta'},
+                {label:'Arma larga',value:'larga'}
+            ]">                
+            </select2>
+        </div>
+        <div class="col-md-1">
+            <text label="Otra" name="" ></text>
+        </div>
+        <div class="col-md-1">
+            <text label="Cantidad" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <select2 placeholder="Tipo:" id=""
+            [options]="[
+                {label:'Corta',value:'corta'},
+                {label:'Arma larga',value:'larga'}
+            ]">                
+            </select2>
+        </div>
+        <div class="col-md-2">
+            <text label="Cantidad" name="" ></text>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <span>Documentos</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-2">
+            <select2 placeholder="Otro objeto:" id=""
+            [options]="[
+                {label:'Sí',value:'si'},
+                {label:'No',value:'no'}
+            ]">                
+            </select2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <text label="Cantidad" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Cantidad" name="" ></text>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-auto">
+            <button class="" mat-raised-button color="accent">Agregar</button>
+        </div>
+    </div>
+    <div class="row space"></div>
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <mat-table #table [dataSource]="dataSource">
+                <ng-container matColumnDef="nombre">
+                    <mat-header-cell *matHeaderCellDef>Detenido</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="objeto">
+                    <mat-header-cell *matHeaderCellDef>Comprendio sus derechos</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.objeto}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="accion">
+                    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon></span> </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+            </mat-table>
+        </div>
+    </div>
+    <div class="row space"></div>
+    <div class="row">
+        <p><strong>¿Realizó inspección(es) de medio de transporte?</strong></p>
+    </div>
+    <div class="row"> 
+        <div class="col-md-4">
+            <span>Con caracteristicas de los narcóticos</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+    </div>
+    <div class="row">
+        <p>Objetos encontrados</p>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <select2 placeholder="Tipo:" id=""
+            [options]="[
+                {label:'Terrestre',value:'corta'},
+                {label:'Aereo',value:'larga'}
+            ]">                
+            </select2>
+        </div>
+        <div class="col-md-2">
+            <text label="Marca" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Submarca" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Modelo" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Placa" name="" ></text>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <text label="Número de permiso" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Serie" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Número de motor" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Color" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <select2 placeholder="Procedencia:" id=""
+            [options]="[
+                {label:'Terrestre',value:'corta'},
+                {label:'Aereo',value:'larga'}
+            ]">                
+            </select2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <text label="Apellido paterno" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Apellido materno" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Nombre(s)" name="" ></text>
+        </div>
+        <div class="col-md-4">
+            <span>¿Le encontro algún objeto relacionado con la comisión del delito?(Anexo 4)</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <span>Armas</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-4">
+            <span>Cargadores</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-4">
+            <span>Cartuchos</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <text label="Cantidad" name="" ></text>
+        </div>
+        <div class="col-md-4">
+            <text label="Cantidad" name="" ></text>
+        </div>
+        <div class="col-md-4">
+            <text label="Cantidad" name="" ></text>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <span>Casquillos</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-4">
+            <span>Dinero</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-4">
+            <span>Con caracteristicas de los narcóticos</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <text label="Cantidad" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <select2 placeholder="Moneda:" id=""
+            [options]="[
+                {label:'Terrestre',value:'corta'},
+                {label:'Aereo',value:'larga'}
+            ]">                
+            </select2>
+        </div>
+        <div class="col-md-1">
+            <text label="Otro" name="" ></text>
+        </div>
+        <div class="col-md-1">
+            <text label="Cantidad" name="" ></text>
+        </div>
+        <div class="col-md-2">
+            <select2 placeholder="Del tipo:" id=""
+            [options]="[
+                {label:'Terrestre',value:'corta'},
+                {label:'Aereo',value:'larga'}
+            ]">                
+            </select2>
+        </div>
+        <div class="col-md-2">
+            <text label="Cantidad" name="" ></text>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <span>Documentos</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-4">
+            <span>Personas</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-4">
+            <span>Cadáver</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <text label="Cantidad" name="" ></text>
+        </div>
+        <div class="col-md-4">
+            <text label="Cantidad" name="" ></text>
+        </div>
+        <div class="col-md-4">
+            <text label="Cantidad" name="" ></text>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <span>Restos humanos</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-4">
+            <span>Otro objeto / sustancia</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <text label="Cantidad" name="" ></text>
+        </div>
+        <div class="col-md-4">
+            <text label="Cantidad" name="" ></text>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-auto">
+            <button class="" mat-raised-button color="accent">Agregar</button>
+        </div>
+    </div>
+    <div class="row space"></div>
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <mat-table #table [dataSource]="dataSource">
+                <ng-container matColumnDef="nombre">
+                    <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="objeto">
+                    <mat-header-cell *matHeaderCellDef>Tipo</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.objeto}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="accion">
+                    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon></span> </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+            </mat-table>
+        </div>
+    </div>
+    <div class="row space"></div>
+    <div class="row justify-content-end">
+        <div class="col-sm-auto">
+            <button class="" mat-raised-button color="accent">Guardar</button>
+        </div>
+        <div class="col-sm-auto">
+            <button class="" mat-raised-button routerLink="/caso/1313/informe-homologado" color="">Cancelar</button> 
         </div>
     </div>
 </div>
