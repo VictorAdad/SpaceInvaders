@@ -67,15 +67,15 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
     isViolenciaGenero: boolean = false;
     isAChange: boolean = false;
 
-    efectoDisplayedColumns = ['efecto', 'detalle'];
+    efectoDisplayedColumns = ['efecto', 'detalle', 'acciones'];
     efectoDataSource = new ExampleDataSource([]);
 
     trataData = []
-    trataDisplayedColumns = ['País de origen', 'Estado de origen','Municipio de origen','País destino','Estado destino','Municipio destino', 'Tipo de trata','Transportación'];
+    trataDisplayedColumns = ['País de origen', 'Estado de origen','Municipio de origen','País destino','Estado destino','Municipio destino', 'Tipo de trata','Transportación','acciones'];
     trataDataSource = new ExampleDataSource(this.trataData);
 
     hostigamientoData= []
-    hostigamientoDisplayedColumns = ['Modalidad', 'Ámbito','Conducta','Detalle','Testigo'];
+    hostigamientoDisplayedColumns = ['Modalidad', 'Ámbito','Conducta','Detalle','Testigo','acciones'];
     hostigamientoDataSource = new ExampleDataSource(this.hostigamientoData);
 
 
@@ -205,6 +205,14 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
 
     ngOnDestroy(){
 
+    }
+
+    eliminaElemento(arreglo:string, subjec: string, datasource: string, nameform:string, indice:number){
+        this.colections.del(arreglo, subjec, datasource,indice);
+        let form = this.form.get(nameform) as FormArray;
+        form.controls.splice(indice,1);
+        form['value'].splice(indice,1);
+        console.log(form);
     }
 
     addEfectoDetalle(_val: any,id=null){

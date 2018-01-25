@@ -384,6 +384,14 @@
                                         <mat-cell *matCellDef="let element"> {{element.detalle}} </mat-cell>
                                     </ng-container>
 
+                                    <!-- Acciones Column -->
+                                    <ng-container matColumnDef="acciones">
+                                            <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+                                            <mat-cell *matCellDef="let element; let rIndex = index;">
+                                                <mat-icon (click)="eliminaElemento('efectoDetalle','subjectEfectoDetalle','sourceEfectoDetalle','efectoViolencia',rIndex);">delete</mat-icon> 
+                                            </mat-cell>
+                                        </ng-container>
+
                                     <mat-header-row *matHeaderRowDef="efectoDisplayedColumns"></mat-header-row>
                                     <mat-row *matRowDef="let row; columns: efectoDisplayedColumns;"></mat-row>
                                 </mat-table>
@@ -560,7 +568,15 @@
                                         </mat-cell>
                                     </ng-container>
 
-                            <mat-header-row *matHeaderRowDef="trataDisplayedColumns"></mat-header-row>
+                                    <!-- Acciones Column -->
+                                    <ng-container matColumnDef="acciones">
+                                            <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+                                            <mat-cell *matCellDef="let element; let rIndex = index;">
+                                                <mat-icon (click)="eliminaElemento('trataPersonas','subjectTrataPersonas','sourceTrataPersonas','trataPersona',rIndex);">delete</mat-icon> 
+                                            </mat-cell>
+                                        </ng-container>
+
+                                    <mat-header-row *matHeaderRowDef="trataDisplayedColumns"></mat-header-row>
                                     <mat-row *matRowDef="let row; columns: trataDisplayedColumns;"></mat-row>
                                 </mat-table>
                             </div>
@@ -653,6 +669,14 @@
                                         <mat-header-cell *matHeaderCellDef> Testigo </mat-header-cell>
                                         <mat-cell *matCellDef="let element"> {{element?.testigo?.nombre}} </mat-cell>
                                     </ng-container>
+
+                                    <!-- Acciones Column -->
+                                    <ng-container matColumnDef="acciones">
+                                            <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+                                            <mat-cell *matCellDef="let element; let rIndex = index;">
+                                                <mat-icon (click)="eliminaElemento('hostigamiento','subjectHostigamiento','sourceHostigamiento','hostigamientoAcoso',rIndex);">delete</mat-icon> 
+                                            </mat-cell>
+                                        </ng-container>
 
                                     <mat-header-row *matHeaderRowDef="hostigamientoDisplayedColumns"></mat-header-row>
                                     <mat-row *matRowDef="let row; columns: hostigamientoDisplayedColumns;"></mat-row>
