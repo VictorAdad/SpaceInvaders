@@ -1,0 +1,179 @@
+<div class="row justify-content-start">
+    <div class="col-md-12">
+        <h2>Anexo 7 Traslado/canalización</h2>
+    </div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+            <select2 placeholder="Traslado / canalización a:" id=""
+            [options]="[
+                {label:'Ministerio Público',value:'Ministerio Público'},
+                {label:'Ministerio Público',value:'Ministerio Público'}
+            ]">                
+            </select2>
+        </div>
+        <div class="col-md-3">
+            <select2 placeholder="Tipo:" id=""
+            [options]="[
+                {label:'Especializado',value:'Especializado'},
+                {label:'Especializado',value:'Especializado'}
+            ]">                
+            </select2>
+        </div>
+        <div class="col-md-3">
+        	<text label="Especifique" name="" ></text>
+        </div>
+	</div>
+	<div class="row">
+		<div class="col-md-2">
+        	<text label="Nombre de la agencia" name="" ></text>
+        </div>
+        <div class="col-md-2">
+        	<text label="Estado" name="" ></text>
+        </div>
+        <div class="col-md-2">
+        	<text label="Municipio" name="" ></text>
+        </div>
+        <div class="col-md-2">
+        	<text label="Colonia" name="" ></text>
+        </div>
+        <div class="col-md-2">
+        	<text label="Calle" name="" ></text>
+        </div>
+        <div class="col-md-2">
+        	<text label="Número Exterior" name="" ></text>
+        </div>
+	</div>
+	<div class="row">
+		<text label="C.P." name="" ></text>
+	</div>
+	<div class="row">
+		<p>Persona trasladada</p>
+	</div>
+	<div class="row">
+		<div class="col-md-2">
+            <select2 placeholder="Traslado / canalización a:" id=""
+            [options]="[
+                {label:'Detenido',value:'Detenido'},
+                {label:'Detenido',value:'Detenido'}
+            ]">                
+            </select2>
+        </div>
+        <div class="col-md-2">
+        	<text label="Estado" name="" ></text>
+        </div>
+        <div class="col-md-2">
+        	<text label="Municipio" name="" ></text>
+        </div>
+        <div class="col-md-2">
+        	<text label="Colonia" name="" ></text>
+        </div>
+        <div class="col-md-2">
+        	<text label="Calle" name="" ></text>
+        </div>
+        <div class="col-md-2">
+        	<text label="Número Exterior" name="" ></text>
+        </div>
+	</div>
+	<div class="row">
+		<p>Persona que entrega</p>
+	</div>
+	<div class="row">
+        <div class="col-md-2">
+        	<text label="CUIP" name="" ></text>
+        </div>
+        o
+        <div class="col-md-2">
+        	<text label="Apellido paterno" name="" ></text>
+        </div>
+        <div class="col-md-2">
+        	<text label="Apellido materno" name="" ></text>
+        </div>
+        <div class="col-md-2">
+        	<text label="Nombre(s)" name="" ></text>
+        </div>
+        <div class="col-md-2">
+        	<text label="Carga" name="" ></text>
+        </div>
+	</div>
+	<div class="row">
+		<p>Persona que recibe</p>
+	</div>
+	<div class="row">
+        <div class="col-md-2">
+        	<text label="Apellido paterno" name="" ></text>
+        </div>
+        <div class="col-md-2">
+        	<text label="Apellido materno" name="" ></text>
+        </div>
+        <div class="col-md-2">
+        	<text label="Nombre(s)" name="" ></text>
+        </div>
+        <div class="col-md-2">
+        	<text label="Carga" name="" ></text>
+        </div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+            <date label="Fecha de conocimiento" name="" placeholder="dd/mm/aaaa"></date>
+        </div>
+        <div class="col-md-2">
+            <text label="Hora" name="" placeholder="hh:mm"> </text>
+        </div>
+	</div>
+	<div class="row justify-content-center">
+        <div class="col-md-auto">
+            <button class="" mat-raised-button color="accent">Agregar</button>
+        </div>
+    </div>
+
+    <div class="row space"></div>
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <mat-table #table [dataSource]="dataSource">
+                <ng-container matColumnDef="nombre">
+                    <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="traslado">
+                    <mat-header-cell *matHeaderCellDef>Traslado a</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.traslado}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="entrega">
+                    <mat-header-cell *matHeaderCellDef>Entrega</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.entrega}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="recibe">
+                    <mat-header-cell *matHeaderCellDef>Recibe</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.recibe}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="ubicacion">
+                    <mat-header-cell *matHeaderCellDef>Ubicación</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.ubicacion}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="accion">
+                    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon></span> </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+            </mat-table>
+        </div>
+    </div>
+    <div class="row space"></div>
+    <div class="row justify-content-end">
+        <div class="col-sm-auto">
+            <button class="" mat-raised-button color="accent">Guardar</button>
+        </div>
+        <div class="col-sm-auto">
+            <button class="" mat-raised-button routerLink="/caso/1313/informe-homologado" color="">Cancelar</button> 
+        </div>
+    </div>
+</div>
