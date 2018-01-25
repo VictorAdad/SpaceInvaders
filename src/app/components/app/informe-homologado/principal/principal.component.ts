@@ -13,13 +13,25 @@ import { HttpService} from '@services/http.service';
 export class PrincipalInformeHomologadoCreate {
 
     public breadcrumb = [];
-    columns = ['cuip', 'nombre', 'institucion', "entidadMunicipio", "accion"];
-    columns2 = ['riesgoPara', 'tipo', "accion"];
+    public lat: number = 19.4968732;
+    public lng: number = -99.7232673;
+    public latMarker: number = 19.4968732;
+    public lngMarker: number = -99.7232673;
+    public zoom: number = 10;
+
+    columns = ['cuip', 'nombre', 'institucion', 'entidadMunicipio', 'accion'];
+    columns2 = ['riesgoPara', 'tipo', 'accion'];
+    columns3 = ['apoyo', 'nEconomico', 'accion'];
+    columns4 = ['evento', 'fecha', 'hora', 'accion'];
     dataSource: TableService | null;
     dataSource2: TableService | null;
+    dataSource3: TableService | null;
+    dataSource4: TableService | null;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatPaginator) paginator2: MatPaginator;
+    @ViewChild(MatPaginator) paginator3: MatPaginator;
+    @ViewChild(MatPaginator) paginator4: MatPaginator;
 
     constructor(
         private route: ActivatedRoute,
@@ -42,6 +54,21 @@ export class PrincipalInformeHomologadoCreate {
         rows2['tipo'] = "Salud"
 
         this.dataSource2 = new TableService(this.paginator2, [rows2]);
+
+        var rows3 = {};
+        rows3['apoyo'] = "Bomberos" 
+        rows3['nEconomico'] = "34535"
+
+        this.dataSource3 = new TableService(this.paginator3, [rows3,rows3]);
+
+        console.log('<<<<< hola >>>>>', this.dataSource3);
+
+        var rows4 = {};
+        rows4['evento'] = "Conocimiento del hecho" 
+        rows4['fecha'] = "24/01/2018"
+        rows4['hora'] = "11:35"
+
+        this.dataSource3 = new TableService(this.paginator4, [rows4]);
     }
 
 }

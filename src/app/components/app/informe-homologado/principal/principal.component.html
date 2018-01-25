@@ -212,5 +212,94 @@
         </div>
     </div>
     <br>
+    <div class="row justify-content-center">
+        <div class="col-md-3">
+            <select2 placeholder="Solicitó apoyo de:" name="" [options]="
+                [
+                    {label:'Bomberos',value:'Bomberos'},
+                    {label:'Cruz Roja',value:'Roja'}
+                ]">
+            </select2>
+        </div>
+        <div class="col-md-3">
+            <text label="Número económico" name=""></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Especifique" name=""></text>
+        </div>
+        <div class="col-md-3">
+            <button mat-raised-button color="accent">Agregar</button>
+        </div>
+    </div>
+    <div class="row justify-content-end">
+        <div class="col-md-9">
+            <mat-table [dataSource]="dataSource3">
+                <ng-container matColumnDef="apoyo">
+                    <mat-header-cell *matHeaderCellDef>Apoyo de</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.apoyo}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="nEconomico">
+                    <mat-header-cell *matHeaderCellDef>Número económico</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.nEconomico}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="accion">
+                    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon></span> </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="columns3"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columns3;" routerLink=""></mat-row>
+            </mat-table>
+        </div>
+    </div>
+
+    <div class="row space"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Croquis del lugar de intervención</h2>
+        </div>
+    </div>
+    <div class="row space"></div>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="changeLocation($event)" [zoom]="zoom" style="height: 400px; width: 100%;" >
+                 <agm-marker [latitude]="latMarker" [longitude]="lngMarker"></agm-marker>
+            </agm-map>
+        </div>
+    </div>
+    <div class="row space"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Linea de tiempo</h2>
+        </div>
+    </div>
+    <div class="row space"></div>
+    <div class="row justify-content-center">
+        <div class="col-md-9">
+            <mat-table [dataSource]="dataSource4">
+                <ng-container matColumnDef="evento">
+                    <mat-header-cell *matHeaderCellDef>Apoyo de</mat-header-cell>
+                    <mat-cell *matCellDef="let element4"> {{element4.evento}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="fecha">
+                    <mat-header-cell *matHeaderCellDef>Número económico</mat-header-cell>
+                    <mat-cell *matCellDef="let element4"> {{element4.fecha}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="hora">
+                    <mat-header-cell *matHeaderCellDef>Número económico</mat-header-cell>
+                    <mat-cell *matCellDef="let element4"> {{element4.hora}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="accion">
+                    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                    <mat-cell *matCellDef="let element4"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon></span> </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="columns4"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columns4;" routerLink=""></mat-row>
+            </mat-table>
+        </div>
+    </div>
 
 </div>
