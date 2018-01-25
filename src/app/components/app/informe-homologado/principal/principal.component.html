@@ -96,10 +96,10 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <date label="Fecha de arribo" name="" placeholder="dd/mm/aaaa"></date>
         </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
             <text label="Hora de arribo" name="" placeholder="hh:mm"> </text>
         </div>
         <div class="col-md-3">
@@ -121,9 +121,7 @@
         <div class="col-md-2">
             <text label="Localidad" name=""> </text>
         </div>
-
     </div>
-    <br>
     <div class="row">
         <div class="col-md-4">
             <text label="Calle" name=""> </text>
@@ -145,7 +143,12 @@
 
     <div class="row">
         <div class="col-md-3">
-            <text label="Tipo" name=""> </text>
+            <select2 placeholder="Entidad" name="" [options]="
+                [
+                    {label:'Veracruz',value:'Veracruz'},
+                    {label:'Puebla',value:'Puebla'}
+                ]">
+            </select2>
         </div>
         <div class="col-md-3">
             <text label="KM" name=""> </text>
@@ -291,10 +294,6 @@
                     <mat-header-cell *matHeaderCellDef>Número económico</mat-header-cell>
                     <mat-cell *matCellDef="let element4"> {{element4.hora}} </mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="accion">
-                    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-                    <mat-cell *matCellDef="let element4"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon></span> </mat-cell>
-                </ng-container>
 
                 <mat-header-row *matHeaderRowDef="columns4"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: columns4;" routerLink=""></mat-row>
@@ -357,7 +356,7 @@
         <div class="col-md-3">
             <span>Informar sobre echos a favor(anexo 1)</span>
             <radiobutton
-                class="col-md-3"
+                class="col-md-4"
                 [radios]="[
                     {label:'Detenido',value:'Sí'},
                     {label:'N/A',value:'No'}
@@ -388,7 +387,7 @@
     
     <div class="row">
         <div class="col-md-3">
-            <span>Protección</span>
+            <span>Detenciones llenar (Anexo 2)</span>
             <radiobutton
                 class="col-md-3"
                 [radios]="[
@@ -400,7 +399,7 @@
             </radiobutton>
         </div>
         <div class="col-md-3">
-            <span>Resguardo</span>
+            <span>Uso de fuerza (Anexo 3)</span>
             <radiobutton
                 class="col-md-3"
                 [radios]="[
@@ -412,7 +411,7 @@
             </radiobutton>
         </div>
         <div class="col-md-3">
-            <span>Preservanción del lugar de intervención llenar sección 6</span>
+            <span>Puesto a disposición de los detenidos (Anexo 4)</span>
             <radiobutton
                 class="col-md-3"
                 [radios]="[
@@ -424,7 +423,7 @@
             </radiobutton>
         </div>
         <div class="col-md-3">
-            <span>Informar sobre echos a favor(anexo 1)</span>
+            <span>Invetario de pertenencias del detenido (Anexo 5)</span>
             <radiobutton
                 class="col-md-3"
                 [radios]="[
@@ -437,8 +436,20 @@
     </div>
     <div class="row space"></div>
     <div class="row">
-        <div class="col-md-3">
-            <span>Protección</span>
+        <div class="col-md-4">
+            <span>Traslado / Canalización</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
+                    {label:'Sí',value:'Sí'},
+                    {label:'No',value:'No'},
+                    {label:'N/A',value:'NA'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-4">
+            <span>Inspecciones (Anexo 8)</span>
             <radiobutton
                 class="col-md-3"
                 [radios]="[
@@ -450,45 +461,50 @@
             </radiobutton>
         </div>
         <div class="col-md-3">
-            <span>Resguardo</span>
+            <span>Informar sobre echos a favor (Anexo 1)</span>
             <radiobutton
-                class="col-md-3"
+                class="col-md-4"
                 [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
-                ]" 
-                name="">    
-            </radiobutton>
-        </div>
-        <div class="col-md-3">
-            <span>Preservanción del lugar de intervención llenar sección 6</span>
-            <radiobutton
-                class="col-md-3"
-                [radios]="[
-                    {label:'Sí',value:'Sí'},
-                    {label:'No',value:'No'},
-                    {label:'N/A',value:'NA'}
-                ]" 
-                name="">    
-            </radiobutton>
-        </div>
-        <div class="col-md-3">
-            <span>Informar sobre echos a favor(anexo 1)</span>
-            <radiobutton
-                class="col-md-3"
-                [radios]="[
-                    {label:'Detenido',value:'Sí'},
-                    {label:'N/A',value:'No'}
                 ]" 
                 name="">    
             </radiobutton>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <select2 placeholder="A:" name="" [options]="
+                [
+                    {label:'Personas',value:'personas'},
+                    {label:'Víctimas',value:'victimas'}
+                ]">
+            </select2>
+        </div>
+        <div class="col-md-2">
+            <select2 placeholder="De:" name="" [options]="
+                [
+                    {label:'Personas',value:'personas'},
+                    {label:'Víctimas',value:'victimas'}
+                ]">
+            </select2>
+        </div>
+        <div class="col-md-3">
+            <select2 placeholder="A:" name="" [options]="
+                [
+                    {label:'Personas',value:'personas'},
+                    {label:'Víctimas',value:'victimas'}
+                ]">
+            </select2>
+        </div>
+    </div>
+
     <div class="row space"></div>
     <div class="row">
         <div class="col-md-3">
-            <span>Protección</span>
+            <span>Recolección y resguardo de objetos y/o bienes (Anexo 9)</span>
             <radiobutton
                 class="col-md-3"
                 [radios]="[
@@ -500,7 +516,7 @@
             </radiobutton>
         </div>
         <div class="col-md-3">
-            <span>Resguardo</span>
+            <span>Entrega recepción de lugar de la intervención (Anexo 10)</span>
             <radiobutton
                 class="col-md-3"
                 [radios]="[
@@ -512,24 +528,13 @@
             </radiobutton>
         </div>
         <div class="col-md-3">
-            <span>Preservanción del lugar de intervención llenar sección 6</span>
+            <span>Entrevistas(s) (Anexo 10) </span>
             <radiobutton
                 class="col-md-3"
                 [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
-                ]" 
-                name="">    
-            </radiobutton>
-        </div>
-        <div class="col-md-3">
-            <span>Informar sobre echos a favor(anexo 1)</span>
-            <radiobutton
-                class="col-md-3"
-                [radios]="[
-                    {label:'Detenido',value:'Sí'},
-                    {label:'N/A',value:'No'}
                 ]" 
                 name="">    
             </radiobutton>

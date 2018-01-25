@@ -22,7 +22,7 @@ export class PrincipalInformeHomologadoCreate {
     columns = ['cuip', 'nombre', 'institucion', 'entidadMunicipio', 'accion'];
     columns2 = ['riesgoPara', 'tipo', 'accion'];
     columns3 = ['apoyo', 'nEconomico', 'accion'];
-    columns4 = ['evento', 'fecha', 'hora', 'accion'];
+    columns4 = ['evento', 'fecha', 'hora'];
     dataSource: TableService | null;
     dataSource2: TableService | null;
     dataSource3: TableService | null;
