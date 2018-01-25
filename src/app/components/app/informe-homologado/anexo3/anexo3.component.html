@@ -1,8 +1,12 @@
-<div class="container">
-    <div class="row">
+<div class="row justify-content-start">
+
         <div class="col-md-12">
             <h2>Anexo 3 Informe del uso de la fuerza</h2>
         </div>
+</div>
+
+<div class="container">
+    <div class="row">
         <div class="col-md-12">
            <text label="Situación que originó el uso del a fuerza" name="" ></text>
         </div>
@@ -87,19 +91,19 @@
         <div class="col-md-8">
             <mat-table #table [dataSource]="dataSource">
                 
-                <ng-container matColumnDef="Usodelafuerza">
-                    <mat-header-cell *matHeaderCellDef> CUIP</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.Usodelafuerza}} </mat-cell>
+                <ng-container matColumnDef="usodelafuerza">
+                    <mat-header-cell *matHeaderCellDef>Uso de la fuerza</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.usodelafuerza}} </mat-cell>
                 </ng-container>
 
-                <ng-container matColumnDef="Primerresponsable">
-                    <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.Primerresponsable}} </mat-cell>
+                <ng-container matColumnDef="primerresponsable">
+                    <mat-header-cell *matHeaderCellDef>primerresponsable</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.primerresponsable}} </mat-cell>
                 </ng-container>
 
-                <ng-container matColumnDef="Nivel">
-                    <mat-header-cell *matHeaderCellDef>Institución</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.Nivel}} </mat-cell>
+                <ng-container matColumnDef="nivel">
+                    <mat-header-cell *matHeaderCellDef>Nivel</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.nivel}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="accion">

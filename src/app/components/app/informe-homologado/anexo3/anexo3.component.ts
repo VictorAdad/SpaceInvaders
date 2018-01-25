@@ -11,7 +11,7 @@ import { HttpService} from '@services/http.service';
 })
 
 export class Anexo3Component {
- 	columns = ['Usodelafuerza', "Primerresponsable", "Nivel","accion"];
+ 	columns = ['usodelafuerza', "primerresponsable", "nivel","accion"];
     dataSource: TableService | null;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -26,9 +26,9 @@ export class Anexo3Component {
 
  ngOnInit(){
         var rows = {};
-        rows['Usodelafuerza'] = "Yahir Ruiz" 
-        rows['Primerresponsable'] = "Ricardo Crespo"
-        rows['Nivel'] = "Control de Contacto"
+        rows['usodelafuerza'] = "Yahir Ruiz" 
+        rows['primerresponsable'] = "Ricardo Crespo"
+        rows['nivel'] = "Control de Contacto"
         
         
         this.dataSource = new TableService(this.paginator, [rows]);

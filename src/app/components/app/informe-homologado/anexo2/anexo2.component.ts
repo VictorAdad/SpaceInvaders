@@ -12,7 +12,7 @@ import { HttpService} from '@services/http.service';
 
 export class Anexo2Component {
 
-	columns = ['Detenido', "Edad", "Direccion","accion"];
+	columns = ['detenido', "edad", "direccion","accion"];
     dataSource: TableService | null;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -32,9 +32,9 @@ export class Anexo2Component {
     }
 ngOnInit(){
         var rows = {};
-        rows['Detenido'] = "Ulises Morales" 
-        rows['Edad'] = "20"
-        rows['Direccion'] = "Calle Colima #34 Col. México"
+        rows['detenido'] = "Ulises Morales" 
+        rows['edad'] = "20"
+        rows['direccion'] = "Calle Colima #34 Col. México"
         
         
         this.dataSource = new TableService(this.paginator, [rows]);

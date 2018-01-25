@@ -1,10 +1,11 @@
-<div class="container">
-    <div class="row">
+<div class="row justify-content-start">
         <div class="col-md-12">
             <h2>Anexo 2 Detencion(es)</h2>
         </div>
-    </div>
-	<div class="row">
+</div>
+
+<div class="container">
+    	<div class="row">
         <div class="col-md-12">
            <text label="Motivo de la Detención" name="" ></text>
         </div>
@@ -239,19 +240,19 @@
         <div class="col-md-8">
             <mat-table #table [dataSource]="dataSource">
                 
-                <ng-container matColumnDef="Detenido">
+                <ng-container matColumnDef="detenido">
                     <mat-header-cell *matHeaderCellDef> Detenido</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.Detenido}} </mat-cell>
+                    <mat-cell *matCellDef="let element"> {{element.detenido}} </mat-cell>
                 </ng-container>
 
-                <ng-container matColumnDef="Edad">
+                <ng-container matColumnDef="edad">
                     <mat-header-cell *matHeaderCellDef>Edad</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.Edad}} </mat-cell>
+                    <mat-cell *matCellDef="let element"> {{element.edad}} </mat-cell>
                 </ng-container>
 
-                <ng-container matColumnDef="Direccion">
+                <ng-container matColumnDef="direccion">
                     <mat-header-cell *matHeaderCellDef>Direccion</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.Direccion}} </mat-cell>
+                    <mat-cell *matCellDef="let element"> {{element.direccion}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="accion">
