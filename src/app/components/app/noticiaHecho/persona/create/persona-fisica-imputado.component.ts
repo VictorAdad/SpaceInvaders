@@ -1240,7 +1240,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal {
                 height: '400px',
                 data: { 
                     action: _save.bind(this),
-                    title: 'Se han valores en la sección de Datos de Localización sin agregar. Se guardará la información insertada'
+                    title: 'Se han detectado valores en la sección de Datos de Localización sin agregar. Se guardará la información insertada'
                 }
             });
         } else {
