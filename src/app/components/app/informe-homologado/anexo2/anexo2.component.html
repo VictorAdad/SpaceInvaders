@@ -17,9 +17,265 @@
             <text label="Hora de detención" name="" placeholder="hh:mm"> </text>
         </div>
     </div>
-	<div class="row justify-content-center">
+	
+	<div class="row justify-content-start">
 		<div class="col-md-auto">
-	    	<span class="float-rigth">Lugar de la detención de la persona 1(Llenar en caso de ser distinta al lugar de la intervención</span>
+	    	<span class="float-rigth"><strong>Lugar de la detención de la persona 1(Llenar en caso de ser distinta al lugar de la intervención)</strong></span>
 		</div>
 	</div>
+	
+	<br>
+	 
+	<div class="row justify-content-start">
+        <div class="col-md-2">
+            <select2 placeholder="Entidad de la detención" id=""
+            [options]="[
+                {label:'Veracruz',value:'Veracruz'}
+            ]">
+            </select2>
+        </div>
+        <div class="col-md-2">
+            <select2 placeholder="Municipio de la detención" id=""
+            [options]="[
+                {label:'Poza Rica',value:'Poza Rica'}
+            ]">
+            </select2>
+        </div>
+        <div class="col-md-2">
+                <text label="Localidad de la detención" name="" placeholder="Poza Rica"> </text>
+        </div>
+        <div class="col-md-3">
+                <text label="Calle" name=""> </text>
+        </div>
+        <div class="col-md-3">
+                <text label="Num.Interior" name=""> </text>
+        </div>
+	</div>
+	
+
+	<div class="row justify-content-start">
+        <div class="col-md-2">
+        	<text label="Num.Exterior" name=""> </text>
+        </div>
+		
+		<div class="col-md-2">
+        	<text label="Entre calle y calle" name=""> </text>
+        </div>
+    	
+    	<div class="col-md-2">
+        	<text label="C.P." name=""> </text>
+        </div>
+
+        <div class="col-md-3">
+        	<text label="Latitud(con 6 decimales)" name=""> </text>
+        </div>
+
+        <div class="col-md-3">
+        	<text label="Longitud(con 6 decimales)" name=""> </text>
+        </div>
+    </div>
+	
+	<br>
+
+	<div class="row justify-content-start">
+		<div class="col-md-auto">
+	    	<span class="float-rigth"><strong>Datos del detenido</strong></span>
+		</div>
+	</div>
+	
+	<br>
+
+	<div class="row justify-content-start">
+        <div class="col-md-2">
+        	<text label="Apellido paterno" name=""> </text>
+        </div>
+		
+		<div class="col-md-2">
+        	<text label="Apellido materno" name=""> </text>
+        </div>
+    	
+    	<div class="col-md-2">
+        	<text label="Nombres(S)" name=""> </text>
+        </div>
+
+        <div class="col-md-3">
+            <span>Sexo</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
+                    {label:'H',value:'H'},
+                    {label:'M',value:'M'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+        <div class="col-md-3">
+        	<text label="Edad referida" name=""> </text>
+        </div>
+    </div>
+
+
+<div class="row justify-content-start">
+        <div class="col-md-2">
+        	<text label="Calle" name=""> </text>
+        </div>
+		
+		<div class="col-md-2">
+        	<text label="Num. Exterior" name=""> </text>
+        </div>
+    	
+    	<div class="col-md-2">
+        	<text label="Num. Interior" name=""> </text>
+        </div>
+
+        <div class="col-md-3">
+            <text label="C.P." name=""> </text>
+        </div>
+        <div class="col-md-3">
+        	<date label="Fecha" name="" placeholder="dd/mm/aaaa"> </date>
+        </div>
+    </div>
+
+
+<div class="row justify-content-start">
+        <div class="col-md-2">
+        	<select2 placeholder="Casado" id=""
+            [options]="[
+                {label:'Poza Rica',value:'Poza Rica'}
+            ]">
+            </select2>
+        </div>
+		
+		<div class="col-md-2">
+        	<text label="Ocupación" name=""> </text>
+        </div>
+    	
+    	<div class="col-md-2">
+        	<span>Nacionalidad</span>
+            <radiobutton class="col-md-6"
+                [radios]="[
+                    {label:'Mexicana',value:'Mexicana'},
+                    {label:'Extranjera',value:'Extranjera'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+
+        <div class="col-md-3">
+            <text label="RFC/CURP" name=""> </text>
+        </div>
+
+        <div class="col-md-3">
+        	<span>Lectura de derechos (anexo 1)</span>
+            <radiobutton class="col-md-3"
+                [radios]="[
+                    {label:'Si',value:'Si'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+    </div>
+<div class="row justify-content-start">
+        <div class="col-md-2">
+        	<text label= "Señales particulares" name=""></text>
+        </div>
+		
+		<div class="col-md-2">
+        	<text label= "Descripción fisica" name=""></text>
+        </div>
+    	
+    	<div class="col-md-2">
+        	<text label= "Tipo de vestimenta" name=""> </text>
+        </div>
+
+        <div class="col-md-3">
+        	<span class="center">¿Se encontró pertenencias particulares al detenido? (Anexo 5)</span>
+            <radiobutton class="col-md-3"
+                [radios]="[
+                    {label:'Si',value:'Si'},
+                    {label:'No',value:'No'}
+                ]" 
+                name="">    
+            </radiobutton>
+        </div>
+    </div>
+
+    <div class="row justify-content-start">
+		<div class="col-md-auto">
+	    	<span class="float-rigth"><strong>Seleccione el lugar de la detención</strong></span>
+		</div>
+	</div>
+	
+	<br>
+
+	<div class="row justify-content-center">
+        <div class="col-md-6">
+            <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="changeLocation($event)" [zoom]="zoom" style="height: 400px; width: 100%;" >
+                 <agm-marker [latitude]="latMarker" [longitude]="lngMarker"></agm-marker>
+            </agm-map>
+        </div>
+    </div>
+
+   	<br>
+
+   	<div class="row justify-content-center">
+		<div class="col-md-auto">
+	    	<span class="float-rigth">Llenar el Anexo 3. Informe del uso de la fuerza</span>
+		</div>
+	</div>
+
+    <br>
+
+    <div class="row justify-content-center">
+        <div class="col-sm-auto">
+            <button class="" mat-raised-button color="accent">Agregar</button>
+        </div>
+    </div>
+    
+    <br>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <mat-table #table [dataSource]="dataSource">
+                
+                <ng-container matColumnDef="Detenido">
+                    <mat-header-cell *matHeaderCellDef> Detenido</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.Detenido}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Edad">
+                    <mat-header-cell *matHeaderCellDef>Edad</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.Edad}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Direccion">
+                    <mat-header-cell *matHeaderCellDef>Direccion</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.Direccion}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="accion">
+                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                    <mat-cell *matCellDef="let element"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon></span> </mat-cell>
+                </ng-container>
+
+
+               <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+            
+            </mat-table>
+        </div>
+    </div>
+
+<br>
+    
+    <div class="row justify-content-end">
+        <div class="col-sm-auto">
+            <button class="" mat-raised-button color="accent">Guardar</button>
+        </div>
+
+        <div class ="col-sm-auto">
+            <button class="" mat-raised-button color="accent">Cancelar</button>
+        </div>
+    </div>
 </div>
