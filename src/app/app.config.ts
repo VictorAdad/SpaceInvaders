@@ -32,6 +32,7 @@ export var _config = {
     },
     delito:{
       robo:"ROBO"
+      robo: ["ROBO DE UN VEHÍCULO AUTOMOTOR","ROBO DE UN VEHÍCULO AUTOMOTOR Y CON VIOLENCIA"]
     }
 	},
 	manuales: {

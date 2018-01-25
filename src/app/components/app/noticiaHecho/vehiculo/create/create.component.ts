@@ -178,12 +178,12 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
       console.log('delito caso',caso.delitoCaso);
       caso.delitoCaso.forEach(delito => {
         console.log(delito)
-        if(delito.delito.nombre===_config.optionValue.delito.robo){
+        if( Yason.itemInArray(delito.delito.nombre, _config.optionValue.delito.robo) ){
             isRoboSecundario=true;
         }
       });
 
-      if(caso.delitoPrincipal.nombre==_config.optionValue.delito.robo || isRoboSecundario)
+      if( Yason.itemInArray(caso.delitoPrincipal.nombre, _config.optionValue.delito.robo) || isRoboSecundario)
       {
         this.isRobo=true;
         this.isOneFilled=true;
