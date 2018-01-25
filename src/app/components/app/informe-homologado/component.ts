@@ -33,6 +33,12 @@ export class PaginadorHomologado extends BasePaginationComponent{
         
         this.dataSource = new TableService(this.paginator, [rows,rows,rows]);
     }
+
+    public onPrint() {
+        console.log('<<< Click!! >>>')
+        let url='../../../assets/formatos/IPH Word.docx';    
+        window.open(url, 'Download');
+    }
     
 
 }
