@@ -1,21 +1,20 @@
-<div class="row justify-content-start">
-    <div class="col-md-12">
-        <h2>Anexo 6 Constancia de lectura de derechos de la víctima</h2>
+<div>
+    <div class="row justify-content-start">
+        <div class="col-md-12">
+            <h2>Anexo 6 Constancia de lectura de derechos de la víctima</h2>
+        </div>
     </div>
-</div>
-
-<div class="container">
 	<div class="row">
 		<p>Datos de la víctima</p>
 	</div>
 	<div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <text label="Apellido paterno" name="" ></text>
         </div>        
-        <div class="col-md-3">
+        <div class="col-md-4">
             <text label="Apellido materno" name="" ></text>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <text label="Nombre(s)" name="" ></text>
         </div>
 	</div>
@@ -46,8 +45,8 @@
         </div>
     </div>
     <div class="row space"></div>
-    <div class="row justify-content-center">
-        <div class="col-md-10">
+    <div class="row">
+        <div class="col-md-12">
             <mat-table #table [dataSource]="dataSource">
                 <ng-container matColumnDef="victima">
                     <mat-header-cell *matHeaderCellDef>Víctima</mat-header-cell>

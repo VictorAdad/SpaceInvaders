@@ -1,18 +1,17 @@
-<div class="row justify-content-start">
-
+<div>
+    <div class="row">
         <div class="col-md-12">
             <h2>Anexo 3 Informe del uso de la fuerza</h2>
         </div>
-</div>
+    </div>
 
-<div class="container">
     <div class="row">
         <div class="col-md-12">
            <text label="Situación que originó el uso del a fuerza" name="" ></text>
         </div>
     </div>
 
-    <div class="row justify-content-center"> 
+    <div class="row"> 
         <div class="col-md-3">
             <span>¿Se requirió asistencia medía?</span>
             <radiobutton
@@ -34,7 +33,7 @@
         </div>
     </div>
 
-    <div class="row justify-content-center">
+    <div class="row">
         <div class="col-md-auto">
             <span class="float-rigth">Seleccione un detenido o ingrese el nombre de la persona a la que se le aplico el uso de la fuerza</span>
         </div>
@@ -42,42 +41,42 @@
 
     <div class="row space"></div>
 
-    <div class="row justify-content-center">
-        <div class="col-md-3">
+    <div class="row">
+        <div class="col-md-4">
             <select2 placeholder="Detenido" id=""
             [options]="[
                 {label:'Yahir Ruiz',value:'Yahir Ruiz'}
             ]">
             </select2>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4">
             <text label="Apellido materno" name="" ></text>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4">
             <text label="Nombre(s)" name="" ></text>
         </div>
     </div>
 
-    <div class="row justify-content-center">
+    <div class="row">
         <div class="col-md-auto">
-            <span class="float-rigth">Seleccione un primer responsable o ingrese el nombre de la persona a la que se le aplico el uso de la fuerza</span>
+            <span >Seleccione un primer responsable o ingrese el nombre de la persona a la que se le aplico el uso de la fuerza</span>
         </div>
     </div>
 
     <div class="row space"></div>
 
-    <div class="row justify-content-center">
-        <div class="col-md-3">
+    <div class="row">
+        <div class="col-md-4">
             <select2 placeholder="Primer responsable" id=""
             [options]="[
                 {label:'Ricardo Crespo',value:'Ricardo Crespo'}
             ]">
             </select2>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4">
             <text label="Apellido materno" name="" ></text>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4">
             <text label="Nombre(s)" name="" ></text>
         </div>
     </div>
@@ -87,8 +86,8 @@
         </div>
     </div>
 
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="row align-items-center">
+        <div class="col-md-12">
             <mat-table #table [dataSource]="dataSource">
                 
                 <ng-container matColumnDef="usodelafuerza">
@@ -111,18 +110,16 @@
                     <mat-cell *matCellDef="let element"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon></span> </mat-cell>
                 </ng-container>
 
-
-               <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+                <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
-            
             </mat-table>
         </div>
     </div>
 
     <div class= "row space"></div>
     <br>    
-    <div class="row justify-content-start">
-        <div class="col-md-3">
+    <div class="row">
+        <div class="col-md-4">
             <span>Se realizo traslado y canalizacion</span>
             <radiobutton
                 class="col-md-4"
@@ -133,21 +130,18 @@
                 name="">    
             </radiobutton>
         </div>
-        <div class="row">
-            <div class="col-md-5">
-                <date label="Fecha de conocimiento" name="" placeholder="dd/mm/aaaa"></date>
-            </div>
-            <div class="col-md-5">
-                <text label="Hora de conocimiento" name="" placeholder="hh:mm"> </text>
-            </div>
+        <div class="col-md-4">
+            <date label="Fecha de conocimiento" name="" placeholder="dd/mm/aaaa"></date>
         </div>
-        <div class= "row space"></div>
+        <div class="col-md-4">
+            <text label="Hora de conocimiento" name="" placeholder="hh:mm"> </text>
+        </div>
     </div>
+    <div class= "row space"></div>
     <div class="row justify-content-end">
         <div class="col-sm-auto">
             <button class="" mat-raised-button color="accent">Guardar</button>
         </div>
-
         <div class ="col-sm-auto">
             <button class="" mat-raised-button routerLink="/caso/1313/informe-homologado" color="accent">Cancelar</button>
         </div>
