@@ -74,6 +74,9 @@
                     <text label="Municipio/Delegación" name="municipioOtro" [max]="40" [group]="form" (focusout)="fillAddress();" (valueChange)="fillMunicipio($event)"></text>
                 </div>
                 <div class="col-md-3" *ngIf="!isMexico">
+                    <text label="Localidad" name="localidadOtro" [max]="40" [group]="form" ></text>
+                </div>
+                <div class="col-md-3" *ngIf="!isMexico">
                     <text label="Colonia/Asentamiento" name="coloniaOtro" [max]="40" [group]="form" (focusout)="fillAddress();" (valueChange)="fillColonia($event)"></text>
                 </div>
                 <div class="col-md-3" *ngIf="isMexico">
@@ -101,6 +104,9 @@
                          >
 
                     </select2>
+                </div>
+                <div class="col-md-3" *ngIf="isColoniaSelect" >
+                    <text label="Localidad" [(value)]='nombreLocalidadDeCol' [readonly]='true'></text>
                 </div>
                 <div class="col-md-3" *ngIf="isMexico">
                     <select2 placeholder="Colonia" [options]="optionsServ.colonias" name="idCp" [group]="form.controls.colonia" (valueChange)="changeColonia($event); fillColonia($event)" (focusout)="fillAddress();" hintStart="Campo obligatorio"></select2>

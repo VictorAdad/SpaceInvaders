@@ -55,6 +55,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
   public geocoder: any=null;
   public editFlag: boolean = false;
   public masDe3Dias:any; 
+  public isColoniaSelect: boolean = false;
+  public nombreLocalidadDeCol:string ='';
 
 
   constructor(private _fbuilder: FormBuilder,
@@ -87,6 +89,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
     this.model = new Lugar();
     this.searchControl = new FormControl();
     this.form = this.createForm();
+    //this.form.controls.localidad.disable();
     this.optionsServ.getData();
     Logger.log(this.optionsServ);
 
@@ -166,6 +169,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
       'referencias': new FormControl('', [Validators.required,]),
       'estadoOtro': new FormControl('', [Validators.required,]),
       'municipioOtro': new FormControl('', [Validators.required,]),
+      'localidadOtro': new FormControl('', []),
       'coloniaOtro': new FormControl('', [Validators.required,]),
       'fecha': new FormControl('', [Validators.required,]),
       'hora': new FormControl('', [Validators.required,]),
@@ -187,6 +191,9 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
       }),
       'municipio': new FormGroup({
         'id': new FormControl('', [Validators.required,]),
+      }),
+      'localidad': new FormGroup({
+        'id': new FormControl('', []),
       }),
       'colonia': new FormGroup({
         'id': new FormControl('', []),
@@ -390,6 +397,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
         'dia': _data.detalleLugar ? _data.detalleLugar.dia : null,
         'estadoOtro': _data.estadoOtro,
         'municipioOtro': _data.municipioOtro,
+        'localidadOtro': _data.localidadOtro,
         'coloniaOtro': _data.coloniaOtro,
         'cp': _data.cp,
         'fecha': _data.fecha,
@@ -416,12 +424,14 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
             'colonia': _data.colonia ? _data.colonia : new Colonia(),
             'estado': _data.estado ? _data.estado : {},
             'municipio': _data.municipio ? _data.municipio : new Municipio(),
+            'localidad': _data.localidad ? _data.localidad : { id: ''},
           }
         );
         if (_data.colonia) {
+          const localidad= _data.colonia.localidad ? _data.colonia.localidad['id'] : '';
           this.form.controls.colonia.patchValue({
             id: _data.colonia.id,
-            idCp: '' + _data.colonia.id + '-' + _data.colonia.cp
+            idCp: '' + _data.colonia.id + '-' + _data.colonia.cp + '-' + localidad
           });
         }
         Logger.logColor('DATOS', 'tomato', this.form.value, _data);
@@ -609,6 +619,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
       this.optionsServ.getEstadoByPais(id);
       this.isMexico = (id == _config.optionValue.idMexico);
       Logger.log(this.optionsServ.paises);
+      this.nombreLocalidadDeCol = '';
+      this.isColoniaSelect = false;
     }
     if (id == _config.optionValue.idMexico) {
       this.fillPais("Mexico");
@@ -618,6 +630,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
       this.form.controls.estadoOtro.disable();
       this.form.controls.coloniaOtro.disable();
       this.form.controls.municipioOtro.disable();
+      this.form.controls.localidadOtro.disable();
     } else {
       this.form.controls.estado.disable();
       this.form.controls.municipio.disable();
@@ -625,6 +638,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
       this.form.controls.estadoOtro.enable();
       this.form.controls.coloniaOtro.enable();
       this.form.controls.municipioOtro.enable();
+      this.form.controls.localidadOtro.enable();
     }
 
 
@@ -633,6 +647,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
   public changeEstado(id) {
     Logger.log('Id de estado', id);
     if (id != null && typeof id != 'undefined' && id != "") {
+      this.nombreLocalidadDeCol = '';
+      this.isColoniaSelect = false;
       this.optionsServ.getMunicipiosByEstado(id);
       this.form.controls.estado.patchValue(id);
       Logger.log(this.form.controls);
@@ -641,15 +657,35 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
   }
 
   public changeMunicipio(id) {
-    if (id != null && typeof id != 'undefined' && id != "")
+    if (id != null && typeof id != 'undefined' && id != "") {
       this.optionsServ.getColoniasByMunicipio(id);
+      this.nombreLocalidadDeCol = '';
+      this.isColoniaSelect = false;
+    }
+      
     this.cleanSelects(false);
   }
 
   public changeColonia(idCp) {
     if (idCp) {
       let arr = idCp.split('-');
+      this.nombreLocalidadDeCol = '';
+      this.isColoniaSelect = false;
       this.form.controls.cp.patchValue(arr[1]);
+      this.form.controls.localidad.patchValue({id:31});
+      var obj = this;
+      Logger.logColor('Localidad','blue',arr);
+      if (arr[2]!='') {
+        this.db.get('catalogos','localidad').then(lista =>{
+          const localidad = (lista['arreglo'] as any[]).filter(loc => 
+            { return loc.id == arr[2];});
+          if (localidad.length>0) {
+            this.isColoniaSelect = true;
+            obj.nombreLocalidadDeCol = localidad[0]['nombre'];
+            obj.optionsServ.localidad=[{value: parseInt(arr[2]), label: localidad[0]['nombre']}];
+          }
+        });
+      }
       this.form.controls.colonia.patchValue({id: arr[0]});
     }
   }
