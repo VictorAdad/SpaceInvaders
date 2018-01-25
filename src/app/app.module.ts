@@ -82,6 +82,7 @@ import { PrincipalInformeHomologadoCreate} from '@components-app/informe-homolog
 import { Anexo1Component} from '@components-app/informe-homologado/anexo1/anexo1.component';
 import { Anexo2Component} from '@components-app/informe-homologado/anexo2/anexo2.component';
 import { Anexo3Component} from '@components-app/informe-homologado/anexo3/anexo3.component';
+import { Anexo5Component} from '@components-app/informe-homologado/anexo5/anexo5.component';
 
 @NgModule({
   declarations: [
@@ -103,6 +104,7 @@ import { Anexo3Component} from '@components-app/informe-homologado/anexo3/anexo3
     Anexo1Component,
     Anexo2Component,
     Anexo3Component,
+    Anexo5Component,
     EntrevistaComponents,
 
     catalogosComponents,
