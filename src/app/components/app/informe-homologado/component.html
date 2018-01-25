@@ -7,7 +7,7 @@
         <h2>Informe policial homologado</h2>
     </div>
     <div class="col-md-6">
-        <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
+        <button class="float-right" mat-raised-button routerLink="/caso/1313/detalle" color="accent">Regresar</button>
     </div>
 </div>
 
@@ -16,7 +16,7 @@
         <search (search)="filterPage($event)"></search>
       </div>
     <div class="col-md-auto">
-        <button mat-raised-button color="accent" routerLink="/caso/{{casoId}}/perito/create">Agregar</button>
+        <button mat-raised-button color="accent" routerLink="/caso/1313/informe-homologado/create">Agregar</button>
     </div>
 </div>
 
@@ -39,11 +39,12 @@
     </ng-container>
 
     <ng-container matColumnDef="accion">
-        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-        <mat-cell *matCellDef="let element"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">local_printshop</mat-icon></span> </mat-cell>
+        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <button class="" mat-icon-button (click)="onPrint()"><mat-icon  class="">local_printshop</mat-icon></button>
+        </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
-    <!-- <mat-row *matRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/perito/{{row.id}}/edit"></mat-row> -->
+    <mat-row *matRowDef="let row; columns: columns;" routerLink="/caso/1313/informe-homologado/create"></mat-row>
 </mat-table>
