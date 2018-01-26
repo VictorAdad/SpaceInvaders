@@ -139,7 +139,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                     if(this.armaServ.claseArma.finded[0]){
                         _model.claseArma.id        = this.armaServ.claseArma.finded[0].id;
                         _model.claseArma["claseArma"]=this.armaServ.claseArma.finded[0].claseArma;
-                        _model.claseArma["subTipo"]=this.armaServ.claseArma.finded[0].subtipo;
+                        _model.claseArma["subtipo"]=this.armaServ.claseArma.finded[0].subtipo;
                         _model.claseArma["tipo"]=this.armaServ.claseArma.finded[0].tipo;
                     }
                     if(this.isArmaFuego){
@@ -195,7 +195,7 @@ export class ArmaCreateComponent extends NoticiaHechoGlobal{
                 if(this.armaServ.claseArma.finded[0]){
                     _model.claseArma.id        = this.armaServ.claseArma.finded[0].id;
                     _model.claseArma["claseArma"]=this.armaServ.claseArma.finded[0].claseArma;
-                    _model.claseArma["subTipo"]=this.armaServ.claseArma.finded[0].subtipo;
+                    _model.claseArma["subtipo"]=this.armaServ.claseArma.finded[0].subtipo;
                     _model.claseArma["tipo"]=this.armaServ.claseArma.finded[0].tipo;
                 }
                 if(this.isArmaFuego){
