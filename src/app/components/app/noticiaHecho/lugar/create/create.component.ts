@@ -434,7 +434,16 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
             idCp: '' + _data.colonia.id + '-' + _data.colonia.cp + '-' + localidad
           });
         }
-        Logger.logColor('DATOS', 'tomato', this.form.value, _data);
+        if (_data.estado) {
+          this.optionsServ.getMunicipiosByEstado(_data.estado.id);
+        }
+        const timer2 = Observable.timer(1500);
+        timer2.subscribe(t => {
+          if (_data.municipio) {
+            this.optionsServ.getColoniasByMunicipio(_data.municipio.id);
+          } 
+          Logger.logColor('DATOS', 'tomato', this.form.value, _data, this.optionsServ);
+        });
       }
     );
 
@@ -645,8 +654,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
   }
 
   public changeEstado(id) {
-    Logger.log('Id de estado', id);
     if (id != null && typeof id != 'undefined' && id != "") {
+      Logger.log('Id de estado', id);
       this.nombreLocalidadDeCol = '';
       this.isColoniaSelect = false;
       this.optionsServ.getMunicipiosByEstado(id);
@@ -658,6 +667,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
 
   public changeMunicipio(id) {
     if (id != null && typeof id != 'undefined' && id != "") {
+      Logger.logColor('Muicipio', 'green', id);
       this.optionsServ.getColoniasByMunicipio(id);
       this.nombreLocalidadDeCol = '';
       this.isColoniaSelect = false;
