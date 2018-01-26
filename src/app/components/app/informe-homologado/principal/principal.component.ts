@@ -19,6 +19,15 @@ export class PrincipalInformeHomologadoCreate {
     public lngMarker: number = -99.7232673;
     public zoom: number = 10;
 
+    public cProteccion = false;
+    public cResguardo = false;
+    public cTraslado = false;
+    public cInspeccion = false;
+    public cAcordonamiento = false;
+    public cResguardo2 = false;
+    public cMedicoOtraAgencia = false;
+    public cMedicoParticular = false;
+
     columns = ['cuip', 'nombre', 'institucion', 'entidadMunicipio', 'accion'];
     columns2 = ['riesgoPara', 'tipo', 'accion'];
     columns3 = ['apoyo', 'nEconomico', 'accion'];
@@ -68,6 +77,31 @@ export class PrincipalInformeHomologadoCreate {
         rows4['hora'] = "11:35"
 
         this.dataSource4= new TableService(this.paginator4, [rows4,rows4]);
+    }
+
+    showProteccion(value){
+        (value=="Sí") ? this.cProteccion = true : this.cProteccion = false; 
+    }
+    showResguardo(value){
+        (value=="Sí") ? this.cResguardo = true : this.cResguardo = false; 
+    }
+    showTraslado(value){
+        (value=="Sí") ? this.cTraslado = true : this.cTraslado = false; 
+    }
+    showInspeccion(value){
+        (value=="Sí") ? this.cInspeccion = true : this.cInspeccion = false; 
+    }
+    showAcordonamiento(value){
+        (value=="Sí") ? this.cAcordonamiento = true : this.cAcordonamiento = false; 
+    }
+    showResguardo2(value){
+        (value=="Sí") ? this.cResguardo2 = true : this.cResguardo2 = false; 
+    }
+    showMedicoOtraAgencia(value){
+        (value=="Sí") ? this.cMedicoOtraAgencia = true : this.cMedicoOtraAgencia = false; 
+    }
+    showMedicoParticular(value){
+        (value=="Sí") ? this.cMedicoParticular = true : this.cMedicoParticular = false; 
     }
 
 }

@@ -15,6 +15,9 @@ export class Anexo8Component {
     public breadcrumb = [];
     columns = ['nombre', 'objeto', 'accion'];
     dataSource: TableService | null;
+    public divTipoArma = false;
+    public divDinero = false;
+    public divPersona = false;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -28,8 +31,17 @@ export class Anexo8Component {
         var rows = {};
         rows['nombre'] = "Yair Ruiz" 
         rows['objeto'] = "Arma de fuego"
-        
         this.dataSource = new TableService(this.paginator, [rows]);
+    }
+
+    showTipoArma(value){
+        (value=="true") ? this.divTipoArma = true : this.divTipoArma = false; 
+    }
+    showDinero(value){
+        (value=="true") ? this.divDinero = true : this.divDinero = false; 
+    }
+    showPersona(value){
+        (value=="true") ? this.divPersona = true : this.divPersona = false; 
     }
 
 

@@ -312,7 +312,7 @@
     <div class="row space"></div>
     <div class="row">
         <div class="col-md-12">
-            <h2>Acciones realizadas</h2>
+            <h2> V. Acciones realizadas</h2>
         </div>
     </div>
     <div class="row space"></div>
@@ -326,7 +326,8 @@
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
                 ]" 
-                name="">    
+                name=""
+                [functionChange]="showProteccion.bind(this)">    
             </radiobutton>
         </div>
         <div class="col-md-3">
@@ -338,7 +339,8 @@
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
                 ]" 
-                name="">    
+                name=""
+                [functionChange]="showResguardo.bind(this)">
             </radiobutton>
         </div>
         <div class="col-md-3">
@@ -368,16 +370,18 @@
 
     <div class="row">
         <div class="col-md-3">
-            <select2 placeholder="A" name="" [options]="
-                [
+            <select2 placeholder="A" name="" 
+                *ngIf="cProteccion"
+                [options]="[
                     {label:'Víctimas',value:'Víctimas'},
                     {label:'Personas',value:'Personas'}
                 ]">
             </select2>
         </div>
         <div class="col-md-3">
-            <select2 placeholder="A" name="" [options]="
-                [
+            <select2 placeholder="A" name="" 
+                *ngIf="cResguardo"
+                [options]="[
                     {label:'Víctimas',value:'Víctimas'},
                     {label:'Personas',value:'Personas'}
                 ]">
@@ -445,7 +449,8 @@
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
                 ]" 
-                name="">    
+                name=""
+                [functionChange]="showTraslado.bind(this)">    
             </radiobutton>
         </div>
         <div class="col-md-4">
@@ -457,7 +462,8 @@
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
                 ]" 
-                name="">    
+                name=""
+                [functionChange]="showInspeccion.bind(this)">    
             </radiobutton>
         </div>
         <div class="col-md-3">
@@ -476,24 +482,27 @@
 
     <div class="row">
         <div class="col-md-2">
-            <select2 placeholder="A:" name="" [options]="
-                [
+            <select2 placeholder="De:" name="" 
+                *ngIf="cTraslado"
+                [options]="[
                     {label:'Personas',value:'personas'},
                     {label:'Víctimas',value:'victimas'}
                 ]">
             </select2>
         </div>
         <div class="col-md-2">
-            <select2 placeholder="De:" name="" [options]="
-                [
+            <select2 placeholder="A:" name="" 
+                *ngIf="cTraslado"
+                [options]="[
                     {label:'Personas',value:'personas'},
                     {label:'Víctimas',value:'victimas'}
                 ]">
             </select2>
         </div>
         <div class="col-md-3">
-            <select2 placeholder="A:" name="" [options]="
-                [
+            <select2 placeholder="A:" name="" 
+                *ngIf="cInspeccion"
+                [options]="[
                     {label:'Personas',value:'personas'},
                     {label:'Víctimas',value:'victimas'}
                 ]">
@@ -547,12 +556,14 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-6">
             <date label="Fecha de conocimiento" name="" placeholder="dd/mm/aaaa"></date>
         </div>
         <div class="col-md-3">
             <text label="Hora de conocimiento" name="" placeholder="hh:mm"> </text>
         </div>
+    </div>
+    <div class="row">
         <div class="col-md-12">
             <p>Primer respondiente que realiza el acordonamiento del lugar de la intervención (Llenar sólo en caso de no ser el mismo que llena este formato)</p>
         </div>
@@ -566,25 +577,28 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name=""
+                [functionChange]="showAcordonamiento.bind(this)">    
             </radiobutton>
         </div>
         <div class="col-md-2">
-            <text label="CUIP" name=""> </text>
+            <text label="CUIP" name="" *ngIf="cAcordonamiento"> </text>
         </div>
-        o
+        <span *ngIf="cAcordonamiento">o</span>
         <div class="col-md-2">
-            <text label="Apellido paterno" name=""> </text>
-        </div>
-        <div class="col-md-2">
-            <text label="Apellido materno" name=""> </text>
+            <text label="Apellido paterno" name="" *ngIf="cAcordonamiento"> </text>
         </div>
         <div class="col-md-2">
-            <text label="Nombre(s)" name=""> </text>
+            <text label="Apellido materno" name="" *ngIf="cAcordonamiento"> </text>
         </div>
         <div class="col-md-2">
-            <text label="Adcripción" name=""> </text>
+            <text label="Nombre(s)" name="" *ngIf="cAcordonamiento"> </text>
         </div>
+        <div class="col-md-2">
+            <text label="Adcripción" name="" *ngIf="cAcordonamiento"> </text>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-12">
             <p>Primer respondiente que realiza el acordonamiento del lugar de la intervención (Llenar sólo en caso de no ser el mismo que llena este formato)</p>
         </div>
@@ -598,37 +612,38 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name=""
+                [functionChange]="showResguardo2.bind(this)"> 
             </radiobutton>
         </div>
         <div class="col-md-2">
-            <text label="CUIP" name=""> </text>
+            <text label="CUIP" name="" *ngIf="cResguardo2"> </text>
         </div>
-        o
+        <span *ngIf="cResguardo2">o</span>
         <div class="col-md-2">
-            <text label="Apellido paterno" name=""> </text>
-        </div>
-        <div class="col-md-2">
-            <text label="Apellido materno" name=""> </text>
+            <text label="Apellido paterno" name="" *ngIf="cResguardo2"> </text>
         </div>
         <div class="col-md-2">
-            <text label="Nombre(s)" name=""> </text>
+            <text label="Apellido materno" name="" *ngIf="cResguardo2"> </text>
         </div>
         <div class="col-md-2">
-            <text label="Adcripción" name=""> </text>
+            <text label="Nombre(s)" name="" *ngIf="cResguardo2"> </text>
+        </div>
+        <div class="col-md-2">
+            <text label="Adcripción" name="" *ngIf="cResguardo2"> </text>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-12">
-            <h2>VI. Solicitud de certificado(s) médico(s)</h2>
+            <h2>VII. Solicitud de certificado(s) médico(s)</h2>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
             <date label="Fecha de conocimiento" name="" placeholder="dd/mm/aaaa"></date>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <text label="Hora de conocimiento" name="" placeholder="hh:mm"> </text>
         </div>
         <div class="col-md-6">
@@ -644,20 +659,21 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name=""
+                [functionChange]="showMedicoOtraAgencia.bind(this)">    
             </radiobutton>
         </div>
-        <div class="col-md-2">
-            <text label="Nombre de la agencia" name=""> </text>
+        <div class="col-md-3">
+            <text label="Nombre de la agencia" name="" *ngIf="cMedicoOtraAgencia"> </text>
+        </div>
+        <div class="col-md-3">
+            <text label="Municipio" name="" *ngIf="cMedicoOtraAgencia"> </text>
         </div>
         <div class="col-md-2">
-            <text label="Municipio" name=""> </text>
+            <text label="Calle" name="" *ngIf="cMedicoOtraAgencia"> </text>
         </div>
         <div class="col-md-2">
-            <text label="Calle" name=""> </text>
-        </div>
-        <div class="col-md-2">
-            <text label="Número" name=""> </text>
+            <text label="Número" name="" *ngIf="cMedicoOtraAgencia"> </text>
         </div>
     </div>
     <div class="row">
@@ -669,18 +685,21 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name=""
+                [functionChange]="showMedicoParticular.bind(this)">    
             </radiobutton>
         </div>
-        <div class="col-md-2">
-            <text label="Municipio" name=""> </text>
+        <div class="col-md-4">
+            <text label="Municipio" name="" *ngIf="cMedicoParticular"> </text>
+        </div>
+        <div class="col-md-4">
+            <text label="Calle" name="" *ngIf="cMedicoParticular"> </text>
         </div>
         <div class="col-md-2">
-            <text label="Calle" name=""> </text>
+            <text label="Número" name="" *ngIf="cMedicoParticular"> </text>
         </div>
-        <div class="col-md-2">
-            <text label="Número" name=""> </text>
-        </div>
+    </div>
+    <div class="row">
         <div class="col-md-12">
             <p>Primer respondiente que realiza la solicitud (Llenar sólo en caso de no ser el mismo que llena este formato)</p>
         </div>

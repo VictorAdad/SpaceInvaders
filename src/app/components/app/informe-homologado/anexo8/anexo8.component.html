@@ -65,16 +65,18 @@
 	<div class="row">
 		<p><strong>Tipo de objetos encontrados</strong></p>
 	</div>
+
 	<div class="row">
 		<div class="col-md-4">
             <span>Armas</span>
             <radiobutton
                 class="col-md-4"
                 [radios]="[
-                    {label:'Sí',value:'Sí'},
-                    {label:'No',value:'No'}
+                    {label:'Sí',value:'true'},
+                    {label:'No',value:'false'}
                 ]" 
-                name="">    
+                name=""
+                [functionChange]="showTipoArma.bind(this)">    
             </radiobutton>
         </div>
         <div class="col-md-4">
@@ -82,10 +84,11 @@
             <radiobutton
                 class="col-md-4"
                 [radios]="[
-                    {label:'Sí',value:'Sí'},
-                    {label:'No',value:'No'}
+                    {label:'Sí',value:'true'},
+                    {label:'No',value:'false'}
                 ]" 
-                name="">    
+                name=""
+                [functionChange]="showDinero.bind(this)">    
             </radiobutton>
         </div>
         <div class="col-md-4">
@@ -93,16 +96,19 @@
             <radiobutton
                 class="col-md-4"
                 [radios]="[
-                    {label:'Sí',value:'Sí'},
-                    {label:'No',value:'No'}
+                    {label:'Sí',value:'true'},
+                    {label:'No',value:'false'}
                 ]" 
-                name="">    
+                name=""
+                [functionChange]="showPersona.bind(this)">   
             </radiobutton>
         </div>
 	</div>
+
     <div class="row">
         <div class="col-md-2">
             <select2 placeholder="Tipo:" id=""
+            *ngIf="divTipoArma"
             [options]="[
                 {label:'Corta',value:'corta'},
                 {label:'Arma larga',value:'larga'}
@@ -110,10 +116,11 @@
             </select2>
         </div>
         <div class="col-md-2">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="" *ngIf="divTipoArma"></text>
         </div>
         <div class="col-md-2">
             <select2 placeholder="Moneda:" id=""
+            *ngIf="divDinero"
             [options]="[
                 {label:'Corta',value:'corta'},
                 {label:'Arma larga',value:'larga'}
@@ -121,13 +128,13 @@
             </select2>
         </div>
         <div class="col-md-1">
-            <text label="Otra" name="" ></text>
+            <text label="Otra" name="" *ngIf="divDinero"></text>
         </div>
         <div class="col-md-1">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="" *ngIf="divDinero"></text>
         </div>
         <div class="col-md-4">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="" *ngIf="divPersona"></text>
         </div>
     </div>
 
