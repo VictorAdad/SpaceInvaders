@@ -179,13 +179,15 @@ export class Form {
             coloniaPersonaTraslado: [''],
             callePersonaTraslado: [''],
             numExtPersonaTraslado: [''],
+            
             cuipEntregaTraslado: [''],  
             paternoEntregaTraslado: [''],
-            meternoEntregaTraslado: [''],
+            maternoEntregaTraslado: [''],
             nombreEntregaTraslado: [''],
             cargaEntregaTraslado: [''],
+            
             paternoRecibeTraslado: [''],
-            meternoRecibeTraslado: [''],
+            maternoRecibeTraslado: [''],
             nombreRecibeTraslado: [''],
             cargaRecibeTraslado: [''],
             fechaTraslado: [''],
