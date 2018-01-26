@@ -70,6 +70,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                     'vigente': new FormControl(true),
                 })
             ]),
+            'distrito' : new FormControl('', []), 
         });
         this.activeRoute.parent.params.subscribe(params => {
             if(this.hasId){
@@ -141,6 +142,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         // _model["agencia"]={id:1};
         _model["nic"]=this.generateNIC(_model);
         // _model["estatus"]={id:1};
+        _model['distrito'] = this.auth.user.distrito;
 
         _model.created = null;
         _model.delitoCaso.delito.id =  this.delito.id;
@@ -201,6 +203,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
     }
 
     public edit(_valid : boolean, _model : any):Promise<any>{
+        _model['distrito'] = this.auth.user.distrito;
         return new Promise((resolve,reject)=>{
             Logger.log('-> Caso@edit()', _model);
             if(this.onLine.onLine){

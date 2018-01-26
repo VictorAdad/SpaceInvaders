@@ -8,7 +8,22 @@
         <form>
             <div class="row">
                 <div class="col">
+                  <select2 *ngIf="id != null"
+                      [focus]="false"
+                      [options]="
+                      [
+                          {label:'Acuerdo general',value:'Acuerdo general'},
+                          {label:'Registro general', value:'Registro general'},
+                          {label:'Registro de llamada para permitir al imputado comunicarse con su defensor',value:'Registro de llamada'}
+                      ]"
+                      placeholder="Tipo de solicitud"
+                      (valueChange)="tipoChange($event)"
+                      [group]="form"
+                      name="tipo">
+                  </select2>
+
                   <select2
+                    *ngIf="id == null"
                       [focus]="true"
                       [options]="
                       [
