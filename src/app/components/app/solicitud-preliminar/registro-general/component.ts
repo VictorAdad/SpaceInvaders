@@ -14,7 +14,7 @@ import { CasoService } from '@services/caso/caso.service';
     templateUrl: './component.html',
 })
 export class RegistroGeneralComponent extends BasePaginationComponent implements OnInit {
-    columns = ['fundamento', 'plazo'];
+    columns = ['fundamento', 'plazo', 'tipo'];
     public dataSource: TableService | null;
     public data: RegistroGeneral[] = [];
     public casoId: number = null;
