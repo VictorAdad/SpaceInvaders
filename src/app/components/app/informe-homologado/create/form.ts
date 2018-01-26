@@ -158,7 +158,10 @@ export class Form {
             paternoPrimerVictima: [''],
             maternoPrimerVictima: [''],
             nombrePrimerVictima: [''],
-            adscripcionPrimerVictima: [''],
+            cuipRespondiente: [''],
+            paternoRespondiente: [''],
+            maternoRespondiente: [''],
+            nombreRespondiente: [''],
             // Anexo 7
             trasladoA: [''],  
             tipoTraslado: [''],
