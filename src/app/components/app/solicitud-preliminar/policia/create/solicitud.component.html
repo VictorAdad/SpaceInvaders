@@ -9,7 +9,8 @@
     </div>
     <div class="col-md-12">
         <form>
-            <text label="Número de oficio" name="noOficio" [group]="form" [focus]="true"></text>
+            <text *ngIf="id == null"  label="Número de oficio" name="noOficio" [group]="form" [focus]="true"></text>
+            <text *ngIf=" id != null" label="Número de oficio" name="noOficio" [group]="form" ></text>
             <text-area label="Nombre del coordinador de la policía de investigación" name="nombreComisario" [group]="form"></text-area>
             <text-area label="Actuaciones de investigación solicitadas" name="actuacionesSolicitadas" [group]="form"></text-area>
             <div class="row space"></div>
