@@ -21,6 +21,6 @@ export class InformeHomologadoCreate {
     ngOnInit() {
         this.form =  Form.createForm(this.fbuilder);
         console.log('-> Form', this.form.value);
-    }
+    }  
 
 }

@@ -1,7 +1,7 @@
 <div>
     <div class="row">
         <div class="col-md-4">
-            <text label="Número de referencia" id=""></text>
+            <text label="Número de referencia" name="numeroReferencia" [group]="form" id=""></text>
         </div>
     </div>
     <div class="row">
@@ -11,18 +11,18 @@
     </div>
     <div class="row">
         <div class="col-md-4">
-            <text label="Nombre del primer responsable" id=""></text>
+            <text label="Nombre del primer responsable" name="primerResponsable" [group]="form"></text>
         </div>
         <div class="col-md-4">
-            <text label="Institución de la que proviene" id=""></text>
+            <text label="Institución de la que proviene" name="institucion" [group]="form"></text>
         </div>
         <div class="col-md-4">
-            <text label="Entidad, Municipio" id=""></text>
+            <text label="Entidad, Municipio" name="municipio" [group]="form"></text>
         </div>
     </div>
     <div class="row justify-content-end">
         <div class="col-md-5">
-            <text label="Clave Única de Identificación Policial (CUIP)" id=""></text>
+            <text label="Clave Única de Identificación Policial (CUIP)" name="cuip" [group]="form" id=""></text>
         </div>
         <div class="col-md-5">
             <button mat-raised-button color="accent">Agregar</button>
@@ -71,7 +71,7 @@
     </div>
     <div class="row">
         <div class="col-md-3">
-            <select2 placeholder="¿Cómo se enteró del hecho?" name="" [options]="
+            <select2 placeholder="¿Cómo se enteró del hecho?" name="enteroHecho" [group]="form" [options]="
                 [
                     {label:'Fragrancia',value:'Fragrancia'},
                     {label:'Fragrancia_1',value:'Fragrancia_1'}
@@ -79,13 +79,13 @@
             </select2>
         </div>
         <div class="col-md-4">
-            <text label="Especifique" id="Especifique" name=""> </text>
+            <text label="Especifique" id="Especifique" name="especifique" [group]="form"> </text>
         </div>
         <div class="col-md-3">
-            <date label="Fecha de conocimiento" name="" placeholder="dd/mm/aaaa"></date>
+            <date label="Fecha de conocimiento" name="fechaConocimiento" [group]="form" placeholder="dd/mm/aaaa"></date>
         </div>
         <div class="col-md-2">
-            <text label="Hora de conocimiento" name="" placeholder="hh:mm"> </text>
+            <text label="Hora de conocimiento" name="horaConocimiento" [group]="form" placeholder="hh:mm"> </text>
         </div>
     </div>
     <br>
@@ -97,13 +97,13 @@
     </div>
     <div class="row">
         <div class="col-md-2">
-            <date label="Fecha de arribo" name="" placeholder="dd/mm/aaaa"></date>
+            <date label="Fecha de arribo" name="fechaArribo" [group]="form" placeholder="dd/mm/aaaa"></date>
         </div>
         <div class="col-md-2">
-            <text label="Hora de arribo" name="" placeholder="hh:mm"> </text>
+            <text label="Hora de arribo" name="horaArribo" [group]="form" placeholder="hh:mm"> </text>
         </div>
         <div class="col-md-3">
-            <select2 placeholder="Entidad" name="" [options]="
+            <select2 placeholder="Entidad" name="entidadArribo" [group]="form" [options]="
                 [
                     {label:'Veracruz',value:'Veracruz'},
                     {label:'Puebla',value:'Puebla'}
@@ -111,7 +111,7 @@
             </select2>
         </div>
         <div class="col-md-3">
-            <select2 placeholder="Municipio" name="" [options]="
+            <select2 placeholder="Municipio" name="municipioArribo" [group]="form" [options]="
                 [
                     {label:'Xalapa',value:'Xalapa'},
                     {label:'Veracruz',value:'Veracruz'}
@@ -119,31 +119,31 @@
             </select2>
         </div>
         <div class="col-md-2">
-            <text label="Localidad" name=""> </text>
+            <text label="Localidad" name="localidadArribo" [group]="form"> </text>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <text label="Calle" name=""> </text>
+            <text label="Calle" name="calleArribo" [group]="form"> </text>
         </div>
         <div class="col-md-1">
-            <text label="Num. Interior" name=""> </text>
+            <text label="Num. Interior" name="numIntArribo" [group]="form"> </text>
         </div>
         <div class="col-md-1">
-            <text label="Num. Exterior" name=""> </text>
+            <text label="Num. Exterior" name="numExtArribo" [group]="form"> </text>
         </div>
         <div class="col-md-3">
-            <text label="Entre calle y calle" name=""> </text>
+            <text label="Entre calle y calle" name="entreCalleArribo" [group]="form"> </text>
         </div>
         <div class="col-md-3">
-            <text label="Tramo carretero (Si aplica)" name=""> </text>
+            <text label="Tramo carretero (Si aplica)" name="tramoCarreteroArribo" [group]="form"> </text>
         </div>
 
     </div>
 
     <div class="row">
         <div class="col-md-3">
-            <select2 placeholder="Entidad" name="" [options]="
+            <select2 placeholder="Tipo" name="tipoArribo" [group]="form" [options]="
                 [
                     {label:'Veracruz',value:'Veracruz'},
                     {label:'Puebla',value:'Puebla'}
@@ -151,13 +151,13 @@
             </select2>
         </div>
         <div class="col-md-3">
-            <text label="KM" name=""> </text>
+            <text label="KM" name="kmArribo" [group]="form"> </text>
         </div>
         <div class="col-md-3">
-            <text label="Latitud (Con 6 decimales)" name=""> </text>
+            <text label="Latitud (Con 6 decimales)" name="latitudArribo" [group]="form"> </text>
         </div>
         <div class="col-md-3">
-            <text label="Longitud (Con 6 decimales)" name=""> </text>
+            <text label="Longitud (Con 6 decimales)" name="longitudArribo" [group]="form"> </text>
         </div>
     </div>
 
@@ -169,7 +169,7 @@
 
     <div class="row justify-content-center">
         <div class="col-md-3">
-            <select2 placeholder="Riesgo para" name="" [options]="
+            <select2 placeholder="Riesgo para" name="riesgoPara" [group]="form" [options]="
                 [
                     {label:'Víctimas',value:'Víctimas'},
                     {label:'Personas',value:'Personas'}
@@ -177,7 +177,7 @@
             </select2>
         </div>
         <div class="col-md-3">
-            <select2 placeholder="Tipo" name="" [options]="
+            <select2 placeholder="Tipo" name="tipoRiesgo" [group]="form" [options]="
                 [
                     {label:'Salud',value:'Salud'},
                     {label:'Hogar',value:'Hogar'}
@@ -185,7 +185,7 @@
             </select2>
         </div>
         <div class="col-md-3">
-            <text label="Especifique" name=""> </text>
+            <text label="Especifique" name="especifiqueRiesgo" [group]="form"> </text>
         </div>
         <div class="col-md-3">
             <button mat-raised-button color="accent">Agregar</button>
@@ -217,7 +217,7 @@
     <br>
     <div class="row justify-content-center">
         <div class="col-md-3">
-            <select2 placeholder="Solicitó apoyo de:" name="" [options]="
+            <select2 placeholder="Solicitó apoyo de:" name="apoyo" [group]="form" [options]="
                 [
                     {label:'Bomberos',value:'Bomberos'},
                     {label:'Cruz Roja',value:'Roja'}
@@ -225,10 +225,10 @@
             </select2>
         </div>
         <div class="col-md-3">
-            <text label="Número económico" name=""></text>
+            <text label="Número económico" name="numEconomico" [group]="form"></text>
         </div>
         <div class="col-md-3">
-            <text label="Especifique" name=""></text>
+            <text label="Especifique" name="especifiqueApoyo" [group]="form"></text>
         </div>
         <div class="col-md-3">
             <button mat-raised-button color="accent">Agregar</button>
@@ -306,7 +306,7 @@
             <h2>Narración de los hechos por el primer responsable</h2>
         </div>
         <div class="col-md-12">
-            <text label="Narración" name=""  [group]=""></text>
+            <text label="Narración" name="narracionHechos"  [group]="form"></text>
         </div>
     </div>
     <div class="row space"></div>
@@ -321,12 +321,13 @@
             <span>Protección</span>
             <radiobutton
                 class="col-md-3"
+                name="proteccion"  
+                [group]="form"
                 [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
                 ]" 
-                name=""
                 [functionChange]="showProteccion.bind(this)">    
             </radiobutton>
         </div>
@@ -334,25 +335,27 @@
             <span>Resguardo</span>
             <radiobutton
                 class="col-md-3"
+                name="resguardoAcciones"  
+                [group]="form"
                 [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
                 ]" 
-                name=""
-                [functionChange]="showResguardo.bind(this)">
+                [functionChange]="showResguardo.bind(this)">    
             </radiobutton>
         </div>
         <div class="col-md-3">
             <span>Preservanción del lugar de intervención llenar sección 6</span>
             <radiobutton
                 class="col-md-3"
+                name="preservacionAcciones"  
+                [group]="form"
                 [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
-                ]" 
-                name="">    
+                ]" >    
             </radiobutton>
         </div>
         <div class="col-md-3">
@@ -363,25 +366,28 @@
                     {label:'Detenido',value:'Sí'},
                     {label:'N/A',value:'No'}
                 ]" 
-                name="">    
+                name="informarAcciones"
+                [group]="form">    
             </radiobutton>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-3">
-            <select2 placeholder="A" name="" 
+            <select2 placeholder="A" name="proteccionAccionesA"
                 *ngIf="cProteccion"
-                [options]="[
+                [group]="form" [options]="
+                [
                     {label:'Víctimas',value:'Víctimas'},
                     {label:'Personas',value:'Personas'}
                 ]">
             </select2>
         </div>
         <div class="col-md-3">
-            <select2 placeholder="A" name="" 
+            <select2 placeholder="A" name="resguardoAccionesA" 
                 *ngIf="cResguardo"
-                [options]="[
+                [group]="form" [options]="
+                [
                     {label:'Víctimas',value:'Víctimas'},
                     {label:'Personas',value:'Personas'}
                 ]">
@@ -399,7 +405,8 @@
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
                 ]" 
-                name="">    
+                name="detencionAcciones"
+                [group]="form">    
             </radiobutton>
         </div>
         <div class="col-md-3">
@@ -411,7 +418,8 @@
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
                 ]" 
-                name="">    
+                name="fuerzaAcciones"
+                [group]="form">    
             </radiobutton>
         </div>
         <div class="col-md-3">
@@ -423,7 +431,8 @@
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
                 ]" 
-                name="">    
+                name="puestoAcciones"
+                [group]="form">    
             </radiobutton>
         </div>
         <div class="col-md-3">
@@ -434,7 +443,8 @@
                     {label:'Detenido',value:'Sí'},
                     {label:'N/A',value:'No'}
                 ]" 
-                name="">    
+                name="inventarioAcciones"
+                [group]="form">    
             </radiobutton>
         </div>
     </div>
@@ -449,7 +459,8 @@
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
                 ]" 
-                name=""
+                name="trasladoAcciones"
+                [group]="form"
                 [functionChange]="showTraslado.bind(this)">    
             </radiobutton>
         </div>
@@ -462,7 +473,8 @@
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
                 ]" 
-                name=""
+                name="inspeccionesAcciones"
+                [group]="form"
                 [functionChange]="showInspeccion.bind(this)">    
             </radiobutton>
         </div>
@@ -475,34 +487,38 @@
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
                 ]" 
-                name="">    
+                name="echosFavorAcciones"
+                [group]="form">    
             </radiobutton>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-2">
-            <select2 placeholder="De:" name="" 
+            <select2 placeholder="A:" name="trasladoAccionesA" 
                 *ngIf="cTraslado"
-                [options]="[
+                [group]="form" [options]="
+                [
                     {label:'Personas',value:'personas'},
                     {label:'Víctimas',value:'victimas'}
                 ]">
             </select2>
         </div>
         <div class="col-md-2">
-            <select2 placeholder="A:" name="" 
+            <select2 placeholder="De:" name="trasladoAccionesDe" 
                 *ngIf="cTraslado"
-                [options]="[
+                [group]="form" [options]="
+                [
                     {label:'Personas',value:'personas'},
                     {label:'Víctimas',value:'victimas'}
                 ]">
             </select2>
         </div>
         <div class="col-md-3">
-            <select2 placeholder="A:" name="" 
+            <select2 placeholder="A:" name="inspeccionesAccionesA" 
                 *ngIf="cInspeccion"
-                [options]="[
+                [group]="form" [options]="
+                [
                     {label:'Personas',value:'personas'},
                     {label:'Víctimas',value:'victimas'}
                 ]">
@@ -521,7 +537,8 @@
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
                 ]" 
-                name="">    
+                name="recoleccionAcciones"
+                [group]="form">    
             </radiobutton>
         </div>
         <div class="col-md-3">
@@ -533,7 +550,8 @@
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
                 ]" 
-                name="">    
+                name="recepcionAcciones"
+                [group]="form">    
             </radiobutton>
         </div>
         <div class="col-md-3">
@@ -545,7 +563,8 @@
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
                 ]" 
-                name="">    
+                name="entrevistasAcciones"
+                [group]="form">    
             </radiobutton>
         </div>
     </div>
@@ -556,11 +575,11 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <date label="Fecha de conocimiento" name="" placeholder="dd/mm/aaaa"></date>
+        <div class="col-md-3">
+            <date label="Fecha de conocimiento" name="fechaPreservacion" [group]="form" placeholder="dd/mm/aaaa"></date>
         </div>
         <div class="col-md-3">
-            <text label="Hora de conocimiento" name="" placeholder="hh:mm"> </text>
+            <text label="Hora de conocimiento" name="horaPreservacion" [group]="form" placeholder="hh:mm"> </text>
         </div>
     </div>
     <div class="row">
@@ -577,25 +596,26 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name=""
+                name="acordonamiento"
+                [group]="form"
                 [functionChange]="showAcordonamiento.bind(this)">    
             </radiobutton>
         </div>
         <div class="col-md-2">
-            <text label="CUIP" name="" *ngIf="cAcordonamiento"> </text>
+            <text label="CUIP" name="cuipAcordonamiento" *ngIf="cAcordonamiento" [group]="form"> </text>
         </div>
         <span *ngIf="cAcordonamiento">o</span>
         <div class="col-md-2">
-            <text label="Apellido paterno" name="" *ngIf="cAcordonamiento"> </text>
+            <text label="Apellido paterno" name="paternoAcordonamiento" *ngIf="cAcordonamiento" [group]="form"> </text>
         </div>
         <div class="col-md-2">
-            <text label="Apellido materno" name="" *ngIf="cAcordonamiento"> </text>
+            <text label="Apellido materno" name="maternoAcordonamiento" *ngIf="cAcordonamiento" [group]="form"> </text>
         </div>
         <div class="col-md-2">
-            <text label="Nombre(s)" name="" *ngIf="cAcordonamiento"> </text>
+            <text label="Nombre(s)" name="nombreAcordonamiento" *ngIf="cAcordonamiento" [group]="form"> </text>
         </div>
         <div class="col-md-2">
-            <text label="Adcripción" name="" *ngIf="cAcordonamiento"> </text>
+            <text label="Adcripción" name="adcripcionAcordonamiento" *ngIf="cAcordonamiento" [group]="form"> </text>
         </div>
     </div>
     <div class="row">
@@ -612,25 +632,26 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name=""
-                [functionChange]="showResguardo2.bind(this)"> 
+                name="resguardo"
+                [group]="form"
+                [functionChange]="showResguardo2.bind(this)">    
             </radiobutton>
         </div>
         <div class="col-md-2">
-            <text label="CUIP" name="" *ngIf="cResguardo2"> </text>
+            <text label="CUIP" name="cuipResguardo" *ngIf="cResguardo2" [group]="form"> </text>
         </div>
         <span *ngIf="cResguardo2">o</span>
         <div class="col-md-2">
-            <text label="Apellido paterno" name="" *ngIf="cResguardo2"> </text>
+            <text label="Apellido paterno" name="paternoResguardo" *ngIf="cResguardo2" [group]="form"> </text>
         </div>
         <div class="col-md-2">
-            <text label="Apellido materno" name="" *ngIf="cResguardo2"> </text>
+            <text label="Apellido materno" name="maternoResguardo" *ngIf="cResguardo2" [group]="form"> </text>
         </div>
         <div class="col-md-2">
-            <text label="Nombre(s)" name="" *ngIf="cResguardo2"> </text>
+            <text label="Nombre(s)" name="nombreResguardo" *ngIf="cResguardo2" [group]="form"> </text>
         </div>
         <div class="col-md-2">
-            <text label="Adcripción" name="" *ngIf="cResguardo2"> </text>
+            <text label="Adcripción" name="adcripcionResguardo" *ngIf="cResguardo2" [group]="form"> </text>
         </div>
     </div>
 
@@ -640,14 +661,14 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3">
-            <date label="Fecha de conocimiento" name="" placeholder="dd/mm/aaaa"></date>
+        <div class="col-md-2">
+            <date label="Fecha de conocimiento" name="fechaCertificado" [group]="form" placeholder="dd/mm/aaaa"></date>
         </div>
-        <div class="col-md-3">
-            <text label="Hora de conocimiento" name="" placeholder="hh:mm"> </text>
+        <div class="col-md-2">
+            <text label="Hora de conocimiento" name="horaCertificado" [group]="form" placeholder="hh:mm"> </text>
         </div>
         <div class="col-md-6">
-            <text label="Médico de la agencia del ministerio público en la que se realiza la puesta a disposición" name="" placeholder="hh:mm"> </text>
+            <text label="Médico de la agencia del ministerio público en la que se realiza la puesta a disposición" name="medico" [group]="form" placeholder="hh:mm"> </text>
         </div>
     </div>
     <div class="row">
@@ -659,21 +680,22 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name=""
+                name="medicoAgencia"
+                [group]="form"
                 [functionChange]="showMedicoOtraAgencia.bind(this)">    
             </radiobutton>
         </div>
-        <div class="col-md-3">
-            <text label="Nombre de la agencia" name="" *ngIf="cMedicoOtraAgencia"> </text>
-        </div>
-        <div class="col-md-3">
-            <text label="Municipio" name="" *ngIf="cMedicoOtraAgencia"> </text>
+        <div class="col-md-2">
+            <text label="Nombre de la agencia" name="nombreAgencia" *ngIf="cMedicoOtraAgencia" [group]="form"> </text>
         </div>
         <div class="col-md-2">
-            <text label="Calle" name="" *ngIf="cMedicoOtraAgencia"> </text>
+            <text label="Municipio" name="municipioAgencia" *ngIf="cMedicoOtraAgencia" [group]="form"> </text>
         </div>
         <div class="col-md-2">
-            <text label="Número" name="" *ngIf="cMedicoOtraAgencia"> </text>
+            <text label="Calle" name="calleAgencia" *ngIf="cMedicoOtraAgencia" [group]="form"> </text>
+        </div>
+        <div class="col-md-2">
+            <text label="Número" name="numAgencia" *ngIf="cMedicoOtraAgencia" [group]="form"> </text>
         </div>
     </div>
     <div class="row">
@@ -685,18 +707,19 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name=""
+                name="medicoParticular"
+                [group]="form"
                 [functionChange]="showMedicoParticular.bind(this)">    
             </radiobutton>
         </div>
-        <div class="col-md-4">
-            <text label="Municipio" name="" *ngIf="cMedicoParticular"> </text>
-        </div>
-        <div class="col-md-4">
-            <text label="Calle" name="" *ngIf="cMedicoParticular"> </text>
+        <div class="col-md-2">
+            <text label="Municipio" name="municipioParticular" *ngIf="cMedicoParticular" [group]="form"> </text>
         </div>
         <div class="col-md-2">
-            <text label="Número" name="" *ngIf="cMedicoParticular"> </text>
+            <text label="Calle" name="calleParticular" *ngIf="cMedicoParticular" [group]="form"> </text>
+        </div>
+        <div class="col-md-2">
+            <text label="Número" name="numParticular" *ngIf="cMedicoParticular" [group]="form"> </text>
         </div>
     </div>
     <div class="row">
@@ -706,25 +729,25 @@
     </div>
     <div class="row">
         <div class="col-md-2">
-            <text label="CUIP" name=""> </text>
+            <text label="CUIP" name="cuipParticular" [group]="form"> </text>
         </div>
         o
         <div class="col-md-2">
-            <text label="Apellido paterno" name=""> </text>
+            <text label="Apellido paterno" name="paternoParticular" [group]="form"> </text>
         </div>
         <div class="col-md-2">
-            <text label="Apellido materno" name=""> </text>
+            <text label="Apellido materno" name="maternoParticular" [group]="form"> </text>
         </div>
         <div class="col-md-2">
-            <text label="Nombre(s)" name=""> </text>
+            <text label="Nombre(s)" name="nombreParticular" [group]="form"> </text>
         </div>
         <div class="col-md-2">
-            <text label="Adcripción" name=""> </text>
+            <text label="Adcripción" name="adscripcionParticular" [group]="form"> </text>
         </div>
     </div>
     <div class="row justify-content-end">
         <div class="col-sm-auto">
-            <button class="" mat-raised-button color="accent">Guardar</button>
+            <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)">Guardar</button>
         </div>
         <div class="col-sm-auto">
             <button class="" mat-raised-button routerLink="/caso/1313/informe-homologado" color="">Cancelar</button> 
