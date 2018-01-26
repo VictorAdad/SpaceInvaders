@@ -10,14 +10,14 @@
             [options]="[
                 {label:'Saul Roman',value:'Saul Roman'},
                 {label:'Diego Lopez',value:'Diego Lopez'}
-            ]">                
+            ]" name="detenidoPertenencia" [group]="form">                
             </select2>
         </div>
         <div class="col-md-3">
-            <text label="Descripción del objeto" name="" ></text>
+            <text label="Descripción del objeto" name="objeto" [group]="form"></text>
         </div>
         <div class="col-md-3">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="cantidadObjeto" [group]="form" ></text>
         </div>
         <div class="col-md-3 justify-content-start">
             <button class="" mat-raised-button color="accent">Agregar</button>

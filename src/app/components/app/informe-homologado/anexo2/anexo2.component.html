@@ -1,102 +1,96 @@
 <div>
     <div class="row justify-content-start">
-            <div class="col-md-12">
-                <h2>Anexo 2 Detencion(es)</h2>
-            </div>
-    </div>
-
-    	<div class="row">
         <div class="col-md-12">
-           <text label="Motivo de la Detención" name="" ></text>
+            <h2>Anexo 2 Detencion(es)</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+           <text label="Motivo de la Detención" name="motivoDetencion" [group]="form"></text>
         </div>
 	</div>
     <div class="row justify-content-start">
         <div class="col-md-auto">
-            <date label="Fecha de detención" name="" placeholder="dd/mm/aaaa"></date>
+            <date label="Fecha de detención" placeholder="dd/mm/aaaa" name="fechaDetencion" [group]="form"></date>
         </div>
         <div class="col-md-auto">
-            <text label="Hora de detención" name="" placeholder="hh:mm"> </text>
+            <text label="Hora de detención" placeholder="hh:mm" name="horaDetencion" [group]="form"> </text>
         </div>
     </div>
-	
 	<div class="row justify-content-start">
 		<div class="col-md-auto">
 	    	<span class="float-rigth"><strong>Lugar de la detención de la persona 1(Llenar en caso de ser distinta al lugar de la intervención)</strong></span>
 		</div>
 	</div>
-	
 	<br>
-	 
 	<div class="row justify-content-start">
         <div class="col-md-2">
             <select2 placeholder="Entidad de la detención" id=""
-            [options]="[
-                {label:'Veracruz',value:'Veracruz'}
-            ]">
+                [options]="[
+                    {label:'Veracruz',value:'Veracruz'}
+                ]" 
+                name="entidadDetencion" 
+                [group]="form">
             </select2>
         </div>
         <div class="col-md-2">
             <select2 placeholder="Municipio de la detención" id=""
-            [options]="[
-                {label:'Poza Rica',value:'Poza Rica'}
-            ]">
+                [options]="[
+                    {label:'Poza Rica',value:'Poza Rica'}
+                ]"
+                name="municipioDetencion" 
+                [group]="form">
             </select2>
         </div>
         <div class="col-md-2">
-                <text label="Localidad de la detención" name="" placeholder="Poza Rica"> </text>
+            <text label="Localidad de la detención" placeholder="Poza Rica" name="localidadDetencion" [group]="form"> </text>
         </div>
         <div class="col-md-3">
-                <text label="Calle" name=""> </text>
+            <text label="Calle" name="calleDetencion" [group]="form"> </text>
         </div>
         <div class="col-md-3">
-                <text label="Num.Interior" name=""> </text>
+            <text label="Num.Interior" name="numIntDetencion" [group]="form"> </text>
         </div>
 	</div>
-	
-
 	<div class="row justify-content-start">
         <div class="col-md-2">
-        	<text label="Num.Exterior" name=""> </text>
+        	<text label="Num.Exterior" name="numExtDetencion" [group]="form"> </text>
         </div>
 		
 		<div class="col-md-2">
-        	<text label="Entre calle y calle" name=""> </text>
+        	<text label="Entre calle y calle" name="entreCalleDetencion" [group]="form" > </text>
         </div>
     	
     	<div class="col-md-2">
-        	<text label="C.P." name=""> </text>
+        	<text label="C.P." name="cpDetencion" [group]="form"> </text>
         </div>
 
         <div class="col-md-3">
-        	<text label="Latitud(con 6 decimales)" name=""> </text>
+        	<text label="Latitud(con 6 decimales)" name="latitudDetencion" [group]="form"> </text>
         </div>
 
         <div class="col-md-3">
-        	<text label="Longitud(con 6 decimales)" name=""> </text>
+        	<text label="Longitud(con 6 decimales)" name="longitudDetencion" [group]="form"> </text>
         </div>
     </div>
-	
 	<br>
-
 	<div class="row justify-content-start">
 		<div class="col-md-auto">
 	    	<span class="float-rigth"><strong>Datos del detenido</strong></span>
 		</div>
 	</div>
-	
 	<br>
-
 	<div class="row justify-content-start">
         <div class="col-md-2">
-        	<text label="Apellido paterno" name=""> </text>
+        	<text label="Apellido paterno" name="paternoDetecion" [group]="form"> </text>
         </div>
 		
 		<div class="col-md-2">
-        	<text label="Apellido materno" name=""> </text>
+        	<text label="Apellido materno" name="maternoDetecion" [group]="form"> </text>
         </div>
     	
     	<div class="col-md-2">
-        	<text label="Nombres(S)" name=""> </text>
+        	<text label="Nombres(S)" name="nombreDetencion" [group]="form"> </text>
         </div>
 
         <div class="col-md-3">
@@ -107,48 +101,51 @@
                     {label:'H',value:'H'},
                     {label:'M',value:'M'}
                 ]" 
-                name="">    
+                name="sexoDetencion" 
+                [group]="form">    
             </radiobutton>
         </div>
         <div class="col-md-3">
-        	<text label="Edad referida" name=""> </text>
+        	<text label="Edad referida" name="edadRefeDetencion" [group]="form"> </text>
         </div>
     </div>
 
 
 <div class="row justify-content-start">
         <div class="col-md-2">
-        	<text label="Calle" name=""> </text>
+        	<text label="Calle" name="calleDetenido" [group]="form"> </text>
         </div>
 		
 		<div class="col-md-2">
-        	<text label="Num. Exterior" name=""> </text>
+        	<text label="Num. Exterior" name="numExtDetenido" [group]="form"> </text>
         </div>
     	
     	<div class="col-md-2">
-        	<text label="Num. Interior" name=""> </text>
+        	<text label="Num. Interior" name="numIntDetenido" [group]="form"> </text>
         </div>
 
         <div class="col-md-3">
-            <text label="C.P." name=""> </text>
+            <text label="C.P." name="cpDetenido" [group]="form"> </text>
         </div>
         <div class="col-md-3">
-        	<date label="Fecha" name="" placeholder="dd/mm/aaaa"> </date>
+        	<date label="Fecha" name="fechaDetenido" [group]="form" placeholder="dd/mm/aaaa"> </date>
         </div>
     </div>
 
 
-<div class="row justify-content-start">
+    <div class="row justify-content-start">
         <div class="col-md-2">
         	<select2 placeholder="Casado" id=""
-            [options]="[
-                {label:'Poza Rica',value:'Poza Rica'}
-            ]">
+                [options]="[
+                    {label:'Poza Rica',value:'Poza Rica'}
+                ]" 
+                name="casadoDetenido" 
+                [group]="form">
             </select2>
         </div>
 		
 		<div class="col-md-2">
-        	<text label="Ocupación" name=""> </text>
+        	<text label="Ocupación" name="ocupacionDetenido" [group]="form"> </text>
         </div>
     	
     	<div class="col-md-2">
@@ -157,13 +154,12 @@
                 [radios]="[
                     {label:'Mexicana',value:'Mexicana'},
                     {label:'Extranjera',value:'Extranjera'}
-                ]" 
-                name="">    
+                ]" name="nacionalidadDetenido" [group]="form">    
             </radiobutton>
         </div>
 
         <div class="col-md-3">
-            <text label="RFC/CURP" name=""> </text>
+            <text label="RFC/CURP" name="rfcCurpDetenido" [group]="form"> </text>
         </div>
 
         <div class="col-md-3">
@@ -173,21 +169,21 @@
                     {label:'Si',value:'Si'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="lecturaDerechosDetenido" [group]="form">    
             </radiobutton>
         </div>
     </div>
-<div class="row justify-content-start">
+    <div class="row justify-content-start">
         <div class="col-md-2">
-        	<text label= "Señales particulares" name=""></text>
+        	<text label= "Señales particulares" name="señalesParticularesDetenido" [group]="form"></text>
         </div>
 		
 		<div class="col-md-2">
-        	<text label= "Descripción fisica" name=""></text>
+        	<text label= "Descripción fisica" name="descripcionFisicaDetenido" [group]="form"></text>
         </div>
     	
     	<div class="col-md-2">
-        	<text label= "Tipo de vestimenta" name=""> </text>
+        	<text label= "Tipo de vestimenta" name="tipoVestimentaDetenido" [group]="form"> </text>
         </div>
 
         <div class="col-md-3">
@@ -197,7 +193,8 @@
                     {label:'Si',value:'Si'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="pertenenciasDetenido" 
+                [group]="form">    
             </radiobutton>
         </div>
     </div>
