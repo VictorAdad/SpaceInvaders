@@ -4,13 +4,14 @@ import { TableService } from '@utils/table/table.service';
 import { MatPaginator } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService} from '@services/http.service';
+import { InformeBaseComponent} from '@components-app/informe-homologado/informe-base.component';
 
 @Component({
     selector: 'principal',
     templateUrl: './principal.component.html'
 })
 
-export class PrincipalInformeHomologadoCreate {
+export class PrincipalInformeHomologadoCreate extends InformeBaseComponent {
 
     public breadcrumb = [];
     public lat: number = 19.4968732;
@@ -36,7 +37,7 @@ export class PrincipalInformeHomologadoCreate {
     constructor(
         private route: ActivatedRoute,
         private http: HttpService){
-        // super();
+        super();
 
     }
 
