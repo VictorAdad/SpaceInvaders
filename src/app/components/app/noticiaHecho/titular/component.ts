@@ -64,9 +64,9 @@ export class TransferirComponent extends BasePaginationComponent implements OnIn
     public findByAgencia(_agencia: string) {
         console.log('findAgencia()', _agencia);
         if (_agencia) {
-            Logger.logColor('entrada ------>', 'Green', _agencia, this.usuarios);
             this.http.get(`/v1/administration/ldap/fiscalias/agencias/usuarios?f=${_agencia}`).subscribe(
                 response => {
+                    this.usuarios = [];
                     for (const object of response) {
                         this.usuarios.push({value: object.uid, label: object.displayName});
                     }
