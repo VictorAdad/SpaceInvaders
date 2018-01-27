@@ -53,8 +53,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        <text *ngIf="!heredar" label="Nacionalidad" [max]="1000" name="nacionalidadHeredar" [group]="form"></text>
-                        <text *ngIf="heredar" label="Nacionalidad" name="nacionalidad" [group]="form"></text>
+                        <text *ngIf="heredar" label="Nacionalidad" [max]="1000" name="nacionalidadHeredar" [group]="form"></text>
+                        <text *ngIf="!heredar" label="Nacionalidad" name="nacionalidad" [group]="form"></text>
                     </div>
                     <div class="col-md-3">
                         <text *ngIf="!heredar" label="Originario de" name="originarioDe" [group]="form"></text>
