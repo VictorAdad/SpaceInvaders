@@ -4,8 +4,8 @@ import { TableService } from '@utils/table/table.service';
 import { MatPaginator } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService} from '@services/http.service';
-import { FormatosLocal } from '@services/formatos/formatos.service';
-import { FormatosGlobal} from '../solicitud-preliminar/formatos';
+import { FormatosLocal, FormatosService } from '@services/formatos/formatos.service';
+// import { FormatosGlobal} from '../solicitud-preliminar/formatos';
 
 @Component({
     selector: 'paginador',
@@ -15,7 +15,7 @@ import { FormatosGlobal} from '../solicitud-preliminar/formatos';
 export class PaginadorHomologado extends BasePaginationComponent{
 
     public setFormato = new FormatosLocal();
-    public formato = new FormatosGlobal(null,null,null,null,null);
+    // public formato = new FormatosGlobal(null,null,null,null,null);
 
     public displayedColumns = ['tipo', 'calle', 'colonia', 'localidad', 'estado'];
     public breadcrumb = [];
@@ -26,7 +26,8 @@ export class PaginadorHomologado extends BasePaginationComponent{
 
     constructor(
         private route: ActivatedRoute,
-        private http: HttpService){
+        private http: HttpService,
+        private formatoServ :FormatosService){
         super();
     }
 
@@ -43,7 +44,7 @@ export class PaginadorHomologado extends BasePaginationComponent{
         console.log('<<< Click!! >>>')
 
         this.setFormato.setDataIPH();
-        this.formato.changeFormatoIph('F1_IPH');
+        this.formatoServ.replaceWord(this.formatoServ.formatos['F1_IPH'].nombre, 'F1_IPH');
 
         // let url='../../../assets/formatos/IPH.docx';    
         // window.open(url, 'Download');

@@ -606,6 +606,8 @@ public setDataIPH() {
     let _data
     _data = JSON.parse(localStorage.getItem('Principal'));
 
+    console.log('<<<< formato >>>>', _data.numeroReferencia);
+
     this.data['xNumeroReferencia']            = _data.numeroReferencia            
     this.data['xPrimerResponsable']           = _data.primerResponsable            
     this.data['xInstitucion']                 = _data.institucion         
