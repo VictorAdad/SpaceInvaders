@@ -207,8 +207,9 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
 
   public addNombres(_model) {
     if (this.optionsServ.colonias && _model['colonia']) {
+      console.log(_model['colonia']);
       for (var i = 0; i < this.optionsServ.colonias.length; ++i) {
-        if (this.optionsServ.colonias[i]['value'].split('-')[0].indexOf(_model['colonia']['id'])) {
+        if (this.optionsServ.colonias[i]['value'] == _model['colonia']['idCp']) {
           _model['colonia']['nombre'] = this.optionsServ.colonias[i]['label'];
           _model['colonia']['cp'] = this.optionsServ.colonias[i]['value'].split('-')[1];
           break;
@@ -421,7 +422,6 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
 
     timer.subscribe(t => {
         this.form.patchValue({
-            'colonia': _data.colonia ? _data.colonia : new Colonia(),
             'estado': _data.estado ? _data.estado : {},
             'municipio': _data.municipio ? _data.municipio : new Municipio(),
             'localidad': _data.localidad ? _data.localidad : { id: ''},
@@ -430,6 +430,11 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
         if (_data.colonia) {
           const localidad= _data.colonia.localidad ? _data.colonia.localidad['id'] : '';
           this.form.controls.colonia.patchValue({
+            id: _data.colonia.id,
+            idCp: _data.colonia['idCp'] ? _data.colonia['idCp'] : 
+              ('' + _data.colonia.id + '-' + _data.colonia.cp + '-' + localidad)
+          });
+          Logger.log("COLONIAS=>",{
             id: _data.colonia.id,
             idCp: '' + _data.colonia.id + '-' + _data.colonia.cp + '-' + localidad
           });
@@ -442,6 +447,12 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
           if (_data.municipio) {
             this.optionsServ.getColoniasByMunicipio(_data.municipio.id);
           } 
+          const localidad= _data.colonia.localidad ? _data.colonia.localidad['id'] : '';
+          this.form.controls.colonia.patchValue({
+            id: _data.colonia.id,
+            idCp: _data.colonia['idCp'] ? _data.colonia['idCp'] : 
+              ('' + _data.colonia.id + '-' + _data.colonia.cp + '-' + localidad)
+          });
           Logger.logColor('DATOS', 'tomato', this.form.value, _data, this.optionsServ);
         });
       }
