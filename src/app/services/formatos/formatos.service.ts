@@ -123,6 +123,13 @@ export class FormatosLocal {
     'file': null,
     'data': null
    };
+   //Formado de Informe Policial Homologado
+   public F1_IPH = {
+    'path': environment.app.host+'/assets/formatos/IPH.docx',
+    'nombre': 'IPH.docx',
+    'file': null,
+    'data': null
+   };
 
 
 
@@ -230,6 +237,94 @@ export class FormatosLocal {
         'xRealizaraExamen':'',
        //F1011
          'xActuacionesSolicitadas':'',
+
+        //IPH
+        'xNumeroReferencia': '',
+        'xPrimerResponsable': '',
+        'xInstitucion': '',
+        'xMunicipio': '',
+        'xCuip': '',
+        // 2
+        'xEnteroHecho': '',
+        'xEspecifique': '',
+        'xFechaConocimiento': '',
+        'xHoraConocimiento': '',
+        // 3
+        'xFechaArribo': '',
+        'xHoraArribo': '',
+        'xEntidadArribo': '',
+        'xMunicipioArribo': '',
+        'xLocalidadArribo': '',
+        'xCalleArribo': '',
+        'xNumIntArribo': '',
+        'xNumExtArribo': '',
+        'xEntreCalleArribo': '',
+        'xTramoCarreteroArribo': '',
+        'xTipoArribo': '',
+        'xKmArribo': '',
+        'xLatitudArribo': '',
+        'xLongitudArribo': '',
+        'xRiesgoPara': '',
+        'xTipoRiesgo': '',
+        'xEspecifiqueRiesgo': '',
+        'xApoyo': '',
+        'xNumEconomico': '',
+        'xEspecifiqueApoyo': '',
+        'xNarracionHechosResponsable': '',
+        //radios
+        'xProteccion': '',
+        'xRecepcionAcciones': '',
+        'xRecoleccionAcciones': '',
+        'xProteccionAcciones': '',
+        'xResguardoAcciones': '',
+        'xPreservacionAcciones': '',
+        'xInformarAcciones': '',
+        'xProteccionAccionesA': '',
+        'xResguardoAccionesA': '',
+        'xDetencionAcciones': '',
+        'xFuerzaAcciones': '',
+        'xPuestoAcciones': '',
+        'xInventarioAcciones': '',
+        'xTrasladoAcciones': '',
+        'xInspeccionesAcciones': '',
+        'xEchosFavorAcciones':'',
+        'xTrasladoAccionesA':'',
+        'xTrasladoAccionesDe':'',
+        'xInspeccionesAccionesA':'',
+        'xEntrevistasAcciones':'',
+        // 4
+        'xFechaPreservacion': '',
+        'xHoraPreservacion': '',
+        'xAcordonamiento': '',
+        'xCuipAcordonamiento': '',
+        'xPaternoAcordonamiento': '',
+        'xMaternoAcordonamiento': '',
+        'xNombreAcordonamiento': '',
+        'xAdcripcionAcordonamiento': '',
+        'xResguardo': '',
+        'xCuipResguardo': '',
+        'xPaternoResguardo': '',
+        'xMaternoResguardo': '',
+        'xNombreResguardo': '',
+        'xAdcripcionResguardo': '',
+        // 5
+        'xFechaCertificado': '',
+        'xHoraCertificado': '',
+        'xMedico': '',
+        'xMedicoAgencia': '',
+        'xNombreAgencia': '',
+        'xMunicipioAgencia': '',
+        'xCalleAgencia': '',
+        'xNumAgencia': '',
+        'xMedicoParticular': '',
+        'xMunicipioParticular': '',
+        'xCalleParticular': '',
+        'xNumParticular': '',
+        'xCuipParticular': '',
+        'xPaternoParticular': '',
+        'xMaternoParticular': '',
+        'xNombreParticular': '',
+        'xAdscripcionParticular': ''
 
 
       }
@@ -504,6 +599,94 @@ public setDataF1011(_data,_id_solicitud){
   this.data['xActuacionesSolicitadas'] =  typeof policia.actuacionesSolicitadas != 'undefined' ? policia.actuacionesSolicitadas: '';
   this.data['xAdscripcionEmisor']      = '';
   Logger.log('formato',this.data)
+
+}
+
+public setDataIPH() {
+    let _data
+    _data = JSON.parse(localStorage.getItem('Principal'));
+
+    this.data['xNumeroReferencia']            = _data.numeroReferencia            
+    this.data['xPrimerResponsable']           = _data.primerResponsable            
+    this.data['xInstitucion']                 = _data.institucion         
+    this.data['xMunicipio']                   = _data.municipio
+    this.data['xCuip']                        = _data.cuip
+    this.data['xEnteroHecho']                 = _data.enteroHecho
+    this.data['xEspecifique']                 = _data.especifique
+    this.data['xFechaConocimiento']           = _data.fechaConocimiento     
+    this.data['xHoraConocimiento']            = _data.horaConocimiento    
+    this.data['xFechaArribo']                 = _data.fechaArribo
+    this.data['xHoraArribo']                  = _data.horaArribo
+    this.data['xEntidadArribo']               = _data.entidadArribo 
+    this.data['xMunicipioArribo']             = _data.municipioArribo   
+    this.data['xLocalidadArribo']             = _data.localidadArribo   
+    this.data['xCalleArribo']                 = _data.calleArribo
+    this.data['xNumIntArribo']                = _data.numIntArribo
+    this.data['xNumExtArribo']                = _data.numExtArribo
+    this.data['xEntreCalleArribo']            = _data.entreCalleArribo    
+    this.data['xTramoCarreteroArribo']        = _data.tramoCarreteroArribo       
+    this.data['xTipoArribo']                  = _data.tipoArribo
+    this.data['xKmArribo']                    = _data.kmArribo
+    this.data['xLatitudArribo']               = _data.latitudArribo
+    this.data['xLongitudArribo']              = _data.longitudArribo 
+    this.data['xRiesgoPara']                  = _data.riesgoPara  
+    this.data['xTipoRiesgo']                  = _data.tipoRiesgo
+    this.data['xEspecifiqueRiesgo']           = _data.especifiqueRiesgo     
+    this.data['xApoyo']                       = _data.apoyo
+    this.data['xNumEconomico']                = _data.numEconomico
+    this.data['xEspecifiqueApoyo']            = _data.especifiqueApoyo
+    this.data['xNarracionHechosResponsable']  = _data.narracionHechosResponsable          
+    this.data['xProteccion']                  = _data.proteccion
+    this.data['xRecepcionAcciones']           = _data.recepcionAcciones
+    this.data['xRecoleccionAcciones']         = _data.recoleccionAcciones  
+    this.data['xProteccionAcciones']          = _data.proteccionAcciones 
+    this.data['xResguardoAcciones']           = _data.resguardoAcciones
+    this.data['xPreservacionAcciones']        = _data.preservacionAcciones   
+    this.data['xInformarAcciones']            = _data.informarAcciones
+    this.data['xProteccionAccionesA']         = _data.proteccionAccionesA  
+    this.data['xResguardoAccionesA']          = _data.resguardoAccionesA 
+    this.data['xDetencionAcciones']           = _data.detencionAcciones
+    this.data['xFuerzaAcciones']              = _data.fuerzaAcciones
+    this.data['xPuestoAcciones']              = _data.puestoAcciones
+    this.data['xInventarioAcciones']          = _data.inventarioAcciones 
+    this.data['xTrasladoAcciones']            = _data.trasladoAcciones
+    this.data['xInspeccionesAcciones']        = _data.inspeccionesAcciones   
+    this.data['xEchosFavorAcciones']          = _data.echosFavorAcciones 
+    this.data['xTrasladoAccionesA']           = _data.trasladoAccionesA
+    this.data['xTrasladoAccionesDe']          = _data.trasladoAccionesDe 
+    this.data['xInspeccionesAccionesA']       = _data.InspeccionesAccionesA    
+    this.data['xEntrevistasAcciones']         = _data.entrevistasAcciones  
+    this.data['xFechaPreservacion']           = _data.fechaPreservacion
+    this.data['xHoraPreservacion']            = _data.horaPreservacion
+    this.data['xAcordonamiento']              = _data.acordonamiento
+    this.data['xCuipAcordonamiento']          = _data.cuipAcordonamiento 
+    this.data['xPaternoAcordonamiento']       = _data.paternoAcordonamiento    
+    this.data['xMaternoAcordonamiento']       = _data.maternoAcordonamiento    
+    this.data['xNombreAcordonamiento']        = _data.nombreAcordonamiento   
+    this.data['xAdcripcionAcordonamiento']    = _data.adcripcionAcordonamiento       
+    this.data['xResguardo']                   = _data.resguardo
+    this.data['xCuipResguardo']               = _data.cuipResguardo
+    this.data['xPaternoResguardo']            = _data.paternoResguardo
+    this.data['xMaternoResguardo']            = _data.maternoResguardo
+    this.data['xNombreResguardo']             = _data.nombreResguardo
+    this.data['xAdcripcionResguardo']         = _data.adcripcionResguardo  
+    this.data['xFechaCertificado']            = _data.fechaCertificado
+    this.data['xHoraCertificado']             = _data.horaCertificado
+    this.data['xMedico']                      = _data.medico
+    this.data['xMedicoAgencia']               = _data.medicoAgencia
+    this.data['xNombreAgencia']               = _data.nombreAgencia
+    this.data['xMunicipioAgencia']            = _data.municipioAgencia
+    this.data['xCalleAgencia']                = _data.calleAgencia
+    this.data['xNumAgencia']                  = _data.numAgencia
+    this.data['xMedicoParticular']            = _data.medicoParticular
+    this.data['xMunicipioParticular']         = _data.municipioParticular  
+    this.data['xCalleParticular']             = _data.calleParticular
+    this.data['xNumParticular']               = _data.numParticular
+    this.data['xCuipParticular']              = _data.cuipParticular
+    this.data['xPaternoParticular']           = _data.paternoParticular
+    this.data['xMaternoParticular']           = _data.maternoParticular 
+    this.data['xNombreParticular']            = _data.combreParticular
+    this.data['xAdscripcionParticular']       = _data.adscripcionParticular
 
 }
 

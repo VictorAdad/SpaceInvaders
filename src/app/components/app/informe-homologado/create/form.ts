@@ -34,7 +34,7 @@ export class Form {
             apoyo: [''],
             numEconomico: [''],
             especifiqueApoyo: [''],
-            narracionHechos: [''],
+            narracionHechosResponsable: [''],
             //radios
             proteccion: [''],
             recepcionAcciones: [''],
@@ -155,6 +155,7 @@ export class Form {
             cargaRecibeTraslado: [''],
             fechaTraslado: [''],
             horaTraslado: [''],
+            fechaCreacion: ['']
         })
     }
 }

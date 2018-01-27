@@ -21,6 +21,16 @@ export class InformeHomologadoCreate {
     ngOnInit() {
         this.form =  Form.createForm(this.fbuilder);
         console.log('-> Form', this.form.value);
+
+        // if (true) {
+        //     this.fillForm()            
+        // }
+    }
+
+    public fillForm() {
+        let _data = JSON.parse(localStorage.getItem('Principal'));
+        console.log('------>>> ',_data);
+        this.form.patchValue(_data);
     }  
 
 }

@@ -11,22 +11,18 @@ export class InformeBaseComponent {
     }
 
     public save(form) {
+    	localStorage.removeItem('Principal');    	
     	return new Promise( (resolve,reject) => {
-			console.log('<<< Ya me guardaron :3 >>>', form);
 			resolve("Form valido");
-			let result
-
+			let fecha = new Date();
+    		form.fechaCreacion= fecha;
 			localStorage.setItem('Principal', JSON.stringify(form));
-
-
-			result = JSON.parse(localStorage.getItem('Principal'));
-			console.log('<<< Ya regrese :3 >>>', result);
 
    			//json = {x:1, nombre:"cosoaoosao sa s a sa"};
 			// localStorage.setItem('YASON', JSON.stringify(json));
 			// xxxx= localStorage.getItem('YASON');
 			// xxxx = JSON.parse(xxxx);
-			// localStorage.removeItem('YASON');	
+				
     	});
         
     }

@@ -4,6 +4,8 @@ import { TableService } from '@utils/table/table.service';
 import { MatPaginator } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService} from '@services/http.service';
+import { FormatosLocal } from '@services/formatos/formatos.service';
+import { FormatosGlobal} from '../solicitud-preliminar/formatos';
 
 @Component({
     selector: 'paginador',
@@ -11,6 +13,9 @@ import { HttpService} from '@services/http.service';
 })
 
 export class PaginadorHomologado extends BasePaginationComponent{
+
+    public setFormato = new FormatosLocal();
+    public formato = new FormatosGlobal(null,null,null,null,null);
 
     public displayedColumns = ['tipo', 'calle', 'colonia', 'localidad', 'estado'];
     public breadcrumb = [];
@@ -26,18 +31,22 @@ export class PaginadorHomologado extends BasePaginationComponent{
     }
 
     ngOnInit(){
-        var rows = {};
-        rows['nombre'] = "juan de dios Lopez Contreras" 
-        rows['fecha'] = "22/03/2017"
-        rows['accion'] = "X"
+        let result
+        result = JSON.parse(localStorage.getItem('Principal'));
+
+        console.log('<<< Aqui estoy en el paginador >>>', result);
         
-        this.dataSource = new TableService(this.paginator, [rows,rows,rows]);
+        this.dataSource = new TableService(this.paginator, [result]);
     }
 
     public onPrint() {
         console.log('<<< Click!! >>>')
-        let url='../../../assets/formatos/IPH Word.docx';    
-        window.open(url, 'Download');
+
+        this.setFormato.setDataIPH();
+        this.formato.changeFormatoIph('F1_IPH');
+
+        // let url='../../../assets/formatos/IPH.docx';    
+        // window.open(url, 'Download');
     }
     
 

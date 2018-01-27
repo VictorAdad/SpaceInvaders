@@ -76,6 +76,9 @@ export class FormatosGlobal{
 
     }
 
+    public changeFormatoIph(_format) {
+        this.formatos.replaceWord(this.formatos.formatos[_format].nombre, _format)                            
+    }
 
     public downloadFile(_object, _contentType){
         Logger.log('downloadFile():', _object);

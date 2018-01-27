@@ -30,12 +30,12 @@
 <mat-table #table [dataSource]="dataSource">
     <ng-container matColumnDef="nombre">
         <mat-header-cell *matHeaderCellDef> Nombre</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.primerResponsable}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="fecha">
         <mat-header-cell *matHeaderCellDef>Fecha de creación</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.fecha}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.fechaCreacion | inputPipe}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="accion">
