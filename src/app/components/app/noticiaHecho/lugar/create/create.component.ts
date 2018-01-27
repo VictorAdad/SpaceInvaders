@@ -232,6 +232,14 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
         }
       }
     }
+    if (this.optionsServ.paises && _model['pais']) {
+      for (var i = 0; i < this.optionsServ.paises.length; ++i) {
+        if (this.optionsServ.paises[i]['value'] == _model['pais']['id']) {
+          _model['pais']['nombre'] = this.optionsServ.paises[i]['label'];
+          break;
+        }
+      }
+    }
   }
 
   public save(_valid: any, _model: any) {
