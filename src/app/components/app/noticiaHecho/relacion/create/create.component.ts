@@ -587,7 +587,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                                             )
                                             : '',
                                     tipo:_model["tipoRelacionPersona"]["tipo"],
-                                    vehiculoTipoRelacion:_model["tipoRelacionPersona"]["vehiculoTipoRelacionPersona"]
+                                    vehiculoTipoRelacionPersona:_model["tipoRelacionPersona"]["vehiculoTipoRelacionPersona"]
                                 }
                                 caso["tipoRelacionPersonas"].push(relacion);
                                 Logger.log("NO");
@@ -836,7 +836,7 @@ export class RelacionCreateComponent extends NoticiaHechoGlobal{
                                 personaCasoRelacionada:
                                     this.optionsNoticia.getPersonaCaso(_model["tipoRelacionPersona"]["personaCasoRelacionada"]["id"]),
                                 tipo:_model["tipoRelacionPersona"]["tipo"],
-                                vehiculoTipoRelacion:_model["tipoRelacionPersona"]["vehiculoTipoRelacionPersona"]
+                                vehiculoTipoRelacionPersona:_model["tipoRelacionPersona"]["vehiculoTipoRelacionPersona"]
                             }
                             Logger.log("Relacion",relacion);
                             for (var i = 0; i < caso["tipoRelacionPersonas"].length; ++i) {
