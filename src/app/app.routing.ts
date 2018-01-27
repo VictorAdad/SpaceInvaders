@@ -83,6 +83,8 @@ import {AyudaComponent} from '@components-app/ayuda/component';
 
 import {Nothing} from '@components-app/home/nothing.component';
 
+import {DashBoardOffline} from '@components-app/offline/dashboard.offline.componet';
+
 const routes: Routes = [
     { path : '', redirectTo: 'home', pathMatch: 'full'},
     { path : '', component: HomeComponent, data : { breadcrumb : 'Noticia de hechos'}},
@@ -224,6 +226,8 @@ const routes: Routes = [
     { path : 'mecanismo-accion', component : MecanismoAccionComponent, data : { breadcrumb : 'Mecanismo de Acción', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"}] } },
     { path : 'mecanismo-accion/create', component : CreateArmaComponent, data : { breadcrumb : 'Agregar Mecanismo', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/mecanismo-accion',label:"Mecanismo de Acción"}] }  },
     { path : 'mecanismo-accion/:id/edit', component : CreateArmaComponent, data : { breadcrumb : 'Editar Mecanismo', rutas : [{path:'/catalogos', label:'Catálogos'},{path:'/catalogo-armas',label:"Catálogo de Armas"},{path:'/tipo-arma',label:"Calibre de Armas"}] }  },
+    
+    { path : 'reporte/offline', component : DashBoardOffline, data : { breadcrumb : 'Estatus offline'}  },
 ];
 
 @NgModule({
@@ -303,5 +307,7 @@ export const routingComponents = [
   TipoArmaComponent,
   CreateArmaComponent,
   CalibreArmaComponent,
-  MecanismoAccionComponent
+  MecanismoAccionComponent,
+
+  DashBoardOffline
 ];
