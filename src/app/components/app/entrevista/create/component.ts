@@ -439,13 +439,15 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
             const originarioDeControl = this.form.controls['originarioDeHeredar'];
             const sabeLeerEscribir = personaCaso.persona.sabeLeerEscribir;
             const sabeLeerEscribirControl = this.form.controls['sabeLeerEscribirHeredar'];
-            const lugarOcupacion = personaCaso.persona.lugarTrabajo;
+            const lugarOcupacion = personaCaso.persona.lugarTrabajo ? personaCaso.persona.lugarTrabajo : 'Sin valor';
             const lugarOcupacionControl = this.form.controls['lugarOcupacionHeredar'];
-            const ocupacion = personaCaso.persona.ocupacion ? personaCaso.persona.ocupacion.nombre : null;
+            const ocupacion = personaCaso.persona.ocupacion ? personaCaso.persona.ocupacion.nombre : 'Sin valor';
             const ocupacionControl = this.form.controls['ocupacionHeredar'];
-            const estadoCivil = personaCaso.persona.estadoCivil ? personaCaso.persona.estadoCivil.nombre : null;
+            const estadoCivil = personaCaso.persona.estadoCivil ? personaCaso.persona.estadoCivil.nombre : 'Sin valor';
             const estadoCivilControl = this.form.controls['estadoCivilHeredar'];
-            const nacionalidad = personaCaso.persona.nacionalidadReligion ? personaCaso.persona.nacionalidadReligion.nacionalidad : null;
+            const alfabetismo = personaCaso.persona.alfabetismo ? personaCaso.persona.alfabetismo.nombre : 'Sin valor';
+            const alfabetismoControl = this.form.controls['sabeLeerEscribirHeredar'];
+            const nacionalidad = personaCaso.persona.nacionalidadReligion ? personaCaso.persona.nacionalidadReligion.nacionalidad : 'Sin valor';
             const nacionalidadControl = this.form.controls['nacionalidadHeredar'];
 
             // Heredar Sexo
@@ -475,6 +477,10 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
             // Heredar nacionalidad
             nacionalidadControl.setValue(
                 nacionalidadControl.value ? (nacionalidadControl.value+", " + nacionalidad) : nacionalidad
+            );
+            // Heredar leerEscribir
+            alfabetismoControl.setValue(
+                alfabetismoControl.value ? (alfabetismoControl.value+", " + alfabetismo) : alfabetismo
             );
 
             // Heredar Fecha Nacimiento
