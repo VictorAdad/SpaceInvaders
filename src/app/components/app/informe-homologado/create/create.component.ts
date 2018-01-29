@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService} from '@services/http.service';
 import { Form } from './form';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'informe-homologado-create',
@@ -22,15 +23,18 @@ export class InformeHomologadoCreate {
         this.form =  Form.createForm(this.fbuilder);
         console.log('-> Form', this.form.value);
 
-        // if (true) {
-        //     this.fillForm()            
-        // }
+        this.fillForm()            
+
     }
 
     public fillForm() {
         let _data = JSON.parse(localStorage.getItem('Principal'));
         console.log('------>>> ',_data);
-        this.form.patchValue(_data);
+        let timer = Observable.timer(1);
+        timer.subscribe(t => {
+            this.form.patchValue(_data);
+        });
+        
     }  
 
 }
