@@ -4,13 +4,14 @@ import { TableService } from '@utils/table/table.service';
 import { MatPaginator } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from '@services/http.service';
+import { InformeBaseComponent} from '@components-app/informe-homologado/informe-base.component';
 
 @Component({
     selector: 'anexo8',
     templateUrl: './anexo8.component.html'
 })
 
-export class Anexo8Component {
+export class Anexo8Component extends InformeBaseComponent{
 
     public breadcrumb = [];
     columns = ['nombre', 'objeto', 'accion'];
@@ -24,7 +25,7 @@ export class Anexo8Component {
     constructor(
         private route: ActivatedRoute,
         private http: HttpService){
-        // super();
+        super();
     }
 
     ngOnInit(){
