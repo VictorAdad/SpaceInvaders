@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpService} from '@services/http.service';
 import { Form } from './form';
 import {Observable} from 'rxjs';
+import { InformeBaseComponent } from '@components-app/informe-homologado/informe-base.component';
 
 @Component({
     selector: 'informe-homologado-create',
@@ -23,17 +24,21 @@ export class InformeHomologadoCreate {
         this.form =  Form.createForm(this.fbuilder);
         console.log('-> Form', this.form.value);
 
-        this.fillForm()            
+        console.log('<<< userOption >>>',InformeBaseComponent.userOption)
+        if (InformeBaseComponent.userOption) {
+            this.fillForm()            
+        }
 
     }
 
     public fillForm() {
         let _data = JSON.parse(localStorage.getItem('Principal'));
         console.log('------>>> ',_data);
-        let timer = Observable.timer(1);
+        let timer = Observable.timer(10);
         timer.subscribe(t => {
             this.form.patchValue(_data);
         });
+        InformeBaseComponent.userOption = false;
         
     }  
 

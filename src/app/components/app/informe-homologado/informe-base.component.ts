@@ -7,6 +7,8 @@ export class InformeBaseComponent {
     @Input()
     public form: FormGroup;   
 
+    public static userOption: boolean = false;
+
     constructor(){
     }
 

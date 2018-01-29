@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService} from '@services/http.service';
 import { FormatosLocal, FormatosService } from '@services/formatos/formatos.service';
+import { InformeBaseComponent } from '@components-app/informe-homologado/informe-base.component';
 // import { FormatosGlobal} from '../solicitud-preliminar/formatos';
 
 @Component({
@@ -34,21 +35,20 @@ export class PaginadorHomologado extends BasePaginationComponent{
     ngOnInit(){
         let result
         result = JSON.parse(localStorage.getItem('Principal'));
-
-        console.log('<<< Aqui estoy en el paginador >>>', result);
-        
         this.dataSource = new TableService(this.paginator, [result]);
+
+        console.log('<<< BaseBoolean >>>', InformeBaseComponent.userOption);
+
     }
 
     public onPrint() {
         let result
         result = JSON.parse(localStorage.getItem('Principal'));
-        console.log('<<< Click!! >>>')
         this.formatoServ.replaceWord(this.formatoServ.formatos["F1_IPH"].nombre, "F1_IPH", this.setFormato.setDataIPH(result));
-        
+    }
 
-        // let url='../../../assets/formatos/IPH.docx';    
-        // window.open(url, 'Download');
+    public changeFill() {
+        InformeBaseComponent.userOption = true;        
     }
     
 
