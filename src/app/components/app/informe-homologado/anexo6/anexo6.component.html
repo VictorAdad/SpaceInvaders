@@ -4,7 +4,7 @@
             <h2>Anexo 6 Constancia de lectura de derechos de la víctima</h2>
         </div>
     </div>
-	<div class="row">
+	<div class="row justify-content-center">
 		<p>Datos de la víctima</p>
 	</div>
 	<div class="row">
@@ -21,19 +21,19 @@
 	<div class="row">
 		<p>Primer respondiente que realiza la lectura de derechos (Llenar sólo en caso de no ser el mismo que llena este formato)</p>
 	</div>
-	<div class="row">
+	<div class="row justify-content-center">
         <div class="col-md-3">
-            <text label="CUIP" name="" ></text>
+            <text label="CUIP" name="cuipRespondiente" [group]="form"></text>
         </div>
         o
         <div class="col-md-3">
-            <text label="Apellido paterno" name="" ></text>
+            <text label="Apellido paterno" name="paternoRespondiente" [group]="form"></text>
         </div>        
         <div class="col-md-3">
-            <text label="Apellido materno" name="" ></text>
+            <text label="Apellido materno" name="maternoRespondiente" [group]="form" ></text>
         </div>
         <div class="col-md-3">
-            <text label="Nombre(s)" name="" ></text>
+            <text label="Nombre(s)" name="nombreRespondiente" [group]="form" ></text>
         </div>
         
     </div>

@@ -10,7 +10,8 @@
             [options]="[
                 {label:'Ministerio Público',value:'Ministerio Público'},
                 {label:'Ministerio Público',value:'Ministerio Público'}
-            ]">                
+            ]"
+            name="trasladoA" [group]="form">                
             </select2>
         </div>
         <div class="col-md-3">
@@ -18,36 +19,36 @@
             [options]="[
                 {label:'Especializado',value:'Especializado'},
                 {label:'Especializado',value:'Especializado'}
-            ]">                
+            ]" name="tipoTraslado" [group]="form">                
             </select2>
         </div>
         <div class="col-md-3">
-        	<text label="Especifique" name="" ></text>
+        	<text label="Especifique" name="especifiqueTraslado" [group]="form" ></text>
         </div>
 		<div class="col-md-3">
-        	<text label="Nombre de la agencia" name="" ></text>
+        	<text label="Nombre de la agencia" name="agenciaTraslado" [group]="form" ></text>
         </div>
     </div>
     <div class="row">
         <div class="col-md-3">
-        	<text label="Estado" name="" ></text>
+        	<text label="Estado" name="estadoAgenciaTraslado" [group]="form" ></text>
         </div>
         <div class="col-md-3">
-        	<text label="Municipio" name="" ></text>
+        	<text label="Municipio" name="municipioAgenciaTraslado" [group]="form" ></text>
         </div>
         <div class="col-md-3">
-        	<text label="Colonia" name="" ></text>
+        	<text label="Colonia" name="coloniaAgenciaTraslado" [group]="form" ></text>
         </div>
         <div class="col-md-3">
-            <text label="Calle" name="" ></text>
+            <text label="Calle" name="calleAgenciaTraslado" [group]="form" ></text>
         </div>
     </div>
     <div class="row">
         <div class="col-md-3">
-            <text label="Número Exterior" name="" ></text>
+            <text label="Número Exterior" name="numExtAgenciaTraslado" [group]="form" ></text>
         </div>
         <div class="col-md-3">
-		    <text label="C.P." name="" ></text>
+		    <text label="C.P." name="cpAgenciaTraslado" [group]="form" ></text>
         </div>
     </div>
 	<div class="row">
@@ -59,23 +60,23 @@
             [options]="[
                 {label:'Detenido',value:'Detenido'},
                 {label:'Detenido',value:'Detenido'}
-            ]">                
+            ]" name="personaTraslado" [group]="form">                
             </select2>
         </div>
         <div class="col-md-2">
-        	<text label="Estado" name="" ></text>
+        	<text label="Estado" name="estadoPersonaTraslado" [group]="form" ></text>
         </div>
         <div class="col-md-2">
-        	<text label="Municipio" name="" ></text>
+        	<text label="Municipio" name="municipioPersonaTraslado" [group]="form" ></text>
         </div>
         <div class="col-md-2">
-        	<text label="Colonia" name="" ></text>
+        	<text label="Colonia" name="coloniaPersonaTraslado" [group]="form" ></text>
         </div>
         <div class="col-md-2">
-        	<text label="Calle" name="" ></text>
+        	<text label="Calle" name="callePersonaTraslado" [group]="form"></text>
         </div>
         <div class="col-md-2">
-        	<text label="Número Exterior" name="" ></text>
+        	<text label="Número Exterior" name="numExtPersonaTraslado" [group]="form"></text>
         </div>
 	</div>
 	<div class="row">
@@ -83,20 +84,20 @@
 	</div>
 	<div class="row">
         <div class="col-md-2">
-        	<text label="CUIP" name="" ></text>
+        	<text label="CUIP" name="cuipEntregaTraslado" [group]="form"></text>
         </div>
         o
         <div class="col-md-2">
-        	<text label="Apellido paterno" name="" ></text>
+        	<text label="Apellido paterno" name="paternoEntregaTraslado" [group]="form" ></text>
         </div>
         <div class="col-md-2">
-        	<text label="Apellido materno" name="" ></text>
+        	<text label="Apellido materno" name="maternoEntregaTraslado" [group]="form" ></text>
         </div>
         <div class="col-md-2">
-        	<text label="Nombre(s)" name="" ></text>
+        	<text label="Nombre(s)" name="nombreEntregaTraslado" [group]="form" ></text>
         </div>
         <div class="col-md-2">
-        	<text label="Carga" name="" ></text>
+        	<text label="Carga" name="cargaEntregaTraslado" [group]="form"></text>
         </div>
 	</div>
 	<div class="row">
@@ -104,22 +105,22 @@
 	</div>
 	<div class="row">
         <div class="col-md-2">
-        	<text label="Apellido paterno" name="" ></text>
+        	<text label="Apellido paterno" name="paternoRecibeTraslado" [group]="form" ></text>
         </div>
         <div class="col-md-2">
-        	<text label="Apellido materno" name="" ></text>
+        	<text label="Apellido materno" name="maternoRecibeTraslado" [group]="form"></text>
         </div>
         <div class="col-md-2">
-        	<text label="Nombre(s)" name="" ></text>
+        	<text label="Nombre(s)" name="nombreRecibeTraslado" [group]="form" ></text>
         </div>
         <div class="col-md-2">
-        	<text label="Carga" name="" ></text>
+        	<text label="Carga" name="cargaRecibeTraslado" [group]="form" ></text>
         </div>
 		<div class="col-md-2">
-            <date label="Fecha de conocimiento" name="" placeholder="dd/mm/aaaa"></date>
+            <date label="Fecha de conocimiento" name="fechaTraslado" [group]="form" placeholder="dd/mm/aaaa"></date>
         </div>
         <div class="col-md-2">
-            <text label="Hora" name="" placeholder="hh:mm"> </text>
+            <text label="Hora" name="horaTraslado" placeholder="hh:mm"> </text>
         </div>
     </div>
 	<div class="row justify-content-center">
