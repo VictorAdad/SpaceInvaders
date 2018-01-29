@@ -4,13 +4,14 @@ import { BasePaginationComponent } from '@components-app/base/pagination/compone
 import { TableService } from '@utils/table/table.service';
 import { MatPaginator } from '@angular/material';
 import { HttpService} from '@services/http.service';
+import { InformeBaseComponent} from '@components-app/informe-homologado/informe-base.component';
 
 @Component({
     selector: 'anexo3',
     templateUrl: './anexo3.component.html'
 })
 
-export class Anexo3Component {
+export class Anexo3Component extends InformeBaseComponent{
  	columns = ['usodelafuerza', "primerresponsable", "nivel","accion"];
     dataSource: TableService | null;
 
@@ -21,7 +22,7 @@ export class Anexo3Component {
     constructor(
         private route: ActivatedRoute,
         private http: HttpService){
-        // super();
+        super();
     }
 
  ngOnInit(){
