@@ -44,8 +44,7 @@ export class PaginadorHomologado extends BasePaginationComponent{
         let result
         result = JSON.parse(localStorage.getItem('Principal'));
         console.log('<<< Click!! >>>')
-        this.setFormato.setDataIPH(result);
-        this.formatoServ.replaceWord(this.formatoServ.formatos["F1_IPH"].nombre, "F1_IPH", result);
+        this.formatoServ.replaceWord(this.formatoServ.formatos["F1_IPH"].nombre, "F1_IPH", this.setFormato.setDataIPH(result));
         
 
         // let url='../../../assets/formatos/IPH.docx';    

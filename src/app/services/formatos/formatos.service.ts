@@ -46,7 +46,9 @@ export class FormatosService {
         let reader = new FileReader();
         doc.loadZip(this.formatos[_formato].file);
         if (_data != null) {
+            console.log('<<< hola mundo  >>>', _data);
             doc.setData(_data);
+
         } else {
             doc.setData(this.formatos.data);
         }
@@ -697,6 +699,7 @@ public setDataIPH(_data) {
     this.data['xAdscripcionParticular']       = _data.adscripcionParticular
 
     console.log('<<< data parseo >>>', this.data);
+    return this.data;
 
 }
 
