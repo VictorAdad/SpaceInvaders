@@ -13,7 +13,7 @@
             [options]="[
                 {label:'Casa',value:'Casa'},
                 {label:'Casa',value:'Casa'}
-            ]">                
+            ]" name ="tipoLugarIntervencion" [group]="form" >                
             </select2>
         </div>
         <div class="col-md-3">
@@ -24,7 +24,7 @@
             [options]="[
                 {label:'Abierto',value:'Abierto'},
                 {label:'Cerrado',value:'Cerrado'}
-            ]">                
+            ]" name ="caracterLugarIntervencion" [group]="form">                
             </select2>
         </div>
         <div class="col-md-3">
@@ -32,7 +32,7 @@
             [options]="[
                 {label:'Pavimento',value:'Pavimento'},
                 {label:'Terracería',value:'Terracería'}
-            ]">                
+            ]" name="sueloIntervencion" [group]="form">                
             </select2>
         </div>
 	</div>
@@ -42,7 +42,7 @@
             [options]="[
                 {label:'Seco',value:'Seco'},
                 {label:'Mojado',value:'Mojado'}
-            ]">                
+            ]" name="condicionesIntervencion" [group]="form">                
             </select2>
         </div>
         <div class="col-md-3">
@@ -50,7 +50,7 @@
             [options]="[
                 {label:'Natural',value:'Natural'},
                 {label:'Artificial',value:'Artificial'}
-            ]">                
+            ]" name="iluminacionIntervencion" [group]="form">                
             </select2>
         </div>
         <div class="col-md-3">
@@ -58,7 +58,7 @@
             [options]="[
                 {label:'Sí',value:'si'},
                 {label:'No',value:'no'}
-            ]">                
+            ]" name="objetosIntervencion" [group]="form">                
             </select2>
         </div>
 	</div>
@@ -75,7 +75,7 @@
                     {label:'Sí',value:'true'},
                     {label:'No',value:'false'}
                 ]" 
-                name=""
+                name="tipoObjetosEncontradosArma" [group]="form"
                 [functionChange]="showTipoArma.bind(this)">    
             </radiobutton>
         </div>
@@ -87,7 +87,7 @@
                     {label:'Sí',value:'true'},
                     {label:'No',value:'false'}
                 ]" 
-                name=""
+                name="tipoOEncontradosDinero" [group]="form"
                 [functionChange]="showDinero.bind(this)">    
             </radiobutton>
         </div>
@@ -99,7 +99,7 @@
                     {label:'Sí',value:'true'},
                     {label:'No',value:'false'}
                 ]" 
-                name=""
+                name="tipoObjetosEncontradosPersonas" [group]="form"
                 [functionChange]="showPersona.bind(this)">   
             </radiobutton>
         </div>
@@ -112,11 +112,11 @@
             [options]="[
                 {label:'Corta',value:'corta'},
                 {label:'Arma larga',value:'larga'}
-            ]">                
+            ]" name="tipoObjetosEncontradosArmaTipo" [group]="form">                
             </select2>
         </div>
         <div class="col-md-2">
-            <text label="Cantidad" name="" *ngIf="divTipoArma"></text>
+            <text label="Cantidad" name="tipoObjetosEncontradosArmaCantidad" [group]="form" *ngIf="divTipoArma"></text>
         </div>
         <div class="col-md-2">
             <select2 placeholder="Moneda:" id=""
@@ -124,17 +124,17 @@
             [options]="[
                 {label:'Corta',value:'corta'},
                 {label:'Arma larga',value:'larga'}
-            ]">                
+            ]" name="tipoObjetosEncontradosDineroMoneda" [group]="form">                
             </select2>
         </div>
         <div class="col-md-1">
-            <text label="Otra" name="" *ngIf="divDinero"></text>
+            <text label="Otra" name="tipoObjetosEncontradosDineroOtra" [group]="form" *ngIf="divDinero"></text>
         </div>
         <div class="col-md-1">
-            <text label="Cantidad" name="" *ngIf="divDinero"></text>
+            <text label="Cantidad" name="tipoObjetosEncontradosDineroCantidad"  [group]="form" *ngIf="divDinero"></text>
         </div>
         <div class="col-md-4">
-            <text label="Cantidad" name="" *ngIf="divPersona"></text>
+            <text label="Cantidad" name="tipoObjetosEncontradosPersonasCantidad" [group]="form" *ngIf="divPersona"></text>
         </div>
     </div>
 
@@ -147,7 +147,7 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="tipoObjetosEncontradosCadaver" [group]="form">    
             </radiobutton>
         </div>
         <div class="col-md-4">
@@ -158,7 +158,7 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="tipoObjetosEncontradosRestosHumanos" [group]="form">    
             </radiobutton>
         </div>
         <div class="col-md-4">
@@ -169,19 +169,19 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="tipoObjetosEncontradosDocumentos" [group]="form">    
             </radiobutton>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="tipoObjetosEncontradosCadaverCantidad" [group]="form" ></text>
         </div>
         <div class="col-md-4">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="tipoObjetosEncontradosRestosHumanosCantidad" [group]="form" ></text>
         </div>
         <div class="col-md-4">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="tipoObjetosEncontradosDocumentosCantidad" [group]="form"></text>
         </div>
     </div>
     <div class="row">
@@ -193,7 +193,7 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="tipoObjetosEncontradosOtroObjeto" [group]="form">    
             </radiobutton>
         </div>
         <div class="col-md-4">
@@ -204,24 +204,24 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                 name="tipoObjetosEncontradosCaracteristicasNarcoticos" [group]="form">    
             </radiobutton>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="tipoObjetosEncontradosOtroObjetoCantidad" [group]="form" ></text>
         </div>
         <div class="col-md-2">
             <select2 placeholder="Del tipo:" id=""
             [options]="[
                 {label:'Corta',value:'corta'},
                 {label:'Arma larga',value:'larga'}
-            ]">                
+            ]" name="tipoObjetosEncontradosCaracteristicasNarcoticosTipo" [group]="form" >                
             </select2>
         </div>
         <div class="col-md-2">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="tipoObjetosEncontradosCaracteristicasNarcoticosCantidad" [group]="form"></text>
         </div>
     </div>
     <div class="row">
@@ -236,19 +236,19 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                 name="inspeccionesPersonas" [group]="form">    
             </radiobutton>
         </div>
     </div>
     <div class="row">
         <div class="col-md-3">
-            <text label="Apellido paterno" name="" ></text>
+            <text label="Apellido paterno" name="inspeccionesPersonasPaterno" [group]="form"></text>
         </div>
         <div class="col-md-3">
-            <text label="Apellido materno" name="" ></text>
+            <text label="Apellido materno" name="inspeccionesPersonasMaterno" [group]="form" ></text>
         </div>
         <div class="col-md-3">
-            <text label="Nombre(s)" name="" ></text>
+            <text label="Nombre(s)" name="inspeccionesPersonasNombres" [group]="form"></text>
         </div>
         <div class="col-md-3">
             <span>¿Le encontró algún objeto relacionado con la comisión del delito?(anexo 4)</span>
@@ -258,11 +258,13 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="inspeccionesPersonasObjetos" [group]="form">    
             </radiobutton>
         </div>
     </div>
-
+      <div class="row">
+        <p>Objetos encontrados</p>
+    </div>
     <div class="row">
         <div class="col-md-4">
             <span>Armas</span>
@@ -272,7 +274,7 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="objetosEncontradosArmas" [group]="form">    
             </radiobutton>
         </div>
         <div class="col-md-4">
@@ -283,7 +285,7 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="objetosEncontradosDinero" [group]="form">    
             </radiobutton>
         </div>
         <div class="col-md-4">
@@ -294,7 +296,7 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="objetosEncontradosCaracteristicasNarcoticos" [group]="form">    
             </radiobutton>
         </div>
     </div>
@@ -304,36 +306,36 @@
             [options]="[
                 {label:'Corta',value:'corta'},
                 {label:'Arma larga',value:'larga'}
-            ]">                
+            ]" name="objetosEncontradosArmasTipo" [group]="form">                
             </select2>
         </div>
         <div class="col-md-2">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="objetosEncontradosArmasCantidad" [group]="form" ></text>
         </div>
         <div class="col-md-2">
             <select2 placeholder="Moneda:" id=""
             [options]="[
                 {label:'Corta',value:'corta'},
                 {label:'Arma larga',value:'larga'}
-            ]">                
+            ]" name="objetosEncontradosDineroMoneda" [group]="form">                
             </select2>
         </div>
         <div class="col-md-1">
-            <text label="Otra" name="" ></text>
+            <text label="Otra" name="objetosEncontradosDineroOtra" [group]="form" ></text>
         </div>
         <div class="col-md-1">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="objetosEncontradosDineroCantidad" [group]="form"></text>
         </div>
         <div class="col-md-2">
             <select2 placeholder="Tipo:" id=""
             [options]="[
                 {label:'Corta',value:'corta'},
                 {label:'Arma larga',value:'larga'}
-            ]">                
+            ]" name="objetosEncontradosCaracteristicasNarcoticosTipo" [group]="form">                
             </select2>
         </div>
         <div class="col-md-2">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="objetosEncontradosCaracteristicasNarcoticosCantidad" [group]="form" ></text>
         </div>
     </div>
 
@@ -346,7 +348,7 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="objetosEncontradosDocumentos" [group]="form">    
             </radiobutton>
         </div>
         <div class="col-md-2">
@@ -354,16 +356,16 @@
             [options]="[
                 {label:'Sí',value:'si'},
                 {label:'No',value:'no'}
-            ]">                
+            ]" name="objetosEncontradosOtroObjeto" [group]="form">                
             </select2>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="objetosEncontradosDocumentosCantidad" [group]="form"></text>
         </div>
         <div class="col-md-2">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="objetosEncontradosOtroObjetoCantidad" [group]="form"></text>
         </div>
     </div>
     <div class="row justify-content-center">
@@ -408,7 +410,7 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="inspeccionMedioTransporte" [group]="form">    
             </radiobutton>
         </div>
     </div>
@@ -421,54 +423,54 @@
             [options]="[
                 {label:'Terrestre',value:'corta'},
                 {label:'Aereo',value:'larga'}
-            ]">                
+            ]" name="objetosEncontradosMedioTransporteTipo" [group]="form">                
             </select2>
         </div>
         <div class="col-md-2">
-            <text label="Marca" name="" ></text>
+            <text label="Marca" name="objetosEncontradosMedioTransporteMarca" [group]="form"></text>
         </div>
         <div class="col-md-2">
-            <text label="Submarca" name="" ></text>
+            <text label="Submarca" name="objetosEncontradosMedioTransporteSubmarca" [group]="form"></text>
         </div>
         <div class="col-md-2">
-            <text label="Modelo" name="" ></text>
+            <text label="Modelo" name="objetosEncontradosMedioTransporteModelo" [group]="form"></text>
         </div>
         <div class="col-md-2">
-            <text label="Placa" name="" ></text>
+            <text label="Placa" name="objetosEncontradosMedioTransportePlaca" [group]="form"></text>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-2">
-            <text label="Número de permiso" name="" ></text>
+            <text label="Número de permiso" name="objetosEncontradosMedioTransporteNumeroPermiso" [group]="form" ></text>
         </div>
         <div class="col-md-2">
-            <text label="Serie" name="" ></text>
+            <text label="Serie" name="objetosEncontradosMedioTransporteNumeroSerie" [group]="form"></text>
         </div>
         <div class="col-md-2">
-            <text label="Número de motor" name="" ></text>
+            <text label="Número de motor" name="objetosEncontradosMedioTransporteNumeroMotor" [group]="form" ></text>
         </div>
         <div class="col-md-2">
-            <text label="Color" name="" ></text>
+            <text label="Color" name="objetosEncontradosMedioTransporteNumeroColor" [group]="form"></text>
         </div>
         <div class="col-md-2">
             <select2 placeholder="Procedencia:" id=""
             [options]="[
                 {label:'Terrestre',value:'corta'},
                 {label:'Aereo',value:'larga'}
-            ]">                
+            ]" name="objetosEncontradosMedioTransporteProcedencia" [group]="form">                
             </select2>
         </div>
     </div>
     <div class="row">
         <div class="col-md-2">
-            <text label="Apellido paterno" name="" ></text>
+            <text label="Apellido paterno" name="inspeccionesMedioTransportePaterno" [group]="form"></text>
         </div>
         <div class="col-md-2">
-            <text label="Apellido materno" name="" ></text>
+            <text label="Apellido materno" name="inspeccionesMedioTransporteMaterno" [group]="form" ></text>
         </div>
         <div class="col-md-2">
-            <text label="Nombre(s)" name="" ></text>
+            <text label="Nombre(s)" name="inspeccionesMedioTransporteNombres" [group]="form"  ></text>
         </div>
         <div class="col-md-4">
             <span>¿Le encontro algún objeto relacionado con la comisión del delito?(Anexo 4)</span>
@@ -478,7 +480,7 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="objetosEncontradosMedioTransporteObjetoRelacionado" [group]="form">    
             </radiobutton>
         </div>
     </div>
@@ -491,7 +493,7 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="armasObjetosEncontrados" [group]="form">    
             </radiobutton>
         </div>
         <div class="col-md-4">
@@ -502,7 +504,7 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="cargadoresObjetosEncontrados" [group]="form">    
             </radiobutton>
         </div>
         <div class="col-md-4">
@@ -513,19 +515,19 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="cartuchosObjetosEncontrados" [group]="form">    
             </radiobutton>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="armasCantidadObjetosEncontrados" [group]="form"></text>
         </div>
         <div class="col-md-4">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="cargadoresCantidadObjetosEncontrados" [group]="form"></text>
         </div>
         <div class="col-md-4">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="cartuchosCantidadObjetosEncontrados" [group]="form"></text>
         </div>
     </div>
 
@@ -538,7 +540,7 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="casquillosObjetosEncontrados" [group]="form">    
             </radiobutton>
         </div>
         <div class="col-md-4">
@@ -549,7 +551,7 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="dineroObjetosEncontrados" [group]="form">    
             </radiobutton>
         </div>
         <div class="col-md-4">
@@ -560,38 +562,38 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="caracteristicasNarcoticosObjetosEncontrados" [group]="form">    
             </radiobutton>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="casquillosCamtidadObjetosEncontrados" [group]="form"></text>
         </div>
         <div class="col-md-2">
             <select2 placeholder="Moneda:" id=""
             [options]="[
                 {label:'Terrestre',value:'corta'},
                 {label:'Aereo',value:'larga'}
-            ]">                
+            ]" name="dineroMonedaObjetosEncontrados" [group]="form">                
             </select2>
         </div>
         <div class="col-md-1">
-            <text label="Otro" name="" ></text>
+            <text label="Otra" name="dineroOtraObjetosEncontrados" [group]="form" ></text>
         </div>
         <div class="col-md-1">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="dineroCantidadObjetosEncontrados" [group]="form"  ></text>
         </div>
         <div class="col-md-2">
             <select2 placeholder="Del tipo:" id=""
             [options]="[
                 {label:'Terrestre',value:'corta'},
                 {label:'Aereo',value:'larga'}
-            ]">                
+            ]" name="caracteristicasNarcoticosTipoObjetosEncontrados" [group]="form">                
             </select2>
         </div>
         <div class="col-md-2">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="caracteristicasNarcoticosCantidadObjetosEncontrados" [group]="form" ></text>
         </div>
     </div>
 
@@ -604,7 +606,7 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="documentosTipoObjetosEncontrados" [group]="form">    
             </radiobutton>
         </div>
         <div class="col-md-4">
@@ -615,7 +617,7 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="personasTipoObjetosEncontrados" [group]="form">    
             </radiobutton>
         </div>
         <div class="col-md-4">
@@ -626,19 +628,19 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="cadaverTipoObjetosEncontrados" [group]="form">    
             </radiobutton>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="documentosCantidadTipoObjetosEncontrados" [group]="form" ></text>
         </div>
         <div class="col-md-4">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="personasCantidadTipoObjetosEncontrados" [group]="form" ></text>
         </div>
         <div class="col-md-4">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="cadaverTipoObjetosEncontrados" [group]="form" ></text>
         </div>
     </div>
     <div class="row">
@@ -650,7 +652,7 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="restosHumanosTipoObjetosEncontrados" [group]="form" >    
             </radiobutton>
         </div>
         <div class="col-md-4">
@@ -661,16 +663,16 @@
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
                 ]" 
-                name="">    
+                name="otroObjetoTipoObjetosEncontrados" [group]="form">    
             </radiobutton>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="restosHumanosCantidadTipoObjetosEncontrados" [group]="form" ></text>
         </div>
         <div class="col-md-4">
-            <text label="Cantidad" name="" ></text>
+            <text label="Cantidad" name="otroObjetoCantidadTipoObjetosEncontrados" [group]="form"></text>
         </div>
     </div>
     <div class="row justify-content-center">

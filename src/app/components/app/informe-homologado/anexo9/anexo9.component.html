@@ -10,15 +10,15 @@
             <select2 placeholder="Tipo de Objeto" id=""
             [options]="[
                 {label:'Objetos de gran tamaño',value:'Objetos de gran tamaño'}
-            ]">
+            ]" name="inventarioTipoObjeto" [group]="form">
                 
             </select2>
         </div>
         <div class="col-md-4">
-            <text label="Cantidad" name="" placeholder="20" ></text>
+            <text label="Cantidad" name="inventarioCantidad" [group]="form" placeholder="20" ></text>
         </div>
          <div class="col-md-4">
-            <text label="Especificación" name="" placeholder="" ></text>
+            <text label="Especificación" name="inventarioEspecificacion" [group]="form" placeholder="" ></text>
         </div>
     </div>
     <div class="row justify-content-center">

@@ -7,45 +7,45 @@
 
     <div class="row">
         <div class="col-md-5">
-            <select2 placeholder="Persona" name="" [options]="
+            <select2 placeholder="Persona" name="entrevistaVictimaPersona" [group]="form" [options]="
                 [
                     {label:'Víctima',value:'Víctima'},
                     {label:'Ofendido',value:'Ofendido'}
-                ]">
+                ]" >
             </select2>
         </div>
     </div>
     <h5>Lugar y fecha de la entrevista</h5>
     <div class="row">
         <div class="col-md-3">
-            <date label="Fecha" name="" placeholder="dd/mm/aaaa"></date>
+            <date label="Fecha" name="lugarFechaEntrevistaFecha" [group]="form" placeholder="dd/mm/aaaa"></date>
         </div>
         <div class="col-md-2">
-            <text label="Hora" name="" ></text>
+            <text label="Hora" name="lugarFechaEntrevistaHora" [group]="form" ></text>
         </div>        
         <div class="col-md-3">
-            <text label="Colonia" name="" ></text>
+            <text label="Colonia" name="lugarFechaEntrevistaColonia" [group]="form" ></text>
         </div>
         <div class="col-md-3">
-            <text label="Calle" name="" ></text>
+            <text label="Calle" name="lugarFechaEntrevistaCalle" [group]="form" ></text>
         </div>
         <div class="col-md-1">
-            <text label="Número exterior" name="" ></text>
+            <text label="Número exterior" name="lugarFechaEntrevistaNumExterior" [group]="form" ></text>
         </div>
     </div>
     <h5>Datos del entrevistado</h5>
     <div class="row">
         <div class="col-md-3">
-            <text label="Apellido paterno" name="" ></text>
+            <text label="Apellido paterno" name="datosEntrevistadoPaterno" [group]="form" ></text>
         </div> 
         <div class="col-md-3">
-            <text label="Apellido materno" name="" ></text>
+            <text label="Apellido materno" name="datosEntrevistadoMaterno" [group]="form" ></text>
         </div>        
         <div class="col-md-3">
-            <text label="Nombre(s)" name="" ></text>
+            <text label="Nombre(s)" name="datosEntrevistadoNombres" [group]="form"></text>
         </div>
         <div class="col-md-3">
-            <select2 placeholder="Sexo" name="" [options]="
+            <select2 placeholder="Sexo" name="datosEntrevistadoSexo" [group]="form" [options]="
                 [
                     {label:'Hombre',value:'Himbre'},
                     {label:'Mujer',value:'Mujer'},
@@ -57,49 +57,49 @@
 
     <div class="row">
         <div class="col-md-3">
-            <text label="Estado" name="" ></text>
+            <text label="Estado" name="datosEntrevistadoEstado" [group]="form" ></text>
         </div>
         <div class="col-md-3">
-            <text label="Municipio" name="" ></text>
+            <text label="Municipio" name="datosEntrevistadoMunicipio" [group]="form" ></text>
         </div>        
         <div class="col-md-3">
-            <text label="Colonia" name="" ></text>
+            <text label="Colonia" name="datosEntrevistadoColonia" [group]="form" ></text>
         </div>
         <div class="col-md-3">
-            <text label="Calle" name="" ></text>
+            <text label="Calle" name="datosEntrevistadoCalle" [group]="form" ></text>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-3">
-            <text label="Número exterior" name="" ></text>
+            <text label="Número exterior" name="datosEntrevistadoNumExterior" [group]="form" ></text>
         </div>
         <div class="col-md-3">
-            <text label="Número interior" name="" ></text>
+            <text label="Número interior" name="datosEntrevistadoNumInterior" [group]="form" ></text>
         </div>        
         <div class="col-md-3">
-            <text label="C.P." name="" ></text>
+            <text label="C.P." name="datosEntrevistadoCp" [group]="form" ></text>
         </div>
         <div class="col-md-3">
-            <date label="Fecha de nacimiento" name="" placeholder="dd/mm/aaaa"></date>
+            <date label="Fecha de nacimiento" name="datosEntrevistadoFechaNacimiento" [group]="form"  placeholder="dd/mm/aaaa"></date>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-3">
-            <text label="RFC / CURP" name="" ></text>
+            <text label="RFC / CURP" name="datosEntrevistadoCurp" [group]="form" ></text>
         </div>
         <div class="col-md-3">
-            <text label="Estado civil" name="" ></text>
+            <text label="Estado civil" name="datosEntrevistadoEstadoCivil" [group]="form" ></text>
         </div>        
         <div class="col-md-3">
-            <text label="Ocupación" name="" ></text>
+            <text label="Ocupación" name="datosEntrevistadoOcupacion" [group]="form"  ></text>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-12">
-            <text label="Relato" name="" ></text>
+            <text label="Relato" name="datosEntrevistadoRelato" [group]="form" ></text>
         </div>
     </div>
 
@@ -107,22 +107,22 @@
 
     <div class="row">
         <div class="col-md-3">
-            <text label="CUIP" name="" ></text>
+            <text label="CUIP" name="datosEntrevistadorCuip" [group]="form"></text>
         </div>
         <div class="col-md-3">
-            <text label="Apellido paterno" name="" ></text>
+            <text label="Apellido paterno" name="datosEntrevistadorApellidoPaterno" [group]="form" ></text>
         </div>        
         <div class="col-md-3">
-            <text label="Apellido materno" name="" ></text>
+            <text label="Apellido materno" name="datosEntrevistadorApellidoMaterno" [group]="form" ></text>
         </div>      
         <div class="col-md-3">
-            <text label="Nombre(s)" name="" ></text>
+            <text label="Nombre(s)" name="datosEntrevistadorApellidoNombres" [group]="form"></text>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-3">
-            <text label="Adscripción" name="" ></text>
+            <text label="Adscripción" name="datosEntrevistadorApellidoAdscripcion" [group]="form" ></text>
         </div>
     </div>
 
