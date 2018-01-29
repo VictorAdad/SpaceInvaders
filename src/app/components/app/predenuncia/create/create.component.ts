@@ -288,7 +288,11 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                         if (model.tipoPersonaHeredar != null && model.tipoPersonaHeredar != undefined){
                                             this.form.controls.tipoPersonaHeredar.setValue(model.tipoPersonaHeredar);
                                         }
-                                        console.log('############', this.form.controls.tipoPersonaHeredar);
+                                        if (model.calidadPersonaHeredar != null && model.calidadPersonaHeredar != undefined){
+                                            this.form.controls.calidadPersonaHeredar.setValue(model.calidadPersonaHeredar);
+                                        }
+                                        
+                                        console.log('############', this.form.controls.tipoPersonaHeredar,this.form.controls.calidadPersonaHeredar );
                                         this.form.disable();
                                     });
 

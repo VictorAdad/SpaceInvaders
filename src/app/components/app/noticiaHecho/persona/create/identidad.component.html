@@ -43,7 +43,12 @@
                 </div>
             </div>
             <div class="col-md-3">
-              <select2 [options]="personaServ.nacionalidadReligion.nacionalidad" placeholder="Nacionalidad" name="nacionalidad" [group]="globals.form"></select2>
+              <select2 
+                [options]="personaServ.nacionalidadReligion.nacionalidad" 
+                placeholder="Nacionalidad" 
+                name="nacionalidad" 
+                [group]="globals.form"
+                (valueChange)="personaServ.nacionalidadReligion.find($event, 'nacionalidad')"></select2>
             </div>
         </div>
         <div class="row">
@@ -93,7 +98,12 @@
             </div>
 
             <div class="col-md-2">
-              <select2 [options]="personaServ.nacionalidadReligion.religion" placeholder="Religión" name="religion" [group]="globals.form"></select2>
+              <select2 
+                    [options]="personaServ.nacionalidadReligion.religion" 
+                    placeholder="Religión" 
+                    name="religion" 
+                    [group]="globals.form"
+                    (valueChange)="personaServ.nacionalidadReligion.find($event, 'religion')"></select2>
             </div>
 
             <div class="col-md-2">
