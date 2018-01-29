@@ -40,12 +40,17 @@ export class FormatosService {
         // Logger.log(this.formatos);
     }
 
-    public replaceWord(_name:string, _formato: string){
+    public replaceWord(_name:string, _formato: string, _data=null){
         Logger.log('-> Response', this.formatos[_formato]);
         let doc = new docxtemplater();
         let reader = new FileReader();
         doc.loadZip(this.formatos[_formato].file);
-        doc.setData(this.formatos.data);
+        if (_data != null) {
+            doc.setData(_data);
+        } else {
+            doc.setData(this.formatos.data);
+        }
+        console.log('<<< replaceWod >>>', this.formatos.data);
         try {
             // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
             doc.render()
@@ -602,13 +607,14 @@ public setDataF1011(_data,_id_solicitud){
 
 }
 
-public setDataIPH() {
-    let _data
-    _data = JSON.parse(localStorage.getItem('Principal'));
+public setDataIPH(_data) {
+    // let _data
+    // _data = JSON.parse(localStorage.getItem('Principal'));
 
-    console.log('<<<< formato >>>>', _data.numeroReferencia);
+    // console.log('<<<< formato >>>>', _data.numeroReferencia);
 
-    this.data['xNumeroReferencia']            = _data.numeroReferencia            
+    this.data['xNumeroReferencia']            = _data.numeroReferencia
+    console.log('<<< Numero >>>', this.data['xNumeroReferencia']);            
     this.data['xPrimerResponsable']           = _data.primerResponsable            
     this.data['xInstitucion']                 = _data.institucion         
     this.data['xMunicipio']                   = _data.municipio
@@ -689,6 +695,8 @@ public setDataIPH() {
     this.data['xMaternoParticular']           = _data.maternoParticular 
     this.data['xNombreParticular']            = _data.combreParticular
     this.data['xAdscripcionParticular']       = _data.adscripcionParticular
+
+    console.log('<<< data parseo >>>', this.data);
 
 }
 

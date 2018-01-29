@@ -77,6 +77,7 @@ export class FormatosGlobal{
     }
 
     public changeFormatoIph(_format) {
+        console.log('<<< _format >>>', _format);
         this.formatos.replaceWord(this.formatos.formatos[_format].nombre, _format)                            
     }
 
