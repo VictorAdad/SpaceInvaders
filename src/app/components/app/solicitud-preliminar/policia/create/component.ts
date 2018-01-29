@@ -24,34 +24,34 @@ import { Yason } from '@services/utils/yason';
 import { AuthenticationService } from "@services/auth/authentication.service";
 
 @Component({
-	templateUrl: './component.html',
+    templateUrl: './component.html',
 })
 export class PoliciaCreateComponent {
-	public casoId: number = null;
+    public casoId: number = null;
   public solicitudId: number = null;
-	public breadcrumb = [];
+    public breadcrumb = [];
   public model:any=null;
-	constructor(
-		public casoServ: CasoService,
-      	private router: Router , 
-		private route: ActivatedRoute) { }
+    constructor(
+        public casoServ: CasoService,
+          private router: Router , 
+        private route: ActivatedRoute) { }
 
-	ngOnInit() {
-		this.route.params.subscribe(params => {
-			if (params['casoId']) {
-				this.casoId = +params['casoId'];
-				this.casoServ.find(this.casoId).then(
+    ngOnInit() {
+        this.route.params.subscribe(params => {
+            if (params['casoId']) {
+                this.casoId = +params['casoId'];
+                this.casoServ.find(this.casoId).then(
                     caso => {
                         if(!this.casoServ.caso.hasRelacionVictimaImputado && !this.casoServ.caso.hasPredenuncia)
                             this.router.navigate(['/caso/' + this.casoId + '/detalle']);
 
                     }
                 )
-				this.breadcrumb.push({ path: `/caso/${this.casoId}/detalle`, label: "Detalle del caso" })
-				this.breadcrumb.push({ path: `/caso/${this.casoId}/policia`, label: "Solicitudes preliminares de Policía de investigación" })
-			}
-		});
-	}
+                this.breadcrumb.push({ path: `/caso/${this.casoId}/detalle`, label: "Detalle del caso" })
+                this.breadcrumb.push({ path: `/caso/${this.casoId}/policia`, label: "Solicitudes preliminares de Policía de investigación" })
+            }
+        });
+    }
   modelUpdate(model: any) {
     this.solicitudId= model.id;
     this.model=model
@@ -60,186 +60,187 @@ export class PoliciaCreateComponent {
 }
 
 @Component({
-	selector: 'solicitud-policia',
-	templateUrl: './solicitud.component.html',
+    selector: 'solicitud-policia',
+    templateUrl: './solicitud.component.html',
 })
 export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
-	public apiUrl = "/v1/base/solicitudes-pre-policias";
-	public casoId: number = null;
-	public id: number = null;
-	public personas: any[] = [];
-	public masDe3Dias:any;
+    public apiUrl = "/v1/base/solicitudes-pre-policias";
+    public casoId: number = null;
+    public id: number = null;
+    public personas: any[] = [];
+    public masDe3Dias:any;
   @Output() modelUpdate=new EventEmitter<any>();
-	public form: FormGroup;
-	public model: SolicitudServicioPolicial;
-	dataSource: TableService | null;
-	@ViewChild(MatPaginator) paginator: MatPaginator;
+    public form: FormGroup;
+    public model: SolicitudServicioPolicial;
+    dataSource: TableService | null;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
-	public precarga = true;
+    public precarga = true;
 
-	constructor(
-		private _fbuilder: FormBuilder,
-		private route: ActivatedRoute,
-		public onLine: OnLineService,
-		private http: HttpService,
-		private router: Router,
-		private db: CIndexedDB,
-		private auth:AuthenticationService
-	) { super(); }
+    constructor(
+        private _fbuilder: FormBuilder,
+        private route: ActivatedRoute,
+        public onLine: OnLineService,
+        private http: HttpService,
+        private router: Router,
+        private db: CIndexedDB,
+        private auth:AuthenticationService
+    ) { super(); }
 
-	ngOnInit() {
-		this.auth.masDe3DiasSinConexion().then(r=>{
+    ngOnInit() {
+        this.auth.masDe3DiasSinConexion().then(r=>{
             let x= r as boolean;
             this.masDe3Dias=r;
         });
-		this.model = new SolicitudServicioPolicial();
+        this.model = new SolicitudServicioPolicial();
 
-		this.form = new FormGroup({
+        this.form = new FormGroup({
       'lugar': new FormGroup({
-				'id': new FormControl("", []),
-			}),
+                'id': new FormControl("", []),
+            }),
       'arma': new FormGroup({
-				'id': new FormControl("", []),
+                'id': new FormControl("", []),
       }),
       'vehiculo': new FormGroup({
-				'id': new FormControl("", []),
+                'id': new FormControl("", []),
       }),
       'delito': new FormGroup({
-				'id': new FormControl("", []),
+                'id': new FormControl("", []),
       }),
       'heredar':  new FormControl("", []),
       'heredarSintesisHechos':  new FormControl(false, []),
       'personas': new FormArray([]),
 
-			'noOficio': new FormControl(this.model.noOficio),
-			'nombreComisario': new FormControl(this.model.nombreComisario),
-			'actuacionesSolicitadas': new FormControl(this.model.actuacionesSolicitadas)
-		});
+            'noOficio': new FormControl(this.model.noOficio),
+            'nombreComisario': new FormControl(this.model.nombreComisario),
+            'actuacionesSolicitadas': new FormControl(this.model.actuacionesSolicitadas)
+        });
 
-		this.route.params.subscribe(params => {
-			if (params['casoId'])
-				this.casoId = +params['casoId'];
-			Logger.log('casoId', this.casoId);
-			if (params['id']) {
-				this.id = +params['id'];
-				this.precarga = false;
-				Logger.log('id', this.id);
+        this.route.params.subscribe(params => {
+            if (params['casoId'])
+                this.casoId = +params['casoId'];
+            Logger.log('casoId', this.casoId);
+            if (params['id']) {
+                this.id = +params['id'];
+                this.precarga = false;
+                Logger.log('id', this.id);
 
-				if(this.onLine.onLine){
-					this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-					  	Logger.log(response.data),
-	            		this.fillForm(response);
-						this.modelUpdate.emit(response);
-						this.personas = response.personas;
-						this.form.disable();
-					});
-				}else{
-					this.db.get("casos", this.casoId).then(t=>{
+                if(this.onLine.onLine){
+                    this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
+                          Logger.log(response.data),
+                        this.fillForm(response);
+                        this.modelUpdate.emit(response);
+                        this.personas = response.personas;
+                        this.form.disable();
+                    });
+                }else{
+                    this.db.get("casos", this.casoId).then(t=>{
                         let sol = t["solicitudPrePolicias"] as any[];
                         for (var i = 0; i < sol.length; ++i) {
                             if ((sol[i])["id"]==this.id){
-								this.personas = sol[i].personas;
+                                this.personas = sol[i].personas;
                                 this.fillForm(sol[i]);
                                 break;
                             }
                         }
                     });
-				}
-			}
-		});
-	}
+                }
+            }
+        });
+    }
 
-	public save(valid: any, _model: any) {
-		if(valid){
-			Object.assign(this.model, _model);
-			this.model.caso.id = this.casoId;
+    public save(valid: any, _model: any) {
+        if(valid){
+            Object.assign(this.model, _model);
+            this.model.caso.id = this.casoId;
 
-			return new Promise<any>(
-				(resolve, reject) => {
-					Logger.log('-> Policia@save()', this.model);
-					this.http.post(this.apiUrl, this.model).subscribe(
-						(response) => {
-							if (this.onLine.onLine) {
-								if(this.casoId!=null){
-									this.id=response.id;
-									this.router.navigate(['/caso/' + this.casoId + '/policia/' + this.id + '/edit']);
-								}
-								resolve('Solicitud de policía creada con éxito');
-							}else{
-								let temId=Date.now();
-				                let dato={
-				                    url: this.apiUrl,
-				                    body:_model,
-				                    options:[],
-				                    tipo:"post",
-				                    pendiente:true,
-				                    dependeDe:[this.casoId],
-									temId: temId,
-									username: this.auth.user.username
-				                }
-				                this.db.add("sincronizar",dato).then(p=>{
-				                    this.db.get("casos", this.casoId).then(caso=>{
-				                        if (caso){
-				                            if(!caso["solicitudPrePolicias"]){
-			                        			caso["solicitudPrePolicias"]=[];
-				                            }
-				                            _model["id"]=temId;
-				                            this.id= _model['id'];
-				                            caso["solicitudPrePolicias"].push(_model);
-				                            this.db.update("casos",caso).then(t=>{
-				                                resolve('Solicitud de policía creada con éxito');
-				                                this.router.navigate(['/caso/' + this.casoId + '/policia/' + this.id + '/edit']);
-				                            });
-				                        }
-				                    });
-				                });
-							}
-						},
-						(error) => {
-							Logger.error('Error', error);
-							reject(error);
-						}
-					);
-				}
-			);
-		}else{
+            return new Promise<any>(
+                (resolve, reject) => {
+                    Logger.log('-> Policia@save()', this.model);
+                    if (this.onLine.onLine) {
+                        this.http.post(this.apiUrl, this.model).subscribe(
+                            (response) => {
+                                if(this.casoId!=null){
+                                    this.id=response.id;
+                                    this.router.navigate(['/caso/' + this.casoId + '/policia/' + this.id + '/edit']);
+                                }
+                                resolve('Solicitud de policía creada con éxito');
+                            },
+                            (error) => {
+                                Logger.error('Error', error);
+                                reject(error);
+                            }
+                        );
+                    } else {
+                        const temId = Date.now();
+                        const dato = {
+                            url: this.apiUrl,
+                            body: this.model,
+                            options: [],
+                            tipo: 'post',
+                            pendiente: true,
+                            dependeDe: [this.casoId],
+                            temId: temId,
+                            username: this.auth.user.username
+                        };
+
+                        this.db.add("sincronizar", dato).then(p => {
+                            this.db.get("casos", this.casoId).then(caso => {
+                                if (caso) {
+                                    if (!caso["solicitudPrePolicias"]) {
+                                        caso["solicitudPrePolicias"] = [];
+                                    }
+                                    this.model["id"] = temId;
+                                    this.id = this.model['id'];
+                                    caso["solicitudPrePolicias"].push(this.model);
+                                    this.db.update("casos",caso).then(t => {
+                                        resolve('Solicitud de policía creada con éxito');
+                                        this.router.navigate(['/caso/' + this.casoId + '/policia/' + this.id + '/edit']);
+                                    });
+                                }
+                            });
+                        });
+                    }
+                }
+            );
+        }else{
             console.error('El formulario no pasó la validación D:')
         }
-	}
+    }
 
-	public edit(_valid: any, _model: any) {
-		Logger.log('-> Policia@edit()', _model);
-		return new Promise<any>(
-			(resolve, reject) => {
-				this.http.put(this.apiUrl + '/' + this.id, _model).subscribe(
-					(response) => {
-						Logger.log('-> Registro acutualizado', response);
-						if(this.id!=null){
-							this.router.navigate(['/caso/' + this.casoId + '/policia']);
-						}
-						resolve('Solitud de policía actualizada con éxito');
-					},
-					(error) => {
-						Logger.error('Error', error);
-						reject(error);
-					}
-				);
-			}
-		);
-	}
+    public edit(_valid: any, _model: any) {
+        Logger.log('-> Policia@edit()', _model);
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.http.put(this.apiUrl + '/' + this.id, _model).subscribe(
+                    (response) => {
+                        Logger.log('-> Registro acutualizado', response);
+                        if(this.id!=null){
+                            this.router.navigate(['/caso/' + this.casoId + '/policia']);
+                        }
+                        resolve('Solitud de policía actualizada con éxito');
+                    },
+                    (error) => {
+                        Logger.error('Error', error);
+                        reject(error);
+                    }
+                );
+            }
+        );
+    }
 
-	public fillForm(_data) {
-		Yason.eliminaNulos(_data);
-		Logger.logColor('<<< DATA >>>','green',_data);
-		this.form.patchValue(_data);
-		
-	}
+    public fillForm(_data) {
+        Yason.eliminaNulos(_data);
+        Logger.logColor('<<< DATA >>>','green',_data);
+        this.form.patchValue(_data);
+        
+    }
 
 }
 
 @Component({
-	selector: 'documento-policia',
-	templateUrl: './documento.component.html',
+    selector: 'documento-policia',
+    templateUrl: './documento.component.html',
 })
 export class DocumentoPoliciaComponent extends FormatosGlobal{
 
@@ -247,7 +248,7 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
   displayedColumns = ['nombre', 'fechaCreacion', 'acciones'];
   @Input()
   object: any;
-	dataSource: TableDataSource | null;
+    dataSource: TableDataSource | null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   public data: DocumentoPolicia[] = [];
   public subject:BehaviorSubject<DocumentoPolicia[]> = new BehaviorSubject<DocumentoPolicia[]>([]);
@@ -282,17 +283,17 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
       Logger.log('-> Object ', this.object);
       if (this.onLine.onLine){
 
-	      if(this.object.documentos){
-	          this.dataSource = this.source;
-	          for (let object of this.object.documentos) {
-	              this.data.push(object);
-	              this.subject.next(this.data);
-	          }
+          if(this.object.documentos){
+              this.dataSource = this.source;
+              for (let object of this.object.documentos) {
+                  this.data.push(object);
+                  this.subject.next(this.data);
+              }
 
-	      }
+          }
 
       }else{
-      	this.cargaArchivosOffline(this,"",DocumentoPolicia);
+          this.cargaArchivosOffline(this,"",DocumentoPolicia);
       }
 
       this.route.params.subscribe(params => {
@@ -317,12 +318,12 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
   }
 
   public setData(_object){
-  	if (this.onLine.onLine){
+      if (this.onLine.onLine){
       Logger.log('setData()');
       this.data.push(_object);
       this.subject.next(this.data);
     }else{
-      	this.cargaArchivosOffline(this,"",DocumentoPolicia);
+          this.cargaArchivosOffline(this,"",DocumentoPolicia);
     }
   }
   public updateDataFormatos(_object){
@@ -331,8 +332,8 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
 }
 
 export class DocumentoPolicia {
-	id: number
-	nameEcm: string;
-	procedimiento: string;
-	created: Date;
+    id: number
+    nameEcm: string;
+    procedimiento: string;
+    created: Date;
 }

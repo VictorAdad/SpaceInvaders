@@ -150,7 +150,7 @@ import { LoginDialogService } from './services/onLine/loginDialog.service';
     CatalogosModule,
 
     AgmCoreModule.forRoot({
-        apiKey: 'AIzaSyC3cI1aBJ-gr-305dfFHLMV5yO9Qw_Tl8M',
+        apiKey: 'AIzaSyCKhwZLZIYpbwbOWxbjZXyeFynANpGDYvs',
         libraries: ["places"]
     })
   ],

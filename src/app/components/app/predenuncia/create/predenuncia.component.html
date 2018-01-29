@@ -116,7 +116,8 @@
 		</div>
 		<div class="row">
 		    <div class="col-md-12 col-sm-12 col-lg-12">
-		    	<text-area label="Lugar en donde sucedieron los hechos" name="lugarHechos" [group]="form"></text-area>
+				<text-area *ngIf="!heredar" label="Lugar en donde sucedieron los hechos" name="lugarHechos" [group]="form"></text-area>
+				<text-area *ngIf="heredar"label="Lugar en donde sucedieron los hechos" name="lugarHechosHeredar" [group]="form"></text-area>
 		    </div>
 		    <div class="col-md-12 col-sm-12 col-lg-12">
 		    	<text-area label="Hechos narrados (hechos denunciados)" name="hechosNarrados" [group]="form"></text-area>

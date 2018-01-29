@@ -166,6 +166,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             'personas': new FormArray([]),
             'calidadPersonaHeredar': new FormControl("",[]),
             'tipoPersonaHeredar': new FormControl('',[]),
+            'lugarHechosHeredar': new FormControl('',[]),
             'caso': new FormGroup({
                 'id': new FormControl()
             }),
@@ -287,7 +288,11 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                         if (model.tipoPersonaHeredar != null && model.tipoPersonaHeredar != undefined){
                                             this.form.controls.tipoPersonaHeredar.setValue(model.tipoPersonaHeredar);
                                         }
-                                        console.log('############', this.form.controls.tipoPersonaHeredar);
+                                        if (model.calidadPersonaHeredar != null && model.calidadPersonaHeredar != undefined){
+                                            this.form.controls.calidadPersonaHeredar.setValue(model.calidadPersonaHeredar);
+                                        }
+                                        
+                                        console.log('############', this.form.controls.tipoPersonaHeredar,this.form.controls.calidadPersonaHeredar );
                                         this.form.disable();
                                     });
 
@@ -336,7 +341,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
 
             }
 
-            this.form.controls['lugarHechos'].setValue(lugar);
+            this.form.controls['lugarHechosHeredar'].setValue(lugar);
             this.form.controls['tipoPersonaHeredar'].setValue('');
             this.form.controls['calidadPersonaHeredar'].setValue('');
 
