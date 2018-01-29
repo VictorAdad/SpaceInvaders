@@ -112,7 +112,10 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
             'heredar':  new FormControl("", []),
             'heredarSintesisHechos':  new FormControl(false, []),
             'personas': new FormArray([]),
-            'edadDenuncianteHeredar':new FormControl(''),
+            'edadDenuncianteHeredar': new FormControl(''),
+            'nombreDenuncianteHeredar': new FormControl(''),
+            'originarioDenuncianteHeredar': new FormControl(''),
+            'domicilioDenuncianteHeredar': new FormControl(''),
 
             'observaciones': new FormControl(),
             'sintesisHechos': new FormControl(),
@@ -165,7 +168,7 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
         this.personasHeredadas.forEach((personaCaso)=> {
             // Heradar Nombre del denunciante
             let nombrePersona=this.personaNombre.transform(personaCaso);
-            this.form.controls["nombreDenunciante"].setValue( this.form.controls["nombreDenunciante"].value?(nombrePersona?this.form.controls["nombreDenunciante"].value+","+nombrePersona:this.form.controls["nombreDenunciante"].value+",Sin valor"):nombrePersona)
+            this.form.controls["nombreDenuncianteHeredar"].setValue( this.form.controls["nombreDenuncianteHeredar"].value?(nombrePersona?this.form.controls["nombreDenuncianteHeredar"].value+","+nombrePersona:this.form.controls["nombreDenuncianteHeredar"].value+",Sin valor"):nombrePersona)
             // Heredar edad Denunciante
             let edad=personaCaso.persona.edad
             this.form.controls["edadDenuncianteHeredar"].setValue( this.form.controls["edadDenuncianteHeredar"].value?(edad?this.form.controls["edadDenuncianteHeredar"].value+","+edad:this.form.controls["edadDenuncianteHeredar"].value+",Sin valor"):edad)
@@ -173,10 +176,10 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
             this.form.controls["edadDenuncianteHeredar"].updateValueAndValidity();
             let originario=this.personaOriginario.transform(personaCaso);
             // Heredar originario
-            this.form.controls["originarioDenunciante"].setValue( this.form.controls["originarioDenunciante"].value?(originario?this.form.controls["originarioDenunciante"].value+","+originario:this.form.controls["originarioDenunciante"].value+",Sin valor"):originario)
+            this.form.controls["originarioDenuncianteHeredar"].setValue( this.form.controls["originarioDenuncianteHeredar"].value?(originario?this.form.controls["originarioDenuncianteHeredar"].value+","+originario:this.form.controls["originarioDenuncianteHeredar"].value+",Sin valor"):originario)
             // Heredar Domicilio
             let domicilio = this.personaDomicilio.transform(personaCaso,0);
-            this.form.controls["domicilioDenunciante"].setValue( this.form.controls["domicilioDenunciante"].value?(domicilio?this.form.controls["domicilioDenunciante"].value+","+domicilio:this.form.controls["domicilioDenunciante"].value+",Sin valor"):domicilio)
+            this.form.controls["domicilioDenuncianteHeredar"].setValue( this.form.controls["domicilioDenuncianteHeredar"].value?(domicilio?this.form.controls["domicilioDenuncianteHeredar"].value+","+domicilio:this.form.controls["domicilioDenuncianteHeredar"].value+",Sin valor"):domicilio)
         });
         // Heredar Síntesis de los hechos (Síntesis del caso)
         if (this.heredarSintesis) {

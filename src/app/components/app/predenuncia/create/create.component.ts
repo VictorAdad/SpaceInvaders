@@ -166,6 +166,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             'personas': new FormArray([]),
             'calidadPersonaHeredar': new FormControl("",[]),
             'tipoPersonaHeredar': new FormControl('',[]),
+            'lugarHechosHeredar': new FormControl('',[]),
             'caso': new FormGroup({
                 'id': new FormControl()
             }),
@@ -336,7 +337,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
 
             }
 
-            this.form.controls['lugarHechos'].setValue(lugar);
+            this.form.controls['lugarHechosHeredar'].setValue(lugar);
             this.form.controls['tipoPersonaHeredar'].setValue('');
             this.form.controls['calidadPersonaHeredar'].setValue('');
 
