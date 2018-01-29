@@ -207,8 +207,9 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
 
   public addNombres(_model) {
     if (this.optionsServ.colonias && _model['colonia']) {
+      console.log(_model['colonia']);
       for (var i = 0; i < this.optionsServ.colonias.length; ++i) {
-        if (this.optionsServ.colonias[i]['value'].split('-')[0].indexOf(_model['colonia']['id'])) {
+        if (this.optionsServ.colonias[i]['value'] == _model['colonia']['idCp']) {
           _model['colonia']['nombre'] = this.optionsServ.colonias[i]['label'];
           _model['colonia']['cp'] = this.optionsServ.colonias[i]['value'].split('-')[1];
           break;
@@ -227,6 +228,14 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
       for (var i = 0; i < this.optionsServ.estados.length; ++i) {
         if (this.optionsServ.estados[i]['value'] == _model['estado']['id']) {
           _model['estado']['nombre'] = this.optionsServ.estados[i]['label'];
+          break;
+        }
+      }
+    }
+    if (this.optionsServ.paises && _model['pais']) {
+      for (var i = 0; i < this.optionsServ.paises.length; ++i) {
+        if (this.optionsServ.paises[i]['value'] == _model['pais']['id']) {
+          _model['pais']['nombre'] = this.optionsServ.paises[i]['label'];
           break;
         }
       }
@@ -421,7 +430,6 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
 
     timer.subscribe(t => {
         this.form.patchValue({
-            'colonia': _data.colonia ? _data.colonia : new Colonia(),
             'estado': _data.estado ? _data.estado : {},
             'municipio': _data.municipio ? _data.municipio : new Municipio(),
             'localidad': _data.localidad ? _data.localidad : { id: ''},
@@ -431,10 +439,30 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
           const localidad= _data.colonia.localidad ? _data.colonia.localidad['id'] : '';
           this.form.controls.colonia.patchValue({
             id: _data.colonia.id,
+            idCp: _data.colonia['idCp'] ? _data.colonia['idCp'] : 
+              ('' + _data.colonia.id + '-' + _data.colonia.cp + '-' + localidad)
+          });
+          Logger.log("COLONIAS=>",{
+            id: _data.colonia.id,
             idCp: '' + _data.colonia.id + '-' + _data.colonia.cp + '-' + localidad
           });
         }
-        Logger.logColor('DATOS', 'tomato', this.form.value, _data);
+        if (_data.estado) {
+          this.optionsServ.getMunicipiosByEstado(_data.estado.id);
+        }
+        const timer2 = Observable.timer(1500);
+        timer2.subscribe(t => {
+          if (_data.municipio) {
+            this.optionsServ.getColoniasByMunicipio(_data.municipio.id);
+          } 
+          const localidad= _data.colonia.localidad ? _data.colonia.localidad['id'] : '';
+          this.form.controls.colonia.patchValue({
+            id: _data.colonia.id,
+            idCp: _data.colonia['idCp'] ? _data.colonia['idCp'] : 
+              ('' + _data.colonia.id + '-' + _data.colonia.cp + '-' + localidad)
+          });
+          Logger.logColor('DATOS', 'tomato', this.form.value, _data, this.optionsServ);
+        });
       }
     );
 
@@ -645,8 +673,8 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
   }
 
   public changeEstado(id) {
-    Logger.log('Id de estado', id);
     if (id != null && typeof id != 'undefined' && id != "") {
+      Logger.log('Id de estado', id);
       this.nombreLocalidadDeCol = '';
       this.isColoniaSelect = false;
       this.optionsServ.getMunicipiosByEstado(id);
@@ -658,6 +686,7 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
 
   public changeMunicipio(id) {
     if (id != null && typeof id != 'undefined' && id != "") {
+      Logger.logColor('Muicipio', 'green', id);
       this.optionsServ.getColoniasByMunicipio(id);
       this.nombreLocalidadDeCol = '';
       this.isColoniaSelect = false;
