@@ -39,16 +39,27 @@ export class PoliciaComponent extends BasePaginationComponent implements OnInit 
                 this.casoId = +params['casoId'];
                 this.casoServ.find(this.casoId).then(
                     caso => {
-                        if(!this.casoServ.caso.hasRelacionVictimaImputado && !this.casoServ.caso.hasPredenuncia)
+                        if (!this.casoServ.caso.hasRelacionVictimaImputado && !this.casoServ.caso.hasPredenuncia) {
                             this.router.navigate(['/caso/' + this.casoId + '/detalle']);
+                        }
 
                     }
-                )
+                );
                 this.apiUrl = this.apiUrl.replace("{id}", String(this.casoId));
                 this.breadcrumb.push({ path: `/caso/${this.casoId}/detalle`, label: "Detalle del caso" })
-                this.page();
-            }
-            else {
+                if (this.onLine.onLine) {
+                    this.page();
+                } else {
+                    this.db.get('casos', this.casoId).then(caso => {
+                        if (caso) {
+                            if (caso['solicitudPrePolicias']) {
+                                this.dataSource = new TableService(
+                                    this.paginator, caso['solicitudPrePolicias'] as SolicitudServicioPolicial[]);
+                            }
+                        }
+                    });
+                }
+            } else {
                 this.http.get(this.apiUrl).subscribe((response) => {
                     this.data = response.data as SolicitudServicioPolicial[];
                     Logger.log(this.data)
