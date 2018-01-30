@@ -23,15 +23,11 @@ export class InformeHomologadoCreate {
     ngOnInit() {
         this.form =  Form.createForm(this.fbuilder);
         console.log('-> Form', this.form.value);
-
-        console.log('<<< userOption >>>',InformeBaseComponent.userOption)
-        if (InformeBaseComponent.userOption) {
-            this.fillForm()            
-        }
-
+        this.fillForm()            
     }
 
     public fillForm() {
+        var informeId;
         let _data = JSON.parse(localStorage.getItem('Principal'));
         console.log('------>>> ',_data);
         let timer = Observable.timer(10);
