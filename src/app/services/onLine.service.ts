@@ -89,6 +89,9 @@ export class OnLineService {
             }
 
             if (this.anterior!=this.onLine){
+                if (this.onLine){
+                    this.sincronizarCatalogos.searchChange();
+                }
                 this.onLineChange.next(this.onLine);
                 var url=this.route["url"];
                 if (url=="/")
