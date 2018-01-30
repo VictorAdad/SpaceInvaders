@@ -130,32 +130,46 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
                 this.casoId = +params['casoId'];
                 this.casoService.find(this.casoId).then(
                     caso => {
-                        if(!this.casoService.caso.hasRelacionVictimaImputado && !this.casoService.caso.hasPredenuncia)
+                        if(!caso.hasRelacionVictimaImputado && !caso.hasPredenuncia)
                             this.router.navigate(['/caso/' + this.casoId + '/detalle']);
+
+                        if (this.onLine.onLine) {
+                        this.apiUrl=this.apiUrl.replace("{id}",String(this.casoId));
+                         this.http.get(`/v1/base/acuerdos/casos/${this.casoId}/tipos?tipo=${tipo}`).subscribe(response => {
+                            if(response.length!=0){
+                              this.precarga = false;
+                              this.hasAcuerdoInicio = true;
+                              this.form.disable();
+                              this.fillForm(response[0]);
+                              this.personas = response[0].personas;
+                              this.modelUpdate.emit(response[0]);
+                            }
+                            if(params['id']){
+                              this.id=params['id'];
+                              this.modelUpdate.emit(response[0]);
+                              this.hasAcuerdoInicio = true;
+                              this.form.disable();
+                              this.personas = response[0].personas;
+                              this.fillForm(response[0]);
+                            }
+                        });                  
+                      } else {
+                        if(params['id']){
+                              this.id=params['id'];
+                        }
+                        if (caso.hasAcuerdoInicio) {
+                           this.hasAcuerdoInicio = true;
+                           this.fillForm(caso['acuerdoInicio']);  
+                           this.form.disable();
+                           this.modelUpdate.emit(caso['acuerdoInicio']);
+                        }else{
+                          this.hasAcuerdoInicio = false;  
+                        }
+                      }
 
                     }
                 )
-                this.casoService.find(this.casoId);
-                this.apiUrl=this.apiUrl.replace("{id}",String(this.casoId));
-                 this.http.get(`/v1/base/acuerdos/casos/${this.casoId}/tipos?tipo=${tipo}`).subscribe(response => {
-                    if(response.length!=0){
-                        this.precarga = false;
-    				    this.hasAcuerdoInicio = true;
-                        this.form.disable();
-                        this.fillForm(response[0]);
-                        this.personas = response[0].personas;
-                        this.modelUpdate.emit(response[0]);
-
-    			    }
-                    if(params['id']){
-                        this.id=params['id'];
-                        this.modelUpdate.emit(response[0]);
-                        this.hasAcuerdoInicio = true;
-                        this.form.disable();
-                        this.personas = response[0].personas;
-                        this.fillForm(response[0]);
-                    }
-                });
+                
             }
 
         });
@@ -193,6 +207,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
 
     public save(valid: any, _model: any) {
 
+
         Object.assign(this.model, _model);
         this.model.caso.id  = this.casoId;
         this.model.caso.nuc = this.generateNUC();
@@ -200,6 +215,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
 
         return new Promise<any>(
             (resolve, reject) => {
+              if (this.onLine.onLine) {
                 this.http.post(this.apiUrl, this.model).subscribe(
 
                     (response) => {
@@ -220,6 +236,41 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
                         reject(error);
                     }
                 );
+              } else {
+                let temId = Date.now();
+                _model.caso.id = this.casoId;
+
+                Object.assign(this.model, _model);
+                  Logger.logColor('MODEL@SAVE', 'green', _model, this.model);
+                  let dato = {
+                      url:this.apiUrl,
+                      body:this.model,
+                      options:[],
+                      tipo:"post",
+                      pendiente:true,
+                      dependeDe:[this.casoId, this.id],
+                      temId: temId,
+                      username: this.auth.user.username
+                  }
+                  this.db.add("sincronizar", dato).then(p=>{
+                      this.db.get("casos",this.casoId).then(caso=>{
+                          if (caso){
+                              if(!caso["acuerdoInicio"]){
+                                  caso["acuerdoInicio"];
+                              }
+                              _model["id"]=temId;
+                              caso["acuerdoInicio"] = _model;
+                              Logger.log("caso arma", caso["acuerdoInicio"]);
+                              this.db.update("casos",caso).then(t=>{
+                                  Logger.log("caso arma", t["arma"]);
+                                  resolve("Se agregó el acuerdo de inicio de manera local");
+                                  this.casoService.actualizaCasoOffline(t);
+                                  this.router.navigate(['/caso/' + this.casoId + '/acuerdo-inicio/'+temId+'/view']);
+                              });
+                          }
+                      });
+                  });
+              }
             }
         );
 
