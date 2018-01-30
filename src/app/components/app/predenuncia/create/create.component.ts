@@ -248,6 +248,9 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                     if (x && response.data[0].calidadPersonaHeredar != null && response.data[0].calidadPersonaHeredar != undefined){
                                         this.form.controls.calidadPersonaHeredar.setValue(response.data[0].calidadPersonaHeredar);
                                     }
+                                    if (x && response.data[0].lugarHechosHeredar != null && response.data[0].lugarHechosHeredar != undefined){
+                                        this.form.controls.lugarHechosHeredar.setValue(response.data[0].lugarHechosHeredar);
+                                    }
                                     this.form.disable();
                                 });
 
