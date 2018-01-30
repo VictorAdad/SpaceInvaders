@@ -20,6 +20,7 @@ import { _config} from '@app/app.config';
 import { LoginDialogService } from './onLine/loginDialog.service';
 import { AuthenticationService } from "@services/auth/authentication.service";
 import * as moment from 'moment';
+import { Subject } from 'rxjs/Subject';
 
 /**
  * Servicio para verificar la conexion con el servidor que aloja a la web app.
@@ -32,7 +33,10 @@ export class OnLineService {
     timerSincronizarMatrices = Observable.timer(_config.offLine.sincronizarCatalogos.tiempoStartSincronizarCatalogos,_config.offLine.sincronizarCatalogos.tiempoSincronizarCatalogos);
     anterior: boolean= true;
 
-    
+    /**
+     * Subject del caso
+     */
+    public onLineChange = new Subject<boolean>();    
 
     sincronizarCatalogos:SincronizaCatalogos;
     sincronizarCambios:SincronizaCambios;
@@ -55,9 +59,11 @@ export class OnLineService {
         auth.setDb(db);
         auth.setOnLine(this);
         this.sincronizarCatalogos=new SincronizaCatalogos(db,http,dialogoSincronizar);
+        this.sincronizarCatalogos.setOnlineService(this);
         this.sincronizarCambios= new SincronizaCambios(db,http,notificationService,route,_confirmation,this);
         // timer = Observable.timer(2000,1000);
         var primeraVez=true;
+        this.onLineChange.next(true);
         this.timer.subscribe(t=>{
             this.anterior = this.onLine;
             this.onLine = navigator.onLine;
@@ -83,6 +89,7 @@ export class OnLineService {
             }
 
             if (this.anterior!=this.onLine){
+                this.onLineChange.next(this.onLine);
                 var url=this.route["url"];
                 if (url=="/")
                     url=this.onLine?url+"enlinea":url+"sinconexion";
