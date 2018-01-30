@@ -289,6 +289,8 @@ export class SincronizaCatalogos {
         if (!SincronizaCatalogos.onLine.onLine){
             Logger.logColor('Se perdió la conexión','red',SincronizaCatalogos.onLine);
             Logger.timeEnd(titulo);
+            this.finalizoCatalogo=true;
+            SincronizaCatalogos.sincronizando=false;
             this.dialogo.close();
             return;
         }
