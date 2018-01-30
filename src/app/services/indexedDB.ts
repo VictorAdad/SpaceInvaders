@@ -336,7 +336,8 @@ export class CIndexedDB {
      */
     actualizaCambios(_table,cambios){
         var obj=this;
-        if(obj.init){
+        return new Promise((resolve,reject) =>{
+            if(obj.init){
                 Logger.logColor("BASE","green",_table)
                 var db    = obj.db;
                 var tx    = db.transaction(_table, "readwrite");
@@ -347,12 +348,14 @@ export class CIndexedDB {
                 
                 tx.oncomplete = function() {
                     //db.close();
+                    resolve(cambios);
                     //Logger.log("-> cierra la conexion");
                 };
             //}
-        }else{
-            Logger.warn("No se ha creado la tabla: ", _table, " Con la acción: update");
-        }
+            }else{
+                reject("No se ha creado la tabla: " +  _table + " Con la acción: update");
+            }
+        });
     }
     /**
      * Agrega un registro a la tabla _table
