@@ -44,6 +44,4 @@ export class Anexo8Component extends InformeBaseComponent{
     showPersona(value){
         (value=="true") ? this.divPersona = true : this.divPersona = false; 
     }
-
-
 }

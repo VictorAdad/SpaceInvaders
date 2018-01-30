@@ -11,19 +11,20 @@ import { InformeBaseComponent } from '@components-app/informe-homologado/informe
     templateUrl: './create.component.html'
 })
 
-export class InformeHomologadoCreate {
+export class InformeHomologadoCreate extends InformeBaseComponent{
 
     public breadcrumb = [];
 
     public form: FormGroup;
 
     constructor(public fbuilder: FormBuilder, private activatedRoute: ActivatedRoute){
+        super();
     }
 
     ngOnInit() {
         this.form =  Form.createForm(this.fbuilder);
         console.log('-> Form', this.form.value);
-        this.fillForm()            
+        this.fillForm();            
     }
 
     public fillForm() {
@@ -34,9 +35,14 @@ export class InformeHomologadoCreate {
         if (informeId != null) {
             let _data = JSON.parse(localStorage.getItem('Principal_'+informeId));
             console.log('------>>> ',_data);
-            let timer = Observable.timer(10000);
+            let timer = Observable.timer(1);
             timer.subscribe(t => {
                 this.form.patchValue(_data);
+
+                let timer = Observable.timer(1);
+                timer.subscribe(t => {
+                    this.form.patchValue(_data);
+                });
             });
             InformeBaseComponent.idInforme = informeId;
         }

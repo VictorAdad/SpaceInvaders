@@ -70,6 +70,19 @@
                     <anexo11 [form]="form"> </anexo11>
                 </mat-tab>
 		    </mat-tab-group>
+            <div>
+                <div class="row justify-content-end">
+                    <div class="col-sm-auto">
+                        <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.value)">Guardar</button>
+                    </div>
+                    <div class="col-sm-auto">
+                        <button class="" mat-raised-button routerLink="/caso/1313/informe-homologado" color="">Cancelar</button> 
+                    </div>
+                </div>                
+            </div>
+            <div class="row space"></div>
+            <div class="row space"></div>
+            <div class="row space"></div>
         </form>
 	</div>
 </div>
