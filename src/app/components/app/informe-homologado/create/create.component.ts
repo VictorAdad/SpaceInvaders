@@ -28,22 +28,17 @@ export class InformeHomologadoCreate {
 
     public fillForm() {
         var informeId;
-        let _data = JSON.parse(localStorage.getItem('Principal'));
-        console.log('------>>> ',_data);
-        let timer = Observable.timer(10);
-        timer.subscribe(t => {
-            this.form.patchValue(_data);
+        this.activatedRoute.params.subscribe((params: Params) => {
+            informeId = params['informeId'];
         });
-
         if (informeId != null) {
             let _data = JSON.parse(localStorage.getItem('Principal_'+informeId));
             console.log('------>>> ',_data);
-            let timer = Observable.timer(1);
+            let timer = Observable.timer(10000);
             timer.subscribe(t => {
                 this.form.patchValue(_data);
             });
             InformeBaseComponent.idInforme = informeId;
         }
     }  
-
 }
