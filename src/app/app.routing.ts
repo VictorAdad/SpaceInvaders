@@ -230,7 +230,8 @@ const routes: Routes = [
 
     //informe homologado
     { path : 'caso/:casoId/informe-homologado', component : PaginadorHomologado, data : { breadcrumb : 'Informe Homologado'}},
-    { path : 'caso/:casoId/informe-homologado/create', component : InformeHomologadoCreate, data : { breadcrumb : 'Informe Homologado Create'}},
+    { path : 'caso/:casoId/informe-homologado/update/:informeId', component : InformeHomologadoCreate, data : { breadcrumb : 'Actualizar Informe Homologado'}},
+    { path : 'caso/:casoId/informe-homologado/create', component : InformeHomologadoCreate, data : { breadcrumb : 'Actualizar Informe Homologado'}},
 ];
 
 @NgModule({

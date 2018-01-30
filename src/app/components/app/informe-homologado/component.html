@@ -41,10 +41,11 @@
     <ng-container matColumnDef="accion">
         <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
         <mat-cell *matCellDef="let element">
-            <button class="" mat-icon-button (click)="onPrint()"><mat-icon  class="">local_printshop</mat-icon></button>
+            <button class="" mat-icon-button (click)="onPrint(element.numeroReferencia)"><mat-icon  class="">local_printshop</mat-icon></button>
+            <button class="" routerLink="/caso/1313/informe-homologado/update/{{element.numeroReferencia}}" mat-icon-button><mat-icon  class="">remove_red_eye</mat-icon></button>
         </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: columns;" (click)="changeFill()" routerLink="/caso/1313/informe-homologado/create"></mat-row>
+    <mat-row *matRowDef="let row; columns: columns;"></mat-row>
 </mat-table>
