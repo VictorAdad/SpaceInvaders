@@ -179,6 +179,9 @@ export class CasoService{
         if (temCaso['predenuncias']) {
             temCaso['hasPredenuncia'] = !Number.isNaN(temCaso['predenuncias']['id']);
         }
+        if (temCaso['acuerdoInicio']) {
+            temCaso['hasAcuerdoInicio'] = !Number.isNaN(temCaso['acuerdoInicio']['id']);
+        }
         if (temCaso['tipoRelacionPersonas']){
             console.log('log', temCaso['tipoRelacionPersonas']);
             for (let i = 0; i < temCaso['tipoRelacionPersonas'].length; i++) {
@@ -222,6 +225,7 @@ export class Caso {
     public personaCasos: any[];
     public delitoPrincipal: any;
     public predenuncias: any;
+    public acuerdoInicio:any;
     public delitoCaso: any[];
     public delito: string;
     public id: number;
