@@ -223,7 +223,11 @@ export class SincronizaCatalogos {
                     }
                     
                     if (!encontrado){
-                        let nombreCatalogo=obj.toGuionCase(itemR["nombreCatalogo"]);
+                        let nombre = itemR["nombreCatalogo"];
+                        if (itemR["nombreCatalogo"] == 'MarcaSubMarca'){
+                            nombre = 'MarcaSubmarca';
+                        }
+                        let nombreCatalogo=obj.toGuionCase(nombre);
                         let item=obj.buscaElementoInCatalogos(nombreCatalogo);
                         if (item!=null){
                             Logger.log("actualizar este catalogo",itemR, nombreCatalogo,item);
