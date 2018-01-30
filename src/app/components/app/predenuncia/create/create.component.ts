@@ -521,7 +521,9 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
             globalService,
             dialog,
             onLine,
-            formatos
+            formatos,
+            authen,
+            db
             );
         this.vista="predenuncia";
     }
