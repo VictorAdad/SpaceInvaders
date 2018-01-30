@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { HttpService} from '@services/http.service';
 import { Form } from './form';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import { InformeBaseComponent } from '@components-app/informe-homologado/informe-base.component';
 
 @Component({
@@ -23,14 +23,20 @@ export class InformeHomologadoCreate {
     ngOnInit() {
         this.form =  Form.createForm(this.fbuilder);
         console.log('-> Form', this.form.value);
-        this.fillForm()            
+
+        console.log('<<< userOption >>>',InformeBaseComponent.userOption)
+        if (InformeBaseComponent.userOption) {
+            this.fillForm()            
+        }
+
     }
 
     public fillForm() {
-        var informeId;
-        this.activatedRoute.params.subscribe((params: Params) => {
-            informeId = params['informeId'];
-            console.log("----->>> " + informeId);
+        let _data = JSON.parse(localStorage.getItem('Principal'));
+        console.log('------>>> ',_data);
+        let timer = Observable.timer(10);
+        timer.subscribe(t => {
+            this.form.patchValue(_data);
         });
 
         if (informeId != null) {
