@@ -8,6 +8,7 @@ import * as docxtemplater from 'docxtemplater';
 import { forEach } from '@angular/router/src/utils/collection';
 import { environment } from '../../../environments/environment';
 import { Logger } from "@services/logger.service";
+import * as moment from 'moment';
 
 @Injectable()
 export class FormatosService {
@@ -610,22 +611,20 @@ public setDataF1011(_data,_id_solicitud){
 }
 
 public setDataIPH(_data) {
-    // let _data
-    // _data = JSON.parse(localStorage.getItem('Principal'));
 
-    // console.log('<<<< formato >>>>', _data.numeroReferencia);
+   let fechaConocimiento = moment(_data.fechaConocimiento).format('L');
+   let fechaArribo = moment(_data.fechaArribo).format('L');
 
-    this.data['xNumeroReferencia']            = _data.numeroReferencia
-    console.log('<<< Numero >>>', this.data['xNumeroReferencia']);            
+    this.data['xNumeroReferencia']            = _data.numeroReferencia            
     this.data['xPrimerResponsable']           = _data.primerResponsable            
     this.data['xInstitucion']                 = _data.institucion         
     this.data['xMunicipio']                   = _data.municipio
     this.data['xCuip']                        = _data.cuip
     this.data['xEnteroHecho']                 = _data.enteroHecho
     this.data['xEspecifique']                 = _data.especifique
-    this.data['xFechaConocimiento']           = _data.fechaConocimiento     
+    this.data['xFechaConocimiento']           = fechaConocimiento     
     this.data['xHoraConocimiento']            = _data.horaConocimiento    
-    this.data['xFechaArribo']                 = _data.fechaArribo
+    this.data['xFechaArribo']                 = fechaArribo
     this.data['xHoraArribo']                  = _data.horaArribo
     this.data['xEntidadArribo']               = _data.entidadArribo 
     this.data['xMunicipioArribo']             = _data.municipioArribo   
@@ -695,7 +694,7 @@ public setDataIPH(_data) {
     this.data['xCuipParticular']              = _data.cuipParticular
     this.data['xPaternoParticular']           = _data.paternoParticular
     this.data['xMaternoParticular']           = _data.maternoParticular 
-    this.data['xNombreParticular']            = _data.combreParticular
+    this.data['xNombreParticular']            = _data.nombreParticular
     this.data['xAdscripcionParticular']       = _data.adscripcionParticular
 
     console.log('<<< data parseo >>>', this.data);
