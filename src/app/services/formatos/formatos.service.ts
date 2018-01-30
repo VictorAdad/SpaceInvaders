@@ -63,16 +63,12 @@ export class FormatosService {
             throw error;
         }
 
-        var out = doc.getZip().generate({
-            type:"blob",
-            mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        const out = doc.getZip().generate({
+            type: 'blob',
+            mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         });
-        let an  = document.createElement("a");
-        let url = window.URL.createObjectURL(out);
-        document.body.appendChild(an);
-        an.href = url;
-        an.download = _name;
-        an.click();
+
+        return out;
     }
 
 }

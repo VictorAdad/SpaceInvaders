@@ -145,7 +145,7 @@ export class CatalogosACargar {
             uri:'/v1/catalogos/relacion/forma-comision/options'
         },
         {//12
-            catalogo:"clasificiacion_delito_orden",
+            catalogo:"clasificacion_delito_orden",
             uri:'/v1/catalogos/relacion/clasificacion-delito-orden/options'
         },
         {//28

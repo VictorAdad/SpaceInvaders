@@ -207,10 +207,10 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
     }
 
     public cleanCamposHeredar() {
-        this.form.controls['nombreDenunciante'].setValue('');
+        this.form.controls['nombreDenuncianteHeredar'].setValue('');
         this.form.controls['edadDenuncianteHeredar'].setValue('');
-        this.form.controls['originarioDenunciante'].setValue('');
-        this.form.controls['domicilioDenunciante'].setValue('');
+        this.form.controls['originarioDenuncianteHeredar'].setValue('');
+        this.form.controls['domicilioDenuncianteHeredar'].setValue('');
         this.form.controls['sintesisHechos'].setValue('');
     }
 

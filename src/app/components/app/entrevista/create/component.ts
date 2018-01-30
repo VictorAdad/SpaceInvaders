@@ -631,35 +631,33 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
     }
 
     public cleanCamposHeredar() {
-        this.form.controls['nombreEntrevistado'].setValue('');
-        this.form.controls['nombreEntrevistado'].setValue('');
-        this.form.controls["sexoHeredar"].setValue('');
-        this.form.controls["fechaNacimientoHeredar"].setValue('');
-        this.form.controls["edadHeredar"].setValue('');
-        this.form.controls["nacionalidad"].setValue('');
-        this.form.controls["curpHeredar"].setValue('');
-        this.form.controls["rfcHeredar"].setValue('');
-        this.form.controls["ocupacion"].setValue('');
-        this.form.controls["lugarOcupacion"].setValue('');
-        this.form.controls["estadoCivil"].setValue('');
-        this.form.controls["narracionHechos"].setValue('');
-        this.form.controls["calleHeredar"].setValue('')
-        this.form.controls["noExterior"].setValue('')
-        this.form.controls["noInterior"].setValue('')
-        this.form.controls["cpHeredar"].setValue('')
-        this.form.controls["colonia"].setValue('')
-        this.form.controls["municipio"].setValue('')
-        this.form.controls["estado"].setValue('')
-        this.form.controls["noTelefonoParticularHeredar"].setValue('')
-        this.form.controls["noTelefonoCelularHeredar"].setValue('')
-        this.form.controls["correoElectronicoHeredar"].setValue('')
-
-        this.form.controls["calidadIntervinienteHeredar"].setValue('')
-        this.form.controls["tipoIdentificacionHeredar"].setValue('')
-        this.form.controls["emisorIdentificacionHeredar"].setValue('')
-        this.form.controls["noIdentificacionHeredar"].setValue('')
-        this.form.controls["gradoEscolaridadHeredar"].setValue('')
-        this.form.controls["salarioHeredar"].setValue('')
+        this.form.controls['nombreEntrevistadoHeredar'].setValue('');
+        this.form.controls['sexoHeredar'].setValue('');
+        this.form.controls['fechaNacimientoHeredar'].setValue('');
+        this.form.controls['edadHeredar'].setValue('');
+        this.form.controls['nacionalidadHeredar'].setValue('');
+        this.form.controls['curpHeredar'].setValue('');
+        this.form.controls['rfcHeredar'].setValue('');
+        this.form.controls['ocupacionHeredar'].setValue('');
+        this.form.controls['lugarOcupacionHeredar'].setValue('');
+        this.form.controls['estadoCivilHeredar'].setValue('');
+        this.form.controls['narracionHechos'].setValue('');
+        this.form.controls['calleHeredar'].setValue('')
+        this.form.controls['noExteriorHeredar'].setValue('')
+        this.form.controls['noInteriorHeredar'].setValue('')
+        this.form.controls['cpHeredar'].setValue('')
+        this.form.controls['coloniaHeredar'].setValue('')
+        this.form.controls['municipioHeredar'].setValue('')
+        this.form.controls['estadoHeredar'].setValue('')
+        this.form.controls['noTelefonoParticularHeredar'].setValue('')
+        this.form.controls['noTelefonoCelularHeredar'].setValue('');
+        this.form.controls['correoElectronicoHeredar'].setValue('');
+        this.form.controls['calidadIntervinienteHeredar'].setValue('')
+        this.form.controls['tipoIdentificacionHeredar'].setValue('')
+        this.form.controls['emisorIdentificacionHeredar'].setValue('')
+        this.form.controls['noIdentificacionHeredar'].setValue('')
+        this.form.controls['gradoEscolaridadHeredar'].setValue('')
+        this.form.controls['salarioHeredar'].setValue('')
     }
 
     public heredarSintesisChange(_event: boolean) {
@@ -695,15 +693,18 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
     public onLine: OnLineService,
     public formatos: FormatosService,
     public db: CIndexedDB,
-    public caso: CasoService
-    ){
+    public caso: CasoService,
+    public auth: AuthenticationService
+    ) {
     super(
         http,
         confirmationService,
         globalService,
         dialog,
         onLine,
-        formatos
+        formatos,
+        auth,
+        db
         );
     this.vista="entrevista";
 }

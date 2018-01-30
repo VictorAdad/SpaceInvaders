@@ -248,6 +248,9 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                     if (x && response.data[0].calidadPersonaHeredar != null && response.data[0].calidadPersonaHeredar != undefined){
                                         this.form.controls.calidadPersonaHeredar.setValue(response.data[0].calidadPersonaHeredar);
                                     }
+                                    if (x && response.data[0].lugarHechosHeredar != null && response.data[0].lugarHechosHeredar != undefined){
+                                        this.form.controls.lugarHechosHeredar.setValue(response.data[0].lugarHechosHeredar);
+                                    }
                                     this.form.disable();
                                 });
 
@@ -442,7 +445,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                     Logger.log("caso arma", caso["predenuncia"]);
                                     this.db.update("casos",caso).then(t=>{
                                         Logger.log("caso arma", t["arma"]);
-                                        resolve("Se agregó la arma de manera local");
+                                        resolve("Se agregó la predenuncia de manera local");
                                         this.casoService.actualizaCasoOffline(t);
                                         this.router.navigate(['/caso/'+this.casoId+'/detalle']);
                                     });
@@ -471,6 +474,13 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             this.form.controls.horaCanalizacion.setValue(time);
             Logger.log('HH----------------->', time, _data)
         }
+        
+        const timer = Observable.timer(1000);
+        timer.subscribe(t=>{
+            if(_data.heredar) {
+                this.form.controls.lugarHechosHeredar.setValue(_data.lugarHechos)
+            }
+        });
     }
 }
 
@@ -511,7 +521,9 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
             globalService,
             dialog,
             onLine,
-            formatos
+            formatos,
+            authen,
+            db
             );
         this.vista="predenuncia";
     }

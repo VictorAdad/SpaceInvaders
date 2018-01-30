@@ -18,14 +18,18 @@ export class Caso {
        let meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
        var date = new Date(this.created);
-       var dia = date.getDate();
-       var mes = date.getMonth();
-       var year = date.getFullYear();
+       if(this.created) {
+         var dia = date.getDate();
+         var mes = date.getMonth();
+         var year = date.getFullYear();
 
-       var user = _usuarios['']; //Necesita recibir el usuario 
+         var user = _usuarios['']; //Necesita recibir el usuario 
 
-       var x = 'Creado el '+ dia + ' de ' + meses[mes] + ' de ' + year;
-       return x;  
+         var x = 'Creado el '+ dia + ' de ' + meses[mes] + ' de ' + year;
+         return x;  
+       } else {
+         return 'Caso creado offline'
+       }
     }
 
     nombre(){

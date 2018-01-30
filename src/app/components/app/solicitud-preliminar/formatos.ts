@@ -11,9 +11,11 @@ import { FormatosService } from '@services/formatos/formatos.service';
 import { Observable } from 'rxjs/Observable';
 import { Logger } from "@services/logger.service";
 import { Yason } from "@services/utils/yason";
+import { AuthenticationService } from '../../../services/auth/authentication.service';
+import { CasoService } from '../../../services/caso/caso.service';
 
-export class FormatosGlobal{
-	public confirmation_settings:ConfirmSettings={
+export class FormatosGlobal {
+    public confirmation_settings: ConfirmSettings={
         overlay:true,
         overlayClickToClose: true, // Default: true
         showCloseButton: true, // Default: true
@@ -33,24 +35,26 @@ export class FormatosGlobal{
 
     constructor(
         public http: HttpService,
-        public _confirmation:ConfirmationService,
+        public _confirmation: ConfirmationService,
         public globalService: GlobalService,
         public dialog: MatDialog,
         public onLine: OnLineService = null,
-        public formatos: FormatosService = null
-        ){
+        public formatos: FormatosService = null,
+        public auth: AuthenticationService =  null,
+        public db: CIndexedDB =  null,
+        public casoServ: CasoService = null
+        ) {
         this.validateFiles();
     }
 
-    public changeFormat(_format, _id, _data: any = {}){
+    public changeFormat(_format, _id, _data: any = {}) {
         Logger.log('Change format:', _format, _id);
 
         this._confirmation.create('Advertencia','¿Estás seguro de guardar este formato?',this.confirmation_settings)
         .subscribe(
             (ans: ResolveEmit) => {
-                Logger.log("respueta",ans);
-                if(ans.resolved){
-                    if(this.onLine === null || this.onLine.onLine){
+                if (ans.resolved) {
+                    if (this.onLine === null || this.onLine.onLine) {
                         this.http.get(`/v1/documentos/formatos/save/${_id}/${_format}`).subscribe(
                             response => {
                                 Logger.log('Done changeFormat()', response);
@@ -63,11 +67,34 @@ export class FormatosGlobal{
                                 this.globalService.openSnackBar("X ocurrió un error al generar el formato");
                             }
                         );
-                    }else{
-                        this.formatos.replaceWord(
+                    } else {
+                        const tempId = Date.now();
+                        const dato = {
+                            url: `/v1/documentos/formatos/save/${_id}/${_format}`,
+                            body: {},
+                            options: [],
+                            tipo: 'get',
+                            pendiente: true,
+                            dependeDe: [_id],
+                            temId: tempId,
+                            username: this.auth.user.username
+                        };
+
+                        this.db.add('sincronizar', dato).then( p => {
+                        });
+                        const out = this.formatos.replaceWord(
                             this.formatos.formatos[_format].nombre,
                             _format
-                        )
+                        );
+                        if (this.auth) {
+                            this.guardarFormatoOffLine(out, _id);
+                        }
+                        const an  = document.createElement('a');
+                        const url = window.URL.createObjectURL(out);
+                        document.body.appendChild(an);
+                        an.href = url;
+                        an.download = this.formatos.formatos[_format].nombre;
+                        an.click();
                     }
 
                 }
@@ -201,6 +228,32 @@ export class FormatosGlobal{
       });
     }
   }
+
+
+    public guardarFormatoOffLine(_file, casoId) {
+        const reader = new FileReader();
+        reader.onload = (file) => {
+            this.db.add('blobs', {blob: file.target['result']}).then(
+                t => {
+                    // console.log('-> Load file', file);
+                    // const dato = {
+                    //     nombre:(item["some"])["name"],
+                    //     type:(item["some"])["type"],
+                    //     idBlob:t["id"],
+                    //     procedimiento:"",
+                    //     fecha:new Date(),
+                    //     casoId:casoId,
+                    //     vista: ,
+                    //     atributoExtraPost: ''
+                    // };
+                    // this.db.add('documentos', dato).then(t => {
+
+                    // });
+                }
+            );
+        };
+        reader.readAsDataURL(_file);
+    }
 
 
 }

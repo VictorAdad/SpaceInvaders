@@ -49,7 +49,7 @@ export class DocumentoComponent extends FormatosGlobal{
       public globalService:GlobalService,
       public dialog: MatDialog,
       private route: ActivatedRoute,
-      private db: CIndexedDB,
+      public db: CIndexedDB,
       _onLine:OnLineService
       ){
       super(http, confirmationService, globalService, dialog,_onLine);

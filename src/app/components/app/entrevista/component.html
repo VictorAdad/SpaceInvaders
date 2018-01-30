@@ -26,7 +26,7 @@
 <mat-table #table [dataSource]="dataSource">
     <ng-container matColumnDef="entrevistado">
         <mat-header-cell *matHeaderCellDef> Entrevistado </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element?.nombreEntrevistado || "No tiene"}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element?.nombreEntrevistado || element?.nombreEntrevistadoHeredar || "No tiene"}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="calidadEntrevistado">
