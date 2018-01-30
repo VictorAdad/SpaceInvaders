@@ -88,6 +88,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	public model: Perito;
 	isPericiales: boolean = false;
 	isPsicofisico: boolean = false;
+	public disable: boolean = false;
 
 
 	dataSource: TableService | null;
@@ -146,14 +147,16 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
                         let sol = t["solicitudPrePericiales"] as any[];
                         for (var i = 0; i < sol.length; ++i) {
                             if ((sol[i])["id"]==this.id){
-								this.fillForm(sol[i]);
+								// this.fillForm(sol[i]);
+								let item = sol[i];
 								const timer = Observable.timer(100);
 								timer.subscribe(t=> {
+									this.fillForm(item);
 									this.isPericiales = this.form.controls.tipo.value === 'Periciales';
 									this.isPsicofisico = this.form.controls.tipo.value === 'Psicofísico';
 									this.isPericialesUpdate.emit(this.isPericiales);
-									this.modelUpdate.emit(sol[i]);
-									this.personas = sol[i].personas;
+									this.modelUpdate.emit(item);
+									this.personas = item.personas;
 									Logger.log('<<<< OffLine >>>>',sol[i])
 									this.form.disable();
 								});
@@ -179,18 +182,18 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	public createForm() {
 		return new FormGroup({
       'lugar': new FormGroup({
-				'id': new FormControl("", []),
+				'id': new FormControl('', []),
 			}),
       'arma': new FormGroup({
-				'id': new FormControl("", []),
+				'id': new FormControl('', []),
       }),
       'vehiculo': new FormGroup({
-				'id': new FormControl("", []),
+				'id': new FormControl('', []),
       }),
       'delito': new FormGroup({
-				'id': new FormControl("", []),
+				'id': new FormControl('', []),
       }),
-      'heredar':  new FormControl("", []),
+      'heredar':  new FormControl('', []),
       'heredarSintesisHechos':  new FormControl(false, []),
       'personas': new FormArray([]),
 
@@ -199,7 +202,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 			'noOficio': new FormControl(this.model.noOficio),
 			'directorInstituto': new FormControl(this.model.directorInstituto),
 			'peritoMateria': new FormGroup({
-				'id': new FormControl("", []),
+				'id': new FormControl('', []),
 			}),
 			'finalidad': new FormControl(this.model.finalidad),
 			'plazoDias': new FormControl(this.model.plazoDias),
@@ -208,10 +211,10 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 			'medicoLegista': new FormControl(this.model.medicoLegista),
 			'realizadoA': new FormControl(this.model.realizadoA),
 			'tipoExamen': new FormGroup({
-				'id': new FormControl("", []),
+				'id': new FormControl('', []),
 			}),
 			'caso': new FormGroup({
-				'id': new FormControl("", []),
+				'id': new FormControl('', []),
 			})
 		});
   }
@@ -308,7 +311,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 			if (_data[propName] === null || _data[propName] === undefined)
 				delete _data[propName];
 		}
-		Logger.log('_data2', _data);
+		Logger.log('_data2', _data, this.form);
 		this.form.patchValue({
 			tipo: _data.tipo
 		});
@@ -316,23 +319,11 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 		timer.subscribe(t => {
 			this.form.patchValue(_data);
 		})
+		this.disable = true;
 	}
 	tipoChange(_tipo): void {
 		this.isPericiales = _tipo === 'Periciales';
 		this.isPsicofisico = _tipo === 'Psicofísico';
-
-		let timer = Observable.timer(1);
-		timer.subscribe(t => {
-			if(this.onLine.onLine){
-				this.http.get(this.apiUrlPre+this.casoId+'/page').subscribe(response => {
-					this.form.patchValue({
-						hechosNarrados : response.data[0].hechosNarrados
-					});
-				});
-			}
-		})
-		this.form.controls.hechosNarrados.disable();
-
 	}
 }
 

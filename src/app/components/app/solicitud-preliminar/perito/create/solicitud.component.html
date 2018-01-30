@@ -26,7 +26,7 @@
                 <h4>Oficio solicitud de servicios periciales</h4>
                 <text label="Número de oficio" name="noOficio" [group]="form"></text>
                 <text label="Nombre del director del instituto de servicios periciales" name="directorInstituto" [max]="100" [group]="form"></text>
-                <select2 placeholder="Se solicita al perito en materia de" [options]="options.peritoMateria" name="id" [group]="form.controls.peritoMateria"></select2>
+                <select2 placeholder="Se solicita al perito en materia de" [options]="options.peritoMateria" name="id" [group]="form.controls.peritoMateria" [disabled]="disable"></select2>
                 <text-area label="Finalidad del requerimiento" name="finalidad" [group]="form"></text-area>
                 <text label="Plazo en días para cumplir el informe" name="plazoDias" [max]="30" [group]="form"></text>
                 <text-area label="Apercibimiento o medidas de apremio" name="apercibimiento" [group]="form"></text-area>
@@ -43,7 +43,7 @@
             </div>
 
             <div class="row justify-content-end">
-                <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
+                <div class="col-sm-auto" (mouseenter)="validateForm(form)">
                     <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || masDe3Dias==true" *ngIf="id == null">Guardar</button>
                 </div>
                 <div class="col-sm-auto">
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="row justify-content-end space">
-                <div class="col-sm-auto" *ngIf="!onLine.onLine && masDe3Dias==true">
+                <div class="col-sm-auto" *ngIf="!onLine.onLine && masDe3Dias == true">
                     Más de tres dias sin conexión, favor de conectarse a internet
                 </div>
             </div>
