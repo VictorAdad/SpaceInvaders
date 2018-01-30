@@ -7,27 +7,29 @@ export class InformeBaseComponent {
     @Input()
     public form: FormGroup;   
 
+    public static userOption: boolean = false;
+
+    public static idInforme = "";
+
     constructor(){
     }
 
     public save(form) {
+
+        console.log("-->>>>>>>>> " + InformeBaseComponent.idInforme);
+
+        var idInfo = InformeBaseComponent.idInforme;
+
+        if (typeof idInfo != 'undefined') {
+    	    localStorage.removeItem('Principal_'+idInfo);
+        }
     	return new Promise( (resolve,reject) => {
-			console.log('<<< Ya me guardaron :3 >>>', form);
 			resolve("Form valido");
-			let result
-
-			localStorage.setItem('Principal', JSON.stringify(form));
-
-
-			result = JSON.parse(localStorage.getItem('Principal'));
-			console.log('<<< Ya regrese :3 >>>', result);
-
-   			//json = {x:1, nombre:"cosoaoosao sa s a sa"};
-			// localStorage.setItem('YASON', JSON.stringify(json));
-			// xxxx= localStorage.getItem('YASON');
-			// xxxx = JSON.parse(xxxx);
-			// localStorage.removeItem('YASON');	
+			let fecha = new Date();
+    		form.fechaCreacion= fecha;
+			localStorage.setItem('Principal_'+form.numeroReferencia, JSON.stringify(form));
     	});
+
         
     }
 

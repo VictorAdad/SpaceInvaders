@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 export class Form {
     public static createForm(_fbuilder: FormBuilder) {
         return _fbuilder.group({
+            fechaCreacion: [''],  
             numeroReferencia: [''],
             primerResponsable: [''],
             institucion: [''],
@@ -34,7 +35,7 @@ export class Form {
             apoyo: [''],
             numEconomico: [''],
             especifiqueApoyo: [''],
-            narracionHechos: [''],
+            narracionHechosResponsable: [''],
             //radios
             proteccion: [''],
             recepcionAcciones: [''],
@@ -319,7 +320,7 @@ export class Form {
             datosEntrevistadorApellidoPaterno: [''],
             datosEntrevistadorApellidoMaterno: [''],
             datosEntrevistadorApellidoNombres: [''],
-            datosEntrevistadorApellidoAdscripcion: [''],
-                    })
+            datosEntrevistadorApellidoAdscripcion: [''],  
+        })
     }
 }

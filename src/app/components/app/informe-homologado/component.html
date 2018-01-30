@@ -30,21 +30,22 @@
 <mat-table #table [dataSource]="dataSource">
     <ng-container matColumnDef="nombre">
         <mat-header-cell *matHeaderCellDef> Nombre</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.primerResponsable}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="fecha">
         <mat-header-cell *matHeaderCellDef>Fecha de creación</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.fecha}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.fechaCreacion | inputPipe}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="accion">
         <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
         <mat-cell *matCellDef="let element">
-            <button class="" mat-icon-button (click)="onPrint()"><mat-icon  class="">local_printshop</mat-icon></button>
+            <button class="" mat-icon-button (click)="onPrint(element.numeroReferencia)"><mat-icon  class="">local_printshop</mat-icon></button>
+            <button class="" routerLink="/caso/1313/informe-homologado/update/{{element.numeroReferencia}}" mat-icon-button><mat-icon  class="">remove_red_eye</mat-icon></button>
         </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: columns;" routerLink="/caso/1313/informe-homologado/create"></mat-row>
+    <mat-row *matRowDef="let row; columns: columns;"></mat-row>
 </mat-table>
