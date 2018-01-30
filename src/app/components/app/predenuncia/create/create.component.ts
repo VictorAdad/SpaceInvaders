@@ -474,6 +474,13 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             this.form.controls.horaCanalizacion.setValue(time);
             Logger.log('HH----------------->', time, _data)
         }
+        
+        const timer = Observable.timer(1000);
+        timer.subscribe(t=>{
+            if(_data.heredar) {
+                this.form.controls.lugarHechosHeredar.setValue(_data.lugarHechos)
+            }
+        });
     }
 }
 
