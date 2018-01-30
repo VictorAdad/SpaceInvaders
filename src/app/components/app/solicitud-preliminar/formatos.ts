@@ -11,9 +11,11 @@ import { FormatosService } from '@services/formatos/formatos.service';
 import { Observable } from 'rxjs/Observable';
 import { Logger } from "@services/logger.service";
 import { Yason } from "@services/utils/yason";
+import { AuthenticationService } from '../../../services/auth/authentication.service';
+import { CasoService } from '../../../services/caso/caso.service';
 
-export class FormatosGlobal{
-	public confirmation_settings:ConfirmSettings={
+export class FormatosGlobal {
+    public confirmation_settings: ConfirmSettings={
         overlay:true,
         overlayClickToClose: true, // Default: true
         showCloseButton: true, // Default: true
@@ -33,24 +35,26 @@ export class FormatosGlobal{
 
     constructor(
         public http: HttpService,
-        public _confirmation:ConfirmationService,
+        public _confirmation: ConfirmationService,
         public globalService: GlobalService,
         public dialog: MatDialog,
         public onLine: OnLineService = null,
-        public formatos: FormatosService = null
-        ){
+        public formatos: FormatosService = null,
+        public auth: AuthenticationService =  null,
+        public db: CIndexedDB =  null,
+        public casoServ: CasoService = null
+        ) {
         this.validateFiles();
     }
 
-    public changeFormat(_format, _id, _data: any = {}){
+    public changeFormat(_format, _id, _data: any = {}) {
         Logger.log('Change format:', _format, _id);
 
         this._confirmation.create('Advertencia','¿Estás seguro de guardar este formato?',this.confirmation_settings)
         .subscribe(
             (ans: ResolveEmit) => {
-                Logger.log("respueta",ans);
-                if(ans.resolved){
-                    if(this.onLine === null || this.onLine.onLine){
+                if (ans.resolved) {
+                    if (this.onLine === null || this.onLine.onLine) {
                         this.http.get(`/v1/documentos/formatos/save/${_id}/${_format}`).subscribe(
                             response => {
                                 Logger.log('Done changeFormat()', response);
@@ -63,11 +67,25 @@ export class FormatosGlobal{
                                 this.globalService.openSnackBar("X ocurrió un error al generar el formato");
                             }
                         );
-                    }else{
+                    } else {
+                        const tempId = Date.now();
+                        const dato = {
+                            url: `/v1/documentos/formatos/save/${_id}/${_format}`,
+                            body: {},
+                            options: [],
+                            tipo: 'get',
+                            pendiente: true,
+                            dependeDe: [_id],
+                            temId: tempId,
+                            username: this.auth.user.username
+                        };
+
+                        this.db.add('sincronizar', dato).then( p => {
+                        });
                         this.formatos.replaceWord(
                             this.formatos.formatos[_format].nombre,
                             _format
-                        )
+                        );
                     }
 
                 }
