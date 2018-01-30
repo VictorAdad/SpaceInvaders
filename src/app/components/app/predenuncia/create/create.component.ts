@@ -445,7 +445,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                     Logger.log("caso arma", caso["predenuncia"]);
                                     this.db.update("casos",caso).then(t=>{
                                         Logger.log("caso arma", t["arma"]);
-                                        resolve("Se agregó la arma de manera local");
+                                        resolve("Se agregó la predenuncia de manera local");
                                         this.casoService.actualizaCasoOffline(t);
                                         this.router.navigate(['/caso/'+this.casoId+'/detalle']);
                                     });
