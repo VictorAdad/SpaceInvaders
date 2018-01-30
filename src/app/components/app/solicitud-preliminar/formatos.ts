@@ -82,10 +82,19 @@ export class FormatosGlobal {
 
                         this.db.add('sincronizar', dato).then( p => {
                         });
-                        this.formatos.replaceWord(
+                        const out = this.formatos.replaceWord(
                             this.formatos.formatos[_format].nombre,
                             _format
                         );
+                        if (this.auth) {
+                            this.guardarFormatoOffLine(out, _id);
+                        }
+                        const an  = document.createElement('a');
+                        const url = window.URL.createObjectURL(out);
+                        document.body.appendChild(an);
+                        an.href = url;
+                        an.download = this.formatos.formatos[_format].nombre;
+                        an.click();
                     }
 
                 }
@@ -219,6 +228,32 @@ export class FormatosGlobal {
       });
     }
   }
+
+
+    public guardarFormatoOffLine(_file, casoId) {
+        const reader = new FileReader();
+        reader.onload = (file) => {
+            this.db.add('blobs', {blob: file.target['result']}).then(
+                t => {
+                    // console.log('-> Load file', file);
+                    // const dato = {
+                    //     nombre:(item["some"])["name"],
+                    //     type:(item["some"])["type"],
+                    //     idBlob:t["id"],
+                    //     procedimiento:"",
+                    //     fecha:new Date(),
+                    //     casoId:casoId,
+                    //     vista: ,
+                    //     atributoExtraPost: ''
+                    // };
+                    // this.db.add('documentos', dato).then(t => {
+
+                    // });
+                }
+            );
+        };
+        reader.readAsDataURL(_file);
+    }
 
 
 }
