@@ -9,14 +9,18 @@ import { forEach } from '@angular/router/src/utils/collection';
 import { environment } from '../../../environments/environment';
 import { Logger } from "@services/logger.service";
 import { _config } from '@app/app.config';
+import { AuthenticationService } from '../auth/authentication.service';
 
 @Injectable()
 export class FormatosService {
 
-    public formatos =  new FormatosLocal();
+    public formatos: FormatosLocal;
 
-	constructor(private http: HttpService) {
-	}
+    constructor(
+        private http: HttpService,
+        private auth: AuthenticationService) {
+        this.formatos = new FormatosLocal(auth);
+    }
 
     public getFormatos(){
         // Logger.log('Formatos@getFormatos()');
@@ -74,6 +78,10 @@ export class FormatosService {
 }
 
 export class FormatosLocal {
+
+    constructor(
+        private auth: AuthenticationService
+    ){}
 
     public F1_003 = {
         'path': environment.app.host+'/assets/formatos/F1-003 LECTURA DE DERECHOS DE LA VÍCTIMA.docx',
@@ -292,25 +300,40 @@ export class FormatosLocal {
 
       }
 
-    constructor() {
+    public setDataF1003(_caso) {
+        // Logger.log('Formatos@setDataF1003', _caso);
+        const nombrePersonas = [];
+        const identificaciones = [];
+        const foliosIdentificacion = [];
+        const predenuncia =  _caso.predenuncias;
+        const personas = this.findHerenciaPersonasPredenuncia(_caso);
 
-    }
+        personas.forEach(o => {
+            nombrePersonas.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
+            if (o.persona.idiomaIdentificacion.identificacion) {
+                identificaciones.push(o.persona.idiomaIdentificacion.identificacion);
+            }
+            if (o.persona.folioIdentificacion) {
+                foliosIdentificacion.push(o.persona.folioIdentificacion);
+            }
+        });
 
-    public setDataF1003(_data){
-        Logger.log('Formatos@setDataF1003', _data);
-        this.setCasoInfo(_data);
-        this.setVictimaInfo(_data);
-        this.data['xFolioDocumento']     = !_data.predenuncias ? '' :(_data.predenuncias.noFolioConstancia ? _data.predenuncias.noFolioConstancia  : '');
 
-        this.data['xHablaEspaniol']      = !_data.predenuncias ? '' :(_data.predenuncias.hablaEspaniol ? 'Sí' : 'No');
-        this.data['xIdiomaLengua']       = !_data.predenuncias ? '' :(_data.predenuncias.hablaEspaniol ? '' : _data.predenuncias.lenguaIdioma);
-        this.data['xInterprete']         = !_data.predenuncias ? '' :(_data.predenuncias.nombreInterprete ? _data.predenuncias.nombreInterprete  : '');
-        this.data['xComprendioDerechos'] = !_data.predenuncias ? '' :(_data.predenuncias.compredioDerechos ? 'Sí' : 'No');
-        this.data['xCopiaDerechos']      = !_data.predenuncias ? '' :(_data.predenuncias.proporcionoCopia ? 'Sí' : 'No');
+        this.setCasoInfo(_caso);
+        this.data['xVictima'] = nombrePersonas.toLocaleString();
+        this.data['xVictimaFirma'] = nombrePersonas.toLocaleString().toLocaleUpperCase();
+        this.data['xSeIdentificaConFirma'] = identificaciones ? identificaciones.toLocaleString() : '';
+        this.data['xFolioVictimaFirma'] = foliosIdentificacion ? foliosIdentificacion.toLocaleString() : '';
+        this.data['xFolioDocumento'] = !predenuncia ? '' :(predenuncia.noFolioConstancia ? predenuncia.noFolioConstancia  : '');
+        this.data['xHablaEspaniol'] = !predenuncia ? '' :(predenuncia.hablaEspaniol ? 'Sí' : 'No');
+        this.data['xIdiomaLengua'] = !predenuncia ? '' :(predenuncia.hablaEspaniol ? '' : predenuncia.lenguaIdioma);
+        this.data['xInterprete'] = !predenuncia ? '' :(predenuncia.nombreInterprete ? predenuncia.nombreInterprete  : '');
+        this.data['xComprendioDerechos'] = !predenuncia ? '' :(predenuncia.compredioDerechos ? 'Sí' : 'No');
+        this.data['xCopiaDerechos'] = !predenuncia ? '' :(predenuncia.proporcionoCopia ? 'Sí' : 'No');
 
-        this.data['xCargoEmisor']        = '';
-        this.data['xNombreEmisor']       = '';
-        this.data['xAdscripcionEmisor']  = '';
+        this.data['xCargoEmisorFirma']        = this.auth.user.cargo;
+        this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto;
+        this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto;
     }
 
     public setDataF1004(_data){
@@ -338,7 +361,7 @@ export class FormatosLocal {
 
     public setDataF1005(_data){
         this.setCasoInfo(_data);
-        this.setVictimaInfo(_data);
+        // this.setVictimaInfo(_data);
         this.data['xTelefonoLlamando']      = !_data.predenuncias ? '' :(_data.predenuncias.noTelefonico ? _data.predenuncias.noTelefonico  : '');
         this.data['xTipoLineaTelefonica']   = !_data.predenuncias ? '' :(_data.predenuncias.tipoLinea ? _data.predenuncias.tipoLinea  : '');
         this.data['xLugarLlamada']          = !_data.predenuncias ? '' :(_data.predenuncias.lugarLlamada ? _data.predenuncias.lugarLlamada  : '');
@@ -625,6 +648,17 @@ public setDataF1011(_data,_id_solicitud){
   Logger.log('formato',this.data)
 
 }
+
+    public findHerenciaPersonasPredenuncia(_caso) {
+        const personasIds  = _caso.predenuncias.personas;
+        const personas = [];
+
+        for (const personaId of personasIds) {
+            personas.push(_caso.findPersonaCaso(personaId.personaCaso.id));
+        }
+
+        return personas;
+    }
 
 
 }

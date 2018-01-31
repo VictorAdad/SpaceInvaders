@@ -238,6 +238,14 @@ export class Caso {
     public username: string;
 
 
+    public findPersonaCaso(_id) {
+        const personas = this.personaCasos.filter(
+            object => {
+                return (object.id === _id);
+            }
+        );
+        return personas[0];
+    }
 
     public findVictima(){
         Logger.log('Caso@findVictima', this.personaCasos, _config.optionValue.tipoInterviniente.victima);
