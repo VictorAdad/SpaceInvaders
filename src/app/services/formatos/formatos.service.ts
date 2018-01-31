@@ -137,8 +137,8 @@ export class FormatosLocal {
    };
    public F1_021 = {
     'path': environment.app.host+'/assets/formatos/F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO.docx',
-    'nombre': 'F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
-    'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL',
+    'nombre': 'F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO.docx',
+    'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO',
     'file': null,
     'data': null
    };
