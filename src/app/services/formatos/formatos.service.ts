@@ -331,7 +331,7 @@ export class FormatosLocal {
         this.data['xComprendioDerechos'] = !predenuncia ? '' :(predenuncia.compredioDerechos ? 'Sí' : 'No');
         this.data['xCopiaDerechos'] = !predenuncia ? '' :(predenuncia.proporcionoCopia ? 'Sí' : 'No');
 
-        this.data['xCargoEmisorFirma']        = this.auth.user.autoridad;
+        this.data['xCargoEmisorFirma']        = this.auth.user.cargo;
         this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto;
         this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto;
     }
