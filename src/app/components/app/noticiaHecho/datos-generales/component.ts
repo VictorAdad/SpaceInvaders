@@ -166,6 +166,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                     Logger.log('object', object);
                     var id=object["id"];
                     _model["id"]="";
+                    _model['estatusSincronizacion']='no sincronizado';
                     let dato={
                         url:'/v1/base/casos',
                         body:_model,

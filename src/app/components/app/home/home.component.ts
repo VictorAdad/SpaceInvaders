@@ -51,7 +51,14 @@ export class HomeComponent extends BasePaginationComponent implements OnInit {
             this.page();
         }else{
             this.db.list('casos').then(list => {
-                const lista = (list as any[]).filter( caso => caso.username == this.auth.user.username);
+                const lista = (list as any[]).filter( caso => {
+                    if (caso['estatusSincronizacion'] && caso['estatusSincronizacion']!='sincronizado') {
+                        return caso.username == this.auth.user.username
+                    }else if(!caso['estatusSincronizacion']){
+                        return caso.username == this.auth.user.username
+                    }
+                    return false;
+                });
                 this.loadList = false;
                 for(let object in lista){
                     let caso = new Caso();

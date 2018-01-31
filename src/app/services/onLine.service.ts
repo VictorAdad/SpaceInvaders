@@ -80,6 +80,7 @@ export class OnLineService {
                 }
                 this.loginDialogService.setOnLine(this);
                 if (auth.isLoggedin){
+                    this.sincronizarCambios.actualizaCasos();
                     this.sincronizarCambios.startSincronizacion();
                     if (primeraVez){
                         primeraVez = false;

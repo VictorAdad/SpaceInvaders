@@ -69,19 +69,21 @@ export class FormatosGlobal {
                         );
                     } else {
                         const tempId = Date.now();
-                        const dato = {
-                            url: `/v1/documentos/formatos/save/${_id}/${_format}`,
-                            body: {},
-                            options: [],
-                            tipo: 'get',
-                            pendiente: true,
-                            dependeDe: [_id],
-                            temId: tempId,
-                            username: this.auth.user.username
-                        };
+                        if (this.auth) {
+                            const dato = {
+                                url: `/v1/documentos/formatos/save/${_id}/${_format}`,
+                                body: {},
+                                options: [],
+                                tipo: 'get',
+                                pendiente: true,
+                                dependeDe: [_id],
+                                temId: tempId,
+                                username: this.auth.user.username
+                            };
 
-                        this.db.add('sincronizar', dato).then( p => {
-                        });
+                            this.db.add('sincronizar', dato).then( p => {
+                            });
+                        }
                         const out = this.formatos.replaceWord(
                             this.formatos.formatos[_format].nombre,
                             _format

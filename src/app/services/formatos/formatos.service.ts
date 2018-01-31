@@ -9,14 +9,18 @@ import { forEach } from '@angular/router/src/utils/collection';
 import { environment } from '../../../environments/environment';
 import { Logger } from "@services/logger.service";
 import { _config } from '@app/app.config';
+import { AuthenticationService } from '../auth/authentication.service';
 
 @Injectable()
 export class FormatosService {
 
-    public formatos =  new FormatosLocal();
+    public formatos: FormatosLocal;
 
-	constructor(private http: HttpService) {
-	}
+    constructor(
+        private http: HttpService,
+        private auth: AuthenticationService) {
+        this.formatos = new FormatosLocal(auth);
+    }
 
     public getFormatos(){
         // Logger.log('Formatos@getFormatos()');
@@ -74,6 +78,10 @@ export class FormatosService {
 }
 
 export class FormatosLocal {
+
+    constructor(
+        private auth: AuthenticationService
+    ){}
 
     public F1_003 = {
         'path': environment.app.host+'/assets/formatos/F1-003 LECTURA DE DERECHOS DE LA VÍCTIMA.docx',
@@ -134,6 +142,60 @@ export class FormatosLocal {
     'file': null,
     'data': null
    };
+
+   public getVicImp(_data, _id_solicitud, _interVi) {
+       var victimasHeredar = [];
+       var nombreVicHer = '';
+
+       var tipo1
+       var tipo2
+       var label = '';
+       if (_interVi) {
+           tipo1 = 'imputado'
+           tipo2 = 'imputadoDesconocido'
+           label = 'Quién resulte responsable'
+       } else {
+           tipo1 = 'victima'
+           tipo2 = 'victimaDesconocido'
+           label = 'Identidad desconocida'
+       }
+
+       for (let i=0;i < _data.solicitudPrePericiales.length; i++) {
+          const solicitud = _data.solicitudPrePericiales[i];
+          if (solicitud.id == _id_solicitud) {
+              if (solicitud.heredar) {
+                  for (var j = 0; j < solicitud.personas.length; j++) {
+                      const persona = solicitud.personas[j];
+                      console.log(persona);
+                        victimasHeredar.push(persona.id);
+                  }
+              }
+          }
+      }
+
+     for (let i = 0; i < _data.personaCasos.length; i++) {
+         if (_data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente[tipo1] || _data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente[tipo2]) { //hola
+             for (var j = 0; j < victimasHeredar.length; j++) {
+                 if (victimasHeredar[j] == _data.personaCasos[i].id) {
+                     if (_data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente[tipo2]) {
+                         if (nombreVicHer == '')
+                             nombreVicHer = label;
+                         else
+                            nombreVicHer += ' ,'+ label; 
+
+                     } else {
+                         if (nombreVicHer == '')
+                             nombreVicHer = _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
+                         else
+                            nombreVicHer += ' ,'+ _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : ''); 
+                     }
+                 }   
+             }
+         }
+     }
+
+     return nombreVicHer;
+   }
 
 
 
@@ -245,25 +307,40 @@ export class FormatosLocal {
 
       }
 
-    constructor() {
+    public setDataF1003(_caso) {
+        // Logger.log('Formatos@setDataF1003', _caso);
+        const nombrePersonas = [];
+        const identificaciones = [];
+        const foliosIdentificacion = [];
+        const predenuncia =  _caso.predenuncias;
+        const personas = this.findHerenciaPersonasPredenuncia(_caso);
 
-    }
+        personas.forEach(o => {
+            nombrePersonas.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
+            if (o.persona.idiomaIdentificacion.identificacion) {
+                identificaciones.push(o.persona.idiomaIdentificacion.identificacion);
+            }
+            if (o.persona.folioIdentificacion) {
+                foliosIdentificacion.push(o.persona.folioIdentificacion);
+            }
+        });
 
-    public setDataF1003(_data){
-        Logger.log('Formatos@setDataF1003', _data);
-        this.setCasoInfo(_data);
-        this.setVictimaInfo(_data);
-        this.data['xFolioDocumento']     = !_data.predenuncias ? '' :(_data.predenuncias.noFolioConstancia ? _data.predenuncias.noFolioConstancia  : '');
 
-        this.data['xHablaEspaniol']      = !_data.predenuncias ? '' :(_data.predenuncias.hablaEspaniol ? 'Sí' : 'No');
-        this.data['xIdiomaLengua']       = !_data.predenuncias ? '' :(_data.predenuncias.hablaEspaniol ? '' : _data.predenuncias.lenguaIdioma);
-        this.data['xInterprete']         = !_data.predenuncias ? '' :(_data.predenuncias.nombreInterprete ? _data.predenuncias.nombreInterprete  : '');
-        this.data['xComprendioDerechos'] = !_data.predenuncias ? '' :(_data.predenuncias.compredioDerechos ? 'Sí' : 'No');
-        this.data['xCopiaDerechos']      = !_data.predenuncias ? '' :(_data.predenuncias.proporcionoCopia ? 'Sí' : 'No');
+        this.setCasoInfo(_caso);
+        this.data['xVictima'] = nombrePersonas.toLocaleString();
+        this.data['xVictimaFirma'] = nombrePersonas.toLocaleString().toLocaleUpperCase();
+        this.data['xSeIdentificaConFirma'] = identificaciones ? identificaciones.toLocaleString() : '';
+        this.data['xFolioVictimaFirma'] = foliosIdentificacion ? foliosIdentificacion.toLocaleString() : '';
+        this.data['xFolioDocumento'] = !predenuncia ? '' :(predenuncia.noFolioConstancia ? predenuncia.noFolioConstancia  : '');
+        this.data['xHablaEspaniol'] = !predenuncia ? '' :(predenuncia.hablaEspaniol ? 'Sí' : 'No');
+        this.data['xIdiomaLengua'] = !predenuncia ? '' :(predenuncia.hablaEspaniol ? '' : predenuncia.lenguaIdioma);
+        this.data['xInterprete'] = !predenuncia ? '' :(predenuncia.nombreInterprete ? predenuncia.nombreInterprete  : '');
+        this.data['xComprendioDerechos'] = !predenuncia ? '' :(predenuncia.compredioDerechos ? 'Sí' : 'No');
+        this.data['xCopiaDerechos'] = !predenuncia ? '' :(predenuncia.proporcionoCopia ? 'Sí' : 'No');
 
-        this.data['xCargoEmisor']        = '';
-        this.data['xNombreEmisor']       = '';
-        this.data['xAdscripcionEmisor']  = '';
+        this.data['xCargoEmisorFirma']        = this.auth.user.cargo;
+        this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto;
+        this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto;
     }
 
     public setDataF1004(_data){
@@ -291,7 +368,7 @@ export class FormatosLocal {
 
     public setDataF1005(_data){
         this.setCasoInfo(_data);
-        this.setVictimaInfo(_data);
+        // this.setVictimaInfo(_data);
         this.data['xTelefonoLlamando']      = !_data.predenuncias ? '' :(_data.predenuncias.noTelefonico ? _data.predenuncias.noTelefonico  : '');
         this.data['xTipoLineaTelefonica']   = !_data.predenuncias ? '' :(_data.predenuncias.tipoLinea ? _data.predenuncias.tipoLinea  : '');
         this.data['xLugarLlamada']          = !_data.predenuncias ? '' :(_data.predenuncias.lugarLlamada ? _data.predenuncias.lugarLlamada  : '');
@@ -395,45 +472,101 @@ public setDataF1008(_data){
 
 public setDataF1009(_data,_id_solicitud){
   Logger.log('Formatos@setDataF1009', _data);
-  let imputado;
-  let victima = _data.findVictima();
-  let nombreVictima =`${victima.persona.nombre} ${victima.persona.paterno} ${victima.persona.materno ? victima.persona.materno :'' }`;
-  let lugar:any={};//por definir
-  let pericial;
+  console.log('<<< Informacion >>>',_data, _id_solicitud)
 
-  _data.personaCasos.forEach(persona => {
-    if(persona.tipoInterviniente.tipo==='Imputado'){
-        imputado=persona;
-        Logger.log(imputado)
-    }
+  let nombresVictimas = '';
+  let nombresImputados = '';
 
-  });
+  if (_data.heredar) {
+      nombresVictimas = this.getVicImp(_data, _id_solicitud, false);
+      nombresImputados = this.getVicImp(_data, _id_solicitud, true);
+   } else {
+       for (let i = 0; i < _data.personaCasos.length; i++) {
+           if (_data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.victima || _data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.victimaDesconocido) {
+               if (_data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.victimaDesconocido) {
+                   if (nombresVictimas == '') {
+                       nombresVictimas = 'Identidad desconocida';
+                   } else {
+                       nombresVictimas += ' ,'+ 'Identidad desconocida';
+                   }   
+               } else {
+                   if (nombresVictimas == '') {
+                       nombresVictimas = _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
+                   } else {
+                       nombresVictimas += ' ,'+ _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
+                   }                   
+               }
+           }
+       }
+
+       for (let i = 0; i < _data.personaCasos.length; i++) {
+           if (_data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.imputado || _data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.imputadoDesconocido) {
+               if (_data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.imputadoDesconocido) {
+                   if (nombresImputados == '') {
+                       nombresImputados = 'Quién resulte responsable';
+                   } else {
+                       nombresImputados += ' ,'+ 'Quién resulte responsable';
+                   }     
+               } else {
+                   if (nombresImputados == '') {
+                       nombresImputados = _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
+                   } else {
+                       nombresImputados += ' ,'+ _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
+                   }                   
+               }
+           }
+       }
+   }
+
+   console.log('<<< nombresVictimas >>>', nombresVictimas);
+   console.log('<<< nombresImputados >>>', nombresImputados);
+
+  // let imputado;
+  
+  // _data.personaCasos.forEach(persona => {
+  //   if(persona.tipoInterviniente.tipo==='Imputado'){
+  //       imputado=persona;
+  //       console.log('<<< Imputado >>>' , imputado);
+  //   }
+
+  // });
+
+  // let victima = _data.findVictima();
+  // let nombreVictima =`${victima.persona.nombre} ${victima.persona.paterno} ${victima.persona.materno ? victima.persona.materno :'' }`;
+  var lugar:any={};//por definir
+  var pericial;
+
   _data.solicitudPrePericiales.forEach(solicitud => {
      if(solicitud.id===_id_solicitud){
          pericial=solicitud;
      }
   });
-  let nombreImputado = imputado.persona.nombre+' '+imputado.persona.paterno+' '+imputado.persona.materno;
-  let date = new Date();
+
+  // let nombreImputado = imputado.persona.nombre+' '+imputado.persona.paterno+' '+imputado.persona.materno;
+  var date = new Date();
   if(pericial != null)
       date= new Date(pericial.created);
+
+  console.log('<<< fecha >>>',date);
 
   this.data['xNUC']                     = _data.nuc? _data.nuc:'';
   this.data['xNIC']                     = _data.nic? _data.nic:'';
   this.data['xHechoDelictivo']          = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
-  this.data['xVictima']                 = nombreVictima;
-  this.data['xImputado']                = nombreImputado;
+  this.data['xVictima']                 = nombresVictimas;
+  this.data['xImputado']                = nombresImputados;
   this.data['xOficio']                  = pericial.hechosDenunciados ? _data.hechosDenunciados : '';
   this.data['xEstado']                  = lugar.estado?lugar.estado:lugar.estadoOtro?lugar.estadoOtro:'';
   this.data['xPoblacion']               = lugar.municipio? lugar.municipio:lugar.municipioOtro?lugar.municipioOtro:'';
-  this.data['xDia']                     = date? date.getDay()+'' : '';
-  this.data['xMes']                     = date? date.getMonth()+'' : '';
-  this.data['xAnio']                    = date? date.getFullYear()+'' : '';
+  this.data['xDia']                     = date ? date.getDate()+'' : '';
+  this.data['xMes']                     = date ? date.getMonth()+'' : '';
+  this.data['xAnio']                    = date ? date.getFullYear()+'' : '';
   this.data['xSolicitaPerito']          = pericial.peritoMateria ? pericial.peritoMateria: '';
   this.data['xFinalidadRequerimiento']  = pericial.finalidad?pericial.finalidad:'';
   this.data['xPlazoRendirInformes']     = pericial.plazoDias? pericial.plazoDias: '';
-  this.data['xApercibimiento']          =  pericial.apercibimiento ? pericial.apercibimiento: '';
-  this.data['xAdscripcionEmisor']        = '';
+  this.data['xApercibimiento']          = pericial.apercibimiento ? pericial.apercibimiento: '';
+  this.data['xDirectorInstituto']       = pericial.directorInstituto ? pericial.directorInstituto: '';
+  this.data['xAdscripcionEmisor']       = '';
+
 
 }
 
@@ -522,6 +655,17 @@ public setDataF1011(_data,_id_solicitud){
   Logger.log('formato',this.data)
 
 }
+
+    public findHerenciaPersonasPredenuncia(_caso) {
+        const personasIds  = _caso.predenuncias.personas;
+        const personas = [];
+
+        for (const personaId of personasIds) {
+            personas.push(_caso.findPersonaCaso(personaId.personaCaso.id));
+        }
+
+        return personas;
+    }
 
 
 }
