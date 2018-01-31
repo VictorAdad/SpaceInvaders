@@ -135,6 +135,13 @@ export class FormatosLocal {
     'file': null,
     'data': null
    };
+   public F1_021 = {
+    'path': environment.app.host+'/assets/formatos/F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO.docx',
+    'nombre': 'F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO.docx',
+    'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO',
+    'file': null,
+    'data': null
+   };
 
    public getVicImp(_data, _id_solicitud, _interVi) {
        var victimasHeredar = [];
@@ -556,6 +563,7 @@ public setDataF1008(_data){
 public setDataF1009(_data,_id_solicitud){
   Logger.log('Formatos@setDataF1009', _data);
   console.log('<<< Informacion >>>',_data, _id_solicitud)
+  console.log('<<< autentificacion >>>', this.auth);
 
   let nombresVictimas = '';
   let nombresImputados = '';
@@ -630,6 +638,12 @@ public setDataF1009(_data,_id_solicitud){
   if(pericial != null)
       date= new Date(pericial.created);
 
+  if (date) {
+      var dia = date.getDate();
+      var mes = 1 + date.getMonth();
+      var anio = date.getFullYear();
+  }
+
   console.log('<<< fecha >>>',date);
 
   this.data['xNUC']                     = _data.nuc? _data.nuc:'';
@@ -637,18 +651,21 @@ public setDataF1009(_data,_id_solicitud){
   this.data['xHechoDelictivo']          = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
   this.data['xVictima']                 = nombresVictimas;
   this.data['xImputado']                = nombresImputados;
-  this.data['xOficio']                  = pericial.hechosDenunciados ? _data.hechosDenunciados : '';
-  this.data['xEstado']                  = lugar.estado?lugar.estado:lugar.estadoOtro?lugar.estadoOtro:'';
-  this.data['xPoblacion']               = lugar.municipio? lugar.municipio:lugar.municipioOtro?lugar.municipioOtro:'';
-  this.data['xDia']                     = date ? date.getDate()+'' : '';
-  this.data['xMes']                     = date ? date.getMonth()+'' : '';
-  this.data['xAnio']                    = date ? date.getFullYear()+'' : '';
-  this.data['xSolicitaPerito']          = pericial.peritoMateria ? pericial.peritoMateria: '';
+  this.data['xOficio']                  = pericial.noOficio ? pericial.noOficio : '';
+  this.data['xEstado']                  = 'Estado de México';
+  this.data['xPoblacion']               = this.auth.user.municipio;
+  this.data['xDia']                     = dia ? dia.toString() : '';
+  this.data['xMes']                     = mes ? mes.toString() : '';
+  this.data['xAnio']                    = anio ? anio.toString(): '';
+  this.data['xSolicitaPerito']          = pericial.peritoMateria.nombre ? pericial.peritoMateria.nombre : '';
   this.data['xFinalidadRequerimiento']  = pericial.finalidad?pericial.finalidad:'';
   this.data['xPlazoRendirInformes']     = pericial.plazoDias? pericial.plazoDias: '';
   this.data['xApercibimiento']          = pericial.apercibimiento ? pericial.apercibimiento: '';
   this.data['xDirectorInstituto']       = pericial.directorInstituto ? pericial.directorInstituto: '';
-  this.data['xAdscripcionEmisor']       = '';
+  this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto;
+  this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto;
+  this.data['xCargoEmisorFirma']        = this.auth.user.cargo;
+
 
 
 }

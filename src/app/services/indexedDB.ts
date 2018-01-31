@@ -315,10 +315,16 @@ export class CIndexedDB {
                         var tx    = db.transaction(_table, "readwrite");
                         var store = tx.objectStore(_table);
 
-                        store.put(_data);
-                        
-                        tx.oncomplete = function() {
+                        var updateTitleRequest = store.put(_data);
+
+                        updateTitleRequest.onsuccess = function() {
                             resolve(_data);
+                        };
+                        updateTitleRequest.onerror = function(){
+                            reject('Ocurrio un error');
+                        }
+                        tx.oncomplete = function() {
+                            
                             //Logger.log("-> cierra la conexion");
                         };
                     //}

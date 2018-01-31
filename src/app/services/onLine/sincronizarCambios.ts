@@ -49,6 +49,35 @@ export class SincronizaCambios {
         ){
     }
     /**
+     * Actualiza los casos que ya se sincronizaron.
+     * Busca en la lista de sincronizacion, las entradas que corresponden a la url de post de 
+     * caso y luego busca el caso en indexeddb y le agrega el campo de estatusSincronizacion
+     */
+    actualizaCasos(){
+        if (this.sincronizando)
+            return;
+        this.db.list('sincronizar').then(list=>{
+            let lista = (list as any[]).filter(e => e.url == '/v1/base/casos');
+            for (let i =0; i<lista.length; i++){
+                let item = lista[i];
+                if (!item['pendiente']){
+                    this.db.get('casos',item['temId']).then(caso => {
+                        if (caso){
+                            if (caso['estatusSincronizacion'] && caso['estatusSincronizacion']!='sincronizado'){
+                                caso['estatusSincronizacion']='sincronizado';
+                                this.db.update2('casos',caso).then(caso => {
+                                    Logger.log('Actualizado', caso);
+                                }).catch(e => {
+                                    console.log(e);
+                                });
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+    /**
      * Fincin para setear el casoService.
      * @param casoService La instancia del servicio casoService
      */
