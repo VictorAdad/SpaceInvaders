@@ -430,28 +430,28 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                 );
             }
             personaCaso.persona.sexo=this.consultas.get('sexo',personaCaso.persona.sexo.id);
-            if (personaCaso.persona.estado['id'] && personaCaso.persona.estado['id']!=''){
+            if (personaCaso.persona.estado && personaCaso.persona.estado['id'] && personaCaso.persona.estado['id']!=''){
                 personaCaso.persona.estado=this.consultas.get('estado',personaCaso.persona.estado.id);
             }
-            if (personaCaso.persona.municipio['id'] && personaCaso.persona.municipio['id']!=''){
+            if (personaCaso.persona.municipio && personaCaso.persona.municipio['id'] && personaCaso.persona.municipio['id']!=''){
                 personaCaso.persona.municipio=this.consultas.get('municipio',personaCaso.persona.municipio.id);
             }
-            if (personaCaso.persona.pais['id'] && personaCaso.persona.pais['id']!=''){
+            if (personaCaso.persona.pais && personaCaso.persona.pais['id'] && personaCaso.persona.pais['id']!=''){
                 personaCaso.persona.pais=this.consultas.get('pais',personaCaso.persona.pais.id);
             }
-            if (personaCaso.persona.estadoCivil['id'] && personaCaso.persona.estadoCivil['id']!=''){
+            if (personaCaso.persona.estadoCivil && personaCaso.persona.estadoCivil['id'] && personaCaso.persona.estadoCivil['id']!=''){
                 personaCaso.persona.estadoCivil=this.consultas.get('estadoCivil',personaCaso.persona.estadoCivil.id);
             }
-            if (personaCaso.persona.nacionalidadReligion['id'] && personaCaso.persona.nacionalidadReligion['id']!=''){
+            if (personaCaso.persona.nacionalidadReligion && personaCaso.persona.nacionalidadReligion['id'] && personaCaso.persona.nacionalidadReligion['id']!=''){
                 personaCaso.persona.nacionalidadReligion=this.consultas.get('nacionalidadReligion',personaCaso.persona.nacionalidadReligion.id);
             }
-            if (personaCaso.persona.ocupacion['id'] && personaCaso.persona.ocupacion['id']!=''){
+            if (personaCaso.persona.ocupacion && personaCaso.persona.ocupacion['id'] && personaCaso.persona.ocupacion['id']!=''){
                 personaCaso.persona.ocupacion=this.consultas.get('ocupacion',personaCaso.persona.ocupacion.id);
             }
-            if (personaCaso.persona.escolaridad['id'] && personaCaso.persona.escolaridad['id']!=''){
+            if (personaCaso.persona.escolaridad && personaCaso.persona.escolaridad['id'] && personaCaso.persona.escolaridad['id']!=''){
                 personaCaso.persona.escolaridad=this.consultas.get('escolaridad',personaCaso.persona.escolaridad.id);
             }
-            if (personaCaso.persona.alfabetismo['id'] && personaCaso.persona.alfabetismo['id']!=''){
+            if (personaCaso.persona.alfabetismo && personaCaso.persona.alfabetismo['id'] && personaCaso.persona.alfabetismo['id']!=''){
                 personaCaso.persona.alfabetismo=this.consultas.get('alfabetismo',personaCaso.persona.alfabetismo.id);
             }
             Logger.log("PERSONA",personaCaso);
@@ -695,7 +695,9 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
         this.form.controls['emisorIdentificacionHeredar'].setValue('')
         this.form.controls['noIdentificacionHeredar'].setValue('')
         this.form.controls['gradoEscolaridadHeredar'].setValue('')
-        this.form.controls['salarioHeredar'].setValue('')
+        this.form.controls['salarioHeredar'].setValue('');
+        this.form.controls['originarioDeHeredar'].setValue('');
+        this.form.controls['sabeLeerEscribirHeredar'].setValue('');
     }
 
     public heredarSintesisChange(_event: boolean) {
