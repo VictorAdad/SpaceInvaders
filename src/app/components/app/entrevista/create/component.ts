@@ -164,7 +164,10 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                         for (let i = 0; i < entrevistas.length; ++i) {
                             if ((entrevistas[i])["id"] == this.id)    {
                                 const entrevista = entrevistas[i];
-                                this.fillForm(entrevistas[i]);
+                                this.heredar = entrevista.heredar;
+                                timer.subscribe(t=>{
+                                    this.fillForm(entrevistas[i]);
+                                });
                                 this.modelUpdate.emit(entrevistas[i]);
                                 this.personas = entrevistas[i].personas;
                                 break;
@@ -598,15 +601,19 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 
             } else {
                 this.setSinValor("calleHeredar");
+                this.setSinValor('noExteriorHeredar');
                 this.setSinValor("noExterior");
+                this.setSinValor("noInteriorHeredar");
                 this.setSinValor("noInterior");
-                this.setSinValor("colonia");
+                this.setSinValor("coloniaHeredar");
+                this.setSinValor("estadoHeredar");
+                this.setSinValor("municipioHeredar");
+                this.setSinValor("correoElectronicoHeredar");
                 this.setSinValor("cpHeredar");
                 this.setSinValor("municipio");
                 this.setSinValor("estado");
                 this.setSinValor("noTelefonoParticularHeredar");
                 this.setSinValor("noTelefonoCelularHeredar");
-                this.setSinValor("correoElectronicoHeredar");
 
                 // this.setSinValor("calidadIntervinienteHeredar");
                 // this.setSinValor("tipoIdentificacionHeredar");
@@ -617,19 +624,6 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 
             }
         });
-
-        if (!hasALocalizacion) {
-            this.form.controls["calleHeredar"].setValue(null)
-            this.form.controls["noExterior"].setValue(null)
-            this.form.controls["noInterior"].setValue(null)
-            this.form.controls["cpHeredar"].setValue(null)
-            this.form.controls["colonia"].setValue(null)
-            this.form.controls["municipio"].setValue(null)
-            this.form.controls["estado"].setValue(null)
-            this.form.controls["noTelefonoParticularHeredar"].setValue(null)
-            this.form.controls["noTelefonoCelularHeredar"].setValue(null)
-            this.form.controls["correoElectronico"].setValue(null)
-        }
     }
 
     public setSinValor(key) {
