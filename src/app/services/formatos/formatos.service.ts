@@ -78,18 +78,21 @@ export class FormatosLocal {
     public F1_003 = {
         'path': environment.app.host+'/assets/formatos/F1-003 LECTURA DE DERECHOS DE LA VÍCTIMA.docx',
         'nombre': 'F1-003 LECTURA DE DERECHOS DE LA VÍCTIMA.docx',
+        'nameEcm': 'LECTURA DE DERECHOS DE LA VÍCTIMA',
         'file': null,
         'data': null
     };
     public F1_004= {
         'path': environment.app.host+'/assets/formatos/F1-004 REGISTRO PRESENCIAL.docx',
         'nombre': 'F1-004 REGISTRO PRESENCIAL.docx',
+        'nameEcm': 'REGISTRO PRESENCIAL',
         'file': null,
         'data': null
     };
     public F1_005 = {
         'path': environment.app.host+'/assets/formatos/F1-005 REGISTRO DE RECEPCIÓN DE LLAMADA.docx',
         'nombre': 'F1-005 REGISTRO DE RECEPCIÓN DE LLAMADA.docx',
+        'nameEcm': 'REGISTRO DE RECEPCIÓN DE LLAMADA',
         'file': null,
         'data': null
     };
@@ -97,6 +100,7 @@ export class FormatosLocal {
   public F1_008 = {
     'path': environment.app.host+'/assets/formatos/F1-008 ENTREVISTA.docx',
     'nombre': 'F1-008 ENTREVISTA.docx',
+    'nameEcm': 'ENTREVISTA',
     'file': null,
     'data': null
    };
@@ -104,12 +108,14 @@ export class FormatosLocal {
    public F1_009 = {
     'path': environment.app.host+'/assets/formatos/F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES.docx',
     'nombre': 'F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES.docx',
+    'nameEcm': 'OFICIO SOLICITUD A SERVICIOS PERICIALES',
     'file': null,
     'data': null
    };
    public F1_010 = {
     'path': environment.app.host+'/assets/formatos/F1-010 SOLICITUD EXAMEN PSICOFÍSICO.docx',
     'nombre': 'F1-010 SOLICITUD EXAMEN PSICOFÍSICO.docx',
+    'nameEcm': 'SOLICITUD EXAMEN PSICOFÍSICO',
     'file': null,
     'data': null
    };
@@ -117,6 +123,7 @@ export class FormatosLocal {
    public F1_011 = {
     'path': environment.app.host+'/assets/formatos/F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
     'nombre': 'F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
+    'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL',
     'file': null,
     'data': null
    };
