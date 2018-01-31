@@ -26,7 +26,7 @@ import { FormatosService } from '@services/formatos/formatos.service';
 import { Logger } from "@services/logger.service";
 import { PersonaService} from '@services/noticia-hecho/persona/persona.service';
 import { AuthenticationService } from '@services/auth/authentication.service';
-
+import { Consultas } from './consultas';
 
 var eliminaNulos = function(x){
     if (typeof x == "object"){
@@ -90,6 +90,7 @@ export class EntrevistaCreateComponent {
     templateUrl: './entrevista.component.html',
 })
 export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
+    public consultas: Consultas;
     public apiUrl = "/v1/base/entrevistas";
     public casoId: number = null;
     public id: number = null;
@@ -120,7 +121,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
         public casoService:CasoService,
         private auth: AuthenticationService,
 
-    ) { super(); }
+    ) { super();  this.consultas = new Consultas(db); }
 
     ngOnInit() {
         this.auth.masDe3DiasSinConexion().then( r => {
@@ -406,7 +407,8 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
         if (this.heredarSintesis) {
             this.form.controls["narracionHechos"].setValue(this.casoService.caso.predenuncias.hechosNarrados);
         }
-
+        let alfabetismos ='';
+        let edades = '';
         this.personasHeredadas.forEach((personaCaso)=> {
             // Heradar nombre del entrevistado
             let nombrePersona =
@@ -427,7 +429,32 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                     this.form.controls['nombreEntrevistadoHeredar'].value+","+nombrePersona
                 );
             }
-
+            personaCaso.persona.sexo=this.consultas.get('sexo',personaCaso.persona.sexo.id);
+            if (personaCaso.persona.estado['id'] && personaCaso.persona.estado['id']!=''){
+                personaCaso.persona.estado=this.consultas.get('estado',personaCaso.persona.estado.id);
+            }
+            if (personaCaso.persona.municipio['id'] && personaCaso.persona.municipio['id']!=''){
+                personaCaso.persona.municipio=this.consultas.get('municipio',personaCaso.persona.municipio.id);
+            }
+            if (personaCaso.persona.pais['id'] && personaCaso.persona.pais['id']!=''){
+                personaCaso.persona.pais=this.consultas.get('pais',personaCaso.persona.pais.id);
+            }
+            if (personaCaso.persona.estadoCivil['id'] && personaCaso.persona.estadoCivil['id']!=''){
+                personaCaso.persona.estadoCivil=this.consultas.get('estadoCivil',personaCaso.persona.estadoCivil.id);
+            }
+            if (personaCaso.persona.nacionalidadReligion['id'] && personaCaso.persona.nacionalidadReligion['id']!=''){
+                personaCaso.persona.nacionalidadReligion=this.consultas.get('nacionalidadReligion',personaCaso.persona.nacionalidadReligion.id);
+            }
+            if (personaCaso.persona.ocupacion['id'] && personaCaso.persona.ocupacion['id']!=''){
+                personaCaso.persona.ocupacion=this.consultas.get('ocupacion',personaCaso.persona.ocupacion.id);
+            }
+            if (personaCaso.persona.escolaridad['id'] && personaCaso.persona.escolaridad['id']!=''){
+                personaCaso.persona.escolaridad=this.consultas.get('escolaridad',personaCaso.persona.escolaridad.id);
+            }
+            if (personaCaso.persona.alfabetismo['id'] && personaCaso.persona.alfabetismo['id']!=''){
+                personaCaso.persona.alfabetismo=this.consultas.get('alfabetismo',personaCaso.persona.alfabetismo.id);
+            }
+            Logger.log("PERSONA",personaCaso);
             const sexo = personaCaso.persona.sexo ? personaCaso.persona.sexo.nombre : null;
             const sexoControl = this.form.controls["sexoHeredar"];
             const salarioSemanal = personaCaso.persona.ingresoMensual;
@@ -479,18 +506,29 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                 nacionalidadControl.value ? (nacionalidadControl.value+", " + nacionalidad) : nacionalidad
             );
             // Heredar leerEscribir
-            alfabetismoControl.setValue(
-                alfabetismoControl.value ? (alfabetismoControl.value+", " + alfabetismo) : alfabetismo
-            );
+            if (alfabetismos == '')
+                alfabetismos=alfabetismo;
+            else
+                alfabetismos +=', '+alfabetismo;
+            alfabetismoControl.setValue(alfabetismos);
 
             // Heredar Fecha Nacimiento
             // Logger.log('-> fecha de nacimiento ', personaCaso.persona.fechaNacimiento);
+
+            let fechaNacimientoMoment = personaCaso.persona.fechaNacimiento ? moment(personaCaso.persona.fechaNacimiento).format('DD-MM-YYYY'): 'Sin valor';
+            var hoy=moment();
+            let edadMoment = personaCaso.persona.fechaNacimiento ? hoy.diff(moment(personaCaso.persona.fechaNacimiento), 'years'): personaCaso.persona.edad;
+            if (edades=='')
+                edades = ''+edadMoment;
+            else
+                edades += ', '+edadMoment;
             if (typeof personaCaso.persona.fechaNacimiento === 'number') {
-                personaCaso.persona.fechaNacimiento = personaCaso.persona.fechaNacimiento?new Date(personaCaso.persona.fechaNacimiento).toLocaleDateString():null;
+                personaCaso.persona.fechaNacimiento = personaCaso.persona.fechaNacimiento? moment(personaCaso.persona.fechaNacimiento).format('DD-MM-YYYY'):null;
             }
-            this.form.controls["fechaNacimientoHeredar"].setValue(this.form.controls["fechaNacimientoHeredar"].value?(personaCaso.persona.fechaNacimiento?this.form.controls["fechaNacimientoHeredar"].value+","+personaCaso.persona.fechaNacimiento:this.form.controls["fechaNacimientoHeredar"].value+",Sin valor"):(personaCaso.persona.fechaNacimiento?personaCaso.persona.fechaNacimiento:"Sin valor"))
+            this.form.controls["fechaNacimientoHeredar"].setValue(
+                this.form.controls["fechaNacimientoHeredar"].value ? this.form.controls["fechaNacimientoHeredar"].value + ', '+fechaNacimientoMoment:fechaNacimientoMoment );
             // Heredar Edad
-            this.form.controls["edadHeredar"].setValue( this.form.controls["edadHeredar"].value?(personaCaso.persona.edad?this.form.controls["edadHeredar"].value+","+personaCaso.persona.edad:this.form.controls["edadHeredar"].value+",Sin valor"):(personaCaso.persona.edad?personaCaso.persona.edad:"Sin valor"))
+            this.form.controls["edadHeredar"].setValue(edades);
             // heredar Nacionalidad
             //Heredar CURP
             this.form.controls["curpHeredar"].setValue( this.form.controls["curpHeredar"].value?(personaCaso.persona.curp?this.form.controls["curpHeredar"].value+","+personaCaso.persona.curp:this.form.controls["curpHeredar"].value+",Sin valor"):(personaCaso.persona.curp?personaCaso.persona.curp:"Sin valor"))
