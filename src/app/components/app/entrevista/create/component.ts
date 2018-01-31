@@ -739,7 +739,8 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
         onLine,
         formatos,
         auth,
-        db
+        db,
+        caso
         );
     this.vista="entrevista";
 }

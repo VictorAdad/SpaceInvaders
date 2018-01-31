@@ -278,7 +278,6 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	                            }
 	                        }
 	                    );
-
 	                }
 				}
 			);
@@ -357,18 +356,22 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
         public onLine: OnLineService,
         public formatos: FormatosService,
         public db: CIndexedDB,
-        public caso: CasoService
+        public caso: CasoService,
+        public auth: AuthenticationService
     ){
-    super(
-        http,
-        confirmationService,
-        globalService,
-        dialog,
-        onLine,
-        formatos
-    );
-    this.vista="solicitudPerito";
-}
+	    super(
+	        http,
+	        confirmationService,
+	        globalService,
+	        dialog,
+	        onLine,
+	        formatos,
+	        auth,
+	        db,
+	        caso
+	    );
+	    this.vista="solicitudPerito";
+	}
 
   ngOnInit() {
       Logger.log('-> Data source ', this.object);
