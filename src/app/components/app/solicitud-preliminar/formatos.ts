@@ -88,7 +88,9 @@ export class FormatosGlobal {
                             this.formatos.formatos[_format].nombre,
                             _format
                         );
-                        this.guardarFormatoOffLine(out, _id);
+                        if (this.auth) {
+                            this.guardarFormatoOffLine(out, _id, this.formatos.formatos[_format].nameEcm);
+                        }
                         const an  = document.createElement('a');
                         const url = window.URL.createObjectURL(out);
                         document.body.appendChild(an);
@@ -230,25 +232,30 @@ export class FormatosGlobal {
   }
 
 
-    public guardarFormatoOffLine(_file, casoId) {
+    public guardarFormatoOffLine(_file, _casoId, _format) {
         const reader = new FileReader();
         reader.onload = (file) => {
             this.db.add('blobs', {blob: file.target['result']}).then(
                 t => {
-                    // console.log('-> Load file', file);
-                    // const dato = {
-                    //     nombre:(item["some"])["name"],
-                    //     type:(item["some"])["type"],
-                    //     idBlob:t["id"],
-                    //     procedimiento:"",
-                    //     fecha:new Date(),
-                    //     casoId:casoId,
-                    //     vista: ,
-                    //     atributoExtraPost: ''
-                    // };
-                    // this.db.add('documentos', dato).then(t => {
-
-                    // });
+                    const dato = {
+                        nombre: _format,
+                        type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                        idBlob: t['id'],
+                        procedimiento: '',
+                        fecha: new Date(),
+                        casoId: '',
+                        vista: '',
+                        atributoExtraPost: '',
+                        tipo: 'formato-offline'
+                    };
+                    this.db.add('documentos', dato).then(doc => {
+                        this.setData({
+                            id: doc['id'],
+                            nameEcm: doc['nombre'] + '.docx',
+                            created: new Date(),
+                            blob: doc['idBlob']
+                        });
+                    });
                 }
             );
         };
