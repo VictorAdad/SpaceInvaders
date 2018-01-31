@@ -302,7 +302,8 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 							}
 						);
 					}else{
-						let temId=Date.now();
+                        let temId=Date.now();
+                        _model['created'] = Date.now();
 		                let dato={
 		                    url: this.apiUrl,
 		                    body:_model,
