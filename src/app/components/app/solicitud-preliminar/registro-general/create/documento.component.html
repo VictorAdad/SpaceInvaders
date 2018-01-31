@@ -3,6 +3,7 @@
 		<select2
     placeholder= "Formatos"
     *ngIf="object.tipo === 'Registro general'"
+    [afterClean]="true"
     (valueChange)="changeFormat($event, object.id)" 
     [options]="[
         {label:'REGISTRO GENERAL',value:'F1_017'}
@@ -10,6 +11,7 @@
     <select2
     placeholder= "Formatos"
     *ngIf="object.tipo === 'Registro de llamada'"
+    [afterClean]="true"
     (valueChange)="changeFormat($event, object.id)" 
     [options]="[
         {label:'REGISTRO PARA PERMITIR AL IMPUTADO COMUNICARSE CON SU DEFENSOR O FAMILIAR',value:'F2_063'}
@@ -17,6 +19,7 @@
     <select2
     placeholder= "Formatos"
     *ngIf="object.tipo === 'Acuerdo general'"
+    [afterClean]="true"
     (valueChange)="changeFormat($event, object.id)" 
     [options]="[
         {'label':'ACUERDO GENERAL','value':'F1_006'},
@@ -25,6 +28,7 @@
     <select2
     placeholder= "Formatos"
     *ngIf="object.tipo === 'Registro de derivación'"
+    [afterClean]="true"
     (valueChange)="changeFormat($event, object.id)" 
     [options]="[
         {'label':'Registro de derivación a Justicia Restaurativa (JR)','value':'F2_117'}

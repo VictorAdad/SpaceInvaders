@@ -502,6 +502,7 @@ export class DocumentoPredenunciaComponent extends FormatosGlobal {
     public isCallCenter:boolean=false;
     public formData:FormData = new FormData();
     public urlUpload: string;
+    public documentClass: DocumentoPredenuncia;
 
     constructor(
         public http: HttpService,

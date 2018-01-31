@@ -48,7 +48,7 @@ export class FormatosGlobal {
     }
 
     public changeFormat(_format, _id, _data: any = {}) {
-        Logger.log('Change format:', _format, _id);   
+        Logger.log('Change format:', _format, _id);
 
         this._confirmation.create('Advertencia','¿Estás seguro de guardar este formato?',this.confirmation_settings)
         .subscribe(

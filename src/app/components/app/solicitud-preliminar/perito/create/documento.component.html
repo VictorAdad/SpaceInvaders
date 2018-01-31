@@ -1,7 +1,7 @@
 <div class="row space justify-content-end">
 	<div class="col-md-2">
-    <select2 placeholder= "Formatos" (valueChange)="changeFormat($event, object.id)" *ngIf="isPericiales" [options]="[{label:'OFICIO SOLICITUD A SERVICIOS PERICIALES',value:'F1_009'}]"></select2>
-    <select2 placeholder= "Formatos" (valueChange)="changeFormat($event, object.id)" *ngIf="!isPericiales" [options]="[{label:'SOLICITUD EXAMEN PSICOFÍSICO',value:'F1_010'}]"></select2>
+    <select2 placeholder= "Formatos" (valueChange)="changeFormat($event, object.id)" *ngIf="isPericiales" [options]="[{label:'OFICIO SOLICITUD A SERVICIOS PERICIALES',value:'F1_009'}]" [afterClean]="true"></select2>
+    <select2 placeholder= "Formatos" (valueChange)="changeFormat($event, object.id)" *ngIf="!isPericiales" [options]="[{label:'SOLICITUD EXAMEN PSICOFÍSICO',value:'F1_010'}]" [afterClean]="true"></select2>
   </div>
 
 	<div class="col-md-auto">
