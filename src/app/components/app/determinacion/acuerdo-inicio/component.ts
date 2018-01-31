@@ -1,4 +1,5 @@
 import { FormatosGlobal } from './../../solicitud-preliminar/formatos';
+import { FormatosService } from '@services/formatos/formatos.service';
 import { Component, ViewChild , Output, Input,EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
