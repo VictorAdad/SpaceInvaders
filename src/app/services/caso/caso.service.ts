@@ -108,10 +108,16 @@ export class CasoService{
                             return;
                        }
                        const caso = lista[i];
-                       if (caso['ultimaActualizacion'] != undefined && caso['ultimaActualizacion'] != null) {
+                       //eliminamos los casos temporales que ya estan sincronizados
+                       if (caso['estatusSincronizacion'] != undefined && caso['estatusSincronizacion'] == 'nasincronizado') {
                            obj.db.delete("casos",caso["id"]).then( p => {
                                fun(i+1,lista);
                            }).catch( e => { return reject(e);});
+                           //los casos que no tienen este estatus es por que no los crearon en offline, tons tambien borramos
+                       }else if(caso['estatusSincronizacion'] == undefined){
+                            obj.db.delete("casos",caso["id"]).then( p => {
+                                fun(i+1,lista);
+                            }).catch( e => { return reject(e);});
                        }else {
                            fun(i+1,lista);
                        }
@@ -141,6 +147,9 @@ export class CasoService{
      * @param caso
      */
     public setCaso(caso){
+        this.caso.estatusSincronizacion = undefined;
+        this.caso.ultimaActualizacion = null;
+        this.caso.username = undefined;
         Object.assign(this.caso, caso)
     }
     /**
@@ -236,6 +245,7 @@ export class Caso {
     public sintesis: string;
     public ultimaActualizacion: Date = null;
     public username: string;
+    public estatusSincronizacion: string = undefined;
 
 
     public findPersonaCaso(_id) {
