@@ -313,7 +313,13 @@ export class FormatosLocal {
         const identificaciones = [];
         const foliosIdentificacion = [];
         const predenuncia =  _caso.predenuncias;
-        const personas = this.findHerenciaPersonasPredenuncia(_caso);
+        let personas = [];
+
+        if (predenuncia.heredar) {
+            personas = this.findHerenciaPersonasPredenuncia(_caso)
+        } else {
+            personas = this.findVictimas(_caso);
+        }
 
         personas.forEach(o => {
             nombrePersonas.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
@@ -345,7 +351,7 @@ export class FormatosLocal {
 
     public setDataF1004(_caso) {
         // Logger.log('Formatos@setDataF1004', _data);
-        const personas = this.findHerenciaPersonasPredenuncia(_caso);
+        const predenuncia = _caso.predenuncias;
         const nombres = [];
         const calidadPersonas = [];
         const tiposPersonas = [];
@@ -365,6 +371,13 @@ export class FormatosLocal {
         const nacionalidades = [];
         const identificaciones = [];
         const folios = [];
+        let personas = [];
+
+        if (predenuncia.heredar) {
+            personas = this.findHerenciaPersonasPredenuncia(_caso)
+        } else {
+            personas = this.findVictimas(_caso);
+        }
 
         personas.forEach(o => {
             nombres.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
@@ -765,6 +778,19 @@ public setDataF1011(_data,_id_solicitud){
         }
 
         return personas;
+    }
+
+    public findVictimas(_caso) {
+        const personas = _caso.personas;
+        const victimas = [];
+
+        for (const persona of victimas) {
+            if (persona.tipoInterviniente.id == _config.optionValue.tipoInterviniente.victima) {
+                victimas.push(persona);
+            }
+        }
+
+        return victimas;
     }
 
 
