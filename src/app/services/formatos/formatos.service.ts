@@ -137,8 +137,8 @@ export class FormatosLocal {
    };
    public F1_021 = {
     'path': environment.app.host+'/assets/formatos/F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO.docx',
-    'nombre': 'F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
-    'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL',
+    'nombre': 'F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO.docx',
+    'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO',
     'file': null,
     'data': null
    };
@@ -338,32 +338,122 @@ export class FormatosLocal {
         this.data['xComprendioDerechos'] = !predenuncia ? '' :(predenuncia.compredioDerechos ? 'Sí' : 'No');
         this.data['xCopiaDerechos'] = !predenuncia ? '' :(predenuncia.proporcionoCopia ? 'Sí' : 'No');
 
-        this.data['xCargoEmisorFirma']        = this.auth.user.cargo;
-        this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto;
-        this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto;
+        this.data['xCargoEmisorFirma']        = this.auth.user.cargo.toLocaleUpperCase();
+        this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto.toLocaleUpperCase();
+        this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto.toLocaleUpperCase();
     }
 
-    public setDataF1004(_data){
-        Logger.log('Formatos@setDataF1004', _data);
-        this.setCasoInfo(_data);
-        // this.data['xNombreUsuario']           = _data.
+    public setDataF1004(_caso) {
+        // Logger.log('Formatos@setDataF1004', _data);
+        const personas = this.findHerenciaPersonasPredenuncia(_caso);
+        const nombres = [];
+        const calidadPersonas = [];
+        const tiposPersonas = [];
+        const noParticulares = [];
+        const originarios = [];
+        const edades = [];
+        const sexos = [];
+        const domicilios = [];
+        const noMoviles = [];
+        const fechasNacimientos = [];
+        const rfcs = [];
+        const curps = [];
+        const estadosCiviles = [];
+        const ocupaciones = [];
+        const escolaridades = [];
+        const religiones = [];
+        const nacionalidades = [];
+        const identificaciones = [];
+        const folios = [];
 
-        this.data['xCalidadUsuarioPersona']   = _data.predenuncia ? _data.predenuncias.calidadPersona : '';
-        this.data['xTipoPersona']             = _data.tipoPersona ? _data.tipoPersona.nombre : '';
-        this.data['xNumeroTelefonico']        = _data.noTelefonico;
-        this.data['xFolioIdentificacion']     = !_data.predenuncias ? '' :(_data.predenuncias.noFolioConstancia ? _data.predenuncias.noFolioConstancia  : '');
-        this.data['xHechosNarrados']          = !_data.predenuncias ? '' :(_data.predenuncias.hechosNarrados ? _data.predenuncias.hechosNarrados  : '');
-        this.data['xConclusionHechos']        = !_data.predenuncias ? '' :(_data.predenuncias.conclusion ? _data.predenuncias.conclusion  : '');
-        this.data['xLugarHechos']             = !_data.predenuncias ? '' :(_data.predenuncias.lugarHechos ? _data.predenuncias.lugarHechos  : '');
-        this.data['xCanalizacion']            = !_data.predenuncias ? '' :(_data.predenuncias.canalizacion ? _data.predenuncias.canalizacion  : '');
-        this.data['xInstitucionCanalizacion'] = !_data.predenuncias ? '' :(_data.predenuncias.institucion ? _data.predenuncias.institucion  : '');
-        this.data['xMotivoCanalizacion']      = !_data.predenuncias ? '' :(_data.predenuncias.motivoCanalizacion ? _data.predenuncias.motivoCanalizacion  : '');
-        this.data['xFechaCanalizacion']       = !_data.predenuncias ? '' :(_data.predenuncias.fechaCanalizacion ? _data.predenuncias.fechaCanalizacion  : '');
-        this.data['xHoraCanalizacion']        = !_data.predenuncias ? '' :(_data.predenuncias.horaCanalizacion ? _data.predenuncias.horaCanalizacion  : '');
-        this.data['xNombreCausoHecho']        = !_data.predenuncias ? '' :(_data.predenuncias.nombreCausante ? _data.predenuncias.nombreCausante  : '');
-        this.data['xDomicilioHechos']         = !_data.predenuncias ? '' :(_data.predenuncias.domicilioCausante ? _data.predenuncias.domicilioCausante  : '');
-        this.data['xObservaciones']           = !_data.predenuncias ? '' :(_data.predenuncias.observaciones ? _data.predenuncias.observaciones  : '');
-        // this.data['xPersonaRegistro']         = _data.
+        personas.forEach(o => {
+            nombres.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
+            if (o.tipoInterviniente) {
+                calidadPersonas.push(` ${o.tipoInterviniente.tipo}`);
+            }
+            if (o.persona.tipoPersona) {
+                tiposPersonas.push(` ${o.persona.tipoPersona}`);
+            }
+            if (o.persona.fechaNacimiento) {
+                fechasNacimientos.push(` ${o.persona.fechaNacimiento}`);
+            }
+            if (o.persona.rfc) {
+                rfcs.push(` ${o.persona.rfc}`);
+            }
+            if (o.persona.estado) {
+                curps.push(` ${o.persona.curp}`);
+            }
+            if (o.persona.edad) {
+                edades.push(` ${o.persona.edad}`);
+            }
+            if (o.persona.folioIdentificacion) {
+                folios.push(` ${o.folioIdentificacion}`);
+            }
+            if (o.persona.estado) {
+                originarios.push(` ${o.persona.estado.nombre}`);
+            }
+            if (o.persona.localizacionPersona.length > 0) {
+                domicilios.push(` ${o.estado.nombre}`);
+                noParticulares.push(` ${o.estado.nombre}`);
+                noMoviles.push(` ${o.estado.nombre}`);
+            }
+            if (o.sexo) {
+                sexos.push(` ${o.persona.sexo.nombre}`);
+            }
+            if (o.persona.estadoCivil) {
+                estadosCiviles.push(` ${o.persona.estadoCivil.nombre}`);
+            }
+            if (o.persona.ocupacion) {
+                ocupaciones.push(` ${o.persona.ocupacion.nombre}`);
+            }
+            if (o.persona.escolaridad) {
+                escolaridades.push(` ${o.persona.escolaridad.nombre}`);
+            }
+            if (o.persona.nacionalidadReligion) {
+                religiones.push(` ${o.persona.nacionalidadReligion.religion}`);
+                nacionalidades.push(` ${o.persona.nacionalidadReligion.religion}`);
+            }
+            if (o.persona.idiomaIdentificacion) {
+                if (o.persona.idiomaIdentificacion.identificacion) {
+                    identificaciones.push(` ${o.persona.idiomaIdentificacion.identificacion}`);
+                }
+            }
+        });
+        this.setCasoInfo(_caso);
+        this.data['xNombreUsuario'] = nombres.toLocaleString();
+        this.data['xOriginario'] = originarios.toLocaleString();
+        this.data['xEdad'] = edades.toLocaleString();
+        this.data['xSexo'] = sexos.toLocaleString();
+        this.data['xDomicilio'] = domicilios.toLocaleString();
+        this.data['xCalidadUsuarioPersona'] = calidadPersonas.toLocaleString();
+        this.data['xTipoPersona'] = tiposPersonas.toLocaleString();
+        this.data['xFechaNacimiento'] = fechasNacimientos.toLocaleString();
+        this.data['xRFC'] = rfcs.toLocaleString();
+        this.data['xCURP'] = curps.toLocaleString();
+        this.data['xEstadoCivil'] = estadosCiviles.toLocaleString();
+        this.data['xOcupacion'] = ocupaciones.toLocaleString();
+        this.data['xEscolaridad'] = escolaridades.toLocaleString();
+        this.data['xReligion'] = religiones.toLocaleString();
+        this.data['xNacionalidad'] = nacionalidades.toLocaleString();
+        this.data['xNumeroTelefonico'] = noParticulares.toLocaleString();
+        this.data['xNumeroMovil'] = noMoviles.toLocaleString();
+        this.data['xSeIdentificaCon'] = identificaciones.toLocaleString();
+        this.data['xFolioIdentificacion'] = folios.toLocaleString();
+
+        if (_caso.predenuncias ) {
+            this.data['xFolioIdentificacion'] = (_caso.predenuncias.noFolioConstancia ? _caso.predenuncias.noFolioConstancia : '');
+            this.data['xHechosNarrados'] = (_caso.predenuncias.hechosNarrados ? _caso.predenuncias.hechosNarrados : '');
+            this.data['xConclusionHechos'] = (_caso.predenuncias.conclusion ? _caso.predenuncias.conclusion : '');
+            this.data['xLugarHechos'] = (_caso.predenuncias.lugarHechos ? _caso.predenuncias.lugarHechos : '');
+            this.data['xCanalizacion'] = (_caso.predenuncias.canalizacion ? _caso.predenuncias.canalizacion : '');
+            this.data['xInstitucionCanalizacion'] = (_caso.predenuncias.institucion ? _caso.predenuncias.institucion : '');
+            this.data['xMotivoCanalizacion'] = (_caso.predenuncias.motivoCanalizacion ? _caso.predenuncias.motivoCanalizacion : '');
+            this.data['xFechaCanalizacion'] = (_caso.predenuncias.fechaCanalizacion ? _caso.predenuncias.fechaCanalizacion : '');
+            this.data['xHoraCanalizacion'] = (_caso.predenuncias.horaCanalizacion ? _caso.predenuncias.horaCanalizacion : '');
+            this.data['xNombreCausoHecho'] = (_caso.predenuncias.nombreCausante ? _caso.predenuncias.nombreCausante : '');
+            this.data['xDomicilioHechos'] = (_caso.predenuncias.domicilioCausante ? _caso.predenuncias.domicilioCausante : '');
+            this.data['xObservaciones'] = (_caso.predenuncias.observaciones ? _caso.predenuncias.observaciones : '');
+        }
     }
 
     public setDataF1005(_data){
@@ -473,6 +563,7 @@ public setDataF1008(_data){
 public setDataF1009(_data,_id_solicitud){
   Logger.log('Formatos@setDataF1009', _data);
   console.log('<<< Informacion >>>',_data, _id_solicitud)
+  console.log('<<< autentificacion >>>', this.auth);
 
   let nombresVictimas = '';
   let nombresImputados = '';
@@ -547,6 +638,12 @@ public setDataF1009(_data,_id_solicitud){
   if(pericial != null)
       date= new Date(pericial.created);
 
+  if (date) {
+      var dia = date.getDate();
+      var mes = 1 + date.getMonth();
+      var anio = date.getFullYear();
+  }
+
   console.log('<<< fecha >>>',date);
 
   this.data['xNUC']                     = _data.nuc? _data.nuc:'';
@@ -554,18 +651,21 @@ public setDataF1009(_data,_id_solicitud){
   this.data['xHechoDelictivo']          = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
   this.data['xVictima']                 = nombresVictimas;
   this.data['xImputado']                = nombresImputados;
-  this.data['xOficio']                  = pericial.hechosDenunciados ? _data.hechosDenunciados : '';
-  this.data['xEstado']                  = lugar.estado?lugar.estado:lugar.estadoOtro?lugar.estadoOtro:'';
-  this.data['xPoblacion']               = lugar.municipio? lugar.municipio:lugar.municipioOtro?lugar.municipioOtro:'';
-  this.data['xDia']                     = date ? date.getDate()+'' : '';
-  this.data['xMes']                     = date ? date.getMonth()+'' : '';
-  this.data['xAnio']                    = date ? date.getFullYear()+'' : '';
-  this.data['xSolicitaPerito']          = pericial.peritoMateria ? pericial.peritoMateria: '';
+  this.data['xOficio']                  = pericial.noOficio ? pericial.noOficio : '';
+  this.data['xEstado']                  = 'Estado de México';
+  this.data['xPoblacion']               = this.auth.user.municipio;
+  this.data['xDia']                     = dia ? dia.toString() : '';
+  this.data['xMes']                     = mes ? mes.toString() : '';
+  this.data['xAnio']                    = anio ? anio.toString(): '';
+  this.data['xSolicitaPerito']          = pericial.peritoMateria.nombre ? pericial.peritoMateria.nombre : '';
   this.data['xFinalidadRequerimiento']  = pericial.finalidad?pericial.finalidad:'';
   this.data['xPlazoRendirInformes']     = pericial.plazoDias? pericial.plazoDias: '';
   this.data['xApercibimiento']          = pericial.apercibimiento ? pericial.apercibimiento: '';
   this.data['xDirectorInstituto']       = pericial.directorInstituto ? pericial.directorInstituto: '';
-  this.data['xAdscripcionEmisor']       = '';
+  this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto;
+  this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto;
+  this.data['xCargoEmisorFirma']        = this.auth.user.cargo;
+
 
 
 }
