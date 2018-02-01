@@ -38,7 +38,7 @@ export class FormatosService {
                 String(attr) !== 'setDataF1009',
                 String(attr) !== 'setDataF1010',
                 String(attr) !== 'setDataF1011',
-                String(attr) !== 'findHerenciaPersonasPredenuncia'
+                String(attr) !== 'findHerenciaPersonasPredenuncia',
                 String(attr) !== 'findVictimas'
                 ){
                 Logger.log('-> Cargar formato: ', attr);
