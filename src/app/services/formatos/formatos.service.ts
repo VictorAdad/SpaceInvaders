@@ -42,7 +42,8 @@ export class FormatosService {
                 String(attr) !== 'findHerenciaPersonasPredenuncia' &&
                 String(attr) !== 'findVictimas' &&
                 String(attr) !== 'findImputados' &&
-                String(attr) !== 'setDataF1007'
+                String(attr) !== 'setDataF1007' &&
+                String(attr) !== 'findHerenciaNombresVictimas'
                 ){
                 Logger.log('-> Cargar formato: ', attr);
                 if(this.formatos[attr].path){
@@ -873,16 +874,18 @@ public setDataF1011(_data,_id_solicitud){
     this.data['xNUC']                    = _data.nuc? _data.nuc:'';
     this.data['xNIC']                    = _data.nic? _data.nic:'';
     this.data['xHechoDelictivo']         = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
-    this.data['xVictima']                = nombreVictima;
+    this.data['xVictima']                = this.findHerenciaNombresVictimas(policia, _data);
     this.data['xImputado']               = nombreImputado;
-    this.data['xOficio']                 = typeof policia.hechosDenunciados != 'undefined' ? _data.hechosDenunciados : '';
-    this.data['xEstado']                 = lugar.estado?lugar.estado:lugar.estadoOtro?lugar.estadoOtro:'';
-    this.data['xPoblacion']              = lugar.municipio? lugar.municipio:lugar.municipioOtro?lugar.municipioOtro:'';
-    this.data['xDia']                    = date? date.getDay()+'' : '';
-    this.data['xMes']                    = date? date.getMonth()+'' : '';
-    this.data['xAnio']                   = date? date.getFullYear()+'' : '';
+    this.data['xOficio']                 = typeof policia.noOficio != 'undefined' ? policia.noOficio : '';
+    this.data['xEstado']                 = 'Estado de México';
+    this.data['xPoblacion']              = this.auth.user.municipio;
+    this.data['xDia']                    = date ? date.getDay()+'' : '';
+    this.data['xMes']                    = date ? date.getMonth()+'' : '';
+    this.data['xAnio']                   = date ? date.getFullYear()+'' : '';
     this.data['xActuacionesSolicitadas'] =  typeof policia.actuacionesSolicitadas != 'undefined' ? policia.actuacionesSolicitadas: '';
-    this.data['xAdscripcionEmisor']      = '';
+    this.data['xNombreEmisorFirma']      = this.auth.user.nombreCompleto.toUpperCase();
+    this.data['xCargoEmisorFirma']       = this.auth.user.cargo.toUpperCase();
+    this.data['xAdscripcionEmisorFirma'] = this.auth.user.agenciaCompleto.toUpperCase();
     Logger.log('formato',this.data)
 
 }
