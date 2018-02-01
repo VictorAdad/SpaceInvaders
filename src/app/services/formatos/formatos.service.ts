@@ -115,7 +115,7 @@ export class FormatosLocal {
         'data': null
     };
     public F1_005 = {
-        'path': environment.app.host+'/assets/formatos/F1_005_Registro_De_Recepción_De_Llamada.docx',
+        'path': environment.app.host+'/assets/formatos/F1_005_Registro_De_Recepcion_De_Llamada.docx',
         'nombre': 'F1-005 REGISTRO DE RECEPCIÓN DE LLAMADA',
         'nameEcm': 'REGISTRO DE RECEPCIÓN DE LLAMADA',
         'file': null,
@@ -140,7 +140,7 @@ export class FormatosLocal {
         'data': null
     };
     public F1_010 = {
-        'path': environment.app.host+'/assets/formatos/F1_010_Solicitud_Examen_Psicofísico.docx',
+        'path': environment.app.host+'/assets/formatos/F1_010_Solicitud_Examen_Psicofisico.docx',
         'nombre': 'F1-010 SOLICITUD EXAMEN PSICOFÍSICO',
         'nameEcm': 'SOLICITUD EXAMEN PSICOFÍSICO',
         'file': null,
