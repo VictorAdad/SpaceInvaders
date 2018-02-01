@@ -610,7 +610,6 @@ export class FormatosLocal {
 public setDataF1007(_data){
   Logger.log('Formatos@setDataF1007', _data);
   let fecha = new Date()
-  console.log('<<< Fecha >>>', fecha);
   const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   let delito = '';
   var dia  = fecha.getDate();
@@ -713,11 +712,50 @@ public setDataF1007(_data){
       }
   }
 
-   console.log('<<< hechos >>>', lugaresHechos);
-   console.log('<<< hallazgo >>>', lugaresHallazgo);
+  const imp        = _config.optionValue.tipoInterviniente.imputado;    
+  const impDesc    = _config.optionValue.tipoInterviniente.imputadoDesconocido;
+  const vic        = _config.optionValue.tipoInterviniente.victima;
+  const vicDesc    = _config.optionValue.tipoInterviniente.victimaDesconocido;
+  const ofendido   = _config.optionValue.tipoInterviniente.ofendido;
 
+  let nombresVictimas = '';
+  let nombresImputados = '';
 
-  console.log('<<< delito >>>', delito);
+  for (let i = 0; i < _data.personaCasos.length; i++) {
+       if (_data.personaCasos[i].tipoInterviniente.id == vic || _data.personaCasos[i].tipoInterviniente.id == vicDesc || _data.personaCasos[i].tipoInterviniente.id == ofendido) {
+           if (_data.personaCasos[i].tipoInterviniente.id == vicDesc) {
+               if (nombresVictimas == '') {
+                   nombresVictimas = 'Identidad desconocida';
+               } else {
+                   nombresVictimas += ', '+ 'Identidad desconocida';
+               }   
+           } else {
+               if (nombresVictimas == '') {
+                   nombresVictimas = _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
+               } else {
+                   nombresVictimas += ', '+ _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
+               }                   
+           }
+       }
+  }
+
+  for (let i = 0; i < _data.personaCasos.length; i++) {
+       if (_data.personaCasos[i].tipoInterviniente.id == imp || _data.personaCasos[i].tipoInterviniente.id == impDesc) {
+           if (_data.personaCasos[i].tipoInterviniente.id == impDesc) {
+               if (nombresImputados == '') {
+                   nombresImputados = 'Quién resulte responsable';
+               } else {
+                   nombresImputados += ', '+ 'Quién resulte responsable';
+               }     
+           } else {
+               if (nombresImputados == '') {
+                   nombresImputados = _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
+               } else {
+                   nombresImputados += ', '+ _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
+               }                   
+           }
+       }
+   }
 
   this.data['xNUC']                = _data.nuc ? _data.nuc : '';
   this.data['xNIC']                = _data.nic ? _data.nic : '';
@@ -728,6 +766,9 @@ public setDataF1007(_data){
   this.data['xHechoDelictivo']     = delito;
   this.data['xLugarHallazgo']      = lugaresHallazgo;  
   this.data['xLugarHechos']        = lugaresHechos;
+
+  this.data['xVictima']            = nombresVictimas;
+  this.data['xImputado']           = nombresImputados;
 
   this.data['xCargoEmisorFirma']   = this.auth.user.cargo;
   this.data['xNombreEmisorFirma']  = this.auth.user.nombreCompleto;
