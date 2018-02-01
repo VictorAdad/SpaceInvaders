@@ -17,6 +17,7 @@ import { CasoService } from '@services/caso/caso.service'
 import { Observable }                  from 'rxjs/Observable';
 import { Logger } from "@services/logger.service";
 import { Cadena } from "@services/utils/cadena";
+import { SelectsService} from '@services/selects.service';
 
 @Component({
     selector : 'datos-generales',
@@ -44,7 +45,8 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         _onLine: OnLineService,
         private http: HttpService,
         private auth: AuthenticationService,
-        private casoService: CasoService
+        private casoService: CasoService,
+        public options: SelectsService
     ) {
         super();
         this.db = _db;
@@ -52,9 +54,11 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         this.activeRoute = _activeRoute;
         this.dialog = _dialog;
         this.onLine = _onLine;
+
     }
 
     ngOnInit(){
+        this.options.getData();
         this.auth.masDe3DiasSinConexion().then(r=>{
             let x= r as boolean;
             this.masDe3Dias=r;
