@@ -15,4 +15,5 @@ tar cvzf builds/$BUILD_NAME a.out
 
 # Upload to DEST/DIR_NAME
 echo "Intentando subir el paquete al servidor (en ~/Documents)"
-scp builds/$BUILD_NAME $DEST
+#scp builds/$BUILD_NAME $DEST # este es el antiguo metodo, no sirve en GoCD
+sshpass -p "evo100518" scp -r $DEST builds/$BUILD_NAME
