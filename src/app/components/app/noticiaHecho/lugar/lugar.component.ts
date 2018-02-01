@@ -9,6 +9,7 @@ import { Lugar } from '@models/lugar';
 import { CIndexedDB } from '@services/indexedDB';
 import { CasoService } from '@services/caso/caso.service';
 import { Logger } from "@services/logger.service";
+import { _config} from '@app/app.config';
 
 @Component({
     selector: 'lugar',
@@ -22,6 +23,7 @@ export class LugarComponent extends BasePaginationComponent {
     public data: Lugar[] = [];
     public dataSource: TableService | null;
     public pag: number = 0;
+    public IdMexico = _config.optionValue.idMexico; 
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(

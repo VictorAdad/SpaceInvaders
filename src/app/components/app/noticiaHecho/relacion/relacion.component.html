@@ -28,7 +28,17 @@
             <span *ngIf="element.tipo == 'Defensor del imputado'"> <strong>Imputado:</strong> {{element.personaCaso | personaNombre}} </span> <br *ngIf="element.tipo == 'Defensor del imputado'">
             <span *ngIf="element.tipo != 'Defensor del imputado'"> <strong>Víctima:</strong> {{element.personaCaso | personaNombre}} </span>   <br *ngIf="element.tipo != 'Defensor del imputado'">
             <span *ngIf="element.tipo == 'Imputado víctima delito'"> <strong>Imputado:</strong> {{element.personaCasoRelacionada | personaNombre}} </span> <br *ngIf="element.tipo == 'Imputado víctima delito'">         
-            <span *ngIf="element.tipo == 'Imputado víctima delito'"><strong>Lugar:</strong> {{element.lugarTipoRelacionPersona["0"]?element.lugarTipoRelacionPersona["0"].lugar.calle +', '+ (element.lugarTipoRelacionPersona["0"].lugar.pais.id == IdMexico ? element.lugarTipoRelacionPersona["0"].lugar.colonia.nombre : element.lugarTipoRelacionPersona["0"].lugar.coloniaOtro):''}}</span> <br *ngIf="element.tipo == 'Imputado víctima delito'">
+            <span *ngIf="element.tipo == 'Imputado víctima delito'">
+                <strong>Lugar:</strong> 
+                {{element.lugarTipoRelacionPersona["0"]?.lugar?.calle }} , 
+                <span *ngIf="element.lugarTipoRelacionPersona && element.lugarTipoRelacionPersona['0'] &&  element.lugarTipoRelacionPersona['0'].lugar && element.lugarTipoRelacionPersona['0'].lugar.pais && element.lugarTipoRelacionPersona['0'].lugar.pais.id == IdMexico">
+                    {{element?.lugarTipoRelacionPersona["0"]?.lugar?.colonia?.nombre }}
+                </span>
+                <span *ngIf="element.lugarTipoRelacionPersona && element.lugarTipoRelacionPersona['0'] &&  element.lugarTipoRelacionPersona['0'].lugar && element.lugarTipoRelacionPersona['0'].lugar.pais && element.lugarTipoRelacionPersona['0'].lugar.pais.id != IdMexico">
+                    {{element?.lugarTipoRelacionPersona["0"]?.lugar?.coloniaOtro }}
+                </span>
+            </span> 
+            <br *ngIf="element.tipo == 'Imputado víctima delito'">
             <div *ngIf="element.tipo == 'Imputado víctima delito'" style="text-overflow: ellipsis; white-space: pre; overflow: hidden !important;"><strong>Delito:</strong> {{element.detalleDelito.delitoCaso?element.detalleDelito.delitoCaso.delito.nombre:''}}</div>
         </mat-cell>
     </ng-container>
