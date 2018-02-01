@@ -1,7 +1,7 @@
 // Header Files
 #include<iostream>
 
-//Standard namespace declaration
+//Standard namespace declarations
 using namespace std;
 
 //Main Function
