@@ -379,25 +379,6 @@ export class FormatosLocal {
     public setDataF1004(_caso) {
         // Logger.log('Formatos@setDataF1004', _data);
         const predenuncia = _caso.predenuncias;
-        const nombres = [];
-        const calidadPersonas = [];
-        const tiposPersonas = [];
-        const noParticulares = [];
-        const originarios = [];
-        const edades = [];
-        const sexos = [];
-        const domicilios = [];
-        const noMoviles = [];
-        const fechasNacimientos = [];
-        const rfcs = [];
-        const curps = [];
-        const estadosCiviles = [];
-        const ocupaciones = [];
-        const escolaridades = [];
-        const religiones = [];
-        const nacionalidades = [];
-        const identificaciones = [];
-        const folios = [];
         let personas = [];
 
         if (predenuncia.heredar) {
@@ -405,80 +386,28 @@ export class FormatosLocal {
         } else {
             personas = this.findVictimas(_caso);
         }
-
-        personas.forEach(o => {
-            nombres.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
-            if (o.tipoInterviniente) {
-                calidadPersonas.push(` ${o.tipoInterviniente.tipo}`);
-            }
-            if (o.persona.tipoPersona) {
-                tiposPersonas.push(` ${o.persona.tipoPersona}`);
-            }
-            if (o.persona.fechaNacimiento) {
-                fechasNacimientos.push(` ${o.persona.fechaNacimiento}`);
-            }
-            if (o.persona.rfc) {
-                rfcs.push(` ${o.persona.rfc}`);
-            }
-            if (o.persona.estado) {
-                curps.push(` ${o.persona.curp}`);
-            }
-            if (o.persona.edad) {
-                edades.push(` ${o.persona.edad}`);
-            }
-            if (o.persona.folioIdentificacion) {
-                folios.push(` ${o.folioIdentificacion}`);
-            }
-            if (o.persona.estado) {
-                originarios.push(` ${o.persona.estado.nombre}`);
-            }
-            if (o.persona.localizacionPersona.length > 0) {
-                domicilios.push(` ${o.estado.nombre}`);
-                noParticulares.push(` ${o.estado.nombre}`);
-                noMoviles.push(` ${o.estado.nombre}`);
-            }
-            if (o.sexo) {
-                sexos.push(` ${o.persona.sexo.nombre}`);
-            }
-            if (o.persona.estadoCivil) {
-                estadosCiviles.push(` ${o.persona.estadoCivil.nombre}`);
-            }
-            if (o.persona.ocupacion) {
-                ocupaciones.push(` ${o.persona.ocupacion.nombre}`);
-            }
-            if (o.persona.escolaridad) {
-                escolaridades.push(` ${o.persona.escolaridad.nombre}`);
-            }
-            if (o.persona.nacionalidadReligion) {
-                religiones.push(` ${o.persona.nacionalidadReligion.religion}`);
-                nacionalidades.push(` ${o.persona.nacionalidadReligion.religion}`);
-            }
-            if (o.persona.idiomaIdentificacion) {
-                if (o.persona.idiomaIdentificacion.identificacion) {
-                    identificaciones.push(` ${o.persona.idiomaIdentificacion.identificacion}`);
-                }
-            }
-        });
+        const atributosPersona = this.getListasPersonas(personas);
+        
         this.setCasoInfo(_caso);
-        this.data['xNombreUsuario'] = nombres.toLocaleString();
-        this.data['xOriginario'] = originarios.toLocaleString();
-        this.data['xEdad'] = edades.toLocaleString();
-        this.data['xSexo'] = sexos.toLocaleString();
-        this.data['xDomicilio'] = domicilios.toLocaleString();
-        this.data['xCalidadUsuarioPersona'] = calidadPersonas.toLocaleString();
-        this.data['xTipoPersona'] = tiposPersonas.toLocaleString();
-        this.data['xFechaNacimiento'] = fechasNacimientos.toLocaleString();
-        this.data['xRFC'] = rfcs.toLocaleString();
-        this.data['xCURP'] = curps.toLocaleString();
-        this.data['xEstadoCivil'] = estadosCiviles.toLocaleString();
-        this.data['xOcupacion'] = ocupaciones.toLocaleString();
-        this.data['xEscolaridad'] = escolaridades.toLocaleString();
-        this.data['xReligion'] = religiones.toLocaleString();
-        this.data['xNacionalidad'] = nacionalidades.toLocaleString();
-        this.data['xNumeroTelefonico'] = noParticulares.toLocaleString();
-        this.data['xNumeroMovil'] = noMoviles.toLocaleString();
-        this.data['xSeIdentificaCon'] = identificaciones.toLocaleString();
-        this.data['xFolioIdentificacion'] = folios.toLocaleString();
+        this.data['xNombreUsuario'] = atributosPersona['nombres'].toLocaleString();
+        this.data['xOriginario'] = atributosPersona['originarios'].toLocaleString();
+        this.data['xEdad'] = atributosPersona['edades'].toLocaleString();
+        this.data['xSexo'] = atributosPersona['sexos'].toLocaleString();
+        this.data['xDomicilio'] = atributosPersona['domicilios'].toLocaleString();
+        this.data['xCalidadUsuarioPersona'] = atributosPersona['calidadPersonas'].toLocaleString();
+        this.data['xTipoPersona'] = atributosPersona['tiposPersonas'].toLocaleString();
+        this.data['xFechaNacimiento'] = atributosPersona['fechasNacimientos'].toLocaleString();
+        this.data['xRFC'] = atributosPersona['rfcs'].toLocaleString();
+        this.data['xCURP'] = atributosPersona['curps'].toLocaleString();
+        this.data['xEstadoCivil'] = atributosPersona['estadosCiviles'].toLocaleString();
+        this.data['xOcupacion'] = atributosPersona['ocupaciones'].toLocaleString();
+        this.data['xEscolaridad'] = atributosPersona['escolaridades'].toLocaleString();
+        this.data['xReligion'] = atributosPersona['religiones'].toLocaleString();
+        this.data['xNacionalidad'] = atributosPersona['nacionalidades'].toLocaleString();
+        this.data['xNumeroTelefonico'] = atributosPersona['noParticulares'].toLocaleString();
+        this.data['xNumeroMovil'] = atributosPersona['noMoviles'].toLocaleString();
+        this.data['xSeIdentificaCon'] = atributosPersona['identificaciones'].toLocaleString();
+        this.data['xFolioIdentificacion'] = atributosPersona['folios'].toLocaleString();
 
         if (_caso.predenuncias ) {
             this.data['xFolioIdentificacion'] = (_caso.predenuncias.noFolioConstancia ? _caso.predenuncias.noFolioConstancia : '');
@@ -498,16 +427,6 @@ export class FormatosLocal {
 
     public setDataF1005(_caso) {
         const predenuncia = _caso.predenuncias;
-        const nombres = [];
-        const calidadPersonas = [];
-        const edades = [];
-        const sexos = [];
-        const estadosCiviles = [];
-        const ocupaciones = [];
-        const escolaridades = [];
-        const religiones = [];
-        const nacionalidades = [];
-        const identificaciones = [];
         let personas = [];
 
         if (predenuncia.heredar) {
@@ -515,44 +434,14 @@ export class FormatosLocal {
         } else {
             personas = this.findImputados(_caso);
         }
-
-        personas.forEach(o => {
-            nombres.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
-            if (o.tipoInterviniente) {
-                calidadPersonas.push(` ${o.tipoInterviniente.tipo}`);
-            }
-            if (o.persona.edad) {
-                edades.push(` ${o.persona.edad}`);
-            }
-            if (o.sexo) {
-                sexos.push(` ${o.persona.sexo.nombre}`);
-            }
-            if (o.persona.estadoCivil) {
-                estadosCiviles.push(` ${o.persona.estadoCivil.nombre}`);
-            }
-            if (o.persona.ocupacion) {
-                ocupaciones.push(` ${o.persona.ocupacion.nombre}`);
-            }
-            if (o.persona.escolaridad) {
-                escolaridades.push(` ${o.persona.escolaridad.nombre}`);
-            }
-            if (o.persona.nacionalidadReligion) {
-                religiones.push(` ${o.persona.nacionalidadReligion.religion}`);
-                nacionalidades.push(` ${o.persona.nacionalidadReligion.religion}`);
-            }
-            if (o.persona.idiomaIdentificacion) {
-                if (o.persona.idiomaIdentificacion.identificacion) {
-                    identificaciones.push(` ${o.persona.idiomaIdentificacion.identificacion}`);
-                }
-            }
-        });
+        const atributosPersona = this.getListasPersonas(personas);
 
         this.setCasoInfo(_caso);
-        this.data['xImputado'] = nombres.toLocaleString();
-        this.data['xEdad'] = edades.toLocaleString();
-        this.data['xEstadoCivil'] = estadosCiviles.toLocaleString();
-        this.data['xOcupacion'] = ocupaciones.toLocaleString();
-        this.data['xEscolaridad'] = escolaridades.toLocaleString();
+        this.data['xImputado'] = atributosPersona['nombres'].toLocaleString();
+        this.data['xEdad'] = atributosPersona['edades'].toLocaleString();
+        this.data['xEstadoCivil'] = atributosPersona['estadosCiviles'].toLocaleString();
+        this.data['xOcupacion'] = atributosPersona['ocupaciones'].toLocaleString();
+        this.data['xEscolaridad'] = atributosPersona['escolaridades'].toLocaleString();
         this.data['xOrientadorJuridicoFirma'] = this.auth.user.nombreCompleto.toLocaleUpperCase();
         // this.data['xNumeroTelefonico'] = nombres.toLocaleString();
         // this.data['xDomicilio'] = nombres.toLocaleString();
@@ -902,7 +791,7 @@ public setDataF1011(_data,_id_solicitud){
     }
 
     public findVictimas(_caso) {
-        const personas = _caso.personas;
+        const personas = _caso.personaCasos;
         const victimas = [];
 
         for (const persona of personas) {
@@ -916,7 +805,7 @@ public setDataF1011(_data,_id_solicitud){
     }
 
     public findImputados(_caso) {
-        const personas = _caso.personas;
+        const personas = _caso.personaCasos;
         const imputados = [];
 
         for (const persona of personas) {
@@ -945,6 +834,113 @@ public setDataF1011(_data,_id_solicitud){
         });
 
         return nombres;
+    }
+
+    public getListasPersonas(_personas) {
+        const listas = {};
+        const nombres = [];
+        const calidadPersonas = [];
+        const tiposPersonas = [];
+        const noParticulares = [];
+        const originarios = [];
+        const edades = [];
+        const sexos = [];
+        const domicilios = [];
+        const noMoviles = [];
+        const fechasNacimientos = [];
+        const rfcs = [];
+        const curps = [];
+        const estadosCiviles = [];
+        const ocupaciones = [];
+        const escolaridades = [];
+        const religiones = [];
+        const nacionalidades = [];
+        const identificaciones = [];
+        const folios = [];
+        const idiomas = [];
+
+        _personas.forEach(o => {
+            nombres.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
+            if (o.tipoInterviniente) {
+                calidadPersonas.push(` ${o.tipoInterviniente.tipo}`);
+            }
+            if (o.persona.tipoPersona) {
+                tiposPersonas.push(` ${o.persona.tipoPersona}`);
+            }
+            if (o.persona.fechaNacimiento) {
+                fechasNacimientos.push(` ${o.persona.fechaNacimiento}`);
+            }
+            if (o.persona.rfc) {
+                rfcs.push(` ${o.persona.rfc}`);
+            }
+            if (o.persona.estado) {
+                curps.push(` ${o.persona.curp}`);
+            }
+            if (o.persona.edad) {
+                edades.push(` ${o.persona.edad}`);
+            }
+            if (o.persona.folioIdentificacion) {
+                folios.push(` ${o.folioIdentificacion}`);
+            }
+            if (o.persona.estado) {
+                originarios.push(` ${o.persona.estado.nombre}`);
+            }
+            if (o.persona.localizacionPersona.length > 0) {
+                domicilios.push(` ${o.estado.nombre}`);
+                noParticulares.push(` ${o.estado.nombre}`);
+                noMoviles.push(` ${o.estado.nombre}`);
+            }
+            if (o.sexo) {
+                sexos.push(` ${o.persona.sexo.nombre}`);
+            }
+            if (o.persona.estadoCivil) {
+                estadosCiviles.push(` ${o.persona.estadoCivil.nombre}`);
+            }
+            if (o.persona.ocupacion) {
+                ocupaciones.push(` ${o.persona.ocupacion.nombre}`);
+            }
+            if (o.persona.escolaridad) {
+                escolaridades.push(` ${o.persona.escolaridad.nombre}`);
+            }
+            if (o.persona.nacionalidadReligion) {
+                if (o.persona.nacionalidadReligion.religion) {
+                    religiones.push(` ${o.persona.nacionalidadReligion.religion}`);
+                }
+                if (o.persona.nacionalidadReligion.nacionalidad) {
+                    nacionalidades.push(` ${o.persona.nacionalidadReligion.nacionalidad}`);
+                }
+            }
+            if (o.persona.idiomaIdentificacion) {
+                if (o.persona.idiomaIdentificacion.identificacion) {
+                    identificaciones.push(` ${o.persona.idiomaIdentificacion.identificacion}`);
+                }
+                if (o.persona.idiomaIdentificacion.idioma) {
+                    idiomas.push(` ${o.persona.idiomaIdentificacion.idioma}`);
+                }
+            }
+        });
+
+        listas['nombres'] = nombres;
+        listas['calidadPersonas'] = calidadPersonas;
+        listas['tiposPersonas'] = tiposPersonas;
+        listas['noParticulares'] = noParticulares;
+        listas['originarios'] = originarios;
+        listas['edades'] = edades;
+        listas['sexos'] = sexos;
+        listas['domicilios'] = domicilios;
+        listas['noMoviles'] = noMoviles;
+        listas['fechasNacimientos'] = fechasNacimientos;
+        listas['rfcs'] = rfcs;
+        listas['curps'] = curps;
+        listas['estadosCiviles'] = estadosCiviles;
+        listas['ocupaciones'] = ocupaciones;
+        listas['escolaridades'] = escolaridades;
+        listas['religiones'] = religiones;
+        listas['nacionalidades'] = nacionalidades;
+        listas['identificaciones'] = identificaciones;
+        listas['folios'] = folios;
+
+        return listas;
     }
 
 
