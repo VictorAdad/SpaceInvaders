@@ -498,9 +498,128 @@ export class FormatosLocal {
 
 public setDataF1007(_data){
   Logger.log('Formatos@setDataF1007', _data);
+  let fecha = new Date()
+  console.log('<<< Fecha >>>', fecha);
+  const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+  let delito = '';
+  var dia  = fecha.getDate();
+  var mes  = meses[fecha.getMonth()];
+  var anio = fecha.getFullYear();
+  var lugaresHallazgo = '';
+  var lugaresHechos = '';
 
-  this.data['xNUC']= _data.nuc? _data.nuc:'';
-  this.data['xNIC']= _data.nic? _data.nic:'';
+  if (_data.acuerdoInicio.heredar) {
+      delito = _data.acuerdoInicio.delito.delito.nombre;
+  } else {
+      delito = _data.delitoPrincipal.nombre;
+  }
+
+  for (let i = 0; i < _data.lugares.length; i++) {
+      if (_data.lugares[i].pais.id == _config.optionValue.idMexico) {
+          if (_data.lugares[i].detalleLugar.tipoLugar == "LUGAR DE LOS HECHOS") {
+              if (lugaresHechos == '') {
+                  lugaresHechos = (_data.lugares[i] ? _data.lugares[i].calle : '')+' '+
+                                  (_data.lugares[i].noExterior ? _data.lugares[i].noExterior : '')+' '+
+                                  (_data.lugares[i].noInterior ? _data.lugares[i].noInterior : '')+' '+
+                                  (_data.lugares[i] ? _data.lugares[i].colonia.nombre : '')+' '+
+                                  (_data.lugares[i].cp ? _data.lugares[i].cp : '')+' '+
+                                  (_data.lugares[i] ? _data.lugares[i].municipio.nombre : '')+' '+
+                                  (_data.lugares[i] ? _data.lugares[i].estado.nombre : '')+' '+
+                                  (_data.lugares[i] ? _data.lugares[i].pais.nombre : ''); 
+              } else {
+                  lugaresHechos += ', '+(_data.lugares[i] ? _data.lugares[i].calle : '')
+                                  +' '+(_data.lugares[i].noExterior ? _data.lugares[i].noExterior : '')
+                                  +' '+(_data.lugares[i].noInterior ? _data.lugares[i].noInterior : '')
+                                  +' '+(_data.lugares[i] ? _data.lugares[i].colonia.nombre : '')
+                                  +' '+(_data.lugares[i].cp ? _data.lugares[i].cp : '')
+                                  +' '+(_data.lugares[i] ? _data.lugares[i].municipio.nombre : '')
+                                  +' '+(_data.lugares[i] ? _data.lugares[i].estado.nombre : '')
+                                  +' '+(_data.lugares[i] ? _data.lugares[i].pais.nombre : '');
+              }
+          } else {
+              if (lugaresHallazgo == '') {
+                  lugaresHallazgo = (_data.lugares[i] ? _data.lugares[i].calle : '')+' '+
+                                  (_data.lugares[i].noExterior ? _data.lugares[i].noExterior : '')+' '+
+                                  (_data.lugares[i].noInterior ? _data.lugares[i].noInterior : '')+' '+
+                                  (_data.lugares[i] ? _data.lugares[i].colonia.nombre : '')+' '+
+                                  (_data.lugares[i].cp ? _data.lugares[i].cp : '')+' '+
+                                  (_data.lugares[i] ? _data.lugares[i].municipio.nombre : '')+' '+
+                                  (_data.lugares[i] ? _data.lugares[i].estado.nombre : '')+' '+
+                                  (_data.lugares[i] ? _data.lugares[i].pais.nombre : '');
+              } else {
+                  lugaresHallazgo += ', '+(_data.lugares[i] ? _data.lugares[i].calle : '')
+                                    +', '+(_data.lugares[i].noExterior ? _data.lugares[i].noExterior : '')
+                                    +', '+(_data.lugares[i].noInterior ? _data.lugares[i].noInterior : '')
+                                    +', '+(_data.lugares[i] ? _data.lugares[i].colonia.nombre : '')
+                                    +', '+(_data.lugares[i].cp ? _data.lugares[i].cp : '')
+                                    +', '+(_data.lugares[i] ? _data.lugares[i].municipio.nombre : '')
+                                    +', '+(_data.lugares[i] ? _data.lugares[i].estado.nombre : '')
+                                    +', '+(_data.lugares[i] ? _data.lugares[i].pais.nombre : '');
+              }
+          }
+      } else {
+          if (_data.lugares[i].detalleLugar.tipoLugar == "LUGAR DE LOS HECHOS") {
+              if (lugaresHechos == '') {
+                  lugaresHechos = (_data.lugares[i] ? _data.lugares[i].calle : '')+' '+
+                                  (_data.lugares[i].noExterior ? _data.lugares[i].noExterior : '')+' '+
+                                  (_data.lugares[i].noInterior ? _data.lugares[i].noInterior : '')+' '+
+                                  (_data.lugares[i] ? _data.lugares[i].coloniaOtro : '')+' '+
+                                  (_data.lugares[i].cp ? _data.lugares[i].cp : '')+' '+
+                                  (_data.lugares[i] ? _data.lugares[i].municipioOtro : '')+' '+
+                                  (_data.lugares[i] ? _data.lugares[i].estadoOtro : '')+' '+
+                                  (_data.lugares[i] ? _data.lugares[i].pais.nombre : ''); 
+              } else {
+                  lugaresHechos += ', '+(_data.lugares[i] ? _data.lugares[i].calle : '')
+                                  +' '+(_data.lugares[i].noExterior ? _data.lugares[i].noExterior : '')
+                                  +' '+(_data.lugares[i].noInterior ? _data.lugares[i].noInterior : '')
+                                  +' '+(_data.lugares[i] ? _data.lugares[i].coloniaOtro : '')
+                                  +' '+(_data.lugares[i].cp ? _data.lugares[i].cp : '')
+                                  +' '+(_data.lugares[i] ? _data.lugares[i].municipioOtro : '')
+                                  +' '+(_data.lugares[i] ? _data.lugares[i].estadoOtro : '')
+                                  +' '+(_data.lugares[i] ? _data.lugares[i].pais.nombre : '');
+              }
+          } else {
+              if (lugaresHallazgo == '') {
+                  lugaresHallazgo = (_data.lugares[i] ? _data.lugares[i].calle : '')+' '+
+                                    (_data.lugares[i].noExterior ? _data.lugares[i].noExterior : '')+' '+
+                                    (_data.lugares[i].noInterior ? _data.lugares[i].noInterior : '')+' '+
+                                    (_data.lugares[i] ? _data.lugares[i].coloniaOtro : '')+' '+
+                                    (_data.lugares[i].cp ? _data.lugares[i].cp : '')+' '+
+                                    (_data.lugares[i] ? _data.lugares[i].municipioOtro : '')+' '+
+                                    (_data.lugares[i] ? _data.lugares[i].estadoOtro : '')+' '+
+                                    (_data.lugares[i] ? _data.lugares[i].pais.nombre : '');  
+              } else {
+                  lugaresHallazgo += ', '+(_data.lugares[i] ? _data.lugares[i].calle : '')
+                                    +' '+(_data.lugares[i].noExterior ? _data.lugares[i].noExterior : '')
+                                    +' '+(_data.lugares[i].noInterior ? _data.lugares[i].noInterior : '')
+                                    +' '+(_data.lugares[i] ? _data.lugares[i].coloniaOtro : '')
+                                    +' '+(_data.lugares[i].cp ? _data.lugares[i].cp : '')
+                                    +' '+(_data.lugares[i] ? _data.lugares[i].municipioOtro : '')
+                                    +' '+(_data.lugares[i] ? _data.lugares[i].estadoOtro : '')
+                                    +' '+(_data.lugares[i] ? _data.lugares[i].pais.nombre : '');
+              }
+          }
+      }
+  }
+
+   console.log('<<< hechos >>>', lugaresHechos);
+   console.log('<<< hallazgo >>>', lugaresHallazgo);
+
+
+  console.log('<<< delito >>>', delito);
+
+  this.data['xNUC']                = _data.nuc ? _data.nuc : '';
+  this.data['xNIC']                = _data.nic ? _data.nic : '';
+
+  this.data['xDia']                = dia.toString(); 
+  this.data['xMes']                = mes.toString();
+  this.data['xAnio']               = anio.toString();
+  this.data['xHechoDelictivo']     = delito;
+  this.data['xLugarHallazgo']      = lugaresHallazgo;  
+  this.data['xLugarHechos']        = lugaresHechos;
+
+  this.data['xCargoEmisorFirma']   = this.auth.user.cargo;
+  this.data['xNombreEmisorFirma']  = this.auth.user.nombreCompleto;
 
 }
 

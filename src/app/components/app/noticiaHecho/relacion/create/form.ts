@@ -244,11 +244,11 @@ export class Form {
     public getViolenciaGeneroForm(){
         return new FormGroup({
             'id': new FormControl('', []),
-            'delincuenciaOrganizada': new FormControl('', [Validators.required]),
-            'violenciaGenero': new FormControl('', [Validators.required]),
-            'victimaTrata': new FormControl('', [Validators.required]),
-            'victimaAcoso': new FormControl('', [Validators.required]),
-            'ordenProteccion': new FormControl('', [Validators.required]),
+            'delincuenciaOrganizada': new FormControl('', []),
+            'violenciaGenero': new FormControl('', []),
+            'victimaTrata': new FormControl('', []),
+            'victimaAcoso': new FormControl('', []),
+            'ordenProteccion': new FormControl('', []),
         });
     }
 
