@@ -14,5 +14,5 @@ echo "Empaquetando a.out para subirlo al server"
 tar cvzf builds/$BUILD_NAME a.out
 
 # Upload to DEST/DIR_NAME
-#echo "Intentando subir el paquete al servidor (en ~/Documents)"
-#scp builds/$BUILD_NAME $DEST
+echo "Intentando subir el paquete al servidor (en ~/Documents)"
+scp builds/$BUILD_NAME $DEST
