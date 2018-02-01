@@ -4,7 +4,7 @@ echo "Compilando proyecto en C++ llamado test.cpp."
 g++ test.cpp
 
 # Set the destination server
-DEST=evomatik@10.0.30.14:/home/evomatik/Documents
+DEST=evomatik@10.0.2.152:/home/evomatik/Downloads
 
 # Setting the packaged dist name
 BUILD_NAME="test-compiled-$(date +'%m%d%y').tgz"
@@ -16,4 +16,4 @@ tar cvzf builds/$BUILD_NAME a.out
 # Upload to DEST/DIR_NAME
 echo "Intentando subir el paquete al servidor (en ~/Documents)"
 #scp builds/$BUILD_NAME $DEST # este es el antiguo metodo, no sirve en GoCD
-sshpass -p "evo100518" scp -r $DEST builds/$BUILD_NAME
+sshpass -p "evo100518" scp -r builds/$BUILD_NAME $DEST
