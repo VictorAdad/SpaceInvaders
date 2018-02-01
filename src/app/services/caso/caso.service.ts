@@ -44,6 +44,9 @@ export class CasoService{
      * @param _id id del caso a buscar
      */
     public find(_id) {
+        if (!Number.isInteger(_id))
+            _id = parseInt(_id);
+        Logger.logColor('Logger con toño','blue',_id, this.caso, this.id);
         return new Promise<any>(
             (resolve, reject) => {
                 if (this.id !== _id) {
@@ -52,7 +55,8 @@ export class CasoService{
                         this.http.get(`/v1/base/casos/${this.id}/all`).subscribe(
                             response => {
                                 this.addExtraInfoCaso(response);
-                                this.casoChange.next(Object.assign(this.caso, response));
+                                this.caso = response as Caso;
+                                this.casoChange.next(this.caso);
                                 resolve(this.setOnlineCaso(response));
                             }
                         );
@@ -61,16 +65,19 @@ export class CasoService{
                             response => {
                                 if (response !== undefined) {
                                     console.log('rsponse', response);
-                                    this.casoChange.next(Object.assign(this.caso, response));
+                                    this.caso = response as Caso;
+                                    this.casoChange.next(this.caso);
                                     this.setCaso(response);
                                     resolve(this.actualizaCasoOffline(response));
                                 }else {
+                                    Logger.logColor('RESPUESTA','green',this.caso);
                                     resolve();
                                 }
                             }
                         );
                     }
                 } else {
+                    Logger.logColor('RESPUESTA','green',this.caso);
                     this.casoChange.next(this.caso);
                     resolve(this.caso);
                 }
@@ -150,7 +157,8 @@ export class CasoService{
         this.caso.estatusSincronizacion = undefined;
         this.caso.ultimaActualizacion = null;
         this.caso.username = undefined;
-        Object.assign(this.caso, caso)
+        this.caso = caso as Caso;
+        Logger.logDarkColor('Caso','white',this.caso);
     }
     /**
      * Agrega informacion extra al caso
@@ -183,8 +191,7 @@ export class CasoService{
      * @return      nada
      */
     public actualizaCasoOffline(caso) {
-        var temCaso = new Caso();
-        Object.assign(temCaso, caso);
+        var temCaso = caso as Caso;
         if (temCaso['predenuncias']) {
             temCaso['hasPredenuncia'] = !Number.isNaN(temCaso['predenuncias']['id']);
         }

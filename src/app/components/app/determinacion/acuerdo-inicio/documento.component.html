@@ -24,11 +24,11 @@
       <ng-container matColumnDef="acciones">
         <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
         <mat-cell *matCellDef="let element">
-            <button 
+            <button
                 mat-raised-button
                 color="accent"
                 [disabled]="documentos[element.id] ? !documentos[element.id]['validate'] : false"
-                (click)="downloadFile(element, element.contentType)">
+                (click)="onLine.onLine?downloadFile(element, element.contentType):download(element)">
                 {{ documentos[element.id] ? !documentos[element.id]['validate'] ? 'Generando PDF...': 'Desacargar' : 'Descargar' }}
             </button>
         </mat-cell>
@@ -37,4 +37,3 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
-
