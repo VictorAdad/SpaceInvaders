@@ -134,7 +134,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal {
     }
 
     ngOnInit(){
-        // this.options.getData();
+        this.options.getData();
         this.auth.masDe3DiasSinConexion().then(r=>{
             let x= r as boolean;
             this.masDe3Dias=r;

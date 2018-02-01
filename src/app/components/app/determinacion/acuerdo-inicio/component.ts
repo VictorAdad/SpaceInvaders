@@ -1,4 +1,5 @@
 import { FormatosGlobal } from './../../solicitud-preliminar/formatos';
+import { FormatosService } from '@services/formatos/formatos.service';
 import { Component, ViewChild , Output, Input,EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
@@ -336,9 +337,25 @@ export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
       public globalService:GlobalService,
       public dialog: MatDialog,
       private route: ActivatedRoute,
+      public onLine: OnLineService,
+      public formatos: FormatosService,
+      public db: CIndexedDB,
+      public caso: CasoService,
+      public auth: AuthenticationService
+      
       ){
-      super(http, confirmationService, globalService, dialog);
-  }
+        super(
+            http,
+            confirmationService,
+            globalService,
+            dialog,
+            onLine,
+            formatos,
+            auth,
+            db,
+            caso
+        );
+    }
 
   ngOnInit() {
       Logger.log('-> Object ', this.object);
@@ -352,8 +369,14 @@ export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
       }
 
       this.route.params.subscribe(params => {
-          if (params['casoId'])
+          if (params['casoId']) {
               this.urlUpload = '/v1/documentos/acuerdos/save/'+params['casoId'];
+              this.caso.find(params['casoId']).then(
+                response => {
+                   this.updateDataFormatos(this.caso.caso);
+               }
+             );
+          }
 
       });
 
@@ -372,6 +395,12 @@ export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
       Logger.log('setData()');
       this.data.push(_object);
       this.subject.next(this.data);
+  }
+
+  public updateDataFormatos(_object){
+    
+    this.formatos.formatos.setDataF1007(_object);
+
   }
 
 }

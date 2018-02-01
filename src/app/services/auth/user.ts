@@ -36,6 +36,8 @@ export class Usuario {
 
     public municipioId: string;
 
+    public cargo: string;
+
     public notificaciones: any[] = [];
 
     public sinLeer = 0;
@@ -59,6 +61,7 @@ export class Usuario {
             this.distrito        = _usuario.distritoAcronimo;
             this.municipio       = _usuario.Municipio;
             this.municipioId     = _usuario.municipioId;
+            this.cargo           = _usuario.Cargo;
         }
 
         this.notificacionesChange.subscribe(

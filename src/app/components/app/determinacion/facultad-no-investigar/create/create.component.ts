@@ -188,22 +188,12 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
     }
 
 
-    public  personasChanged(_personasHeredadas){
+    public  personasChanged(_personasHeredadas) {
         this.personasHeredadas = _personasHeredadas;
     }
 
-    public heredarChanged(_heredar){
-        this.heredar=_heredar;
-        if(_heredar){
-          this.form.removeControl("edadDenunciante");
-          this.form.addControl("edadDenuncianteHeredar",new FormControl("",[]));
-        }else{
-          this.form.removeControl("edadDenuncianteHeredar");
-          this.form.addControl("edadDenunciante",new FormControl("",[]));
-        }
-
-        console.log("Heredar= ",this.heredar)
-
+    public heredarChanged(_heredar) {
+        this.heredar = _heredar;
     }
 
     public cleanCamposHeredar() {
@@ -264,16 +254,16 @@ export class FacultadNoInvestigarComponent extends DeterminacionGlobal {
         Yason.eliminaNulos(_data);
         this.heredarChanged(_data.heredar);
         this.form.patchValue(_data);
-        let timer=Observable.timer(1)
-        timer.subscribe(t=>{
-          if(this.form.controls['edadDenuncianteHeredar']){
-            console.log(_data.edadDenuncianteHeredar);
-            this.form.patchValue({'edadDenuncianteHeredar':_data.edadDenuncianteHeredar})
-          }
-        })
+        const timer = Observable.timer(100);
+        Logger.log('-> fillForm()', _data);
+        timer.subscribe(t => {
+            this.form.controls['nombreDenuncianteHeredar'].setValue(_data.nombreDenuncianteHeredar);
+            this.form.controls['edadDenuncianteHeredar'].setValue(_data.edadDenuncianteHeredar);
+            this.form.controls['originarioDenuncianteHeredar'].setValue(_data.originarioDenuncianteHeredar);
+            this.form.controls['domicilioDenuncianteHeredar'].setValue(_data.domicilioDenuncianteHeredar);
+        });
+
         this.form.disable();
-        Logger.log(_data);
-        console.log('after fill form',this.form)
     }
 
 }
