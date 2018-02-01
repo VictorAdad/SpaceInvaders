@@ -28,14 +28,6 @@ export class FormatosService {
             // Logger.log(attr);
             if(
                 String(attr) !== 'constructor',
-                String(attr) !== 'F1_003',
-                String(attr) !== 'F1_004',
-                String(attr) !== 'F1_005',
-                String(attr) !== 'F1_008',
-                String(attr) !== 'F1_009',
-                String(attr) !== 'F1_010',
-                String(attr) !== 'F1_011',
-                String(attr) !== 'F1_021',
                 String(attr) !== 'data',
                 String(attr) !== 'getVicImp',
                 String(attr) !== 'setDataF1003',
