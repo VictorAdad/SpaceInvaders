@@ -28,12 +28,26 @@ export class FormatosService {
             // Logger.log(attr);
             if(
                 String(attr) !== 'constructor',
+                String(attr) !== 'F1_003',
+                String(attr) !== 'F1_004',
+                String(attr) !== 'F1_005',
+                String(attr) !== 'F1_008',
+                String(attr) !== 'F1_009',
+                String(attr) !== 'F1_010',
+                String(attr) !== 'F1_011',
+                String(attr) !== 'F1_021',
                 String(attr) !== 'data',
+                String(attr) !== 'getVicImp',
                 String(attr) !== 'setDataF1003',
                 String(attr) !== 'setDataF1004',
                 String(attr) !== 'setDataF1005',
                 String(attr) !== 'setCasoInfo',
-                String(attr) !== 'setVictimaInfo'
+                String(attr) !== 'setVictimaInfo',
+                String(attr) !== 'setDataF1008',
+                String(attr) !== 'setDataF1009',
+                String(attr) !== 'setDataF1010',
+                String(attr) !== 'setDataF1011',
+                String(attr) !== 'findHerenciaPersonasPredenuncia'
                 ){
                 if(this.formatos[attr].path){
                     JSZipUtils.getBinaryContent(this.formatos[attr].path, (error, response) => {
@@ -104,46 +118,46 @@ export class FormatosLocal {
         'file': null,
         'data': null
     };
-  // Formato de entrevista
-  public F1_008 = {
-    'path': environment.app.host+'/assets/formatos/F1-008 ENTREVISTA.docx',
-    'nombre': 'F1-008 ENTREVISTA.docx',
-    'nameEcm': 'ENTREVISTA',
-    'file': null,
-    'data': null
-   };
+    // Formato de entrevista
+    public F1_008 = {
+        'path': environment.app.host+'/assets/formatos/F1-008 ENTREVISTA.docx',
+        'nombre': 'F1-008 ENTREVISTA.docx',
+        'nameEcm': 'ENTREVISTA',
+        'file': null,
+        'data': null
+    };
     // Formato de solicitud pericial
-   public F1_009 = {
-    'path': environment.app.host+'/assets/formatos/F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES.docx',
-    'nombre': 'F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES.docx',
-    'nameEcm': 'OFICIO SOLICITUD A SERVICIOS PERICIALES',
-    'file': null,
-    'data': null
-   };
-   public F1_010 = {
-    'path': environment.app.host+'/assets/formatos/F1-010 SOLICITUD EXAMEN PSICOFÍSICO.docx',
-    'nombre': 'F1-010 SOLICITUD EXAMEN PSICOFÍSICO.docx',
-    'nameEcm': 'SOLICITUD EXAMEN PSICOFÍSICO',
-    'file': null,
-    'data': null
-   };
+    public F1_009 = {
+        'path': environment.app.host+'/assets/formatos/F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES.docx',
+        'nombre': 'F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES.docx',
+        'nameEcm': 'OFICIO SOLICITUD A SERVICIOS PERICIALES',
+        'file': null,
+        'data': null
+    };
+    public F1_010 = {
+        'path': environment.app.host+'/assets/formatos/F1-010 SOLICITUD EXAMEN PSICOFÍSICO.docx',
+        'nombre': 'F1-010 SOLICITUD EXAMEN PSICOFÍSICO.docx',
+        'nameEcm': 'SOLICITUD EXAMEN PSICOFÍSICO',
+        'file': null,
+        'data': null
+    };
     // Formato de solicitud policia ministerial
-   public F1_011 = {
-    'path': environment.app.host+'/assets/formatos/F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
-    'nombre': 'F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
-    'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL',
-    'file': null,
-    'data': null
-   };
-   public F1_021 = {
-    'path': environment.app.host+'/assets/formatos/F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO.docx',
-    'nombre': 'F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO.docx',
-    'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO',
-    'file': null,
-    'data': null
-   };
+    public F1_011 = {
+        'path': environment.app.host+'/assets/formatos/F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
+        'nombre': 'F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
+        'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL',
+        'file': null,
+        'data': null
+    };
+    public F1_021 = {
+        'path': environment.app.host+'/assets/formatos/F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO.docx',
+        'nombre': 'F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO.docx',
+        'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO',
+        'file': null,
+        'data': null
+    };
 
-   public getVicImp(_data, _id_solicitud, _interVi) {
+    public getVicImp(_data, _id_solicitud, _interVi) {
        var victimasHeredar = [];
        var nombreVicHer = '';
 
