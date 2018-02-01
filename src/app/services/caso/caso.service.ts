@@ -9,6 +9,7 @@ import { PersonaNombre } from "@pipes/persona.pipe";
 import { Subject } from 'rxjs/Subject';
 import { MOption } from '../../components/globals/partials/form/select2/select2.component';
 import { AuthenticationService } from '@services/auth/authentication.service';
+import { Subscription } from 'rxjs/Subscription';
 /**
  * Servicio qeu almacena el ultimo caso visto
  */
@@ -30,6 +31,8 @@ export class CasoService{
      */
     public casoChange = new Subject<Caso>();
 
+    private getCasoSubs: Subscription;
+
     constructor(
         private db: CIndexedDB,
         private http: HttpService,
@@ -44,19 +47,26 @@ export class CasoService{
      * @param _id id del caso a buscar
      */
     public find(_id) {
+        console.log('-> Find formato', this.id, _id);
         if (!Number.isInteger(_id))
             _id = parseInt(_id);
-        Logger.logColor('Logger con toño','blue',_id, this.caso, this.id);
+        // Logger.logColor('Logger con toño','blue',_id, this.caso, this.id);
         return new Promise<any>(
             (resolve, reject) => {
                 if (this.id !== _id) {
-                    this.id = _id;
                     if (this.onLine.onLine) {
-                        this.http.get(`/v1/base/casos/${this.id}/all`).subscribe(
+                        if (this.getCasoSubs) {
+                            this.getCasoSubs.unsubscribe();
+                        }
+
+                        this.getCasoSubs = this.http.get(`/v1/base/casos/${_id}/all`).subscribe(
                             response => {
+                                this.id = _id;
                                 this.addExtraInfoCaso(response);
-                                this.casoChange.next(Object.assign(this.caso, response));
-                                resolve(this.setOnlineCaso(response));
+                                this.caso = new Caso().fromJSON(response);
+                                this.casoChange.next(this.caso);
+                                resolve(this.caso);
+                                this.setOnlineCaso(response)
                             }
                         );
                     } else {
@@ -64,7 +74,8 @@ export class CasoService{
                             response => {
                                 if (response !== undefined) {
                                     console.log('rsponse', response);
-                                    this.casoChange.next(Object.assign(this.caso, response));
+                                    this.caso = new Caso().fromJSON(response);
+                                    this.casoChange.next(this.caso);
                                     this.setCaso(response);
                                     resolve(this.actualizaCasoOffline(response));
                                 }else {
@@ -155,7 +166,8 @@ export class CasoService{
         this.caso.estatusSincronizacion = undefined;
         this.caso.ultimaActualizacion = null;
         this.caso.username = undefined;
-        Object.assign(this.caso, caso)
+        this.caso = new Caso().fromJSON(caso);
+        Logger.logDarkColor('Caso','white',this.caso);
     }
     /**
      * Agrega informacion extra al caso
@@ -188,8 +200,7 @@ export class CasoService{
      * @return      nada
      */
     public actualizaCasoOffline(caso) {
-        var temCaso = new Caso();
-        Object.assign(temCaso, caso);
+        var temCaso = new Caso().fromJSON(caso);
         if (temCaso['predenuncias']) {
             temCaso['hasPredenuncia'] = !Number.isNaN(temCaso['predenuncias']['id']);
         }
@@ -437,6 +448,12 @@ export class Caso {
             return 0;
         });
         return _options;
+    }
+
+    public fromJSON(json) {
+        for (var propName in json)
+            this[propName] = json[propName];
+        return this;
     }
 
 }

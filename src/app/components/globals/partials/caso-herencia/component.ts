@@ -125,7 +125,7 @@ export class CasoHerenciaComponent implements OnInit {
 
     public setCaso(_caso) {
         Logger.log('Herencia@setCaso()', _caso);
-        this.caso = _caso;
+        this.caso = new Caso().fromJSON(_caso);
         this.personasTipo = this.caso.optionsPersonasTipo();
         this.lugares = this.caso.optionsLugares();
         this.vehiculos = this.caso.optionsVehiculo();
