@@ -69,21 +69,19 @@ export class FormatosGlobal {
                         );
                     } else {
                         const tempId = Date.now();
-                        if (this.auth) {
-                            const dato = {
-                                url: `/v1/documentos/formatos/save/${_id}/${_format}`,
-                                body: {},
-                                options: [],
-                                tipo: 'get',
-                                pendiente: true,
-                                dependeDe: [_id],
-                                temId: tempId,
-                                username: this.auth.user.username
-                            };
+                        const dato = {
+                            url: `/v1/documentos/formatos/save/${_id}/${_format}`,
+                            body: {},
+                            options: [],
+                            tipo: 'get',
+                            pendiente: true,
+                            dependeDe: [_id],
+                            temId: tempId,
+                            username: this.auth.user.username
+                        };
 
-                            this.db.add('sincronizar', dato).then( p => {
-                            });
-                        }
+                        this.db.add('sincronizar', dato).then( p => {
+                        });
                         const out = this.formatos.replaceWord(
                             this.formatos.formatos[_format].nombre,
                             _format
@@ -290,7 +288,8 @@ export class SolPreDocComponent {
         @Inject(MAT_DIALOG_DATA) private data:any,
         public _confirmation:ConfirmationService,
         public dialog: MatDialog,
-        public onLine: OnLineService = null,){
+        public onLine: OnLineService = null,
+        public auth: AuthenticationService =  null,){
         this.db=_db;
     }
     public uploader:FileUploader = new FileUploader({url: URL});
@@ -427,7 +426,8 @@ export class SolPreDocComponent {
                         pendiente:true,
                         dependeDe:dependeDe,
                         temId: temId,
-                        documentos:[]
+                        documentos:[],
+                        username: obj.auth.user.username
                     }
                     this.guardarOffLine(0,listaFiles,casoId,dato);
                 }

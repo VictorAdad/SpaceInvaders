@@ -29,11 +29,17 @@ export class FormatosService {
             if(
                 String(attr) !== 'constructor',
                 String(attr) !== 'data',
+                String(attr) !== 'getVicImp',
                 String(attr) !== 'setDataF1003',
                 String(attr) !== 'setDataF1004',
                 String(attr) !== 'setDataF1005',
                 String(attr) !== 'setCasoInfo',
-                String(attr) !== 'setVictimaInfo'
+                String(attr) !== 'setVictimaInfo',
+                String(attr) !== 'setDataF1008',
+                String(attr) !== 'setDataF1009',
+                String(attr) !== 'setDataF1010',
+                String(attr) !== 'setDataF1011',
+                String(attr) !== 'findHerenciaPersonasPredenuncia'
                 ){
                 if(this.formatos[attr].path){
                     JSZipUtils.getBinaryContent(this.formatos[attr].path, (error, response) => {
@@ -104,29 +110,29 @@ export class FormatosLocal {
         'file': null,
         'data': null
     };
-  // Formato de entrevista
-  public F1_008 = {
-    'path': environment.app.host+'/assets/formatos/F1-008 ENTREVISTA.docx',
-    'nombre': 'F1-008 ENTREVISTA.docx',
-    'nameEcm': 'ENTREVISTA',
-    'file': null,
-    'data': null
-   };
+    // Formato de entrevista
+    public F1_008 = {
+        'path': environment.app.host+'/assets/formatos/F1-008 ENTREVISTA.docx',
+        'nombre': 'F1-008 ENTREVISTA.docx',
+        'nameEcm': 'ENTREVISTA',
+        'file': null,
+        'data': null
+    };
     // Formato de solicitud pericial
-   public F1_009 = {
-    'path': environment.app.host+'/assets/formatos/F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES.docx',
-    'nombre': 'F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES.docx',
-    'nameEcm': 'OFICIO SOLICITUD A SERVICIOS PERICIALES',
-    'file': null,
-    'data': null
-   };
-   public F1_010 = {
-    'path': environment.app.host+'/assets/formatos/F1-010 SOLICITUD EXAMEN PSICOFÍSICO.docx',
-    'nombre': 'F1-010 SOLICITUD EXAMEN PSICOFÍSICO.docx',
-    'nameEcm': 'SOLICITUD EXAMEN PSICOFÍSICO',
-    'file': null,
-    'data': null
-   };
+    public F1_009 = {
+        'path': environment.app.host+'/assets/formatos/F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES.docx',
+        'nombre': 'F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES.docx',
+        'nameEcm': 'OFICIO SOLICITUD A SERVICIOS PERICIALES',
+        'file': null,
+        'data': null
+    };
+    public F1_010 = {
+        'path': environment.app.host+'/assets/formatos/F1-010 SOLICITUD EXAMEN PSICOFÍSICO.docx',
+        'nombre': 'F1-010 SOLICITUD EXAMEN PSICOFÍSICO.docx',
+        'nameEcm': 'SOLICITUD EXAMEN PSICOFÍSICO',
+        'file': null,
+        'data': null
+    };
     // Formato de solicitud policia ministerial
    public F1_011 = {
     'path': environment.app.host+'/assets/formatos/F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
@@ -139,6 +145,22 @@ export class FormatosLocal {
     'path': environment.app.host+'/assets/formatos/F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO.docx',
     'nombre': 'F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO.docx',
     'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO',
+    'file': null,
+    'data': null
+   };
+
+   // Acuerdo de inicio
+   public F1_015_016 = {
+    'path': environment.app.host+'/assets/formatos/F1-016 Y F1-015 FORMATO DE ACUERDO DE INICIO.docx',
+    'nombre': 'F1-016 Y F1-015 FORMATO DE ACUERDO DE INICIO.docx',
+    'nameEcm': 'FORMATO DE ACUERDO DE INICIO',
+    'file': null,
+    'data': null
+   };
+   public F1_007 = {
+    'path': environment.app.host+'/assets/formatos/F1-007 CARÁTULA.docx',
+    'nombre': 'F1-007 CARÁTULA.docx',
+    'nameEcm': 'CARÁTULA',
     'file': null,
     'data': null
    };
@@ -313,7 +335,13 @@ export class FormatosLocal {
         const identificaciones = [];
         const foliosIdentificacion = [];
         const predenuncia =  _caso.predenuncias;
-        const personas = this.findHerenciaPersonasPredenuncia(_caso);
+        let personas = [];
+
+        if (predenuncia.heredar) {
+            personas = this.findHerenciaPersonasPredenuncia(_caso)
+        } else {
+            personas = this.findVictimas(_caso);
+        }
 
         personas.forEach(o => {
             nombrePersonas.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
@@ -345,7 +373,7 @@ export class FormatosLocal {
 
     public setDataF1004(_caso) {
         // Logger.log('Formatos@setDataF1004', _data);
-        const personas = this.findHerenciaPersonasPredenuncia(_caso);
+        const predenuncia = _caso.predenuncias;
         const nombres = [];
         const calidadPersonas = [];
         const tiposPersonas = [];
@@ -365,6 +393,13 @@ export class FormatosLocal {
         const nacionalidades = [];
         const identificaciones = [];
         const folios = [];
+        let personas = [];
+
+        if (predenuncia.heredar) {
+            personas = this.findHerenciaPersonasPredenuncia(_caso)
+        } else {
+            personas = this.findVictimas(_caso);
+        }
 
         personas.forEach(o => {
             nombres.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
@@ -507,6 +542,14 @@ export class FormatosLocal {
     }
 
 
+public setDataF1007(_data){
+  Logger.log('Formatos@setDataF1007', _data);
+
+  this.data['xNUC']= _data.nuc? _data.nuc:'';
+  this.data['xNIC']= _data.nic? _data.nic:'';
+
+}
+
 
 public setDataF1008(_data){
   Logger.log('Formatos@setDataF1008', _data);
@@ -558,6 +601,7 @@ public setDataF1008(_data){
   this.data['xCargoEmisorFirma']= '';
   this.data['xNombreEmisorFirma']= '';
   this.data['xAdscripcionEmisorFirma']= '';
+
 }
 
 public setDataF1009(_data,_id_solicitud){
@@ -788,6 +832,19 @@ public setDataF1011(_data,_id_solicitud){
         }
 
         return personas;
+    }
+
+    public findVictimas(_caso) {
+        const personas = _caso.personas;
+        const victimas = [];
+
+        for (const persona of victimas) {
+            if (persona.tipoInterviniente.id == _config.optionValue.tipoInterviniente.victima) {
+                victimas.push(persona);
+            }
+        }
+
+        return victimas;
     }
 
 
