@@ -5,6 +5,7 @@ import { HttpService} from '@services/http.service';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from 'jszip-utils';
 import * as docxtemplater from 'docxtemplater';
+import * as moment from 'moment';
 import { forEach } from '@angular/router/src/utils/collection';
 import { environment } from '../../../environments/environment';
 import { Logger } from "@services/logger.service";
@@ -43,12 +44,17 @@ export class FormatosService {
                 String(attr) !== 'findVictimas' &&
                 String(attr) !== 'findImputados' &&
                 String(attr) !== 'setDataF1007' &&
-                String(attr) !== 'findHerenciaNombresVictimas'
+                String(attr) !== 'findHerenciaNombresVictimas' &&
+                String(attr) !== 'getListasPersonas'
                 ){
                 Logger.log('-> Cargar formato: ', attr);
                 if(this.formatos[attr].path){
                     JSZipUtils.getBinaryContent(this.formatos[attr].path, (error, response) => {
                         this.formatos[attr].file = new JSZip(response);
+                        Logger.log('-> Formato cargado')
+                        Logger.log('-> Response', response)
+                        Logger.log('-> Error', error)
+                        Logger.log('-> Formato', this.formatos[attr]);
                     });
                 }
             }
@@ -417,7 +423,7 @@ export class FormatosLocal {
             this.data['xCanalizacion'] = (_caso.predenuncias.canalizacion ? _caso.predenuncias.canalizacion : '');
             this.data['xInstitucionCanalizacion'] = (_caso.predenuncias.institucion ? _caso.predenuncias.institucion : '');
             this.data['xMotivoCanalizacion'] = (_caso.predenuncias.motivoCanalizacion ? _caso.predenuncias.motivoCanalizacion : '');
-            this.data['xFechaCanalizacion'] = (_caso.predenuncias.fechaCanalizacion ? _caso.predenuncias.fechaCanalizacion : '');
+            this.data['xFechaCanalizacion'] = (_caso.predenuncias.fechaCanalizacion ? moment(_caso.predenuncias.fechaCanalizacion).format('LL'): '');
             this.data['xHoraCanalizacion'] = (_caso.predenuncias.horaCanalizacion ? _caso.predenuncias.horaCanalizacion : '');
             this.data['xNombreCausoHecho'] = (_caso.predenuncias.nombreCausante ? _caso.predenuncias.nombreCausante : '');
             this.data['xDomicilioHechos'] = (_caso.predenuncias.domicilioCausante ? _caso.predenuncias.domicilioCausante : '');
@@ -966,6 +972,7 @@ public setDataF1010(_data,_id_solicitud){
 
         for (const persona of personas) {
             if (persona.tipoInterviniente.id == _config.optionValue.tipoInterviniente.victima ||
+                persona.tipoInterviniente.id == _config.optionValue.tipoInterviniente.ofendido ||
                 persona.tipoInterviniente.id == _config.optionValue.tipoInterviniente.victimaDesconocido) {
                 victimas.push(persona);
             }
@@ -1035,7 +1042,13 @@ public setDataF1010(_data,_id_solicitud){
         const idiomas = [];
 
         _personas.forEach(o => {
-            nombres.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
+            if (o.tipoInterviniente.id == _config.optionValue.tipoInterviniente.victimaDesconocido) {
+                nombres.push(` Identidad desconocida`);
+            } else if(o.tipoInterviniente.id == _config.optionValue.tipoInterviniente.imputadoDesconocido) {
+                nombres.push(` Quien resulte responsable`);
+            } else {
+                nombres.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
+            }
             if (o.tipoInterviniente) {
                 calidadPersonas.push(` ${o.tipoInterviniente.tipo}`);
             }
@@ -1061,9 +1074,9 @@ public setDataF1010(_data,_id_solicitud){
                 originarios.push(` ${o.persona.estado.nombre}`);
             }
             if (o.persona.localizacionPersona.length > 0) {
-                domicilios.push(` ${o.estado.nombre}`);
-                noParticulares.push(` ${o.estado.nombre}`);
-                noMoviles.push(` ${o.estado.nombre}`);
+                // domicilios.push(` ${o.estado.nombre}`);
+                // noParticulares.push(` ${o.estado.nombre}`);
+                // noMoviles.push(` ${o.estado.nombre}`);
             }
             if (o.sexo) {
                 sexos.push(` ${o.persona.sexo.nombre}`);

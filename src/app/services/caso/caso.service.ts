@@ -70,14 +70,15 @@ export class CasoService{
                             }
                         );
                     } else {
-                        this.db.get('casos', this.id).then(
+                        this.db.get('casos', _id).then(
                             response => {
                                 if (response !== undefined) {
                                     console.log('rsponse', response);
                                     this.caso = new Caso().fromJSON(response);
                                     this.casoChange.next(this.caso);
                                     this.setCaso(response);
-                                    resolve(this.actualizaCasoOffline(response));
+                                    resolve(this.caso);
+                                    this.actualizaCasoOffline(response)
                                 }else {
                                     Logger.logColor('RESPUESTA','green',this.caso);
                                     resolve();
