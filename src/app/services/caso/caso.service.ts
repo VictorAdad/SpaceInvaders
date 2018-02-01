@@ -44,6 +44,9 @@ export class CasoService{
      * @param _id id del caso a buscar
      */
     public find(_id) {
+        if (!Number.isInteger(_id))
+            _id = parseInt(_id);
+        Logger.logColor('Logger con toño','blue',_id, this.caso, this.id);
         return new Promise<any>(
             (resolve, reject) => {
                 if (this.id !== _id) {
@@ -65,12 +68,14 @@ export class CasoService{
                                     this.setCaso(response);
                                     resolve(this.actualizaCasoOffline(response));
                                 }else {
+                                    Logger.logColor('RESPUESTA','green',this.caso);
                                     resolve();
                                 }
                             }
                         );
                     }
                 } else {
+                    Logger.logColor('RESPUESTA','green',this.caso);
                     this.casoChange.next(this.caso);
                     resolve(this.caso);
                 }
