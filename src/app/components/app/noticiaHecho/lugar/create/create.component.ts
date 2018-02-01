@@ -455,12 +455,14 @@ export class LugarCreateComponent extends NoticiaHechoGlobal implements OnInit {
           if (_data.municipio) {
             this.optionsServ.getColoniasByMunicipio(_data.municipio.id);
           } 
-          const localidad= _data.colonia.localidad ? _data.colonia.localidad['id'] : '';
-          this.form.controls.colonia.patchValue({
-            id: _data.colonia.id,
-            idCp: _data.colonia['idCp'] ? _data.colonia['idCp'] : 
-              ('' + _data.colonia.id + '-' + _data.colonia.cp + '-' + localidad)
-          });
+          if (_data.colonia){
+            const localidad= _data.colonia.localidad ? _data.colonia.localidad['id'] : '';
+            this.form.controls.colonia.patchValue({
+              id: _data.colonia.id,
+              idCp: _data.colonia['idCp'] ? _data.colonia['idCp'] : 
+                ('' + _data.colonia.id + '-' + _data.colonia.cp + '-' + localidad)
+            });
+          }
           Logger.logColor('DATOS', 'tomato', this.form.value, _data, this.optionsServ);
         });
       }

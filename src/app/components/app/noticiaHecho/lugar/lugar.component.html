@@ -17,22 +17,22 @@
 
     <ng-container matColumnDef="calle">
         <mat-header-cell *matHeaderCellDef> Calle </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.calle}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element?.calle}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="colonia">
         <mat-header-cell *matHeaderCellDef> Colonia </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{(element.pais.id == 143) ? element.colonia?.nombre : element.coloniaOtro }} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{(element.pais && element.pais.id == IdMexico) ? element.colonia?.nombre : element?.coloniaOtro }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="localidad">
         <mat-header-cell *matHeaderCellDef> Localidad </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{(element.pais.id == 143) ? element.municipio?.nombre : element.municipioOtro }}</mat-cell>
+        <mat-cell *matCellDef="let element"> {{(element.pais && element.pais.id == IdMexico) ? element.municipio?.nombre : element?.municipioOtro }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="estado">
         <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
-        <mat-cell  *matCellDef="let element"> {{(element.pais.id == 143) ? element.estado?.nombre : element.estadoOtro }} </mat-cell>
+        <mat-cell  *matCellDef="let element"> {{(element.pais && element.pais.id == IdMexico) ? element.estado?.nombre : element?.estadoOtro }} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
