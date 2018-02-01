@@ -43,25 +43,63 @@ export class SelectsService {
     }
 
     public getData(){
-        this.getPaises();
-        this.getSexo();
-        this.getEscolaridad();
-        this.getOcupacion();
-        this.getEstadoCivil();
-        this.getIdioma();
-        this.getGrupoEtnico();
-        this.getInterprete();
-        this.getAdiccion();
-        this.getNacionalidad();
-        this.getTipoDomicilio();
-        this.getTipoInterviniente();
-        this.getAlfabetismo();
-        this.getPeritoMateria();
-        this.getTipoExamen();
-        this.getDenunciaQuerella();
-        this.getVictimaQuerellante();
-        this.getTipoPersona();
-        this.getTipoLinea();
+        if (this.paises.length==0) {
+            this.getPaises();
+        }
+        if (this.sexo.length==0) {
+            this.getSexo();
+        }
+        if (this.escolaridad.length==0) {
+            this.getEscolaridad();
+        }
+        if (this.ocupacion.length==0) {
+            this.getOcupacion();
+        }
+        if (this.estadoCivil.length==0) {
+            this.getEstadoCivil();
+        }
+        if (this.idioma.length==0) {
+            this.getIdioma();
+        }
+        if (this.grupoEtnico.length==0) {
+            this.getGrupoEtnico();
+        }
+        if (this.interprete.length==0) {
+            this.getInterprete();
+        }
+        if (this.adiccion.length==0) {
+            this.getAdiccion();
+        }
+        if (this.nacionalidad.length==0) {
+            this.getNacionalidad();
+        }
+        if (this.tipoDomicilio.length==0) {
+            this.getTipoDomicilio();
+        }
+        if (this.tipoInterviniente.length==0) {
+            this.getTipoInterviniente();
+        }
+        if (this.alfabetismo.length==0) {
+            this.getAlfabetismo();
+        }
+        if (this.peritoMateria.length==0) {
+            this.getPeritoMateria();
+        }
+        if (this.tipoExamen.length==0) {
+            this.getTipoExamen();
+        }
+        if (this.denunciaQuerella) {
+            this.getDenunciaQuerella();
+        }
+        if (this.victimaQuerellante.length==0) {
+            this.getVictimaQuerellante();
+        }
+        if (this.tipoPersona.length==0) {
+            this.getTipoPersona();
+        }
+        if (this.tipoLinea.length==0) {
+            this.getTipoLinea();
+        }
     }
 
     public getVictimaQuerellante(){

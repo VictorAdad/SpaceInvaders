@@ -288,7 +288,8 @@ export class SolPreDocComponent {
         @Inject(MAT_DIALOG_DATA) private data:any,
         public _confirmation:ConfirmationService,
         public dialog: MatDialog,
-        public onLine: OnLineService = null,){
+        public onLine: OnLineService = null,
+        public auth: AuthenticationService =  null,){
         this.db=_db;
     }
     public uploader:FileUploader = new FileUploader({url: URL});
@@ -425,7 +426,8 @@ export class SolPreDocComponent {
                         pendiente:true,
                         dependeDe:dependeDe,
                         temId: temId,
-                        documentos:[]
+                        documentos:[],
+                        username: obj.auth.user.username
                     }
                     this.guardarOffLine(0,listaFiles,casoId,dato);
                 }
