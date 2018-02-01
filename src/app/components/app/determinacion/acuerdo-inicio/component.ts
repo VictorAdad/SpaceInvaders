@@ -323,14 +323,17 @@ export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
   displayedColumns = ['nombre', 'fechaCreacion', 'acciones'];
   @Input()
   object: any;
-	dataSource: TableDataSource | null;
+  public dataSource: TableDataSource | null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   public data: DocumentoAcuerdoInicio[] = [];
   public subject:BehaviorSubject<DocumentoAcuerdoInicio[]> = new BehaviorSubject<DocumentoAcuerdoInicio[]>([]);
   public source:TableDataSource = new TableDataSource(this.subject);
   public formData:FormData = new FormData();
   public urlUpload: string;
-
+  public pageSize:number=10;
+  public pageIndex:number=0;
+  public isShowAll:boolean=false;
+  public pag: number = 0;
   constructor(
       public http: HttpService,
       public confirmationService:ConfirmationService,
@@ -342,7 +345,6 @@ export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
       public db: CIndexedDB,
       public caso: CasoService,
       public auth: AuthenticationService
-      
       ){
         super(
             http,
@@ -355,40 +357,63 @@ export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
             db,
             caso
         );
+
+        this.vista="acuerdoInicio";
     }
 
   ngOnInit() {
       Logger.log('-> Object ', this.object);
-      if(this.object.documentos){
-          this.dataSource = this.source;
-          for (let object of this.object.documentos) {
-              this.data.push(object);
-              this.subject.next(this.data);
-          }
-
-      }
-
-      this.route.params.subscribe(params => {
-          if (params['casoId']) {
-              this.urlUpload = '/v1/documentos/acuerdos/save/'+params['casoId'];
-              this.caso.find(params['casoId']).then(
-                response => {
-                   this.updateDataFormatos(this.caso.caso);
-               }
-             );
-          }
+    var obj=this;
+    this.route.params.subscribe(params => {
+        if (params['casoId']) {
+            this.urlUpload = '/v1/documentos/acuerdos/save/'+params['casoId'];
+            this.caso.find(params['casoId']).then(
+            response => {
+                this.updateDataFormatos(this.caso.caso);
+                if(this.onLine.onLine){
+                    if(this.object.documentos){
+                        this.dataSource = this.source;
+                        for (let object of this.object.documentos) {
+                            this.data.push(object);
+                            this.subject.next(this.data);
+                        }
+                    }
+                }else{
+                    this.cargaArchivosOffline(this,"",DocumentoAcuerdoInicio);
+                }
+            }
+            );
+        }
 
       });
 
       this.formData.append('acuerdo.id', this.id.toString());
   }
 
+    download(row){
+        Logger.log(row);
+        if (!this.onLine.onLine){
+          this.db.get("blobs",row.blob).then(t=>{
+            var b=Yason.dataURItoBlob(t["blob"].split(',')[1], row.contentType );
+            var a = document.createElement('a');
+            a.download = row.nameEcm;
+            a.href=window.URL.createObjectURL( b );;
+            a.click();
+            a.remove();
+          });
+        }
+    }
+
   public cargaArchivos(_archivos){
-    let archivos=_archivos.saved
-      for (let object of archivos) {
-          this.data.push(object);
-          this.subject.next(this.data);
-      }
+    if (this.onLine.onLine){
+        let archivos=_archivos.saved
+          for (let object of archivos) {
+              this.data.push(object);
+              this.subject.next(this.data);
+          }
+      }else{
+        this.cargaArchivosOffline(this,"",DocumentoAcuerdoInicio);
+    }
   }
 
   public setData(_object){

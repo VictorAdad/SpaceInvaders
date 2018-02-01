@@ -126,7 +126,6 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 				Logger.log('id', this.id);
 				if(this.onLine.onLine){
 					this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
-	          			delete response.hechosNarrados;
 	          			this.fillForm(response);
 						this.isPericiales = this.form.controls.tipo.value === 'Periciales';
 						this.isPsicofisico = this.form.controls.tipo.value === 'Psicofísico';
