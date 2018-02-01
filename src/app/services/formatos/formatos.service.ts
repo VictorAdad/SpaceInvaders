@@ -839,13 +839,28 @@ public setDataF1011(_data,_id_solicitud){
         const personas = _caso.personas;
         const victimas = [];
 
-        for (const persona of victimas) {
-            if (persona.tipoInterviniente.id == _config.optionValue.tipoInterviniente.victima) {
+        for (const persona of personas) {
+            if (persona.tipoInterviniente.id == _config.optionValue.tipoInterviniente.victima ||
+                persona.tipoInterviniente.id == _config.optionValue.tipoInterviniente.victimaDesconocido) {
                 victimas.push(persona);
             }
         }
 
         return victimas;
+    }
+
+    public findImputados(_caso) {
+        const personas = _caso.personas;
+        const imputados = [];
+
+        for (const persona of personas) {
+            if (persona.tipoInterviniente.id == _config.optionValue.tipoInterviniente.imputado ||
+                persona.tipoInterviniente.id == _config.optionValue.tipoInterviniente.imputadoDesconocido) {
+                imputados.push(persona);
+            }
+        }
+
+        return imputados;
     }
 
 
