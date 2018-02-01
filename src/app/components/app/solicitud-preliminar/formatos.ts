@@ -53,35 +53,35 @@ export class FormatosGlobal {
         this._confirmation.create('Advertencia','¿Estás seguro de guardar este formato?',this.confirmation_settings)
         .subscribe(
             (ans: ResolveEmit) => {
-                // if (ans.resolved) {
-                //     if (this.onLine === null || this.onLine.onLine) {
-                //         this.http.get(`/v1/documentos/formatos/save/${_id}/${_format}`).subscribe(
-                //             response => {
-                //                 Logger.log('Done changeFormat()', response);
-                //                 this.globalService.openSnackBar("Formato generado con éxito");
-                //                 this.documentos[response.id] = response;
-                //                 this.documentos[response.id]['validate'] = false;
-                //                 this.setData(response);
-                //             },
-                //             error => {
-                //                 this.globalService.openSnackBar("X ocurrió un error al generar el formato");
-                //             }
-                //         );
-                //     } else {
-                //         const tempId = Date.now();
-                //         const dato = {
-                //             url: `/v1/documentos/formatos/save/${_id}/${_format}`,
-                //             body: {},
-                //             options: [],
-                //             tipo: 'get',
-                //             pendiente: true,
-                //             dependeDe: [_id],
-                //             temId: tempId,
-                //             username: this.auth.user.username
-                //         };
+                if (ans.resolved) {
+                    if (this.onLine === null || this.onLine.onLine) {
+                        this.http.get(`/v1/documentos/formatos/save/${_id}/${_format}`).subscribe(
+                            response => {
+                                Logger.log('Done changeFormat()', response);
+                                this.globalService.openSnackBar("Formato generado con éxito");
+                                this.documentos[response.id] = response;
+                                this.documentos[response.id]['validate'] = false;
+                                this.setData(response);
+                            },
+                            error => {
+                                this.globalService.openSnackBar("X ocurrió un error al generar el formato");
+                            }
+                        );
+                    } else {
+                        const tempId = Date.now();
+                        const dato = {
+                            url: `/v1/documentos/formatos/save/${_id}/${_format}`,
+                            body: {},
+                            options: [],
+                            tipo: 'get',
+                            pendiente: true,
+                            dependeDe: [_id],
+                            temId: tempId,
+                            username: this.auth.user.username
+                        };
 
-                //         this.db.add('sincronizar', dato).then( p => {
-                //         });
+                        this.db.add('sincronizar', dato).then( p => {
+                        });
                         const out = this.formatos.replaceWord(
                             this.formatos.formatos[_format].nombre,
                             _format
@@ -95,9 +95,9 @@ export class FormatosGlobal {
                         an.href = url;
                         an.download = this.formatos.formatos[_format].nombre;
                         an.click();
-                //     }
+                    }
 
-                // }
+                }
             }
         );
 
