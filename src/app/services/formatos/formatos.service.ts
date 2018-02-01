@@ -806,6 +806,25 @@ public setDataF1009(_data,_id_solicitud){
 
 }
 
+public setDataF1516(_data) {
+    console.log('<<< Formato F1516 caso >>>', _data);
+
+    this.setCasoInfo(_data);
+
+    this.data['xEstado']                 = ''; 
+    this.data['xPoblacion']              = '';
+    this.data['xRecibioLlamada']         = '';
+    this.data['xVictima']                = '';
+    this.data['xManifesto']              = '';
+    this.data['xNarracionHechos']        = '';
+    this.data['xNombreEmisorFirma']      = this.auth.user.nombreCompleto;
+    this.data['xCargoEmisorFirma']       = this.auth.user.cargo;
+    this.data['xAdscripcionEmisorFirma'] = this.auth.user.agenciaCompleto;
+    
+
+
+}
+
 public setDataF1010(_data,_id_solicitud){
   Logger.log('Formatos@setDataF1010', _data);
 
