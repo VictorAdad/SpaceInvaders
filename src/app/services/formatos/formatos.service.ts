@@ -1023,7 +1023,13 @@ public setDataF1010(_data,_id_solicitud){
         const idiomas = [];
 
         _personas.forEach(o => {
-            nombres.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
+            if (o.tipoInterviniente.id == _config.optionValue.tipoInterviniente.victimaDesconocido) {
+                nombres.push(` Identidad desconocida`);
+            } else if(o.tipoInterviniente.id == _config.optionValue.tipoInterviniente.imputadoDesconocido) {
+                nombres.push(` Quien resulte responsable`);
+            } else {
+                nombres.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
+            }
             if (o.tipoInterviniente) {
                 calidadPersonas.push(` ${o.tipoInterviniente.tipo}`);
             }
