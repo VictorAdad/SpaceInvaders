@@ -17,19 +17,25 @@
 
 # Run npm to create the production build
 if [ $# -eq 0 ]; then
-    echo "¿Qué ambiente quieres compilar? [test|prod]"
+    echo "¿Qué ambiente quieres compilar? [evo-sigi | sigi-test | fiscalia]"
     exit 1
 else
-    if [ $1 == "test" ]; then
-      echo "Compilando ambiente test (http://10.0.30.14/sigi/)"
+    if [ $1 == "evo-sigi" ]; then
+      echo "Compilando ambiente evo-sigi (http://sigi.evomatik.net/evo-sigi/)"
       npm run deploy-test
-      DIR_NAME="sigi"
-    elif [ $1 == "prod" ]; then
-      echo "Compilando ambiente prod (http://sigi.evomatik.net/sigi-test/)"
+      npm run precache
+      DIR_NAME="evo-sigi"
+    elif [ $1 == "sigi-test" ]; then
+      echo "Compilando ambiente sigi-test (http://sigi.evomatik.net/sigi-test/)"
       npm run deploy-prod
       DIR_NAME="sigi-test"
+    elif [ $1 == "fiscalia" ]; then
+      echo "Compilando ambiente productivo para Fiscalía (sigi.fiscaliaedomex.gob.mx)"
+      npm run deploy-fiscalia
+      npm run precache
+      DIR_NAME="fiscalia"
     else
-      echo "Opciones aceptadas: [test|prod]"
+      echo "Opciones aceptadas: [evo-sigi | sigi-test | fiscalia]"
       exit 1
     fi
 fi

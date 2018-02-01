@@ -77,7 +77,8 @@ export class CasoService{
                                     this.caso = new Caso().fromJSON(response);
                                     this.casoChange.next(this.caso);
                                     this.setCaso(response);
-                                    resolve(this.actualizaCasoOffline(response));
+                                    resolve(this.caso);
+                                    this.actualizaCasoOffline(response)
                                 }else {
                                     Logger.logColor('RESPUESTA','green',this.caso);
                                     resolve();
