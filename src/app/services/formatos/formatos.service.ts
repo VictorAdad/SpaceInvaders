@@ -26,20 +26,23 @@ export class FormatosService {
         // Logger.log('Formatos@getFormatos()');
         for(let attr in this.formatos){
             if(
-                String(attr) !== 'constructor',
-                String(attr) !== 'data',
-                String(attr) !== 'getVicImp',
-                String(attr) !== 'setDataF1003',
-                String(attr) !== 'setDataF1004',
-                String(attr) !== 'setDataF1005',
-                String(attr) !== 'setCasoInfo',
-                String(attr) !== 'setVictimaInfo',
-                String(attr) !== 'setDataF1008',
-                String(attr) !== 'setDataF1009',
-                String(attr) !== 'setDataF1010',
-                String(attr) !== 'setDataF1011',
-                String(attr) !== 'findHerenciaPersonasPredenuncia',
-                String(attr) !== 'findVictimas',
+                String(attr) !== 'auth' &&
+                String(attr) !== 'constructor' &&
+                String(attr) !== 'data' &&
+                String(attr) !== 'getVicImp' &&
+                String(attr) !== 'setDataF1003' &&
+                String(attr) !== 'setDataF1004' &&
+                String(attr) !== 'setDataF1005' &&
+                String(attr) !== 'setCasoInfo' &&
+                String(attr) !== 'setVictimaInfo' &&
+                String(attr) !== 'setDataF1008' &&
+                String(attr) !== 'setDataF1009' &&
+                String(attr) !== 'setDataF1010' &&
+                String(attr) !== 'setDataF1011' &&
+                String(attr) !== 'findHerenciaPersonasPredenuncia' &&
+                String(attr) !== 'findVictimas' &&
+                String(attr) !== 'findImputados' &&
+                String(attr) !== 'setDataF1007' &&
                 String(attr) !== 'findHerenciaNombresVictimas'
                 ){
                 Logger.log('-> Cargar formato: ', attr);

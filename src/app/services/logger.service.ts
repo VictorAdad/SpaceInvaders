@@ -92,5 +92,13 @@ export class Logger {
         }
     }
 
+    public static logDarkColor(texto, color, ...args){
+        if (_config.develop){
+            var arg2=["%c"+texto,"background-color:black; color:"+color+";font-weight:bold;"];
+            arg2=arg2.concat(args);
+            console.log.apply(console, arg2);
+        }
+    }
+
     
 }

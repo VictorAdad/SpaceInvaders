@@ -278,7 +278,8 @@ export class SolPreDocComponent {
       confirmText: "Continuar", // Default: 'Yes'
       declineText: "Cancelar",
     };
-    public isMaxCapacityViolated:boolean=false
+    public isMaxCapacityViolated:boolean=false;
+    public isSaving = false;
 
     constructor(
         public dialogRef: MatDialogRef<SolPreDocComponent>,
@@ -388,6 +389,7 @@ export class SolPreDocComponent {
      this._confirmation.create('Advertencia','¿Estás seguro de adjuntar este documento?',this.confirmation_settings)
       .subscribe(
           (ans: ResolveEmit) => {
+              this.isSaving = true;
               Logger.log("respueta",ans);
               if(ans.resolved){
                 Logger.log("-> Archivos:", this.uploader);
