@@ -142,22 +142,38 @@ export class FormatosLocal {
         'data': null
     };
     // Formato de solicitud policia ministerial
-    public F1_011 = {
-        'path': environment.app.host+'/assets/formatos/F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
-        'nombre': 'F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
-        'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL',
-        'file': null,
-        'data': null
-    };
-    public F1_021 = {
-        'path': environment.app.host+'/assets/formatos/F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO.docx',
-        'nombre': 'F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO.docx',
-        'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO',
-        'file': null,
-        'data': null
-    };
+   public F1_011 = {
+    'path': environment.app.host+'/assets/formatos/F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
+    'nombre': 'F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
+    'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL',
+    'file': null,
+    'data': null
+   };
+   public F1_021 = {
+    'path': environment.app.host+'/assets/formatos/F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO.docx',
+    'nombre': 'F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO.docx',
+    'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO',
+    'file': null,
+    'data': null
+   };
 
-    public getVicImp(_data, _id_solicitud, _interVi) {
+   // Acuerdo de inicio
+   public F1_015_016 = {
+    'path': environment.app.host+'/assets/formatos/F1-016 Y F1-015 FORMATO DE ACUERDO DE INICIO.docx',
+    'nombre': 'F1-016 Y F1-015 FORMATO DE ACUERDO DE INICIO.docx',
+    'nameEcm': 'FORMATO DE ACUERDO DE INICIO',
+    'file': null,
+    'data': null
+   };
+   public F1_007 = {
+    'path': environment.app.host+'/assets/formatos/F1-007 CARÁTULA.docx',
+    'nombre': 'F1-007 CARÁTULA.docx',
+    'nameEcm': 'CARÁTULA',
+    'file': null,
+    'data': null
+   };
+
+   public getVicImp(_data, _id_solicitud, _interVi) {
        var victimasHeredar = [];
        var nombreVicHer = '';
 
@@ -327,7 +343,13 @@ export class FormatosLocal {
         const identificaciones = [];
         const foliosIdentificacion = [];
         const predenuncia =  _caso.predenuncias;
-        const personas = this.findHerenciaPersonasPredenuncia(_caso);
+        let personas = [];
+
+        if (predenuncia.heredar) {
+            personas = this.findHerenciaPersonasPredenuncia(_caso)
+        } else {
+            personas = this.findVictimas(_caso);
+        }
 
         personas.forEach(o => {
             nombrePersonas.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
@@ -359,7 +381,7 @@ export class FormatosLocal {
 
     public setDataF1004(_caso) {
         // Logger.log('Formatos@setDataF1004', _data);
-        const personas = this.findHerenciaPersonasPredenuncia(_caso);
+        const predenuncia = _caso.predenuncias;
         const nombres = [];
         const calidadPersonas = [];
         const tiposPersonas = [];
@@ -379,6 +401,13 @@ export class FormatosLocal {
         const nacionalidades = [];
         const identificaciones = [];
         const folios = [];
+        let personas = [];
+
+        if (predenuncia.heredar) {
+            personas = this.findHerenciaPersonasPredenuncia(_caso)
+        } else {
+            personas = this.findVictimas(_caso);
+        }
 
         personas.forEach(o => {
             nombres.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
@@ -521,6 +550,14 @@ export class FormatosLocal {
     }
 
 
+public setDataF1007(_data){
+  Logger.log('Formatos@setDataF1007', _data);
+
+  this.data['xNUC']= _data.nuc? _data.nuc:'';
+  this.data['xNIC']= _data.nic? _data.nic:'';
+
+}
+
 
 public setDataF1008(_data){
   Logger.log('Formatos@setDataF1008', _data);
@@ -572,6 +609,7 @@ public setDataF1008(_data){
   this.data['xCargoEmisorFirma']= '';
   this.data['xNombreEmisorFirma']= '';
   this.data['xAdscripcionEmisorFirma']= '';
+
 }
 
 public setDataF1009(_data,_id_solicitud){
@@ -779,6 +817,19 @@ public setDataF1011(_data,_id_solicitud){
         }
 
         return personas;
+    }
+
+    public findVictimas(_caso) {
+        const personas = _caso.personas;
+        const victimas = [];
+
+        for (const persona of victimas) {
+            if (persona.tipoInterviniente.id == _config.optionValue.tipoInterviniente.victima) {
+                victimas.push(persona);
+            }
+        }
+
+        return victimas;
     }
 
 

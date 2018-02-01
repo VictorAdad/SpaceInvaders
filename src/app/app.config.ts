@@ -1,7 +1,7 @@
 export var _config = {
 	api : {
     // host : 'http://10.0.2.103:9000'
-		host : 'http://10.0.2.21:9000'
+		host : 'http://10.0.2.39:9000'
 	},
 	develop:true,
 	sede:"Xalapa, Veracruz",
@@ -23,15 +23,14 @@ export var _config = {
 			victima: 9,
 			defensorPrivado: 10,
       policia: 11,
-      imputadoDesconocido:21,
-      victimaDesconocido:22
+      imputadoDesconocido:12,
+      victimaDesconocido:13
 
     },
     vehiculo:{
       bicicleta:"BICICLETA"
     },
     delito:{
-      robo:"ROBO"
       robo: ["ROBO DE UN VEHÍCULO AUTOMOTOR","ROBO DE UN VEHÍCULO AUTOMOTOR Y CON VIOLENCIA"]
     }
 	},

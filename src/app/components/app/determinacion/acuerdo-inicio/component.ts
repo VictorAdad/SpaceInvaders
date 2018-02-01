@@ -369,8 +369,14 @@ export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
       }
 
       this.route.params.subscribe(params => {
-          if (params['casoId'])
+          if (params['casoId']) {
               this.urlUpload = '/v1/documentos/acuerdos/save/'+params['casoId'];
+              this.caso.find(params['casoId']).then(
+                response => {
+                   this.updateDataFormatos(this.caso.caso);
+               }
+             );
+          }
 
       });
 
@@ -389,6 +395,12 @@ export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
       Logger.log('setData()');
       this.data.push(_object);
       this.subject.next(this.data);
+  }
+
+  public updateDataFormatos(_object){
+    
+    this.formatos.formatos.setDataF1007(_object);
+
   }
 
 }
