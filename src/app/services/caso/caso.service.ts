@@ -70,7 +70,7 @@ export class CasoService{
                             }
                         );
                     } else {
-                        this.db.get('casos', this.id).then(
+                        this.db.get('casos', _id).then(
                             response => {
                                 if (response !== undefined) {
                                     console.log('rsponse', response);
