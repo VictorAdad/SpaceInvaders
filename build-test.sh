@@ -1,7 +1,10 @@
 #!/bin/sh
 # This is a comment!
-echo "Compilando proyecto en C++ llamado test.cpp."
+echo "Compilando proyecto en C++ llamado test.cpp"
 g++ test.cpp
+
+# creamos el archivo html
+echo "Compilando el archivo llamado index.html"
 touch index.html
 echo "<b>Esto es un index.</b>" >> index.html
 
