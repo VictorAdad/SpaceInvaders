@@ -8,7 +8,7 @@ echo "Creando el archivo llamado index.html"
 touch index.html
 
 # insertando codigo html en el index
-echo "Insertando codigo html en index.html"
+echo "Insertando codigo html en el index.html"
 echo "<b>Esto es un index.</b>" >> index.html
 
 # Set the destination server
