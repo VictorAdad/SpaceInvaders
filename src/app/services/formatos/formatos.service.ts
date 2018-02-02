@@ -614,6 +614,12 @@ public setDataIPH(_data) {
 
    let fechaConocimiento = moment(_data.fechaConocimiento).format('L');
    let fechaArribo = moment(_data.fechaArribo).format('L');
+   let fechaPreservacion = moment(_data.fechaPreservacion).format('L');
+   let fechaCertificado = moment (_data.fechaCertificado).format ('L');
+   let fechaDetenido = moment (_data.fechaDetenido).format ('L');
+   let fechaCanalizacion = moment (_data.fechaCanalizacion).format ('L');
+   let lugarFechaEntrevistaFecha = moment (_data.lugarFechaEntrevistaFecha).format ('L');
+   let datosEntrevistadoFechaNacimiento = moment (_data.datosEntrevistadoFechaNacimiento).format ('L');
 
     this.data['xNumeroReferencia']            = _data.numeroReferencia            
     this.data['xPrimerResponsable']           = _data.primerResponsable            
@@ -665,7 +671,7 @@ public setDataIPH(_data) {
     this.data['xTrasladoAccionesDe']          = _data.trasladoAccionesDe 
     this.data['xInspeccionesAccionesA']       = _data.InspeccionesAccionesA    
     this.data['xEntrevistasAcciones']         = _data.entrevistasAcciones  
-    this.data['xFechaPreservacion']           = _data.fechaPreservacion
+    this.data['xFechaPreservacion']           = fechaPreservacion
     this.data['xHoraPreservacion']            = _data.horaPreservacion
     this.data['xAcordonamiento']              = _data.acordonamiento
     this.data['xCuipAcordonamiento']          = _data.cuipAcordonamiento 
@@ -679,7 +685,7 @@ public setDataIPH(_data) {
     this.data['xMaternoResguardo']            = _data.maternoResguardo
     this.data['xNombreResguardo']             = _data.nombreResguardo
     this.data['xAdcripcionResguardo']         = _data.adcripcionResguardo  
-    this.data['xFechaCertificado']            = _data.fechaCertificado
+    this.data['xFechaCertificado']            = fechaCertificado
     this.data['xHoraCertificado']             = _data.horaCertificado
     this.data['xMedico']                      = _data.medico
     this.data['xMedicoAgencia']               = _data.medicoAgencia
@@ -692,10 +698,200 @@ public setDataIPH(_data) {
     this.data['xCalleParticular']             = _data.calleParticular
     this.data['xNumParticular']               = _data.numParticular
     this.data['xCuipParticular']              = _data.cuipParticular
-    this.data['xPaternoParticular']           = _data.paternoParticular
+    this.data['xPaternoParticular']            = _data.paternoParticular
     this.data['xMaternoParticular']           = _data.maternoParticular 
     this.data['xNombreParticular']            = _data.nombreParticular
     this.data['xAdscripcionParticular']       = _data.adscripcionParticular
+   
+
+    //Anexo1
+    this.data['xDetenido']                    = _data.detenido
+    this.data['xPaternoDetenido']             = _data.paternoDetenido
+    this.data['xMaternoDetenido']             = _data.maternoDetenido
+    this.data['xNombreDetenido']              = _data.nombreDetenido
+
+    //Anexo2
+    this.data['xMotivoDetencion']             = _data.motivoDetencion
+    this.data['xFechaDetencion']              = _data.fechaDetencion
+    this.data['xHoraDetencion']               = _data.horaDetencion
+    this.data['xEntidadDetencion']            = _data.entidadDetencion
+    this.data['xMunicipioDetencion']          = _data.municipioDetencion
+    this.data['xLocalidadDetencion']          = _data.localidadDetencion
+    this.data['xCalleDetencion']              = _data.calleDetencion
+    this.data['xNumIntDetencion']             = _data.numIntDetencion
+    this.data['xNumExtDetencion']             = _data.numExtDetencion
+    this.data['xEntreCalleDetencion']         = _data.entreCalleDetencion
+    this.data['xCpDetencion']                 = _data.cpDetencion
+    this.data['xLatitudDetencion']            = _data.latitudDetencion
+    this.data['xLongitudDetencion']           = _data.longitudDetencion
+    this.data['xPaternoDetecion']             = _data.paternoDetecion
+    this.data['xMaternoDetecion']             = _data.maternoDetecion
+    this.data['xMaternoDetecion']             = _data.maternoDetecion
+    this.data['xNombreDetencion']             = _data.nombreDetencion
+    this.data['xEdadRefeDetencion']           = _data.edadRefeDetencion
+    this.data['xCalleDetenido']               = _data.calleDetenido
+    this.data ['xNumExtDetenido']             = _data.numExtDetenido
+    this.data ['xNumIntDetenido']             = _data.numIntDetenido
+    this.data ['xCpDetenido']                 = _data.cpDetenido
+    this.data ['xFechaDetenido']              = fechaDetenido
+    this.data ['xCasadoDetenido']             = _data.casadoDetenido
+    this.data ['xOcupacionDetenido']          = _data.ocupacionDetenido
+    this.data ['xNacionalidadDetenido']       = _data.nacionalidadDetenido
+    this.data ['xRfcCurpDetenido']            = _data.rfcCurpDetenido
+    this.data ['xSeñalesParticularesDetenido']  = _data.señalesParticularesDetenido
+    this.data ['xDescripcionFisicaDetenido']  = _data.descripcionFisicaDetenido
+    this.data ['xTipoVestimentaDetenido']     = _data.tipoVestimentaDetenido
+    //Anexo 3
+    this.data ['xSituacionUsoFuerza']         = _data.situacionUsoFuerza
+    this.data ['xPaternoFuerza']              = _data.paternoFuerza
+    this.data ['xMaternoFuerza']              = _data.maternoFuerza
+    this.data ['xNombreFuerza']               = _data.nombreFuerza     
+    this.data ['xPaternoPrimerFuerza']        = _data.paternoPrimerFuerza
+    this.data ['xMaternoPrimerFuerza']        = _data.maternoPrimerFuerza
+    this.data ['xNombrePrimerFuerza']         = _data.nombrePrimerFuerza
+    this.data ['xFechaCanalizacion']          = fechaCanalizacion  
+    this.data ['xHoraCanalizacion']           = _data.horaCanalizacion
+
+    //Anexo5
+    this.data ['xDetenidoPertenencia']        = _data.detenidoPertenencia
+    this.data ['xObjeto']                     = _data.objeto
+    this.data ['xCantidadObjeto']             = _data.cantidadObjeto
+    
+    //Anexo 6
+    this.data ['xPaternoPrimerVictima']        = _data.paternoPrimerVictima
+    this.data ['xMaternoPrimerVictima']        = _data.maternoPrimerVictima
+    this.data ['xNombrePrimerVictima']         = _data.nombrePrimerVictima
+    this.data ['xPaternoRespondiente']         = _data.paternoRespondiente
+    this.data ['xMaternoRespondiente']         = _data.maternoRespondiente
+    this.data ['xNombreRespondiente']          = _data.nombreRespondiente
+
+    //Anexo 7
+    this.data ['xTrasladoA']                   = _data.trasladoA
+    this.data ['xTipoTraslado']                = _data.tipoTraslado
+    this.data ['xEspecifiqueTraslado']         = _data.especifiqueTraslado
+    this.data ['xAgenciaTraslado']             = _data.agenciaTraslado
+    this.data ['xEstadoAgenciaTraslado']       = _data.estadoAgenciaTraslado
+    this.data ['xMunicipioAgenciaTraslado']    = _data.municipioAgenciaTraslado
+    this.data ['xColoniaAgenciaTraslado']      = _data.coloniaAgenciaTraslado
+    this.data ['xCalleAgenciaTraslado']        = _data.calleAgenciaTraslado
+    this.data ['xNumExtAgenciaTraslado']       = _data.numExtAgenciaTraslado
+    this.data ['xCpAgenciaTraslado']           = _data.cpAgenciaTraslado
+    this.data ['xPaternoEntregaTraslado']      = _data.paternoEntregaTraslado
+    this.data ['xMaternoEntregaTraslado']      = _data.maternoEntregaTraslado
+    this.data ['xNombreEntregaTraslado']       = _data.nombreEntregaTraslado
+    this.data ['xCargaEntregaTraslado']        = _data.cargaEntregaTraslado
+    this.data ['xPaternoRecibeTraslado']       = _data.paternoRecibeTraslado
+    this.data ['xMaternoRecibeTraslado']       = _data.maternoRecibeTraslado
+    this.data ['xNombreRecibeTraslado']        = _data.nombreRecibeTraslado
+    this.data ['xFechaTraslado']               = _data.fechaTraslado
+    this.data ['xHoraTraslado']                = _data.horaTraslado
+
+    //Anexo 8
+    this.data ['xTipoLugarIntervencion']       = _data.tipoLugarIntervencion
+    this.data ['xOtroLugarIntervencion']       = _data.otroLugarIntervencion
+    this.data ['xCaracterLugarIntervencion']   = _data.caracterLugarIntervencion
+    this.data ['xSueloIntervencion']           = _data.sueloIntervencion
+    this.data ['xCondicionesIntervencion']     = _data.condicionesIntervencion
+    this.data ['xIluminacionIntervencion']     = _data.iluminacionIntervencion
+    this.data ['xTipoObjetosEncontradosArmaTipo']      = _data.tipoObjetosEncontradosArmaTipo
+    this.data ['xTipoObjetosEncontradosArmaCantidad']  = _data.tipoObjetosEncontradosArmaCantidad
+    this.data ['xTipoObjetosEncontradosDineroMoneda']  = _data.tipoObjetosEncontradosDineroMoneda
+    this.data ['xTipoObjetosEncontradosDineroOtra']   = _data.tipoObjetosEncontradosDineroOtra
+    this.data ['xTipoObjetosEncontradosDineroCantidad']    = _data.tipoObjetosEncontradosDineroCantidad
+    this.data ['xTipoObjetosEncontradosCadaverCantidad'] = _data.tipoObjetosEncontradosCadaverCantidad
+    this.data ['xTipoObjetosEncontradosRestosHumanosCantidad'] =_data.tipoObjetosEncontradosRestosHumanosCantidad
+    this.data ['xTipoObjetosEncontradosPersonasCantidad'] = _data.tipoObjetosEncontradosPersonasCantidad
+    this.data ['xTipoObjetosEncontradosDocumentosCantidad'] = _data.tipoObjetosEncontradosDocumentosCantidad
+    this.data ['xTipoObjetosEncontradosOtroObjetoCantidad'] = _data.tipoObjetosEncontradosOtroObjetoCantidad
+    this.data ['xTipoObjetosEncontradosCaracteristicasNarcoticosTipo'] = _data.tipoObjetosEncontradosCaracteristicasNarcoticosTipo
+    this.data ['xTipoObjetosEncontradosCaracteristicasNarcoticosCantidad'] =_data.tipoObjetosEncontradosCaracteristicasNarcoticosCantidad
+    this.data ['xInspeccionesPersonasPaterno'] = _data.inspeccionesPersonasPaterno
+    this.data ['xInspeccionesPersonasMaterno'] = _data.inspeccionesPersonasMaterno
+    this.data ['xInspeccionesPersonasNombres'] = _data.inspeccionesPersonasNombres
+    this.data ['xObjetosEncontradosArmasTipo'] = _data.objetosEncontradosArmasTipo
+    this.data ['xObjetosEncontradosArmasCantidad'] = _data.objetosEncontradosArmasCantidad
+    this.data ['xObjetosEncontradosDineroMoneda']  = _data.objetosEncontradosDineroMoneda
+    this.data ['xObjetosEncontradosDineroOtra']    = _data.objetosEncontradosDineroOtra
+    this.data ['xObjetosEncontradosDineroCantidad'] = _data.objetosEncontradosDineroCantidad
+    this.data ['xObjetosEncontradosCaracteristicasNarcoticosTipo'] = _data.objetosEncontradosCaracteristicasNarcoticosTipo
+    this.data ['xObjetosEncontradosCaracteristicasNarcoticosCantidad'] = _data.objetosEncontradosCaracteristicasNarcoticosCantidad
+    this.data ['xObjetosEncontradosDocumentosCantidad']    = _data.objetosEncontradosDocumentosCantidad
+    this.data ['xObjetosEncontradosOtroObjetoCantidad']    = _data.objetosEncontradosOtroObjetoCantidad
+
+    //Anexo 8 Json enlazados pero no agregados en el documento
+    this.data ['xObjetosEncontradosMedioTransporteTipo']   = _data.objetosEncontradosMedioTransporteTipo
+    this.data ['xObjetosEncontradosMedioTransporteMarca']  = _data.objetosEncontradosMedioTransporteMarca
+    this.data ['xObjetosEncontradosMedioTransporteSubmarca'] = _data.objetosEncontradosMedioTransporteSubmarca
+    this.data ['xObjetosEncontradosMedioTransporteModelo'] = _data.objetosEncontradosMedioTransporteModelo
+    this.data ['xObjetosEncontradosMedioTransportePlaca']  = _data.objetosEncontradosMedioTransportePlaca
+    this.data ['xObjetosEncontradosMedioTransporteNumeroPermiso'] = _data.objetosEncontradosMedioTransporteNumeroPermiso
+    this.data ['xObjetosEncontradosMedioTransporteNumeroSerie'] = _data.objetosEncontradosMedioTransporteNumeroSerie
+    this.data ['xObjetosEncontradosMedioTransporteNumeroMoto']  = _data.objetosEncontradosMedioTransporteNumeroMoto
+    this.data ['xObjetosEncontradosMedioTransporteNumeroColor'] = _data.objetosEncontradosMedioTransporteNumeroColor
+    this.data ['xObjetosEncontradosMedioTransporteProcedencia'] = _data.objetosEncontradosMedioTransporteProcedencia
+    this.data ['xInspeccionesMedioTransportePaterno'] = _data.inspeccionesMedioTransportePaterno
+    this.data ['xInspeccionesMedioTransporteMaterno'] = _data.inspeccionesMedioTransporteMaterno
+    this.data ['xInspeccionesMedioTransporteNombres'] = _data.inspeccionesMedioTransporteNombres
+    this.data ['xArmasCantidadObjetosEncontrados']    = _data.armasCantidadObjetosEncontrados
+    this.data ['xCargadoresCantidadObjetosEncontrado'] = _data.cargadoresCantidadObjetosEncontrado
+    this.data ['xCartuchosCantidadObjetosEncontrados'] = _data.cartuchosCantidadObjetosEncontrados
+    this.data ['xCasquillosCantidadObjetosEncontrados'] = _data.casquillosCantidadObjetosEncontrados
+    this.data ['xDineroMonedaObjetosEncontrados'] = _data.dineroMonedaObjetosEncontrados
+    this.data ['xDineroOtraObjetosEncontrados'] = _data.dineroOtraObjetosEncontrados
+    this.data ['xDineroCantidadObjetosEncontrados'] = _data.dineroCantidadObjetosEncontrados
+    this.data ['xCaracteristicasNarcoticosTipoObjetosEncontrados'] = _data.caracteristicasNarcoticosTipoObjetosEncontrados
+    this.data ['xCaracteristicasNarcoticosCantidadObjetosEncontrados'] = _data.caracteristicasNarcoticosCantidadObjetosEncontrados
+    this.data ['xDocumentosCantidadTipoObjetosEncontrados'] = _data.documentosCantidadTipoObjetosEncontrados
+    this.data ['xPersonasCantidadTipoObjetosEncontrados'] = _data.personasCantidadTipoObjetosEncontrados
+    this.data ['xCadaverCantidadTipoObjetosEncontrados']  = _data.cadaverCantidadTipoObjetosEncontrados
+    this.data ['xRestosHumanosCantidadTipoObjetosEncontrados'] = _data.restosHumanosCantidadTipoObjetosEncontrados
+    this.data ['xOtroObjetoCantidadTipoObjetosEncontrados'] = _data.otroObjetoCantidadTipoObjetosEncontrados
+
+    //Anexo 9 
+    this.data ['xInventarioTipoObjeto'] = _data.inventarioTipoObjeto
+    this.data ['xInventarioCantidad']   = _data.inventarioCantidad
+    this.data ['xInventarioEspecificacion'] = _data.inventarioEspecificacion
+
+
+    //Anexo 10
+    this.data ['xEntregaLugar']         = _data.entregaLugar
+    this.data ['xEntregaEntidad']       = _data.entregaEntidad
+    this.data ['xEntregaMunicipio']     = _data.entregaMunicipio
+    this.data ['xEntregaColonia']       = _data.entregaColonia
+    this.data ['xEntregaCalle']         = _data.entregaCalle
+    this.data ['xEntregaNumInterior']   = _data.entregaNumInterior
+    this.data ['xEntregaNumExterior']   = _data.entregaNumExterior
+    this.data ['xEntregaCp']            = _data.entregaCp
+
+    //Anexo 11
+    this.data ['xEntrevistaVictimaPersona']     = _data.entrevistaVictimaPersona
+    this.data ['xLugarFechaEntrevistaFecha']    = lugarFechaEntrevistaFecha
+    this.data ['xLugarFechaEntrevistaHora']     = _data.lugarFechaEntrevistaHora
+    this.data ['xLugarFechaEntrevistaColonia']  = _data.lugarFechaEntrevistaColonia
+    this.data ['xLugarFechaEntrevistaCalle']    = _data.lugarFechaEntrevistaCalle
+    this.data ['xLugarFechaEntrevistaNumExterior']   = _data.lugarFechaEntrevistaNumExterior
+    this.data ['xDatosEntrevistadoPaterno']     = _data.datosEntrevistadoPaterno
+    this.data ['xDatosEntrevistadoMaterno']     = _data.datosEntrevistadoMaterno
+    this.data ['xDatosEntrevistadoNombres']     = _data.datosEntrevistadoNombres
+    this.data ['xDatosEntrevistadoSexo']        = _data.datosEntrevistadoSexo
+    this.data ['xDatosEntrevistadoEstado']      = _data.datosEntrevistadoEstado
+    this.data ['xDatosEntrevistadoMunicipio']   = _data.datosEntrevistadoMunicipio
+    this.data ['xDatosEntrevistadoColonia']     = _data.datosEntrevistadoColonia
+    this.data ['xDatosEntrevistadoCalle']       = _data.datosEntrevistadoCalle
+    this.data ['xDatosEntrevistadoNumExterior'] = _data.datosEntrevistadoNumExterior
+    this.data ['xDatosEntrevistadoNumInterior'] = _data.datosEntrevistadoNumInterior
+    this.data ['xDatosEntrevistadoCp']          = _data.datosEntrevistadoCp
+    this.data ['xDatosEntrevistadoFechaNacimiento']  = datosEntrevistadoFechaNacimiento
+    this.data ['xDatosEntrevistadoCurp']        = _data.datosEntrevistadoCurp
+    this.data ['xDatosEntrevistadoOcupacion']   = _data.datosEntrevistadoOcupacion
+    this.data ['xDatosEntrevistadoRelato']      = _data.datosEntrevistadoRelato 
+    this.data ['xDatosEntrevistadoEstadoCivil'] = _data.datosEntrevistadoEstadoCivil
+    this.data ['xDatosEntrevistadorApellidoPaterno'] = _data.datosEntrevistadorApellidoPaterno
+    this.data ['xDatosEntrevistadorApellidoMaterno'] = _data.datosEntrevistadorApellidoMaterno
+    this.data ['xDatosEntrevistadorNombres']         = _data.datosEntrevistadorNombres
+    this.data ['xDatosEntrevistadorAdscripcion'] = _data.datosEntrevistadorAdscripcion
+
+
 
     console.log('<<< data parseo >>>', this.data);
     return this.data;

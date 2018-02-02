@@ -191,8 +191,10 @@ export class Form {
             cargaRecibeTraslado: [''],
             fechaTraslado: [''],
             horaTraslado: [''],
+            
             //Anexo 8
             tipoLugarIntervencion:[''],
+            otroLugarIntervencion: [''],
             caracterLugarIntervencion: [''],
             sueloIntervencion: [''],
             condicionesIntervencion:[''],
@@ -275,6 +277,7 @@ export class Form {
             personasTipoObjetosEncontrados: [''],
             cadaverTipoObjetosEncontrados: [''],
             documentosCantidadTipoObjetosEncontrados: [''],
+            cadaverCantidadTipoObjetosEncontrados: [''],
             personasCantidadTipoObjetosEncontrados: [''],
             restosHumanosTipoObjetosEncontrados: [''],
             otroObjetoTipoObjetosEncontrados: [''],
@@ -319,8 +322,8 @@ export class Form {
             datosEntrevistadorCuip: [''],
             datosEntrevistadorApellidoPaterno: [''],
             datosEntrevistadorApellidoMaterno: [''],
-            datosEntrevistadorApellidoNombres: [''],
-            datosEntrevistadorApellidoAdscripcion: [''],  
+            datosEntrevistadorNombres: [''],
+            datosEntrevistadorAdscripcion: [''],  
         })
     }
 }
