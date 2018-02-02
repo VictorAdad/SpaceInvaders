@@ -1221,7 +1221,7 @@ public setDataF2117(_data) {
             if (o.persona.rfc) {
                 rfcs.push(` ${o.persona.rfc}`);
             }
-            if (o.persona.estado) {
+            if (o.persona.curp) {
                 curps.push(` ${o.persona.curp}`);
             }
             if (o.persona.edad) {
@@ -1238,7 +1238,7 @@ public setDataF2117(_data) {
                 // noParticulares.push(` ${o.estado.nombre}`);
                 // noMoviles.push(` ${o.estado.nombre}`);
             }
-            if (o.sexo) {
+            if (o.persona.sexo) {
                 sexos.push(` ${o.persona.sexo.nombre}`);
             }
             if (o.persona.estadoCivil) {
