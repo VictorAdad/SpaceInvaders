@@ -259,6 +259,12 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
                               if(!caso["acuerdoInicio"]){
                                   caso["acuerdoInicio"];
                               }
+                              if (_model['personas']){
+                                const personas = _model['personas'] as any[];
+                                for (let i = 0; i< personas.length; i++){
+                                    personas[i]['personaCaso'] = {id: personas[i]['id']};
+                                }
+                              }
                               _model["id"]=temId;
                               caso["acuerdoInicio"] = _model;
                               Logger.log("caso arma", caso["acuerdoInicio"]);

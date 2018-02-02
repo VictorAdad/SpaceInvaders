@@ -90,12 +90,6 @@ export class FormatosGlobal {
                         if (this.auth) {
                             this.guardarFormatoOffLine(out, _id, this.formatos.formatos[_format].nameEcm);
                         }
-                        const an  = document.createElement('a');
-                        const url = window.URL.createObjectURL(out);
-                        document.body.appendChild(an);
-                        an.href = url;
-                        an.download = this.formatos.formatos[_format].nombre;
-                        an.click();
                     }
 
                 }
