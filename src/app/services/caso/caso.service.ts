@@ -189,6 +189,7 @@ export class CasoService{
                 response => {
                     this.addExtraInfoCaso(response);
                     this.setOnlineCaso(response);
+                    this.casoChange.next(new Caso().fromJSON(response));
                     Logger.log("%cCaso "+this.id+" actualizado","color:green;");
                 }
             )
