@@ -203,6 +203,21 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-4">
+                <select2 placeholder="Situación"
+                    [options]="[
+                        {value: 'ABANDONADO', label: 'ABANDONADO'},
+                        {value: 'DECOMISADO', label: 'DECOMISADO'},
+                        {value: 'RECUPERADO', label: 'RECUPERADO'},
+                        {value: 'ROBADO', label: 'ROBADO'}
+                    ]"
+                    name="situacion"
+                    [group]="form">
+
+                </select2>
+            </div>
+        </div>
+        <div class="row">
             <div class="col">
                 <text-area label="Señas particulares"  name="seniasParticulares" [group]="form"></text-area>
             </div>
