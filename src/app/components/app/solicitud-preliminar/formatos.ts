@@ -250,7 +250,7 @@ export class FormatosGlobal {
                     this.db.add('documentos', dato).then(doc => {
                         this.setData({
                             id: doc['id'],
-                            nameEcm: doc['nombre'] + '.docx',
+                            nameEcm: doc['nombre'],
                             created: new Date(),
                             blob: doc['idBlob']
                         });
