@@ -327,10 +327,14 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
     }
 
     public cargaArchivos(_archivos){
-        let archivos=_archivos.saved
-        for (let object of archivos) {
-            this.data.push(object);
-            this.subject.next(this.data);
+        if (this.onLine.onLine){
+            let archivos=_archivos.saved
+              for (let object of archivos) {
+                  this.data.push(object);
+                  this.subject.next(this.data);
+              }
+        }else{
+            this.cargaArchivosOffline(this,"",DocumentoPolicia);
         }
     }
 

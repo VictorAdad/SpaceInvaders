@@ -426,6 +426,7 @@ export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
   public updateDataFormatos(_object){
     this.formatos.formatos.setDataF1007(_object);
     this.formatos.formatos.setDataF1516(_object);
+    this.formatos.formatos.setDataF2117(_object);
 
   }
 
