@@ -1,6 +1,14 @@
 <div class="row space justify-content-end">
 	<div class="col-md-2">
-		<select2 placeholder= "Formatos" (valueChange)="changeFormat($event, object.id)" [options]="[{label:'DETERMINACIÓN DE NO EJERCICIO DE LA ACCIÓN PENAL',value:'F1_014'}]"  [afterClean]="true"></select2>
+        <select2
+            placeholder= "Formatos"
+            (valueChange)="changeFormat($event, object.id)"
+            [options]="[
+                {label:'DETERMINACIÓN DE NO EJERCICIO DE LA ACCIÓN PENAL',value:'F1_014'},
+                {label:'DETERMINACIÓN DE INCOMPETENCIA',value:'F1_022'}
+            ]"
+            [afterClean]="true">
+        </select2>
 	</div>
 	<div class="col-md-auto">
 		<button mat-raised-button color="accent"  (click)="openDocDialog()">Adjuntar</button>

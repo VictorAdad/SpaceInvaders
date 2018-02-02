@@ -83,5 +83,12 @@ export class Yason {
           });
         return typeof encontrado != 'undefined';
     }
+    /**
+     * Clona un  json
+     * @param _original json origen del cual se creara la copia
+     */
+    public static clone(_original){
+        return JSON.parse(JSON.stringify(_original) );
+    }
 
 }
