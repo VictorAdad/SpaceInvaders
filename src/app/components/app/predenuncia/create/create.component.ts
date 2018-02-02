@@ -440,9 +440,15 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                     if(!caso["predenuncias"]){
                                         caso["predenuncias"];
                                     }
+                                    if (_model['personas']){
+                                        const personas = _model['personas'] as any[];
+                                        for (let i = 0; i< personas.length; i++){
+                                            personas[i]['personaCaso'] = {id: personas[i]['id']};
+                                        }
+                                    }
                                     _model["id"]=temId;
                                     caso["predenuncias"] = _model;
-                                    Logger.log("caso arma", caso["predenuncia"]);
+                                    Logger.logDarkColor('      PERSONAS     ','cyan',caso["predenuncias"]);
                                     this.db.update("casos",caso).then(t=>{
                                         Logger.log("caso arma", t["arma"]);
                                         resolve("Se agregó la predenuncia de manera local");

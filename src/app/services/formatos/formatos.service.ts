@@ -431,11 +431,11 @@ export class FormatosLocal {
             this.data['xHechosNarrados'] = (_caso.predenuncias.hechosNarrados ? _caso.predenuncias.hechosNarrados : '');
             this.data['xConclusionHechos'] = (_caso.predenuncias.conclusion ? _caso.predenuncias.conclusion : '');
             this.data['xLugarHechos'] = (_caso.predenuncias.lugarHechos ? _caso.predenuncias.lugarHechos : '');
-            this.data['xCanalizacion'] = (_caso.predenuncias.canalizacion ? _caso.predenuncias.canalizacion : '');
+            this.data['xCanalizacion'] = (_caso.predenuncias.canalizacion ? 'Sí' : 'No');
             this.data['xInstitucionCanalizacion'] = (_caso.predenuncias.institucion ? _caso.predenuncias.institucion : '');
             this.data['xMotivoCanalizacion'] = (_caso.predenuncias.motivoCanalizacion ? _caso.predenuncias.motivoCanalizacion : '');
             this.data['xFechaCanalizacion'] = (_caso.predenuncias.fechaCanalizacion ? moment(_caso.predenuncias.fechaCanalizacion).format('LL'): '');
-            this.data['xHoraCanalizacion'] = (_caso.predenuncias.horaCanalizacion ? _caso.predenuncias.horaCanalizacion : '');
+            this.data['xHoraCanalizacion'] = (_caso.predenuncias.fechaCanalizacion ? moment(_caso.predenuncias.fechaCanalizacion).format('HH:mm') : '');
             this.data['xNombreCausoHecho'] = (_caso.predenuncias.nombreCausante ? _caso.predenuncias.nombreCausante : '');
             this.data['xDomicilioHechos'] = (_caso.predenuncias.domicilioCausante ? _caso.predenuncias.domicilioCausante : '');
             this.data['xObservaciones'] = (_caso.predenuncias.observaciones ? _caso.predenuncias.observaciones : '');
@@ -1221,7 +1221,7 @@ public setDataF2117(_data) {
                 tiposPersonas.push(` ${o.persona.tipoPersona}`);
             }
             if (o.persona.fechaNacimiento) {
-                fechasNacimientos.push(` ${o.persona.fechaNacimiento}`);
+                fechasNacimientos.push(` ${moment(o.persona.fechaNacimiento).format('LL')}`);
             }
             if (o.persona.rfc) {
                 rfcs.push(` ${o.persona.rfc}`);
@@ -1239,9 +1239,11 @@ public setDataF2117(_data) {
                 originarios.push(` ${o.persona.estado.nombre}`);
             }
             if (o.persona.localizacionPersona.length > 0) {
-                // domicilios.push(` ${o.estado.nombre}`);
-                // noParticulares.push(` ${o.estado.nombre}`);
-                // noMoviles.push(` ${o.estado.nombre}`);
+                o.persona.localizacionPersona.forEach(l => {
+                    domicilios.push(` ${l.calle} ${l.noInterior} ${l.noExterior} ${(l.colonia ? l.colonia.nombre : l.coloniaOtro)} ${(l.municipio ? l.municipio.nombre : l.municipioOtro)} ${(l.estado ? l.estado.nombre : l.estadoOtro)}`);
+                    noParticulares.push(` ${l.telParticular}`);
+                    noMoviles.push(` ${l.telMovil}`);
+                })
             }
             if (o.persona.sexo) {
                 sexos.push(` ${o.persona.sexo.nombre}`);

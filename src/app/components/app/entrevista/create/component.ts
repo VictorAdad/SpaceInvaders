@@ -319,7 +319,13 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 		                        if (caso){
 		                            if(!caso["entrevistas"]){
 	                        			caso["entrevistas"]=[];
-		                            }
+                                    }
+                                    if (_model['personas']){
+                                        const personas = _model['personas'] as any[];
+                                        for (let i = 0; i< personas.length; i++){
+                                            personas[i]['personaCaso'] = {id: personas[i]['id']};
+                                        }
+                                    }
 		                            _model["id"]=temId;
 		                            this.id= _model['id'];
 		                            caso["entrevistas"].push(_model);

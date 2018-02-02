@@ -263,7 +263,13 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	                        p => {
 	                            if (this.casoServ.caso){
 	                                if(!this.casoServ.caso["solicitudPrePericiales"])
-	                                    this.casoServ.caso["solicitudPrePericiales"] = [];
+										this.casoServ.caso["solicitudPrePericiales"] = [];
+									if (_model['personas']){
+										const personas = _model['personas'] as any[];
+										for (let i = 0; i< personas.length; i++){
+											personas[i]['personaCaso'] = {id: personas[i]['id']};
+										}
+									}
 
 	                                _model["id"] = temId;
 	                                this.id      = _model['id'];

@@ -196,6 +196,12 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
                                     if (!caso["solicitudPrePolicias"]) {
                                         caso["solicitudPrePolicias"] = [];
                                     }
+                                    if (_model['personas']){
+                                        const personas = _model['personas'] as any[];
+                                        for (let i = 0; i< personas.length; i++){
+                                            personas[i]['personaCaso'] = {id: personas[i]['id']};
+                                        }
+                                    }
                                     this.model["id"] = temId;
                                     this.id = this.model['id'];
                                     caso["solicitudPrePolicias"].push(this.model);
