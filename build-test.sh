@@ -12,7 +12,7 @@ DEST=evomatik@10.0.2.152:/home/evomatik/Downloads
 BUILD_NAME="test-compiled-$(date +'%m%d%y').tgz"
 
 # Create the tarball of the build
-echo "Empaquetando a.out para subirlo al server"
+echo "Empaquetando index.html para subirlo al server"
 tar cvzf builds/$BUILD_NAME index.html
 
 # Upload to DEST/DIR_NAME
