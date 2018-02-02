@@ -15,7 +15,7 @@ BUILD_NAME="test-compiled-$(date +'%m%d%y').tgz"
 echo "Empaquetando index.html para subirlo al server"
 tar cvzf builds/$BUILD_NAME index.html
 
-# Upload to DEST/DIR_NAME
+# Upload to DEST
 echo "Intentando subir el paquete al servidor (/home/evomatik/Downloads)"
 #scp builds/$BUILD_NAME $DEST # este es el antiguo metodo, no sirve en GoCD
 sshpass -p "evo100518" scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r builds/$BUILD_NAME $DEST
