@@ -309,11 +309,11 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
             if (params['casoId']){
                 this.casoId = +params['casoId'];
                 this.urlUpload = '/v1/documentos/solicitudes-pre-policias/save/'+params['casoId'];
-            // this.caso.find(params['casoId']).then(
-            //     response => {
-            //         this.updateDataFormatos(this.caso.caso);
-            //     }
-            // );
+            this.caso.find(params['casoId']).then(
+                response => {
+                    this.updateDataFormatos(this.caso.caso);
+                }
+            );
             }
         });
 

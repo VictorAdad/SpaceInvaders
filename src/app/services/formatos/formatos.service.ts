@@ -51,10 +51,10 @@ export class FormatosService {
                 if(this.formatos[attr].path){
                     JSZipUtils.getBinaryContent(this.formatos[attr].path, (error, response) => {
                         this.formatos[attr].file = new JSZip(response);
-                        Logger.log('-> Formato cargado')
-                        Logger.log('-> Response', response)
-                        Logger.log('-> Error', error)
-                        Logger.log('-> Formato', this.formatos[attr]);
+                        // Logger.log('-> Formato cargado')
+                        // Logger.log('-> Response', response)
+                        // Logger.log('-> Error', error)
+                        // Logger.log('-> Formato', this.formatos[attr]);
                     });
                 }
             }
