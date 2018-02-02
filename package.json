@@ -10,6 +10,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "deploy-test": "ng build --environment test --prod --base-href /sigi/",
+    "deploy-iph": "ng build --environment iph --prod --base-href https://sigi.evomatik.net/iph/",
     "deploy-prod": "ng build --environment prod --prod --base-href http://sigi.evomatik.net/sigi-test/",
     "compodoc": "./node_modules/.bin/compodoc -p tsconfig.json",
     "precache": "sw-precache --verbose --config=sw-precache-config.js"

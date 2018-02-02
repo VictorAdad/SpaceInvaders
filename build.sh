@@ -17,7 +17,7 @@
 
 # Run npm to create the production build
 if [ $# -eq 0 ]; then
-    echo "¿Qué ambiente quieres compilar? [test|prod]"
+    echo "¿Qué ambiente quieres compilar? [test|prod|iph]"
     exit 1
 else
     if [ $1 == "test" ]; then
@@ -28,14 +28,18 @@ else
       echo "Compilando ambiente prod (http://sigi.evomatik.net/sigi-test/)"
       npm run deploy-prod
       DIR_NAME="sigi-test"
+    elif [ $1 == "iph" ]; then
+      echo "Compilando ambiente iph (http://sigi.evomatik.net/iph/)"
+      npm run deploy-iph
+      DIR_NAME="iph"
     else
-      echo "Opciones aceptadas: [test|prod]"
+      echo "Opciones aceptadas: [test|prod|iph]"
       exit 1
     fi
 fi
 
 # Set the destination server
-DEST=evomatik@10.0.30.14:/home/evomatik/Downloads
+DEST=evomatik@10.0.30.14:/home/evomatik/Downloads/frontend
 
 # Setting the packaged dist name
 BUILD_NAME=$DIR_NAME"-$(date +'%m%d%y').tgz"
