@@ -383,7 +383,7 @@ export class FormatosLocal {
         this.data['xFolioVictimaFirma'] = foliosIdentificacion ? foliosIdentificacion.toLocaleString() : '';
         this.data['xFolioDocumento'] = !predenuncia ? '' :(predenuncia.noFolioConstancia ? predenuncia.noFolioConstancia  : '');
         this.data['xHablaEspaniol'] = !predenuncia ? '' :(predenuncia.hablaEspaniol ? 'Sí' : 'No');
-        this.data['xIdiomaLengua'] = !predenuncia ? '' :(predenuncia.hablaEspaniol ? '' : predenuncia.lenguaIdioma);
+        this.data['xIdiomaLengua'] = !predenuncia.lenguaIdioma ? '' : predenuncia.lenguaIdioma;
         this.data['xInterprete'] = !predenuncia ? '' :(predenuncia.nombreInterprete ? predenuncia.nombreInterprete  : '');
         this.data['xComprendioDerechos'] = !predenuncia ? '' :(predenuncia.compredioDerechos ? 'Sí' : 'No');
         this.data['xCopiaDerechos'] = !predenuncia ? '' :(predenuncia.proporcionoCopia ? 'Sí' : 'No');
@@ -523,9 +523,15 @@ public setDataF1007(_data){
   var anio = fecha.getFullYear();
   var lugaresHallazgo = '';
   var lugaresHechos = '';
+  var delitoHeredar
 
   if (_data.acuerdoInicio.heredar) {
-      delito = _data.acuerdoInicio.delito.delito.nombre;
+      delitoHeredar = _data.acuerdoInicio.delito.id;
+      for (let i=0; i < _data.delitoCaso.length; i++) {
+          if (_data.delitoCaso[i].id == delitoHeredar) {
+              delito = _data.delitoCaso[i].delito.nombre;
+          }
+      }
   } else {
       delito = _data.delitoPrincipal.nombre;
   }
@@ -715,10 +721,15 @@ public setDataF1007(_data){
         const nombreRepresentanteLegal = entrevista.nombreRepresentanteLegal;
         // const relacionEntrevistado;
 
+        let fecha = new Date(entrevista.created);
+        console.log('<<< FECHA ENTREVISTA >>>', fecha);
+        let fechaAtencion = fecha.getDate()+' de '+this.getMes(fecha.getMonth())+' de '+fecha.getFullYear();
+        let horaAtencion = fecha.getHours()+':'+fecha.getMinutes();
+
         this.data['xNUC']= _caso.nuc ? _caso.nuc : '';
         this.data['xNIC']= _caso.nic ? _caso.nic : '';
-        this.data['xFechaAtencion']=entrevista.created? entrevista.created:'';
-        this.data['xHoraAtencion']= entrevista.created? entrevista.created:'';
+        this.data['xFechaAtencion']=entrevista.created? fechaAtencion :'';
+        this.data['xHoraAtencion']= entrevista.created? horaAtencion :'';
         this.data['xNombreAutoridadEntrevista']= entrevista.autoridadRealizaEntrevista? entrevista.autoridadRealizaEntrevista:'';
         this.data['xLugarEntrevista']= entrevista.lugarRealizaEntrevista? entrevista.lugarRealizaEntrevista:'';
 
@@ -728,7 +739,7 @@ public setDataF1007(_data){
         this.data['xFechaNacimiento']= fechaNacimiento ? fechaNacimiento:'';
         this.data['xNacionalidad']= nacionalidad ? nacionalidad:'';
         this.data['xOriginario']= originarioDe ? originarioDe:'';
-        this.data['xCalidadUsuarioPersona']= '';
+        this.data['xCalidadUsuarioPersona']= calidadUsuarioPersonas ? calidadUsuarioPersonas : '';
         this.data['xTipoIdentificacion'] = tipoIdentificacion ? tipoIdentificacion:'';
         this.data['xEmisorIdentificacion'] = emisorIdentificacion ? emisorIdentificacion:'';
         this.data['xNumeroIdentificacion'] = noIdentificacion ? noIdentificacion:'';
@@ -754,11 +765,11 @@ public setDataF1007(_data){
         this.data['xRepresentanteLegal'] = entrevista.tieneRepresentanteLegal ? 'Sí' : 'No';
         this.data['xNombreRepresentanteLegal']= entrevista.nombreRepresentanteLegal ? entrevista.nombreRepresentanteLegal:'';
         this.data['xUsoMedioTecnologico']= entrevista.medioTecnologico ? 'Sí' : 'No';
-        this.data['xMedioTecnologico']= entrevista.medioTecnologicoRegistro? entrevista.medioTecnologicoRegistro:'';
+        this.data['xMedioTecnologico']= entrevista.medioTecnologicoUtilizado ? entrevista.medioTecnologicoUtilizado :'';;
         this.data['xUsoMedioTecnico']= entrevista.medioTecnico ? 'Sí' :'No';
-        this.data['xMedioTecnico']= entrevista.medioTecnicoRegistro? entrevista.medioTecnicoRegistro:'';
+        this.data['xMedioTecnico']= entrevista.medioTecnicoUtilizado? entrevista.medioTecnicoUtilizado:'';
         this.data['xNarracionHechos']= entrevista.narracionHechos? entrevista.narracionHechos:'';
-        this.data['xNombreEntrevistadoFirma']=  entrevista.nombreEntrevistado? entrevista.nombreEntrevistado:'';
+        this.data['xNombreEntrevistadoFirma']= nombreEntrevistado ? nombreEntrevistado : '';
         this.data['xEstadoMigratorio']= entrevista.estadoMigratorio ? entrevista.estadoMigratorio:'';
         this.data['xRelacionEntrevistadoPartes'] = entrevista.relacionEntrevistado ? entrevista.relacionEntrevistado : '';
 
@@ -1030,7 +1041,7 @@ public setDataF2117(_data) {
         this.data['xPoblacion']               = this.auth.user.municipio;
 
         this.data['xDia']                     = dia.toString();
-        this.data['xMes']                     = this.getMonth(mes);
+        this.data['xMes']                     = this.getMes(mes);
         this.data['xAnio']                    = anio.toString();
         this.data['xApercibimiento']          = examen.apercibimiento ? examen.apercibimiento : '';
         this.data['xMedicoLegistaMayus']      = examen.medicoLegista ? examen.medicoLegista : '';
@@ -1069,7 +1080,7 @@ public setDataF2117(_data) {
         this.data['xEstado']                 = 'Estado de México';
         this.data['xPoblacion']              = this.auth.user.municipio;
         this.data['xDia']                    = date ? date.getDay()+'' : '';
-        this.data['xMes']                    = date ? this.getMonth(date.getMonth())+'' : '';
+        this.data['xMes']                    = date ? this.getMes(date.getMonth())+'' : '';
         this.data['xAnio']                   = date ? date.getFullYear()+'' : '';
         this.data['xActuacionesSolicitadas'] = typeof policia.actuacionesSolicitadas != 'undefined' ? policia.actuacionesSolicitadas : '';
         this.data['xNombreEmisorFirma']      = this.auth.user.nombreCompleto.toUpperCase();
@@ -1235,7 +1246,7 @@ public setDataF2117(_data) {
             }
             if (o.persona.localizacionPersona.length > 0) {
                 o.persona.localizacionPersona.forEach(l => {
-                    // domicilios.push(` ${o.estado.nombre}`);
+                    domicilios.push(` ${l.calle} ${l.noInterior} ${l.noExterior} ${(l.colonia ? l.colonia.nombre : l.coloniaOtro)} ${(l.municipio ? l.municipio.nombre : l.municipioOtro)} ${(l.estado ? l.estado.nombre : l.estadoOtro)}`);
                     noParticulares.push(` ${l.telParticular}`);
                     noMoviles.push(` ${l.telMovil}`);
                 })
@@ -1293,7 +1304,7 @@ public setDataF2117(_data) {
         return listas;
     }
 
-    public getMonth(indexMonth){
+    public getMes(indexMonth){
         const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
         return meses[indexMonth].toString();
     }
