@@ -903,8 +903,8 @@ public setDataF1516(_data) {
         let date= new Date(examen.created);
 
         if (date) {
-            var dia = date.getDate();
-            var mes = 1 + date.getMonth();
+            var dia  = date.getDate();
+            var mes  = date.getMonth();
             var anio = date.getFullYear();
         }
 
@@ -918,7 +918,7 @@ public setDataF1516(_data) {
         this.data['xPoblacion']               = this.auth.user.municipio;
 
         this.data['xDia']                     = dia.toString();
-        this.data['xMes']                     = mes.toString();
+        this.data['xMes']                     = this.getMonth(mes);
         this.data['xAnio']                    = anio.toString();
         this.data['xApercibimiento']          = examen.apercibimiento ? examen.apercibimiento : '';
         this.data['xMedicoLegistaMayus']      = examen.medicoLegista ? examen.medicoLegista : '';
@@ -957,7 +957,7 @@ public setDataF1516(_data) {
         this.data['xEstado']                 = 'Estado de México';
         this.data['xPoblacion']              = this.auth.user.municipio;
         this.data['xDia']                    = date ? date.getDay()+'' : '';
-        this.data['xMes']                    = date ? date.getMonth()+'' : '';
+        this.data['xMes']                    = date ? this.getMonth(date.getMonth())+'' : '';
         this.data['xAnio']                   = date ? date.getFullYear()+'' : '';
         this.data['xActuacionesSolicitadas'] = typeof policia.actuacionesSolicitadas != 'undefined' ? policia.actuacionesSolicitadas : '';
         this.data['xNombreEmisorFirma']      = this.auth.user.nombreCompleto.toUpperCase();
@@ -1177,6 +1177,11 @@ public setDataF1516(_data) {
         listas['folios'] = folios;
 
         return listas;
+    }
+
+    public getMonth(indexMonth){
+        const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        return meses[indexMonth].toString();
     }
 
 }
