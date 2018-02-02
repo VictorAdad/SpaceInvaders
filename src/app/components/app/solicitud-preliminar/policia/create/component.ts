@@ -314,6 +314,7 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
             //         this.updateDataFormatos(this.caso.caso);
             //     }
             // );
+            }
         });
 
         this.caso.casoChange.subscribe(
