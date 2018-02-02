@@ -846,7 +846,7 @@ public setDataF1009(_data,_id_solicitud){
   this.data['xEstado']                  = 'Estado de México';
   this.data['xPoblacion']               = this.auth.user.municipio;
   this.data['xDia']                     = dia ? dia.toString() : '';
-  this.data['xMes']                     = mes ? mes.toString() : '';
+  this.data['xMes']                     = mes ? this.getMes(mes) : '';
   this.data['xAnio']                    = anio ? anio.toString(): '';
   this.data['xSolicitaPerito']          = pericial.peritoMateria ? pericial.peritoMateria.nombre : '';
   this.data['xFinalidadRequerimiento']  = pericial.finalidad?pericial.finalidad:'';
