@@ -523,9 +523,15 @@ public setDataF1007(_data){
   var anio = fecha.getFullYear();
   var lugaresHallazgo = '';
   var lugaresHechos = '';
+  var delitoHeredar
 
   if (_data.acuerdoInicio.heredar) {
-      delito = _data.acuerdoInicio.delito.delito.nombre;
+      delitoHeredar = _data.acuerdoInicio.delito.id;
+      for (let i=0; i < _data.delitoCaso.length; i++) {
+          if (_data.delitoCaso[i].id == delitoHeredar) {
+              delito = _data.delitoCaso[i].delito.nombre;
+          }
+      }
   } else {
       delito = _data.delitoPrincipal.nombre;
   }
