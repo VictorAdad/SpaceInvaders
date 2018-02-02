@@ -1,5 +1,5 @@
 #!/bin/sh
-# This is a comment!
+# compilamos el archivo cpp
 echo "Compilando proyecto en C++ llamado test.cpp"
 g++ test.cpp
 
