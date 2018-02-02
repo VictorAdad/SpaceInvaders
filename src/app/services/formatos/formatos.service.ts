@@ -834,92 +834,46 @@ public setDataF1516(_data) {
 
 }
 
-public setDataF1010(_data,_id_solicitud){
-  Logger.log('Formatos@setDataF1010', _data);
+    public setDataF1010(_data,_id_solicitud){
+        Logger.log('Formatos@setDataF1010', _data);
+        let examen;
 
-  let nombresVictimas = '';
-  let nombresImputados = '';
+        _data.solicitudPrePericiales.forEach(solicitud => {
+            if(solicitud.id===_id_solicitud){
+                examen=solicitud;
+            }
+        });
+        console.log('<<< examen >>>', examen);
 
-  if (_data.heredar) {
-      nombresVictimas = this.getVicImp(_data, _id_solicitud, false);
-      nombresImputados = this.getVicImp(_data, _id_solicitud, true);
-   } else {
-       for (let i = 0; i < _data.personaCasos.length; i++) {
-           if (_data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.victima || _data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.victimaDesconocido) {
-               if (_data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.victimaDesconocido) {
-                   if (nombresVictimas == '') {
-                       nombresVictimas = 'Identidad desconocida';
-                   } else {
-                       nombresVictimas += ', '+ 'Identidad desconocida';
-                   }   
-               } else {
-                   if (nombresVictimas == '') {
-                       nombresVictimas = _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
-                   } else {
-                       nombresVictimas += ', '+ _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
-                   }                   
-               }
-           }
-       }
+        let date= new Date(examen.created);
 
-       for (let i = 0; i < _data.personaCasos.length; i++) {
-           if (_data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.imputado || _data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.imputadoDesconocido) {
-               if (_data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.imputadoDesconocido) {
-                   if (nombresImputados == '') {
-                       nombresImputados = 'Quién resulte responsable';
-                   } else {
-                       nombresImputados += ', '+ 'Quién resulte responsable';
-                   }     
-               } else {
-                   if (nombresImputados == '') {
-                       nombresImputados = _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
-                   } else {
-                       nombresImputados += ', '+ _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
-                   }                   
-               }
-           }
-       }
-   }
+        if (date) {
+            var dia = date.getDate();
+            var mes = 1 + date.getMonth();
+            var anio = date.getFullYear();
+        }
 
-  let lugar:any={};//por definir
-  let examen;
+        this.data['xNUC']                     = _data.nuc? _data.nuc:'';
+        this.data['xNIC']                     = _data.nic? _data.nic:'';
+        this.data['xHechoDelictivo']          = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
+        this.data['xVictima']                 = this.findHerenciaNombresVictimas(examen,_data).toUpperCase();
+        this.data['xImputado']                = this.findHerenciaNombresImputados(examen,_data).toUpperCase();
+        this.data['xOficio']                  = examen.noOficio ? examen.noOficio : ''; 
+        this.data['xEstado']                  = 'Estado de México';
+        this.data['xPoblacion']               = this.auth.user.municipio;
 
-  _data.solicitudPrePericiales.forEach(solicitud => {
-     if(solicitud.id===_id_solicitud){
-         examen=solicitud;
-     }
-  });
-  console.log('<<< examen >>>', examen);
+        this.data['xDia']                     = dia.toString();
+        this.data['xMes']                     = mes.toString();
+        this.data['xAnio']                    = anio.toString();
+        this.data['xApercibimiento']          = examen.apercibimiento ? examen.apercibimiento : '';
+        this.data['xMedicoLegistaMayus']      = examen.medicoLegista ? examen.medicoLegista : '';
+        this.data['xSolicitaExamen']          = examen.tipo ? examen.tipo : '';
+        this.data['xRealizaraExamen']         = examen.realizadoA ? examen.realizadoA : '';
+        this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto.toUpperCase();
+        this.data['xCargoEmisorFirma']        = this.auth.user.cargo.toUpperCase();
+        this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto.toUpperCase();
 
-  let date= new Date(examen.created);
-
-  if (date) {
-      var dia = date.getDate();
-      var mes = 1 + date.getMonth();
-      var anio = date.getFullYear();
-  }
-
-  this.data['xNUC']                = _data.nuc? _data.nuc:'';
-  this.data['xNIC']                = _data.nic? _data.nic:'';
-  this.data['xHechoDelictivo']     = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
-  this.data['xVictima']            = nombresVictimas.toUpperCase();
-  this.data['xImputado']           = nombresImputados.toUpperCase();
-  this.data['xOficio']             = examen.noOficio ? examen.noOficio : ''; 
-  this.data['xEstado']             = 'Estado de México';
-  this.data['xPoblacion']          = this.auth.user.municipio;
-
-  this.data['xDia']                = dia.toString();
-  this.data['xMes']                = mes.toString();
-  this.data['xAnio']               = anio.toString();
-  this.data['xApercibimiento']     = examen.apercibimiento ? examen.apercibimiento: '';
-  this.data['xMedicoLegistaMayus'] = examen.medicoLegista?examen.medicoLegista:'';
-  this.data['xSolicitaExamen']     = examen.tipo? examen.tipo: '';
-  this.data['xRealizaraExamen']    = examen.realizadoA ? examen.realizadoA: '';
-  this.data['xNombreEmisorFirma']  = this.auth.user.nombreCompleto;
-  this.data['xCargoEmisorFirma']   = this.auth.user.cargo;
-  this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto;
-
-}
+    }
 
 
 
