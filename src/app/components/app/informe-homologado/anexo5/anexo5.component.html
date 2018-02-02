@@ -1,57 +1,58 @@
 <div>
-    <div class="row justify-content-start">
-        <div class="col-md-12">
-            <h2>Anexo 5 inventario de pertenencias del detenido</h2>
-        </div>
+  <div class="row justify-content-start">
+    <div class="col-md-12">
+      <h2>Anexo 5 inventario de pertenencias del detenido</h2>
     </div>
-	<div class="row justify-content-center">
-		<div class="col-md-3">
-            <select2 placeholder="Detenido" id=""
-            [options]="[
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-3">
+      <select2 placeholder="Detenido" id=""
+               [options]="[
                 {label:'Saul Roman',value:'Saul Roman'},
                 {label:'Diego Lopez',value:'Diego Lopez'}
-            ]" name="detenidoPertenencia" [group]="form">                
-            </select2>
-        </div>
-        <div class="col-md-3">
-            <text label="Descripción del objeto" name="objeto" [group]="form"></text>
-        </div>
-        <div class="col-md-3">
-            <text label="Cantidad" name="cantidadObjeto" [group]="form" ></text>
-        </div>
-        <div class="col-md-3 justify-content-start">
-            <button class="" mat-raised-button color="accent">Agregar</button>
-        </div>
+            ]" name="detenidoPertenencia" [group]="form">
+      </select2>
     </div>
-    <hr>
-    <div class="row space"></div>
-    <div class="row">
-        <div class="col-md-12">
-            <mat-table #table [dataSource]="dataSource">
-                <ng-container matColumnDef="detenido">
-                    <mat-header-cell *matHeaderCellDef>Detenido</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.detenido}} </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="descripcion">
-                    <mat-header-cell *matHeaderCellDef>Comprendio sus derechos</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="cantidad">
-                    <mat-header-cell *matHeaderCellDef>Primer responsable</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.cantidad}} </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="accion">
-                    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon></span> </mat-cell>
-                </ng-container>
-
-                <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
-            </mat-table>
-        </div>
+    <div class="col-md-3">
+      <text label="Descripción del objeto" name="objeto" [group]="form"></text>
     </div>
-    <div class="row space"></div>
+    <div class="col-md-3">
+      <text label="Cantidad" name="cantidadObjeto" [group]="form"></text>
+    </div>
+    <div class="col-md-3 justify-content-start">
+      <button class="" mat-raised-button color="accent">Agregar</button>
+    </div>
+  </div>
+  <hr>
+  <div class="row space"></div>
+  <div class="row">
+    <div class="col-md-12">
+      <mat-table #table [dataSource]="dataSource">
+        <ng-container matColumnDef="detenido">
+          <mat-header-cell *matHeaderCellDef>Detenido</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.detenido}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="descripcion">
+          <mat-header-cell *matHeaderCellDef>Comprendio sus derechos</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.descripcion}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="cantidad">
+          <mat-header-cell *matHeaderCellDef>Primer responsable</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.cantidad}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="accion">
+          <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+          <mat-cell *matCellDef="let element"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
+                                                              aria-hidden="true">delete</mat-icon></span></mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+      </mat-table>
+    </div>
+  </div>
+  <div class="row space"></div>
 </div>

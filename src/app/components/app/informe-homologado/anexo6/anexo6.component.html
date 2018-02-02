@@ -1,70 +1,72 @@
 <div>
-    <div class="row justify-content-start">
-        <div class="col-md-12">
-            <h2>Anexo 6 Constancia de lectura de derechos de la víctima</h2>
-        </div>
+  <div class="row justify-content-start">
+    <div class="col-md-12">
+      <h2>Anexo 6 Constancia de lectura de derechos de la víctima</h2>
     </div>
-	<div class="row justify-content-start">
-		<p><Strong>Datos de la víctima</Strong></p>
-	</div>
-	<div class="row">
-        <div class="col-md-4">
-            <text label="Apellido paterno" name="paternoPrimerVictima" [group]="form" ></text>
-        </div>        
-        <div class="col-md-4">
-            <text label="Apellido materno" name="maternoPrimerVictima" [group]="form" ></text>
-        </div>
-        <div class="col-md-4">
-            <text label="Nombre(s)" name="nombrePrimerVictima" [group]="form" ></text>
-        </div>
-	</div>
-	<div class="row">
-		<p><Strong>Primer respondiente que realiza la lectura de derechos (Llenar sólo en caso de no ser el mismo que llena este formato)</Strong></p>
-	</div>
-	<div class="row justify-content-center">
-        <div class="col-md-3">
-            <text label="CUIP" name="cuipRespondiente" [group]="form"></text>
-        </div>
-        o
-        <div class="col-md-3">
-            <text label="Apellido paterno" name="paternoRespondiente" [group]="form"></text>
-        </div>        
-        <div class="col-md-3">
-            <text label="Apellido materno" name="maternoRespondiente" [group]="form" ></text>
-        </div>
-        <div class="col-md-3">
-            <text label="Nombre(s)" name="nombreRespondiente" [group]="form" ></text>
-        </div>
-        
+  </div>
+  <div class="row justify-content-start">
+    <p><Strong>Datos de la víctima</Strong></p>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <text label="Apellido paterno" name="paternoPrimerVictima" [group]="form"></text>
     </div>
-    <div class="row justify-content-center">
-        <div class="col-md-auto">
-            <button class="" mat-raised-button color="accent">Agregar</button>
-        </div>
+    <div class="col-md-4">
+      <text label="Apellido materno" name="maternoPrimerVictima" [group]="form"></text>
     </div>
-    <div class="row space"></div>
-    <div class="row">
-        <div class="col-md-12">
-            <mat-table #table [dataSource]="dataSource">
-                <ng-container matColumnDef="victima">
-                    <mat-header-cell *matHeaderCellDef>Víctima</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.victima}} </mat-cell>
-                </ng-container>
+    <div class="col-md-4">
+      <text label="Nombre(s)" name="nombrePrimerVictima" [group]="form"></text>
+    </div>
+  </div>
+  <div class="row">
+    <p><Strong>Primer respondiente que realiza la lectura de derechos (Llenar sólo en caso de no ser el mismo que llena
+      este formato)</Strong></p>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-3">
+      <text label="CUIP" name="cuipRespondiente" [group]="form"></text>
+    </div>
+    o
+    <div class="col-md-3">
+      <text label="Apellido paterno" name="paternoRespondiente" [group]="form"></text>
+    </div>
+    <div class="col-md-3">
+      <text label="Apellido materno" name="maternoRespondiente" [group]="form"></text>
+    </div>
+    <div class="col-md-3">
+      <text label="Nombre(s)" name="nombreRespondiente" [group]="form"></text>
+    </div>
 
-                <ng-container matColumnDef="responsable">
-                    <mat-header-cell *matHeaderCellDef>Primer responsable</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.responsable}} </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="accion">
-                    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon></span> </mat-cell>
-                </ng-container>
-
-                <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
-            </mat-table>
-        </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-auto">
+      <button class="" mat-raised-button color="accent">Agregar</button>
     </div>
-    <div class="row space"></div>
+  </div>
+  <div class="row space"></div>
+  <div class="row">
+    <div class="col-md-12">
+      <mat-table #table [dataSource]="dataSource">
+        <ng-container matColumnDef="victima">
+          <mat-header-cell *matHeaderCellDef>Víctima</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.victima}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="responsable">
+          <mat-header-cell *matHeaderCellDef>Primer responsable</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.responsable}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="accion">
+          <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+          <mat-cell *matCellDef="let element"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
+                                                              aria-hidden="true">delete</mat-icon></span></mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+      </mat-table>
+    </div>
+  </div>
+  <div class="row space"></div>
 </div>

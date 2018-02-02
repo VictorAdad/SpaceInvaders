@@ -1,172 +1,173 @@
 <div>
-    <div class="row">
-        <div class="col-md-12">
-            <h2>Anexo 7 Traslado/canalización</h2>
-        </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Anexo 7 Traslado/canalización</h2>
     </div>
-	<div class="row">
-		<div class="col-md-3">
-            <select2 placeholder="Traslado / canalización a:" id=""
-            [options]="[
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <select2 placeholder="Traslado / canalización a:" id=""
+               [options]="[
                 {label:'Ministerio Público',value:'Ministerio Público'},
                 {label:'Ministerio Público',value:'Ministerio Público'}
             ]"
-            name="trasladoA" [group]="form">                
-            </select2>
-        </div>
-        <div class="col-md-3">
-            <select2 placeholder="Tipo:" id=""
-            [options]="[
+               name="trasladoA" [group]="form">
+      </select2>
+    </div>
+    <div class="col-md-3">
+      <select2 placeholder="Tipo:" id=""
+               [options]="[
                 {label:'Especializado',value:'Especializado'},
                 {label:'Especializado',value:'Especializado'}
-            ]" name="tipoTraslado" [group]="form">                
-            </select2>
-        </div>
-        <div class="col-md-3">
-        	<text label="Especifique" name="especifiqueTraslado" [group]="form" ></text>
-        </div>
-		<div class="col-md-3">
-        	<text label="Nombre de la agencia" name="agenciaTraslado" [group]="form" ></text>
-        </div>
+            ]" name="tipoTraslado" [group]="form">
+      </select2>
     </div>
-    <div class="row">
-        <div class="col-md-3">
-        	<text label="Estado" name="estadoAgenciaTraslado" [group]="form" ></text>
-        </div>
-        <div class="col-md-3">
-        	<text label="Municipio" name="municipioAgenciaTraslado" [group]="form" ></text>
-        </div>
-        <div class="col-md-3">
-        	<text label="Colonia" name="coloniaAgenciaTraslado" [group]="form" ></text>
-        </div>
-        <div class="col-md-3">
-            <text label="Calle" name="calleAgenciaTraslado" [group]="form" ></text>
-        </div>
+    <div class="col-md-3">
+      <text label="Especifique" name="especifiqueTraslado" [group]="form"></text>
     </div>
-    <div class="row">
-        <div class="col-md-3">
-            <text label="Número Exterior" name="numExtAgenciaTraslado" [group]="form" ></text>
-        </div>
-        <div class="col-md-3">
-		    <text label="C.P." name="cpAgenciaTraslado" [group]="form" ></text>
-        </div>
+    <div class="col-md-3">
+      <text label="Nombre de la agencia" name="agenciaTraslado" [group]="form"></text>
     </div>
-	<div class="row">
-		<p>Persona trasladada</p>
-	</div>
-	<div class="row">
-		<div class="col-md-2">
-            <select2 placeholder="Traslado / canalización a:" id=""
-            [options]="[
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <text label="Estado" name="estadoAgenciaTraslado" [group]="form"></text>
+    </div>
+    <div class="col-md-3">
+      <text label="Municipio" name="municipioAgenciaTraslado" [group]="form"></text>
+    </div>
+    <div class="col-md-3">
+      <text label="Colonia" name="coloniaAgenciaTraslado" [group]="form"></text>
+    </div>
+    <div class="col-md-3">
+      <text label="Calle" name="calleAgenciaTraslado" [group]="form"></text>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <text label="Número Exterior" name="numExtAgenciaTraslado" [group]="form"></text>
+    </div>
+    <div class="col-md-3">
+      <text label="C.P." name="cpAgenciaTraslado" [group]="form"></text>
+    </div>
+  </div>
+  <div class="row">
+    <p>Persona trasladada</p>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <select2 placeholder="Traslado / canalización a:" id=""
+               [options]="[
                 {label:'Detenido',value:'Detenido'},
                 {label:'Detenido',value:'Detenido'}
-            ]" name="personaTraslado" [group]="form">                
-            </select2>
-        </div>
-        <div class="col-md-2">
-        	<text label="Estado" name="estadoPersonaTraslado" [group]="form" ></text>
-        </div>
-        <div class="col-md-2">
-        	<text label="Municipio" name="municipioPersonaTraslado" [group]="form" ></text>
-        </div>
-        <div class="col-md-2">
-        	<text label="Colonia" name="coloniaPersonaTraslado" [group]="form" ></text>
-        </div>
-        <div class="col-md-2">
-        	<text label="Calle" name="callePersonaTraslado" [group]="form"></text>
-        </div>
-        <div class="col-md-2">
-        	<text label="Número Exterior" name="numExtPersonaTraslado" [group]="form"></text>
-        </div>
-	</div>
-	<div class="row">
-		<p>Persona que entrega</p>
-	</div>
-	<div class="row">
-        <div class="col-md-2">
-        	<text label="CUIP" name="cuipEntregaTraslado" [group]="form"></text>
-        </div>
-        o
-        <div class="col-md-2">
-        	<text label="Apellido paterno" name="paternoEntregaTraslado" [group]="form" ></text>
-        </div>
-        <div class="col-md-2">
-        	<text label="Apellido materno" name="maternoEntregaTraslado" [group]="form" ></text>
-        </div>
-        <div class="col-md-2">
-        	<text label="Nombre(s)" name="nombreEntregaTraslado" [group]="form" ></text>
-        </div>
-        <div class="col-md-2">
-        	<text label="Carga" name="cargaEntregaTraslado" [group]="form"></text>
-        </div>
-	</div>
-	<div class="row">
-		<p>Persona que recibe</p>
-	</div>
-	<div class="row">
-        <div class="col-md-2">
-        	<text label="Apellido paterno" name="paternoRecibeTraslado" [group]="form" ></text>
-        </div>
-        <div class="col-md-2">
-        	<text label="Apellido materno" name="maternoRecibeTraslado" [group]="form"></text>
-        </div>
-        <div class="col-md-2">
-        	<text label="Nombre(s)" name="nombreRecibeTraslado" [group]="form" ></text>
-        </div>
-        <div class="col-md-2">
-        	<text label="Carga" name="cargaRecibeTraslado" [group]="form" ></text>
-        </div>
-		<div class="col-md-2">
-            <date label="Fecha de conocimiento" name="fechaTraslado" [group]="form" placeholder="dd/mm/aaaa"></date>
-        </div>
-        <div class="col-md-2">
-            <text label="Hora" name="horaTraslado" placeholder="hh:mm" [group]="form"> </text>
-        </div>
+            ]" name="personaTraslado" [group]="form">
+      </select2>
     </div>
-	<div class="row justify-content-center">
-        <div class="col-md-auto">
-            <button class="" mat-raised-button color="accent">Agregar</button>
-        </div>
+    <div class="col-md-2">
+      <text label="Estado" name="estadoPersonaTraslado" [group]="form"></text>
     </div>
-
-    <div class="row space"></div>
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <mat-table #table [dataSource]="dataSource">
-                <ng-container matColumnDef="nombre">
-                    <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="traslado">
-                    <mat-header-cell *matHeaderCellDef>Traslado a</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.traslado}} </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="entrega">
-                    <mat-header-cell *matHeaderCellDef>Entrega</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.entrega}} </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="recibe">
-                    <mat-header-cell *matHeaderCellDef>Recibe</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.recibe}} </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="ubicacion">
-                    <mat-header-cell *matHeaderCellDef>Ubicación</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.ubicacion}} </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="accion">
-                    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon></span> </mat-cell>
-                </ng-container>
-
-                <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
-            </mat-table>
-        </div>
+    <div class="col-md-2">
+      <text label="Municipio" name="municipioPersonaTraslado" [group]="form"></text>
     </div>
-    <div class="row space"></div>   
+    <div class="col-md-2">
+      <text label="Colonia" name="coloniaPersonaTraslado" [group]="form"></text>
+    </div>
+    <div class="col-md-2">
+      <text label="Calle" name="callePersonaTraslado" [group]="form"></text>
+    </div>
+    <div class="col-md-2">
+      <text label="Número Exterior" name="numExtPersonaTraslado" [group]="form"></text>
+    </div>
+  </div>
+  <div class="row">
+    <p>Persona que entrega</p>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <text label="CUIP" name="cuipEntregaTraslado" [group]="form"></text>
+    </div>
+    o
+    <div class="col-md-2">
+      <text label="Apellido paterno" name="paternoEntregaTraslado" [group]="form"></text>
+    </div>
+    <div class="col-md-2">
+      <text label="Apellido materno" name="maternoEntregaTraslado" [group]="form"></text>
+    </div>
+    <div class="col-md-2">
+      <text label="Nombre(s)" name="nombreEntregaTraslado" [group]="form"></text>
+    </div>
+    <div class="col-md-2">
+      <text label="Carga" name="cargaEntregaTraslado" [group]="form"></text>
+    </div>
+  </div>
+  <div class="row">
+    <p>Persona que recibe</p>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <text label="Apellido paterno" name="paternoRecibeTraslado" [group]="form"></text>
+    </div>
+    <div class="col-md-2">
+      <text label="Apellido materno" name="maternoRecibeTraslado" [group]="form"></text>
+    </div>
+    <div class="col-md-2">
+      <text label="Nombre(s)" name="nombreRecibeTraslado" [group]="form"></text>
+    </div>
+    <div class="col-md-2">
+      <text label="Carga" name="cargaRecibeTraslado" [group]="form"></text>
+    </div>
+    <div class="col-md-2">
+      <date label="Fecha de conocimiento" name="fechaTraslado" [group]="form" placeholder="dd/mm/aaaa"></date>
+    </div>
+    <div class="col-md-2">
+      <text label="Hora" name="horaTraslado" placeholder="hh:mm" [group]="form"></text>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-auto">
+      <button class="" mat-raised-button color="accent">Agregar</button>
+    </div>
+  </div>
+
+  <div class="row space"></div>
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <mat-table #table [dataSource]="dataSource">
+        <ng-container matColumnDef="nombre">
+          <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.nombre}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="traslado">
+          <mat-header-cell *matHeaderCellDef>Traslado a</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.traslado}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="entrega">
+          <mat-header-cell *matHeaderCellDef>Entrega</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.entrega}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="recibe">
+          <mat-header-cell *matHeaderCellDef>Recibe</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.recibe}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="ubicacion">
+          <mat-header-cell *matHeaderCellDef>Ubicación</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.ubicacion}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="accion">
+          <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+          <mat-cell *matCellDef="let element"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
+                                                              aria-hidden="true">delete</mat-icon></span></mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+      </mat-table>
+    </div>
+  </div>
+  <div class="row space"></div>
 </div>

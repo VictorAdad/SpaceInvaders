@@ -1,98 +1,99 @@
 <div>
-    <div class="row">
-        <div class="col-md-12">
-            <h2>Anexo 1 Constancia de derecho de lectura de derechos del detenido</h2>
-        </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Anexo 1 Constancia de derecho de lectura de derechos del detenido</h2>
     </div>
-    
-    <div class="row">
-        <div class="col-md-6">
-            <select2 placeholder="Detenido" id=""
-                [options]="[
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <select2 placeholder="Detenido" id=""
+               [options]="[
                     {label:'Saul Roman',value:'Saul Roman'},
                     {label:'Diego Lopez',value:'Diego Lopez'}
-                ]" 
-                name="detenido" [group]="form">
-            </select2>
-        </div>
-        <div class="col-md-6">
-            <span>Comprendió sus derechos</span>
-            <radiobutton
-                class="col-md-3"
-                [radios]="[
+                ]"
+               name="detenido" [group]="form">
+      </select2>
+    </div>
+    <div class="col-md-6">
+      <span>Comprendió sus derechos</span>
+      <radiobutton
+        class="col-md-3"
+        [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
-                ]" 
-                name="comprendioDerechos" 
-                [group]="form">    
-            </radiobutton>
-        </div>
+                ]"
+        name="comprendioDerechos"
+        [group]="form">
+      </radiobutton>
     </div>
+  </div>
 
-    <div class="row">
-        <div class="col-md-auto">
-            <span class="float-left"><h5>Primer respondiente que realiza la lectura de derechos (Llenar sólo en caso de no ser el mismo que llena este formato)</h5></span>
-        </div>
+  <div class="row">
+    <div class="col-md-auto">
+      <span class="float-left"><h5>Primer respondiente que realiza la lectura de derechos (Llenar sólo en caso de no ser el mismo que llena este formato)</h5></span>
     </div>
+  </div>
 
-    <div class="row space"></div>
+  <div class="row space"></div>
 
-    <div class="row">
-        <div class="col-md-3">
-            <text label="CUIP" name="cuipDetenido" [group]="form" > </text>
-        </div>
-        o
-        <div class="col-md-2">
-            <text label="Apellido paterno" name="paternoDetenido" [group]="form"></text>
-        </div>        
-        <div class="col-md-2">
-            <text label="Apellido materno" name="maternoDetenido" [group]="form"></text>
-        </div>
-        <div class="col-md-2">
-            <text label="Nombre(s)" name="nombreDetenido" [group]="form" ></text>
-        </div>
-        <div class="col-md-2">
-            <text label="Adcripción" name="adscripcionDetenido" [group]="form"></text>
-        </div>
+  <div class="row">
+    <div class="col-md-3">
+      <text label="CUIP" name="cuipDetenido" [group]="form"></text>
     </div>
-
-    <div class="row justify-content-center">
-        <div class="col-md-auto">
-            <button class="" mat-raised-button color="accent">Agregar</button>
-        </div>
+    o
+    <div class="col-md-2">
+      <text label="Apellido paterno" name="paternoDetenido" [group]="form"></text>
     </div>
-
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <mat-table #table [dataSource]="dataSource">
-                <ng-container matColumnDef="detenido">
-                    <mat-header-cell *matHeaderCellDef>Detenido</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.detenido}} </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="comprendio">
-                    <mat-header-cell *matHeaderCellDef>Comprendio sus derechos</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.comprendio}} </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="primer">
-                    <mat-header-cell *matHeaderCellDef>Primer responsable</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.primer}} </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="accion">
-                    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon></span> </mat-cell>
-                </ng-container>
-
-                <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
-            </mat-table>
-        </div>
+    <div class="col-md-2">
+      <text label="Apellido materno" name="maternoDetenido" [group]="form"></text>
     </div>
-    <div class="row space"></div>
-    <div class="row space"></div>
+    <div class="col-md-2">
+      <text label="Nombre(s)" name="nombreDetenido" [group]="form"></text>
+    </div>
+    <div class="col-md-2">
+      <text label="Adcripción" name="adscripcionDetenido" [group]="form"></text>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-auto">
+      <button class="" mat-raised-button color="accent">Agregar</button>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <mat-table #table [dataSource]="dataSource">
+        <ng-container matColumnDef="detenido">
+          <mat-header-cell *matHeaderCellDef>Detenido</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.detenido}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="comprendio">
+          <mat-header-cell *matHeaderCellDef>Comprendio sus derechos</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.comprendio}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="primer">
+          <mat-header-cell *matHeaderCellDef>Primer responsable</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.primer}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="accion">
+          <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+          <mat-cell *matCellDef="let element"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
+                                                              aria-hidden="true">delete</mat-icon></span></mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+      </mat-table>
+    </div>
+  </div>
+  <div class="row space"></div>
+  <div class="row space"></div>
 </div>
-    
-    
-    
+
+
+

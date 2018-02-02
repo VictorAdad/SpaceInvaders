@@ -1,61 +1,62 @@
 <div>
-    <div class="row justify-content-start">
-        <div class="col-md-12">
-            <h2>Anexo 9 inventario de objetos y/o bienes asegurados</h2>
-        </div>
+  <div class="row justify-content-start">
+    <div class="col-md-12">
+      <h2>Anexo 9 inventario de objetos y/o bienes asegurados</h2>
     </div>
-    <br>
-    <div class="row justify-content-center">
-         <div class="col-md-4">
-            <select2 placeholder="Tipo de Objeto" id=""
-            [options]="[
+  </div>
+  <br>
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <select2 placeholder="Tipo de Objeto" id=""
+               [options]="[
                 {label:'Objetos de gran tamaño',value:'Objetos de gran tamaño'}
             ]" name="inventarioTipoObjeto" [group]="form">
-                
-            </select2>
-        </div>
-        <div class="col-md-4">
-            <text label="Cantidad" name="inventarioCantidad" [group]="form" placeholder="20" ></text>
-        </div>
-         <div class="col-md-4">
-            <text label="Especificación" name="inventarioEspecificacion" [group]="form" placeholder="" ></text>
-        </div>
+
+      </select2>
     </div>
-    <div class="row justify-content-center">
-        <div class="col-sm-auto">
-            <button class="" mat-raised-button color="accent">Agregar</button>
-        </div>
+    <div class="col-md-4">
+      <text label="Cantidad" name="inventarioCantidad" [group]="form" placeholder="20"></text>
     </div>
-    <br>
-    <div class="row space"></div>
-    <div class="row">
-        <div class="col-md-12">
-            <mat-table #table [dataSource]="dataSource">
-                <ng-container matColumnDef="tipo">
-                    <mat-header-cell *matHeaderCellDef>Tipo</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.tipo}} </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="cantidad">
-                    <mat-header-cell *matHeaderCellDef>Cantidad</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.cantidad}} </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="especificacion">
-                    <mat-header-cell *matHeaderCellDef>Especificacion</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.especificacion}} </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="accion">
-                    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> <span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon></span> </mat-cell>
-                </ng-container>
-
-               <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
-            </mat-table>
-        </div>
+    <div class="col-md-4">
+      <text label="Especificación" name="inventarioEspecificacion" [group]="form" placeholder=""></text>
     </div>
-    <div class="row space"></div>
-    <div class="row space"></div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-sm-auto">
+      <button class="" mat-raised-button color="accent">Agregar</button>
+    </div>
+  </div>
+  <br>
+  <div class="row space"></div>
+  <div class="row">
+    <div class="col-md-12">
+      <mat-table #table [dataSource]="dataSource">
+        <ng-container matColumnDef="tipo">
+          <mat-header-cell *matHeaderCellDef>Tipo</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.tipo}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="cantidad">
+          <mat-header-cell *matHeaderCellDef>Cantidad</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.cantidad}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="especificacion">
+          <mat-header-cell *matHeaderCellDef>Especificacion</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.especificacion}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="accion">
+          <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+          <mat-cell *matCellDef="let element"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
+                                                              aria-hidden="true">delete</mat-icon></span></mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+      </mat-table>
+    </div>
+  </div>
+  <div class="row space"></div>
+  <div class="row space"></div>
 </div>
