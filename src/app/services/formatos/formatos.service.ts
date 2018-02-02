@@ -179,6 +179,14 @@ export class FormatosLocal {
         'data': null
     };
 
+    public F2_117 = {
+        'path': environment.app.host+'/assets/formatos/F2_117_Registro_De_Derivacion_A_La_Unidad_De_Mecanismos_Alternativos.docx',
+        'nombre': 'F2-117 REGISTRO DE DERIVACION A LA UNIDAD DE MECANISMOS ALTERNATIVOS',
+        'nameEcm': 'REGISTRO DE DERIVACION A LA UNIDAD DE MECANISMOS ALTERNATIVOS',
+        'file': null,
+        'data': null
+    };
+
    public getVicImp(_data, _id_solicitud, _interVi) {
        var victimasHeredar = [];
        var nombreVicHer = '';
@@ -886,6 +894,77 @@ public setDataF1516(_data) {
     this.data['xAdscripcionEmisorFirma'] = this.auth.user.agenciaCompleto;
     
 
+
+}
+public setDataF2117(_data) {
+    console.log('<<< @setDataF2117 >>>', _data);
+
+    let victimasNombres = '';
+    let victimas = [];
+    let victimasHeredar = [];
+    const vic        = _config.optionValue.tipoInterviniente.victima;
+    const vicDesc    = _config.optionValue.tipoInterviniente.victimaDesconocido;
+    const ofendido   = _config.optionValue.tipoInterviniente.ofendido;
+    var changeB =true;
+
+    if (_data.acuerdoInicio.heredar) {
+        for (let i=0; i < _data.acuerdoInicio.personas[i]; i++) {
+            victimas.push(_data.acuerdoInicio.personas[i].personaCaso.id);
+        }
+
+        for (var i=0; i < victimas.length; i++) {
+            for (var j=0; j < _data.personaCasos.length; j++) {
+                if(_data.personaCasos[j].id == victimas[i]) {
+                    victimasHeredar.push(_data.personaCasos[j]);
+                }
+            }
+        }
+
+        for (let i; i < victimasHeredar.length; i++) {
+            if(victimasHeredar[i].tipoInterviniente.id == vic || victimasHeredar[i].tipoInterviniente.id == vicDesc || victimasHeredar[i].tipoInterviniente.id == ofendido) {
+                victimas.push(victimasHeredar[i]);
+            }
+        }
+
+        if (victimas.length == 0) {
+            victimas = this.findVictimas(_data);
+        }
+
+        
+    } else {
+        victimasNombres = _data.acuerdoInicio.nombrePersonaAcepta ? _data.acuerdoInicio.nombrePersonaAcepta : '';
+        changeB =false;
+    }
+
+    console.log('<<< victimas acuerdo >>>', victimas);
+
+    if (changeB) {
+        for (i=0; i < victimas.length; i++) {
+            if (victimas[i].tipoInterviniente.id == vicDesc) {
+                if (victimasNombres == '') {
+                    victimasNombres = 'Identidad desconocida';
+                } else {
+                    victimasNombres += ', '+'Identidad desconocida';
+                }
+            } else {
+                if (victimasNombres == '') {
+                    victimasNombres = victimas[i].persona.nombre+' '+victimas[i].persona.paterno+' '+(victimas[i].persona.materno ? victimas[i].persona.materno : '');
+                } else {
+                    victimasNombres += ', '+victimas[i].persona.nombre+' '+victimas[i].persona.paterno+' '+(victimas[i].persona.materno ? victimas[i].persona.materno : '');
+                }
+
+            }
+        }
+    }
+
+    console.log('<<< Nombres victimas acuerdos >>>',victimasNombres);
+
+    this.setCasoInfo(_data);
+
+    this.data['xVictima'] = victimasNombres;
+    this.data['xNombreEmisorFirma']      = this.auth.user.nombreCompleto;
+    this.data['xCargoEmisorFirma']       = this.auth.user.cargo;
+    this.data['xAdscripcionEmisorFirma'] = this.auth.user.agenciaCompleto;
 
 }
 
