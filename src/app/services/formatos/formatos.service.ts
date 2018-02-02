@@ -682,58 +682,91 @@ public setDataF1007(_data){
 }
 
 
-public setDataF1008(_data){
-  Logger.log('Formatos@setDataF1008', _data);
+    public setDataF1008(_caso, _id){
+        Logger.log('Formatos@setDataF1008', _caso);
+        const entrevista = _caso.entrevistas.filter(o => o.id == _id)[0];
+        const nombreEntrevistado = entrevista.heredar ? entrevista.nombreEntrevistadoHeredar : entrevista.nombreEntrevistado;
+        const sexo = entrevista.heredar ? entrevista.sexoHeredar : entrevista.sexo;
+        const fechaNacimiento = entrevista.heredar ? entrevista.fechaNacimientoHeredar : entrevista.fechaNacimiento;
+        const nacionalidad = entrevista.heredar ? entrevista.nacionalidadHeredar : entrevista.nacionalidad;
+        const originarioDe = entrevista.heredar ? entrevista.originarioDeHeredar : entrevista.originarioDe;
+        const tipoIdentificacion = entrevista.heredar ? entrevista.identificacionHeredar : entrevista.tipoIdentificacion;
+        const emisorIdentificacion = entrevista.heredar ? entrevista.Heredar : entrevista.emisorIdentificacion;
+        const noIdentificacion = entrevista.heredar ? entrevista.folioIdentificacionHeredar : entrevista.noIdentificacion;
+        const curp = entrevista.heredar ? entrevista.curpHeredar : entrevista.curp;
+        const rfc = entrevista.heredar ? entrevista.rfcHeredar : entrevista.rfc;
+        const sabeLeerEscribir = entrevista.heredar ? entrevista.sabeLeerEscribirHeredar : entrevista.sabeLeerEscribir;
+        const gradoEscolaridad = entrevista.heredar ? entrevista.gradoEscolaridadHeredar : entrevista.gradoEscolaridad;
+        const ocupacion = entrevista.heredar ? entrevista.ocupacionHeredar : entrevista.ocupacion;
+        const lugarOcupacion = entrevista.heredar ? entrevista.lugarOcupacionHeredar : entrevista.lugarOcupacion;
+        const estadoCivil = entrevista.heredar ? entrevista.estadoCivilHeredar : entrevista.estadoCivil;
+        const salarioSemanal = entrevista.heredar ? entrevista.salarioHeredar : entrevista.salarioSemanal;
+        const calle = entrevista.heredar ? entrevista.calleHeredar : entrevista.calle;
+        const noExterior = entrevista.heredar ? entrevista.noExteriorHeredar : entrevista.noExterior;
+        const noInterior = entrevista.heredar ? entrevista.noInteriorHeredar : entrevista.noInterior;
+        const colonia = entrevista.heredar ? entrevista.coloniaHeredar : entrevista.colonia;
+        const cp = entrevista.heredar ? entrevista.cpHeredar : entrevista.cp;
+        const municipio = entrevista.heredar ? entrevista.Heredar : entrevista.municipio;
+        const estado = entrevista.heredar ? entrevista.estadoHeredar : entrevista.estado;
+        const noTelefonoCelular = entrevista.heredar ? entrevista.noTelefonoCelularHeredar : entrevista.noTelefonoParticular;
+        const noTelefonoParticular = entrevista.heredar ? entrevista.noTelefonoParticularHeredar : entrevista.noTelefonoParticular;
+        const correoElectronico = entrevista.heredar ? entrevista.correoElectronicoHeredar : entrevista.correoElectronico;
+        const calidadUsuarioPersonas = entrevista.heredar ? entrevista.calidadIntervinienteHeredar : entrevista.calidadInterviniente;
+        const nombreRepresentanteLegal = entrevista.nombreRepresentanteLegal;
+        // const relacionEntrevistado;
 
-  this.data['xNUC']= _data.nuc? _data.nuc:'';
-  this.data['xNIC']= _data.nic? _data.nic:'';
-  this.data['xFechaAtencion']=_data.created? _data.created:'';
-  this.data['xHoraAtencion']= _data.created? _data.created:'';
-  this.data['xNombreAutoridadEntrevista']= _data.autoridadRealizaEntrevista? _data.autoridadRealizaEntrevista:'';
-  this.data['xLugarEntrevista']= _data.lugarRealizaEntrevista? _data.lugarRealizaEntrevista:'';
-  this.data['xNombreEntrevistado']= _data.nombreEntrevistado? _data.nombreEntrevistado:'';
-  this.data['xSexo']= _data.sexo? _data.sexo:'';
-  this.data['xFechaNacimiento']= _data.fechaNacimiento? _data.fechaNacimiento:'';
-  this.data['xNacionalidad']= _data.nacionalidad? _data.nacionalidad:'';
-  this.data['xOriginario']= _data.originarioDe? _data.originarioDe:'';
-  this.data['xEstadoMigratorio']= _data.estadoMigratorio? _data.estadoMigratorio:'';
-  this.data['xCalidadUsuarioPersona']= '';
-  this.data['xTipoIdentificacion']= _data.tipoIdentificacion? _data.tipoIdentificacion:'';
-  this.data['xEmisorIdentificacion']= _data.emisorIdentificacion? _data.emisorIdentificacion:'';
-  this.data['xNumeroIdentificacion']= _data.noIdentificacion? _data.noIdentificacion:'';
-  this.data['xCURP']= _data.curp? _data.curp:'';
-  this.data['xRFC']= _data.rfc? _data.rfc:'';
-  this.data['xSabeLeerEscribir']= _data.sabeLeerEscribir? _data.sabeLeerEscribir:'';
-  this.data['xEscolaridad']= _data.gradoEscolaridad? _data.gradoEscolaridad:'';
-  this.data['xOcupacion']= _data.ocupacion? _data.ocupacion:'';
-  this.data['xLugarOcupacion']= _data.lugarOcupacion? _data.lugarOcupacion:'';
-  this.data['xEstadoCivil']= _data.estadoCivil? _data.estadoCivil:'';
-  this.data['xSalarioSemanal']= _data.salarioSemanal? _data.salarioSemanal:'';
-  this.data['xRelacionEntrevistadoPartes']=_data.relacionEntrevistado? _data.relacionEntrevistado:'';
-  this.data['xCalle']= _data.calle? _data.calle:'';
-  this.data['xNumExterior']= _data.noExterior? _data.noExterior:'';
-  this.data['xNumInterior']= _data.noInterior? _data.noInterior:'';
-  this.data['xColonia']= _data.colonia? _data.colonia:'';
-  this.data['xCP']= _data.cp? _data.cp:'';
-  this.data['xPoblacion']= _data.municipio? _data.municipio:'';
-  this.data['xEstado']=_data.estado? _data.estado:'';
-  this.data['xNumeroTelefonico']= _data.noTelefonoParticular? _data.noTelefonoParticular:'';
-  this.data['xNumeroMovil']= _data.noTelefonoParticular? _data.noTelefonoParticular:'';
-  this.data['xCorreoElectronico']= _data.correoElectronico? _data.correoElectronico:'';
-  this.data['xRepresentanteLegal']= _data.tieneRepresentanteLegal?'Si':'No';
-  this.data['xNombreRepresentanteLegal']= _data.nombreRepresentanteLegal? _data.nombreRepresentanteLegal:'';
-  this.data['xUsoMedioTecnologico']= _data.medioTecnologicoUtilizado?'Si':'No';
-  this.data['xMedioTecnologico']= _data.medioTecnologicoRegistro? _data.medioTecnologicoRegistro:'';
-  this.data['xUsoMedioTecnico']= _data.medioTecnicoUtilizado?'Si':'No';
-  this.data['xMedioTecnico']= _data.medioTecnicoRegistro? _data.medioTecnicoRegistro:'';
-  this.data['xNarracionHechos']= _data.narracionHechos? _data.narracionHechos:'';
-  this.data['xNombreEntrevistadoFirma']=  _data.nombreEntrevistado? _data.nombreEntrevistado:'';
+        this.data['xNUC']= _caso.nuc ? _caso.nuc : '';
+        this.data['xNIC']= _caso.nic ? _caso.nic : '';
+        this.data['xFechaAtencion']=entrevista.created? entrevista.created:'';
+        this.data['xHoraAtencion']= entrevista.created? entrevista.created:'';
+        this.data['xNombreAutoridadEntrevista']= entrevista.autoridadRealizaEntrevista? entrevista.autoridadRealizaEntrevista:'';
+        this.data['xLugarEntrevista']= entrevista.lugarRealizaEntrevista? entrevista.lugarRealizaEntrevista:'';
 
-  this.data['xCargoEmisorFirma']= '';
-  this.data['xNombreEmisorFirma']= '';
-  this.data['xAdscripcionEmisorFirma']= '';
+        this.data['xNombreEntrevistado']= nombreEntrevistado ? nombreEntrevistado:'';
+        this.data['xNombreEntrevistadoFirma']= nombreEntrevistado ? nombreEntrevistado:'';
+        this.data['xSexo']= sexo ? sexo:'';
+        this.data['xFechaNacimiento']= fechaNacimiento ? fechaNacimiento:'';
+        this.data['xNacionalidad']= nacionalidad ? nacionalidad:'';
+        this.data['xOriginario']= originarioDe ? originarioDe:'';
+        this.data['xCalidadUsuarioPersona']= '';
+        this.data['xTipoIdentificacion'] = tipoIdentificacion ? tipoIdentificacion:'';
+        this.data['xEmisorIdentificacion'] = emisorIdentificacion ? emisorIdentificacion:'';
+        this.data['xNumeroIdentificacion'] = noIdentificacion ? noIdentificacion:'';
+        this.data['xCURP'] = curp ? curp : '';
+        this.data['xRFC'] = rfc ? rfc : '';
+        this.data['xSabeLeerEscribir'] = sabeLeerEscribir ? sabeLeerEscribir:'';
+        this.data['xEscolaridad'] = gradoEscolaridad ? gradoEscolaridad:'';
+        this.data['xOcupacion'] = ocupacion ? ocupacion:'';
+        this.data['xLugarOcupacion'] = lugarOcupacion ? lugarOcupacion:'';
+        this.data['xEstadoCivil'] = estadoCivil ? estadoCivil:'';
+        this.data['xSalarioSemanal'] = salarioSemanal ? salarioSemanal:'';
+        this.data['xCalle'] = calle ? calle:'';
+        this.data['xNumExterior'] = noExterior ? noExterior:'';
+        this.data['xNumInterior'] = noInterior ? noInterior:'';
+        this.data['xColonia'] = colonia ? colonia:'';
+        this.data['xCP'] = cp ? cp:'';
+        this.data['xPoblacion']= municipio ? municipio:'';
+        this.data['xEstado'] = estado ? estado:'';
+        this.data['xNumeroTelefonico'] = noTelefonoParticular ? noTelefonoParticular:'';
+        this.data['xNumeroMovil'] = noTelefonoParticular ? noTelefonoParticular:'';
+        this.data['xCorreoElectronico'] = correoElectronico ? correoElectronico:'';
 
-}
+        this.data['xRepresentanteLegal'] = entrevista.tieneRepresentanteLegal ? 'Sí' : 'No';
+        this.data['xNombreRepresentanteLegal']= entrevista.nombreRepresentanteLegal ? entrevista.nombreRepresentanteLegal:'';
+        this.data['xUsoMedioTecnologico']= entrevista.medioTecnologico ? 'Sí' : 'No';
+        this.data['xMedioTecnologico']= entrevista.medioTecnologicoRegistro? entrevista.medioTecnologicoRegistro:'';
+        this.data['xUsoMedioTecnico']= entrevista.medioTecnico ? 'Sí' :'No';
+        this.data['xMedioTecnico']= entrevista.medioTecnicoRegistro? entrevista.medioTecnicoRegistro:'';
+        this.data['xNarracionHechos']= entrevista.narracionHechos? entrevista.narracionHechos:'';
+        this.data['xNombreEntrevistadoFirma']=  entrevista.nombreEntrevistado? entrevista.nombreEntrevistado:'';
+        this.data['xEstadoMigratorio']= entrevista.estadoMigratorio ? entrevista.estadoMigratorio:'';
+        this.data['xRelacionEntrevistadoPartes'] = entrevista.relacionEntrevistado ? entrevista.relacionEntrevistado : '';
+
+        this.data['xCargoEmisorFirma']        = this.auth.user.cargo.toLocaleUpperCase();
+        this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto.toLocaleUpperCase();
+        this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto.toLocaleUpperCase();
+
+    }
 
 public setDataF1009(_data,_id_solicitud){
   Logger.log('Formatos@setDataF1009', _data);

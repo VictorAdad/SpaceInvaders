@@ -764,13 +764,14 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
           if (params['casoId']){
             this.casoId = +params['casoId'];
             this.urlUpload = '/v1/documentos/entrevistas/save/'+params['casoId'];
-            this.caso.find(params['casoId']).then(
-              response => {
-                  this.updateDataFormatos(this.caso.caso);
-              }
-          );
+        //     this.caso.find(params['casoId']).then(
+        //       response => {
+        //           this.updateDataFormatos(this.caso.caso);
+        //       }
+        //   );
 
             }
+            this.caso.casoChange.subscribe(this.updateDataFormatos.bind(this));
       });
       this.atributoExtraPost={nombre:"entrevista.id",valor:this.id.toString()};
       this.formData.append('entrevista.id', this.id.toString());
@@ -797,7 +798,7 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
       this.subject.next(this.data);
   }
   public updateDataFormatos(_object){
-    this.formatos.formatos.setDataF1008(_object);
+    this.formatos.formatos.setDataF1008(_object, this.id);
 }
 
 }
