@@ -394,14 +394,17 @@ export class FormatosLocal {
     }
 
     public setDataF1004(_caso) {
-        // Logger.log('Formatos@setDataF1004', _data);
+        Logger.log('Formatos@setDataF1004', _caso);
         const predenuncia = _caso.predenuncias;
         let personas = [];
+        let lugar = '';
 
         if (predenuncia.heredar) {
             personas = this.findHerenciaPersonasPredenuncia(_caso)
+            lugar = predenuncia.lugarHechosHeredar;
         } else {
             personas = this.findVictimas(_caso);
+            lugar = predenuncia.lugarHechos
         }
         const atributosPersona = this.getListasPersonas(personas);
         
@@ -430,7 +433,7 @@ export class FormatosLocal {
             this.data['xFolioIdentificacion'] = (_caso.predenuncias.noFolioConstancia ? _caso.predenuncias.noFolioConstancia : '');
             this.data['xHechosNarrados'] = (_caso.predenuncias.hechosNarrados ? _caso.predenuncias.hechosNarrados : '');
             this.data['xConclusionHechos'] = (_caso.predenuncias.conclusion ? _caso.predenuncias.conclusion : '');
-            this.data['xLugarHechos'] = (_caso.predenuncias.lugarHechos ? _caso.predenuncias.lugarHechos : '');
+            this.data['xLugarHechos'] = (lugar ? lugar : '');
             this.data['xCanalizacion'] = (_caso.predenuncias.canalizacion ? 'Sí' : 'No');
             this.data['xInstitucionCanalizacion'] = (_caso.predenuncias.institucion ? _caso.predenuncias.institucion : '');
             this.data['xMotivoCanalizacion'] = (_caso.predenuncias.motivoCanalizacion ? _caso.predenuncias.motivoCanalizacion : '');
@@ -523,9 +526,15 @@ public setDataF1007(_data){
   var anio = fecha.getFullYear();
   var lugaresHallazgo = '';
   var lugaresHechos = '';
+  var delitoHeredar
 
   if (_data.acuerdoInicio.heredar) {
-      delito = _data.acuerdoInicio.delito.delito.nombre;
+      delitoHeredar = _data.acuerdoInicio.delito.id;
+      for (let i=0; i < _data.delitoCaso.length; i++) {
+          if (_data.delitoCaso[i].id == delitoHeredar) {
+              delito = _data.delitoCaso[i].delito.nombre;
+          }
+      }
   } else {
       delito = _data.delitoPrincipal.nombre;
   }
