@@ -84,7 +84,10 @@ export class TransferirComponent extends BasePaginationComponent implements OnIn
                         username: response.userNameAsignado,
                         titulo: 'Transferencia de titularidad del caso',
                         contenido: 'Se le ha transferido un nuevo caso',
-                        tipo: 'transferencia'
+                        tipo: 'transferencia',
+                        caso: {
+                            id: this.data.casoId
+                        }
                     });
 
                     this.notify.emitMessage(response);
