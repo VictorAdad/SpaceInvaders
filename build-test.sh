@@ -3,7 +3,7 @@
 echo "Compilando proyecto en C++ llamado test.cpp."
 g++ test.cpp
 touch index.html
-cout "<b>Esto es un index.</b>" >> index.html
+echo "<b>Esto es un index.</b>" >> index.html
 
 # Set the destination server
 DEST=evomatik@10.0.2.152:/home/evomatik/Downloads
