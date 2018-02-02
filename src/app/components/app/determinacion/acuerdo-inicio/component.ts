@@ -259,6 +259,12 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
                               if(!caso["acuerdoInicio"]){
                                   caso["acuerdoInicio"];
                               }
+                              if (_model['personas']){
+                                const personas = _model['personas'] as any[];
+                                for (let i = 0; i< personas.length; i++){
+                                    personas[i]['personaCaso'] = {id: personas[i]['id']};
+                                }
+                              }
                               _model["id"]=temId;
                               caso["acuerdoInicio"] = _model;
                               Logger.log("caso arma", caso["acuerdoInicio"]);
@@ -366,6 +372,7 @@ export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
     var obj=this;
     this.route.params.subscribe(params => {
         if (params['casoId']) {
+            this.casoId=+params['casoId'];
             this.urlUpload = '/v1/documentos/acuerdos/save/'+params['casoId'];
             this.caso.find(params['casoId']).then(
             response => {
@@ -425,6 +432,7 @@ export class DocumentoAcuerdoInicioComponent extends FormatosGlobal{
   public updateDataFormatos(_object){
     this.formatos.formatos.setDataF1007(_object);
     this.formatos.formatos.setDataF1516(_object);
+    this.formatos.formatos.setDataF2117(_object);
 
   }
 

@@ -253,8 +253,10 @@ export class DocumentoInspeccionComponent extends FormatosGlobal{
       }
 
       this.route.params.subscribe(params => {
-          if (params['casoId'])
-              this.urlUpload = '/v1/documentos/solicitudes-pre-inspecciones/save/'+params['casoId'];
+          if (params['casoId']) {
+            this.casoId = +params['casoId'];
+            this.urlUpload = '/v1/documentos/solicitudes-pre-inspecciones/save/'+params['casoId'];
+          }
 
       });
 

@@ -236,7 +236,8 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	    				this.http.post(this.apiUrl, _model).subscribe(
 	    					(response) => {
 	    							if(this.casoId!=null){
-	    								this.id=response.id;
+										this.id=response.id;
+										this.casoServ.actualizaCaso();
 	    								this.router.navigate(['/caso/' + this.casoId + '/perito/' + this.id + '/edit']);
 	    							}
 	    							resolve('Solicitud pericial creada con éxito');
@@ -262,7 +263,13 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	                        p => {
 	                            if (this.casoServ.caso){
 	                                if(!this.casoServ.caso["solicitudPrePericiales"])
-	                                    this.casoServ.caso["solicitudPrePericiales"] = [];
+										this.casoServ.caso["solicitudPrePericiales"] = [];
+									if (_model['personas']){
+										const personas = _model['personas'] as any[];
+										for (let i = 0; i< personas.length; i++){
+											personas[i]['personaCaso'] = {id: personas[i]['id']};
+										}
+									}
 
 	                                _model["id"] = temId;
 	                                this.id      = _model['id'];
@@ -384,11 +391,12 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
 
 	      }
       }else{
-      	this.cargaArchivosOffline(this,"",DocumentoPerito);
+      	this.cargaArchivosOffline(this,"",DocumentoPerito,{idPerito:this.object['id']});
       }
 
       this.route.params.subscribe(params => {
           if (params['casoId']){
+              this.casoId = +params['casoId'];
               this.urlUpload = '/v1/documentos/solicitudes-pre-pericial/save/'+params['casoId'];
               this.caso.find(params['casoId']).then(
                 response => {
@@ -397,7 +405,14 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
             );
 
             }
-      });
+	  });
+	  
+		this.caso.casoChange.subscribe(
+			caso => {
+				this.updateDataFormatos(caso);
+			}
+		)
+
       this.atributoExtraPost={nombre:"solicitudPrePericial.id",valor:this.id.toString()};
       this.formData.append('solicitudPrePericial.id', this.id.toString());
   }
@@ -410,7 +425,7 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
 	          this.subject.next(this.data);
 	      }
 	}else{
-		this.cargaArchivosOffline(this,"",DocumentoPerito);
+		this.cargaArchivosOffline(this,"",DocumentoPerito,{idPerito:this.object['id']});
 	}
   }
 

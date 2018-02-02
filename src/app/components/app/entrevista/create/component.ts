@@ -319,7 +319,13 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 		                        if (caso){
 		                            if(!caso["entrevistas"]){
 	                        			caso["entrevistas"]=[];
-		                            }
+                                    }
+                                    if (_model['personas']){
+                                        const personas = _model['personas'] as any[];
+                                        for (let i = 0; i< personas.length; i++){
+                                            personas[i]['personaCaso'] = {id: personas[i]['id']};
+                                        }
+                                    }
 		                            _model["id"]=temId;
 		                            this.id= _model['id'];
 		                            caso["entrevistas"].push(_model);
@@ -757,11 +763,12 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
 
 	      }
       }else{
-      	this.cargaArchivosOffline(this,"",DocumentoEntrevista);
+      	this.cargaArchivosOffline(this,"",DocumentoEntrevista,{idEntrevista:this.object['id']});
       }
 
       this.route.params.subscribe(params => {
           if (params['casoId']){
+            this.casoId = +params['casoId'];
             this.urlUpload = '/v1/documentos/entrevistas/save/'+params['casoId'];
             this.caso.find(params['casoId']).then(
               response => {
@@ -770,6 +777,7 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
           );
 
             }
+            this.caso.casoChange.subscribe(this.updateDataFormatos.bind(this));
       });
       this.atributoExtraPost={nombre:"entrevista.id",valor:this.id.toString()};
       this.formData.append('entrevista.id', this.id.toString());
@@ -783,7 +791,7 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
 	          this.subject.next(this.data);
 	      }
   	}else{
-  		this.cargaArchivosOffline(this, "",DocumentoEntrevista);
+        this.cargaArchivosOffline(this,"",DocumentoEntrevista,{idEntrevista:this.object['id']});
   	}
 
   }
@@ -796,7 +804,7 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
       this.subject.next(this.data);
   }
   public updateDataFormatos(_object){
-    this.formatos.formatos.setDataF1008(_object);
+    this.formatos.formatos.setDataF1008(_object, this.id);
 }
 
 }

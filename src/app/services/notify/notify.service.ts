@@ -22,7 +22,7 @@ export class NotifyService {
     }
 
     public emitMessage(_message) {
-        Logger.log('-> NotifyService@emitMessage()');
+        Logger.log('-> NotifyService@emitMessage()', _message);
         this.socket.send(JSON.stringify(_message));
     }
 
@@ -58,11 +58,18 @@ class Notify {
 
     public tipo: string;
 
+    public caso: Caso;
+
 
     constructor(_notify: any) {
         this.username  = _notify['username'];
         this.titulo    = _notify['titulo'];
         this.contenido = _notify['contenido'];
         this.tipo      = _notify['tipo'];
+        this.caso      = _notify['caso'];
     }
+}
+
+class Caso {
+    public id;
 }

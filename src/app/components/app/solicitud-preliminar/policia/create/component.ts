@@ -84,7 +84,8 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
         private http: HttpService,
         private router: Router,
         private db: CIndexedDB,
-        private auth:AuthenticationService
+        private auth:AuthenticationService,
+        public casoServ: CasoService,
         ) { super(); }
 
     ngOnInit() {
@@ -166,6 +167,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
                             (response) => {
                                 if(this.casoId!=null){
                                     this.id=response.id;
+                                    this.casoServ.actualizaCaso();
                                     this.router.navigate(['/caso/' + this.casoId + '/policia/' + this.id + '/edit']);
                                 }
                                 resolve('Solicitud de policía creada con éxito');
@@ -193,6 +195,12 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
                                 if (caso) {
                                     if (!caso["solicitudPrePolicias"]) {
                                         caso["solicitudPrePolicias"] = [];
+                                    }
+                                    if (_model['personas']){
+                                        const personas = _model['personas'] as any[];
+                                        for (let i = 0; i< personas.length; i++){
+                                            personas[i]['personaCaso'] = {id: personas[i]['id']};
+                                        }
                                     }
                                     this.model["id"] = temId;
                                     this.id = this.model['id'];
@@ -300,27 +308,39 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
             }
 
         }else{
-            this.cargaArchivosOffline(this,"",DocumentoPolicia);
+            this.cargaArchivosOffline(this,"",DocumentoPolicia,{idPolicio:this.object['id']});
         }
 
         this.route.params.subscribe(params => {
-            if (params['casoId'])
+            if (params['casoId']){
+                this.casoId = +params['casoId'];
                 this.urlUpload = '/v1/documentos/solicitudes-pre-policias/save/'+params['casoId'];
             this.caso.find(params['casoId']).then(
                 response => {
                     this.updateDataFormatos(this.caso.caso);
                 }
             );
+            }
         });
+
+        this.caso.casoChange.subscribe(
+			caso => {
+				this.updateDataFormatos(caso);
+			}
+		)
 
         this.formData.append('solicitudPrePolicia.id', this.id.toString());
     }
 
     public cargaArchivos(_archivos){
-        let archivos=_archivos.saved
-        for (let object of archivos) {
-            this.data.push(object);
-            this.subject.next(this.data);
+        if (this.onLine.onLine){
+            let archivos=_archivos.saved
+              for (let object of archivos) {
+                  this.data.push(object);
+                  this.subject.next(this.data);
+              }
+        }else{
+            this.cargaArchivosOffline(this,"",DocumentoPolicia,{idPolicio:this.object['id']});
         }
     }
 

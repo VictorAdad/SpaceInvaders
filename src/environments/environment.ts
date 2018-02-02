@@ -17,9 +17,9 @@ export const environment = {
   	domainName: 'OAuthSIGIDomain',
   	grantType: 'PASSWORD',
   	scope: 'AttributesOUD.attrs',
-  	host: 'http://sigi-api.evomatik.net',
+  	host: 'https://sigi.evomatik.net/oam',
     session: '_USER',
-    idle: 240,
-    idleTimeout: 60
+    idle: 10000,
+    idleTimeout: 1000
   }
 };

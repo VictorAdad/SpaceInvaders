@@ -42,7 +42,7 @@
 
     <ng-container matColumnDef="fechaCreacion">
         <mat-header-cell *matHeaderCellDef> Fecha de creación </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.fechaCreacion}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.fechaCreacion || element.created | inputPipe}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="procedimiento">
