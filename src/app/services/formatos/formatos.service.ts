@@ -943,7 +943,7 @@ public setDataF1010(_data,_id_solicitud){
         this.data['xNIC']                    = _data.nic ? _data.nic:'';
         this.data['xHechoDelictivo']         = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
         this.data['xVictima']                = this.findHerenciaNombresVictimas(policia, _data);
-        this.data['xImputado']               = '';
+        this.data['xImputado']               = this.findHerenciaNombresImputados(policia,_data);
         this.data['xOficio']                 = typeof policia.noOficio != 'undefined' ? policia.noOficio : '';
         this.data['xEstado']                 = 'Estado de México';
         this.data['xPoblacion']              = this.auth.user.municipio;
@@ -999,22 +999,58 @@ public setDataF1010(_data,_id_solicitud){
     }
 
     public findHerenciaNombresVictimas(_solicitud, _caso) {
-        let personasIds  = (_solicitud.heredar ? _solicitud.personas : _caso.personas);
+        let personasIds  = _solicitud.personas;
         const personas = [];
         let nombres = "";
+        let hasVictima = false;
 
         for (const personaId of personasIds) {
-            if(_caso.findPersonaCaso(personaId.personaCaso.id).tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.victima || 
+            if(_caso.findPersonaCaso(personaId.personaCaso.id) && (_caso.findPersonaCaso(personaId.personaCaso.id).tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.victima || 
                 _caso.findPersonaCaso(personaId.personaCaso.id).tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.ofendido ||
-                _caso.findPersonaCaso(personaId.personaCaso.id).tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.victimaDesconocido)
-                personas.push(_caso.findPersonaCaso(personaId.personaCaso.id));
+                _caso.findPersonaCaso(personaId.personaCaso.id).tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.victimaDesconocido)){
+                    personas.push(_caso.findPersonaCaso(personaId.personaCaso.id));
+                    hasVictima = true;
+            }
+        }
+
+        if(!hasVictima){
+            nombres = this.getListasPersonas(this.findVictimas(_caso))['nombres'].toLocaleString()
         }
 
         personas.forEach(o => {
             if(o.tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.victimaDesconocido){
                 nombres += ('IDENTIDAD DESCONOCIDA, ');
             }else {
-                nombres += (` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}, `);
+                nombres += (` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
+            }
+        });
+
+        return nombres;
+    }
+
+    public findHerenciaNombresImputados(_solicitud, _caso) {
+        let personasIds  = _solicitud.personas;
+        const personas = [];
+        let nombres = "";
+        let hasVictima = false;
+
+        for (const personaId of personasIds) {
+            if(_caso.findPersonaCaso(personaId.personaCaso.id) && (_caso.findPersonaCaso(personaId.personaCaso.id).tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.imputado || 
+                _caso.findPersonaCaso(personaId.personaCaso.id).tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.imputadoDesconocido)){
+                    personas.push(_caso.findPersonaCaso(personaId.personaCaso.id));
+                    hasVictima = true;
+            }
+        }
+
+        if(!hasVictima){
+            nombres = this.getListasPersonas(this.findImputados(_caso))['nombres'].toLocaleString()
+        }
+
+        personas.forEach(o => {
+            if(o.tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.victimaDesconocido){
+                nombres += ('Quién resulte responsable, ');
+            }else {
+                nombres += (` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
             }
         });
 
