@@ -308,7 +308,7 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
             }
 
         }else{
-            this.cargaArchivosOffline(this,"",DocumentoPolicia);
+            this.cargaArchivosOffline(this,"",DocumentoPolicia,{idPolicio:this.object['id']});
         }
 
         this.route.params.subscribe(params => {
@@ -340,7 +340,7 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
                   this.subject.next(this.data);
               }
         }else{
-            this.cargaArchivosOffline(this,"",DocumentoPolicia);
+            this.cargaArchivosOffline(this,"",DocumentoPolicia,{idPolicio:this.object['id']});
         }
     }
 

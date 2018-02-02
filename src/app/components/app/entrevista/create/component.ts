@@ -763,7 +763,7 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
 
 	      }
       }else{
-      	this.cargaArchivosOffline(this,"",DocumentoEntrevista);
+      	this.cargaArchivosOffline(this,"",DocumentoEntrevista,{idEntrevista:this.object['id']});
       }
 
       this.route.params.subscribe(params => {
@@ -791,7 +791,7 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
 	          this.subject.next(this.data);
 	      }
   	}else{
-  		this.cargaArchivosOffline(this, "",DocumentoEntrevista);
+        this.cargaArchivosOffline(this,"",DocumentoEntrevista,{idEntrevista:this.object['id']});
   	}
 
   }

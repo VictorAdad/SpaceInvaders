@@ -88,7 +88,7 @@ export class FormatosGlobal {
                             _format
                         );
                         if (this.auth) {
-                            this.guardarFormatoOffLine(out, _id, this.formatos.formatos[_format].nameEcm);
+                            this.guardarFormatoOffLine(out, _id, this.formatos.formatos[_format].nameEcm, _data);
                         }
                     }
 
@@ -147,7 +147,7 @@ export class FormatosGlobal {
         
     }
 
-    public openDocDialog() {
+    public openDocDialog(_data={}) {
         var dialog = this.dialog.open(SolPreDocComponent, {
             height: 'auto',
             width: 'auto',
@@ -158,7 +158,8 @@ export class FormatosGlobal {
                 urlUpload: this.urlUpload,
                 formData: this.formData,
                 vista:this.vista,
-                atributoExtraPost:this.atributoExtraPost
+                atributoExtraPost:this.atributoExtraPost,
+                pertenece:_data
             }
         });
 
@@ -176,16 +177,36 @@ export class FormatosGlobal {
     public cargaArchivos(_archivos){
 
     }
-
-    cargaArchivosOffline(object,procedimiento,ClassDocument){
+    /**
+     * Carga los documentos en offline
+     * @param object la referencia a la vista general
+     * @param procedimiento Este era necesario en documentos de noticia de hecho
+     * @param ClassDocument La clase interface para los documentos de la vista
+     * @param _extraCondicion Un json que contiene el parametro extra que se evaluara. Es de la forma {key:value}
+     */
+    cargaArchivosOffline(object,procedimiento,ClassDocument,_extraCondicion = {}){
       object.db.list("documentos").then(archivos=>{
         var lista=archivos as any[];
         Logger.logColor("------->","pink",lista, object);
         console.log(lista);
         object.data=[];
         object.dataSource = object.source;
+        Logger.logDarkColor('    DATOS-CARGA-OFFLINE   ','yellow',object,_extraCondicion);
         for (var i = 0; i < lista.length; ++i) {
           if (object.caso && lista[i]["casoId"]==object.caso.caso.id && lista[i]["vista"]==object.vista){
+            let salir = false;  
+            //EL siguiente for solo entrara si existe la extra condicion
+            for (let key in _extraCondicion){
+                //validamos la condicion extra
+                //si no existe la llave o no es igual
+                if (!lista[i][key] || lista[i][key] != _extraCondicion[key]){
+                    salir = true;
+                    break;
+                }
+            }
+            if (salir){
+                continue;
+            }
             var obj=new ClassDocument();
             obj.id=lista[i]["id"];
             obj.nameEcm=lista[i]["nombre"];
@@ -224,8 +245,14 @@ export class FormatosGlobal {
     }
   }
 
-
-    public guardarFormatoOffLine(_file, _casoId, _format) {
+    /**
+     * Guarda los archivos en la tabla de documentos
+     * @param _file el archivo ya transformado a blod
+     * @param _casoId 
+     * @param _format 
+     * @param _extraAtribute atributo extra a agregar
+     */
+    public guardarFormatoOffLine(_file, _casoId, _format,_extraAtribute) {
         const reader = new FileReader();
         reader.onload = (file) => {
             this.db.add('blobs', {blob: file.target['result']}).then(
@@ -241,6 +268,9 @@ export class FormatosGlobal {
                         atributoExtraPost: '',
                         tipo: 'formato-offline'
                     };
+                    for (let key in _extraAtribute){
+                        dato[key]=_extraAtribute[key];
+                    }
                     this.db.add('documentos', dato).then(doc => {
                         this.setData({
                             id: doc['id'],
@@ -368,6 +398,9 @@ export class SolPreDocComponent {
                         vista:obj.data.vista,
                         atributoExtraPost:obj.data.atributoExtraPost
                     };
+                    for (let key in obj.data.pertenece){
+                        dato[key] = obj.data.pertenece[key];
+                    }
                     obj.db.add("documentos",dato).then(t=>{
                         Logger.log("Se guardo el archivo",(item["some"])["name"]);
                         _data["documentos"].push(t);

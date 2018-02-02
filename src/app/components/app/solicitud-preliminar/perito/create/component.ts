@@ -391,7 +391,7 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
 
 	      }
       }else{
-      	this.cargaArchivosOffline(this,"",DocumentoPerito);
+      	this.cargaArchivosOffline(this,"",DocumentoPerito,{idPerito:this.object['id']});
       }
 
       this.route.params.subscribe(params => {
@@ -425,7 +425,7 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
 	          this.subject.next(this.data);
 	      }
 	}else{
-		this.cargaArchivosOffline(this,"",DocumentoPerito);
+		this.cargaArchivosOffline(this,"",DocumentoPerito,{idPerito:this.object['id']});
 	}
   }
 
