@@ -1019,7 +1019,7 @@ public setDataF1010(_data,_id_solicitud){
 
         personas.forEach(o => {
             if(o.tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.victimaDesconocido){
-                nombres += ('IDENTIDAD DESCONOCIDA, ');
+                nombres += ('Identidad desconocida ');
             }else {
                 nombres += (` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
             }
@@ -1047,8 +1047,8 @@ public setDataF1010(_data,_id_solicitud){
         }
 
         personas.forEach(o => {
-            if(o.tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.victimaDesconocido){
-                nombres += ('Quién resulte responsable, ');
+            if(o.tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.imputadoDesconocido){
+                nombres += ('Quién resulte responsable ');
             }else {
                 nombres += (` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
             }
