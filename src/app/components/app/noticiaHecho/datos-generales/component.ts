@@ -257,10 +257,11 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         Logger.log('caso ', _caso.delitoCaso.delito.id);
         let nic: string = '';
         let user = this.auth.user;
-        // nic=`${user.fiscalia}/${user.agencia}/${user.turno}/${user.autoridad}/${this.pad(this.delito.id, 3)}/${this.createUUID()}/${(new Date()).getFullYear().toString().substr(-2)}/${this.pad((new Date()).getMonth()+1, 2)}`
-        nic=`${user.fiscalia}/${user.agencia}/${user.turno}/${user.autoridad}/${this.pad(this.delito.id, 3)}/NICID/${(new Date()).getFullYear().toString().substr(-2)}/${this.pad((new Date()).getMonth()+1, 2)}`
-
-
+        if(this.onLine.onLine){
+            nic = `${user.fiscalia}/${user.agencia}/${user.turno}/${user.autoridad}/${this.pad(this.delito.id, 3)}/NICID/${(new Date()).getFullYear().toString().substr(-2)}/${this.pad((new Date()).getMonth()+1, 2)}`;
+        } else {
+            nic = `${user.fiscalia}/${user.agencia}/${user.turno}/${user.autoridad}/${this.pad(this.delito.id, 3)}/${this.createUUID()}/${(new Date()).getFullYear().toString().substr(-2)}/${this.pad((new Date()).getMonth()+1, 2)}`;
+        }
         return nic;
     }
 

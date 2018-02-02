@@ -55,6 +55,11 @@ export class NoticiaHechoService {
 
     public llamaDatos(){
         Logger.log("CASO->",this.caso);
+        this.lugares   = [];
+        this.vehiculos = [];
+        this.armas     = [];
+        this.personas  = [];
+        this.delitos   = [];
         this.getLugares();
         this.getVehiculos();
         this.getArmas();
