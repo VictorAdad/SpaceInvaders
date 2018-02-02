@@ -41,7 +41,7 @@ else
 fi
 
 # Set the destination server
-DEST=evomatik@10.0.30.14:/home/evomatik/Downloads
+DEST=evomatik@10.0.30.14:/home/evomatik/Downloads/frontend
 
 # Setting the packaged dist name
 BUILD_NAME=$DIR_NAME"-$(date +'%m%d%y').tgz"
