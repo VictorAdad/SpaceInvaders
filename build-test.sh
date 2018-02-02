@@ -4,7 +4,7 @@ echo "Compilando proyecto en C++ llamado test.cpp"
 g++ test.cpp
 
 # creamos el archivo html
-echo "Compilando el archivo llamado index.html"
+echo "Creando el archivo llamado index.html"
 touch index.html
 
 # insertando codigo html en el index
