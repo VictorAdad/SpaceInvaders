@@ -303,7 +303,6 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 						);
 					}else{
                         let temId=Date.now();
-                        _model['created'] = Date.now();
 		                let dato={
 		                    url: this.apiUrl,
 		                    body:_model,
@@ -315,6 +314,7 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 	                        username: this.auth.user.username
 		                }
 		                this.db.add("sincronizar",dato).then(p=>{
+                            _model['created'] = Date.now();
 		                    this.db.get("casos", this.casoId).then(caso=>{
 		                        if (caso){
 		                            if(!caso["entrevistas"]){

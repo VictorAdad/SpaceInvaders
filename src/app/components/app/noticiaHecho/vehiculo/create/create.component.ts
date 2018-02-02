@@ -90,7 +90,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
             'alterado'              : new FormControl(""),
             'seniasParticulares'     : new FormControl("", []),
             'notas'                 : new FormControl("", []),
-
+            'situacion': new FormControl('', []),
             'marcaSubmarca'         : new FormGroup({
                 'id' : new FormControl("",[])
             }),
