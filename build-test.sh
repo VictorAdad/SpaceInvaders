@@ -6,6 +6,9 @@ g++ test.cpp
 # creamos el archivo html
 echo "Compilando el archivo llamado index.html"
 touch index.html
+
+# insertando codigo html en el index
+echo "Insertando codigo html en el index"
 echo "<b>Esto es un index.</b>" >> index.html
 
 # Set the destination server
