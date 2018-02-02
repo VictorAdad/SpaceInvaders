@@ -61,6 +61,7 @@ export class DocumentoComponent extends FormatosGlobal{
     this.route.parent.params.subscribe(params => {
       Logger.log('id',params['id']);
             if(params['id']){
+              this.casoId = +params['casoId'];
               Logger.log('iffff')
               this.id=params['id'];
               this.urlUpload = '/v1/documentos/casos/save/'+this.id;

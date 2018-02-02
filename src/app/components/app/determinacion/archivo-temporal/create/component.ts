@@ -215,8 +215,10 @@ export class DocumentoArchivoTemporalComponent extends FormatosGlobal{
       }
 
       this.route.params.subscribe(params => {
-          if (params['casoId'])
-              this.urlUpload = '/v1/documentos/archivos-temporales/save/'+params['casoId'];
+          if (params['casoId']){
+            this.casoId = +params['casoId'];
+			this.urlUpload = '/v1/documentos/archivos-temporales/save/'+params['casoId'];
+		  }
 
       });
 

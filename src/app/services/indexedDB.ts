@@ -295,6 +295,9 @@ export class CIndexedDB {
      * @param data json con los cambios
      */
     update2(_table,_data){
+        if (_table=='casos'){
+            _data = JSON.parse( JSON.stringify(_data));
+        }
         var obj=this;
         var promesa = new Promise( 
             function(resolve,reject){
@@ -370,6 +373,9 @@ export class CIndexedDB {
      * @return Una promesa que devuelve los datos agregados o el error
      */
     add(_table:string, _datos:any){
+        if (_table=='casos'){
+            _datos = JSON.parse( JSON.stringify(_datos));
+        }
         return this.action(_table, "add", _datos) 
     }
     /**
