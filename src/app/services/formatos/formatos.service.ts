@@ -101,80 +101,83 @@ export class FormatosLocal {
     ){}
 
     public F1_003 = {
-        'path': environment.app.host+'/assets/formatos/F1-003 LECTURA DE DERECHOS DE LA VÍCTIMA.docx',
-        'nombre': 'F1-003 LECTURA DE DERECHOS DE LA VÍCTIMA.docx',
+        'path': environment.app.host+'/assets/formatos/F1_003_Lectura_De_Derechos_De_La_Victima.docx',
+        'nombre': 'F1-003 LECTURA DE DERECHOS DE LA VÍCTIMA',
         'nameEcm': 'LECTURA DE DERECHOS DE LA VÍCTIMA',
         'file': null,
         'data': null
     };
     public F1_004= {
-        'path': environment.app.host+'/assets/formatos/F1-004 REGISTRO PRESENCIAL.docx',
-        'nombre': 'F1-004 REGISTRO PRESENCIAL.docx',
+        'path': environment.app.host+'/assets/formatos/F1_004_Registro_Presencial.docx',
+        'nombre': 'F1-004 REGISTRO PRESENCIAL',
         'nameEcm': 'REGISTRO PRESENCIAL',
         'file': null,
         'data': null
     };
     public F1_005 = {
-        'path': environment.app.host+'/assets/formatos/F1-005 REGISTRO DE RECEPCIÓN DE LLAMADA.docx',
-        'nombre': 'F1-005 REGISTRO DE RECEPCIÓN DE LLAMADA.docx',
+        'path': environment.app.host+'/assets/formatos/F1_005_Registro_De_Recepcion_De_Llamada.docx',
+        'nombre': 'F1-005 REGISTRO DE RECEPCIÓN DE LLAMADA',
         'nameEcm': 'REGISTRO DE RECEPCIÓN DE LLAMADA',
         'file': null,
         'data': null
     };
+
     // Formato de entrevista
     public F1_008 = {
-        'path': environment.app.host+'/assets/formatos/F1-008 ENTREVISTA.docx',
-        'nombre': 'F1-008 ENTREVISTA.docx',
+        'path': environment.app.host+'/assets/formatos/F1_008_Entrevista.docx',
+        'nombre': 'F1-008 ENTREVISTA',
         'nameEcm': 'ENTREVISTA',
         'file': null,
         'data': null
     };
+
     // Formato de solicitud pericial
     public F1_009 = {
-        'path': environment.app.host+'/assets/formatos/F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES.docx',
-        'nombre': 'F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES.docx',
+        'path': environment.app.host+'/assets/formatos/F1_009_Oficio_Solicitud_A_Servicios_Periciales.docx',
+        'nombre': 'F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES',
         'nameEcm': 'OFICIO SOLICITUD A SERVICIOS PERICIALES',
         'file': null,
         'data': null
     };
     public F1_010 = {
-        'path': environment.app.host+'/assets/formatos/F1-010 SOLICITUD EXAMEN PSICOFÍSICO.docx',
-        'nombre': 'F1-010 SOLICITUD EXAMEN PSICOFÍSICO.docx',
+        'path': environment.app.host+'/assets/formatos/F1_010_Solicitud_Examen_Psicofisico.docx',
+        'nombre': 'F1-010 SOLICITUD EXAMEN PSICOFÍSICO',
         'nameEcm': 'SOLICITUD EXAMEN PSICOFÍSICO',
         'file': null,
         'data': null
     };
-    // Formato de solicitud policia ministerial
-   public F1_011 = {
-    'path': environment.app.host+'/assets/formatos/F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
-    'nombre': 'F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL.docx',
-    'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL',
-    'file': null,
-    'data': null
-   };
-   public F1_021 = {
-    'path': environment.app.host+'/assets/formatos/F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO.docx',
-    'nombre': 'F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO.docx',
-    'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO',
-    'file': null,
-    'data': null
-   };
 
-   // Acuerdo de inicio
-   public F1_015_016 = {
-    'path': environment.app.host+'/assets/formatos/F1-016 Y F1-015 FORMATO DE ACUERDO DE INICIO.docx',
-    'nombre': 'F1-016 Y F1-015 FORMATO DE ACUERDO DE INICIO.docx',
-    'nameEcm': 'FORMATO DE ACUERDO DE INICIO',
-    'file': null,
-    'data': null
-   };
-   public F1_007 = {
-    'path': environment.app.host+'/assets/formatos/F1-007 CARÁTULA.docx',
-    'nombre': 'F1-007 CARÁTULA.docx',
-    'nameEcm': 'CARÁTULA',
-    'file': null,
-    'data': null
-   };
+    // Formato de solicitud policia ministerial
+    public F1_011 = {
+        'path': environment.app.host+'/assets/formatos/F1_011_Oficio_Solicitud_A_Policia_Ministerial.docx',
+        'nombre': 'F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL',
+        'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL',
+        'file': null,
+        'data': null
+    };
+    public F1_021 = {
+        'path': environment.app.host+'/assets/formatos/F1_021_Oficio_Solicitud_A_Policia_Ministerial_Sin_Apercibimiento.docx',
+        'nombre': 'F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO',
+        'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO',
+        'file': null,
+        'data': null
+    };
+
+    // Acuerdo de inicio
+    public F1_015_016 = {
+        'path': environment.app.host+'/assets/formatos/F1_016_Y_F1_015_Formato_De_Acuerdo_De_Inicio.docx',
+        'nombre': 'F1-016 Y F1-015 FORMATO DE ACUERDO DE INICIO',
+        'nameEcm': 'FORMATO DE ACUERDO DE INICIO',
+        'file': null,
+        'data': null
+    };
+    public F1_007 = {
+        'path': environment.app.host+'/assets/formatos/F1_007_Caratula.docx',
+        'nombre': 'F1-007 CARÁTULA',
+        'nameEcm': 'CARÁTULA',
+        'file': null,
+        'data': null
+    };
 
    public getVicImp(_data, _id_solicitud, _interVi) {
        var victimasHeredar = [];
@@ -995,7 +998,7 @@ public setDataF1010(_data,_id_solicitud){
         this.data['xNIC']                    = _data.nic ? _data.nic:'';
         this.data['xHechoDelictivo']         = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
         this.data['xVictima']                = this.findHerenciaNombresVictimas(policia, _data);
-        this.data['xImputado']               = '';
+        this.data['xImputado']               = this.findHerenciaNombresImputados(policia,_data);
         this.data['xOficio']                 = typeof policia.noOficio != 'undefined' ? policia.noOficio : '';
         this.data['xEstado']                 = 'Estado de México';
         this.data['xPoblacion']              = this.auth.user.municipio;
@@ -1051,22 +1054,58 @@ public setDataF1010(_data,_id_solicitud){
     }
 
     public findHerenciaNombresVictimas(_solicitud, _caso) {
-        let personasIds  = (_solicitud.heredar ? _solicitud.personas : _caso.personas);
+        let personasIds  = _solicitud.personas;
         const personas = [];
         let nombres = "";
+        let hasVictima = false;
 
         for (const personaId of personasIds) {
-            if(_caso.findPersonaCaso(personaId.personaCaso.id).tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.victima || 
+            if(_caso.findPersonaCaso(personaId.personaCaso.id) && (_caso.findPersonaCaso(personaId.personaCaso.id).tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.victima || 
                 _caso.findPersonaCaso(personaId.personaCaso.id).tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.ofendido ||
-                _caso.findPersonaCaso(personaId.personaCaso.id).tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.victimaDesconocido)
-                personas.push(_caso.findPersonaCaso(personaId.personaCaso.id));
+                _caso.findPersonaCaso(personaId.personaCaso.id).tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.victimaDesconocido)){
+                    personas.push(_caso.findPersonaCaso(personaId.personaCaso.id));
+                    hasVictima = true;
+            }
+        }
+
+        if(!hasVictima){
+            nombres = this.getListasPersonas(this.findVictimas(_caso))['nombres'].toLocaleString()
         }
 
         personas.forEach(o => {
             if(o.tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.victimaDesconocido){
-                nombres += ('IDENTIDAD DESCONOCIDA, ');
+                nombres += ('Identidad desconocida ');
             }else {
-                nombres += (` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}, `);
+                nombres += (` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
+            }
+        });
+
+        return nombres;
+    }
+
+    public findHerenciaNombresImputados(_solicitud, _caso) {
+        let personasIds  = _solicitud.personas;
+        const personas = [];
+        let nombres = "";
+        let hasVictima = false;
+
+        for (const personaId of personasIds) {
+            if(_caso.findPersonaCaso(personaId.personaCaso.id) && (_caso.findPersonaCaso(personaId.personaCaso.id).tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.imputado || 
+                _caso.findPersonaCaso(personaId.personaCaso.id).tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.imputadoDesconocido)){
+                    personas.push(_caso.findPersonaCaso(personaId.personaCaso.id));
+                    hasVictima = true;
+            }
+        }
+
+        if(!hasVictima){
+            nombres = this.getListasPersonas(this.findImputados(_caso))['nombres'].toLocaleString()
+        }
+
+        personas.forEach(o => {
+            if(o.tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.imputadoDesconocido){
+                nombres += ('Quién resulte responsable ');
+            }else {
+                nombres += (` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
             }
         });
 

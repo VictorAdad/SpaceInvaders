@@ -762,6 +762,7 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
 
       this.route.params.subscribe(params => {
           if (params['casoId']){
+            this.casoId = +params['casoId'];
             this.urlUpload = '/v1/documentos/entrevistas/save/'+params['casoId'];
             this.caso.find(params['casoId']).then(
               response => {

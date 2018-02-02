@@ -243,8 +243,10 @@ export class DocumentoNoEjercicioAccionPenalComponent extends FormatosGlobal {
       }
 
       this.route.params.subscribe(params => {
-          if (params['casoId'])
-              this.urlUpload = '/v1/documentos/no-ejercicio-accion/save/'+params['casoId'];
+          if (params['casoId']) {
+            this.casoId = +params['casoId'];
+            this.urlUpload = '/v1/documentos/no-ejercicio-accion/save/'+params['casoId'];
+          }
 
       });
 

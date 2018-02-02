@@ -26,6 +26,7 @@ export class FormatosGlobal {
     public urlUpload: string;
     public documentos: any = {};
     public vista:string="";
+    public casoId: number = undefined; 
     /*
     atributo extra es para agregar un valor extra al formdata que se envia al sincronizar los atributos que tienen son nombre y valor.
     ejemplo de uso
@@ -190,8 +191,7 @@ export class FormatosGlobal {
         object.data=[];
         object.dataSource = object.source;
         for (var i = 0; i < lista.length; ++i) {
-
-          if (object.caso && lista[i]["casoId"]==object.caso.id && lista[i]["vista"]==object.vista){
+          if (object.caso && lista[i]["casoId"]==object.caso.caso.id && lista[i]["vista"]==object.vista){
             var obj=new ClassDocument();
             obj.id=lista[i]["id"];
             obj.nameEcm=lista[i]["nombre"];
@@ -200,6 +200,7 @@ export class FormatosGlobal {
             obj["blob"]=lista[i]["idBlob"];
             obj["contentType"]=lista[i]["type"];
             object.data.push(obj);
+            Logger.logDarkColor('Archivo','yellow',obj);
             object.subject.next(object.data);
           }
         }
@@ -236,20 +237,20 @@ export class FormatosGlobal {
             this.db.add('blobs', {blob: file.target['result']}).then(
                 t => {
                     const dato = {
-                        nombre: _format,
+                        nombre: _format+'.docx',
                         type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                         idBlob: t['id'],
                         procedimiento: '',
                         fecha: new Date(),
-                        casoId: '',
-                        vista: '',
+                        casoId: this.casoId,
+                        vista: this.vista,
                         atributoExtraPost: '',
                         tipo: 'formato-offline'
                     };
                     this.db.add('documentos', dato).then(doc => {
                         this.setData({
                             id: doc['id'],
-                            nameEcm: doc['nombre'] + '.docx',
+                            nameEcm: doc['nombre'],
                             created: new Date(),
                             blob: doc['idBlob']
                         });

@@ -236,7 +236,8 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	    				this.http.post(this.apiUrl, _model).subscribe(
 	    					(response) => {
 	    							if(this.casoId!=null){
-	    								this.id=response.id;
+										this.id=response.id;
+										this.casoServ.actualizaCaso();
 	    								this.router.navigate(['/caso/' + this.casoId + '/perito/' + this.id + '/edit']);
 	    							}
 	    							resolve('Solicitud pericial creada con éxito');
@@ -389,15 +390,23 @@ export class DocumentoPeritoComponent extends FormatosGlobal {
 
       this.route.params.subscribe(params => {
           if (params['casoId']){
+              this.casoId = +params['casoId'];
               this.urlUpload = '/v1/documentos/solicitudes-pre-pericial/save/'+params['casoId'];
-              this.caso.find(params['casoId']).then(
-                response => {
-                    this.updateDataFormatos(this.caso.caso);
-                }
-            );
+            //   this.caso.find(params['casoId']).then(
+            //     response => {
+            //         this.updateDataFormatos(this.caso.caso);
+            //     }
+            // );
 
             }
-      });
+	  });
+	  
+		this.caso.casoChange.subscribe(
+			caso => {
+				this.updateDataFormatos(caso);
+			}
+		)
+
       this.atributoExtraPost={nombre:"solicitudPrePericial.id",valor:this.id.toString()};
       this.formData.append('solicitudPrePericial.id', this.id.toString());
   }

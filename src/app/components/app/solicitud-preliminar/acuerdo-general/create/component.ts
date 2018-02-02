@@ -304,8 +304,10 @@ export class DocumentoAcuerdoGeneralComponent extends FormatosGlobal{
         }
 
         this.route.params.subscribe(params => {
-            if (params['casoId'])
+            if (params['casoId']) {
+                this.casoId = +params['casoId'];
                 this.urlUpload = '/v1/documentos/solicitudes-pre-acuerdos/save/'+params['casoId'];
+            }
         });
 
         this.formData.append('solicitudPreAcuerdo.id', this.id.toString());
