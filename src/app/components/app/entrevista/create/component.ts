@@ -764,11 +764,11 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
           if (params['casoId']){
             this.casoId = +params['casoId'];
             this.urlUpload = '/v1/documentos/entrevistas/save/'+params['casoId'];
-        //     this.caso.find(params['casoId']).then(
-        //       response => {
-        //           this.updateDataFormatos(this.caso.caso);
-        //       }
-        //   );
+            this.caso.find(params['casoId']).then(
+              response => {
+                  this.updateDataFormatos(this.caso.caso);
+              }
+          );
 
             }
             this.caso.casoChange.subscribe(this.updateDataFormatos.bind(this));

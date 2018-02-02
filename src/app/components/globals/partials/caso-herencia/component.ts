@@ -99,7 +99,7 @@ export class CasoHerenciaComponent implements OnInit {
         this.setHeredarDatos(this.heredar);
         this.casoServ.casoChange.subscribe(
             caso => {
-                Logger.log('Caso change');
+                // Logger.log('Caso change');
                 this.setCaso(caso);
             }
         );
@@ -124,7 +124,7 @@ export class CasoHerenciaComponent implements OnInit {
     }
 
     public setCaso(_caso) {
-        Logger.log('Herencia@setCaso()', _caso);
+        // Logger.log('Herencia@setCaso()', _caso);
         this.caso = new Caso().fromJSON(_caso);
         this.personasTipo = this.caso.optionsPersonasTipo();
         this.lugares = this.caso.optionsLugares();
