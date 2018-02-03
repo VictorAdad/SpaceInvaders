@@ -53,7 +53,8 @@ export class FormatosService {
                 Logger.log('-> Cargar formato: ', attr);
                 if(this.formatos[attr].path){
                     JSZipUtils.getBinaryContent(this.formatos[attr].path, (error, response) => {
-                        this.formatos[attr].file = new JSZip(response);
+                        this.formatos[attr].file = response;
+                        this.formatos[attr].copy = new JSZip(response);
                         // Logger.log('-> Formato cargado')
                         // Logger.log('-> Response', response)
                         // Logger.log('-> Error', error)
@@ -69,8 +70,12 @@ export class FormatosService {
         Logger.log('-> Response', this.formatos[_formato]);
         let doc = new docxtemplater();
         let reader = new FileReader();
-        doc.loadZip(this.formatos[_formato].file);
+        const copy = this.formatos[_formato].copy;
+        doc.loadZip(copy);
         doc.setData(this.formatos.data);
+        // Logger.log('-> Templater', doc);
+        // Logger.log('-> Copy', copy);
+        // Logger.log('-> Original', this.formatos[_formato].file);
         try {
             // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
             doc.render()
@@ -91,7 +96,7 @@ export class FormatosService {
             type: 'blob',
             mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         });
-
+        this.formatos[_formato].copy = new JSZip(this.formatos[_formato].file);
         return out;
     }
 
@@ -114,6 +119,8 @@ export class FormatosLocal {
         'nombre': 'F1-003 LECTURA DE DERECHOS DE LA VÍCTIMA',
         'nameEcm': 'LECTURA DE DERECHOS DE LA VÍCTIMA',
         'file': null,
+        'copy': null,
+        'index': 0,
         'data': null
     };
     public F1_004= {
@@ -121,6 +128,8 @@ export class FormatosLocal {
         'nombre': 'F1-004 REGISTRO PRESENCIAL',
         'nameEcm': 'REGISTRO PRESENCIAL',
         'file': null,
+        'copy': null,
+        'index': 0,
         'data': null
     };
     public F1_005 = {
@@ -128,6 +137,8 @@ export class FormatosLocal {
         'nombre': 'F1-005 REGISTRO DE RECEPCIÓN DE LLAMADA',
         'nameEcm': 'REGISTRO DE RECEPCIÓN DE LLAMADA',
         'file': null,
+        'copy': null,
+        'index': 0,
         'data': null
     };
 
@@ -137,6 +148,8 @@ export class FormatosLocal {
         'nombre': 'F1-008 ENTREVISTA',
         'nameEcm': 'ENTREVISTA',
         'file': null,
+        'copy': null,
+        'index': 0,
         'data': null
     };
 
@@ -146,6 +159,8 @@ export class FormatosLocal {
         'nombre': 'F1-009 OFICIO SOLICITUD A SERVICIOS PERICIALES',
         'nameEcm': 'OFICIO SOLICITUD A SERVICIOS PERICIALES',
         'file': null,
+        'copy': null,
+        'index': 0,
         'data': null
     };
     public F1_010 = {
@@ -153,6 +168,8 @@ export class FormatosLocal {
         'nombre': 'F1-010 SOLICITUD EXAMEN PSICOFÍSICO',
         'nameEcm': 'SOLICITUD EXAMEN PSICOFÍSICO',
         'file': null,
+        'copy': null,
+        'index': 0,
         'data': null
     };
 
@@ -162,6 +179,8 @@ export class FormatosLocal {
         'nombre': 'F1-011 OFICIO SOLICITUD A POLICIA MINISTERIAL',
         'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL',
         'file': null,
+        'copy': null,
+        'index': 0,
         'data': null
     };
     public F1_021 = {
@@ -169,6 +188,8 @@ export class FormatosLocal {
         'nombre': 'F1-021 OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO',
         'nameEcm': 'OFICIO SOLICITUD A POLICIA MINISTERIAL SIN APERCIBIMIENTO',
         'file': null,
+        'copy': null,
+        'index': 0,
         'data': null
     };
 
@@ -178,6 +199,8 @@ export class FormatosLocal {
         'nombre': 'F1-016 Y F1-015 FORMATO DE ACUERDO DE INICIO',
         'nameEcm': 'FORMATO DE ACUERDO DE INICIO',
         'file': null,
+        'copy': null,
+        'index': 0,
         'data': null
     };
     public F1_007 = {
@@ -185,6 +208,8 @@ export class FormatosLocal {
         'nombre': 'F1-007 CARÁTULA',
         'nameEcm': 'CARÁTULA',
         'file': null,
+        'copy': null,
+        'index': 0,
         'data': null
     };
 
@@ -193,6 +218,7 @@ export class FormatosLocal {
         'nombre': 'F2-117 REGISTRO DE DERIVACION A LA UNIDAD DE MECANISMOS ALTERNATIVOS',
         'nameEcm': 'REGISTRO DE DERIVACION A LA UNIDAD DE MECANISMOS ALTERNATIVOS',
         'file': null,
+        'copy': null,
         'data': null
     };
 
