@@ -849,8 +849,8 @@ public setDataF1009(_data,_id_solicitud){
   this.data['xNUC']                     = _data.nuc? _data.nuc:'';
   this.data['xNIC']                     = _data.nic? _data.nic:'';
   this.data['xHechoDelictivo']          = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
-  this.data['xVictima']                 = nombresVictimas;
-  this.data['xImputado']                = nombresImputados;
+  this.data['xVictima']                 = this.findHerenciaNombresVictimas(pericial, _data);
+  this.data['xImputado']                = this.findHerenciaNombresImputados(pericial, _data);
   this.data['xOficio']                  = pericial.noOficio ? pericial.noOficio : '';
   this.data['xEstado']                  = 'Estado de México';
   this.data['xPoblacion']               = this.auth.user.municipio;
