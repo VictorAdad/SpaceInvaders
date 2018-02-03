@@ -484,7 +484,12 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         const timer = Observable.timer(1000);
         timer.subscribe(t=>{
             if(_data.heredar) {
-                this.form.controls.lugarHechosHeredar.setValue(_data.lugarHechos)
+                if (_data.lugarHechos) {
+                    this.form.controls.lugarHechosHeredar.setValue(_data.lugarHechos);
+                }
+                if (_data.lugarHechosHeredar) {
+                    this.form.controls.lugarHechosHeredar.setValue(_data.lugarHechosHeredar);
+                }
             }
         });
     }
