@@ -1009,9 +1009,9 @@ public setDataF2117(_data) {
     this.setCasoInfo(_data);
 
     this.data['xVictima'] = victimasNombres;
-    this.data['xNombreEmisorFirma']      = this.auth.user.nombreCompleto;
-    this.data['xCargoEmisorFirma']       = this.auth.user.cargo;
-    this.data['xAdscripcionEmisorFirma'] = this.auth.user.agenciaCompleto;
+    this.data['xNombreEmisorFirma']      = this.auth.user.nombreCompleto.toUpperCase();
+    this.data['xCargoEmisorFirma']       = this.auth.user.cargo.toUpperCase();
+    this.data['xAdscripcionEmisorFirma'] = this.auth.user.agenciaCompleto.toUpperCase();
 
 }
 
