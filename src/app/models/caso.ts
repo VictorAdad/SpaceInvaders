@@ -13,6 +13,7 @@ export class Caso {
     public hasPredenuncia:boolean;
     public hasRelacionVictimaImputado:boolean;
     public hasAcuerdoInicio:boolean;
+    public predenuncias: any;
     
     fecha (){
        let meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -33,7 +34,7 @@ export class Caso {
     }
 
     nombre(){
-      return `NIC: ${ this.hasPredenuncia ? this.nic : ''}  -  NUC: ${this.nuc || ''}`;
+      return `NIC: ${ this.hasPredenuncia || this.predenuncias != null ? this.nic : ''}  -  NUC: ${this.nuc || ''}`;
     }
 
     public personas:any[];
