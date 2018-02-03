@@ -265,14 +265,20 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
                                     personas[i]['personaCaso'] = {id: personas[i]['id']};
                                 }
                               }
-                              _model["id"]=temId;
-                              caso["acuerdoInicio"] = _model;
-                              Logger.log("caso arma", caso["acuerdoInicio"]);
-                              this.db.update("casos",caso).then(t=>{
-                                  Logger.log("caso arma", t["arma"]);
-                                  resolve("Se agregó el acuerdo de inicio de manera local");
-                                  this.casoService.actualizaCasoOffline(t);
-                                  this.router.navigate(['/caso/' + this.casoId + '/acuerdo-inicio/'+temId+'/view']);
+                              this.db.get("catalogos", "presento_llamada").then(    presentoLlamada => {
+                                if (Number.isInteger(_model['presentoLlamada']['id']))
+                                    Logger.log(presentoLlamada["arreglo"][_model['presentoLlamada']['id']]);
+                                _model['presentoLlamada']['nombre'] = presentoLlamada["arreglo"][_model['presentoLlamada']['id'] ];
+                                _model["id"]=temId;
+                                caso["acuerdoInicio"] = _model;
+                                caso['hasAcuerdoInicio'] = true;
+                                Logger.log("caso arma", caso["acuerdoInicio"]);
+                                this.db.update("casos",caso).then(t=>{
+                                    Logger.log("caso arma", t["arma"]);
+                                    resolve("Se agregó el acuerdo de inicio de manera local");
+                                    this.casoService.actualizaCasoOffline(t);
+                                    this.router.navigate(['/caso/' + this.casoId + '/acuerdo-inicio/'+temId+'/view']);
+                                });
                               });
                           }
                       });

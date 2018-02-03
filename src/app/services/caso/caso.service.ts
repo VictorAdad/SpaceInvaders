@@ -73,6 +73,7 @@ export class CasoService{
                         this.db.get('casos', _id).then(
                             response => {
                                 if (response !== undefined) {
+                                    this.id = _id;
                                     console.log('rsponse', response);
                                     this.caso = new Caso().fromJSON(response);
                                     this.casoChange.next(this.caso);
