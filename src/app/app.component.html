@@ -27,7 +27,7 @@
             </button>
             <ng-template #list [ngIf]="authService.user.notificaciones.length > 0 " [ngIfElse]="noNotification">
                 <div class="notification-content" (scroll)="onScrollNotification($event)">
-                    <button mat-menu-item *ngFor="let notificacion of authService.user.notificaciones">
+                    <button mat-menu-item (click)="readNotification(notificacion)" *ngFor="let notificacion of authService.user.notificaciones">
                         <div class="row">
                             <div class="col-sm-2">
                                 <mat-icon class="prueba" fxHide="false" fxHide.gt-sm>perm_identity</mat-icon>

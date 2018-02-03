@@ -181,4 +181,23 @@ export class AppComponent implements OnInit {
 
     }
 
+    public readNotification(_data){
+        Logger.log(' -> notificaciones',_data);
+        return new Promise( (resolve, reject) => {
+            this.http.post(`/v1/base/notificaciones/usuario/${_data.id}/leido`, _data).subscribe(
+                response => {
+                    Logger.log(' -> notificaciones',this.authService.user.notificaciones);
+                    this.authService.user.notificaciones = this.authService.user.notificaciones.filter(obj => obj !== _data);
+                    this.authService.user.sinLeer -= 1;
+                    Logger.log(' -> notificaciones after',this.authService.user.notificaciones);
+                    this.router.navigate(['/caso/'+_data.caso.id+'/noticia-hecho']);
+                },
+                error => {
+                    Logger.error('Error', error);
+                    reject('Ocurrió un error al leer la notificación');
+                }
+            );
+        });
+    }
+
 }
