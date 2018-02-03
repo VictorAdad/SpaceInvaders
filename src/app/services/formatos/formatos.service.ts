@@ -1018,15 +1018,27 @@ public setDataF2117(_data) {
     public setDataF1010(_data,_id_solicitud){
         Logger.log('Formatos@setDataF1010', _data);
         let examen;
+        let victimas;
+        let imputados;
 
         _data.solicitudPrePericiales.forEach(solicitud => {
             if(solicitud.id===_id_solicitud){
                 examen=solicitud;
             }
         });
+
+        if (examen.heredar) {
+            const personas = this.findHerenciaPersonas(_data, examen)
+            victimas = personas['victimas'];
+            imputados = personas['imputados'];
+        } else {
+            victimas = this.findVictimas(_data);
+            imputados = this.findImputados(_data);
+        }
+
         console.log('<<< examen >>>', examen);
 
-        let date= new Date(examen.created);
+        let date = new Date();
 
         if (date) {
             var dia  = date.getDate();
@@ -1037,8 +1049,8 @@ public setDataF2117(_data) {
         this.data['xNUC']                     = _data.nuc? _data.nuc:'';
         this.data['xNIC']                     = _data.nic? _data.nic:'';
         this.data['xHechoDelictivo']          = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
-        this.data['xVictima']                 = this.findHerenciaNombresVictimas(examen,_data).toUpperCase();
-        this.data['xImputado']                = this.findHerenciaNombresImputados(examen,_data).toUpperCase();
+        this.data['xVictima']                 = this.getListasPersonas(victimas)['nombres'].toLocaleString().toUpperCase();
+        this.data['xImputado']                = this.getListasPersonas(imputados)['nombres'].toLocaleString().toUpperCase();
         this.data['xOficio']                  = examen.noOficio ? examen.noOficio : ''; 
         this.data['xEstado']                  = 'Estado de México';
         this.data['xPoblacion']               = this.auth.user.municipio;
@@ -1047,8 +1059,8 @@ public setDataF2117(_data) {
         this.data['xMes']                     = this.getMes(mes);
         this.data['xAnio']                    = anio.toString();
         this.data['xApercibimiento']          = examen.apercibimiento ? examen.apercibimiento : '';
-        this.data['xMedicoLegistaMayus']      = examen.medicoLegista ? examen.medicoLegista : '';
-        this.data['xSolicitaExamen']          = examen.tipo ? examen.tipo : '';
+        this.data['xMedicoLegistaMayus']      = examen.medicoLegista ? examen.medicoLegista.toUpperCase() : '';
+        this.data['xSolicitaExamen']          = examen.tipoExamen ? examen.tipoExamen.nombre : '';
         this.data['xRealizaraExamen']         = examen.realizadoA ? examen.realizadoA : '';
         this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto.toUpperCase();
         this.data['xCargoEmisorFirma']        = this.auth.user.cargo.toUpperCase();
@@ -1102,6 +1114,34 @@ public setDataF2117(_data) {
         }
 
         return personas;
+    }
+
+    public findHerenciaPersonas(_caso, _solicitud) {
+        const personasIds  = _solicitud.personas;
+        const listas = {};
+        let victimas = [];
+        let imputados = [];
+        
+        for (const personaId of personasIds) {
+            if(_caso.findPersonaCaso(personaId.personaCaso.id) && (_caso.findPersonaCaso(personaId.personaCaso.id).tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.victima || 
+                _caso.findPersonaCaso(personaId.personaCaso.id).tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.ofendido ||
+                _caso.findPersonaCaso(personaId.personaCaso.id).tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.victimaDesconocido)){
+                victimas.push(_caso.findPersonaCaso(personaId.personaCaso.id));
+            } else if(_caso.findPersonaCaso(personaId.personaCaso.id) && (_caso.findPersonaCaso(personaId.personaCaso.id).tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.imputado || 
+            _caso.findPersonaCaso(personaId.personaCaso.id).tipoInterviniente.id ==  _config.optionValue.tipoInterviniente.imputadoDesconocido)){
+                imputados.push(_caso.findPersonaCaso(personaId.personaCaso.id));
+            }
+        }
+
+        if(victimas.length==0){
+            victimas = this.findVictimas(_caso);
+        }
+        if(imputados.length==0){
+            imputados = this.findImputados(_caso);
+        }
+        listas['victimas']  = victimas;
+        listas['imputados'] = imputados;
+        return listas;
     }
 
     public findVictimas(_caso) {
