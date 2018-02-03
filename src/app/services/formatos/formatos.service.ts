@@ -446,8 +446,10 @@ export class FormatosLocal {
     }
 
     public setDataF1005(_caso) {
+        console.log('<<< @setDataF1005 >>>', _caso);
         const predenuncia = _caso.predenuncias;
         let personas = [];
+        let lugar = '';
 
         if (predenuncia.heredar) {
             personas = this.findHerenciaPersonasPredenuncia(_caso);
@@ -463,8 +465,8 @@ export class FormatosLocal {
         this.data['xOcupacion'] = atributosPersona['ocupaciones'].toLocaleString();
         this.data['xEscolaridad'] = atributosPersona['escolaridades'].toLocaleString();
         this.data['xOrientadorJuridicoFirma'] = this.auth.user.nombreCompleto.toLocaleUpperCase();
-        // this.data['xNumeroTelefonico'] = nombres.toLocaleString();
-        // this.data['xDomicilio'] = nombres.toLocaleString();
+        this.data['xNumeroTelefonico'] = atributosPersona['noParticulares'].toLocaleString();
+        this.data['xDomicilio'] = atributosPersona['domicilios'].toLocaleString();
 
         if (_caso.predenuncias) {
             this.data['xTelefonoLlamando']      = (_caso.predenuncias.noTelefonico ? _caso.predenuncias.noTelefonico  : '');
@@ -475,8 +477,6 @@ export class FormatosLocal {
             this.data['xHoraConclusionLlamada'] = (_caso.predenuncias.horaConclusionLlamada ? _caso.predenuncias.horaConclusionLlamada  : '');
             this.data['xDuracionLlamada']       = (_caso.predenuncias.duracionLlamada ? _caso.predenuncias.duracionLlamada  : '');
             this.data['xObservaciones']         = (_caso.predenuncias.observaciones ? _caso.predenuncias.observaciones  : '');
-            this.data['xAdscripcionEmisor']     = ''
-            this.data['xOrientadorJuridico']    = ''
         }
     }
 
