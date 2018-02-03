@@ -11,6 +11,7 @@ import { environment } from '../../../environments/environment';
 import { Logger } from "@services/logger.service";
 import { _config } from '@app/app.config';
 import { AuthenticationService } from '../auth/authentication.service';
+import { CIndexedDB } from '../indexedDB';
 
 @Injectable()
 export class FormatosService {
@@ -19,8 +20,10 @@ export class FormatosService {
 
     constructor(
         private http: HttpService,
-        private auth: AuthenticationService) {
+        private auth: AuthenticationService,
+        public db: CIndexedDB) {
         this.formatos = new FormatosLocal(auth);
+        this.formatos.setDb(db);
     }
 
     public getFormatos(){
@@ -95,6 +98,12 @@ export class FormatosService {
 }
 
 export class FormatosLocal {
+
+    db: CIndexedDB;
+
+    setDb(db){
+        this.db = db;
+    }
 
     constructor(
         private auth: AuthenticationService
@@ -364,33 +373,42 @@ export class FormatosLocal {
         } else {
             personas = this.findVictimas(_caso);
         }
+        this.db.get('catalogos','idioma_identificacion').then(idioma_identificacion => {
+            if (idioma_identificacion){
+                let lista = idioma_identificacion['arreglo'] as any[]; 
+                personas.forEach(o => {
+                    nombrePersonas.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
+                    let identificacion = lista.filter(e => { 
+                        return e.id == o.persona.idiomaIdentificacion.id;
+                    });
+                    if (identificacion.length>0) {
+                        identificaciones.push(identificacion[0].identificacion);
+                    }
+                    if (o.persona.folioIdentificacion) {
+                        foliosIdentificacion.push(o.persona.folioIdentificacion);
+                    }
 
-        personas.forEach(o => {
-            nombrePersonas.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
-            if (o.persona.idiomaIdentificacion.identificacion) {
-                identificaciones.push(o.persona.idiomaIdentificacion.identificacion);
-            }
-            if (o.persona.folioIdentificacion) {
-                foliosIdentificacion.push(o.persona.folioIdentificacion);
+                    Logger.logDarkColor(' identificaciones  ','cyan',identificaciones , o.persona.idiomaIdentificacion.id, identificacion);
+                });
+        
+                
+                this.setCasoInfo(_caso);
+                this.data['xVictima'] = nombrePersonas.toLocaleString();
+                this.data['xVictimaFirma'] = nombrePersonas.toLocaleString().toLocaleUpperCase();
+                this.data['xSeIdentificaConFirma'] = identificaciones ? identificaciones.toLocaleString() : '';
+                this.data['xFolioVictimaFirma'] = foliosIdentificacion ? foliosIdentificacion.toLocaleString() : '';
+                this.data['xFolioDocumento'] = !predenuncia ? '' :(predenuncia.noFolioConstancia ? predenuncia.noFolioConstancia  : '');
+                this.data['xHablaEspaniol'] = !predenuncia ? '' :(predenuncia.hablaEspaniol ? 'Sí' : 'No');
+                this.data['xIdiomaLengua'] = !predenuncia.lenguaIdioma ? '' : predenuncia.lenguaIdioma;
+                this.data['xInterprete'] = !predenuncia ? '' :(predenuncia.nombreInterprete ? predenuncia.nombreInterprete  : '');
+                this.data['xComprendioDerechos'] = !predenuncia ? '' :(predenuncia.compredioDerechos ? 'Sí' : 'No');
+                this.data['xCopiaDerechos'] = !predenuncia ? '' :(predenuncia.proporcionoCopia ? 'Sí' : 'No');
+        
+                this.data['xCargoEmisorFirma']        = this.auth.user.cargo.toLocaleUpperCase();
+                this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto.toLocaleUpperCase();
+                this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto.toLocaleUpperCase();
             }
         });
-
-
-        this.setCasoInfo(_caso);
-        this.data['xVictima'] = nombrePersonas.toLocaleString();
-        this.data['xVictimaFirma'] = nombrePersonas.toLocaleString().toLocaleUpperCase();
-        this.data['xSeIdentificaConFirma'] = identificaciones ? identificaciones.toLocaleString() : '';
-        this.data['xFolioVictimaFirma'] = foliosIdentificacion ? foliosIdentificacion.toLocaleString() : '';
-        this.data['xFolioDocumento'] = !predenuncia ? '' :(predenuncia.noFolioConstancia ? predenuncia.noFolioConstancia  : '');
-        this.data['xHablaEspaniol'] = !predenuncia ? '' :(predenuncia.hablaEspaniol ? 'Sí' : 'No');
-        this.data['xIdiomaLengua'] = !predenuncia.lenguaIdioma ? '' : predenuncia.lenguaIdioma;
-        this.data['xInterprete'] = !predenuncia ? '' :(predenuncia.nombreInterprete ? predenuncia.nombreInterprete  : '');
-        this.data['xComprendioDerechos'] = !predenuncia ? '' :(predenuncia.compredioDerechos ? 'Sí' : 'No');
-        this.data['xCopiaDerechos'] = !predenuncia ? '' :(predenuncia.proporcionoCopia ? 'Sí' : 'No');
-
-        this.data['xCargoEmisorFirma']        = this.auth.user.cargo.toLocaleUpperCase();
-        this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto.toLocaleUpperCase();
-        this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto.toLocaleUpperCase();
     }
 
     public setDataF1004(_caso) {
@@ -849,8 +867,8 @@ public setDataF1009(_data,_id_solicitud){
   this.data['xNUC']                     = _data.nuc? _data.nuc:'';
   this.data['xNIC']                     = _data.nic? _data.nic:'';
   this.data['xHechoDelictivo']          = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
-  this.data['xVictima']                 = nombresVictimas;
-  this.data['xImputado']                = nombresImputados;
+  this.data['xVictima']                 = this.findHerenciaNombresVictimas(pericial, _data);
+  this.data['xImputado']                = this.findHerenciaNombresImputados(pericial, _data);
   this.data['xOficio']                  = pericial.noOficio ? pericial.noOficio : '';
   this.data['xEstado']                  = 'Estado de México';
   this.data['xPoblacion']               = this.auth.user.municipio;
