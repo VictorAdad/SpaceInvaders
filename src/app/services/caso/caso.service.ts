@@ -265,6 +265,7 @@ export class Caso {
     public ultimaActualizacion: Date = null;
     public username: string;
     public estatusSincronizacion: string = undefined;
+    public currentTitular: any;
 
 
     public findPersonaCaso(_id) {

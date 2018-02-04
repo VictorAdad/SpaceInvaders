@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OnLineService } from '@services/onLine.service';
 import { HttpService } from '@services/http.service';
@@ -10,44 +10,65 @@ import { AuthenticationService } from '@services/auth/authentication.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { Logger } from "@services/logger.service";
 import { CasoService, Caso } from '@services/caso/caso.service';
-import { Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
+import { LoadingDialogService } from '../../../services/loading/loading-dialog.service';
 
 @Component({
-    templateUrl:'./component.html'
+    templateUrl: './component.html'
 })
 
-export class DetalleCasoComponent implements OnInit{
+export class DetalleCasoComponent implements OnInit {
 
     public id: number = null;
+
     private route: ActivatedRoute;
+
     public onLine: OnLineService;
+
     private http: HttpService;
+
     public caso: Caso;
-    public involucrados:Persona[];
-    public delitos:DelitoCaso[];
-    public predenuncia:Predenuncia;
-    public detalleFecha = new Date()
-    hasPredenuncia:boolean=false;
-    hasAcuerdoInicio:boolean=false;
-    hasRelacionVictimaImputado:boolean=false;
+
+    public involucrados: Persona[];
+
+    public delitos: DelitoCaso[];
+
+    public predenuncia: Predenuncia;
+
+    public detalleFecha = new Date();
+
+    public hasPredenuncia = false;
+
+    public hasAcuerdoInicio = false;
+
+    public hasRelacionVictimaImputado = false;
+
+    public isTitular = false;
 
     constructor(
         _route: ActivatedRoute,
         public _onLine: OnLineService,
         private _http: HttpService,
         public auth: AuthenticationService,
-        private db:CIndexedDB,
-        private casoService: CasoService
-        ){
+        private db: CIndexedDB,
+        private casoService: CasoService,
+        private loaderDialog: LoadingDialogService
+    ) {
         this.route = _route;
         this.onLine = _onLine;
-        this.http   = _http;
+        this.http = _http;
         this.caso = new Caso();
-        this.predenuncia=new Predenuncia();
-        this.detalleFecha = new Date()
+        this.predenuncia = new Predenuncia();
+        this.detalleFecha = new Date();
+        this.loaderDialog.setData({
+            titulo: 'Cargando información',
+            subtitulo: '' 
+        });
     }
 
-    ngOnInit(){
+    ngOnInit() {
+        const timer = Observable.timer(1);
+        timer.subscribe(t => this.loaderDialog.open());
         this.route.params.subscribe(params => {
             if (params['id']) {
                 this.id = +params['id'];
@@ -57,6 +78,7 @@ export class DetalleCasoComponent implements OnInit{
                         caso => {
                             Logger.log('casoChange()', caso);
                             this.caso = this.casoService.caso;
+                            this.isTitular = this.caso.currentTitular.userNameAsignado === this.auth.user.username;
                             this.hasPredenuncia = caso.hasPredenuncia;
                             this.hasAcuerdoInicio = caso.hasAcuerdoInicio;
                             this.hasRelacionVictimaImputado = caso.hasRelacionVictimaImputado;
@@ -65,13 +87,14 @@ export class DetalleCasoComponent implements OnInit{
                             }
                             this.involucrados = caso.personaCasos as Persona[];
                             this.delitos = caso.delitoCaso as DelitoCaso[];
+                            this.loaderDialog.close();
                         }
                     );
                     this.casoService.find(this.id).then(t => this.caso = this.casoService.caso);
                 } else {
                     this.casoService.actualizaCasoOffline(this.caso = this.casoService.caso);
                     const timer = Observable.timer(1000);
-                    timer.subscribe(t=> {
+                    timer.subscribe(t => {
                         this.caso = this.casoService.caso;
                         console.log("CASO->", this.caso);
                         this.hasRelacionVictimaImputado = this.caso.hasRelacionVictimaImputado;

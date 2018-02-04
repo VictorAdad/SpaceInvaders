@@ -76,6 +76,7 @@ import { MatPaginatorIntlEsp } from '@providers/paginator.provider';
 import 'hammerjs';
 import { pipes } from './pipes/pipe.module';
 import { LoginDialogService } from './services/onLine/loginDialog.service';
+import { LoadingDialogService } from './services/loading/loading-dialog.service';
 
 
 @NgModule({
@@ -173,6 +174,7 @@ import { LoginDialogService } from './services/onLine/loginDialog.service';
     NotifyService,
     Logger,
     LoginDialogService,
+    LoadingDialogService,
     {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true},
     {provide: MAT_DATE_LOCALE, useValue: 'es-MX'},
     {provide: MatPaginatorIntl, useClass: MatPaginatorIntlEsp},

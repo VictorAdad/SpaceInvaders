@@ -18,27 +18,27 @@
                     <label class="d-xs-none d-sm-none d-md-inline">Datos generales</label>
                 </a>
                 <div [class]="hasId() ? '' : 'hidden' ">
-                    <a href="#tab2-panel" class="mdl-tabs__tab disabled" [routerLink]="['personas']">
+                    <a href="#tab2-panel" class="mdl-tabs__tab disabled" [routerLink]="['personas']" *ngIf="isTitular">
                         <mat-icon>assignment_ind</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Personas</label>
                     </a>
-                    <a href="#tab3-panel" class="mdl-tabs__tab" [routerLink]="['delitos']">
+                    <a href="#tab3-panel" class="mdl-tabs__tab" [routerLink]="['delitos']" *ngIf="isTitular">
                         <mat-icon>gavel</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Delitos</label>
                     </a>
-                    <a href="#tab4-panel" class="mdl-tabs__tab" [routerLink]="['lugares']">
+                    <a href="#tab4-panel" class="mdl-tabs__tab" [routerLink]="['lugares']" *ngIf="isTitular">
                         <mat-icon>room</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Lugares</label>
                     </a>
-                    <a href="#tab5-panel" class="mdl-tabs__tab" [routerLink]="['armas']">
+                    <a href="#tab5-panel" class="mdl-tabs__tab" [routerLink]="['armas']" *ngIf="isTitular">
                         <mat-icon svgIcon="arma" class="arma-icon"></mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Armas</label>
                     </a>
-                    <a href="#tab6-panel" class="mdl-tabs__tab" [routerLink]="['vehiculos']">
+                    <a href="#tab6-panel" class="mdl-tabs__tab" [routerLink]="['vehiculos']" *ngIf="isTitular">
                         <mat-icon>directions_car</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Vehículos</label>
                     </a>
-                    <a href="#tab7-panel" class="mdl-tabs__tab" [routerLink]="['relaciones']">
+                    <a href="#tab7-panel" class="mdl-tabs__tab" [routerLink]="['relaciones']" *ngIf="isTitular">
                         <mat-icon>compare_arrows</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Relaciones</label>
                     </a>
@@ -46,7 +46,7 @@
                         <mat-icon>description</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Titulares</label>
                     </a>
-                    <a href="#tab9-panel" class="mdl-tabs__tab" [routerLink]="['documentos']">
+                    <a href="#tab9-panel" class="mdl-tabs__tab" [routerLink]="['documentos']" *ngIf="isTitular">
                         <mat-icon>insert_drive_file</mat-icon>
                         <label class="d-xs-none d-sm-none d-md-inline">Documentos</label>
                     </a>

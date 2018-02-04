@@ -36,6 +36,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
     public model   : Caso =  new Caso();
     public delitos : Delito[] = [];
     public delito: Delito;
+    public isTitular = false;
 
     public constructor(
         _dialog: MatDialog,
@@ -54,7 +55,6 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         this.activeRoute = _activeRoute;
         this.dialog = _dialog;
         this.onLine = _onLine;
-
     }
 
     ngOnInit(){
@@ -82,6 +82,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                 this.id = +params['id'];
                 Logger.log(this.casoService);
                 if (!isNaN(this.id)){
+                    this.isTitular = this.casoService.caso.currentTitular.userNameAsignado === this.auth.user.username;
                     this.casoService.find(this.id);
                     if(this.onLine.onLine){
                         this.http.get('/v1/base/casos/'+this.id).subscribe((response) => {

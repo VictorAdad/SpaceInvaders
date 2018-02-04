@@ -36,7 +36,7 @@
         <ng-container matColumnDef="transferir">
             <mat-header-cell *matHeaderCellDef> Transferir </mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <button class="float-right" mat-icon-button (click)="transferirDialog()" *ngIf="element.vigente"><mat-icon  class="md-24">arrow_forward</mat-icon></button>
+                <button class="float-right" mat-icon-button (click)="transferirDialog()" *ngIf="element.vigente && isTitular"><mat-icon  class="md-24">arrow_forward</mat-icon></button>
             </mat-cell>
         </ng-container>
 

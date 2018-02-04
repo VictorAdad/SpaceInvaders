@@ -12,6 +12,7 @@ import { TableService} from '@utils/table/table.service';
 import { MOption } from '@partials/form/select2/select2.component'
 import { _usuarios } from '@services/auth/usuarios';
 import { Logger } from "@services/logger.service";
+import { CasoService } from '../../../../services/caso/caso.service';
 
 @Component({
     templateUrl: 'tranferir.component.html'
@@ -21,6 +22,7 @@ export class TransferirComponent extends BasePaginationComponent implements OnIn
     public agencias: MOption[] = [];
     public usuarios: MOption[] = [];
     public form: FormGroup;
+    private isTitular = false;
 
     constructor(
         public dialogRef: MatDialogRef<TransferirComponent>,
@@ -28,9 +30,11 @@ export class TransferirComponent extends BasePaginationComponent implements OnIn
         private http: HttpService,
         private router: Router,
         private auth: AuthenticationService,
-        private notify: NotifyService
+        private notify: NotifyService,
+        private casoServ: CasoService
        ) {
         super();
+        this.isTitular = (this.casoServ.caso.currentTitular.userNameAsignado === this.auth.user.username);
     }
 
     ngOnInit() {
