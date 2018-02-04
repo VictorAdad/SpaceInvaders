@@ -99,7 +99,7 @@ export class CasoHerenciaComponent implements OnInit {
         this.setHeredarDatos(this.heredar);
         this.casoServ.casoChange.subscribe(
             caso => {
-                // Logger.log('Caso change');
+                Logger.log('HeredarComponent Caso change', caso);
                 this.setCaso(caso);
             }
         );

@@ -156,6 +156,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
 
     public save(valid: any, _model: any) {
         if(valid){
+            _model.personas = this.cleanPersonasRepetidas(_model.personas);
             Object.assign(this.model, _model);
             this.model.caso.id = this.casoId;
 
@@ -206,6 +207,7 @@ export class SolicitudPoliciaComponent extends SolicitudPreliminarGlobal {
                                     this.id = this.model['id'];
                                     caso["solicitudPrePolicias"].push(this.model);
                                     this.db.update("casos",caso).then(t => {
+                                        this.casoServ.actualizaCasoOffline(t);
                                         resolve('Solicitud de policía creada con éxito');
                                         this.router.navigate(['/caso/' + this.casoId + '/policia/' + this.id + '/edit']);
                                     });

@@ -15,5 +15,23 @@ export class SolicitudPreliminarGlobal{
                 this.validateForm(control);           
             }
         });
-    } 
+    }
+
+    public cleanPersonasRepetidas(_personas) {
+        const newPersonas = [];
+
+        _personas.forEach(o => {
+            if (newPersonas.length === 0) {
+                newPersonas.push(o);
+            } else {
+                newPersonas.forEach(np => {
+                    if (np.id !== o.id) {
+                        newPersonas.push(o);
+                    }
+                });
+            }
+        });
+
+        return newPersonas;
+    }
 }

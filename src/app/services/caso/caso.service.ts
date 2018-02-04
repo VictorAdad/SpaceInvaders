@@ -47,7 +47,7 @@ export class CasoService{
      * @param _id id del caso a buscar
      */
     public find(_id) {
-        console.log('-> Find formato', this.id, _id);
+        console.log('-> Find caso', this.id, _id);
         if (!Number.isInteger(_id))
             _id = parseInt(_id);
         // Logger.logColor('Logger con toño','blue',_id, this.caso, this.id);
