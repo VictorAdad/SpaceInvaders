@@ -395,17 +395,17 @@ export class FormatosLocal {
         if (predenuncia.heredar) {
             personas = this.findHerenciaPersonasPredenuncia(_caso);
         } else {
-            personas = this.findImputados(_caso);
+            personas = this.findVictimas(_caso);
         }
         const atributosPersona = this.getListasPersonas(personas);
 
         this.setCasoInfo(_caso);
-        this.data['xImputado'] = atributosPersona['nombres'].toLocaleString();
         this.data['xEdad'] = atributosPersona['edades'].toLocaleString();
         this.data['xEstadoCivil'] = atributosPersona['estadosCiviles'].toLocaleString();
         this.data['xOcupacion'] = atributosPersona['ocupaciones'].toLocaleString();
         this.data['xEscolaridad'] = atributosPersona['escolaridades'].toLocaleString();
         this.data['xOrientadorJuridicoFirma'] = this.auth.user.nombreCompleto.toLocaleUpperCase();
+        this.data['xCargoEmisorFirma']        = this.auth.user.cargo.toLocaleUpperCase();
         this.data['xNumeroTelefonico'] = atributosPersona['noParticulares'].toLocaleString();
         this.data['xDomicilio'] = atributosPersona['domicilios'].toLocaleString();
 
@@ -976,6 +976,7 @@ public setDataF2117(_data) {
         let examen;
         let victimas;
         let imputados;
+        let tipoExamen;
 
         _data.solicitudPrePericiales.forEach(solicitud => {
             if(solicitud.id===_id_solicitud){
@@ -993,6 +994,17 @@ public setDataF2117(_data) {
         }
 
         console.log('<<< examen >>>', examen);
+        if(examen.tipoExamen){
+            this.db.get('catalogos','tipo_examen').then(tipo_examen => {
+                if (tipo_examen){
+                    let lista = tipo_examen['arreglo'] as any[]; 
+                    Logger.log("examen.tipoExamen.id:"+examen.tipoExamen.id);
+                    Logger.log("lista[examen.tipoExamen.id]:"+lista[examen.tipoExamen.id]);
+                    tipoExamen = lista[examen.tipoExamen.id];
+                    Logger.log("-----> tipoExamen:"+tipoExamen);
+                }
+            });
+        }
 
         let date = new Date();
 
@@ -1016,11 +1028,13 @@ public setDataF2117(_data) {
         this.data['xAnio']                    = anio.toString();
         this.data['xApercibimiento']          = examen.apercibimiento ? examen.apercibimiento : '';
         this.data['xMedicoLegistaMayus']      = examen.medicoLegista ? examen.medicoLegista.toUpperCase() : '';
-        this.data['xSolicitaExamen']          = examen.tipoExamen ? examen.tipoExamen.nombre : '';
+        Logger.log("Antes de imprimit tipoExamen "+tipoExamen);
+        this.data['xSolicitaExamen']          = tipoExamen;
         this.data['xRealizaraExamen']         = examen.realizadoA ? examen.realizadoA : '';
         this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto.toUpperCase();
         this.data['xCargoEmisorFirma']        = this.auth.user.cargo.toUpperCase();
         this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto.toUpperCase();
+        Logger.log('formato',this.data)
 
     }
 
