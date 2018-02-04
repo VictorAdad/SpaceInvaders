@@ -229,6 +229,7 @@ export class SolicitudPeritoComponent extends SolicitudPreliminarGlobal {
 	public save(valid: any, _model: any){
 		if(valid){
 			_model.caso.id = this.casoId;
+			_model.personas = this.cleanPersonasRepetidas(_model.personas);
 			return new Promise<any>(
 				(resolve, reject) => {
 					Logger.log('-> Perito@save()', _model);

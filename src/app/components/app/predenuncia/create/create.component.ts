@@ -374,6 +374,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
     }
     public save(valid : any, _model : any){
         if(valid){
+            _model.personas = this.cleanPersonasRepetidas(_model.personas);
             return new Promise<any>(
                 (resolve, reject) => {
                     if(this.onLine.onLine){
@@ -492,6 +493,24 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                 }
             }
         });
+    }
+
+    public cleanPersonasRepetidas(_personas) {
+        const newPersonas = [];
+
+        _personas.forEach(o => {
+            if (newPersonas.length === 0) {
+                newPersonas.push(o);
+            } else {
+                newPersonas.forEach(np => {
+                    if (np.id !== o.id) {
+                        newPersonas.push(o);
+                    }
+                });
+            }
+        });
+
+        return newPersonas;
     }
 }
 

@@ -123,6 +123,7 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 
 	public save(valid: any, _model: any) {
 		if(valid){
+			_model.personas = this.cleanPersonasRepetidas(_model.personas);
 			Object.assign(this.model, _model);
 			this.model.caso.id = this.casoId;
 			//var _date = new Date();
