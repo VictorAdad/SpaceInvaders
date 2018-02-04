@@ -976,7 +976,7 @@ public setDataF2117(_data) {
         let examen;
         let victimas;
         let imputados;
-        let tipoExamen;
+        let tipoExamen = '';
 
         _data.solicitudPrePericiales.forEach(solicitud => {
             if(solicitud.id===_id_solicitud){
@@ -993,19 +993,6 @@ public setDataF2117(_data) {
             imputados = this.findImputados(_data);
         }
 
-        console.log('<<< examen >>>', examen);
-        if(examen.tipoExamen){
-            this.db.get('catalogos','tipo_examen').then(tipo_examen => {
-                if (tipo_examen){
-                    let lista = tipo_examen['arreglo'] as any[]; 
-                    Logger.log("examen.tipoExamen.id:"+examen.tipoExamen.id);
-                    Logger.log("lista[examen.tipoExamen.id]:"+lista[examen.tipoExamen.id]);
-                    tipoExamen = lista[examen.tipoExamen.id];
-                    Logger.log("-----> tipoExamen:"+tipoExamen);
-                }
-            });
-        }
-
         let date = new Date();
 
         if (date) {
@@ -1014,28 +1001,35 @@ public setDataF2117(_data) {
             var anio = date.getFullYear();
         }
 
-        this.data['xNUC']                     = _data.nuc? _data.nuc:'';
-        this.data['xNIC']                     = _data.nic? _data.nic:'';
-        this.data['xHechoDelictivo']          = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
-        this.data['xVictima']                 = this.getListasPersonas(victimas)['nombres'].toLocaleString().toUpperCase();
-        this.data['xImputado']                = this.getListasPersonas(imputados)['nombres'].toLocaleString().toUpperCase();
-        this.data['xOficio']                  = examen.noOficio ? examen.noOficio : ''; 
-        this.data['xEstado']                  = 'Estado de México';
-        this.data['xPoblacion']               = this.auth.user.municipio;
+        console.log('<<< examen >>>', examen);
+        
+        this.db.get('catalogos','tipo_examen').then(tipo_examen => {
+            if (tipo_examen && examen.tipoExamen){
+                let lista = tipo_examen['arreglo'] as any[]; 
+                tipoExamen = lista[examen.tipoExamen.id];
+            }
 
-        this.data['xDia']                     = dia.toString();
-        this.data['xMes']                     = this.getMes(mes);
-        this.data['xAnio']                    = anio.toString();
-        this.data['xApercibimiento']          = examen.apercibimiento ? examen.apercibimiento : '';
-        this.data['xMedicoLegistaMayus']      = examen.medicoLegista ? examen.medicoLegista.toUpperCase() : '';
-        Logger.log("Antes de imprimit tipoExamen "+tipoExamen);
-        this.data['xSolicitaExamen']          = tipoExamen;
-        this.data['xRealizaraExamen']         = examen.realizadoA ? examen.realizadoA : '';
-        this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto.toUpperCase();
-        this.data['xCargoEmisorFirma']        = this.auth.user.cargo.toUpperCase();
-        this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto.toUpperCase();
-        Logger.log('formato',this.data)
+            this.data['xNUC']                     = _data.nuc? _data.nuc:'';
+            this.data['xNIC']                     = _data.nic? _data.nic:'';
+            this.data['xHechoDelictivo']          = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
+            this.data['xVictima']                 = this.getListasPersonas(victimas)['nombres'].toLocaleString().toUpperCase();
+            this.data['xImputado']                = this.getListasPersonas(imputados)['nombres'].toLocaleString().toUpperCase();
+            this.data['xOficio']                  = examen.noOficio ? examen.noOficio : ''; 
+            this.data['xEstado']                  = 'Estado de México';
+            this.data['xPoblacion']               = this.auth.user.municipio;
 
+            this.data['xDia']                     = dia.toString();
+            this.data['xMes']                     = this.getMes(mes);
+            this.data['xAnio']                    = anio.toString();
+            this.data['xApercibimiento']          = examen.apercibimiento ? examen.apercibimiento : '';
+            this.data['xMedicoLegistaMayus']      = examen.medicoLegista ? examen.medicoLegista.toUpperCase() : '';
+            this.data['xSolicitaExamen']          = tipoExamen ? tipoExamen : '';
+            this.data['xRealizaraExamen']         = examen.realizadoA ? examen.realizadoA : '';
+            this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto.toUpperCase();
+            this.data['xCargoEmisorFirma']        = this.auth.user.cargo.toUpperCase();
+            this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto.toUpperCase();
+            Logger.log('formato',this.data)
+        });
     }
 
 
