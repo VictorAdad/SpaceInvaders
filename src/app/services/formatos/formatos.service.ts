@@ -73,7 +73,7 @@ export class FormatosService {
         const copy = this.formatos[_formato].copy;
         doc.loadZip(copy);
         doc.setData(this.formatos.data);
-        // Logger.log('-> Templater', doc);
+        Logger.log('-> Templater', doc);
         // Logger.log('-> Copy', copy);
         // Logger.log('-> Original', this.formatos[_formato].file);
         try {
@@ -281,7 +281,7 @@ export class FormatosLocal {
     public data = this.getDatos();
 
     public setDataF1003(_caso) {
-        this.data = this.getDatos();
+        
         Logger.log('Formatos@setDataF1003', _caso);
 
         const nombrePersonas = [];
@@ -335,7 +335,7 @@ export class FormatosLocal {
 
     public setDataF1004(_caso) {
         Logger.log('Formatos@setDataF1004', _caso);
-        this.data = this.getDatos();
+        
         const predenuncia = _caso.predenuncias;
         let personas = [];
         let lugar = '';
@@ -388,7 +388,7 @@ export class FormatosLocal {
 
     public setDataF1005(_caso) {
         console.log('<<< @setDataF1005 >>>', _caso);
-        this.data = this.getDatos();
+        
         const predenuncia = _caso.predenuncias;
         let personas = [];
         let lugar = '';
@@ -423,7 +423,7 @@ export class FormatosLocal {
     }
 
     public setCasoInfo(_caso){
-        this.data = this.getDatos();
+        
         this.data['xNUC']           = _caso.nuc ? _caso.nuc : '';
         this.data['xNIC']           = _caso.nic ? _caso.nic : '';
         this.data['xFechaAtencion'] = _caso.formatCreated();
@@ -431,7 +431,7 @@ export class FormatosLocal {
     }
 
     public setVictimaInfo(_caso){
-        this.data = this.getDatos();
+        
         let victima = _caso.findVictima();
         let nombreVictima = '';
         if (victima.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victimaDesconocido) {
@@ -462,7 +462,7 @@ export class FormatosLocal {
 
 public setDataF1007(_data){
   Logger.log('Formatos@setDataF1007', _data);
-  this.data = this.getDatos();
+  
   let fecha = new Date()
   const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   let delito = '';
@@ -638,7 +638,7 @@ public setDataF1007(_data){
 
     public setDataF1008(_caso, _id){
         Logger.log('Formatos@setDataF1008', _caso);
-        this.data = this.getDatos();
+        
         const entrevista = _caso.entrevistas.filter(o => o.id == _id)[0];
         const nombreEntrevistado = entrevista.heredar ? entrevista.nombreEntrevistadoHeredar : entrevista.nombreEntrevistado;
         const sexo = entrevista.heredar ? entrevista.sexoHeredar : entrevista.sexo;
@@ -730,7 +730,7 @@ public setDataF1007(_data){
 
 public setDataF1009(_data,_id_solicitud){
   Logger.log('Formatos@setDataF1009', _data);
-  this.data = this.getDatos();
+  
   let nombresVictimas = '';
   let nombresImputados = '';
 
@@ -819,7 +819,7 @@ public setDataF1009(_data,_id_solicitud){
 
 public setDataF1516(_data) {
     console.log('<<< Formato F1516 caso >>>', _data);
-    this.data = this.getDatos();
+    
     let victimasNombres = '';
     let victimas = [];
     let victimasHeredar = [];
@@ -880,7 +880,8 @@ public setDataF1516(_data) {
 
     this.data['xEstado']                 = 'Estado de México'; 
     this.data['xPoblacion']              = this.auth.user.municipio;
-    this.data['xRecibioLlamada']         = _data.acuerdoInicio.presentoLlamada ? _data.acuerdoInicio.presentoLlamada.nombre: '';
+    this.data['xRecibioLlamada']         = _data.acuerdoInicio.presentoLlamada ? _data.acuerdoInicio.presentoLlamada.nombre: ''; 
+    console.log('<<< recibio llamada >>>', this.data['xRecibioLlamada'], _data.acuerdoInicio.presentoLlamada.nombre)
     this.data['xVictima']                = victimasNombres;
     this.data['xManifesto']              = _data.acuerdoInicio.manifesto ? _data.acuerdoInicio.manifesto : '';
     this.data['xNarracionHechos']        = _data.acuerdoInicio.sintesisHechos ? _data.acuerdoInicio.sintesisHechos : '';
@@ -893,7 +894,7 @@ public setDataF1516(_data) {
 }
 public setDataF2117(_data) {
     console.log('<<< @setDataF2117 >>>', _data);
-    this.data = this.getDatos();
+    
     let victimasNombres = '';
     let victimas = [];
     let victimasHeredar = [];
@@ -965,7 +966,7 @@ public setDataF2117(_data) {
 
     public setDataF1010(_data,_id_solicitud){
         Logger.log('Formatos@setDataF1010', _data);
-        this.data = this.getDatos();
+        
         let examen;
         let victimas;
         let imputados;
@@ -1021,7 +1022,7 @@ public setDataF2117(_data) {
 
     public setDataF1011(_data,_id_solicitud){
         Logger.log('Formatos@setDataF1011', _data);
-        this.data = this.getDatos();
+        
         let imputado;
         let policia;
 
@@ -1407,6 +1408,8 @@ public setDataF2117(_data) {
         'xRealizaraExamen':'',
        //F1011
          'xActuacionesSolicitadas':'',
+        //F1516
+         'xRecibioLlamada':'',
       }
 
       return data;
