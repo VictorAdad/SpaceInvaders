@@ -1,5 +1,5 @@
 <breadcrumb [rutas]="breadcrumb"></breadcrumb>
-<caso-nic [id]="id"></caso-nic>
+<caso-nic *ngIf="id != null" [id]="id"></caso-nic>
 <div class="row space justify-content-between">
     <div class="col-sm-auto">
         <h2>Noticia de Hechos</h2>
