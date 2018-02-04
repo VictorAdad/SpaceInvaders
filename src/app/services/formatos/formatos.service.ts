@@ -283,11 +283,10 @@ export class FormatosLocal {
     public setDataF1003(_caso) {
         
         Logger.log('Formatos@setDataF1003', _caso);
-
-        const nombrePersonas = [];
         const identificaciones = [];
         const foliosIdentificacion = [];
         const predenuncia =  _caso.predenuncias;
+        let atributosPersona = {};
         let personas = [];
 
         if (predenuncia.heredar) {
@@ -297,9 +296,9 @@ export class FormatosLocal {
         }
         this.db.get('catalogos','idioma_identificacion').then(idioma_identificacion => {
             if (idioma_identificacion){
+                atributosPersona = this.getListasPersonas(personas);
                 let lista = idioma_identificacion['arreglo'] as any[]; 
                 personas.forEach(o => {
-                    nombrePersonas.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
                     let identificacion = lista.filter(e => { 
                         return e.id == o.persona.idiomaIdentificacion.id;
                     });
@@ -315,8 +314,8 @@ export class FormatosLocal {
         
                 
                 this.setCasoInfo(_caso);
-                this.data['xVictima'] = nombrePersonas.toLocaleString();
-                this.data['xVictimaFirma'] = nombrePersonas.toLocaleString().toLocaleUpperCase();
+                this.data['xVictima'] = atributosPersona['nombres'].toLocaleString();
+                this.data['xVictimaFirma'] = atributosPersona['nombres'].toLocaleString().toLocaleUpperCase();
                 this.data['xSeIdentificaConFirma'] = identificaciones ? identificaciones.toLocaleString() : '';
                 this.data['xFolioVictimaFirma'] = foliosIdentificacion ? foliosIdentificacion.toLocaleString() : '';
                 this.data['xFolioDocumento'] = !predenuncia ? '' :(predenuncia.noFolioConstancia ? predenuncia.noFolioConstancia  : '');
