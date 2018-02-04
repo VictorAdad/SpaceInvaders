@@ -329,7 +329,8 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 		                            _model["id"]=temId;
 		                            this.id= _model['id'];
 		                            caso["entrevistas"].push(_model);
-		                            this.db.update("casos",caso).then(t=>{
+		                            this.db.update("casos",caso).then(t => {
+                                        this.casoService.actualizaCasoOffline(t);
 		                                resolve("Se agregó la entrevista de manera local");
 		                                this.router.navigate(['/caso/' + this.casoId + '/entrevista/'+this.id+'/view']);
 		                            });
