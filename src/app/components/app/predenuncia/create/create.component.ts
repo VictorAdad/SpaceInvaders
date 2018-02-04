@@ -334,6 +334,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             for(let i=0;i<this.casoService.caso.lugares.length;i++){
                 if(this.casoService.caso.lugares[i].id === this.form.controls["lugar"].value.id){
                     lugar=(this.casoService.caso.lugares[i].calle?this.casoService.caso.lugares[i].calle:"")+" "+
+                    (this.casoService.caso.lugares[i].noExterior?this.casoService.caso.lugares[i].noExterior:"")+" "+
                     (this.casoService.caso.lugares[i].noInterior?this.casoService.caso.lugares[i].noInterior:"")+" "+
                     (this.casoService.caso.lugares[i].colonia?this.casoService.caso.lugares[i].colonia.nombre:(this.casoService.caso.lugares[i].coloniaOtro?this.casoService.caso.lugares[i].coloniaOtro:""))+" "+
                     (this.casoService.caso.lugares[i].municipio?this.casoService.caso.lugares[i].municipio.nombre:(this.casoService.caso.lugares[i].municipioOtro?this.casoService.caso.lugares[i].municipioOtro:""))+" "+

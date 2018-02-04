@@ -1,12 +1,5 @@
 <breadcrumb [rutas]="breadcrumb"></breadcrumb>
-<div class="row space">    
-    <div class="col-md-12 text-right">
-        <div *ngIf="object != null">
-            <small *ngIf="object.hasPredenuncia">NIC: {{object.nic}} - NUC: {{object.nuc}}</small>
-            <small *ngIf="!object.hasPredenuncia">NIC:  - NUC: </small>
-        </div>
-    </div>
-</div>
+<caso-nic [id]="id"></caso-nic>
 <div class="row space justify-content-between">
     <div class="col-sm-auto">
         <h2>Noticia de Hechos</h2>
