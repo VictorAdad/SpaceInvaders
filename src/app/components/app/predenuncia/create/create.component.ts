@@ -224,6 +224,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         this.route.params.subscribe(params => {
             if (params['casoId']){
                 this.casoId = +params['casoId'];
+                this.precarga = this.casoService.caso.hasPredenuncia;
                 this.casoService.find(this.casoId);
                 Logger.log(this.casoId);
                 if(this.onLine.onLine){
