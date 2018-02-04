@@ -224,6 +224,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         this.route.params.subscribe(params => {
             if (params['casoId']){
                 this.casoId = +params['casoId'];
+                this.precarga = this.casoService.caso.hasPredenuncia;
                 this.casoService.find(this.casoId);
                 Logger.log(this.casoId);
                 if(this.onLine.onLine){
@@ -334,6 +335,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             for(let i=0;i<this.casoService.caso.lugares.length;i++){
                 if(this.casoService.caso.lugares[i].id === this.form.controls["lugar"].value.id){
                     lugar=(this.casoService.caso.lugares[i].calle?this.casoService.caso.lugares[i].calle:"")+" "+
+                    (this.casoService.caso.lugares[i].noExterior?this.casoService.caso.lugares[i].noExterior:"")+" "+
                     (this.casoService.caso.lugares[i].noInterior?this.casoService.caso.lugares[i].noInterior:"")+" "+
                     (this.casoService.caso.lugares[i].colonia?this.casoService.caso.lugares[i].colonia.nombre:(this.casoService.caso.lugares[i].coloniaOtro?this.casoService.caso.lugares[i].coloniaOtro:""))+" "+
                     (this.casoService.caso.lugares[i].municipio?this.casoService.caso.lugares[i].municipio.nombre:(this.casoService.caso.lugares[i].municipioOtro?this.casoService.caso.lugares[i].municipioOtro:""))+" "+
@@ -374,6 +376,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
     }
     public save(valid : any, _model : any){
         if(valid){
+            _model.personas = this.cleanPersonasRepetidas(_model.personas);
             return new Promise<any>(
                 (resolve, reject) => {
                     if(this.onLine.onLine){
@@ -492,6 +495,24 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                 }
             }
         });
+    }
+
+    public cleanPersonasRepetidas(_personas) {
+        const newPersonas = [];
+
+        _personas.forEach(o => {
+            if (newPersonas.length === 0) {
+                newPersonas.push(o);
+            } else {
+                newPersonas.forEach(np => {
+                    if (np.id !== o.id) {
+                        newPersonas.push(o);
+                    }
+                });
+            }
+        });
+
+        return newPersonas;
     }
 }
 

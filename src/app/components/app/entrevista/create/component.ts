@@ -281,7 +281,8 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 
 	public save(valid: any, _model: any) {
 		if(valid){
-			_model.caso.id = this.casoId;
+            _model.caso.id = this.casoId;
+            _model.personas = this.cleanPersonasRepetidas(_model.personas);
 			Logger.log('-> Entrevista@save()', _model);
 			return new Promise<any>(
 	            (resolve, reject) => {
@@ -329,7 +330,8 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 		                            _model["id"]=temId;
 		                            this.id= _model['id'];
 		                            caso["entrevistas"].push(_model);
-		                            this.db.update("casos",caso).then(t=>{
+		                            this.db.update("casos",caso).then(t => {
+                                        this.casoService.actualizaCasoOffline(t);
 		                                resolve("Se agregó la entrevista de manera local");
 		                                this.router.navigate(['/caso/' + this.casoId + '/entrevista/'+this.id+'/view']);
 		                            });
@@ -703,6 +705,24 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 
     public heredarSintesisChange(_event: boolean) {
         this.heredarSintesis = _event;
+    }
+
+    public cleanPersonasRepetidas(_personas) {
+        const newPersonas = [];
+
+        _personas.forEach(o => {
+            if (newPersonas.length === 0) {
+                newPersonas.push(o);
+            } else {
+                newPersonas.forEach(np => {
+                    if (np.id !== o.id) {
+                        newPersonas.push(o);
+                    }
+                });
+            }
+        });
+
+        return newPersonas;
     }
 
 }

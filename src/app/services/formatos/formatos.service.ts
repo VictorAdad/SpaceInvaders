@@ -73,7 +73,7 @@ export class FormatosService {
         const copy = this.formatos[_formato].copy;
         doc.loadZip(copy);
         doc.setData(this.formatos.data);
-        // Logger.log('-> Templater', doc);
+        Logger.log('-> Templater', doc);
         // Logger.log('-> Copy', copy);
         // Logger.log('-> Original', this.formatos[_formato].file);
         try {
@@ -278,120 +278,15 @@ export class FormatosLocal {
 
 
 
-    public data = {
-        //F1003
-        'xFolioDocumento': '',
-        'xVictima': '',
-        'xHablaEspaniol': '',
-        'xIdiomaLengua': '',
-        'xInterprete': '',
-        'xFolioVictima': '',
-        'xCargoEmisor': '',
-        'xNombreEmisor': '',
-        'xAdscripcionEmisor': '',
-        //F1004
-        'xNUC': '',
-        'xNIC': '',
-        'xFechaAtencion': '',
-        'xHoraAtencion': '',
-        'xNombreUsuario': '',
-        'xOriginario': '',
-        'xEdad': '',
-        'xSexo': '',
-        'xDomicilio': '',
-        'xCalidadUsuarioPersona': '',
-        'xTipoPersona': '',
-        'xFechaNacimiento': '',
-        'xRFC': '',
-        'xCURP': '',
-        'xEstadoCivil': '',
-        'xOcupacion': '',
-        'xEscolaridad': '',
-        'xReligion': '',
-        'xNacionalidad': '',
-        'xNumeroTelefonico': '',
-        'xNumeroMovil': '',
-        'xSeIdentificaCon': '',
-        'xFolioIdentificacion': '',
-        'xHechosNarrados': '',
-        'xConclusionHechos': '',
-        'xLugarHechos': '',
-        'xCanalizacion': '',
-        'xInstitucionCanalizacion': '',
-        'xMotivoCanalizacion': '',
-        'xFechaCanalizacion': '',
-        'xHoraCanalizacion': '',
-        'xNombreCausoHecho': '',
-        'xDomicilioHechos': '',
-        'xObservaciones': '',
-        'xPersonaRegistro': '',
-        //F1005
-        'xTipoLineaTelefonica': '',
-        'xTelefonoLlamando': '',
-        'xLugarLlamada': '',
-        'xNarracionHechos': '',
-        'xAsesoria': '',
-        'xHoraConclusionLlamada': '',
-        'xDuracionLlamada': '',
-        'xOrientadorJuridico': '',
-
-         //F1008
-        'xNombreAutoridadEntrevista': '',
-        'xLugarEntrevista': '',
-        'xNombreEntrevistado': '',
-        'xEstadoMigratorio': '',
-        'xTipoIdentificacion': '',
-        'xEmisorIdentificacion': '',
-        'xNumeroIdentificacion': '',
-        'xSabeLeerEscribir': '',
-        'xLugarOcupacion': '',
-        'xSalarioSemanal': '',
-        'xRelacionEntrevistadoPartes': '',
-        'xCalle': '',
-        'xNumExterior': '',
-        'xNumInterior': '',
-        'xColonia': '',
-        'xCP': '',
-        'xPoblacion': '',
-        'xEstado': '',
-        'xCorreoElectronico': '',
-        'xRepresentanteLegal': '',
-        'xNombreRepresentanteLegal': '',
-        'xUsoMedioTecnologico': '',
-        'xMedioTecnologico': '',
-        'xUsoMedioTecnico': '',
-        'xMedioTecnico': '',
-        'xNombreEntrevistadoFirma': '',
-        'xCargoEmisorFirma': '',
-        'xNombreEmisorFirma': '',
-        'xAdscripcionEmisorFirma': '',
-        //F1009
-        'xHechoDelictivo':'',
-        'xOficio':'',
-        'xImputado':'',
-        'xMes':'',
-        'xAnio':'',
-        'xDia':'',
-        'xSolicitaPerito':'',
-        'xFinalidadRequerimiento':'',
-        'xPlazoRendirInformes':'',
-        'xApercibimiento':'',
-        //F1010
-        'xMedicoLegistaMayus':'',
-        'xSolicitaExamen':'',
-        'xRealizaraExamen':'',
-       //F1011
-         'xActuacionesSolicitadas':'',
-
-
-      }
+    public data = this.getDatos();
 
     public setDataF1003(_caso) {
-        // Logger.log('Formatos@setDataF1003', _caso);
-        const nombrePersonas = [];
+        
+        Logger.log('Formatos@setDataF1003', _caso);
         const identificaciones = [];
         const foliosIdentificacion = [];
         const predenuncia =  _caso.predenuncias;
+        let atributosPersona = {};
         let personas = [];
 
         if (predenuncia.heredar) {
@@ -401,9 +296,9 @@ export class FormatosLocal {
         }
         this.db.get('catalogos','idioma_identificacion').then(idioma_identificacion => {
             if (idioma_identificacion){
+                atributosPersona = this.getListasPersonas(personas);
                 let lista = idioma_identificacion['arreglo'] as any[]; 
                 personas.forEach(o => {
-                    nombrePersonas.push(` ${o.persona.nombre} ${o.persona.paterno} ${o.persona.materno}`);
                     let identificacion = lista.filter(e => { 
                         return e.id == o.persona.idiomaIdentificacion.id;
                     });
@@ -419,8 +314,8 @@ export class FormatosLocal {
         
                 
                 this.setCasoInfo(_caso);
-                this.data['xVictima'] = nombrePersonas.toLocaleString();
-                this.data['xVictimaFirma'] = nombrePersonas.toLocaleString().toLocaleUpperCase();
+                this.data['xVictima'] = atributosPersona['nombres'].toLocaleString();
+                this.data['xVictimaFirma'] = atributosPersona['nombres'].toLocaleString().toLocaleUpperCase();
                 this.data['xSeIdentificaConFirma'] = identificaciones ? identificaciones.toLocaleString() : '';
                 this.data['xFolioVictimaFirma'] = foliosIdentificacion ? foliosIdentificacion.toLocaleString() : '';
                 this.data['xFolioDocumento'] = !predenuncia ? '' :(predenuncia.noFolioConstancia ? predenuncia.noFolioConstancia  : '');
@@ -439,6 +334,7 @@ export class FormatosLocal {
 
     public setDataF1004(_caso) {
         Logger.log('Formatos@setDataF1004', _caso);
+        
         const predenuncia = _caso.predenuncias;
         let personas = [];
         let lugar = '';
@@ -491,6 +387,7 @@ export class FormatosLocal {
 
     public setDataF1005(_caso) {
         console.log('<<< @setDataF1005 >>>', _caso);
+        
         const predenuncia = _caso.predenuncias;
         let personas = [];
         let lugar = '';
@@ -498,17 +395,17 @@ export class FormatosLocal {
         if (predenuncia.heredar) {
             personas = this.findHerenciaPersonasPredenuncia(_caso);
         } else {
-            personas = this.findImputados(_caso);
+            personas = this.findVictimas(_caso);
         }
         const atributosPersona = this.getListasPersonas(personas);
 
         this.setCasoInfo(_caso);
-        this.data['xImputado'] = atributosPersona['nombres'].toLocaleString();
         this.data['xEdad'] = atributosPersona['edades'].toLocaleString();
         this.data['xEstadoCivil'] = atributosPersona['estadosCiviles'].toLocaleString();
         this.data['xOcupacion'] = atributosPersona['ocupaciones'].toLocaleString();
         this.data['xEscolaridad'] = atributosPersona['escolaridades'].toLocaleString();
         this.data['xOrientadorJuridicoFirma'] = this.auth.user.nombreCompleto.toLocaleUpperCase();
+        this.data['xCargoEmisorFirma']        = this.auth.user.cargo.toLocaleUpperCase();
         this.data['xNumeroTelefonico'] = atributosPersona['noParticulares'].toLocaleString();
         this.data['xDomicilio'] = atributosPersona['domicilios'].toLocaleString();
 
@@ -525,6 +422,7 @@ export class FormatosLocal {
     }
 
     public setCasoInfo(_caso){
+        
         this.data['xNUC']           = _caso.nuc ? _caso.nuc : '';
         this.data['xNIC']           = _caso.nic ? _caso.nic : '';
         this.data['xFechaAtencion'] = _caso.formatCreated();
@@ -532,6 +430,7 @@ export class FormatosLocal {
     }
 
     public setVictimaInfo(_caso){
+        
         let victima = _caso.findVictima();
         let nombreVictima = '';
         if (victima.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victimaDesconocido) {
@@ -562,6 +461,7 @@ export class FormatosLocal {
 
 public setDataF1007(_data){
   Logger.log('Formatos@setDataF1007', _data);
+  
   let fecha = new Date()
   const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   let delito = '';
@@ -734,9 +634,9 @@ public setDataF1007(_data){
 
 }
 
-
     public setDataF1008(_caso, _id){
         Logger.log('Formatos@setDataF1008', _caso);
+        
         const entrevista = _caso.entrevistas.filter(o => o.id == _id)[0];
         const nombreEntrevistado = entrevista.heredar ? entrevista.nombreEntrevistadoHeredar : entrevista.nombreEntrevistado;
         const sexo = entrevista.heredar ? entrevista.sexoHeredar : entrevista.sexo;
@@ -753,26 +653,27 @@ public setDataF1007(_data){
         const ocupacion = entrevista.heredar ? entrevista.ocupacionHeredar : entrevista.ocupacion;
         const lugarOcupacion = entrevista.heredar ? entrevista.lugarOcupacionHeredar : entrevista.lugarOcupacion;
         const estadoCivil = entrevista.heredar ? entrevista.estadoCivilHeredar : entrevista.estadoCivil;
-        const salarioSemanal = entrevista.heredar ? entrevista.salarioHeredar : entrevista.salarioSemanal;
-        const calle = entrevista.heredar ? entrevista.calleHeredar : entrevista.calle;
-        const noExterior = entrevista.heredar ? entrevista.noExteriorHeredar : entrevista.noExterior;
-        const noInterior = entrevista.heredar ? entrevista.noInteriorHeredar : entrevista.noInterior;
-        const colonia = entrevista.heredar ? entrevista.coloniaHeredar : entrevista.colonia;
-        const cp = entrevista.heredar ? entrevista.cpHeredar : entrevista.cp;
-        const municipio = entrevista.heredar ? entrevista.Heredar : entrevista.municipio;
-        const estado = entrevista.heredar ? entrevista.estadoHeredar : entrevista.estado;
+        const salarioSemanal = entrevista.heredar ? entrevista.salarioHeredar : entrevista.salarioSemanal;       
         const noTelefonoCelular = entrevista.heredar ? entrevista.noTelefonoCelularHeredar : entrevista.noTelefonoParticular;
         const noTelefonoParticular = entrevista.heredar ? entrevista.noTelefonoParticularHeredar : entrevista.noTelefonoParticular;
         const correoElectronico = entrevista.heredar ? entrevista.correoElectronicoHeredar : entrevista.correoElectronico;
         const calidadUsuarioPersonas = entrevista.heredar ? entrevista.calidadIntervinienteHeredar : entrevista.calidadInterviniente;
         const nombreRepresentanteLegal = entrevista.nombreRepresentanteLegal;
+        let direccion = "";
+            direccion += entrevista.heredar ? entrevista.calleHeredar != null? entrevista.calleHeredar+" " : "" : entrevista.calle!=null? entrevista.calle+" " : "";
+            direccion += entrevista.heredar ? entrevista.noExteriorHeredar != null? entrevista.noExteriorHeredar+" " : "" : entrevista.noExterior !=null? entrevista.noExterior+" " : "";
+            direccion += entrevista.heredar ? entrevista.noInteriorHeredar != null? entrevista.noInteriorHeredar+" " : "" : entrevista.noInterior !=null? entrevista.noInterior+" " : "";
+            direccion += entrevista.heredar ? entrevista.coloniaHeredar != null? entrevista.coloniaHeredar+" " : "" : entrevista.colonia !=null? entrevista.colonia+" " : "";
+            direccion += entrevista.heredar ? entrevista.cpHeredar != null? entrevista.cpHeredar+" " : "" : entrevista.cp !=null? entrevista.cp+" " : "";
+            direccion += entrevista.heredar ? entrevista.estadoHeredar != null? entrevista.estadoHeredar+" " : "" : entrevista.estado !=null? entrevista.estado+" " : "";
+            direccion += entrevista.heredar ? entrevista.Heredar != null? entrevista.Heredar+" " : "": entrevista.municipio!=null? entrevista.municipio+"" : "";
         // const relacionEntrevistado;
 
         let fecha = new Date(entrevista.created);
         console.log('<<< FECHA ENTREVISTA >>>', fecha);
         let fechaAtencion = fecha.getDate()+' de '+this.getMes(fecha.getMonth())+' de '+fecha.getFullYear();
         let horaAtencion = fecha.getHours()+':'+fecha.getMinutes();
-
+         
         this.data['xNUC']= _caso.nuc ? _caso.nuc : '';
         this.data['xNIC']= _caso.nic ? _caso.nic : '';
         this.data['xFechaAtencion']=entrevista.created? fechaAtencion :'';
@@ -798,13 +699,14 @@ public setDataF1007(_data){
         this.data['xLugarOcupacion'] = lugarOcupacion ? lugarOcupacion:'';
         this.data['xEstadoCivil'] = estadoCivil ? estadoCivil:'';
         this.data['xSalarioSemanal'] = salarioSemanal ? salarioSemanal:'';
-        this.data['xCalle'] = calle ? calle:'';
-        this.data['xNumExterior'] = noExterior ? noExterior:'';
-        this.data['xNumInterior'] = noInterior ? noInterior:'';
-        this.data['xColonia'] = colonia ? colonia:'';
-        this.data['xCP'] = cp ? cp:'';
-        this.data['xPoblacion']= municipio ? municipio:'';
-        this.data['xEstado'] = estado ? estado:'';
+        // this.data['xCalle'] = calle ? calle:'';
+        // this.data['xNumExterior'] = noExterior ? noExterior:'';
+        // this.data['xNumInterior'] = noInterior ? noInterior:'';
+        // this.data['xColonia'] = colonia ? colonia:'';
+        // this.data['xCP'] = cp ? cp:'';
+        // this.data['xPoblacion']= municipio ? municipio:'';
+        // this.data['xEstado'] = estado ? estado:'';
+        this.data['xDireccion'] = direccion? direccion:'';
         this.data['xNumeroTelefonico'] = noTelefonoParticular ? noTelefonoParticular:'';
         this.data['xNumeroMovil'] = noTelefonoParticular ? noTelefonoParticular:'';
         this.data['xCorreoElectronico'] = correoElectronico ? correoElectronico:'';
@@ -826,96 +728,104 @@ public setDataF1007(_data){
 
     }
 
-public setDataF1009(_data,_id_solicitud){
-  Logger.log('Formatos@setDataF1009', _data);
-  let nombresVictimas = '';
-  let nombresImputados = '';
+    public setDataF1009(_data,_id_solicitud){
+        Logger.log('Formatos@setDataF1009', _data);
+        // let nombresVictimas = '';
+        // let nombresImputados = '';
 
-  if (_data.heredar) {
-      nombresVictimas = this.getVicImp(_data, _id_solicitud, false);
-      nombresImputados = this.getVicImp(_data, _id_solicitud, true);
-   } else {
-       for (let i = 0; i < _data.personaCasos.length; i++) {
-           if (_data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.victima || _data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.victimaDesconocido) {
-               if (_data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.victimaDesconocido) {
-                   if (nombresVictimas == '') {
-                       nombresVictimas = 'Identidad desconocida';
-                   } else {
-                       nombresVictimas += ', '+ 'Identidad desconocida';
-                   }   
-               } else {
-                   if (nombresVictimas == '') {
-                       nombresVictimas = _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
-                   } else {
-                       nombresVictimas += ', '+ _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
-                   }                   
-               }
-           }
-       }
+        // if (_data.heredar) {
+        //     nombresVictimas = this.getVicImp(_data, _id_solicitud, false);
+        //     nombresImputados = this.getVicImp(_data, _id_solicitud, true);
+        // } else {
+        //     for (let i = 0; i < _data.personaCasos.length; i++) {
+        //         if (_data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.victima || _data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.victimaDesconocido) {
+        //             if (_data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.victimaDesconocido) {
+        //                 if (nombresVictimas == '') {
+        //                     nombresVictimas = 'Identidad desconocida';
+        //                 } else {
+        //                     nombresVictimas += ', '+ 'Identidad desconocida';
+        //                 }   
+        //             } else {
+        //                 if (nombresVictimas == '') {
+        //                     nombresVictimas = _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
+        //                 } else {
+        //                     nombresVictimas += ', '+ _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
+        //                 }                   
+        //             }
+        //         }
+        //     }
 
-       for (let i = 0; i < _data.personaCasos.length; i++) {
-           if (_data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.imputado || _data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.imputadoDesconocido) {
-               if (_data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.imputadoDesconocido) {
-                   if (nombresImputados == '') {
-                       nombresImputados = 'Quién resulte responsable';
-                   } else {
-                       nombresImputados += ', '+ 'Quién resulte responsable';
-                   }     
-               } else {
-                   if (nombresImputados == '') {
-                       nombresImputados = _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
-                   } else {
-                       nombresImputados += ', '+ _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
-                   }                   
-               }
-           }
-       }
-   }
+        //     for (let i = 0; i < _data.personaCasos.length; i++) {
+        //         if (_data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.imputado || _data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.imputadoDesconocido) {
+        //             if (_data.personaCasos[i].tipoInterviniente.id == _config.optionValue.tipoInterviniente.imputadoDesconocido) {
+        //                 if (nombresImputados == '') {
+        //                     nombresImputados = 'Quién resulte responsable';
+        //                 } else {
+        //                     nombresImputados += ', '+ 'Quién resulte responsable';
+        //                 }     
+        //             } else {
+        //                 if (nombresImputados == '') {
+        //                     nombresImputados = _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
+        //                 } else {
+        //                     nombresImputados += ', '+ _data.personaCasos[i].persona.nombre+' '+_data.personaCasos[i].persona.paterno+' '+(_data.personaCasos[i].persona.materno ? _data.personaCasos[i].persona.materno : '');
+        //                 }                   
+        //             }
+        //         }
+        //     }
+        // }
 
-  var pericial;
+        var pericial;
+        let imputados = [];
+        let victimas  = [];
 
-  _data.solicitudPrePericiales.forEach(solicitud => {
-     if(solicitud.id===_id_solicitud){
-         pericial=solicitud;
-     }
-  });
+        _data.solicitudPrePericiales.forEach(solicitud => {
+            if(solicitud.id===_id_solicitud){
+                pericial=solicitud;
+            }
+        });
 
-  var date = new Date();
-  if(pericial != null)
-      date= new Date(pericial.created);
+        var date = new Date();
 
-  if (date) {
-      var dia = date.getDate();
-      var mes = 1 + date.getMonth();
-      var anio = date.getFullYear();
-  }
+        if (date) {
+            var dia = date.getDate();
+            var mes = 1 + date.getMonth();
+            var anio = date.getFullYear();
+        }
 
-  this.data['xNUC']                     = _data.nuc? _data.nuc:'';
-  this.data['xNIC']                     = _data.nic? _data.nic:'';
-  this.data['xHechoDelictivo']          = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
-  this.data['xVictima']                 = this.findHerenciaNombresVictimas(pericial, _data);
-  this.data['xImputado']                = this.findHerenciaNombresImputados(pericial, _data);
-  this.data['xOficio']                  = pericial.noOficio ? pericial.noOficio : '';
-  this.data['xEstado']                  = 'Estado de México';
-  this.data['xPoblacion']               = this.auth.user.municipio;
-  this.data['xDia']                     = dia ? dia.toString() : '';
-  this.data['xMes']                     = mes ? this.getMes(mes) : '';
-  this.data['xAnio']                    = anio ? anio.toString(): '';
-  this.data['xSolicitaPerito']          = pericial.peritoMateria ? pericial.peritoMateria.nombre : '';
-  this.data['xFinalidadRequerimiento']  = pericial.finalidad?pericial.finalidad:'';
-  this.data['xPlazoRendirInformes']     = pericial.plazoDias? pericial.plazoDias: '';
-  this.data['xApercibimiento']          = pericial.apercibimiento ? pericial.apercibimiento: '';
-  this.data['xDirectorInstituto']       = pericial.directorInstituto ? pericial.directorInstituto: '';
-  this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto;
-  this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto;
-  this.data['xCargoEmisorFirma']        = this.auth.user.cargo;
+        if (pericial.heredar) {
+            const personas = this.findHerenciaPersonas(_data, pericial)
+            victimas = personas['victimas'];
+            imputados = personas['imputados'];
+        } else {
+            victimas = this.findVictimas(_data);
+            imputados = this.findImputados(_data);
+        }
 
+        this.data['xNUC']                     = _data.nuc? _data.nuc:'';
+        this.data['xNIC']                     = _data.nic? _data.nic:'';
+        this.data['xHechoDelictivo']          = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
+        this.data['xVictima']                 = this.getListasPersonas(victimas)['nombres'].toLocaleString().toUpperCase();
+        this.data['xImputado']                = this.getListasPersonas(imputados)['nombres'].toLocaleString().toUpperCase();
+        this.data['xOficio']                  = pericial.noOficio ? pericial.noOficio : '';
+        this.data['xEstado']                  = 'Estado de México';
+        this.data['xPoblacion']               = this.auth.user.municipio;
+        this.data['xDia']                     = dia ? dia.toString() : '';
+        this.data['xMes']                     = mes ? this.getMes(mes) : '';
+        this.data['xAnio']                    = anio ? anio.toString(): '';
+        this.data['xSolicitaPerito']          = pericial.peritoMateria ? pericial.peritoMateria.nombre : '';
+        this.data['xFinalidadRequerimiento']  = pericial.finalidad?pericial.finalidad:'';
+        this.data['xPlazoRendirInformes']     = pericial.plazoDias? pericial.plazoDias: '';
+        this.data['xApercibimiento']          = pericial.apercibimiento ? pericial.apercibimiento: '';
+        this.data['xDirectorInstituto']       = pericial.directorInstituto ? pericial.directorInstituto.toUpperCase() : '';
+        this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto.toUpperCase();
+        this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto.toUpperCase();
+        this.data['xCargoEmisorFirma']        = this.auth.user.cargo.toUpperCase();
 
-
-}
+    }
 
 public setDataF1516(_data) {
     console.log('<<< Formato F1516 caso >>>', _data);
+    
     let victimasNombres = '';
     let victimas = [];
     let victimasHeredar = [];
@@ -976,7 +886,8 @@ public setDataF1516(_data) {
 
     this.data['xEstado']                 = 'Estado de México'; 
     this.data['xPoblacion']              = this.auth.user.municipio;
-    this.data['xRecibioLlamada']         = _data.acuerdoInicio.presentoLlamada ? _data.acuerdoInicio.presentoLlamada.nombre: '';
+    this.data['xRecibioLlamada']         = _data.acuerdoInicio.presentoLlamada ? _data.acuerdoInicio.presentoLlamada.nombre: ''; 
+    console.log('<<< recibio llamada >>>', this.data['xRecibioLlamada'], _data.acuerdoInicio.presentoLlamada.nombre)
     this.data['xVictima']                = victimasNombres;
     this.data['xManifesto']              = _data.acuerdoInicio.manifesto ? _data.acuerdoInicio.manifesto : '';
     this.data['xNarracionHechos']        = _data.acuerdoInicio.sintesisHechos ? _data.acuerdoInicio.sintesisHechos : '';
@@ -989,7 +900,7 @@ public setDataF1516(_data) {
 }
 public setDataF2117(_data) {
     console.log('<<< @setDataF2117 >>>', _data);
-
+    
     let victimasNombres = '';
     let victimas = [];
     let victimasHeredar = [];
@@ -1061,9 +972,11 @@ public setDataF2117(_data) {
 
     public setDataF1010(_data,_id_solicitud){
         Logger.log('Formatos@setDataF1010', _data);
+        
         let examen;
         let victimas;
         let imputados;
+        let tipoExamen;
 
         _data.solicitudPrePericiales.forEach(solicitud => {
             if(solicitud.id===_id_solicitud){
@@ -1081,6 +994,17 @@ public setDataF2117(_data) {
         }
 
         console.log('<<< examen >>>', examen);
+        if(examen.tipoExamen){
+            this.db.get('catalogos','tipo_examen').then(tipo_examen => {
+                if (tipo_examen){
+                    let lista = tipo_examen['arreglo'] as any[]; 
+                    Logger.log("examen.tipoExamen.id:"+examen.tipoExamen.id);
+                    Logger.log("lista[examen.tipoExamen.id]:"+lista[examen.tipoExamen.id]);
+                    tipoExamen = lista[examen.tipoExamen.id];
+                    Logger.log("-----> tipoExamen:"+tipoExamen);
+                }
+            });
+        }
 
         let date = new Date();
 
@@ -1104,11 +1028,13 @@ public setDataF2117(_data) {
         this.data['xAnio']                    = anio.toString();
         this.data['xApercibimiento']          = examen.apercibimiento ? examen.apercibimiento : '';
         this.data['xMedicoLegistaMayus']      = examen.medicoLegista ? examen.medicoLegista.toUpperCase() : '';
-        this.data['xSolicitaExamen']          = examen.tipoExamen ? examen.tipoExamen.nombre : '';
+        Logger.log("Antes de imprimit tipoExamen "+tipoExamen);
+        this.data['xSolicitaExamen']          = tipoExamen;
         this.data['xRealizaraExamen']         = examen.realizadoA ? examen.realizadoA : '';
         this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto.toUpperCase();
         this.data['xCargoEmisorFirma']        = this.auth.user.cargo.toUpperCase();
         this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto.toUpperCase();
+        Logger.log('formato',this.data)
 
     }
 
@@ -1116,7 +1042,9 @@ public setDataF2117(_data) {
 
     public setDataF1011(_data,_id_solicitud){
         Logger.log('Formatos@setDataF1011', _data);
-        let imputado;
+        
+        let imputados = [];
+        let victimas = [];
         let policia;
 
         _data.solicitudPrePolicias.forEach(solicitud => {
@@ -1124,24 +1052,30 @@ public setDataF2117(_data) {
                 policia=solicitud;
             }
         });
+
+        if (policia.heredar) {
+            let personas = this.findHerenciaPersonas(_data, policia)
+            victimas = personas['victimas'];
+            imputados = personas['imputados'];
+        } else {
+            victimas = this.findVictimas(_data);
+            imputados = this.findImputados(_data);
+        }
         
         let date = new Date();
-
-        if(policia)
-            date = new Date(policia.created);
 
         this.data['xNUC']                    = _data.nuc ? _data.nuc:'';
         this.data['xNIC']                    = _data.nic ? _data.nic:'';
         this.data['xHechoDelictivo']         = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
-        this.data['xVictima']                = this.findHerenciaNombresVictimas(policia, _data);
-        this.data['xImputado']               = this.findHerenciaNombresImputados(policia,_data);
-        this.data['xOficio']                 = typeof policia.noOficio != 'undefined' ? policia.noOficio : '';
+        this.data['xVictima']                = this.getListasPersonas(victimas)['nombres'].toLocaleString().toUpperCase();
+        this.data['xImputado']               = this.getListasPersonas(imputados)['nombres'].toLocaleString().toUpperCase();
+        this.data['xOficio']                 = policia.noOficio ? policia.noOficio : '';
         this.data['xEstado']                 = 'Estado de México';
         this.data['xPoblacion']              = this.auth.user.municipio;
-        this.data['xDia']                    = date ? date.getDay()+'' : '';
-        this.data['xMes']                    = date ? this.getMes(date.getMonth())+'' : '';
-        this.data['xAnio']                   = date ? date.getFullYear()+'' : '';
-        this.data['xActuacionesSolicitadas'] = typeof policia.actuacionesSolicitadas != 'undefined' ? policia.actuacionesSolicitadas : '';
+        this.data['xDia']                    = date ? date.getDate().toString() : '';
+        this.data['xMes']                    = date ? this.getMes(date.getMonth()) : '';
+        this.data['xAnio']                   = date ? date.getFullYear().toString() : '';
+        this.data['xActuacionesSolicitadas'] = policia.actuacionesSolicitadas ? policia.actuacionesSolicitadas : '';
         this.data['xNombreEmisorFirma']      = this.auth.user.nombreCompleto.toUpperCase();
         this.data['xCargoEmisorFirma']       = this.auth.user.cargo.toUpperCase();
         this.data['xAdscripcionEmisorFirma'] = this.auth.user.agenciaCompleto.toUpperCase();
@@ -1394,6 +1328,118 @@ public setDataF2117(_data) {
     public getMes(indexMonth){
         const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
         return meses[indexMonth].toString();
+    }
+
+    public getDatos() {
+       var data = {
+        //F1003
+        'xFolioDocumento': '',
+        'xVictima': '',
+        'xHablaEspaniol': '',
+        'xIdiomaLengua': '',
+        'xInterprete': '',
+        'xFolioVictima': '',
+        'xCargoEmisor': '',
+        'xNombreEmisor': '',
+        'xAdscripcionEmisor': '',
+        //F1004
+        'xNUC': '',
+        'xNIC': '',
+        'xFechaAtencion': '',
+        'xHoraAtencion': '',
+        'xNombreUsuario': '',
+        'xOriginario': '',
+        'xEdad': '',
+        'xSexo': '',
+        'xDomicilio': '',
+        'xCalidadUsuarioPersona': '',
+        'xTipoPersona': '',
+        'xFechaNacimiento': '',
+        'xRFC': '',
+        'xCURP': '',
+        'xEstadoCivil': '',
+        'xOcupacion': '',
+        'xEscolaridad': '',
+        'xReligion': '',
+        'xNacionalidad': '',
+        'xNumeroTelefonico': '',
+        'xNumeroMovil': '',
+        'xSeIdentificaCon': '',
+        'xFolioIdentificacion': '',
+        'xHechosNarrados': '',
+        'xConclusionHechos': '',
+        'xLugarHechos': '',
+        'xCanalizacion': '',
+        'xInstitucionCanalizacion': '',
+        'xMotivoCanalizacion': '',
+        'xFechaCanalizacion': '',
+        'xHoraCanalizacion': '',
+        'xNombreCausoHecho': '',
+        'xDomicilioHechos': '',
+        'xObservaciones': '',
+        'xPersonaRegistro': '',
+        //F1005
+        'xTipoLineaTelefonica': '',
+        'xTelefonoLlamando': '',
+        'xLugarLlamada': '',
+        'xNarracionHechos': '',
+        'xAsesoria': '',
+        'xHoraConclusionLlamada': '',
+        'xDuracionLlamada': '',
+        'xOrientadorJuridico': '',
+
+         //F1008
+        'xNombreAutoridadEntrevista': '',
+        'xLugarEntrevista': '',
+        'xNombreEntrevistado': '',
+        'xEstadoMigratorio': '',
+        'xTipoIdentificacion': '',
+        'xEmisorIdentificacion': '',
+        'xNumeroIdentificacion': '',
+        'xSabeLeerEscribir': '',
+        'xLugarOcupacion': '',
+        'xSalarioSemanal': '',
+        'xRelacionEntrevistadoPartes': '',
+        'xCalle': '',
+        'xNumExterior': '',
+        'xNumInterior': '',
+        'xColonia': '',
+        'xCP': '',
+        'xPoblacion': '',
+        'xEstado': '',
+        'xCorreoElectronico': '',
+        'xRepresentanteLegal': '',
+        'xNombreRepresentanteLegal': '',
+        'xUsoMedioTecnologico': '',
+        'xMedioTecnologico': '',
+        'xUsoMedioTecnico': '',
+        'xMedioTecnico': '',
+        'xNombreEntrevistadoFirma': '',
+        'xCargoEmisorFirma': '',
+        'xNombreEmisorFirma': '',
+        'xAdscripcionEmisorFirma': '',
+        //F1009
+        'xHechoDelictivo':'',
+        'xOficio':'',
+        'xImputado':'',
+        'xMes':'',
+        'xAnio':'',
+        'xDia':'',
+        'xSolicitaPerito':'',
+        'xFinalidadRequerimiento':'',
+        'xPlazoRendirInformes':'',
+        'xApercibimiento':'',
+        //F1010
+        'xMedicoLegistaMayus':'',
+        'xSolicitaExamen':'',
+        'xRealizaraExamen':'',
+       //F1011
+         'xActuacionesSolicitadas':'',
+        //F1516
+         'xRecibioLlamada':'',
+      }
+
+      return data;
     }
 
 }

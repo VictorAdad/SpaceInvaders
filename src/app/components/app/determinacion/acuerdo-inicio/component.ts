@@ -208,7 +208,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
 
     public save(valid: any, _model: any) {
 
-
+        _model.personas = this.cleanPersonasRepetidas(_model.personas);
         Object.assign(this.model, _model);
         this.model.caso.id  = this.casoId;
         this.model.caso.nuc = this.generateNUC();
