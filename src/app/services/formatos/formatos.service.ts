@@ -634,7 +634,6 @@ public setDataF1007(_data){
 
 }
 
-
     public setDataF1008(_caso, _id){
         Logger.log('Formatos@setDataF1008', _caso);
         
@@ -654,26 +653,27 @@ public setDataF1007(_data){
         const ocupacion = entrevista.heredar ? entrevista.ocupacionHeredar : entrevista.ocupacion;
         const lugarOcupacion = entrevista.heredar ? entrevista.lugarOcupacionHeredar : entrevista.lugarOcupacion;
         const estadoCivil = entrevista.heredar ? entrevista.estadoCivilHeredar : entrevista.estadoCivil;
-        const salarioSemanal = entrevista.heredar ? entrevista.salarioHeredar : entrevista.salarioSemanal;
-        const calle = entrevista.heredar ? entrevista.calleHeredar : entrevista.calle;
-        const noExterior = entrevista.heredar ? entrevista.noExteriorHeredar : entrevista.noExterior;
-        const noInterior = entrevista.heredar ? entrevista.noInteriorHeredar : entrevista.noInterior;
-        const colonia = entrevista.heredar ? entrevista.coloniaHeredar : entrevista.colonia;
-        const cp = entrevista.heredar ? entrevista.cpHeredar : entrevista.cp;
-        const municipio = entrevista.heredar ? entrevista.Heredar : entrevista.municipio;
-        const estado = entrevista.heredar ? entrevista.estadoHeredar : entrevista.estado;
+        const salarioSemanal = entrevista.heredar ? entrevista.salarioHeredar : entrevista.salarioSemanal;       
         const noTelefonoCelular = entrevista.heredar ? entrevista.noTelefonoCelularHeredar : entrevista.noTelefonoParticular;
         const noTelefonoParticular = entrevista.heredar ? entrevista.noTelefonoParticularHeredar : entrevista.noTelefonoParticular;
         const correoElectronico = entrevista.heredar ? entrevista.correoElectronicoHeredar : entrevista.correoElectronico;
         const calidadUsuarioPersonas = entrevista.heredar ? entrevista.calidadIntervinienteHeredar : entrevista.calidadInterviniente;
         const nombreRepresentanteLegal = entrevista.nombreRepresentanteLegal;
+        let direccion = "";
+            direccion += entrevista.heredar ? entrevista.calleHeredar != null? entrevista.calleHeredar+" " : "" : entrevista.calle!=null? entrevista.calle+" " : "";
+            direccion += entrevista.heredar ? entrevista.noExteriorHeredar != null? entrevista.noExteriorHeredar+" " : "" : entrevista.noExterior !=null? entrevista.noExterior+" " : "";
+            direccion += entrevista.heredar ? entrevista.noInteriorHeredar != null? entrevista.noInteriorHeredar+" " : "" : entrevista.noInterior !=null? entrevista.noInterior+" " : "";
+            direccion += entrevista.heredar ? entrevista.coloniaHeredar != null? entrevista.coloniaHeredar+" " : "" : entrevista.colonia !=null? entrevista.colonia+" " : "";
+            direccion += entrevista.heredar ? entrevista.cpHeredar != null? entrevista.cpHeredar+" " : "" : entrevista.cp !=null? entrevista.cp+" " : "";
+            direccion += entrevista.heredar ? entrevista.estadoHeredar != null? entrevista.estadoHeredar+" " : "" : entrevista.estado !=null? entrevista.estado+" " : "";
+            direccion += entrevista.heredar ? entrevista.Heredar != null? entrevista.Heredar+" " : "": entrevista.municipio!=null? entrevista.municipio+"" : "";
         // const relacionEntrevistado;
 
         let fecha = new Date(entrevista.created);
         console.log('<<< FECHA ENTREVISTA >>>', fecha);
         let fechaAtencion = fecha.getDate()+' de '+this.getMes(fecha.getMonth())+' de '+fecha.getFullYear();
         let horaAtencion = fecha.getHours()+':'+fecha.getMinutes();
-
+         
         this.data['xNUC']= _caso.nuc ? _caso.nuc : '';
         this.data['xNIC']= _caso.nic ? _caso.nic : '';
         this.data['xFechaAtencion']=entrevista.created? fechaAtencion :'';
@@ -699,13 +699,14 @@ public setDataF1007(_data){
         this.data['xLugarOcupacion'] = lugarOcupacion ? lugarOcupacion:'';
         this.data['xEstadoCivil'] = estadoCivil ? estadoCivil:'';
         this.data['xSalarioSemanal'] = salarioSemanal ? salarioSemanal:'';
-        this.data['xCalle'] = calle ? calle:'';
-        this.data['xNumExterior'] = noExterior ? noExterior:'';
-        this.data['xNumInterior'] = noInterior ? noInterior:'';
-        this.data['xColonia'] = colonia ? colonia:'';
-        this.data['xCP'] = cp ? cp:'';
-        this.data['xPoblacion']= municipio ? municipio:'';
-        this.data['xEstado'] = estado ? estado:'';
+        // this.data['xCalle'] = calle ? calle:'';
+        // this.data['xNumExterior'] = noExterior ? noExterior:'';
+        // this.data['xNumInterior'] = noInterior ? noInterior:'';
+        // this.data['xColonia'] = colonia ? colonia:'';
+        // this.data['xCP'] = cp ? cp:'';
+        // this.data['xPoblacion']= municipio ? municipio:'';
+        // this.data['xEstado'] = estado ? estado:'';
+        this.data['xDireccion'] = direccion? direccion:'';
         this.data['xNumeroTelefonico'] = noTelefonoParticular ? noTelefonoParticular:'';
         this.data['xNumeroMovil'] = noTelefonoParticular ? noTelefonoParticular:'';
         this.data['xCorreoElectronico'] = correoElectronico ? correoElectronico:'';
