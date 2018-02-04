@@ -278,116 +278,12 @@ export class FormatosLocal {
 
 
 
-    public data = {
-        //F1003
-        'xFolioDocumento': '',
-        'xVictima': '',
-        'xHablaEspaniol': '',
-        'xIdiomaLengua': '',
-        'xInterprete': '',
-        'xFolioVictima': '',
-        'xCargoEmisor': '',
-        'xNombreEmisor': '',
-        'xAdscripcionEmisor': '',
-        //F1004
-        'xNUC': '',
-        'xNIC': '',
-        'xFechaAtencion': '',
-        'xHoraAtencion': '',
-        'xNombreUsuario': '',
-        'xOriginario': '',
-        'xEdad': '',
-        'xSexo': '',
-        'xDomicilio': '',
-        'xCalidadUsuarioPersona': '',
-        'xTipoPersona': '',
-        'xFechaNacimiento': '',
-        'xRFC': '',
-        'xCURP': '',
-        'xEstadoCivil': '',
-        'xOcupacion': '',
-        'xEscolaridad': '',
-        'xReligion': '',
-        'xNacionalidad': '',
-        'xNumeroTelefonico': '',
-        'xNumeroMovil': '',
-        'xSeIdentificaCon': '',
-        'xFolioIdentificacion': '',
-        'xHechosNarrados': '',
-        'xConclusionHechos': '',
-        'xLugarHechos': '',
-        'xCanalizacion': '',
-        'xInstitucionCanalizacion': '',
-        'xMotivoCanalizacion': '',
-        'xFechaCanalizacion': '',
-        'xHoraCanalizacion': '',
-        'xNombreCausoHecho': '',
-        'xDomicilioHechos': '',
-        'xObservaciones': '',
-        'xPersonaRegistro': '',
-        //F1005
-        'xTipoLineaTelefonica': '',
-        'xTelefonoLlamando': '',
-        'xLugarLlamada': '',
-        'xNarracionHechos': '',
-        'xAsesoria': '',
-        'xHoraConclusionLlamada': '',
-        'xDuracionLlamada': '',
-        'xOrientadorJuridico': '',
-
-         //F1008
-        'xNombreAutoridadEntrevista': '',
-        'xLugarEntrevista': '',
-        'xNombreEntrevistado': '',
-        'xEstadoMigratorio': '',
-        'xTipoIdentificacion': '',
-        'xEmisorIdentificacion': '',
-        'xNumeroIdentificacion': '',
-        'xSabeLeerEscribir': '',
-        'xLugarOcupacion': '',
-        'xSalarioSemanal': '',
-        'xRelacionEntrevistadoPartes': '',
-        'xCalle': '',
-        'xNumExterior': '',
-        'xNumInterior': '',
-        'xColonia': '',
-        'xCP': '',
-        'xPoblacion': '',
-        'xEstado': '',
-        'xCorreoElectronico': '',
-        'xRepresentanteLegal': '',
-        'xNombreRepresentanteLegal': '',
-        'xUsoMedioTecnologico': '',
-        'xMedioTecnologico': '',
-        'xUsoMedioTecnico': '',
-        'xMedioTecnico': '',
-        'xNombreEntrevistadoFirma': '',
-        'xCargoEmisorFirma': '',
-        'xNombreEmisorFirma': '',
-        'xAdscripcionEmisorFirma': '',
-        //F1009
-        'xHechoDelictivo':'',
-        'xOficio':'',
-        'xImputado':'',
-        'xMes':'',
-        'xAnio':'',
-        'xDia':'',
-        'xSolicitaPerito':'',
-        'xFinalidadRequerimiento':'',
-        'xPlazoRendirInformes':'',
-        'xApercibimiento':'',
-        //F1010
-        'xMedicoLegistaMayus':'',
-        'xSolicitaExamen':'',
-        'xRealizaraExamen':'',
-       //F1011
-         'xActuacionesSolicitadas':'',
-
-
-      }
+    public data = this.getDatos();
 
     public setDataF1003(_caso) {
-        // Logger.log('Formatos@setDataF1003', _caso);
+        this.data = this.getDatos();
+        Logger.log('Formatos@setDataF1003', _caso);
+
         const nombrePersonas = [];
         const identificaciones = [];
         const foliosIdentificacion = [];
@@ -439,6 +335,7 @@ export class FormatosLocal {
 
     public setDataF1004(_caso) {
         Logger.log('Formatos@setDataF1004', _caso);
+        this.data = this.getDatos();
         const predenuncia = _caso.predenuncias;
         let personas = [];
         let lugar = '';
@@ -491,6 +388,7 @@ export class FormatosLocal {
 
     public setDataF1005(_caso) {
         console.log('<<< @setDataF1005 >>>', _caso);
+        this.data = this.getDatos();
         const predenuncia = _caso.predenuncias;
         let personas = [];
         let lugar = '';
@@ -525,6 +423,7 @@ export class FormatosLocal {
     }
 
     public setCasoInfo(_caso){
+        this.data = this.getDatos();
         this.data['xNUC']           = _caso.nuc ? _caso.nuc : '';
         this.data['xNIC']           = _caso.nic ? _caso.nic : '';
         this.data['xFechaAtencion'] = _caso.formatCreated();
@@ -532,6 +431,7 @@ export class FormatosLocal {
     }
 
     public setVictimaInfo(_caso){
+        this.data = this.getDatos();
         let victima = _caso.findVictima();
         let nombreVictima = '';
         if (victima.tipoInterviniente.id === _config.optionValue.tipoInterviniente.victimaDesconocido) {
@@ -562,6 +462,7 @@ export class FormatosLocal {
 
 public setDataF1007(_data){
   Logger.log('Formatos@setDataF1007', _data);
+  this.data = this.getDatos();
   let fecha = new Date()
   const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   let delito = '';
@@ -737,6 +638,7 @@ public setDataF1007(_data){
 
     public setDataF1008(_caso, _id){
         Logger.log('Formatos@setDataF1008', _caso);
+        this.data = this.getDatos();
         const entrevista = _caso.entrevistas.filter(o => o.id == _id)[0];
         const nombreEntrevistado = entrevista.heredar ? entrevista.nombreEntrevistadoHeredar : entrevista.nombreEntrevistado;
         const sexo = entrevista.heredar ? entrevista.sexoHeredar : entrevista.sexo;
@@ -828,6 +730,7 @@ public setDataF1007(_data){
 
 public setDataF1009(_data,_id_solicitud){
   Logger.log('Formatos@setDataF1009', _data);
+  this.data = this.getDatos();
   let nombresVictimas = '';
   let nombresImputados = '';
 
@@ -916,6 +819,7 @@ public setDataF1009(_data,_id_solicitud){
 
 public setDataF1516(_data) {
     console.log('<<< Formato F1516 caso >>>', _data);
+    this.data = this.getDatos();
     let victimasNombres = '';
     let victimas = [];
     let victimasHeredar = [];
@@ -989,7 +893,7 @@ public setDataF1516(_data) {
 }
 public setDataF2117(_data) {
     console.log('<<< @setDataF2117 >>>', _data);
-
+    this.data = this.getDatos();
     let victimasNombres = '';
     let victimas = [];
     let victimasHeredar = [];
@@ -1061,6 +965,7 @@ public setDataF2117(_data) {
 
     public setDataF1010(_data,_id_solicitud){
         Logger.log('Formatos@setDataF1010', _data);
+        this.data = this.getDatos();
         let examen;
         let victimas;
         let imputados;
@@ -1116,6 +1021,7 @@ public setDataF2117(_data) {
 
     public setDataF1011(_data,_id_solicitud){
         Logger.log('Formatos@setDataF1011', _data);
+        this.data = this.getDatos();
         let imputado;
         let policia;
 
@@ -1394,6 +1300,116 @@ public setDataF2117(_data) {
     public getMes(indexMonth){
         const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
         return meses[indexMonth].toString();
+    }
+
+    public getDatos() {
+       var data = {
+        //F1003
+        'xFolioDocumento': '',
+        'xVictima': '',
+        'xHablaEspaniol': '',
+        'xIdiomaLengua': '',
+        'xInterprete': '',
+        'xFolioVictima': '',
+        'xCargoEmisor': '',
+        'xNombreEmisor': '',
+        'xAdscripcionEmisor': '',
+        //F1004
+        'xNUC': '',
+        'xNIC': '',
+        'xFechaAtencion': '',
+        'xHoraAtencion': '',
+        'xNombreUsuario': '',
+        'xOriginario': '',
+        'xEdad': '',
+        'xSexo': '',
+        'xDomicilio': '',
+        'xCalidadUsuarioPersona': '',
+        'xTipoPersona': '',
+        'xFechaNacimiento': '',
+        'xRFC': '',
+        'xCURP': '',
+        'xEstadoCivil': '',
+        'xOcupacion': '',
+        'xEscolaridad': '',
+        'xReligion': '',
+        'xNacionalidad': '',
+        'xNumeroTelefonico': '',
+        'xNumeroMovil': '',
+        'xSeIdentificaCon': '',
+        'xFolioIdentificacion': '',
+        'xHechosNarrados': '',
+        'xConclusionHechos': '',
+        'xLugarHechos': '',
+        'xCanalizacion': '',
+        'xInstitucionCanalizacion': '',
+        'xMotivoCanalizacion': '',
+        'xFechaCanalizacion': '',
+        'xHoraCanalizacion': '',
+        'xNombreCausoHecho': '',
+        'xDomicilioHechos': '',
+        'xObservaciones': '',
+        'xPersonaRegistro': '',
+        //F1005
+        'xTipoLineaTelefonica': '',
+        'xTelefonoLlamando': '',
+        'xLugarLlamada': '',
+        'xNarracionHechos': '',
+        'xAsesoria': '',
+        'xHoraConclusionLlamada': '',
+        'xDuracionLlamada': '',
+        'xOrientadorJuridico': '',
+
+         //F1008
+        'xNombreAutoridadEntrevista': '',
+        'xLugarEntrevista': '',
+        'xNombreEntrevistado': '',
+        'xEstadoMigratorio': '',
+        'xTipoIdentificacion': '',
+        'xEmisorIdentificacion': '',
+        'xNumeroIdentificacion': '',
+        'xSabeLeerEscribir': '',
+        'xLugarOcupacion': '',
+        'xSalarioSemanal': '',
+        'xRelacionEntrevistadoPartes': '',
+        'xCalle': '',
+        'xNumExterior': '',
+        'xNumInterior': '',
+        'xColonia': '',
+        'xCP': '',
+        'xPoblacion': '',
+        'xEstado': '',
+        'xCorreoElectronico': '',
+        'xRepresentanteLegal': '',
+        'xNombreRepresentanteLegal': '',
+        'xUsoMedioTecnologico': '',
+        'xMedioTecnologico': '',
+        'xUsoMedioTecnico': '',
+        'xMedioTecnico': '',
+        'xNombreEntrevistadoFirma': '',
+        'xCargoEmisorFirma': '',
+        'xNombreEmisorFirma': '',
+        'xAdscripcionEmisorFirma': '',
+        //F1009
+        'xHechoDelictivo':'',
+        'xOficio':'',
+        'xImputado':'',
+        'xMes':'',
+        'xAnio':'',
+        'xDia':'',
+        'xSolicitaPerito':'',
+        'xFinalidadRequerimiento':'',
+        'xPlazoRendirInformes':'',
+        'xApercibimiento':'',
+        //F1010
+        'xMedicoLegistaMayus':'',
+        'xSolicitaExamen':'',
+        'xRealizaraExamen':'',
+       //F1011
+         'xActuacionesSolicitadas':'',
+      }
+
+      return data;
     }
 
 }
