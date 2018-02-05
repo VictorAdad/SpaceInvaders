@@ -13,7 +13,7 @@
     "deploy-prod": "ng build --environment prod --prod --base-href https://sigi.evomatik.net/sigi-test/",
     "deploy-fiscalia": "ng build --environment fiscalia --prod --base-href https://fgjohsprod01",
     "compodoc": "./node_modules/.bin/compodoc -p tsconfig.json",
-    "precache": "sw-precache --verbose --config=sw-precache-config.js"
+    "precache": "sw-precache --verbose --maximumFileSizeToCacheInBytes 3097152 --config=sw-precache-config.js"
   },
   "private": true,
   "dependencies": {
