@@ -337,6 +337,12 @@ export class FormatosLocal {
         
         const predenuncia = _caso.predenuncias;
         let personas = [];
+        let sexos = [];
+        let ocupaciones = [];
+        let religionesNacionalidades = [];
+        let estadosCiviles = [];
+        let escolaridades = [];
+        let identificaciones = [];
         let lugar = '';
 
         if (predenuncia.heredar) {
@@ -347,42 +353,89 @@ export class FormatosLocal {
             lugar = predenuncia.lugarHechos
         }
         const atributosPersona = this.getListasPersonas(personas);
-        
-        this.setCasoInfo(_caso);
-        this.data['xNombreUsuario'] = atributosPersona['nombres'].toLocaleString();
-        this.data['xOriginario'] = atributosPersona['originarios'].toLocaleString();
-        this.data['xEdad'] = atributosPersona['edades'].toLocaleString();
-        this.data['xSexo'] = atributosPersona['sexos'].toLocaleString();
-        this.data['xDomicilio'] = atributosPersona['domicilios'].toLocaleString();
-        this.data['xCalidadUsuarioPersona'] = atributosPersona['calidadPersonas'].toLocaleString();
-        this.data['xTipoPersona'] = atributosPersona['tiposPersonas'].toLocaleString();
-        this.data['xFechaNacimiento'] = atributosPersona['fechasNacimientos'].toLocaleString();
-        this.data['xRFC'] = atributosPersona['rfcs'].toLocaleString();
-        this.data['xCURP'] = atributosPersona['curps'].toLocaleString();
-        this.data['xEstadoCivil'] = atributosPersona['estadosCiviles'].toLocaleString();
-        this.data['xOcupacion'] = atributosPersona['ocupaciones'].toLocaleString();
-        this.data['xEscolaridad'] = atributosPersona['escolaridades'].toLocaleString();
-        this.data['xReligion'] = atributosPersona['religiones'].toLocaleString();
-        this.data['xNacionalidad'] = atributosPersona['nacionalidades'].toLocaleString();
-        this.data['xNumeroTelefonico'] = atributosPersona['noParticulares'].toLocaleString();
-        this.data['xNumeroMovil'] = atributosPersona['noMoviles'].toLocaleString();
-        this.data['xSeIdentificaCon'] = atributosPersona['identificaciones'].toLocaleString();
-        this.data['xFolioIdentificacion'] = atributosPersona['folios'].toLocaleString();
 
-        if (_caso.predenuncias ) {
-            this.data['xFolioIdentificacion'] = (_caso.predenuncias.noFolioConstancia ? _caso.predenuncias.noFolioConstancia : '');
-            this.data['xHechosNarrados'] = (_caso.predenuncias.hechosNarrados ? _caso.predenuncias.hechosNarrados : '');
-            this.data['xConclusionHechos'] = (_caso.predenuncias.conclusion ? _caso.predenuncias.conclusion : '');
-            this.data['xLugarHechos'] = (lugar ? lugar : '');
-            this.data['xCanalizacion'] = (_caso.predenuncias.canalizacion ? 'Sí' : 'No');
-            this.data['xInstitucionCanalizacion'] = (_caso.predenuncias.institucion ? _caso.predenuncias.institucion : '');
-            this.data['xMotivoCanalizacion'] = (_caso.predenuncias.motivoCanalizacion ? _caso.predenuncias.motivoCanalizacion : '');
-            this.data['xFechaCanalizacion'] = (_caso.predenuncias.fechaCanalizacion ? moment(_caso.predenuncias.fechaCanalizacion).format('LL'): '');
-            this.data['xHoraCanalizacion'] = (_caso.predenuncias.fechaCanalizacion ? moment(_caso.predenuncias.fechaCanalizacion).format('HH:mm') : '');
-            this.data['xNombreCausoHecho'] = (_caso.predenuncias.nombreCausante ? _caso.predenuncias.nombreCausante : '');
-            this.data['xDomicilioHechos'] = (_caso.predenuncias.domicilioCausante ? _caso.predenuncias.domicilioCausante : '');
-            this.data['xObservaciones'] = (_caso.predenuncias.observaciones ? _caso.predenuncias.observaciones : '');
-        }
+        this.db.list('catalogos').then(catalogos => {
+            if(catalogos){
+                let lista = catalogos as any[];
+                let sexo;
+                let ocupacion;
+                let religion;
+                let escolaridad;
+                let estadoCivil;
+                lista.forEach(catalogo => {
+                    if(catalogo['id']=="sexo"){
+                        sexo = catalogo['arreglo'];
+                        Logger.log("catálogo de sexos:",sexo);
+                    }
+                    if(catalogo['id']=="ocupacion"){
+                        ocupacion = catalogo['arreglo'];
+                    }
+                    if(catalogo['id']=="nacionalidad_religion"){
+                        religion = catalogo['arreglo'];
+                    }
+                    if(catalogo['id']=="escolaridad"){
+                        escolaridad = catalogo['arreglo'];
+                    }
+                    if(catalogo['id']=="estado_civil"){
+                        estadoCivil = catalogo['arreglo'];
+                    }
+                });
+        
+                personas.forEach(o => {
+                    if(o.persona.sexo){
+                        sexos.push(sexo[o.persona.sexo.id]);
+                    }
+                    if(o.persona.ocupacion){
+                        ocupaciones.push(ocupacion[o.persona.ocupacion.id]);
+                    }
+                    if(o.persona.escolaridad){
+                        escolaridades.push(escolaridad[o.persona.escolaridad.id]);
+                    }
+                    if(o.persona.estadoCivil){
+                        estadosCiviles.push(estadoCivil[o.persona.estadoCivil.id]);
+                    }
+                    
+                });
+                Logger.log("Sexos de personas en herencia:",sexos);
+            }
+
+            this.setCasoInfo(_caso);
+            this.data['xNombreUsuario'] = atributosPersona['nombres'].toLocaleString();
+            this.data['xOriginario'] = atributosPersona['originarios'].toLocaleString();
+            this.data['xEdad'] = atributosPersona['edades'].toLocaleString();
+            this.data['xSexo'] = sexos.toLocaleString();
+            this.data['xDomicilio'] = atributosPersona['domicilios'].toLocaleString();
+            this.data['xCalidadUsuarioPersona'] = atributosPersona['calidadPersonas'].toLocaleString();
+            this.data['xTipoPersona'] = atributosPersona['tiposPersonas'].toLocaleString();
+            this.data['xFechaNacimiento'] = atributosPersona['fechasNacimientos'].toLocaleString();
+            this.data['xRFC'] = atributosPersona['rfcs'].toLocaleString();
+            this.data['xCURP'] = atributosPersona['curps'].toLocaleString();
+            this.data['xEstadoCivil'] = estadosCiviles.toLocaleString();
+            this.data['xOcupacion'] = ocupaciones.toLocaleString();
+            this.data['xEscolaridad'] = escolaridades.toLocaleString();
+            this.data['xReligion'] = atributosPersona['religiones'].toLocaleString();
+            this.data['xNacionalidad'] = atributosPersona['nacionalidades'].toLocaleString();
+            this.data['xNumeroTelefonico'] = atributosPersona['noParticulares'].toLocaleString();
+            this.data['xNumeroMovil'] = atributosPersona['noMoviles'].toLocaleString();
+            this.data['xSeIdentificaCon'] = atributosPersona['identificaciones'].toLocaleString();
+            this.data['xFolioIdentificacion'] = atributosPersona['folios'].toLocaleString();
+
+            if (_caso.predenuncias ) {
+                this.data['xFolioIdentificacion'] = (_caso.predenuncias.noFolioConstancia ? _caso.predenuncias.noFolioConstancia : '');
+                this.data['xHechosNarrados'] = (_caso.predenuncias.hechosNarrados ? _caso.predenuncias.hechosNarrados : '');
+                this.data['xConclusionHechos'] = (_caso.predenuncias.conclusion ? _caso.predenuncias.conclusion : '');
+                this.data['xLugarHechos'] = (lugar ? lugar : '');
+                this.data['xCanalizacion'] = (_caso.predenuncias.canalizacion ? 'Sí' : 'No');
+                this.data['xInstitucionCanalizacion'] = (_caso.predenuncias.institucion ? _caso.predenuncias.institucion : '');
+                this.data['xMotivoCanalizacion'] = (_caso.predenuncias.motivoCanalizacion ? _caso.predenuncias.motivoCanalizacion : '');
+                this.data['xFechaCanalizacion'] = (_caso.predenuncias.fechaCanalizacion ? moment(_caso.predenuncias.fechaCanalizacion).format('LL'): '');
+                this.data['xHoraCanalizacion'] = (_caso.predenuncias.fechaCanalizacion ? moment(_caso.predenuncias.fechaCanalizacion).format('HH:mm') : '');
+                this.data['xNombreCausoHecho'] = (_caso.predenuncias.nombreCausante ? _caso.predenuncias.nombreCausante : '');
+                this.data['xDomicilioHechos'] = (_caso.predenuncias.domicilioCausante ? _caso.predenuncias.domicilioCausante : '');
+                this.data['xObservaciones'] = (_caso.predenuncias.observaciones ? _caso.predenuncias.observaciones : '');
+            }
+        })
+        
     }
 
     public setDataF1005(_caso) {
@@ -789,8 +842,8 @@ public setDataF1007(_data){
         var date = new Date();
 
         if (date) {
-            var dia = date.getDate();
-            var mes = 1 + date.getMonth();
+            var dia  = date.getDate();
+            var mes  = date.getMonth();
             var anio = date.getFullYear();
         }
 
