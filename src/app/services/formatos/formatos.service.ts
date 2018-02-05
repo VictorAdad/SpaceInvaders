@@ -339,10 +339,11 @@ export class FormatosLocal {
         let personas = [];
         let sexos = [];
         let ocupaciones = [];
-        let religionesNacionalidades = [];
+        let religiones = [];
         let estadosCiviles = [];
         let escolaridades = [];
         let identificaciones = [];
+        let domicilios = [];
         let lugar = '';
 
         if (predenuncia.heredar) {
@@ -362,22 +363,41 @@ export class FormatosLocal {
                 let religion;
                 let escolaridad;
                 let estadoCivil;
+                let pais;
+                let estado;
+                let municipio;
+                let identificacion;
                 lista.forEach(catalogo => {
-                    if(catalogo['id']=="sexo"){
+                    if(catalogo['id'] == "sexo"){
                         sexo = catalogo['arreglo'];
                         Logger.log("catálogo de sexos:",sexo);
                     }
-                    if(catalogo['id']=="ocupacion"){
+                    if(catalogo['id'] == "ocupacion"){
                         ocupacion = catalogo['arreglo'];
                     }
-                    if(catalogo['id']=="nacionalidad_religion"){
+                    if(catalogo['id'] == "nacionalidad_religion"){
                         religion = catalogo['arreglo'];
                     }
-                    if(catalogo['id']=="escolaridad"){
+                    if(catalogo['id'] == "escolaridad"){
                         escolaridad = catalogo['arreglo'];
                     }
-                    if(catalogo['id']=="estado_civil"){
+                    if(catalogo['id'] == "estado_civil"){
                         estadoCivil = catalogo['arreglo'];
+                    }
+                    if(catalogo['id'] == "pais"){
+                        pais = catalogo['arreglo'];
+                    }
+                    if(catalogo['id'] == "estado"){
+                        estado = catalogo['arreglo'];
+                    }
+                    if(catalogo['id'] == "municipio"){
+                        municipio = catalogo['arreglo'];
+                    }
+                    if(catalogo['id'] == 'idioma_identificacion'){
+                        identificacion = catalogo['arreglo'];
+                    }
+                    if(catalogo['id'] == 'nacionalidad_religion'){
+                        religion = catalogo['arreglo'];
                     }
                 });
         
@@ -394,14 +414,35 @@ export class FormatosLocal {
                     if(o.persona.estadoCivil){
                         estadosCiviles.push(estadoCivil[o.persona.estadoCivil.id]);
                     }
-                    
+                    if(o.persona.pais){
+                        let domicilio = pais[o.persona.pais.id] == 'MÉXICO' ? (o.persona.municipio ? municipio[o.persona.municipio.id]+' ' : '') : (o.persona.municipioNacimientoOtro ? o.persona.municipioNacimientoOtro+' ' : '');
+                        domicilio    += pais[o.persona.pais.id] == 'MÉXICO' ? (o.persona.estado ? estado[o.persona.estado.id]+' ' : '') : (o.persona.estadoNacimientoOtro ? o.persona.estadoNacimientoOtro+' ' : '');
+                        domicilio    += pais[o.persona.pais.id];
+                        domicilios.push(domicilio);
+                    }
+                    if(o.persona.idiomaIdentificacion){
+                        let value = lista.filter(e => { 
+                            return e.id == o.persona.idiomaIdentificacion.id;
+                        });
+                        if (value.length>0) {
+                            identificaciones.push(value[0].identificacion);
+                        }
+                    }
+                    if(o.persona.nacionalidadReligion){
+                        let value = lista.filter(e => { 
+                            return e.id == o.persona.nacionalidadReligion.id;
+                        });
+                        if (value.length>0) {
+                            religiones.push(value[0].religion);
+                        }
+                    }
                 });
                 Logger.log("Sexos de personas en herencia:",sexos);
             }
 
             this.setCasoInfo(_caso);
             this.data['xNombreUsuario'] = atributosPersona['nombres'].toLocaleString();
-            this.data['xOriginario'] = atributosPersona['originarios'].toLocaleString();
+            this.data['xOriginario'] = domicilios.toLocaleString();
             this.data['xEdad'] = atributosPersona['edades'].toLocaleString();
             this.data['xSexo'] = sexos.toLocaleString();
             this.data['xDomicilio'] = atributosPersona['domicilios'].toLocaleString();
@@ -413,15 +454,15 @@ export class FormatosLocal {
             this.data['xEstadoCivil'] = estadosCiviles.toLocaleString();
             this.data['xOcupacion'] = ocupaciones.toLocaleString();
             this.data['xEscolaridad'] = escolaridades.toLocaleString();
-            this.data['xReligion'] = atributosPersona['religiones'].toLocaleString();
+            this.data['xReligion'] = religiones.toLocaleString();
             this.data['xNacionalidad'] = atributosPersona['nacionalidades'].toLocaleString();
             this.data['xNumeroTelefonico'] = atributosPersona['noParticulares'].toLocaleString();
             this.data['xNumeroMovil'] = atributosPersona['noMoviles'].toLocaleString();
-            this.data['xSeIdentificaCon'] = atributosPersona['identificaciones'].toLocaleString();
+            this.data['xSeIdentificaCon'] = identificaciones.toLocaleString();
             this.data['xFolioIdentificacion'] = atributosPersona['folios'].toLocaleString();
 
             if (_caso.predenuncias ) {
-                this.data['xFolioIdentificacion'] = (_caso.predenuncias.noFolioConstancia ? _caso.predenuncias.noFolioConstancia : '');
+                // this.data['xFolioIdentificacion'] = (_caso.predenuncias.noFolioConstancia ? _caso.predenuncias.noFolioConstancia : '');
                 this.data['xHechosNarrados'] = (_caso.predenuncias.hechosNarrados ? _caso.predenuncias.hechosNarrados : '');
                 this.data['xConclusionHechos'] = (_caso.predenuncias.conclusion ? _caso.predenuncias.conclusion : '');
                 this.data['xLugarHechos'] = (lugar ? lugar : '');
