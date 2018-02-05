@@ -1395,7 +1395,7 @@ public setDataF2117(_data) {
             }
             if (o.persona.localizacionPersona.length > 0) {
                 o.persona.localizacionPersona.forEach(l => {
-                    domicilios.push(` ${(l.calle ? l.calle : '')} ${(l.noInterior ? l.noInterior : '')} ${(l.noExterior ? l.noExterior : '')} ${(l.colonia ? l.colonia.nombre : l.coloniaOtro)} ${(l.municipio ? l.municipio.nombre : l.municipioOtro)} ${(l.estado ? l.estado.nombre : l.estadoOtro)}`);
+                    domicilios.push(` ${(l.calle ? l.calle : '')} ${(l.noExterior ? l.noExterior : '')} ${(l.noInterior ? l.noInterior : '')} ${(l.colonia ? l.colonia.nombre : l.coloniaOtro)} ${(l.municipio ? l.municipio.nombre : l.municipioOtro)} ${(l.estado ? l.estado.nombre : l.estadoOtro)}`);
                     noParticulares.push(` ${l.telParticular}`);
                     noMoviles.push(` ${l.telMovil}`);
                 })
