@@ -395,6 +395,7 @@ export class SincronizaCambios {
         },
             error=>{
                 Logger.log("Error:",error);
+                item['error']=error;
                 item.pendiente=true;
                 this.db.update("sincronizar",item)
                 this.sincroniza(i+1,lista);
@@ -430,6 +431,7 @@ export class SincronizaCambios {
                 error=>{
                     Logger.log("Error:",error);
                     item.pendiente=true;
+                    item['error']=error;
                     this.db.update("sincronizar",item);
                     this.sincroniza(i+1,lista2);
             });
@@ -464,6 +466,7 @@ export class SincronizaCambios {
             },
                 error=>{
                     Logger.log("Error:",error);
+                    item['error']=error;
                     item.pendiente=true;
                     this.db.update("sincronizar",item);
                     this.sincroniza(i+1,lista2);
@@ -515,6 +518,7 @@ export class SincronizaCambios {
                     },
                         error=>{
                             Logger.log("Error:",error);
+                            item['error']=error;
                             item.pendiente=true;
                             obj.db.update("sincronizar",item);
                             obj.sincroniza(i+1,lista2);
