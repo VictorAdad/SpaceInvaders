@@ -441,7 +441,9 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                     this.form.controls['nombreEntrevistadoHeredar'].value+","+nombrePersona
                 );
             }
-            personaCaso.persona.sexo=this.consultas.get('sexo',personaCaso.persona.sexo.id);
+            if (personaCaso.persona.sexo) {
+                personaCaso.persona.sexo=this.consultas.get('sexo',personaCaso.persona.sexo.id);
+            }
             if (personaCaso.persona.estado && personaCaso.persona.estado['id'] && personaCaso.persona.estado['id']!=''){
                 personaCaso.persona.estado=this.consultas.get('estado',personaCaso.persona.estado.id);
             }
@@ -556,14 +558,25 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                 (personaCaso.tipoInterviniente?personaCaso.tipoInterviniente.tipo:"Sin valor"));
 
             // Heredar tipo identificacion 
-            this.form.controls["tipoIdentificacionHeredar"].setValue( 
-                this.form.controls["tipoIdentificacionHeredar"].value?
-                    (personaCaso.persona.idiomaIdentificacion?
-                        this.form.controls["tipoIdentificacionHeredar"].value+","+(personaCaso.persona.idiomaIdentificacion.identificacion!=null?personaCaso.persona.idiomaIdentificacion.identificacion:'Sin valor'):
-                        this.form.controls["tipoIdentificacionHeredar"].value+",Sin valor"):
-                    (personaCaso.persona.idiomaIdentificacion?
-                        (personaCaso.persona.idiomaIdentificacion.identificacion!=null?personaCaso.persona.idiomaIdentificacion.identificacion:"Sin valor"):
-                        "Sin valor"))
+            if (personaCaso.persona.idiomaIdentificacion.identificacion) {
+                this.form.controls["tipoIdentificacionHeredar"].setValue( 
+                    this.form.controls["tipoIdentificacionHeredar"].value?
+                        (personaCaso.persona.idiomaIdentificacion?
+                            this.form.controls["tipoIdentificacionHeredar"].value+","+(personaCaso.persona.idiomaIdentificacion.identificacion!=null?personaCaso.persona.idiomaIdentificacion.identificacion:'Sin valor'):
+                            this.form.controls["tipoIdentificacionHeredar"].value+",Sin valor"):
+                        (personaCaso.persona.idiomaIdentificacion?
+                            (personaCaso.persona.idiomaIdentificacion.identificacion!=null?personaCaso.persona.idiomaIdentificacion.identificacion:"Sin valor"):
+                            "Sin valor"))
+            } else {
+                this.form.controls["tipoIdentificacionHeredar"].setValue( 
+                    this.form.controls["tipoIdentificacionHeredar"].value?
+                        (personaCaso.persona.idiomaIdentificacion?
+                            this.form.controls["tipoIdentificacionHeredar"].value+","+(personaCaso.persona.identificacion!=null?personaCaso.persona.identificacion:'Sin valor'):
+                            this.form.controls["tipoIdentificacionHeredar"].value+",Sin valor"):
+                        (personaCaso.persona.idiomaIdentificacion?
+                            (personaCaso.persona.identificacion!=null?personaCaso.persona.identificacion:"Sin valor"):
+                            "Sin valor"))
+            }
             
             // Heredar emisor identificacion
             this.form.controls["emisorIdentificacionHeredar"].setValue( this.form.controls["emisorIdentificacionHeredar"].value?(personaCaso.persona.autoridadEmisora?this.form.controls["emisorIdentificacionHeredar"].value+","+personaCaso.persona.autoridadEmisora:this.form.controls["emisorIdentificacionHeredar"].value+",Sin valor"):(personaCaso.persona.autoridadEmisora?personaCaso.persona.autoridadEmisora:"Sin valor"))

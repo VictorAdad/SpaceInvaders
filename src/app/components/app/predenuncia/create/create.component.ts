@@ -285,6 +285,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal {
                             Logger.log('PP----------->',this.model);
                             this.fillForm(this.model);
                         } else {
+                            // Logger.log('No tiene predenuncia');
                             this.precarga = true;
                             this.precargaChange.next(true);
                         }

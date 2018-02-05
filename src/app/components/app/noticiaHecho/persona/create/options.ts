@@ -77,7 +77,8 @@ export class Options {
             this.db.searchInNotMatrx("colonia",{municipio:{id:idMunicipio}}).then(response=>{
                 let colonias={};
                 for(let e in response){
-                    colonias[""+response[e].id+"-"+response[e].cp]=response[e].nombre
+                    const localidad = response[e]["localidad"] ? response[e]["localidad"]['id'] : '';
+                    colonias[""+response[e].id+"-"+response[e].cp+'-'+localidad]=response[e].nombre
                 }
                 this.colonias=this.constructOptionsColonia(colonias,false);
             });
