@@ -1082,7 +1082,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal {
                         this.tabla.update("casos",caso).then(
                             ds=>{
                                 Logger.log("Se actualizo registro",ds);
-                                resolve("Se creo la persona de manera local");
+                                resolve("Se creó una persona de manera local");
                                 this.casoService.actualizaCasoOffline(ds);
                                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas']);
 
