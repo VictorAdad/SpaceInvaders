@@ -39,10 +39,9 @@ export class NoticiaHechoComponent implements OnInit{
             componentHandler.upgradeAllRegistered();
         }
 
-        this.isTitular = (this.casoServ.caso.currentTitular.userNameAsignado === this.auth.user.username);
-
         this.route.params.subscribe(params => {
             if(params['id']){
+                this.isTitular = (this.casoServ.caso.currentTitular.userNameAsignado === this.auth.user.username);
                 this.id = +params['id'];
                 this.breadcrumb.push({path:`/caso/${this.id}/detalle`,label:"Detalle del caso"});
                 if(this.onLine.onLine){

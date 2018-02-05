@@ -68,6 +68,7 @@ export class DetalleCasoComponent implements OnInit {
 
     ngOnInit() {
         const timer = Observable.timer(1);
+        const timer2 = Observable.timer(1);
         timer.subscribe(t => this.loaderDialog.open());
         this.route.params.subscribe(params => {
             if (params['id']) {
@@ -87,7 +88,7 @@ export class DetalleCasoComponent implements OnInit {
                             }
                             this.involucrados = caso.personaCasos as Persona[];
                             this.delitos = caso.delitoCaso as DelitoCaso[];
-                            this.loaderDialog.close();
+                            timer2.subscribe(t => this.loaderDialog.close());
                         }
                     );
                     this.casoService.find(this.id).then(t => this.caso = this.casoService.caso);
@@ -96,7 +97,7 @@ export class DetalleCasoComponent implements OnInit {
                     const timer = Observable.timer(1000);
                     timer.subscribe(t => {
                         this.caso = this.casoService.caso;
-                        console.log("CASO->", this.caso);
+                        this.isTitular = this.caso.currentTitular.userNameAsignado === this.auth.user.username;
                         this.hasRelacionVictimaImputado = this.caso.hasRelacionVictimaImputado;
                         this.hasPredenuncia = this.caso['hasPredenuncia'] ? this.caso.hasPredenuncia : false;
                         if (this.caso['personaCasos']) {
@@ -105,6 +106,7 @@ export class DetalleCasoComponent implements OnInit {
                         if (this.caso['delitoCaso']) {
                             this.delitos = this.caso.delitoCaso as DelitoCaso[];
                         }
+                        timer2.subscribe(t2 => this.loaderDialog.close());
                     });
                 }
             }

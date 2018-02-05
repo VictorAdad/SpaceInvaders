@@ -78,7 +78,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
             'distrito' : new FormControl('', []), 
         });
         this.activeRoute.parent.params.subscribe(params => {
-            if(this.hasId){
+            if(this.hasId()){
                 this.id = +params['id'];
                 Logger.log(this.casoService);
                 if (!isNaN(this.id)){
@@ -115,6 +115,8 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                     }
                 }
 
+            } else {
+                this.isTitular = true;
             }
         });
         this.validateForm(this.form);
