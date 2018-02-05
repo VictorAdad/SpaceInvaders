@@ -103,12 +103,14 @@ export class CasoHerenciaComponent implements OnInit {
         this.setHeredarDatos(this.heredar);
         this.casoServ.casoChange.subscribe(
             caso => {
-                Logger.log('HeredarComponent Caso change', caso);
+                // Logger.log('HeredarComponent Caso change', caso);
                 this.setCaso(caso);
             }
         );
         this.precargaChange.subscribe(
             precarga => {
+                // Logger.log('-> Precarga change', precarga);
+                this.precarga = precarga;
                 if (precarga) {
                     this.fillCampos();
                 }
@@ -215,7 +217,7 @@ export class CasoHerenciaComponent implements OnInit {
     }
 
     public fillCampos() {
-        if (this.caso.personaCasos) {
+        if (this.caso.personaCasos && this.caso.personaCasos.length > 0) {
             this.addPersona(this.caso.personaCasos[0].id);
         }
         this.form.patchValue({
