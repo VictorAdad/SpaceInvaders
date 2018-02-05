@@ -827,9 +827,11 @@ public setDataF1007(_data){
         //     }
         // }
 
-        var pericial;
+        let pericial;
         let imputados = [];
         let victimas  = [];
+        //let tipoExamen = '';
+        let peritoMateria = '';
 
         _data.solicitudPrePericiales.forEach(solicitud => {
             if(solicitud.id===_id_solicitud){
@@ -853,27 +855,32 @@ public setDataF1007(_data){
             victimas = this.findVictimas(_data);
             imputados = this.findImputados(_data);
         }
-
-        this.data['xNUC']                     = _data.nuc? _data.nuc:'';
-        this.data['xNIC']                     = _data.nic? _data.nic:'';
-        this.data['xHechoDelictivo']          = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
-        this.data['xVictima']                 = this.getListasPersonas(victimas)['nombres'].toLocaleString().toUpperCase();
-        this.data['xImputado']                = this.getListasPersonas(imputados)['nombres'].toLocaleString().toUpperCase();
-        this.data['xOficio']                  = pericial.noOficio ? pericial.noOficio : '';
-        this.data['xEstado']                  = 'Estado de México';
-        this.data['xPoblacion']               = this.auth.user.municipio;
-        this.data['xDia']                     = dia ? dia.toString() : '';
-        this.data['xMes']                     = mes ? this.getMes(mes) : '';
-        this.data['xAnio']                    = anio ? anio.toString(): '';
-        this.data['xSolicitaPerito']          = pericial.peritoMateria ? pericial.peritoMateria.nombre : '';
-        this.data['xFinalidadRequerimiento']  = pericial.finalidad?pericial.finalidad:'';
-        this.data['xPlazoRendirInformes']     = pericial.plazoDias? pericial.plazoDias: '';
-        this.data['xApercibimiento']          = pericial.apercibimiento ? pericial.apercibimiento: '';
-        this.data['xDirectorInstituto']       = pericial.directorInstituto ? pericial.directorInstituto.toUpperCase() : '';
-        this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto.toUpperCase();
-        this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto.toUpperCase();
-        this.data['xCargoEmisorFirma']        = this.auth.user.cargo.toUpperCase();
-
+        this.db.get('catalogos','perito_materia').then(perito_materia => {
+            if (perito_materia && pericial.peritoMateria){
+                let lista = perito_materia['arreglo'] as any[]; 
+                peritoMateria = lista[pericial.peritoMateria.id];
+            }
+            this.data['xNUC']                     = _data.nuc? _data.nuc:'';
+            this.data['xNIC']                     = _data.nic? _data.nic:'';
+            this.data['xHechoDelictivo']          = _data.delitoPrincipal.nombre ? _data.delitoPrincipal.nombre : '';
+            this.data['xVictima']                 = this.getListasPersonas(victimas)['nombres'].toLocaleString().toUpperCase();
+            this.data['xImputado']                = this.getListasPersonas(imputados)['nombres'].toLocaleString().toUpperCase();
+            this.data['xOficio']                  = pericial.noOficio ? pericial.noOficio : '';
+            this.data['xEstado']                  = 'Estado de México';
+            this.data['xPoblacion']               = this.auth.user.municipio;
+            this.data['xDia']                     = dia ? dia.toString() : '';
+            this.data['xMes']                     = mes ? this.getMes(mes) : '';
+            this.data['xAnio']                    = anio ? anio.toString(): '';
+            this.data['xSolicitaPerito']          = peritoMateria ? peritoMateria : '';
+            this.data['xFinalidadRequerimiento']  = pericial.finalidad?pericial.finalidad:'';
+            this.data['xPlazoRendirInformes']     = pericial.plazoDias? pericial.plazoDias: '';
+            this.data['xApercibimiento']          = pericial.apercibimiento ? pericial.apercibimiento: '';
+            this.data['xDirectorInstituto']       = pericial.directorInstituto ? pericial.directorInstituto.toUpperCase() : '';
+            this.data['xNombreEmisorFirma']       = this.auth.user.nombreCompleto.toUpperCase();
+            this.data['xAdscripcionEmisorFirma']  = this.auth.user.agenciaCompleto.toUpperCase();
+            this.data['xCargoEmisorFirma']        = this.auth.user.cargo.toUpperCase();
+            Logger.log('formato',this.data)
+        });
     }
 
 public setDataF1516(_data) {

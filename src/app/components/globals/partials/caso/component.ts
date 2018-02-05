@@ -56,8 +56,16 @@ export class CasoNicComponent implements OnInit{
 		// }
 		// Logger.log(this);
 		this.caso.find(this.id).then(caso => {
-			this.nic=caso["nic"];
-			this.nuc=caso["nuc"];
+			if (caso.hasPredenuncia) {
+				this.nic=caso["nic"];
+			} else {
+				this.nic='';
+			}
+			if (caso.hasAcuerdoInicio) {
+				this.nuc=caso["nuc"];
+			} else {
+				this.nuc='';
+			}
 		});
     }
 }
