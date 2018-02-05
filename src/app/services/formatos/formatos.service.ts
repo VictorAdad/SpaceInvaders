@@ -524,24 +524,23 @@ export class FormatosLocal {
 
         if (_caso.predenuncias) {
             this.db.get('catalogos','tipo_linea').then(tipoLinea => {
-                Logger.log('-> Tipo Linea econtrada', (tipoLinea['arreglo'] as any[]));
-                if (tipoLinea) {
-                    const lista = tipoLinea['arreglo'];
-                    if (lista.length > 0) {
-                        this.data['xTipoLineaTelefonica'] = lista[_caso.predenuncias.tipoLinea.id];
-                    }
-                }
+                
+                if (tipoLinea && predenuncia.tipoLinea){
+                    let lista = tipoLinea['arreglo'] as any[]; 
+                    this.data['xTipoLineaTelefonica'] = lista[predenuncia.tipoLinea.id];
+                } else {
+                    this.data['xTipoLineaTelefonica'] = '';
+                }   
+                
+                this.data['xTelefonoLlamando'] = (_caso.predenuncias.noTelefonico ? _caso.predenuncias.noTelefonico : '');
+                this.data['xLugarLlamada'] = (_caso.predenuncias.lugarLlamada ? _caso.predenuncias.lugarLlamada : '');
+                this.data['xNarracionHechos'] = (_caso.predenuncias.hechosNarrados ? _caso.predenuncias.hechosNarrados : '');
+                this.data['xAsesoria'] = (_caso.predenuncias.comunicado ? _caso.predenuncias.comunicado : '');
+                this.data['xHoraConclusionLlamada'] = (_caso.predenuncias.horaConclusionLlamada ? _caso.predenuncias.horaConclusionLlamada : '');
+                this.data['xDuracionLlamada'] = (_caso.predenuncias.duracionLlamada ? _caso.predenuncias.duracionLlamada : '');
+                this.data['xObservaciones'] = (_caso.predenuncias.observaciones ? _caso.predenuncias.observaciones : '');
 
             });
-
-            this.data['xTelefonoLlamando'] = (_caso.predenuncias.noTelefonico ? _caso.predenuncias.noTelefonico : '');
-            this.data['xLugarLlamada'] = (_caso.predenuncias.lugarLlamada ? _caso.predenuncias.lugarLlamada : '');
-            this.data['xNarracionHechos'] = (_caso.predenuncias.hechosNarrados ? _caso.predenuncias.hechosNarrados : '');
-            this.data['xAsesoria'] = (_caso.predenuncias.comunicado ? _caso.predenuncias.comunicado : '');
-            this.data['xHoraConclusionLlamada']
-                = (_caso.predenuncias.horaConclusionLlamada ? _caso.predenuncias.horaConclusionLlamada : '');
-            this.data['xDuracionLlamada'] = (_caso.predenuncias.duracionLlamada ? _caso.predenuncias.duracionLlamada : '');
-            this.data['xObservaciones'] = (_caso.predenuncias.observaciones ? _caso.predenuncias.observaciones : '');
         }
     }
 
