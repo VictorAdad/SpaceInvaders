@@ -853,8 +853,8 @@ public setDataF1007(_data){
         var date = new Date();
 
         if (date) {
-            var dia = date.getDate();
-            var mes = 1 + date.getMonth();
+            var dia  = date.getDate();
+            var mes  = date.getMonth();
             var anio = date.getFullYear();
         }
 
