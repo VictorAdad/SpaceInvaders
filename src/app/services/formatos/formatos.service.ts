@@ -339,10 +339,12 @@ export class FormatosLocal {
         let personas = [];
         let sexos = [];
         let ocupaciones = [];
-        let religionesNacionalidades = [];
+        let religiones = [];
+        let nacionalidades = [];
         let estadosCiviles = [];
         let escolaridades = [];
         let identificaciones = [];
+        let domicilios = [];
         let lugar = '';
 
         if (predenuncia.heredar) {
@@ -362,22 +364,38 @@ export class FormatosLocal {
                 let religion;
                 let escolaridad;
                 let estadoCivil;
+                let pais;
+                let estado;
+                let municipio;
+                let identificacion;
                 lista.forEach(catalogo => {
-                    if(catalogo['id']=="sexo"){
+                    if(catalogo['id'] == "sexo"){
                         sexo = catalogo['arreglo'];
                         Logger.log("catálogo de sexos:",sexo);
                     }
-                    if(catalogo['id']=="ocupacion"){
+                    if(catalogo['id'] == "ocupacion"){
                         ocupacion = catalogo['arreglo'];
                     }
-                    if(catalogo['id']=="nacionalidad_religion"){
-                        religion = catalogo['arreglo'];
+                    if(catalogo['id'] == "nacionalidad_religion"){
+                        religion = catalogo['arreglo'] as any[];
                     }
-                    if(catalogo['id']=="escolaridad"){
+                    if(catalogo['id'] == "escolaridad"){
                         escolaridad = catalogo['arreglo'];
                     }
-                    if(catalogo['id']=="estado_civil"){
+                    if(catalogo['id'] == "estado_civil"){
                         estadoCivil = catalogo['arreglo'];
+                    }
+                    if(catalogo['id'] == "pais"){
+                        pais = catalogo['arreglo'];
+                    }
+                    if(catalogo['id'] == "estado"){
+                        estado = catalogo['arreglo'] as any[];
+                    }
+                    if(catalogo['id'] == "municipio"){
+                        municipio = catalogo['arreglo'] as any[];
+                    }
+                    if(catalogo['id'] == 'idioma_identificacion'){
+                        identificacion = catalogo['arreglo'] as any[];
                     }
                 });
         
@@ -394,14 +412,56 @@ export class FormatosLocal {
                     if(o.persona.estadoCivil){
                         estadosCiviles.push(estadoCivil[o.persona.estadoCivil.id]);
                     }
-                    
+                    if(o.persona.pais){
+                        let domicilio;
+                        if(o.persona.municipio){
+                            let value = municipio.filter(e => { 
+                                return e.id == o.persona.municipio.id;
+                            });
+                            if (value.length>0) {
+                                domicilio = value[0].nombre+' ';
+                            }
+                        } else {
+                            domicilio += (o.persona.municipioNacimientoOtro ? o.persona.municipioNacimientoOtro+' ' : '')
+                        }
+                        if(o.persona.estado){
+                            let value = estado.filter(e => { 
+                                return e.id == o.persona.estado.id;
+                            });
+                            if (value.length>0) {
+                                domicilio += value[0].nombre+' ';
+                            }
+                        } else {
+                            domicilio += (o.persona.estadoNacimientoOtro ? o.persona.estadoNacimientoOtro+' ' : '')
+                        }
+                        domicilio    += pais[o.persona.pais.id];
+                        domicilios.push(domicilio);
+                    }
+                    if(o.persona.idiomaIdentificacion){
+                        let value = identificacion.filter(e => { 
+                            return e.id == o.persona.idiomaIdentificacion.id;
+                        });
+                        if (value.length>0) {
+                            identificaciones.push(value[0].identificacion);
+                        }
+                    }
+                    if(o.persona.nacionalidadReligion){
+                        let value = religion.filter(e => { 
+                            return e.id == o.persona.nacionalidadReligion.id;
+                        });
+                        Logger.log("------> nacionalidadReligion",value);
+                        if (value.length>0) {
+                            religiones.push(value[0].religion);
+                            nacionalidades.push(value[0].nacionalidad);
+                        }
+                    }
                 });
                 Logger.log("Sexos de personas en herencia:",sexos);
             }
 
             this.setCasoInfo(_caso);
             this.data['xNombreUsuario'] = atributosPersona['nombres'].toLocaleString();
-            this.data['xOriginario'] = atributosPersona['originarios'].toLocaleString();
+            this.data['xOriginario'] = domicilios.toLocaleString();
             this.data['xEdad'] = atributosPersona['edades'].toLocaleString();
             this.data['xSexo'] = sexos.toLocaleString();
             this.data['xDomicilio'] = atributosPersona['domicilios'].toLocaleString();
@@ -413,15 +473,15 @@ export class FormatosLocal {
             this.data['xEstadoCivil'] = estadosCiviles.toLocaleString();
             this.data['xOcupacion'] = ocupaciones.toLocaleString();
             this.data['xEscolaridad'] = escolaridades.toLocaleString();
-            this.data['xReligion'] = atributosPersona['religiones'].toLocaleString();
-            this.data['xNacionalidad'] = atributosPersona['nacionalidades'].toLocaleString();
+            this.data['xReligion'] = religiones.toLocaleString();
+            this.data['xNacionalidad'] = nacionalidades.toLocaleString();
             this.data['xNumeroTelefonico'] = atributosPersona['noParticulares'].toLocaleString();
             this.data['xNumeroMovil'] = atributosPersona['noMoviles'].toLocaleString();
-            this.data['xSeIdentificaCon'] = atributosPersona['identificaciones'].toLocaleString();
+            this.data['xSeIdentificaCon'] = identificaciones.toLocaleString();
             this.data['xFolioIdentificacion'] = atributosPersona['folios'].toLocaleString();
 
             if (_caso.predenuncias ) {
-                this.data['xFolioIdentificacion'] = (_caso.predenuncias.noFolioConstancia ? _caso.predenuncias.noFolioConstancia : '');
+                // this.data['xFolioIdentificacion'] = (_caso.predenuncias.noFolioConstancia ? _caso.predenuncias.noFolioConstancia : '');
                 this.data['xHechosNarrados'] = (_caso.predenuncias.hechosNarrados ? _caso.predenuncias.hechosNarrados : '');
                 this.data['xConclusionHechos'] = (_caso.predenuncias.conclusion ? _caso.predenuncias.conclusion : '');
                 this.data['xLugarHechos'] = (lugar ? lugar : '');
@@ -463,14 +523,24 @@ export class FormatosLocal {
         this.data['xDomicilio'] = atributosPersona['domicilios'].toLocaleString();
 
         if (_caso.predenuncias) {
-            this.data['xTelefonoLlamando']      = (_caso.predenuncias.noTelefonico ? _caso.predenuncias.noTelefonico  : '');
-            this.data['xTipoLineaTelefonica']   = (_caso.predenuncias.tipoLinea ? _caso.predenuncias.tipoLinea.nombre  : '');
-            this.data['xLugarLlamada']          = (_caso.predenuncias.lugarLlamada ? _caso.predenuncias.lugarLlamada  : '');
-            this.data['xNarracionHechos']       = (_caso.predenuncias.hechosNarrados ? _caso.predenuncias.hechosNarrados  : '');
-            this.data['xAsesoria']              = (_caso.predenuncias.comunicado ? _caso.predenuncias.comunicado  : '');
-            this.data['xHoraConclusionLlamada'] = (_caso.predenuncias.horaConclusionLlamada ? _caso.predenuncias.horaConclusionLlamada  : '');
-            this.data['xDuracionLlamada']       = (_caso.predenuncias.duracionLlamada ? _caso.predenuncias.duracionLlamada  : '');
-            this.data['xObservaciones']         = (_caso.predenuncias.observaciones ? _caso.predenuncias.observaciones  : '');
+            this.db.get('catalogos','tipo_linea').then(tipoLinea => {
+                
+                if (tipoLinea && predenuncia.tipoLinea){
+                    let lista = tipoLinea['arreglo'] as any[]; 
+                    this.data['xTipoLineaTelefonica'] = lista[predenuncia.tipoLinea.id];
+                } else {
+                    this.data['xTipoLineaTelefonica'] = '';
+                }   
+                
+                this.data['xTelefonoLlamando'] = (_caso.predenuncias.noTelefonico ? _caso.predenuncias.noTelefonico : '');
+                this.data['xLugarLlamada'] = (_caso.predenuncias.lugarLlamada ? _caso.predenuncias.lugarLlamada : '');
+                this.data['xNarracionHechos'] = (_caso.predenuncias.hechosNarrados ? _caso.predenuncias.hechosNarrados : '');
+                this.data['xAsesoria'] = (_caso.predenuncias.comunicado ? _caso.predenuncias.comunicado : '');
+                this.data['xHoraConclusionLlamada'] = (_caso.predenuncias.horaConclusionLlamada ? _caso.predenuncias.horaConclusionLlamada : '');
+                this.data['xDuracionLlamada'] = (_caso.predenuncias.duracionLlamada ? _caso.predenuncias.duracionLlamada : '');
+                this.data['xObservaciones'] = (_caso.predenuncias.observaciones ? _caso.predenuncias.observaciones : '');
+
+            });
         }
     }
 
@@ -1318,7 +1388,7 @@ public setDataF2117(_data) {
                 edades.push(` ${o.persona.edad}`);
             }
             if (o.persona.folioIdentificacion) {
-                folios.push(` ${o.folioIdentificacion}`);
+                folios.push(` ${o.persona.folioIdentificacion}`);
             }
             if (o.persona.estado) {
                 originarios.push(` ${o.persona.estado.nombre}`);
