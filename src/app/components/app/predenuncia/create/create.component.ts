@@ -18,6 +18,7 @@ import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
 import { GlobalService } from "@services/global.service";
 import { TableDataSource } from './../../global.component';
 import { AuthenticationService } from '@services/auth/authentication.service.ts';
@@ -112,21 +113,36 @@ export class PredenunciaCreateComponent {
 	selector: 'predenuncia',
     templateUrl:'./predenuncia.component.html',
 })
-export class PredenunciaComponent  extends PredenunciaGlobal{
-	public form : FormGroup;
-    public model : Predenuncia;
-    public personas: any[] = [];
-    public masDe3Dias:any;
-    public isUserX: boolean=false;// cambiar aquí la lógica del usuario
-    public casoId: number = null;
-    public hasPredenuncia:boolean=false;
-    public apiUrl:string="/v1/base/predenuncias/casos/";
-    @Output() idEmitter = new EventEmitter<any>();
-    public personasHeredadas:any[]=[];
-    public heredar:boolean=false;
-    public heredarSintesis:boolean=false;
+export class PredenunciaComponent  extends PredenunciaGlobal {
 
-    public precarga = true;
+    public form: FormGroup;
+
+    public model: Predenuncia;
+
+    public personas: any[] = [];
+
+    public masDe3Dias: any;
+
+    public isUserX = false;// cambiar aquí la lógica del usuario
+
+    public casoId: number = null;
+
+    public hasPredenuncia = false;
+
+    public apiUrl = '/v1/base/predenuncias/casos/';
+
+    @Output()
+    public idEmitter = new EventEmitter<any>();
+
+    public personasHeredadas: any[] = [];
+
+    public heredar = false;
+
+    public heredarSintesis = false;
+
+    public precarga = false;
+
+    public precargaChange = new Subject<boolean>() ;
 
     constructor(
         private _fbuilder: FormBuilder,
@@ -182,14 +198,14 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
             'duracionLlamada'       :  new FormControl(this.model.duracionLlamada),
             'nombreServidorPublico' :  new FormControl(this.model.nombreServidorPublico),
             'observaciones'         :  new FormControl(this.model.observaciones),
-            //Constancia de lectura de Derechos
+            // Constancia de lectura de Derechos
             'noFolioConstancia'              :  new FormControl(this.model.numeroFolio),
             'hablaEspaniol'                   :  new FormControl(this.model.hablaEspanol),
             'lenguaIdioma'                         :  new FormControl(this.model.idioma),
             'nombreInterprete'               :  new FormControl(this.model.nombreInterprete),
             'compredioDerechos'             :  new FormControl(this.model.comprendioDerechos),
             'proporcionoCopia'                  :  new FormControl(this.model.copiaDerechos),
-            //Oficio de asignación de asesor jurídico
+            // Oficio de asignación de asesor jurídico
             'autoridadOficioAsignacion'      :  new FormControl(this.model.autoridadOficioAsignacion),
             'denunciaQuerella'               :  new FormControl(this.model.denunciaQuerella),
             'ubicacionUnidadInmediata'       :  new FormControl(this.model.ubicacionUnidadInmediata),
@@ -222,23 +238,23 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         });
 
         this.route.params.subscribe(params => {
-            if (params['casoId']){
+            if (params['casoId']) {
                 this.casoId = +params['casoId'];
-                this.precarga = this.casoService.caso.hasPredenuncia;
                 this.casoService.find(this.casoId);
                 Logger.log(this.casoId);
-                if(this.onLine.onLine){
+                if(this.onLine.onLine) {
                     Logger.log('OnLine------------>',);
-                    this.http.get(this.apiUrl+this.casoId+'/page').subscribe(response => {
-                         if(parseInt(response.totalCount) !== 0){
+                    this.http.get(this.apiUrl + this.casoId + '/page').subscribe(response => {
+                         if (parseInt(response.totalCount) !== 0) {
                             this.precarga = false;
+                            this.precargaChange.next(false);
                             this.hasPredenuncia = true;
-                            Logger.log("Dont have predenuncia");
+                            // Logger.log("Dont have predenuncia");
                             this.model= response.data[0] as Predenuncia;
                             let x=response.data[0].heredar;
                             const timer = Observable.timer(1000);
                             timer.subscribe(t=>{
-                                console.log("RESPONSE HEREDAR ->>>>>>>><",x, this.form,response.data[0].tipoPersonaHeredar);
+                                // console.log("RESPONSE HEREDAR ->>>>>>>><",x, this.form,response.data[0].tipoPersonaHeredar);
                                 this.heredar = x;
                                 const timer2 = Observable.timer(100);
 
@@ -268,18 +284,22 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                             this.idEmitter.emit({id: this.model.id});
                             Logger.log('PP----------->',this.model);
                             this.fillForm(this.model);
+                        } else {
+                            this.precarga = true;
+                            this.precargaChange.next(true);
                         }
                     });
                 }else{
                     Logger.log('1.-OffLine------------>');
                     this.db.get("casos", this.casoId).then(caso=>{
-                        Logger.log("Caso en armas ->",caso);
-                        if (caso){
-                            if(caso["predenuncias"]){
+                        if (caso) {
+                            if (caso["predenuncias"]) {
+                                this.precarga = false;
+                                this.precargaChange.next(false);
                                 this.hasPredenuncia = true;
                                 Logger.log("Have predenuncias");
                                 let model = caso['predenuncias'];
-                                var fechaCompleta: Date = new Date(model.fechaHoraInspeccion);
+                                const fechaCompleta: Date = new Date(model.fechaHoraInspeccion);
                                 this.model.fechaCanalizacion=fechaCompleta;
                                 let x=model.heredar;
                                 const timer = Observable.timer(1000);
@@ -295,8 +315,7 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                         if (model.calidadPersonaHeredar != null && model.calidadPersonaHeredar != undefined){
                                             this.form.controls.calidadPersonaHeredar.setValue(model.calidadPersonaHeredar);
                                         }
-                                        
-                                        console.log('############', this.form.controls.tipoPersonaHeredar,this.form.controls.calidadPersonaHeredar );
+                                        // console.log('############', this.form.controls.tipoPersonaHeredar,this.form.controls.calidadPersonaHeredar );
                                         this.form.disable();
                                     });
 
@@ -310,6 +329,9 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
                                 this.personas = model.personas;
                                 Logger.log('4.- OffLine------------>', this.personas);
                                 this.fillForm(model);
+                            } else {
+                                this.precarga = true;
+                                this.precargaChange.next(true);
                             }
                         }
                     });
@@ -479,7 +501,8 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         Logger.log('Predenuncia@fillForm()', _data);
         this.form.patchValue(_data);
         if (_data['fechaCanalizacion']) {
-            const time = _data.fechaCanalizacion.getHours()+':'+_data.fechaCanalizacion.getMinutes();
+            // const time = _data.fechaCanalizacion.getHours()+':'+_data.fechaCanalizacion.getMinutes();
+            const time = moment(_data.fechaCanalizacion).format('LT');
             this.form.controls.horaCanalizacion.setValue(time);
             Logger.log('HH----------------->', time, _data)
         }
