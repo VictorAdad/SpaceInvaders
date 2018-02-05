@@ -840,9 +840,9 @@ public setDataF1007(_data){
 
             this.data['xRepresentanteLegal'] = entrevista.tieneRepresentanteLegal ? 'Sí' : 'No';
             this.data['xNombreRepresentanteLegal']= entrevista.nombreRepresentanteLegal ? entrevista.nombreRepresentanteLegal:'';
-            this.data['xUsoMedioTecnologico']= entrevista.medioTecnologico ? 'Sí' : 'No';
+            this.data['xUsoMedioTecnologico']= entrevista.medioTecnologicoRegistro ? 'Sí' : 'No';
             this.data['xMedioTecnologico']= entrevista.medioTecnologicoUtilizado ? entrevista.medioTecnologicoUtilizado :'';;
-            this.data['xUsoMedioTecnico']= entrevista.medioTecnico ? 'Sí' :'No';
+            this.data['xUsoMedioTecnico']= entrevista.medioTecnicoRegistro ? 'Sí' :'No';
             this.data['xMedioTecnico']= entrevista.medioTecnicoUtilizado? entrevista.medioTecnicoUtilizado:'';
             this.data['xNarracionHechos']= entrevista.narracionHechos? entrevista.narracionHechos:'';
             this.data['xNombreEntrevistadoFirma']= nombreEntrevistado ? nombreEntrevistado : '';
