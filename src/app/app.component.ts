@@ -190,7 +190,7 @@ export class AppComponent implements OnInit {
                     this.authService.user.notificaciones = this.authService.user.notificaciones.filter(obj => obj !== _data);
                     this.authService.user.sinLeer -= 1;
                     Logger.log(' -> notificaciones after',this.authService.user.notificaciones);
-                    this.router.navigate(['/caso/'+_data.caso.id+'/noticia-hecho']);
+                    this.router.navigate(['/caso/'+_data.caso.id+'/noticia-hecho/datos-generales']);
                 },
                 error => {
                     Logger.error('Error', error);
