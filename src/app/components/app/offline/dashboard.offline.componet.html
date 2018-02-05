@@ -70,7 +70,8 @@
                                   <span class="negrita">tipo:</span> {{element.tipo}} <br>
                                   <span class="negrita">url:</span> {{element.url}} <br>
                                   <span class="negrita">usuario:</span> {{element.username}} <br>
-                                  <span class="negrita">body: {{jsonToString(element.body)}}</span>
+                                  <span class="negrita">body:</span> {{jsonToString(element.body)}} <br>
+                                  <span class="negrita">error:</span> {{jsonToString(element['error'])}}
                           </mat-cell>
                         </ng-container>
                     
