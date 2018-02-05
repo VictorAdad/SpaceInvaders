@@ -254,13 +254,12 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
     }
 
     public generateNIC(_caso: any): string{
-        Logger.log('caso ', _caso.delitoCaso.delito.id);
         let nic: string = '';
         let user = this.auth.user;
         if(this.onLine.onLine){
-            nic = `${user.fiscalia}/${user.agencia}/${user.turno}/${user.autoridad}/${this.pad(this.delito.id, 3)}/NICID/${(new Date()).getFullYear().toString().substr(-2)}/${this.pad((new Date()).getMonth()+1, 2)}`;
+            nic = `${user.fiscalia}/${user.agencia}/${this.pad(parseInt(user.turno), 2)}/${user.autoridad}/${this.pad(this.delito.id, 3)}/NICID/${(new Date()).getFullYear().toString().substr(-2)}/${this.pad((new Date()).getMonth() + 1, 2)}`;
         } else {
-            nic = `${user.fiscalia}/${user.agencia}/${user.turno}/${user.autoridad}/${this.pad(this.delito.id, 3)}/${this.createUUID()}/${(new Date()).getFullYear().toString().substr(-2)}/${this.pad((new Date()).getMonth()+1, 2)}`;
+            nic = `${user.fiscalia}/${user.agencia}/${this.pad(parseInt(user.turno), 2)}/${user.autoridad}/${this.pad(this.delito.id, 3)}/${this.createUUID()}/${(new Date()).getFullYear().toString().substr(-2)}/${this.pad((new Date()).getMonth() + 1, 2)}`;
         }
         return nic;
     }
