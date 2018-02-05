@@ -1,5 +1,4 @@
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
-import { Observable } from 'rxjs';
 import { MatPaginator, MatDialog } from '@angular/material';
 import { HttpService } from '@services/http.service';
 import { NoticiaHechoService } from './../../../../services/noticia-hecho.service';
@@ -11,6 +10,8 @@ import { TableService} from '@utils/table/table.service';
 import { Event } from '@angular/router/src/events';
 import { ResolveEmit, ConfirmSettings} from '@utils/alert/alert.service';
 import { forEach } from '@angular/router/src/utils/collection';
+import { Observable } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
     selector: 'caso-herencia',
@@ -50,6 +51,9 @@ export class CasoHerenciaComponent implements OnInit {
 
     @Input('heredarFunction')
     public heredarFunction: any;
+
+    @Input()
+    public precargaChange: Subject<boolean> = new Subject<boolean>();
 
     @Output()
     public lugarChange: EventEmitter<string> = new EventEmitter<string>();
@@ -101,6 +105,13 @@ export class CasoHerenciaComponent implements OnInit {
             caso => {
                 Logger.log('HeredarComponent Caso change', caso);
                 this.setCaso(caso);
+            }
+        );
+        this.precargaChange.subscribe(
+            precarga => {
+                if (precarga) {
+                    this.fillCampos();
+                }
             }
         );
         this.casoServ.find(this.casoId).then(

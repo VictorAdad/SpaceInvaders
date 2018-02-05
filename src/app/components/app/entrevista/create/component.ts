@@ -471,9 +471,9 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
             const sexoControl = this.form.controls["sexoHeredar"];
             const salarioSemanal = personaCaso.persona.ingresoMensual;
             const originarioEstado
-                = `${personaCaso.persona.estado ? personaCaso.persona.estado.nombre : (personaCaso.persona.estadoNacimientoOtro ? personaCaso.persona.estadoNacimientoOtro : 'Sin estado')}`;
+                = `${personaCaso.persona.estado && personaCaso.persona.estado.id != '' ? personaCaso.persona.estado.nombre : (personaCaso.persona.estadoNacimientoOtro ? personaCaso.persona.estadoNacimientoOtro : 'Sin estado')}`;
             const originarioMunicipio
-                = `${personaCaso.persona.municipio ? personaCaso.persona.municipio.nombre : (personaCaso.persona.municipioNacimientoOtro ? personaCaso.persona.municipioNacimientoOtro : 'Sin municipio')}`;
+                = `${personaCaso.persona.municipio && personaCaso.persona.municipio.id != '' ? personaCaso.persona.municipio.nombre : (personaCaso.persona.municipioNacimientoOtro ? personaCaso.persona.municipioNacimientoOtro : 'Sin municipio')}`;
             const originarioDe = `${originarioEstado} - ${originarioMunicipio}`;
             const originarioDeControl = this.form.controls['originarioDeHeredar'];
             const sabeLeerEscribir = personaCaso.persona.sabeLeerEscribir;
