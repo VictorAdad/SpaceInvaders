@@ -441,7 +441,9 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                     this.form.controls['nombreEntrevistadoHeredar'].value+","+nombrePersona
                 );
             }
-            personaCaso.persona.sexo=this.consultas.get('sexo',personaCaso.persona.sexo.id);
+            if (personaCaso.persona.sexo) {
+                personaCaso.persona.sexo=this.consultas.get('sexo',personaCaso.persona.sexo.id);
+            }
             if (personaCaso.persona.estado && personaCaso.persona.estado['id'] && personaCaso.persona.estado['id']!=''){
                 personaCaso.persona.estado=this.consultas.get('estado',personaCaso.persona.estado.id);
             }
