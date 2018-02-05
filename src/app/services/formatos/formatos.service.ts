@@ -340,6 +340,7 @@ export class FormatosLocal {
         let sexos = [];
         let ocupaciones = [];
         let religiones = [];
+        let nacionalidades = [];
         let estadosCiviles = [];
         let escolaridades = [];
         let identificaciones = [];
@@ -376,7 +377,7 @@ export class FormatosLocal {
                         ocupacion = catalogo['arreglo'];
                     }
                     if(catalogo['id'] == "nacionalidad_religion"){
-                        religion = catalogo['arreglo'];
+                        religion = catalogo['arreglo'] as any[];
                     }
                     if(catalogo['id'] == "escolaridad"){
                         escolaridad = catalogo['arreglo'];
@@ -388,16 +389,13 @@ export class FormatosLocal {
                         pais = catalogo['arreglo'];
                     }
                     if(catalogo['id'] == "estado"){
-                        estado = catalogo['arreglo'];
+                        estado = catalogo['arreglo'] as any[];
                     }
                     if(catalogo['id'] == "municipio"){
-                        municipio = catalogo['arreglo'];
+                        municipio = catalogo['arreglo'] as any[];
                     }
                     if(catalogo['id'] == 'idioma_identificacion'){
-                        identificacion = catalogo['arreglo'];
-                    }
-                    if(catalogo['id'] == 'nacionalidad_religion'){
-                        religion = catalogo['arreglo'];
+                        identificacion = catalogo['arreglo'] as any[];
                     }
                 });
         
@@ -415,13 +413,32 @@ export class FormatosLocal {
                         estadosCiviles.push(estadoCivil[o.persona.estadoCivil.id]);
                     }
                     if(o.persona.pais){
-                        let domicilio = pais[o.persona.pais.id] == 'MÉXICO' ? (o.persona.municipio ? municipio[o.persona.municipio.id]+' ' : '') : (o.persona.municipioNacimientoOtro ? o.persona.municipioNacimientoOtro+' ' : '');
-                        domicilio    += pais[o.persona.pais.id] == 'MÉXICO' ? (o.persona.estado ? estado[o.persona.estado.id]+' ' : '') : (o.persona.estadoNacimientoOtro ? o.persona.estadoNacimientoOtro+' ' : '');
+                        let domicilio;
+                        if(o.persona.municipio){
+                            let value = municipio.filter(e => { 
+                                return e.id == o.persona.municipio.id;
+                            });
+                            if (value.length>0) {
+                                domicilio = value[0].nombre+' ';
+                            }
+                        } else {
+                            domicilio += (o.persona.municipioNacimientoOtro ? o.persona.municipioNacimientoOtro+' ' : '')
+                        }
+                        if(o.persona.estado){
+                            let value = estado.filter(e => { 
+                                return e.id == o.persona.estado.id;
+                            });
+                            if (value.length>0) {
+                                domicilio += value[0].nombre+' ';
+                            }
+                        } else {
+                            domicilio += (o.persona.estadoNacimientoOtro ? o.persona.estadoNacimientoOtro+' ' : '')
+                        }
                         domicilio    += pais[o.persona.pais.id];
                         domicilios.push(domicilio);
                     }
                     if(o.persona.idiomaIdentificacion){
-                        let value = lista.filter(e => { 
+                        let value = identificacion.filter(e => { 
                             return e.id == o.persona.idiomaIdentificacion.id;
                         });
                         if (value.length>0) {
@@ -429,11 +446,13 @@ export class FormatosLocal {
                         }
                     }
                     if(o.persona.nacionalidadReligion){
-                        let value = lista.filter(e => { 
+                        let value = religion.filter(e => { 
                             return e.id == o.persona.nacionalidadReligion.id;
                         });
+                        Logger.log("------> nacionalidadReligion",value);
                         if (value.length>0) {
                             religiones.push(value[0].religion);
+                            nacionalidades.push(value[0].nacionalidad);
                         }
                     }
                 });
@@ -455,7 +474,7 @@ export class FormatosLocal {
             this.data['xOcupacion'] = ocupaciones.toLocaleString();
             this.data['xEscolaridad'] = escolaridades.toLocaleString();
             this.data['xReligion'] = religiones.toLocaleString();
-            this.data['xNacionalidad'] = atributosPersona['nacionalidades'].toLocaleString();
+            this.data['xNacionalidad'] = nacionalidades.toLocaleString();
             this.data['xNumeroTelefonico'] = atributosPersona['noParticulares'].toLocaleString();
             this.data['xNumeroMovil'] = atributosPersona['noMoviles'].toLocaleString();
             this.data['xSeIdentificaCon'] = identificaciones.toLocaleString();
@@ -1366,7 +1385,7 @@ public setDataF2117(_data) {
                 edades.push(` ${o.persona.edad}`);
             }
             if (o.persona.folioIdentificacion) {
-                folios.push(` ${o.folioIdentificacion}`);
+                folios.push(` ${o.persona.folioIdentificacion}`);
             }
             if (o.persona.estado) {
                 originarios.push(` ${o.persona.estado.nombre}`);
