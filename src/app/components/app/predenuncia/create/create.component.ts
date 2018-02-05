@@ -479,7 +479,8 @@ export class PredenunciaComponent  extends PredenunciaGlobal{
         Logger.log('Predenuncia@fillForm()', _data);
         this.form.patchValue(_data);
         if (_data['fechaCanalizacion']) {
-            const time = _data.fechaCanalizacion.getHours()+':'+_data.fechaCanalizacion.getMinutes();
+            // const time = _data.fechaCanalizacion.getHours()+':'+_data.fechaCanalizacion.getMinutes();
+            const time = moment(_data.fechaCanalizacion).format('LT');
             this.form.controls.horaCanalizacion.setValue(time);
             Logger.log('HH----------------->', time, _data)
         }
