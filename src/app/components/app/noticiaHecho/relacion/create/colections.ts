@@ -71,13 +71,16 @@ export class TrataPersonas {
                 this.estadoOrigen    =  estado? estado["label"] : '';
             }
         }
-
+        
         if (!_object.municipioOrigenOtro && !_object.municipioOrigen)
             _object.municipioOrigenOtro="";
         else if (_object.municipioOrigenOtro && _object.municipioOrigenOtro!="")
             this.municipioOrigen = _object.municipioOrigenOtro;
         else if (_object.municipioOrigen && _object.municipioOrigen.id!="")
-            if (_municipiosOrigen.length>0){
+            if (_object.municipioOrigen['nombre']) {
+                this.municipioOrigen = _object.municipioOrigen['nombre'];
+            }
+            else if (_municipiosOrigen.length>0){
                 let municipio=_options.buscaItemConValue(_municipiosOrigen,_object.municipioOrigen.id);
                 this.municipioOrigen = municipio ? municipio.label : '';
             }else{
@@ -112,7 +115,10 @@ export class TrataPersonas {
         else if (_object.municipioDestinoOtro && _object.municipioDestinoOtro!="")
             this.municipioDestino=_object.municipioDestinoOtro;
         else if (_object.municipioDestino && _object.municipioDestino.id!=""){
-            if (_municipiosDestino.length>0)//todavia no se incilizan los estados
+            if (_object.municipioDestino['nombre']) {
+                this.municipioDestino = _object.municipioDestino['nombre'];
+            }
+            else if (_municipiosDestino.length>0)//todavia no se incilizan los estados
             {
                 let municipio=_options.buscaItemConValue(_municipiosDestino,_object.municipioDestino.id);
                 this.municipioDestino=
