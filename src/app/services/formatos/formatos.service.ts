@@ -972,152 +972,49 @@ public setDataF1007(_data){
         });
     }
 
-public setDataF1516(_data) {
-    console.log('<<< Formato F1516 caso >>>', _data);
+    public setDataF1516(_data) {
+        console.log('<<< Formato F1516 caso >>>', _data);
+        let victimas = [];
     
-    let victimasNombres = '';
-    let victimas = [];
-    let victimasHeredar = [];
-    const vic        = _config.optionValue.tipoInterviniente.victima;
-    const vicDesc    = _config.optionValue.tipoInterviniente.victimaDesconocido;
-    const ofendido   = _config.optionValue.tipoInterviniente.ofendido;
-
-    if (_data.acuerdoInicio.heredar) {
-        for (let i=0; i < _data.acuerdoInicio.personas[i]; i++) {
-            victimas.push(_data.acuerdoInicio.personas[i].personaCaso.id);
-        }
-
-        for (var i=0; i < victimas.length; i++) {
-            for (var j=0; j < _data.personaCasos.length; j++) {
-                if(_data.personaCasos[j].id == victimas[i]) {
-                    victimasHeredar.push(_data.personaCasos[j]);
-                }
-            }
-        }
-
-        for (let i; i < victimasHeredar.length; i++) {
-            if(victimasHeredar[i].tipoInterviniente.id == vic || victimasHeredar[i].tipoInterviniente.id == vicDesc || victimasHeredar[i].tipoInterviniente.id == ofendido) {
-                victimas.push(victimasHeredar[i]);
-            }
-        }
-
-        if (victimas.length == 0) {
-            victimas = this.findVictimas(_data);
-        }
-
-        
-    } else {
-        victimas = this.findVictimas(_data);
-    }
-
-    console.log('<<< victimas acuerdo >>>', victimas);
-
-    for (i=0; i < victimas.length; i++) {
-        if (victimas[i].tipoInterviniente.id == vicDesc) {
-            if (victimasNombres == '') {
-                victimasNombres = 'Identidad desconocida';
-            } else {
-                victimasNombres += ', '+'Identidad desconocida';
-            }
+        if (_data.acuerdoInicio.heredar) {
+            const personas = this.findHerenciaPersonas(_data, _data.acuerdoInicio)
+            victimas = personas['victimas'];
         } else {
-            if (victimasNombres == '') {
-                victimasNombres = victimas[i].persona.nombre+' '+victimas[i].persona.paterno+' '+(victimas[i].persona.materno ? victimas[i].persona.materno : '');
-            } else {
-                victimasNombres += ', '+victimas[i].persona.nombre+' '+victimas[i].persona.paterno+' '+(victimas[i].persona.materno ? victimas[i].persona.materno : '');
-            }
-
-        }
-    }
-
-    console.log('<<< Nombres victimas acuerdos >>>',victimasNombres);
-
-    this.setCasoInfo(_data);
-
-    this.data['xEstado']                 = 'Estado de México'; 
-    this.data['xPoblacion']              = this.auth.user.municipio;
-    this.data['xRecibioLlamada']         = _data.acuerdoInicio.presentoLlamada ? _data.acuerdoInicio.presentoLlamada.nombre: ''; 
-    console.log('<<< recibio llamada >>>', this.data['xRecibioLlamada'], _data.acuerdoInicio.presentoLlamada.nombre)
-    this.data['xVictima']                = victimasNombres;
-    this.data['xManifesto']              = _data.acuerdoInicio.manifesto ? _data.acuerdoInicio.manifesto : '';
-    this.data['xNarracionHechos']        = _data.acuerdoInicio.sintesisHechos ? _data.acuerdoInicio.sintesisHechos : '';
-    this.data['xNombreEmisorFirma']      = this.auth.user.nombreCompleto;
-    this.data['xCargoEmisorFirma']       = this.auth.user.cargo;
-    this.data['xAdscripcionEmisorFirma'] = this.auth.user.agenciaCompleto;
-    
-
-
-}
-public setDataF2117(_data) {
-    console.log('<<< @setDataF2117 >>>', _data);
-    
-    let victimasNombres = '';
-    let victimas = [];
-    let victimasHeredar = [];
-    const vic        = _config.optionValue.tipoInterviniente.victima;
-    const vicDesc    = _config.optionValue.tipoInterviniente.victimaDesconocido;
-    const ofendido   = _config.optionValue.tipoInterviniente.ofendido;
-    var changeB =true;
-
-    if (_data.acuerdoInicio.heredar) {
-        for (let i=0; i < _data.acuerdoInicio.personas[i]; i++) {
-            victimas.push(_data.acuerdoInicio.personas[i].personaCaso.id);
-        }
-
-        for (var i=0; i < victimas.length; i++) {
-            for (var j=0; j < _data.personaCasos.length; j++) {
-                if(_data.personaCasos[j].id == victimas[i]) {
-                    victimasHeredar.push(_data.personaCasos[j]);
-                }
-            }
-        }
-
-        for (let i; i < victimasHeredar.length; i++) {
-            if(victimasHeredar[i].tipoInterviniente.id == vic || victimasHeredar[i].tipoInterviniente.id == vicDesc || victimasHeredar[i].tipoInterviniente.id == ofendido) {
-                victimas.push(victimasHeredar[i]);
-            }
-        }
-
-        if (victimas.length == 0) {
             victimas = this.findVictimas(_data);
         }
 
-        
-    } else {
-        victimasNombres = _data.acuerdoInicio.nombrePersonaAcepta ? _data.acuerdoInicio.nombrePersonaAcepta : '';
-        changeB =false;
+        this.setCasoInfo(_data);
+        this.data['xEstado']                 = 'Estado de México'; 
+        this.data['xPoblacion']              = this.auth.user.municipio;
+        this.data['xRecibioLlamada']         = _data.acuerdoInicio.presentoLlamada ? _data.acuerdoInicio.presentoLlamada.nombre: ''; 
+        console.log('<<< recibio llamada >>>', this.data['xRecibioLlamada'], _data.acuerdoInicio.presentoLlamada.nombre)
+        this.data['xVictima']                 = this.getListasPersonas(victimas)['nombres'].toLocaleString();
+        this.data['xManifesto']              = _data.acuerdoInicio.manifesto ? _data.acuerdoInicio.manifesto : '';
+        this.data['xNarracionHechos']        = _data.acuerdoInicio.sintesisHechos ? _data.acuerdoInicio.sintesisHechos : '';
+        this.data['xNombreEmisorFirma']      = this.auth.user.nombreCompleto;
+        this.data['xCargoEmisorFirma']       = this.auth.user.cargo;
+        this.data['xAdscripcionEmisorFirma'] = this.auth.user.agenciaCompleto;
     }
 
-    console.log('<<< victimas acuerdo >>>', victimas);
-
-    if (changeB) {
-        for (i=0; i < victimas.length; i++) {
-            if (victimas[i].tipoInterviniente.id == vicDesc) {
-                if (victimasNombres == '') {
-                    victimasNombres = 'Identidad desconocida';
-                } else {
-                    victimasNombres += ', '+'Identidad desconocida';
-                }
-            } else {
-                if (victimasNombres == '') {
-                    victimasNombres = victimas[i].persona.nombre+' '+victimas[i].persona.paterno+' '+(victimas[i].persona.materno ? victimas[i].persona.materno : '');
-                } else {
-                    victimasNombres += ', '+victimas[i].persona.nombre+' '+victimas[i].persona.paterno+' '+(victimas[i].persona.materno ? victimas[i].persona.materno : '');
-                }
-
-            }
+    public setDataF2117(_data) {
+        console.log('<<< @setDataF2117 >>>', _data);
+        let victimas = [];
+    
+        if (_data.acuerdoInicio.heredar) {
+            const personas = this.findHerenciaPersonas(_data, _data.acuerdoInicio)
+            victimas = personas['victimas'];
+        } else {
+            victimas = this.findVictimas(_data);
         }
+
+        this.setCasoInfo(_data);
+
+        this.data['xVictima']                = this.getListasPersonas(victimas)['nombres'].toLocaleString();
+        this.data['xNombreEmisorFirma']      = this.auth.user.nombreCompleto.toUpperCase();
+        this.data['xCargoEmisorFirma']       = this.auth.user.cargo.toUpperCase();
+        this.data['xAdscripcionEmisorFirma'] = this.auth.user.agenciaCompleto.toUpperCase();
+
     }
-
-    console.log('<<< Nombres victimas acuerdos >>>',victimasNombres);
-
-    this.setCasoInfo(_data);
-
-    this.data['xVictima'] = victimasNombres;
-    this.data['xNombreEmisorFirma']      = this.auth.user.nombreCompleto.toUpperCase();
-    this.data['xCargoEmisorFirma']       = this.auth.user.cargo.toUpperCase();
-    this.data['xAdscripcionEmisorFirma'] = this.auth.user.agenciaCompleto.toUpperCase();
-
-}
 
     public setDataF1010(_data,_id_solicitud){
         Logger.log('Formatos@setDataF1010', _data);
