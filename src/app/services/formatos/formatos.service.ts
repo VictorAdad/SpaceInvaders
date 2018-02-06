@@ -1294,7 +1294,7 @@ public setDataF1007(_data){
                 rfcs.push(` ${o.persona.rfc}`);
             }
             if (o.persona.curp) {
-                curps.push(` ${o.persona.curp}`);
+                curps.push(` ${o.persona.curp.toUpperCase()}`);
             }
             if (o.persona.edad) {
                 edades.push(` ${o.persona.edad}`);
