@@ -840,9 +840,9 @@ public setDataF1007(_data){
 
             this.data['xRepresentanteLegal'] = entrevista.tieneRepresentanteLegal ? 'Sí' : 'No';
             this.data['xNombreRepresentanteLegal']= entrevista.nombreRepresentanteLegal ? entrevista.nombreRepresentanteLegal:'';
-            this.data['xUsoMedioTecnologico']= entrevista.medioTecnologico ? 'Sí' : 'No';
+            this.data['xUsoMedioTecnologico']= entrevista.medioTecnologicoRegistro ? 'Sí' : 'No';
             this.data['xMedioTecnologico']= entrevista.medioTecnologicoUtilizado ? entrevista.medioTecnologicoUtilizado :'';;
-            this.data['xUsoMedioTecnico']= entrevista.medioTecnico ? 'Sí' :'No';
+            this.data['xUsoMedioTecnico']= entrevista.medioTecnicoRegistro ? 'Sí' :'No';
             this.data['xMedioTecnico']= entrevista.medioTecnicoUtilizado? entrevista.medioTecnicoUtilizado:'';
             this.data['xNarracionHechos']= entrevista.narracionHechos? entrevista.narracionHechos:'';
             this.data['xNombreEntrevistadoFirma']= nombreEntrevistado ? nombreEntrevistado : '';
@@ -1395,7 +1395,7 @@ public setDataF2117(_data) {
             }
             if (o.persona.localizacionPersona.length > 0) {
                 o.persona.localizacionPersona.forEach(l => {
-                    domicilios.push(` ${(l.calle ? l.calle : '')} ${(l.noInterior ? l.noInterior : '')} ${(l.noExterior ? l.noExterior : '')} ${(l.colonia ? l.colonia.nombre : l.coloniaOtro)} ${(l.municipio ? l.municipio.nombre : l.municipioOtro)} ${(l.estado ? l.estado.nombre : l.estadoOtro)}`);
+                    domicilios.push(` ${(l.calle ? l.calle : '')} ${(l.noExterior ? l.noExterior : '')} ${(l.noInterior ? l.noInterior : '')} ${(l.colonia ? l.colonia.nombre : l.coloniaOtro)} ${(l.municipio ? l.municipio.nombre : l.municipioOtro)} ${(l.estado ? l.estado.nombre : l.estadoOtro)}`);
                     noParticulares.push(` ${l.telParticular}`);
                     noMoviles.push(` ${l.telMovil}`);
                 })
