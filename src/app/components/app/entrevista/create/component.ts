@@ -441,7 +441,9 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                     this.form.controls['nombreEntrevistadoHeredar'].value+","+nombrePersona
                 );
             }
-            personaCaso.persona.sexo=this.consultas.get('sexo',personaCaso.persona.sexo.id);
+            if (personaCaso.persona.sexo) {
+                personaCaso.persona.sexo=this.consultas.get('sexo',personaCaso.persona.sexo.id);
+            }
             if (personaCaso.persona.estado && personaCaso.persona.estado['id'] && personaCaso.persona.estado['id']!=''){
                 personaCaso.persona.estado=this.consultas.get('estado',personaCaso.persona.estado.id);
             }
@@ -474,7 +476,9 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                 = `${personaCaso.persona.estado && personaCaso.persona.estado.id != '' ? personaCaso.persona.estado.nombre : (personaCaso.persona.estadoNacimientoOtro ? personaCaso.persona.estadoNacimientoOtro : 'Sin estado')}`;
             const originarioMunicipio
                 = `${personaCaso.persona.municipio && personaCaso.persona.municipio.id != '' ? personaCaso.persona.municipio.nombre : (personaCaso.persona.municipioNacimientoOtro ? personaCaso.persona.municipioNacimientoOtro : 'Sin municipio')}`;
-            const originarioDe = `${originarioEstado} - ${originarioMunicipio}`;
+            const originarioPais
+                = `${personaCaso.persona.pais && personaCaso.persona.pais.id != '' ? personaCaso.persona.pais.nombre : (personaCaso.persona.paisNacimientoOtro ? personaCaso.persona.paisNacimientoOtro : 'Sin país')}`;
+            const originarioDe = `${originarioPais} - ${originarioEstado} - ${originarioMunicipio}`;
             const originarioDeControl = this.form.controls['originarioDeHeredar'];
             const sabeLeerEscribir = personaCaso.persona.sabeLeerEscribir;
             const sabeLeerEscribirControl = this.form.controls['sabeLeerEscribirHeredar'];
@@ -555,15 +559,26 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                         this.form.controls["calidadIntervinienteHeredar"].value+",") : 
                 (personaCaso.tipoInterviniente?personaCaso.tipoInterviniente.tipo:"Sin valor"));
 
-            // Heredar tipo identificacion 
-            this.form.controls["tipoIdentificacionHeredar"].setValue( 
-                this.form.controls["tipoIdentificacionHeredar"].value?
-                    (personaCaso.persona.idiomaIdentificacion?
-                        this.form.controls["tipoIdentificacionHeredar"].value+","+(personaCaso.persona.idiomaIdentificacion.identificacion!=null?personaCaso.persona.idiomaIdentificacion.identificacion:'Sin valor'):
-                        this.form.controls["tipoIdentificacionHeredar"].value+",Sin valor"):
-                    (personaCaso.persona.idiomaIdentificacion?
-                        (personaCaso.persona.idiomaIdentificacion.identificacion!=null?personaCaso.persona.idiomaIdentificacion.identificacion:"Sin valor"):
-                        "Sin valor"))
+            // Heredar tipo identificacion
+            if (personaCaso.persona.idiomaIdentificacion && personaCaso.persona.idiomaIdentificacion.identificacion) {
+                this.form.controls["tipoIdentificacionHeredar"].setValue( 
+                    this.form.controls["tipoIdentificacionHeredar"].value?
+                        (personaCaso.persona.idiomaIdentificacion?
+                            this.form.controls["tipoIdentificacionHeredar"].value+","+(personaCaso.persona.idiomaIdentificacion.identificacion!=null?personaCaso.persona.idiomaIdentificacion.identificacion:'Sin valor'):
+                            this.form.controls["tipoIdentificacionHeredar"].value+",Sin valor"):
+                        (personaCaso.persona.idiomaIdentificacion?
+                            (personaCaso.persona.idiomaIdentificacion.identificacion!=null?personaCaso.persona.idiomaIdentificacion.identificacion:"Sin valor"):
+                            "Sin valor"))
+            } else {
+                this.form.controls["tipoIdentificacionHeredar"].setValue( 
+                    this.form.controls["tipoIdentificacionHeredar"].value?
+                        (personaCaso.persona.idiomaIdentificacion?
+                            this.form.controls["tipoIdentificacionHeredar"].value+","+(personaCaso.persona.identificacion!=null?personaCaso.persona.identificacion:'Sin valor'):
+                            this.form.controls["tipoIdentificacionHeredar"].value+",Sin valor"):
+                        (personaCaso.persona.idiomaIdentificacion?
+                            (personaCaso.persona.identificacion!=null?personaCaso.persona.identificacion:"Sin valor"):
+                            "Sin valor"))
+            }
             
             // Heredar emisor identificacion
             this.form.controls["emisorIdentificacionHeredar"].setValue( this.form.controls["emisorIdentificacionHeredar"].value?(personaCaso.persona.autoridadEmisora?this.form.controls["emisorIdentificacionHeredar"].value+","+personaCaso.persona.autoridadEmisora:this.form.controls["emisorIdentificacionHeredar"].value+",Sin valor"):(personaCaso.persona.autoridadEmisora?personaCaso.persona.autoridadEmisora:"Sin valor"))
@@ -792,7 +807,9 @@ export class DocumentoEntrevistaComponent extends FormatosGlobal{
             this.urlUpload = '/v1/documentos/entrevistas/save/'+params['casoId'];
             this.caso.find(params['casoId']).then(
               response => {
-                  this.updateDataFormatos(this.caso.caso);
+                  if (!this.onLine.onLine) {
+                      this.updateDataFormatos(this.caso.caso);
+                  }
               }
           );
 

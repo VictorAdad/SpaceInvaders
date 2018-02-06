@@ -10,14 +10,15 @@ import { AuthenticationService } from '@services/auth/authentication.service';
 import { CIndexedDB } from '@services/indexedDB';
 import { Logger } from "@services/logger.service";
 import { CasoService, Caso } from '@services/caso/caso.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable} from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { LoadingDialogService } from '../../../services/loading/loading-dialog.service';
 
 @Component({
     templateUrl: './component.html'
 })
-
-export class DetalleCasoComponent implements OnInit {
+export class DetalleCasoComponent implements OnInit, OnDestroy {
 
     public id: number = null;
 
@@ -44,6 +45,9 @@ export class DetalleCasoComponent implements OnInit {
     public hasRelacionVictimaImputado = false;
 
     public isTitular = false;
+
+    public casoChangeSubs: Subscription;
+
 
     constructor(
         _route: ActivatedRoute,
@@ -75,7 +79,7 @@ export class DetalleCasoComponent implements OnInit {
                 this.id = +params['id'];
 
                 if (this.onLine.onLine) {
-                    this.casoService.casoChange.subscribe(
+                    this.casoChangeSubs = this.casoService.casoChange.subscribe(
                         caso => {
                             Logger.log('casoChange()', caso);
                             this.caso = this.casoService.caso;
@@ -113,5 +117,11 @@ export class DetalleCasoComponent implements OnInit {
 
         });
 
+    }
+
+    ngOnDestroy() {
+        if (this.casoChangeSubs) {
+            this.casoChangeSubs.unsubscribe();
+        }
     }
 }

@@ -223,7 +223,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
         				this.id=response.id;
                         Logger.log(response);
                         if (this.casoId!=null) {
-                            this.casoService.addAcuerdoInicio().then(t => {
+                            this.casoService.addAcuerdoInicio(response).then(t => {
                                 this.router.navigate(['/caso/' + this.casoId + '/acuerdo-inicio/'+this.id+'/view']);
                             });                            
                         }
@@ -309,10 +309,10 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
     }
 
     public generateNUC(): string{
-        let nuc: string = '';
+        let nuc = '';
         const user = this.auth.user;
 
-        nuc = `${user.distrito}/${user.fiscalia}/${user.agencia}/${user.municipioId}/${this.pad(this.casoId, 6)}/${(new Date()).getFullYear().toString().substr(-2)}/${this.pad((new Date()).getMonth()+1, 2)}`
+        nuc = `${user.distrito}/${user.fiscalia}/${user.agencia}/${user.municipioId}/NUCSEQ/${(new Date()).getFullYear().toString().substr(-2)}/${this.pad((new Date()).getMonth()+1, 2)}`;
 
         return nuc;
     }

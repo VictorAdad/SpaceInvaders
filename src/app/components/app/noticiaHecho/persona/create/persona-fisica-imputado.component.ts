@@ -399,11 +399,12 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal {
                             });
                         if((_data.localizacionPersona[i])['colonia'] != null){
                             const _localidad = _data.localizacionPersona[i]["localidad"] ? _data.localizacionPersona[i]["localidad"]['id'] : '';
-                            _data.localizacionPersona[i]['colonia']['idCp']=(_data.localizacionPersona[i])['colonia']['id']+"-"+(_data.localizacionPersona[i])['colonia']['cp']+"-"+_localidad;
+                            if (!_data.localizacionPersona[i]['colonia']['idCp'])
+                                _data.localizacionPersona[i]['colonia']['idCp']=(_data.localizacionPersona[i])['colonia']['id']+"-"+(_data.localizacionPersona[i])['colonia']['cp']+"-"+_localidad;
                             formLoc.patchValue({
                                 'colonia':{
                                     'id': (_data.localizacionPersona[i])['colonia']['id'],
-                                    'idCp':(_data.localizacionPersona[i])['colonia']['id']+"-"+(_data.localizacionPersona[i])['colonia']['cp']+"-"+_localidad 
+                                    'idCp':(_data.localizacionPersona[i])['colonia']['idCp'] 
                                 }
                             });
                         }
@@ -1081,7 +1082,7 @@ export class PersonaFisicaImputadoComponent extends NoticiaHechoGlobal {
                         this.tabla.update("casos",caso).then(
                             ds=>{
                                 Logger.log("Se actualizo registro",ds);
-                                resolve("Se creo la persona de manera local");
+                                resolve("Se creó una persona de manera local");
                                 this.casoService.actualizaCasoOffline(ds);
                                 this.router.navigate(['/caso/'+this.casoId+'/noticia-hecho/personas']);
 

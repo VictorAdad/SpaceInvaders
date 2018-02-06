@@ -104,7 +104,8 @@ export class CasoService{
 
     }
 
-    public addAcuerdoInicio() {
+    public addAcuerdoInicio(_acuerdoInicio) {
+        this.caso.acuerdoInicio = _acuerdoInicio;
         this.caso.hasAcuerdoInicio = true;
         this.caso.hasRelacionVictimaImputado = true;
         return this.db.update('casos', this.caso);

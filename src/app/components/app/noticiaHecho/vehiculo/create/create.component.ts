@@ -397,7 +397,7 @@ export class VehiculoCreateComponent extends NoticiaHechoGlobal implements OnIni
                             }
                         }
                         this.db.update("casos", t).then(r=>{
-                            resolve("vehiculo actualizado");
+                            resolve("Vehículo actualizado");
                             this.casoService.actualizaCasoOffline(t);
                             this.vehiculoServ.reset();
                             Logger.log('-> Registro acutualizado');

@@ -40,9 +40,14 @@
         <mat-cell *matCellDef="let element"> {{element.nameEcm}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="fechaCreacion">
+    <ng-container matColumnDef="fechaCreacion" *ngIf="onLine.onLine">
         <mat-header-cell *matHeaderCellDef> Fecha de creación </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.fechaCreacion || element.created | date:'MM/dd/yyyy'}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{ element.created | date:'MM/dd/yyyy' }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fechaCreacion" *ngIf="!onLine.onLine">
+        <mat-header-cell *matHeaderCellDef> Fecha de creación </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.fechaCreacion || element.created | date:'MM/dd/yyyy'}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="procedimiento">

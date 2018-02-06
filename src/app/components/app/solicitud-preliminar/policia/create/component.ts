@@ -319,7 +319,9 @@ export class DocumentoPoliciaComponent extends FormatosGlobal{
                 this.urlUpload = '/v1/documentos/solicitudes-pre-policias/save/'+params['casoId'];
             this.caso.find(params['casoId']).then(
                 response => {
-                    this.updateDataFormatos(this.caso.caso);
+                    if (!this.onLine.onLine) {
+                        this.updateDataFormatos(this.caso.caso);
+                    }                    
                 }
             );
             }
