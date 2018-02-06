@@ -2,7 +2,7 @@ import { ConfirmationService } from '@jaspero/ng2-confirmations';
 import { MatPaginator, MatDialog } from '@angular/material';
 import { HttpService } from '@services/http.service';
 import { NoticiaHechoService } from './../../../../services/noticia-hecho.service';
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Caso, CasoService } from '@services/caso/caso.service';
 import { Logger } from "@services/logger.service";
@@ -12,12 +12,14 @@ import { ResolveEmit, ConfirmSettings} from '@utils/alert/alert.service';
 import { forEach } from '@angular/router/src/utils/collection';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
+import {  } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
     selector: 'caso-herencia',
     templateUrl: './component.html'
 })
-export class CasoHerenciaComponent implements OnInit {
+export class CasoHerenciaComponent implements OnInit, OnDestroy {
 
     public panelOpenState = true;
 
@@ -76,6 +78,8 @@ export class CasoHerenciaComponent implements OnInit {
     @Output()
     public heredarSintesisChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    public casoChangeSubs: Subscription;
+
 
     public settings: ConfirmSettings = {
         overlayClickToClose: false,
@@ -101,7 +105,7 @@ export class CasoHerenciaComponent implements OnInit {
     ngOnInit() {
         this.heredar = false;
         this.setHeredarDatos(this.heredar);
-        this.casoServ.casoChange.subscribe(
+        this.casoChangeSubs = this.casoServ.casoChange.subscribe(
             caso => {
                 // Logger.log('HeredarComponent Caso change', caso);
                 this.setCaso(caso);
@@ -134,6 +138,10 @@ export class CasoHerenciaComponent implements OnInit {
                 });
             }
         );
+    }
+
+    ngOnDestroy() {
+        this.casoChangeSubs.unsubscribe();
     }
 
     public setCaso(_caso) {
