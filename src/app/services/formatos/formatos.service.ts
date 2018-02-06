@@ -787,13 +787,28 @@ public setDataF1007(_data){
             const calidadUsuarioPersonas = entrevista.heredar ? entrevista.calidadIntervinienteHeredar : (entrevista.tipoInterviniente) ? entrevista.tipoInterviniente.tipo : '';
             const nombreRepresentanteLegal = entrevista.nombreRepresentanteLegal;
             let direccion = "";
-                direccion += entrevista.heredar ? entrevista.calleHeredar != null? entrevista.calleHeredar+" " : "" : entrevista.calle!=null? entrevista.calle+" " : "";
-                direccion += entrevista.heredar ? entrevista.noExteriorHeredar != null? entrevista.noExteriorHeredar+" " : "" : entrevista.noExterior !=null? entrevista.noExterior+" " : "";
-                direccion += entrevista.heredar ? entrevista.noInteriorHeredar != null? entrevista.noInteriorHeredar+" " : "" : entrevista.noInterior !=null? entrevista.noInterior+" " : "";
-                direccion += entrevista.heredar ? entrevista.coloniaHeredar != null? entrevista.coloniaHeredar+" " : "" : entrevista.colonia !=null? entrevista.colonia+" " : "";
-                direccion += entrevista.heredar ? entrevista.cpHeredar != null? entrevista.cpHeredar+" " : "" : entrevista.cp !=null? entrevista.cp+" " : "";
-                direccion += entrevista.heredar ? entrevista.estadoHeredar != null? entrevista.estadoHeredar+" " : "" : entrevista.estado !=null? entrevista.estado+" " : "";
-                direccion += entrevista.heredar ? entrevista.Heredar != null? entrevista.Heredar+" " : "": entrevista.municipio!=null? entrevista.municipio+"" : "";
+                direccion += entrevista.heredar ? 
+                             (entrevista.calleHeredar ? entrevista.calleHeredar+" " : "") : 
+                             (entrevista.calle ? entrevista.calle+" " : "");
+                direccion += entrevista.heredar ? 
+                             (entrevista.noExteriorHeredar ? entrevista.noExteriorHeredar+" " : "") : 
+                             (entrevista.noExterior ? entrevista.noExterior+" " : "");
+                direccion += entrevista.heredar ? 
+                             (entrevista.noInteriorHeredar ? entrevista.noInteriorHeredar+" " : "") : 
+                             (entrevista.noInterior ? entrevista.noInterior+" " : "");
+                direccion += entrevista.heredar ? 
+                             (entrevista.coloniaHeredar ? entrevista.coloniaHeredar+" " : "") : 
+                             (entrevista.colonia ? entrevista.colonia+" " : "");
+                direccion += entrevista.heredar ? 
+                             (entrevista.cpHeredar ? entrevista.cpHeredar+" " : "") : 
+                             (entrevista.cp ? entrevista.cp+" " : "");
+                direccion += entrevista.heredar ? 
+                             (entrevista.municipioHeredar ? entrevista.municipioHeredar+" " : "") : 
+                             (entrevista.municipio ? entrevista.municipio+" " : "");
+                direccion += entrevista.heredar ? 
+                             (entrevista.estadoHeredar ? entrevista.estadoHeredar+" " : "") : 
+                             (entrevista.estado ? entrevista.estado : "");
+                
             // const relacionEntrevistado;
 
             let fecha = new Date(entrevista.created);
@@ -840,9 +855,9 @@ public setDataF1007(_data){
 
             this.data['xRepresentanteLegal'] = entrevista.tieneRepresentanteLegal ? 'Sí' : 'No';
             this.data['xNombreRepresentanteLegal']= entrevista.nombreRepresentanteLegal ? entrevista.nombreRepresentanteLegal:'';
-            this.data['xUsoMedioTecnologico']= entrevista.medioTecnologico ? 'Sí' : 'No';
+            this.data['xUsoMedioTecnologico']= entrevista.medioTecnologicoRegistro ? 'Sí' : 'No';
             this.data['xMedioTecnologico']= entrevista.medioTecnologicoUtilizado ? entrevista.medioTecnologicoUtilizado :'';;
-            this.data['xUsoMedioTecnico']= entrevista.medioTecnico ? 'Sí' :'No';
+            this.data['xUsoMedioTecnico']= entrevista.medioTecnicoRegistro ? 'Sí' :'No';
             this.data['xMedioTecnico']= entrevista.medioTecnicoUtilizado? entrevista.medioTecnicoUtilizado:'';
             this.data['xNarracionHechos']= entrevista.narracionHechos? entrevista.narracionHechos:'';
             this.data['xNombreEntrevistadoFirma']= nombreEntrevistado ? nombreEntrevistado : '';

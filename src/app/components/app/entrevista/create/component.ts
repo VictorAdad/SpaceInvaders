@@ -559,8 +559,8 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                         this.form.controls["calidadIntervinienteHeredar"].value+",") : 
                 (personaCaso.tipoInterviniente?personaCaso.tipoInterviniente.tipo:"Sin valor"));
 
-            // Heredar tipo identificacion 
-            if (personaCaso.persona.idiomaIdentificacion.identificacion) {
+            // Heredar tipo identificacion
+            if (personaCaso.persona.idiomaIdentificacion && personaCaso.persona.idiomaIdentificacion.identificacion) {
                 this.form.controls["tipoIdentificacionHeredar"].setValue( 
                     this.form.controls["tipoIdentificacionHeredar"].value?
                         (personaCaso.persona.idiomaIdentificacion?

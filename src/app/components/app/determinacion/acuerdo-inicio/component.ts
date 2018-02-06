@@ -223,7 +223,7 @@ export class AcuerdoAcuerdoInicioComponent extends DeterminacionGlobal {
         				this.id=response.id;
                         Logger.log(response);
                         if (this.casoId!=null) {
-                            this.casoService.addAcuerdoInicio().then(t => {
+                            this.casoService.addAcuerdoInicio(response).then(t => {
                                 this.router.navigate(['/caso/' + this.casoId + '/acuerdo-inicio/'+this.id+'/view']);
                             });                            
                         }
