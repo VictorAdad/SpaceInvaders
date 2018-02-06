@@ -422,7 +422,7 @@ export class FormatosLocal {
                                 domicilio = value[0].nombre+' ';
                             }
                         } else {
-                            domicilio += (o.persona.municipioNacimientoOtro ? o.persona.municipioNacimientoOtro+' ' : '')
+                            domicilio = (o.persona.municipioNacimientoOtro ? o.persona.municipioNacimientoOtro+' ' : '')
                         }
                         if(o.persona.estado){
                             let value = estado.filter(e => { 
