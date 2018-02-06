@@ -107,37 +107,42 @@ export class TransferirComponent extends BasePaginationComponent implements OnIn
     templateUrl: './component.html',
     selector: 'titular'
 })
-export class TitularComponent {
+export class TitularComponent implements OnInit {
 
-    pag: number = 0;
-    columns = ['operador', 'oficina', 'titular', 'asignacion', 'nic', 'transferir'];
-    data      :Titular[];
-    dataSource: TableService | null;
+    public pag = 0;
+
+    public columns = ['operador', 'oficina', 'titular', 'asignacion', 'nic', 'transferir'];
+
+    public data: Titular[];
+
+    public dataSource: TableService | null;
+
     public casoId: number = null;
-    @ViewChild(MatPaginator) paginator: MatPaginator;
+
+    @ViewChild(MatPaginator)
+    public paginator: MatPaginator;
 
     constructor(
         public dialog: MatDialog,
-        private route:ActivatedRoute,
+        private route: ActivatedRoute,
         public onLine: OnLineService,
-        private db:CIndexedDB,
+        private db: CIndexedDB,
         private http: HttpService
-        ){}
+    ) { }
 
     ngOnInit() {
-        Logger.log(this.route)
         this.route.parent.params.subscribe(params => {
-            if(params['id']){
+            if (params['id']) {
                 this.casoId = +params['id'];
-                if(this.onLine.onLine){
-                    this.page('/v1/base/titulares/'+this.casoId+'/page');
+                if (this.onLine.onLine) {
+                    this.page('/v1/base/titulares/' + this.casoId + '/page');
 
-                }else{
-                    this.db.get("casos",this.casoId).then(caso=>{
-                        Logger.log("Caso en armas ->",caso);
-                        if (caso){
-                            if(caso["arma"]){
-                                this.dataSource = new TableService(this.paginator, caso["arma"] as Titular[]);
+                } else {
+                    this.columns = ['operador', 'oficina', 'titular', 'asignacion', 'nic'];
+                    this.db.get("casos", this.casoId).then(caso => {
+                        if (caso) {
+                            if (caso['titulares']) {
+                                this.dataSource = new TableService(this.paginator, caso['titulares'] as Titular[]);
                             }
                         }
                     });
@@ -146,18 +151,17 @@ export class TitularComponent {
         });
     }
 
-    public changePage(_e){
-        if(this.onLine.onLine){
-            this.page('/v1/base/titulares/'+this.casoId+'/page?p='+_e.pageIndex+'&tr='+_e.pageSize);
-            
+    public changePage(_e) {
+        if (this.onLine.onLine) {
+            this.page('/v1/base/titulares/' + this.casoId + '/page?p=' + _e.pageIndex + '&tr=' + _e.pageSize);
+
         }
-    }  
+    }
 
     public page(url: string){
         this.http.get(url).subscribe((response) => {
             this.pag = response.totalCount;
             this.data = response.data as Titular[];
-            Logger.log("Loading armas..");
             Logger.log(this.data);
             this.dataSource = new TableService(this.paginator, response.data);
         });
@@ -177,10 +181,10 @@ export class TitularComponent {
 
 
 export class Titular {
-    id        : number;
-    operador  : string;
-    oficina   : string;
-    titular   : string;
+    id: number;
+    operador: string;
+    oficina: string;
+    titular: string;
     fechaAsignacion: Date;
-    nic       : string;
+    nic: string;
 }
