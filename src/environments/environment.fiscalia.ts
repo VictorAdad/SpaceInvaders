@@ -10,21 +10,20 @@
 export const environment = {
     production: true,
     api : {
-      host : 'https://fgjappprod01',
-      ws : 'wss://fgjappprod01'
+      host : 'https://sigi-api.fiscaliaedomex.gob.mx/sigi-api',
+      ws : 'wss://sigi-api.fiscaliaedomex.gob.mx/ws'
     },
     app: {
-      host: 'https://fgjohsprod01'
+      host: 'https://sigi.fiscaliaedomex.gob.mx/sigi'
     },
     oam: {
       tokenApp: 'b2F1dGhzaWdpY2xpZW50OmZjODFmZGFmNjlhYjQ4NjZhMmZjODU3NWMwZGIwYmQ2',
       domainName: 'OAuthSIGIDomain',
       grantType: 'PASSWORD',
       scope: 'AttributesOUD.attrs',
-      host: 'https://fgjoamprod01',
+      host: 'https://sigi-api.fiscaliaedomex.gob.mx/oam',
       session: '_USER',
       idle: 4800, // segundos - 80min
       idleTimeout: 600 // Segundos 10min
     }
   };
-  
