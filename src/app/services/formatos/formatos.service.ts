@@ -422,7 +422,7 @@ export class FormatosLocal {
                                 domicilio = value[0].nombre+' ';
                             }
                         } else {
-                            domicilio += (o.persona.municipioNacimientoOtro ? o.persona.municipioNacimientoOtro+' ' : '')
+                            domicilio = (o.persona.municipioNacimientoOtro ? o.persona.municipioNacimientoOtro+' ' : '')
                         }
                         if(o.persona.estado){
                             let value = estado.filter(e => { 
@@ -436,6 +436,8 @@ export class FormatosLocal {
                         }
                         domicilio    += pais[o.persona.pais.id];
                         domicilios.push(domicilio);
+                    } else {
+                        domicilios.push(' ');
                     }
                     if(o.persona.idiomaIdentificacion){
                         let value = identificacion.filter(e => { 
@@ -1296,7 +1298,7 @@ public setDataF1007(_data){
                 rfcs.push(` ${o.persona.rfc}`);
             }
             if (o.persona.curp) {
-                curps.push(` ${o.persona.curp}`);
+                curps.push(` ${o.persona.curp.toUpperCase()}`);
             }
             if (o.persona.edad) {
                 edades.push(` ${o.persona.edad}`);

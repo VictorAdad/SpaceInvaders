@@ -113,10 +113,11 @@ export class DeterminacionArchivoTemporalComponent extends DeterminacionGlobal {
 				this.precarga = false;
 				this.http.get(this.apiUrl + '/' + this.id).subscribe(response => {
 					Logger.log(response.data),
-            this.fillForm(response);
-			this.modelUpdate.emit(response);
-			this.personas = response.personas;
-          });
+		            this.fillForm(response);
+					this.modelUpdate.emit(response);
+					this.personas = response.personas;
+					this.form.disable();
+		        });
 			}
 		});
 	}

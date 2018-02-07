@@ -24,7 +24,7 @@
         </ng-container>
 
         <ng-container matColumnDef="asignacion">
-            <mat-header-cell *matHeaderCellDef> Fecha de asignación de titular </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> Fecha y hora de asignación de titular </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.created | date:'MM/dd/yyyy HH:mm'}} </mat-cell>
         </ng-container>
 
@@ -33,7 +33,7 @@
             <mat-cell *matCellDef="let element"> <small>{{element.caso.hasPredenuncia ? element.caso.nic : ''}}</small> </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="transferir">
+        <ng-container matColumnDef="transferir" *ngIf="onLine.onLine">
             <mat-header-cell *matHeaderCellDef> Transferir </mat-header-cell>
             <mat-cell *matCellDef="let element">
                 <button class="float-right" mat-icon-button (click)="transferirDialog()" *ngIf="element.vigente"><mat-icon  class="md-24">arrow_forward</mat-icon></button>
