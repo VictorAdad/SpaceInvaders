@@ -6,13 +6,15 @@ import { HttpService } from '@services/http.service';
 import { Caso } from '@models/caso'
 import { AuthenticationService } from '../../../services/auth/authentication.service';
 import { CasoService } from '../../../services/caso/caso.service';
+import { Subscription } from 'rxjs/Subscription';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 declare var componentHandler: any;
 
 @Component({
     templateUrl:'./component.html'
 })
 
-export class NoticiaHechoComponent implements OnInit{
+export class NoticiaHechoComponent implements OnInit, OnDestroy {
 
     public id: number = null;
     public caso: Caso = new Caso();
@@ -22,6 +24,8 @@ export class NoticiaHechoComponent implements OnInit{
     public breadcrumb = [];
     public object: any;
     public isTitular = false;
+
+    public casoChangeSubs: Subscription;
 
     constructor(
         private route: ActivatedRoute,
@@ -34,14 +38,19 @@ export class NoticiaHechoComponent implements OnInit{
         this.db = _db;
     }
 
-    ngOnInit(){
+    ngOnInit() {
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
         }
 
+        this.casoChangeSubs = this.casoServ.casoChange.subscribe(
+            caso => {
+                this.isTitular = (this.casoServ.caso.currentTitular.userNameAsignado === this.auth.user.username);
+            }
+        );
+
         this.route.params.subscribe(params => {
             if(params['id']){
-                this.isTitular = (this.casoServ.caso.currentTitular.userNameAsignado === this.auth.user.username);
                 this.id = +params['id'];
                 this.breadcrumb.push({path:`/caso/${this.id}/detalle`,label:"Detalle del caso"});
                 if(this.onLine.onLine){
@@ -58,10 +67,10 @@ export class NoticiaHechoComponent implements OnInit{
             }
             this.getReturnRoute();
         });
+    }
 
-        // this.db.get("casos", this.id).then(object => {
-        // 	this.caso = Object.assign(this.caso, object);
-        // });
+    ngOnDestroy() {
+        this.casoChangeSubs.unsubscribe();
     }
 
     public hasId(): boolean{
