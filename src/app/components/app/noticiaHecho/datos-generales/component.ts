@@ -86,6 +86,9 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                     'vigente': new FormControl(true),
                 })
             ]),
+            'currentTitular': new FormGroup({
+                'userNameAsignado': new FormControl(this.auth.user.username),
+            }),
             'distrito': new FormControl('', []),
         });
         this.activeRoute.parent.params.subscribe(params => {

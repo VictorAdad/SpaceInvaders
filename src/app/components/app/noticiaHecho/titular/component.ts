@@ -147,13 +147,9 @@ export class TitularComponent implements OnInit {
 
                 } else {
                     this.columns = ['operador', 'oficina', 'titular', 'asignacion', 'nic'];
-                    this.db.get("casos", this.casoId).then(caso => {
-                        if (caso) {
-                            if (caso['titulares']) {
-                                this.dataSource = new TableService(this.paginator, caso['titulares'] as Titular[]);
-                            }
-                        }
-                    });
+                    if (this.casoServ.caso['titulares']) {
+                        this.dataSource = new TableService(this.paginator, this.casoServ.caso['titulares'] as Titular[]);
+                    }
                 }
             }
         });

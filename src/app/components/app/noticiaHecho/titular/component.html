@@ -30,7 +30,7 @@
 
         <ng-container matColumnDef="nic">
             <mat-header-cell *matHeaderCellDef> NIC </mat-header-cell>
-            <mat-cell *matCellDef="let element"> <small>{{element.caso.hasPredenuncia ? element.caso.nic : ''}}</small> </mat-cell>
+            <mat-cell *matCellDef="let element"> <small>{{casoServ.caso.hasPredenuncia ? casoServ.caso.nic : ''}}</small> </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="transferir" *ngIf="onLine.onLine">
