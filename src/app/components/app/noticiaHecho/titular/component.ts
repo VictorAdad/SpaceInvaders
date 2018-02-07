@@ -22,7 +22,6 @@ export class TransferirComponent extends BasePaginationComponent implements OnIn
     public agencias: MOption[] = [];
     public usuarios: MOption[] = [];
     public form: FormGroup;
-    private isTitular = false;
 
     constructor(
         public dialogRef: MatDialogRef<TransferirComponent>,
@@ -34,7 +33,6 @@ export class TransferirComponent extends BasePaginationComponent implements OnIn
         private casoServ: CasoService
        ) {
         super();
-        this.isTitular = (this.casoServ.caso.currentTitular.userNameAsignado === this.auth.user.username);
     }
 
     ngOnInit() {
@@ -126,13 +124,19 @@ export class TitularComponent implements OnInit {
     @ViewChild(MatPaginator)
     public paginator: MatPaginator;
 
+    public isTitular = false;
+
     constructor(
         public dialog: MatDialog,
         private route: ActivatedRoute,
         public onLine: OnLineService,
         private db: CIndexedDB,
-        private http: HttpService
-    ) { }
+        private http: HttpService,
+        private auth: AuthenticationService,
+        private casoServ: CasoService
+    ) {
+        this.isTitular = (this.casoServ.caso.currentTitular.userNameAsignado === this.auth.user.username);
+    }
 
     ngOnInit() {
         this.route.parent.params.subscribe(params => {
