@@ -442,17 +442,20 @@ export class FormatosLocal {
                             return e.id == o.persona.idiomaIdentificacion.id;
                         });
                         if (value.length>0) {
-                            identificaciones.push(value[0].identificacion);
+                            if (value[0].identificacion) {
+                                identificaciones.push(value[0].identificacion);
+                            }
                         }
                     }
                     if(o.persona.nacionalidadReligion){
                         let value = religion.filter(e => { 
                             return e.id == o.persona.nacionalidadReligion.id;
                         });
-                        Logger.log("------> nacionalidadReligion",value);
                         if (value.length>0) {
-                            religiones.push(value[0].religion);
-                            nacionalidades.push(value[0].nacionalidad);
+                            if(value[0].religion) {
+                                religiones.push(value[0].religion);
+                                nacionalidades.push(value[0].nacionalidad);
+                            }
                         }
                     }
                 });
@@ -494,8 +497,7 @@ export class FormatosLocal {
                 this.data['xDomicilioHechos'] = (_caso.predenuncias.domicilioCausante ? _caso.predenuncias.domicilioCausante : '');
                 this.data['xObservaciones'] = (_caso.predenuncias.observaciones ? _caso.predenuncias.observaciones : '');
             }
-        })
-        
+        })        
     }
 
     public setDataF1005(_caso) {
