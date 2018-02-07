@@ -49,6 +49,10 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
     public delito: Delito;
     public isTitular = false;
 
+    public hintStart: String = "Campo obligatorio";
+    
+    public hintEnd: String = "150 carácteres mínimo";
+
     public constructor(
         _dialog: MatDialog,
         _db: CIndexedDB,
@@ -76,7 +80,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         });
         this.form = new FormGroup({
             'titulo': new FormControl('', [Validators.required]),
-            'descripcion': new FormControl('', [Validators.required]),
+            'descripcion': new FormControl('', [Validators.required, Validators.minLength(150)]), //('', [Validators.required, Validators.minLength(150)])
             'delito': new FormControl('', [Validators.required]),
             'titulares': new FormArray([
                 new FormGroup({
