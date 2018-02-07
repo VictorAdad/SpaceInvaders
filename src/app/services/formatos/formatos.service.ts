@@ -436,9 +436,7 @@ export class FormatosLocal {
                         }
                         domicilio    += pais[o.persona.pais.id];
                         domicilios.push(domicilio);
-                    } else {
-                        domicilios.push(' ');
-                    }
+                    } 
                     if(o.persona.idiomaIdentificacion){
                         let value = identificacion.filter(e => { 
                             return e.id == o.persona.idiomaIdentificacion.id;
