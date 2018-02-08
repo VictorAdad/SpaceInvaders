@@ -68,7 +68,7 @@ export class Usuario {
             notificacion => {
                 if (typeof notificacion !== 'string') {
                     this.sinLeer ++;
-                    this.notificaciones.push(notificacion);
+                    // this.notificaciones.push(notificacion);
                 } else {
                     this.sinLeer += notificacion.length;
                 }

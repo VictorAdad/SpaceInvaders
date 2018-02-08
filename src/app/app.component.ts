@@ -116,9 +116,11 @@ export class AppComponent implements OnInit {
                         maxLength: 100
                     });
                     this.authService.user.notificacionesChange.next(message['notify']);
+                    this.loadNotifications();
                 }
             }
         );
+        this.loadNotifications();
     }
 
 
@@ -154,25 +156,26 @@ export class AppComponent implements OnInit {
         // window.location.assign("../")
     }
 
-    public loadNotifications(_event){
+    public loadNotifications() {
         this.loadNotification = true;
         this.http.get(`/v1/base/notificaciones/usuario/${this.authService.user.username}/page?p=${this.pageNotification}`).subscribe(
             response => {
-                this.loadNotification = false;
-                this.pageNotification ++;
-                if(this.authService.user.notificaciones.length === 0)
-                    this.authService.user.notificaciones = response.data;
-                else
-                    this.authService.user.notificaciones = this.authService.user.notificaciones.concat(response.data);
-
-                console.log('-> Notificaciones', (this.authService.user.notificaciones.length), this.authService.user.notificaciones);
+                if (response.data.length > 0) {
+                    this.loadNotification = false;
+                    this.pageNotification ++;
+                    if (this.authService.user.notificaciones.length === 0) {
+                        this.authService.user.notificaciones = response.data;
+                    } else {
+                        this.authService.user.notificaciones = this.authService.user.notificaciones.concat(response.data);
+                    }
+                }
             }
-        )
+        );
     }
 
     public onScrollNotification(_event: any) {
         if ((_event.target.scrollTop + 430) === _event.target.scrollHeight) {
-            this.loadNotifications(null);
+            this.loadNotifications();
         }
     }
 
