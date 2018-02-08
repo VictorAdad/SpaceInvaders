@@ -14,8 +14,9 @@
 #
 # v0.1 - 24/10/2017
 # v0.2 - 29/11/2017
+# v0.3 - 05/02/2018 - Se añaden las variables para los ambientes productivos de la Fiscalía
 
-# Run npm to create the production build
+# Run script to create the production build
 if [ $# -eq 0 ]; then
     echo "¿Qué ambiente quieres compilar? [evo-sigi | sigi-test | fiscalia]"
     exit 1
@@ -23,22 +24,23 @@ else
     if [ $1 == "evo-sigi" ]; then
       echo "Compilando ambiente evo-sigi (http://sigi.evomatik.net/evo-sigi/)"
       npm run deploy-test
-      npm run precache
       DIR_NAME="evo-sigi"
     elif [ $1 == "sigi-test" ]; then
       echo "Compilando ambiente sigi-test (http://sigi.evomatik.net/sigi-test/)"
       npm run deploy-prod
       DIR_NAME="sigi-test"
     elif [ $1 == "fiscalia" ]; then
-      echo "Compilando ambiente productivo para Fiscalía (sigi.fiscaliaedomex.gob.mx)"
+      echo "Compilando ambiente productivo para Fiscalía (https://sigi.fiscaliaedomex.gob.mx/sigi/)"
       npm run deploy-fiscalia
-      npm run precache
       DIR_NAME="fiscalia"
     else
       echo "Opciones aceptadas: [evo-sigi | sigi-test | fiscalia]"
       exit 1
     fi
 fi
+
+# Run script to prepare service-worker
+npm run precache
 
 # Set the destination server
 DEST=evomatik@10.0.30.14:/home/evomatik/Downloads/frontend
