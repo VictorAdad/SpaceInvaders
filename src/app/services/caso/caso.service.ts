@@ -219,7 +219,6 @@ export class CasoService{
             console.log('log', temCaso['tipoRelacionPersonas']);
             for (let i = 0; i < temCaso['tipoRelacionPersonas'].length; i++) {
                 if (temCaso['tipoRelacionPersonas'][i]['tipo'] === 'Imputado víctima delito') {
-                    console.log("entro");
                     temCaso['hasRelacionVictimaImputado'] = true;
                     break;
                 }
@@ -237,6 +236,16 @@ export class CasoService{
         }
         this.caso = temCaso;
         Logger.logColor('CASO@Update', 'purple', this.caso);
+    }
+
+    /**
+     * Limpia el caso del servicio dejandolo disponible para una
+     * busqeuda nueva.
+     * @return void
+     */
+    public cleanCaso() {
+        this.id = null;
+        this.caso = new Caso();
     }
 }
 /**
