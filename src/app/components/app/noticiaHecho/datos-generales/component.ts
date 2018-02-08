@@ -18,12 +18,14 @@ import { Observable } from 'rxjs/Observable';
 import { Logger } from "@services/logger.service";
 import { Cadena } from "@services/utils/cadena";
 import { SelectsService } from '@services/selects.service';
+import { Subscription } from 'rxjs/Subscription';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
     selector: 'datos-generales',
     templateUrl: './component.html'
 })
-export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnInit {
+export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnInit, OnDestroy {
 
     public form: FormGroup;
 
@@ -48,9 +50,13 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
 
     public delito: Delito;
 
-    public hintStart: String = "Campo obligatorio";
-    
-    public hintEnd: String = "150 carácteres mínimo";
+    public isTitular = false;
+
+    public casoChangeSubs: Subscription;
+
+    public hintStart = 'Campo obligatorio';
+
+    public hintEnd = '150 carácteres mínimo';
 
     public constructor(
         _dialog: MatDialog,
@@ -69,7 +75,6 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         this.activeRoute = _activeRoute;
         this.dialog = _dialog;
         this.onLine = _onLine;
-
     }
 
     ngOnInit() {
@@ -80,7 +85,7 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
         });
         this.form = new FormGroup({
             'titulo': new FormControl('', [Validators.required]),
-            'descripcion': new FormControl('', [Validators.required, Validators.minLength(150)]), //('', [Validators.required, Validators.minLength(150)])
+            'descripcion': new FormControl('', [Validators.required, Validators.minLength(150)]),
             'delito': new FormControl('', [Validators.required]),
             'titulares': new FormArray([
                 new FormGroup({
@@ -90,10 +95,18 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                     'vigente': new FormControl(true),
                 })
             ]),
+            'currentTitular': new FormGroup({
+                'userNameAsignado': new FormControl(this.auth.user.username),
+            }),
             'distrito': new FormControl('', []),
         });
+
+        this.casoChangeSubs = this.casoService.casoChange.subscribe(
+            caso => {this.isTitular = this.casoService.caso.currentTitular.userNameAsignado === this.auth.user.username; }
+        );
+
         this.activeRoute.parent.params.subscribe(params => {
-            if (this.hasId) {
+            if (this.hasId()) {
                 this.id = +params['id'];
                 Logger.log(this.casoService);
                 if (!isNaN(this.id)) {
@@ -129,9 +142,15 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                     }
                 }
 
+            } else {
+                this.isTitular = true;
             }
         });
         this.validateForm(this.form);
+    }
+
+    ngOnDestroy() {
+        this.casoChangeSubs.unsubscribe();
     }
 
     public openDialog() {

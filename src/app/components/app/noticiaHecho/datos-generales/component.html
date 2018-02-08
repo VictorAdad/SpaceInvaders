@@ -11,7 +11,7 @@
 					<label class="mb-0">Delito principal</label>
 				</div>
 				<div class="col-sm-auto">
-					<button mat-raised-button color="accent" (click)="openDialog()" [disabled]="hasId() ? true : false">Agregar delitos</button>
+					<button mat-raised-button color="accent" *ngIf="!hasId() && isTitular" (click)="openDialog()" [disabled]="hasId() ? true : false">Agregar delitos</button>
 				</div>
 			</div>
 			<text-area  name="delito"  class="delito-principal-input" hintStart="Campo obligatorio" [rows]="4" [readonly]="true" [group]="form"> </text-area>
@@ -19,8 +19,8 @@
 
       <div class="row justify-content-end">
 				<div class="col-sm-auto" [matTooltip]="!form.valid ? 'No se han llenado los campos requeridos' : ''" (mouseenter)="validateForm(form)">
-					<button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [isEdit]="true" [disabled]="!form.valid || [saving] || masDe3Dias==true" *ngIf="hasId()">Guardar</button>
-					<button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving] || masDe3Dias==true" *ngIf="!hasId()">Guardar</button>
+					<button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [isEdit]="true" [disabled]="!form.valid || [saving] || masDe3Dias==true" *ngIf="hasId() && isTitular">Guardar</button>
+					<button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving] || masDe3Dias==true" *ngIf="!hasId() && isTitular">Guardar</button>
 				</div>
 				<div class="col-sm-auto">
 					<button mat-button routerLink="/">Cancelar</button>

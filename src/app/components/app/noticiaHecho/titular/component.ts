@@ -12,6 +12,7 @@ import { TableService} from '@utils/table/table.service';
 import { MOption } from '@partials/form/select2/select2.component'
 import { _usuarios } from '@services/auth/usuarios';
 import { Logger } from "@services/logger.service";
+import { CasoService } from '../../../../services/caso/caso.service';
 
 @Component({
     templateUrl: 'tranferir.component.html'
@@ -28,7 +29,8 @@ export class TransferirComponent extends BasePaginationComponent implements OnIn
         private http: HttpService,
         private router: Router,
         private auth: AuthenticationService,
-        private notify: NotifyService
+        private notify: NotifyService,
+        private casoServ: CasoService
        ) {
         super();
     }
@@ -91,6 +93,7 @@ export class TransferirComponent extends BasePaginationComponent implements OnIn
                     });
 
                     this.notify.emitMessage(response);
+                    this.casoServ.cleanCaso();
                     this.router.navigate(['/' ]);
                     resolve('Se cambió de titular del caso');
                 },
@@ -122,13 +125,19 @@ export class TitularComponent implements OnInit {
     @ViewChild(MatPaginator)
     public paginator: MatPaginator;
 
+    public isTitular = false;
+
     constructor(
         public dialog: MatDialog,
         private route: ActivatedRoute,
         public onLine: OnLineService,
         private db: CIndexedDB,
-        private http: HttpService
-    ) { }
+        private http: HttpService,
+        public auth: AuthenticationService,
+        public casoServ: CasoService
+    ) {
+        this.isTitular = (this.casoServ.caso.currentTitular.userNameAsignado === this.auth.user.username);
+    }
 
     ngOnInit() {
         this.route.parent.params.subscribe(params => {
@@ -139,13 +148,9 @@ export class TitularComponent implements OnInit {
 
                 } else {
                     this.columns = ['operador', 'oficina', 'titular', 'asignacion', 'nic'];
-                    this.db.get("casos", this.casoId).then(caso => {
-                        if (caso) {
-                            if (caso['titulares']) {
-                                this.dataSource = new TableService(this.paginator, caso['titulares'] as Titular[]);
-                            }
-                        }
-                    });
+                    if (this.casoServ.caso['titulares']) {
+                        this.dataSource = new TableService(this.paginator, this.casoServ.caso['titulares'] as Titular[]);
+                    }
                 }
             }
         });
@@ -158,10 +163,15 @@ export class TitularComponent implements OnInit {
         }
     }
 
-    public page(url: string){
+    public page(url: string) {
         this.http.get(url).subscribe((response) => {
             this.pag = response.totalCount;
             this.data = response.data as Titular[];
+            for (const titular of this.data) {
+                this.http.get(`/v1/base/casos/propietario/${titular.id}`).subscribe(
+                    propietario => titular['propietario'] = propietario
+                );
+            }
             Logger.log(this.data);
             this.dataSource = new TableService(this.paginator, response.data);
         });
@@ -187,4 +197,5 @@ export class Titular {
     titular: string;
     fechaAsignacion: Date;
     nic: string;
+    propietario: any;
 }

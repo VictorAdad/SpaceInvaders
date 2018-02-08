@@ -207,15 +207,18 @@ export class CasoService{
         var temCaso = new Caso().fromJSON(caso);
         if (temCaso['predenuncias']) {
             temCaso['hasPredenuncia'] = !Number.isNaN(temCaso['predenuncias']['id']);
+        } else {
+            temCaso['hasPredenuncia'] = false;
         }
         if (temCaso['acuerdoInicio']) {
             temCaso['hasAcuerdoInicio'] = !Number.isNaN(temCaso['acuerdoInicio']['id']);
+        } else {
+            temCaso['hasAcuerdoInicio'] = false;
         }
         if (temCaso['tipoRelacionPersonas']){
             console.log('log', temCaso['tipoRelacionPersonas']);
             for (let i = 0; i < temCaso['tipoRelacionPersonas'].length; i++) {
                 if (temCaso['tipoRelacionPersonas'][i]['tipo'] === 'Imputado víctima delito') {
-                    console.log("entro");
                     temCaso['hasRelacionVictimaImputado'] = true;
                     break;
                 }
@@ -233,6 +236,16 @@ export class CasoService{
         }
         this.caso = temCaso;
         Logger.logColor('CASO@Update', 'purple', this.caso);
+    }
+
+    /**
+     * Limpia el caso del servicio dejandolo disponible para una
+     * busqeuda nueva.
+     * @return void
+     */
+    public cleanCaso() {
+        this.id = null;
+        this.caso = new Caso();
     }
 }
 /**
@@ -266,6 +279,7 @@ export class Caso {
     public ultimaActualizacion: Date = null;
     public username: string;
     public estatusSincronizacion: string = undefined;
+    public currentTitular: any;
 
 
     public findPersonaCaso(_id) {

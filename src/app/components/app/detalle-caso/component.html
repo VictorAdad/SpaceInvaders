@@ -81,7 +81,7 @@
                                     </mat-card-content>
                                 </mat-card>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" *ngIf="isTitular">
                                 <mat-card class="h-100">
                                     <mat-card-content class="d-flex flex-column h-100">
                                         <div class="row ml-0 mr-0 align-items-center mb-auto">
@@ -115,7 +115,7 @@
         </mat-card>
     </div>
 </div>
-<div class="row">
+<div class="row" *ngIf="isTitular">
     <div class="col-md-12">
         <mat-card>
             
@@ -469,7 +469,7 @@
                                     <div class="row ml-0 mr-0 align-items-center mb-auto">
                                         <div class="col-lg-8">
                                             <div class="row">
-                                                <p class="font-weight-bold">No ejercicio de la Acción Penal</p>
+                                                <p class="font-weight-bold">No ejercicio de la Acción Penal e Incompetencia</p>
                                             </div>
                                             <div class="row">
                                                 <p>No existe ejercicio de la acción penal</p>
