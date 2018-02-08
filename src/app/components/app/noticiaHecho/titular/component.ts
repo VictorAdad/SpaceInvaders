@@ -93,6 +93,7 @@ export class TransferirComponent extends BasePaginationComponent implements OnIn
                     });
 
                     this.notify.emitMessage(response);
+                    this.casoServ.cleanCaso();
                     this.router.navigate(['/' ]);
                     resolve('Se cambió de titular del caso');
                 },
@@ -162,10 +163,15 @@ export class TitularComponent implements OnInit {
         }
     }
 
-    public page(url: string){
+    public page(url: string) {
         this.http.get(url).subscribe((response) => {
             this.pag = response.totalCount;
             this.data = response.data as Titular[];
+            for (const titular of this.data) {
+                this.http.get(`/v1/base/casos/propietario/${titular.id}`).subscribe(
+                    propietario => titular['propietario'] = propietario
+                );
+            }
             Logger.log(this.data);
             this.dataSource = new TableService(this.paginator, response.data);
         });
@@ -191,4 +197,5 @@ export class Titular {
     titular: string;
     fechaAsignacion: Date;
     nic: string;
+    propietario: any;
 }
