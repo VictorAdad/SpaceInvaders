@@ -13,6 +13,8 @@ import { MOption } from '@partials/form/select2/select2.component'
 import { _usuarios } from '@services/auth/usuarios';
 import { Logger } from "@services/logger.service";
 import { CasoService } from '../../../../services/caso/caso.service';
+import { Subscription } from 'rxjs/Subscription';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
     templateUrl: 'tranferir.component.html'
@@ -110,7 +112,7 @@ export class TransferirComponent extends BasePaginationComponent implements OnIn
     templateUrl: './component.html',
     selector: 'titular'
 })
-export class TitularComponent implements OnInit {
+export class TitularComponent implements OnInit, OnDestroy {
 
     public pag = 0;
 
@@ -127,6 +129,8 @@ export class TitularComponent implements OnInit {
 
     public isTitular = false;
 
+    public casoChangeSubs: Subscription;
+
     constructor(
         public dialog: MatDialog,
         private route: ActivatedRoute,
@@ -136,7 +140,9 @@ export class TitularComponent implements OnInit {
         public auth: AuthenticationService,
         public casoServ: CasoService
     ) {
-        this.isTitular = (this.casoServ.caso.currentTitular.userNameAsignado === this.auth.user.username);
+        if (this.casoServ.caso.currentTitular) {
+            this.isTitular = (this.casoServ.caso.currentTitular.userNameAsignado === this.auth.user.username);
+        }
     }
 
     ngOnInit() {
@@ -154,6 +160,14 @@ export class TitularComponent implements OnInit {
                 }
             }
         });
+
+        this.casoChangeSubs = this.casoServ.casoChange.subscribe(
+            caso => this.isTitular = (caso.currentTitular.userNameAsignado === this.auth.user.username)
+        );
+    }
+
+    ngOnDestroy() {
+        this.casoChangeSubs.unsubscribe();
     }
 
     public changePage(_e) {
