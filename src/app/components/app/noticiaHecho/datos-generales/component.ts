@@ -100,12 +100,15 @@ export class DatosGeneralesComponent extends NoticiaHechoGlobal implements OnIni
                     this.casoService.find(this.id);
                     if (this.onLine.onLine) {
                         this.http.get('/v1/base/casos/' + this.id).subscribe((response) => {
-                            this.form.patchValue(response);
-                            if (response.delitoPrincipal != null) {
-                                this.form.patchValue({
-                                    'delito': response.delitoPrincipal.nombre
-                                });
-                            }
+                            const timer = Observable.timer(1);
+                            timer.subscribe(t => {
+                                this.form.patchValue(response);
+                                if (response.delitoPrincipal != null) {
+                                    this.form.patchValue({
+                                        'delito': response.delitoPrincipal.nombre
+                                    });
+                                }
+                            });
 
                         });
                     } else {

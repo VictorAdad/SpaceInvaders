@@ -412,9 +412,9 @@ export class FormatosLocal {
                     if(o.persona.estadoCivil){
                         estadosCiviles.push(estadoCivil[o.persona.estadoCivil.id]);
                     }
-                    if(o.persona.pais){
+                    if(o.persona.pais && Object.keys(o.persona.pais).length){
                         let domicilio;
-                        if(o.persona.municipio){
+                        if(o.persona.municipio && o.persona.municipio.id != ""){
                             let value = municipio.filter(e => { 
                                 return e.id == o.persona.municipio.id;
                             });
@@ -424,7 +424,7 @@ export class FormatosLocal {
                         } else {
                             domicilio = (o.persona.municipioNacimientoOtro ? o.persona.municipioNacimientoOtro+' ' : '')
                         }
-                        if(o.persona.estado){
+                        if(o.persona.estado && o.persona.estado.id != ""){
                             let value = estado.filter(e => { 
                                 return e.id == o.persona.estado.id;
                             });
