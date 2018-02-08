@@ -207,9 +207,13 @@ export class CasoService{
         var temCaso = new Caso().fromJSON(caso);
         if (temCaso['predenuncias']) {
             temCaso['hasPredenuncia'] = !Number.isNaN(temCaso['predenuncias']['id']);
+        } else {
+            temCaso['hasPredenuncia'] = false;
         }
         if (temCaso['acuerdoInicio']) {
             temCaso['hasAcuerdoInicio'] = !Number.isNaN(temCaso['acuerdoInicio']['id']);
+        } else {
+            temCaso['hasAcuerdoInicio'] = false;
         }
         if (temCaso['tipoRelacionPersonas']){
             console.log('log', temCaso['tipoRelacionPersonas']);
@@ -266,6 +270,7 @@ export class Caso {
     public ultimaActualizacion: Date = null;
     public username: string;
     public estatusSincronizacion: string = undefined;
+    public currentTitular: any;
 
 
     public findPersonaCaso(_id) {

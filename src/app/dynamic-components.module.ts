@@ -7,6 +7,8 @@ import {ProgressDialog} from '@components-app/onLine/progressDialog.component';
 import {savingComponent} from './directives/saving/saving.directive';
 import { LoginDialog } from './components/app/onLine/loginDialog.component';
 import { PersonaPreSaveComponent } from './components/app/noticiaHecho/persona/create/pre-save-component';
+import { LoaderComponent } from './components/globals/partials/loader/component';
+import { LoaderDialog } from './components/app/loader-dialog/component';
 
 @NgModule()
 export class DynamicComponentsModule {}
@@ -19,5 +21,7 @@ export const dyanamicComponents = [
     PersonaPreSaveComponent,
     ProgressDialog,
     savingComponent,
-    LoginDialog
+    LoginDialog,
+    LoaderComponent,
+    LoaderDialog
 ];
