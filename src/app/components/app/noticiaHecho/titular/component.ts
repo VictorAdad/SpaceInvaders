@@ -132,8 +132,8 @@ export class TitularComponent implements OnInit {
         public onLine: OnLineService,
         private db: CIndexedDB,
         private http: HttpService,
-        private auth: AuthenticationService,
-        private casoServ: CasoService
+        public auth: AuthenticationService,
+        public casoServ: CasoService
     ) {
         this.isTitular = (this.casoServ.caso.currentTitular.userNameAsignado === this.auth.user.username);
     }

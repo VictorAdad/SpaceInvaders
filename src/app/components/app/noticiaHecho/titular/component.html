@@ -10,17 +10,17 @@
 
         <ng-container matColumnDef="operador">
             <mat-header-cell *matHeaderCellDef> Operador </mat-header-cell>
-            <mat-cell *matCellDef="let element"> <small>{{element.propietario?.cargo}}</small> </mat-cell>
+            <mat-cell *matCellDef="let element"> <small>{{element.propietario?.cargo || auth.user.cargo }}</small> </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="oficina">
             <mat-header-cell *matHeaderCellDef> Oficina </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.propietario?.municipio}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.propietario?.municipio || auth.user.municipio }} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="titular">
             <mat-header-cell *matHeaderCellDef> Titular </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.propietario?.displayName}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.propietario?.displayName || auth.user.nombreCompleto }} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="asignacion">
