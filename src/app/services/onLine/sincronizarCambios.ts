@@ -1,4 +1,4 @@
-import {CatalogosACargar} from "@services/onLine/CatalogosACargar";
+import {CatalogosACargar} from "@services/onLine/catalogosACargar";
 import { CIndexedDB } from '@services/indexedDB';
 import { HttpService} from '@services/http.service';
 import { Logger } from "@services/logger.service";
@@ -50,7 +50,7 @@ export class SincronizaCambios {
     }
     /**
      * Actualiza los casos que ya se sincronizaron.
-     * Busca en la lista de sincronizacion, las entradas que corresponden a la url de post de 
+     * Busca en la lista de sincronizacion, las entradas que corresponden a la url de post de
      * caso y luego busca el caso en indexeddb y le agrega el campo de estatusSincronizacion
      */
     actualizaCasos(){
@@ -85,7 +85,7 @@ export class SincronizaCambios {
         this.casoService=casoService;
     }
     /**
-     * Funcion que inicializa la sincronizacion de cambios. lo que hace es buscar todos los elementos de la tabla 
+     * Funcion que inicializa la sincronizacion de cambios. lo que hace es buscar todos los elementos de la tabla
      * sincroizar y luego llama la funcion recursiva sincroniza.
      */
     startSincronizacion(){
@@ -139,7 +139,7 @@ export class SincronizaCambios {
     }
     /**
      * Busca cambios sin sincronizar
-     * @param lista 
+     * @param lista
      */
     hayCambios(lista:any, username:string):boolean{
         let listaSincronizar = lista as any[];
@@ -276,15 +276,15 @@ export class SincronizaCambios {
 
     /**
      * Esta funcion busca exactamente el subarbol model dentro de original. Esto para dar seguimiento a los ids nuevos.
-     * @param original 
-     * @param model 
+     * @param original
+     * @param model
      * @returns devuelve el elemento {id:model, newId:original}, que es una entrada para la tabla newId. o null si no hay mach.
      * @example EJEMPLO
      * orginal={
      *  id:1,
      *  persona:{
      *      id:1,
-     *      nombre:"pepe" 
+     *      nombre:"pepe"
      *  }
      * }
      * model:{
@@ -422,7 +422,7 @@ export class SincronizaCambios {
                 respuesta=>{
                     Logger.log("RESPONSE EDIT=>",respuesta);
                     item.pendiente=false;
-                    
+
                     this.db.update("sincronizar",item).then( respuesta =>{
                         this.seActualizoAlmenosUnRegistro=true;
                         this.sincroniza(i+1,lista2);
@@ -476,7 +476,7 @@ export class SincronizaCambios {
     /**
      * Se encarga de subir los archivos guardados en indexeddb. Nota para este momento ya no debe de venir dentro ninguna informacion temporal.
      * Para lograr lo anterior se busca dentro de la tabla documentos todos los documentos que vienen dentro de item["docuemntos"]. Por cada documento se busca la informacion en la tabla de blob(la cual esta en formato dataUri)
-     * y despues se convierte a blob para despue agregarla al formdata que se enviara. 
+     * y despues se convierte a blob para despue agregarla al formdata que se enviara.
      * @param _url url del servicio
      * @param item Es la fila de la tabla de sincronizacion que se esta atendiendo
      * @param i Es el elemento i-esimo de la lista
@@ -542,7 +542,7 @@ export class SincronizaCambios {
             }else{
                 obj.sincroniza(i+1,lista2);
             }
-            
+
         });
     }
     /**
@@ -569,4 +569,4 @@ export class SincronizaCambios {
 
     }
 
-} 
+}
