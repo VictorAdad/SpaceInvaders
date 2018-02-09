@@ -122,6 +122,7 @@ export class AcuerdoRadicacionComponent extends DeterminacionGlobal{
                         this.fillForm(response);
                         this.modelUpdate.emit(response);
                         this.personas = response.personas;
+                        this.form.disable();
                       });
             }
         });
