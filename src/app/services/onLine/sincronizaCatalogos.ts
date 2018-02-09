@@ -1,10 +1,10 @@
-import {CatalogosACargar} from "@services/onLine/CatalogosACargar";
+import {CatalogosACargar} from '@services/onLine/catalogosACargar';
 import { CIndexedDB } from '@services/indexedDB';
 import { HttpService} from '@services/http.service';
-import { DialogSincrinizarService} from "@services/onLine/dialogSincronizar.service";
-import { Logger } from "@services/logger.service";
-import { Catalogos } from "../../components/app/catalogos/catalogos";
-import { OnLineService } from "../onLine.service";
+import { DialogSincrinizarService} from '@services/onLine/dialogSincronizar.service';
+import { Logger } from '@services/logger.service';
+import { Catalogos } from '../../components/app/catalogos/catalogos';
+import { OnLineService } from '../onLine.service';
 
 /**
  * Clase para sincronizar los cambios de los catalogos
@@ -53,7 +53,7 @@ export class SincronizaCatalogos {
             var ant_ = false;
             for (var i in cad) {
                 if (i=="0"){
-                    copia+=cad[i].toUpperCase();    
+                    copia+=cad[i].toUpperCase();
                 }
                 else if (cad[i]!="_"){
                     if (ant_){
@@ -94,7 +94,7 @@ export class SincronizaCatalogos {
     }
     /**
      * No hace nada :'(
-     * @param arr 
+     * @param arr
      */
     private arrayToCamelCase(arr:any[]){
         let arreglo=new Array<any>();
@@ -178,7 +178,7 @@ export class SincronizaCatalogos {
                 //obj.dialogo.close();
             });
         });
-        
+
     }
     /**
      * Funcion que se encarga de descargar la lista de catalogos firmados y comparalos contra la lista de IndexedDB. Si existe alguna diferencia se actualiza el catalogo que tienen diferente firma.
@@ -221,7 +221,7 @@ export class SincronizaCatalogos {
                             break;
                         }
                     }
-                    
+
                     if (!encontrado){
                         let nombre = itemR["nombreCatalogo"];
                         if (itemR["nombreCatalogo"] == 'MarcaSubMarca'){
@@ -233,9 +233,9 @@ export class SincronizaCatalogos {
                             Logger.log("actualizar este catalogo",itemR, nombreCatalogo,item);
                             obj.actualizaCatalogo(item).then(e => {
                                 //actualizamos la llave del catalogo
-                                obj.db.update('catalogoLlave', 
+                                obj.db.update('catalogoLlave',
                                     {
-                                        id: itemR["nombreCatalogo"], 
+                                        id: itemR["nombreCatalogo"],
                                         uuid: itemR["uuid"]
                                     }).then(e => { rec(i+1);
                                     }).catch( e => {rec(i+1);} );
@@ -249,7 +249,7 @@ export class SincronizaCatalogos {
 
                 }
                 rec(0);
-                
+
             }).catch( error=>{
                 console.error("error", error);
             });
@@ -277,7 +277,7 @@ export class SincronizaCatalogos {
                 .catch( e => {reject(e);});
             });
         });
-       
+
     }
     /**
      * Funcion recursiva para sincronizar catalogos. en teoria todo lo que viene en el arr se va a sincronizar. Este arreglo se inicializa en la funcion searchChange
@@ -300,8 +300,8 @@ export class SincronizaCatalogos {
         }
         if (i==arr.length){
             //dejamos de sincronizar hasta que las matrices se bajen
-            
-            
+
+
             // if (titulo=="matrices"){
             //     this.finalizoMatrix=true;
             // }else{
@@ -404,4 +404,4 @@ export class SincronizaCatalogos {
     }
 
 
-} 
+}
