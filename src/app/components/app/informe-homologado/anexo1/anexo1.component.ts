@@ -26,7 +26,7 @@ export class Anexo1Component extends InformeBaseComponent {
 
   ngOnInit() {
     var rows = {};
-    rows['detenido'] = "12372368476327432"
+    rows['detenido'] = "1237236"
     rows['comprendio'] = "Noé Robles Camacho"
     rows['primer'] = "Policia Federal"
 

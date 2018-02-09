@@ -130,41 +130,41 @@
   </div>
 
   <div class="row space"></div>
-  <div class="row justify-content-center">
+  <div class="row justify-content-center" style="text-align:center" >
     <div class="col-md-10">
-      <mat-table #table [dataSource]="dataSource">
+      <mat-table #table [dataSource]="dataSource" style="text-align:center">
         <ng-container matColumnDef="nombre">
-          <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.nombre}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Nombre</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.nombre}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="traslado">
-          <mat-header-cell *matHeaderCellDef>Traslado a</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.traslado}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Traslado a</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.traslado}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="entrega">
-          <mat-header-cell *matHeaderCellDef>Entrega</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.entrega}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Entrega</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.entrega}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="recibe">
-          <mat-header-cell *matHeaderCellDef>Recibe</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.recibe}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Recibe</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.recibe}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="ubicacion">
-          <mat-header-cell *matHeaderCellDef>Ubicación</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.ubicacion}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Ubicación</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.ubicacion}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="accion">
-          <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-          <mat-cell *matCellDef="let element"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
-                                                              aria-hidden="true">delete</mat-icon></span></mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
+                                                              aria-hidden="true" style="text-align:center">delete</mat-icon></span></mat-cell>
         </ng-container>
 
-        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-header-row *matHeaderRowDef="columns" style="text-align:center"></mat-header-row>
         <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
       </mat-table>
     </div>

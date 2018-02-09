@@ -99,24 +99,24 @@
       <mat-table #table [dataSource]="dataSource">
 
         <ng-container matColumnDef="usodelafuerza">
-          <mat-header-cell *matHeaderCellDef>Uso de la fuerza</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.usodelafuerza}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Uso de la fuerza</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.usodelafuerza}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="primerresponsable">
-          <mat-header-cell *matHeaderCellDef>primerresponsable</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.primerresponsable}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">primerresponsable</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.primerresponsable}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="nivel">
-          <mat-header-cell *matHeaderCellDef>Nivel</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.nivel}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Nivel</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.nivel}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="accion">
-          <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-          <mat-cell *matCellDef="let element"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
-                                                              aria-hidden="true">delete</mat-icon></span></mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
+                                                              aria-hidden="true" style="text-align:center">delete</mat-icon></span></mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="columns"></mat-header-row>

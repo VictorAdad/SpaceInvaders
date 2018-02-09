@@ -52,7 +52,7 @@ export class PrincipalInformeHomologadoCreate extends InformeBaseComponent {
 
   ngOnInit() {
     var rows = {};
-    rows['cuip'] = "12372368476327432"
+    rows['cuip'] = "12372"
     rows['nombre'] = "Noé Robles Camacho"
     rows['institucion'] = "Policia Federal"
     rows['entidadMunicipio'] = "Xalapa, Veracruz (10,018)"

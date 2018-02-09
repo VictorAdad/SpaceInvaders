@@ -137,24 +137,24 @@
     <div class="col-md-9">
       <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="entrevistado">
-          <mat-header-cell *matHeaderCellDef> Entrevistado</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.entrevistado}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center"> Entrevistado</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.entrevistado}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="entrevistador">
-          <mat-header-cell *matHeaderCellDef>Entrevistador</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.entrevistador}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Entrevistador</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.entrevistador}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="fechaHora">
-          <mat-header-cell *matHeaderCellDef>Fecha y hora</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.fechaHora}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Fecha y hora</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.fechaHora}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="accion">
           <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
           <mat-cell *matCellDef="let element"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
-                                                              aria-hidden="true">delete</mat-icon></span></mat-cell>
+                                                              aria-hidden="true" style="text-align:center">delete</mat-icon></span></mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="columns"></mat-header-row>

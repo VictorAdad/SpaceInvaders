@@ -32,24 +32,24 @@
     <div class="col-md-12">
       <mat-table #table [dataSource]="dataSource">
         <ng-container matColumnDef="tipo">
-          <mat-header-cell *matHeaderCellDef>Tipo</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.tipo}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Tipo</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.tipo}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="cantidad">
-          <mat-header-cell *matHeaderCellDef>Cantidad</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.cantidad}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Cantidad</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.cantidad}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="especificacion">
-          <mat-header-cell *matHeaderCellDef>Especificacion</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.especificacion}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Especificacion</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.especificacion}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="accion">
           <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-          <mat-cell *matCellDef="let element"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
-                                                              aria-hidden="true">delete</mat-icon></span></mat-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
+                                                              aria-hidden="true" style="text-align:center">delete</mat-icon></span></mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="columns"></mat-header-row>

@@ -241,24 +241,24 @@
       <mat-table #table [dataSource]="dataSource">
 
         <ng-container matColumnDef="detenido">
-          <mat-header-cell *matHeaderCellDef> Detenido</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.detenido}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center"> Detenido</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.detenido}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="edad">
-          <mat-header-cell *matHeaderCellDef>Edad</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.edad}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Edad</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.edad}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="direccion">
-          <mat-header-cell *matHeaderCellDef>Direccion</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.direccion}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Direccion</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.direccion}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="accion">
-          <mat-header-cell *matHeaderCellDef></mat-header-cell>
-          <mat-cell *matCellDef="let element"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
-                                                              aria-hidden="true">delete</mat-icon></span></mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center"></mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
+                                                              aria-hidden="true" style="text-align:center">delete</mat-icon></span></mat-cell>
         </ng-container>
 
 

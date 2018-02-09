@@ -33,7 +33,7 @@
     <div class="col-md-auto">
       <span class="float-left"><h5>Primer respondiente que realiza la lectura de derechos (Llenar sólo en caso de no ser el mismo que llena este formato)</h5></span>
     </div>
-  </div>
+  </div>  
 
   <div class="row space"></div>
 
@@ -66,24 +66,24 @@
     <div class="col-md-10">
       <mat-table #table [dataSource]="dataSource">
         <ng-container matColumnDef="detenido">
-          <mat-header-cell *matHeaderCellDef>Detenido</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.detenido}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Detenido</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.detenido}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="comprendio">
-          <mat-header-cell *matHeaderCellDef>Comprendio sus derechos</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.comprendio}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Comprendio sus derechos</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.comprendio}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="primer">
-          <mat-header-cell *matHeaderCellDef>Primer responsable</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.primer}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Primer responsable</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.primer}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="accion">
-          <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-          <mat-cell *matCellDef="let element"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
-                                                              aria-hidden="true">delete</mat-icon></span></mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
+                                                              aria-hidden="true" style="text-align:center">delete</mat-icon></span></mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="columns"></mat-header-row>

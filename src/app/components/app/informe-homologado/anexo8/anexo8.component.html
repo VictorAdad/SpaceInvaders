@@ -175,7 +175,7 @@
   </div>
   <div class="row">
     <div class="col-md-4">
-      <text label="Cantidad" name="tipoObjetosEncontradosCadaverCantidad" [group]="form"></text>
+      <text label="Cantidad" name="tipoObjetosEncontradosCadaverCantidad" [group]="form" ></text>
     </div>
     <div class="col-md-4">
       <text label="Cantidad" name="tipoObjetosEncontradosRestosHumanosCantidad" [group]="form"></text>
@@ -378,19 +378,19 @@
     <div class="col-md-10">
       <mat-table #table [dataSource]="dataSource">
         <ng-container matColumnDef="nombre">
-          <mat-header-cell *matHeaderCellDef>Detenido</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.nombre}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Detenido</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.nombre}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="objeto">
-          <mat-header-cell *matHeaderCellDef>Comprendio sus derechos</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.objeto}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Comprendio sus derechos</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.objeto}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="accion">
-          <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-          <mat-cell *matCellDef="let element"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
-                                                              aria-hidden="true">delete</mat-icon></span></mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
+                                                              aria-hidden="true" style="text-align:center">delete</mat-icon></span></mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
@@ -686,19 +686,19 @@
     <div class="col-md-10">
       <mat-table #table [dataSource]="dataSource">
         <ng-container matColumnDef="nombre">
-          <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.nombre}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Nombre</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.nombre}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="objeto">
-          <mat-header-cell *matHeaderCellDef>Tipo</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.objeto}}</mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Tipo</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.objeto}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="accion">
-          <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-          <mat-cell *matCellDef="let element"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
-                                                              aria-hidden="true">delete</mat-icon></span></mat-cell>
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:center"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
+                                                              aria-hidden="true" style="text-align:center">delete</mat-icon></span></mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
