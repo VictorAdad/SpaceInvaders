@@ -764,6 +764,9 @@ public setDataF1007(_data){
         
         const entrevista = _caso.entrevistas.filter(o => o.id == _id)[0];
 
+        if (!entrevista)
+            return;
+
         this.db.get('catalogos','sexo').then(sexoCat => {
             let listSexo = sexoCat['arreglo'] as any[]; 
 
