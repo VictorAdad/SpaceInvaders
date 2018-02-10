@@ -14,12 +14,13 @@
 
         <button mat-icon-button *ngIf="!servicio.onLine && !servicio.sincronizando">
             <mat-icon class="button-menu">signal_wifi_off</mat-icon>
+            <mat-chip color="accent">{{ sincronizar.numPendientes }}</mat-chip>
         </button>
 
         <button mat-icon-button [matMenuTriggerFor]="notify" [disabled]="!servicio.onLine" (onMenuClose)="pageNotification = 0" style="margin-right: 20px;">
             <mat-icon class="button-menu">notifications</mat-icon>
             <mat-chip color="accent">{{ authService.user.sinLeer }}</mat-chip>
-        </button>
+        </button> 
 
         <mat-menu #notify="matMenu" class="notification-list">
             <button class="titulo" mat-menu-item>

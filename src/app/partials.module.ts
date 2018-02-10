@@ -20,7 +20,7 @@ import { CurpRfcComponent } from '@partials/form/curp-rfc/component';
 import { IntComponent } from '@partials/form/int/int.component';
 import { PhoneComponent } from '@partials/form/phone/phone.component';
 import { BaseInputComponent } from '@partials/form/base-input.component';
-
+import { ValidaOfflineComponet } from './components/globals/partials/valida/valida';
 
 @NgModule()
 export class PartialsModule {}
@@ -46,5 +46,6 @@ export const partialsComponents = [
 	CurpRfcComponent,
 	IntComponent,
 	PhoneComponent,
-	BaseInputComponent
+	BaseInputComponent,
+	ValidaOfflineComponet
 ];

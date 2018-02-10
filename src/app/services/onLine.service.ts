@@ -93,6 +93,9 @@ export class OnLineService {
                 if (this.onLine){
                     this.sincronizarCatalogos.searchChange();
                 }
+                if (!this.onLine) {
+                    this.abreNotificacion();
+                }
                 this.onLineChange.next(this.onLine);
                 var url=this.route["url"];
                 if (url=="/")
@@ -114,6 +117,18 @@ export class OnLineService {
             });
         // else
         //     Logger.log('Ya existen catalogos sincroinzados');
+    }
+
+    abreNotificacion() {
+        this.notificationService.create('Advertencia',
+            'Estás entrando a modo offline recuerda que no debes borrar el cache de tu navegador para no perder la información de los casos pendientes de sincronizar.', 
+            'warn', {
+                timeOut: 5000,
+                showProgressBar: true,
+                pauseOnHover: false,
+                clickToClose: false,
+                maxLength: 155
+          });
     }
 
     setCaso(casoService){
