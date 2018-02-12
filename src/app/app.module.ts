@@ -77,6 +77,8 @@ import 'hammerjs';
 import { pipes } from './pipes/pipe.module';
 import { LoginDialogService } from './services/onLine/loginDialog.service';
 import { LoadingDialogService } from './services/loading/loading-dialog.service';
+import { DialogVistaInvalidaOfflineService } from './services/onLine/vistaOfflineInvalidaDialog.service';
+import { TablaSincronizarService } from './services/onLine/tablaSincronizarService';
 
 
 @NgModule({
@@ -156,6 +158,8 @@ import { LoadingDialogService } from './services/loading/loading-dialog.service'
     })
   ],
   providers: [
+    TablaSincronizarService,
+    DialogVistaInvalidaOfflineService,
     DialogSincrinizarService,
     MiservicioService,
     AuthenticationService,

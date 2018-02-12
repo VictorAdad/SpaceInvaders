@@ -530,10 +530,19 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
 
             // Heredar Fecha Nacimiento
             // Logger.log('-> fecha de nacimiento ', personaCaso.persona.fechaNacimiento);
-
-            let fechaNacimientoMoment = personaCaso.persona.fechaNacimiento ? moment(personaCaso.persona.fechaNacimiento).format('DD-MM-YYYY'): 'Sin valor';
+            //VAlidacion de la fecha con moment
+            let fechaNacimientoMoment = moment(personaCaso.persona.fechaNacimiento);
+            let fechaString = 'Sin valor';
+            //Preguntamos si es valida la fecha
+            if (fechaNacimientoMoment.isValid()){
+                fechaString = fechaNacimientoMoment.format("DD-MM-YYYY");
+            }
             var hoy=moment();
-            let edadMoment = personaCaso.persona.fechaNacimiento ? hoy.diff(moment(personaCaso.persona.fechaNacimiento), 'years'): personaCaso.persona.edad;
+            let edadMoment = personaCaso.persona.edad;
+            //si es valida la fecha calculamos la edad contra el dia de hoy
+            if (fechaNacimientoMoment.isValid()) {
+                edadMoment = hoy.diff(moment(personaCaso.persona.fechaNacimiento), 'years')
+            }
             if (edades=='')
                 edades = ''+edadMoment;
             else
@@ -542,11 +551,14 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                 personaCaso.persona.fechaNacimiento = personaCaso.persona.fechaNacimiento? moment(personaCaso.persona.fechaNacimiento).format('DD-MM-YYYY'):null;
             }
             this.form.controls["fechaNacimientoHeredar"].setValue(
-                this.form.controls["fechaNacimientoHeredar"].value ? this.form.controls["fechaNacimientoHeredar"].value + ', '+fechaNacimientoMoment:fechaNacimientoMoment );
+                this.form.controls["fechaNacimientoHeredar"].value ? this.form.controls["fechaNacimientoHeredar"].value + ', '+fechaString:fechaString );
             // Heredar Edad
             this.form.controls["edadHeredar"].setValue(edades);
             // heredar Nacionalidad
             //Heredar CURP
+            if (personaCaso.persona.curp) {
+                personaCaso.persona.curp = personaCaso.persona.curp.toUpperCase();
+            }
             this.form.controls["curpHeredar"].setValue( this.form.controls["curpHeredar"].value?(personaCaso.persona.curp?this.form.controls["curpHeredar"].value+","+personaCaso.persona.curp:this.form.controls["curpHeredar"].value+",Sin valor"):(personaCaso.persona.curp?personaCaso.persona.curp:"Sin valor"))
             //Heredar RFC
             this.form.controls["rfcHeredar"].setValue( this.form.controls["rfcHeredar"].value?(personaCaso.persona.rfc?this.form.controls["rfcHeredar"].value+","+personaCaso.persona.rfc:this.form.controls["rfcHeredar"].value+",Sin valor"):(personaCaso.persona.rfc?personaCaso.persona.rfc:"Sin valor"))
@@ -606,10 +618,18 @@ export class EntrevistaEntrevistaComponent extends EntrevistaGlobal {
                 this.form.controls["noInteriorHeredar"].setValue( this.form.controls["noInteriorHeredar"].value?(localizacion.noInterior?this.form.controls["noInteriorHeredar"].value+","+localizacion.noInterior:this.form.controls["noInteriorHeredar"].value+",Sin valor"):(localizacion.noInterior?localizacion.noInterior:"Sin valor"))
                 // Heredar CP
                 this.form.controls["cpHeredar"].setValue( this.form.controls["cpHeredar"].value?(localizacion.cp?this.form.controls["cpHeredar"].value+","+localizacion.cp:this.form.controls["cpHeredar"].value+",Sin valor"):(localizacion.cp?localizacion.cp:"Sin valor"))
-
-                let colonia=(localizacion.colonia?localizacion.colonia.nombre:(localizacion.coloniaOtro?localizacion.coloniaOtro:null))
-                let municipio=(localizacion.municipio?localizacion.municipio.nombre:(localizacion.municipioOtro?localizacion.municipioOtro:null))
-                let estado=(localizacion.estado?localizacion.estado.nombre:(localizacion.estadoOtro?localizacion.estadoOtro:null))
+                let colonia = '';
+                let municipio = '';
+                let estado = ''; 
+                if (localizacion.pais.id == _config.optionValue.idMexico){
+                    colonia = localizacion.colonia ? localizacion.colonia.nombre : null;
+                    municipio = localizacion.municipio ? localizacion.municipio.nombre : null;
+                    estado = localizacion.estado ? localizacion.estado.nombre : null; 
+                }else{
+                    colonia = localizacion.coloniaOtro ? localizacion.coloniaOtro : null;
+                    municipio = localizacion.municipioOtro ? localizacion.municipioOtro : null;
+                    estado = localizacion.estadoOtro ? localizacion.estadoOtro : null;
+                }
                 // Heredar colonia
                 this.form.controls["coloniaHeredar"].setValue( this.form.controls["coloniaHeredar"].value?(colonia?this.form.controls["coloniaHeredar"].value+","+colonia:this.form.controls["coloniaHeredar"].value+",Sin valor"):(colonia?colonia:"Sin valor"))
                 // Heredar Municipio

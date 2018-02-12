@@ -25,7 +25,7 @@
 
         <ng-container matColumnDef="asignacion">
             <mat-header-cell *matHeaderCellDef> Fecha y hora de asignación de titular </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.created | date:'MM/dd/yyyy HH:mm'}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.fechaAsignacion || element.created | date:'dd/MM/yyyy HH:mm'}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="nic">

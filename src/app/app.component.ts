@@ -19,6 +19,7 @@ import { environment } from '../environments/environment';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import * as io from 'socket.io-client';
+import { TablaSincronizarService } from './services/onLine/tablaSincronizarService';
 
 @Component({
   selector: 'app-root',
@@ -59,7 +60,8 @@ export class AppComponent implements OnInit {
         private notify:  NotifyService,
         private http: HttpService,
         private idle: Idle,
-        private keepalive: Keepalive
+        private keepalive: Keepalive,
+        public sincronizar: TablaSincronizarService
     ) {
         mdIconRegistry.addSvgIcon('arma', sanitizer.bypassSecurityTrustResourceUrl('./assets/images/iconos/arma.svg'));
         this._SIDEBAR = false;

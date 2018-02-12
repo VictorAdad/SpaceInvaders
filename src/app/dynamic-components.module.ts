@@ -9,6 +9,7 @@ import { LoginDialog } from './components/app/onLine/loginDialog.component';
 import { PersonaPreSaveComponent } from './components/app/noticiaHecho/persona/create/pre-save-component';
 import { LoaderComponent } from './components/globals/partials/loader/component';
 import { LoaderDialog } from './components/app/loader-dialog/component';
+import { VistaOfflineInvalidDialog } from './components/app/onLine/vistaOfflineInvalidDialog.component';
 
 @NgModule()
 export class DynamicComponentsModule {}
@@ -23,5 +24,6 @@ export const dyanamicComponents = [
     savingComponent,
     LoginDialog,
     LoaderComponent,
-    LoaderDialog
+    LoaderDialog,
+    VistaOfflineInvalidDialog
 ];

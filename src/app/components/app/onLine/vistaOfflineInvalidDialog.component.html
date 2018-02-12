@@ -1,0 +1,28 @@
+<mat-card>
+  <mat-card-content>
+    <h2 >Se perdio la conexión</h2>
+    <sup>{{catalogo}}</sup>
+    <section >
+      <mat-progress-bar
+          [color]="color  "
+          [mode]="mode"
+          [value]="value"
+          [bufferValue]="bufferValue">
+      </mat-progress-bar>
+    </section>
+    <section class="space">
+      Esta sección no esta hábilitada para trabajar sin conexión.
+    </section>
+    <section class="space">
+      <div class="row">
+        <div class="col-md-12">
+            <h3>¿Desea trabajar en modo sin conexión?</h3>
+            <p class="warning centro"> Al dar click en continuar será redirigido a la sección de inicio y su avance actual se perderá. Si no desea perder su avance NO cierre esta pantalla hasta que vuelva la conexión.</p>
+        </div>
+      </div>
+    </section>
+    <section class="izquierda">
+        <button id="buttonRed" mat-raised-button autofocus (click)="redirige()" tabindex="2" color="accent"><mat-icon>warning</mat-icon>Continuar</button>
+    </section>
+  </mat-card-content>
+</mat-card>
