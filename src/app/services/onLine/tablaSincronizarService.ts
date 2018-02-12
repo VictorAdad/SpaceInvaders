@@ -15,7 +15,7 @@ export class TablaSincronizarService{
             if (auth.isLoggedin){
                 this.db.list('sincronizar').then( listaPendientes => {
                     let lista = listaPendientes as any[];
-                    Logger.logColor('LISTA','red',lista);
+                    // Logger.logColor('LISTA','red',lista);
                     const pendientesDelUsuario = lista.filter( e => {
                         return (e.pendiente) && (e.username == auth.user.username); 
                     });

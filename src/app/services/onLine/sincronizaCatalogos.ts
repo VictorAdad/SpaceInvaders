@@ -351,7 +351,7 @@ export class SincronizaCatalogos {
             Logger.log('NO esta', noEstan);
             Logger.timeEnd(titulo);
             this.db.list('catalogoLlave').then( lista => {
-                Logger.log('Lista',lista);
+                // Logger.log('Lista',lista);
             });
             return;
         }
