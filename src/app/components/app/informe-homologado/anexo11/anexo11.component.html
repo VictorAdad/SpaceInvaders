@@ -1,168 +1,156 @@
 <div>
-  <div class="row">
-    <div class="col-md-12">
-      <h2>Anexo 11 Entrevistas víctimas/ofendidos</h2>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Anexo 11 Entrevistas víctimas/ofendidos</h2>
+        </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-5">
-      <select2 placeholder="Persona" name="entrevistaVictimaPersona" [group]="form" [options]="
-                [
+    <div class="row">
+        <div class="col-md-5">
+            <select2 placeholder="Persona" name="entrevistaVictimaPersona" [group]="form" 
+                [options]="[
                     {label:'Víctima',value:'Víctima'},
                     {label:'Ofendido',value:'Ofendido'}
                 ]">
-      </select2>
+            </select2>
+        </div>
     </div>
-  </div>
-  <h5>Lugar y fecha de la entrevista</h5>
-  <div class="row">
-    <div class="col-md-3">
-      <date label="Fecha" name="lugarFechaEntrevistaFecha" [group]="form" placeholder="dd/mm/aaaa"></date>
+    <h5>Lugar y fecha de la entrevista</h5>
+    <div class="row">
+        <div class="col-md-3">
+            <date label="Fecha" name="lugarFechaEntrevistaFecha" [group]="form" placeholder="dd/mm/aaaa"></date>
+        </div>
+        <div class="col-md-2">
+            <text label="Hora" name="lugarFechaEntrevistaHora" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Colonia" name="lugarFechaEntrevistaColonia" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Calle" name="lugarFechaEntrevistaCalle" [group]="form"></text>
+        </div>
+        <div class="col-md-1">
+            <text label="Número exterior" name="lugarFechaEntrevistaNumExterior" [group]="form"></text>
+        </div>
     </div>
-    <div class="col-md-2">
-      <text label="Hora" name="lugarFechaEntrevistaHora" [group]="form"></text>
-    </div>
-    <div class="col-md-3">
-      <text label="Colonia" name="lugarFechaEntrevistaColonia" [group]="form"></text>
-    </div>
-    <div class="col-md-3">
-      <text label="Calle" name="lugarFechaEntrevistaCalle" [group]="form"></text>
-    </div>
-    <div class="col-md-1">
-      <text label="Número exterior" name="lugarFechaEntrevistaNumExterior" [group]="form"></text>
-    </div>
-  </div>
-  <h5>Datos del entrevistado</h5>
-  <div class="row">
-    <div class="col-md-3">
-      <text label="Apellido paterno" name="datosEntrevistadoPaterno" [group]="form"></text>
-    </div>
-    <div class="col-md-3">
-      <text label="Apellido materno" name="datosEntrevistadoMaterno" [group]="form"></text>
-    </div>
-    <div class="col-md-3">
-      <text label="Nombre(s)" name="datosEntrevistadoNombres" [group]="form"></text>
-    </div>
-    <div class="col-md-3">
-      <select2 placeholder="Sexo" name="datosEntrevistadoSexo" [group]="form" [options]="
-                [
+    <h5>Datos del entrevistado</h5>
+    <div class="row">
+        <div class="col-md-3">
+            <text label="Apellido paterno" name="datosEntrevistadoPaterno" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Apellido materno" name="datosEntrevistadoMaterno" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Nombre(s)" name="datosEntrevistadoNombres" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <select2 placeholder="Sexo" name="datosEntrevistadoSexo" [group]="form"
+                [options]="[
                     {label:'Hombre',value:'Himbre'},
                     {label:'Mujer',value:'Mujer'},
                     {label:'Otro',value:'Otro'}
                 ]">
-      </select2>
+            </select2>
+        </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-3">
-      <text label="Estado" name="datosEntrevistadoEstado" [group]="form"></text>
+    <div class="row">
+        <div class="col-md-3">
+            <text label="Estado" name="datosEntrevistadoEstado" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Municipio" name="datosEntrevistadoMunicipio" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Colonia" name="datosEntrevistadoColonia" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Calle" name="datosEntrevistadoCalle" [group]="form"></text>
+        </div>
     </div>
-    <div class="col-md-3">
-      <text label="Municipio" name="datosEntrevistadoMunicipio" [group]="form"></text>
-    </div>
-    <div class="col-md-3">
-      <text label="Colonia" name="datosEntrevistadoColonia" [group]="form"></text>
-    </div>
-    <div class="col-md-3">
-      <text label="Calle" name="datosEntrevistadoCalle" [group]="form"></text>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-3">
-      <text label="Número exterior" name="datosEntrevistadoNumExterior" [group]="form"></text>
-    </div>
-    <div class="col-md-3">
-      <text label="Número interior" name="datosEntrevistadoNumInterior" [group]="form"></text>
-    </div>
-    <div class="col-md-3">
-      <text label="C.P." name="datosEntrevistadoCp" [group]="form"></text>
-    </div>
-    <div class="col-md-3">
-      <date label="Fecha de nacimiento" name="datosEntrevistadoFechaNacimiento" [group]="form"
+    <div class="row">
+        <div class="col-md-3">
+            <text label="Número exterior" name="datosEntrevistadoNumExterior" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Número interior" name="datosEntrevistadoNumInterior" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <text label="C.P." name="datosEntrevistadoCp" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <date label="Fecha de nacimiento" name="datosEntrevistadoFechaNacimiento" [group]="form"
             placeholder="dd/mm/aaaa"></date>
+        </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-3">
-      <text label="RFC / CURP" name="datosEntrevistadoCurp" [group]="form"></text>
+    <div class="row">
+        <div class="col-md-3">
+            <text label="RFC / CURP" name="datosEntrevistadoCurp" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Estado civil" name="datosEntrevistadoEstadoCivil" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Ocupación" name="datosEntrevistadoOcupacion" [group]="form"></text>
+        </div>
     </div>
-    <div class="col-md-3">
-      <text label="Estado civil" name="datosEntrevistadoEstadoCivil" [group]="form"></text>
+    <div class="row">
+        <div class="col-md-12">
+            <text label="Relato" name="datosEntrevistadoRelato" [group]="form"></text>
+        </div>
     </div>
-    <div class="col-md-3">
-      <text label="Ocupación" name="datosEntrevistadoOcupacion" [group]="form"></text>
+    <h5>Datos del entrevistador (Llenar solo en caso de no ser el mismo que llena este formato)</h5>
+    <div class="row">
+        <div class="col-md-3">
+            <text label="CUIP" name="datosEntrevistadorCuip" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Apellido paterno" name="datosEntrevistadorApellidoPaterno" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Apellido materno" name="datosEntrevistadorApellidoMaterno" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Nombre(s)" name="datosEntrevistadorNombres" [group]="form"></text>
+        </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12">
-      <text label="Relato" name="datosEntrevistadoRelato" [group]="form"></text>
+    <div class="row">
+        <div class="col-md-3">
+            <text label="Adscripción" name="datosEntrevistadorAdscripcion" [group]="form"></text>
+        </div>
     </div>
-  </div>
-
-  <h5>Datos del entrevistador (Llenar solo en caso de no ser el mismo que llena este formato)</h5>
-
-  <div class="row">
-    <div class="col-md-3">
-      <text label="CUIP" name="datosEntrevistadorCuip" [group]="form"></text>
+    <div class="row align-items-center">
+        <div class="col-md-3">
+            <button mat-raised-button color="accent">Agregar</button>
+        </div>
     </div>
-    <div class="col-md-3">
-      <text label="Apellido paterno" name="datosEntrevistadorApellidoPaterno" [group]="form"></text>
+    <div class="row justify-content-center">
+        <div class="col-md-9">
+            <mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="entrevistado">
+                    <mat-header-cell *matHeaderCellDef style="text-align:center"> Entrevistado</mat-header-cell>
+                    <mat-cell *matCellDef="let element" style="text-align:center"> {{element.entrevistado}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="entrevistador">
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Entrevistador</mat-header-cell>
+                    <mat-cell *matCellDef="let element" style="text-align:center"> {{element.entrevistador}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="fechaHora">
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Fecha y hora</mat-header-cell>
+                    <mat-cell *matCellDef="let element" style="text-align:center"> {{element.fechaHora}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="accion">
+                    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <span>
+                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center">delete</mat-icon>
+                        </span>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+            </mat-table>
+        </div>
     </div>
-    <div class="col-md-3">
-      <text label="Apellido materno" name="datosEntrevistadorApellidoMaterno" [group]="form"></text>
-    </div>
-    <div class="col-md-3">
-      <text label="Nombre(s)" name="datosEntrevistadorNombres" [group]="form"></text>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-3">
-      <text label="Adscripción" name="datosEntrevistadorAdscripcion" [group]="form"></text>
-    </div>
-  </div>
-
-  <div class="row align-items-center">
-    <div class="col-md-3">
-      <button mat-raised-button color="accent">Agregar</button>
-    </div>
-  </div>
-
-  <div class="row justify-content-center">
-    <div class="col-md-9">
-      <mat-table [dataSource]="dataSource">
-        <ng-container matColumnDef="entrevistado">
-          <mat-header-cell *matHeaderCellDef style="text-align:center"> Entrevistado</mat-header-cell>
-          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.entrevistado}}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="entrevistador">
-          <mat-header-cell *matHeaderCellDef style="text-align:center">Entrevistador</mat-header-cell>
-          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.entrevistador}}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="fechaHora">
-          <mat-header-cell *matHeaderCellDef style="text-align:center">Fecha y hora</mat-header-cell>
-          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.fechaHora}}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="accion">
-          <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-          <mat-cell *matCellDef="let element"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
-                                                              aria-hidden="true" style="text-align:center">delete</mat-icon></span></mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
-      </mat-table>
-    </div>
-  </div>
-
-  <div class="row space"></div>
-  <div class="row space"></div>
+    <div class="row space"></div>
+    <div class="row space"></div>
 </div>

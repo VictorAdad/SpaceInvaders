@@ -1,155 +1,143 @@
 <div>
-  <div class="row">
-    <div class="col-md-12">
-      <h2>Anexo 3 Informe del uso de la fuerza</h2>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Anexo 3 Informe del uso de la fuerza</h2>
+        </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12">
-      <text label="Situación que originó el uso del a fuerza" name="situacionUsoFuerza" [group]="form"></text>
+    <div class="row">
+        <div class="col-md-12">
+            <text label="Situación que originó el uso del a fuerza" name="situacionUsoFuerza" [group]="form"></text>
+        </div>
     </div>
-  </div>
-
-  <div class="row justify-content-center">
-    <div class="col-md-3">
-      <span>¿Se requirió asistencia medía?</span>
-      <radiobutton
-        class="col-md-3"
-        [radios]="[
+    <div class="row justify-content-center">
+        <div class="col-md-3">
+            <span>¿Se requirió asistencia medía?</span>
+            <radiobutton
+                class="col-md-3"
+                [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
-                ]"
-        name="asistenciaMedica" [group]="form">
-      </radiobutton>
-    </div>
-    <div class="col-md-3">
-      <select2 placeholder="Nivel de uso de Fuerza Empleado" id=""
+                ]" name="asistenciaMedica" [group]="form">
+            </radiobutton>
+        </div>
+        <div class="col-md-3">
+            <select2 placeholder="Nivel de uso de Fuerza Empleado" id=""
                [options]="[
-                {label:'Verbalización',value:'Verbalización'}
-            ]" name="nivelUsoFuerza" [group]="form">
-
-      </select2>
+                    {label:'Verbalización',value:'Verbalización'}
+                ]" name="nivelUsoFuerza" [group]="form">
+            </select2>
+        </div>
     </div>
-  </div>
-  <br>
-  <div class="row justify-content-center">
-    <div class="col-md-auto">
-      <span class="float-rigth"> <strong>Seleccione un detenido o ingrese el nombre de la persona a la que se le aplico el uso de la fuerza</strong></span>
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-md-auto">
+            <span class="float-rigth">
+                <strong>Seleccione un detenido o ingrese el nombre de la persona a la que se le aplico el uso de la fuerza</strong>
+            </span>
+        </div>
     </div>
-  </div>
-
-  <div class="row space"></div>
-
-  <div class="row justify-content-center ">
-    <div class="col-md-2">
-      <select2 placeholder="Detenido" id=""
+    <div class="row space"></div>
+    <div class="row justify-content-center ">
+        <div class="col-md-2">
+            <select2 placeholder="Detenido" id=""
                [options]="[
-                {label:'Yahir Ruiz',value:'Yahir Ruiz'}
-            ]" name="detenidoFuerza" [group]="form">
-      </select2>
+                    {label:'Yahir Ruiz',value:'Yahir Ruiz'}
+                ]" name="detenidoFuerza" [group]="form">
+            </select2>
+        </div>
+        <div class="col-md-2">
+            <text label="Apellido paterno" name="paternoFuerza" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Apellido materno" name="maternoFuerza" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Nombre(s)" name="nombreFuerza" [group]="form"></text>
+        </div>
     </div>
-    <div class="col-md-2">
-      <text label="Apellido paterno" name="paternoFuerza" [group]="form"></text>
+    <div class="row justify-content-center">
+        <div class="col-md-auto">
+            <span>
+                <strong>Seleccione un primer responsable o ingrese el nombre de la persona a la que se le aplico el uso de la fuerza</strong>
+            </span>
+        </div>
     </div>
-    <div class="col-md-2">
-      <text label="Apellido materno" name="maternoFuerza" [group]="form"></text>
+    <div class="row space"></div>
+    <div class="row justify-content-center">
+        <div class="col-md-2">
+            <select2 placeholder="Primer responsable" id=""
+                [options]="[
+                    {label:'Ricardo Crespo',value:'Ricardo Crespo'}
+                ]" name="primerResponsableFuerza" [group]="form">
+            </select2>
+        </div>
+        <div class="col-md-2">
+            <text label="Apellido paterno" name="paternoPrimerFuerza" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Apellido materno" name="maternoPrimerFuerza" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Nombre(s)" name="nombrePrimerFuerza" [group]="form"></text>
+        </div>
     </div>
-    <div class="col-md-2">
-      <text label="Nombre(s)" name="nombreFuerza" [group]="form"></text>
+    <br>
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-md-auto">
+            <button class="" mat-raised-button color="accent">Agregar</button>
+        </div>
     </div>
-  </div>
-
-  <div class="row justify-content-center">
-    <div class="col-md-auto">
-      <span><strong>Seleccione un primer responsable o ingrese el nombre de la persona a la que se le aplico el uso de la fuerza</strong></span>
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <mat-table #table [dataSource]="dataSource">
+                <ng-container matColumnDef="usodelafuerza">
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Uso de la fuerza</mat-header-cell>
+                    <mat-cell *matCellDef="let element" style="text-align:center"> {{element.usodelafuerza}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="primerresponsable">
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">primerresponsable</mat-header-cell>
+                    <mat-cell *matCellDef="let element" style="text-align:center"> {{element.primerresponsable}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="nivel">
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Nivel</mat-header-cell>
+                    <mat-cell *matCellDef="let element" style="text-align:center"> {{element.nivel}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="accion">
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
+                    <mat-cell *matCellDef="let element" style="text-align:center">
+                        <span>
+                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center">delete</mat-icon>
+                        </span>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+            </mat-table>
+        </div>
     </div>
-  </div>
-
-  <div class="row space"></div>
-
-  <div class="row justify-content-center">
-    <div class="col-md-2">
-      <select2 placeholder="Primer responsable" id=""
-               [options]="[
-                {label:'Ricardo Crespo',value:'Ricardo Crespo'}
-            ]" name="primerResponsableFuerza" [group]="form">
-      </select2>
-    </div>
-    <div class="col-md-2">
-      <text label="Apellido paterno" name="paternoPrimerFuerza" [group]="form"></text>
-    </div>
-    <div class="col-md-2">
-      <text label="Apellido materno" name="maternoPrimerFuerza" [group]="form"></text>
-    </div>
-    <div class="col-md-2">
-      <text label="Nombre(s)" name="nombrePrimerFuerza" [group]="form"></text>
-    </div>
-  </div>
-  <br>
-  <br>
-  <div class="row justify-content-center">
-    <div class="col-md-auto">
-      <button class="" mat-raised-button color="accent">Agregar</button>
-    </div>
-  </div>
-  <br>
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <mat-table #table [dataSource]="dataSource">
-
-        <ng-container matColumnDef="usodelafuerza">
-          <mat-header-cell *matHeaderCellDef style="text-align:center">Uso de la fuerza</mat-header-cell>
-          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.usodelafuerza}}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="primerresponsable">
-          <mat-header-cell *matHeaderCellDef style="text-align:center">primerresponsable</mat-header-cell>
-          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.primerresponsable}}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="nivel">
-          <mat-header-cell *matHeaderCellDef style="text-align:center">Nivel</mat-header-cell>
-          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.nivel}}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="accion">
-          <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
-          <mat-cell *matCellDef="let element" style="text-align:center"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
-                                                              aria-hidden="true" style="text-align:center">delete</mat-icon></span></mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
-      </mat-table>
-    </div>
-  </div>
-  <br>
-  <div class="row space"></div>
-  <br>
-  <div class="row justify-content-start">
-    <div class="col-md-auto">
-      <span>Se realizo traslado y canalizacion</span>
-      <radiobutton
-        class="col-md-4"
-        [radios]="[
+    <br>
+    <div class="row space"></div>
+    <br>
+    <div class="row justify-content-start">
+        <div class="col-md-auto">
+            <span>Se realizo traslado y canalizacion</span>
+            <radiobutton
+                class="col-md-4"
+                [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
-                ]"
-        name="trasladoCanalizacion" [group]="form">
-      </radiobutton>
+                ]" name="trasladoCanalizacion" [group]="form">
+            </radiobutton>
+        </div>
+        <div class="col-md-auto">
+            <date label="Fecha de conocimiento" name="fechaCanalizacion" [group]="form" placeholder="dd/mm/aaaa"></date>
+        </div>
+        <div class="col-md-auto">
+            <text label="Hora de conocimiento" name="horaCanalizacion" [group]="form" placeholder="hh:mm"></text>
+        </div>
     </div>
-    <div class="col-md-auto">
-      <date label="Fecha de conocimiento" name="fechaCanalizacion" [group]="form" placeholder="dd/mm/aaaa"></date>
-    </div>
-    <div class="col-md-auto">
-      <text label="Hora de conocimiento" name="horaCanalizacion" [group]="form" placeholder="hh:mm"></text>
-    </div>
-  </div>
-  <br>
-  <div class="row space"></div>
+    <br>
+    <div class="row space"></div>
 </div>
-
-
-
-

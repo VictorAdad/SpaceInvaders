@@ -1,758 +1,668 @@
 <div>
-  <div class="row">
-    <div class="col-md-4">
-      <text label="Número de referencia" name="numeroReferencia" [group]="form" id=""></text>
+    <div class="row">
+        <div class="col-md-4">
+            <text label="Número de referencia" name="numeroReferencia" [group]="form" id=""></text>
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <h2>I. Datos de identificación del primer responsable</h2>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>I. Datos de identificación del primer responsable</h2>
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-      <text label="Nombre del primer responsable" name="primerResponsable" [group]="form"></text>
+    <div class="row">
+        <div class="col-md-4">
+            <text label="Nombre del primer responsable" name="primerResponsable" [group]="form"></text>
+        </div>
+        <div class="col-md-4">
+            <text label="Institución de la que proviene" name="institucion" [group]="form"></text>
+        </div>
+        <div class="col-md-4">
+            <text label="Entidad, Municipio" name="municipio" [group]="form"></text>
+        </div>
     </div>
-    <div class="col-md-4">
-      <text label="Institución de la que proviene" name="institucion" [group]="form"></text>
+    <div class="row justify-content-md-center">
+        <div class="col-12 col col-lg-5">
+            <text label="Clave Única de Identificación Policial (CUIP)" name="cuip" [group]="form" id=""></text>
+        </div>
+        <div class="col col-lg-2">
+            <button mat-raised-button color="accent">Agregar</button>
+        </div>
     </div>
-    <div class="col-md-4">
-      <text label="Entidad, Municipio" name="municipio" [group]="form"></text>
+    <div class="row justify-content-center">
+        <div class="col-md-11">
+            <mat-table #table [dataSource]="dataSource">
+                <ng-container matColumnDef="cuip" >
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">CUIP</mat-header-cell>
+                    <mat-cell *matCellDef="let element" style="text-align:center"> {{element.cuip}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="nombre">
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Nombre</mat-header-cell>
+                    <mat-cell *matCellDef="let element" style="text-align:center"> {{element.nombre}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="institucion">
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Institución</mat-header-cell>
+                    <mat-cell *matCellDef="let element" style="text-align:center"> {{element.institucion}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="entidadMunicipio">
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Entidad, Municipio</mat-header-cell>
+                    <mat-cell *matCellDef="let element" style="text-align:center"> {{element.entidadMunicipio}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="accion">
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
+                    <mat-cell *matCellDef="let element" style="text-align:center">
+                        <span>
+                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center">delete</mat-icon>
+                        </span>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+            </mat-table>
+        </div>
     </div>
-  </div>
-  <div class="row justify-content-md-center">
-    <div class="col-12 col col-lg-5">
-      <text label="Clave Única de Identificación Policial (CUIP)" name="cuip" [group]="form" id=""></text>
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>II. Conocimiento del hecho al primer responsable</h2>
+        </div>
     </div>
-    <div class="col col-lg-2">
-      <button mat-raised-button color="accent">Agregar</button>
-    </div>
-  </div>
-
-  <div class="row justify-content-center">
-    <div class="col-md-11">
-      <mat-table #table [dataSource]="dataSource">
-        <ng-container matColumnDef="cuip" >
-          <mat-header-cell *matHeaderCellDef style="text-align:center">CUIP</mat-header-cell>
-          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.cuip}}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="nombre">
-          <mat-header-cell *matHeaderCellDef style="text-align:center">Nombre</mat-header-cell>
-          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.nombre}}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="institucion">
-          <mat-header-cell *matHeaderCellDef style="text-align:center">Institución</mat-header-cell>
-          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.institucion}}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="entidadMunicipio">
-          <mat-header-cell *matHeaderCellDef style="text-align:center">Entidad, Municipio</mat-header-cell>
-          <mat-cell *matCellDef="let element" style="text-align:center"> {{element.entidadMunicipio}}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="accion">
-          <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
-          <mat-cell *matCellDef="let element" style="text-align:center"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
-                                                              aria-hidden="true" style="text-align:center">delete</mat-icon></span></mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
-      </mat-table>
-    </div>
-  </div>
-  <br>
-
-  <div class="row">
-    <div class="col-md-12">
-      <h2>II. Conocimiento del hecho al primer responsable</h2>
-    </div>
-  </div>
-  <br>
-  <div class="row">
-    <div class="col-md-2">
-      <select2 placeholder="¿Cómo se enteró del hecho?" name="enteroHecho" [group]="form" [options]="
-                [
+    <br>
+    <div class="row">
+        <div class="col-md-2">
+            <select2 placeholder="¿Cómo se enteró del hecho?" name="enteroHecho" [group]="form"
+                [options]="[
                     {label:'Flagrancia',value:'Flagrancia'},
                     {label:'Flagrancia_1',value:'Flagrancia_1'}
                 ]">
-      </select2>
+            </select2>
+        </div>
+        <div class="col-md-5">
+            <text label="Especifique" id="Especifique" name="especifique" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <date label="Fecha de conocimiento" name="fechaConocimiento" [group]="form" placeholder="dd/mm/aaaa"></date>
+        </div>
+        <div class="col-md-2">
+            <text label="Hora de conocimiento" name="horaConocimiento" [group]="form" placeholder="hh:mm"></text>
+        </div>
     </div>
-    <div class="col-md-5">
-      <text label="Especifique" id="Especifique" name="especifique" [group]="form"></text>
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>III. Arribo al lugar de la intervención e identificación de riesgos</h2>
+        </div>
     </div>
-    <div class="col-md-3">
-      <date label="Fecha de conocimiento" name="fechaConocimiento" [group]="form" placeholder="dd/mm/aaaa"></date>
-    </div>
-    <div class="col-md-2">
-      <text label="Hora de conocimiento" name="horaConocimiento" [group]="form" placeholder="hh:mm"></text>
-    </div>
-  </div>
-  <br>
-  <div class="row">
-    <div class="col-md-12">
-      <h2>III. Arribo al lugar de la intervención e identificación de riesgos</h2>
-    </div>
-  </div>
-   <br>
-  <div class="row">
-    <div class="col-md-2">
-      <date label="Fecha de arribo" name="fechaArribo" [group]="form" placeholder="dd/mm/aaaa"></date>
-    </div>
-    <div class="col-md-2">
-      <text label="Hora de arribo" name="horaArribo" [group]="form" placeholder="hh:mm"></text>
-    </div>
-    <div class="col-md-3">
-      <select2 placeholder="Entidad" name="entidadArribo" [group]="form" [options]="
-                [
+    <br>
+    <div class="row">
+        <div class="col-md-2">
+            <date label="Fecha de arribo" name="fechaArribo" [group]="form" placeholder="dd/mm/aaaa"></date>
+        </div>
+        <div class="col-md-2">
+            <text label="Hora de arribo" name="horaArribo" [group]="form" placeholder="hh:mm"></text>
+        </div>
+        <div class="col-md-3">
+            <select2 placeholder="Entidad" name="entidadArribo" [group]="form"
+                [options]="[
                     {label:'Veracruz',value:'Veracruz'},
                     {label:'Puebla',value:'Puebla'}
                 ]">
-      </select2>
-    </div>
-    <div class="col-md-3">
-      <select2 placeholder="Municipio" name="municipioArribo" [group]="form" [options]="
-                [
+            </select2>
+        </div>
+        <div class="col-md-3">
+            <select2 placeholder="Municipio" name="municipioArribo" [group]="form"
+                [options]="[
                     {label:'Xalapa',value:'Xalapa'},
                     {label:'Veracruz',value:'Veracruz'}
                 ]">
-      </select2>
+            </select2>
+        </div>
+        <div class="col-md-2">
+            <text label="Localidad" name="localidadArribo" [group]="form"></text>
+        </div>
     </div>
-    <div class="col-md-2">
-      <text label="Localidad" name="localidadArribo" [group]="form"></text>
+    <div class="row">
+        <div class="col-md-2">
+            <text label="Calle" name="calleArribo" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Num. Interior" name="numIntArribo" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Num. Exterior" name="numExtArribo" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Entre calle y calle" name="entreCalleArribo" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Tramo carretero (Si aplica)" name="tramoCarreteroArribo" [group]="form"></text>
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-2">
-      <text label="Calle" name="calleArribo" [group]="form"></text>
-    </div>
-    <div class="col-md-2">
-      <text label="Num. Interior" name="numIntArribo" [group]="form"></text>
-    </div>
-    <div class="col-md-3">
-      <text label="Num. Exterior" name="numExtArribo" [group]="form"></text>
-    </div>
-    <div class="col-md-3">
-      <text label="Entre calle y calle" name="entreCalleArribo" [group]="form"></text>
-    </div>
-    <div class="col-md-2">
-      <text label="Tramo carretero (Si aplica)" name="tramoCarreteroArribo" [group]="form"></text>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-3">
-      <select2 placeholder="Tipo" name="tipoArribo" [group]="form" [options]="
-                [
+    <div class="row">
+        <div class="col-md-3">
+            <select2 placeholder="Tipo" name="tipoArribo" [group]="form"
+                [options]="[
                     {label:'Veracruz',value:'Veracruz'},
                     {label:'Puebla',value:'Puebla'}
                 ]">
-      </select2>
+            </select2>
+        </div>
+        <div class="col-md-3">
+            <text label="KM" name="kmArribo" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Latitud (Con 6 decimales)" name="latitudArribo" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Longitud (Con 6 decimales)" name="longitudArribo" [group]="form"></text>
+        </div>
     </div>
-    <div class="col-md-3">
-      <text label="KM" name="kmArribo" [group]="form"></text>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Tipos de riesgos identificados en el lugar</h2>
+        </div>
     </div>
-    <div class="col-md-3">
-      <text label="Latitud (Con 6 decimales)" name="latitudArribo" [group]="form"></text>
-    </div>
-    <div class="col-md-3">
-      <text label="Longitud (Con 6 decimales)" name="longitudArribo" [group]="form"></text>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12">
-      <h2>Tipos de riesgos identificados en el lugar</h2>
-    </div>
-  </div>
-
-  <div class="row justify-content-center">
-    <div class="col-md-3">
-      <select2 placeholder="Riesgo para" name="riesgoPara" [group]="form" [options]="
-                [
+    <div class="row justify-content-center">
+        <div class="col-md-3">
+            <select2 placeholder="Riesgo para" name="riesgoPara" [group]="form"
+                [options]="[
                     {label:'Víctimas',value:'Víctimas'},
                     {label:'Personas',value:'Personas'}
                 ]">
-      </select2>
-    </div>
-    <div class="col-md-3">
-      <select2 placeholder="Tipo" name="tipoRiesgo" [group]="form" [options]="
-                [
+            </select2>
+        </div>
+        <div class="col-md-3">
+            <select2 placeholder="Tipo" name="tipoRiesgo" [group]="form"
+                [options]="[
                     {label:'Salud',value:'Salud'},
                     {label:'Hogar',value:'Hogar'}
                 ]">
-      </select2>
+            </select2>
+        </div>
+        <div class="col-md-3">
+            <text label="Especifique" name="especifiqueRiesgo" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <button mat-raised-button color="accent">Agregar</button>
+        </div>
     </div>
-    <div class="col-md-3">
-      <text label="Especifique" name="especifiqueRiesgo" [group]="form"></text>
+    <div class="row justify-content-end">
+        <div class="col-md-9">
+            <mat-table [dataSource]="dataSource2">
+                <ng-container matColumnDef="riesgoPara">
+                    <mat-header-cell *matHeaderCellDef>Riesgo para</mat-header-cell>
+                    <mat-cell *matCellDef="let element2"> {{element2.riesgoPara}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="tipo">
+                    <mat-header-cell *matHeaderCellDef>Tipo</mat-header-cell>
+                    <mat-cell *matCellDef="let element2"> {{element2.tipo}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="accion">
+                    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                    <mat-cell *matCellDef="let element2">
+                        <span>
+                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon>
+                        </span>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="columns2"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columns2;" routerLink=""></mat-row>
+            </mat-table>
+        </div>
     </div>
-    <div class="col-md-3">
-      <button mat-raised-button color="accent">Agregar</button>
-    </div>
-  </div>
-
-  <div class="row justify-content-end">
-    <div class="col-md-9">
-      <mat-table [dataSource]="dataSource2">
-        <ng-container matColumnDef="riesgoPara">
-          <mat-header-cell *matHeaderCellDef>Riesgo para</mat-header-cell>
-          <mat-cell *matCellDef="let element2"> {{element2.riesgoPara}}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="tipo">
-          <mat-header-cell *matHeaderCellDef>Tipo</mat-header-cell>
-          <mat-cell *matCellDef="let element2"> {{element2.tipo}}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="accion">
-          <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-          <mat-cell *matCellDef="let element2"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
-                                                               aria-hidden="true">delete</mat-icon></span></mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="columns2"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: columns2;" routerLink=""></mat-row>
-      </mat-table>
-    </div>
-  </div>
-  <br>
-  <div class="row justify-content-center">
-    <div class="col-md-3">
-      <select2 placeholder="Solicitó apoyo de:" name="apoyo" [group]="form" [options]="
-                [
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-md-3">
+            <select2 placeholder="Solicitó apoyo de:" name="apoyo" [group]="form"
+                [options]="[
                     {label:'Bomberos',value:'Bomberos'},
                     {label:'Cruz Roja',value:'Roja'}
                 ]">
-      </select2>
+            </select2>
+        </div>
+        <div class="col-md-3">
+            <text label="Número económico" name="numEconomico" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <text label="Especifique" name="especifiqueApoyo" [group]="form"></text>
+        </div>
+        <div class="col-md-3">
+            <button mat-raised-button color="accent">Agregar</button>
+        </div>
     </div>
-    <div class="col-md-3">
-      <text label="Número económico" name="numEconomico" [group]="form"></text>
+    <div class="row justify-content-end">
+        <div class="col-md-9">
+            <mat-table [dataSource]="dataSource3">
+                <ng-container matColumnDef="apoyo">
+                    <mat-header-cell *matHeaderCellDef>Apoyo de</mat-header-cell>
+                    <mat-cell *matCellDef="let element3"> {{element3.apoyo}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="nEconomico">
+                    <mat-header-cell *matHeaderCellDef>Número económico</mat-header-cell>
+                    <mat-cell *matCellDef="let element3"> {{element3.nEconomico}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="accion">
+                    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                    <mat-cell *matCellDef="let element3">
+                        <span>
+                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon>
+                        </span>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="columns3"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columns3;" routerLink=""></mat-row>
+            </mat-table>
+        </div>
     </div>
-    <div class="col-md-3">
-      <text label="Especifique" name="especifiqueApoyo" [group]="form"></text>
+    <div class="row space"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Croquis del lugar de intervención</h2>
+        </div>
     </div>
-    <div class="col-md-3">
-      <button mat-raised-button color="accent">Agregar</button>
+    <div class="row space"></div>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="changeLocation($event)" [zoom]="zoom" style="height: 400px; width: 100%;">
+                <agm-marker [latitude]="latMarker" [longitude]="lngMarker"></agm-marker>
+            </agm-map>
+        </div>
     </div>
-  </div>
-  <div class="row justify-content-end">
-    <div class="col-md-9">
-      <mat-table [dataSource]="dataSource3">
-        <ng-container matColumnDef="apoyo">
-          <mat-header-cell *matHeaderCellDef>Apoyo de</mat-header-cell>
-          <mat-cell *matCellDef="let element3"> {{element3.apoyo}}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="nEconomico">
-          <mat-header-cell *matHeaderCellDef>Número económico</mat-header-cell>
-          <mat-cell *matCellDef="let element3"> {{element3.nEconomico}}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="accion">
-          <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-          <mat-cell *matCellDef="let element3"><span><mat-icon class="button-menu mat-icon material-icons" role="img"
-                                                               aria-hidden="true">delete</mat-icon></span></mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="columns3"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: columns3;" routerLink=""></mat-row>
-      </mat-table>
+    <div class="row space"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Linea de tiempo</h2>
+        </div>
     </div>
-  </div>
-
-  <div class="row space"></div>
-  <div class="row">
-    <div class="col-md-12">
-      <h2>Croquis del lugar de intervención</h2>
+    <div class="row space"></div>
+    <div class="row justify-content-center">
+        <div class="col-md-9">
+            <mat-table [dataSource]="dataSource4">
+                <ng-container matColumnDef="evento">
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Apoyo de</mat-header-cell>
+                    <mat-cell *matCellDef="let element4" style="text-align:center"> {{element4.evento}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="fecha">
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Número económico</mat-header-cell>
+                    <mat-cell *matCellDef="let element4" style="text-align:center"> {{element4.fecha}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="hora">
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Número económico</mat-header-cell>
+                    <mat-cell *matCellDef="let element4" style="text-align:center"> {{element4.hora}}</mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="columns4"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columns4;" routerLink=""></mat-row>
+            </mat-table>
+        </div>
     </div>
-  </div>
-  <div class="row space"></div>
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="changeLocation($event)" [zoom]="zoom"
-               style="height: 400px; width: 100%;">
-        <agm-marker [latitude]="latMarker" [longitude]="lngMarker"></agm-marker>
-      </agm-map>
+    <div class="row space"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Narración de los hechos por el primer responsable</h2>
+        </div>
+        <div class="col-md-12">
+            <text label="Narración" name="narracionHechosResponsable" [group]="form"></text>
+        </div>
     </div>
-  </div>
-  <div class="row space"></div>
-  <div class="row">
-    <div class="col-md-12">
-      <h2>Linea de tiempo</h2>
+    <div class="row space"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2> V. Acciones realizadas</h2>
+        </div>
     </div>
-  </div>
-  <div class="row space"></div>
-  <div class="row justify-content-center">
-    <div class="col-md-9">
-      <mat-table [dataSource]="dataSource4">
-        <ng-container matColumnDef="evento">
-          <mat-header-cell *matHeaderCellDef style="text-align:center">Apoyo de</mat-header-cell>
-          <mat-cell *matCellDef="let element4" style="text-align:center"> {{element4.evento}}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="fecha">
-          <mat-header-cell *matHeaderCellDef style="text-align:center">Número económico</mat-header-cell>
-          <mat-cell *matCellDef="let element4" style="text-align:center"> {{element4.fecha}}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="hora">
-          <mat-header-cell *matHeaderCellDef style="text-align:center">Número económico</mat-header-cell>
-          <mat-cell *matCellDef="let element4" style="text-align:center"> {{element4.hora}}</mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="columns4"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: columns4;" routerLink=""></mat-row>
-      </mat-table>
-    </div>
-  </div>
-  <div class="row space"></div>
-  <div class="row">
-    <div class="col-md-12">
-      <h2>Narración de los hechos por el primer responsable</h2>
-    </div>
-    <div class="col-md-12">
-      <text label="Narración" name="narracionHechosResponsable" [group]="form"></text>
-    </div>
-  </div>
-  
-  <div class="row space"></div>
-  <div class="row">
-    <div class="col-md-12">
-      <h2> V. Acciones realizadas</h2>
-    </div>
-  </div>
- 
-  <div class="row justify-content-start">
-    <div class="col-sm-3">
-      <span>Protección</span>
-      <radiobutton
-        class="col-md-4"
-        name="proteccion"
-        [group]="form"
-        [radios]="[
+    <div class="row justify-content-start">
+        <div class="col-sm-3">
+            <span>Protección</span>
+            <radiobutton class="col-md-4" name="proteccion" [group]="form"
+                [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
-                ]"
-        [functionChange]="showProteccion.bind(this)">
-      </radiobutton>
-    </div>
-
-    <div class="col-md-1">
-      <select2 placeholder="A" name="proteccionAccionesA"
-               *ngIf="cProteccion"
-               [group]="form" [options]="
-                [
+                ]" [functionChange]="showProteccion.bind(this)">
+            </radiobutton>
+        </div>
+        <div class="col-md-1">
+            <select2 placeholder="A" name="proteccionAccionesA" *ngIf="cProteccion" [group]="form"
+                [options]="[
                     {label:'Víctimas',value:'Víctimas'},
                     {label:'Personas',value:'Personas'}
                 ]">
-        </select2>
-    </div>
-    <div class="col-sm-3">
-      <span>Resguardo</span>
-      <radiobutton
-        class="col-md-4"
-        name="resguardoAcciones"
-        [group]="form"
-        [radios]="[
+            </select2>
+        </div>
+        <div class="col-sm-3">
+            <span>Resguardo</span>
+            <radiobutton class="col-md-4" name="resguardoAcciones" [group]="form"
+                [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
-                ]"
-        [functionChange]="showResguardo.bind(this)">
-      </radiobutton>
-    </div>
-    <div class="col-md-1">
-      <select2 placeholder="A" name="resguardoAccionesA"
-               *ngIf="cResguardo"
-               [group]="form" [options]="
-                [
+                ]" [functionChange]="showResguardo.bind(this)">
+            </radiobutton>
+        </div>
+        <div class="col-md-1">
+            <select2 placeholder="A" name="resguardoAccionesA" *ngIf="cResguardo" [group]="form"
+                [options]="[
                     {label:'Víctimas',value:'Víctimas'},
                     {label:'Personas',value:'Personas'}
                 ]">
-      </select2>
-    </div>
-    
-    <div class="col-sm-4">
-      <span >Preservación del lugar de intervención llenar sección 6</span>
-      <radiobutton
-        class="col-md-3"
-        name="preservacionAcciones"
-        [group]="form"
-        [radios]="[
+            </select2>
+        </div>
+        <div class="col-sm-4">
+            <span >Preservación del lugar de intervención llenar sección 6</span>
+            <radiobutton class="col-md-3" name="preservacionAcciones" [group]="form"
+                [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
                 ]">
-      </radiobutton>
+            </radiobutton>
+        </div>
     </div>
-  </div>
-
-  <div class="row justify-content-start">
-    <div class="col-sm-4 ">
-      <span>Informar sobre derechos a favor (anexo 1)</span>
-      <radiobutton
-        class="col-md-4"
-        [radios]="[
+    <div class="row justify-content-start">
+        <div class="col-sm-4 ">
+            <span>Informar sobre derechos a favor (anexo 1)</span>
+            <radiobutton class="col-md-4"
+                [radios]="[
                     {label:'Detenido',value:'Sí'},
                     {label:'N/A',value:'No'}
-                ]"
-        name="informarAcciones"
-        [group]="form">
-      </radiobutton>
-    </div>
-    <div class="col-sm-4">
-      <span>Detenciones llenar (Anexo 2)</span>
-      <radiobutton
-        class="col-md-3"
-        [radios]="[
+                ]" name="informarAcciones" [group]="form">
+            </radiobutton>
+        </div>
+        <div class="col-sm-4">
+            <span>Detenciones llenar (Anexo 2)</span>
+            <radiobutton class="col-md-3"
+                [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
-                ]"
-        name="detencionAcciones"
-        [group]="form">
-      </radiobutton>
-    </div>
-    <div class="col-sm-4">
-      <span>Uso de fuerza (Anexo 3)</span>
-      <radiobutton
-        class="col-md-3"
-        [radios]="[
+                ]" name="detencionAcciones" [group]="form">
+            </radiobutton>
+        </div>
+        <div class="col-sm-4">
+            <span>Uso de fuerza (Anexo 3)</span>
+            <radiobutton class="col-md-3"
+                [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
-                ]"
-        name="fuerzaAcciones"
-        [group]="form">
-      </radiobutton>
+                ]" name="fuerzaAcciones" [group]="form">
+            </radiobutton>
+        </div>
     </div>
-  </div>
-  <div class="row justify-content-start">
-    <div class="col-sm-4">
-      <span>Puesto a disposición de los detenidos (Anexo 4)</span>
-      <radiobutton
-        class="col-md-3"
-        [radios]="[
+    <div class="row justify-content-start">
+        <div class="col-sm-4">
+            <span>Puesto a disposición de los detenidos (Anexo 4)</span>
+            <radiobutton class="col-md-3"
+                [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
-                ]"
-        name="puestoAcciones"
-        [group]="form">
-      </radiobutton>
-    </div>
-    
-    <div class="col-sm-4">
-      <span>Inventario de pertenencias del detenido (Anexo 5)</span>
-      <radiobutton
-        class="col-md-4"
-        [radios]="[
+                ]" name="puestoAcciones" [group]="form">
+            </radiobutton>
+        </div>
+        <div class="col-sm-4">
+            <span>Inventario de pertenencias del detenido (Anexo 5)</span>
+            <radiobutton class="col-md-4"
+                [radios]="[
                     {label:'Detenido',value:'Sí'},
                     {label:'N/A',value:'No'}
-                ]"
-        name="inventarioAcciones"
-        [group]="form">
-      </radiobutton>
-    </div>
-    <div class="col-sm-4">
-      <span>Traslado / Canalización</span>
-      <radiobutton
-        class="col-md-3"
-        [radios]="[
+                ]" name="inventarioAcciones" [group]="form">
+            </radiobutton>
+        </div>
+        <div class="col-sm-4">
+            <span>Traslado / Canalización</span>
+            <radiobutton class="col-md-3"
+                [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
-                ]"
-        name="trasladoAcciones"
-        [group]="form"
-        [functionChange]="showTraslado.bind(this)">
-      </radiobutton>
+                ]" name="trasladoAcciones" [group]="form"
+                [functionChange]="showTraslado.bind(this)">
+            </radiobutton>
+        </div>
     </div>
-  </div>
-  <div class="row justify-content-start">
-    <div class="col-md-2">
-      <select2 placeholder="A:" name="trasladoAccionesA"
-               *ngIf="cTraslado"
-               [group]="form" [options]="
-                [
+    <div class="row justify-content-start">
+        <div class="col-md-2">
+            <select2 placeholder="A:" name="trasladoAccionesA" *ngIf="cTraslado" [group]="form"
+                [options]="[
                     {label:'Personas',value:'personas'},
                     {label:'Víctimas',value:'victimas'}
                 ]">
-      </select2>
-    </div>
-    <div class="col-md-2">
-      <select2 placeholder="De:" name="trasladoAccionesDe"
-               *ngIf="cTraslado"
-               [group]="form" [options]="
-                [
+            </select2>
+        </div>
+        <div class="col-md-2">
+            <select2 placeholder="De:" name="trasladoAccionesDe" *ngIf="cTraslado" [group]="form"
+                [options]="[
                     {label:'Personas',value:'personas'},
                     {label:'Víctimas',value:'victimas'}
                 ]">
-      </select2>
+            </select2>
+        </div>
     </div>
-  
-  </div>  
-  <div class="row justify-content-start">
-    <div class="col-sm-3">
-      <span>Inspecciones (Anexo 8)</span>
-      <radiobutton
-        class="col-md-4"
-        [radios]="[
+    <div class="row justify-content-start">
+        <div class="col-sm-3">
+            <span>Inspecciones (Anexo 8)</span>
+            <radiobutton class="col-md-4"
+                [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
-                ]"
-        name="inspeccionesAcciones"
-        [group]="form"
-        [functionChange]="showInspeccion.bind(this)">
-      </radiobutton>
-    </div>
-    <div class="col-md-1">
-      <select2 placeholder="A:" name="inspeccionesAccionesA"
-               *ngIf="cInspeccion"
-               [group]="form" [options]="
-                [
+                ]" name="inspeccionesAcciones" [group]="form"
+                [functionChange]="showInspeccion.bind(this)">
+            </radiobutton>
+        </div>
+        <div class="col-md-1">
+            <select2 placeholder="A:" name="inspeccionesAccionesA" *ngIf="cInspeccion" [group]="form"
+                [options]="[
                     {label:'Personas',value:'personas'},
                     {label:'Víctimas',value:'victimas'}
                 ]">
-      </select2>
-    </div>
-    <div class="col-sm-4">
-      <span>Informar sobre hechos a favor (Anexo 1)</span>
-      <radiobutton
-        class="col-md-3"
-        [radios]="[
+            </select2>
+        </div>
+        <div class="col-sm-4">
+            <span>Informar sobre hechos a favor (Anexo 1)</span>
+            <radiobutton class="col-md-3"
+                [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
-                ]"
-        name="echosFavorAcciones"
-        [group]="form">
-      </radiobutton>
-    </div>
-    <div class="col-sm-4">
-      <span>Recolección y resguardo de objetos y/o bienes (Anexo 9)</span>
-      <radiobutton
-        class="col-md-3"
-        [radios]="[
+                ]" name="echosFavorAcciones" [group]="form">
+            </radiobutton>
+        </div>
+        <div class="col-sm-4">
+            <span>Recolección y resguardo de objetos y/o bienes (Anexo 9)</span>
+            <radiobutton class="col-md-3"
+                [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
-                ]"
-        name="recoleccionAcciones"
-        [group]="form">
-      </radiobutton>
+                ]" name="recoleccionAcciones" [group]="form">
+            </radiobutton>
+        </div>
     </div>
-  </div>
-
-
-  <div class="row justify-content-start">
- 
-    <div class="col-sm-4">
-      <span>Entrega recepción de lugar de la intervención (Anexo 10)</span>
-      <radiobutton
-        class="col-md-3"
-        [radios]="[
+    <div class="row justify-content-start">
+        <div class="col-sm-4">
+            <span>Entrega recepción de lugar de la intervención (Anexo 10)</span>
+            <radiobutton class="col-md-3"
+                [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
-                ]"
-        name="recepcionAcciones"
-        [group]="form">
-      </radiobutton>
-    </div>
-    <div class="col-sm-3">
-      <span>Entrevistas(s) (Anexo 10) </span>
-      <radiobutton
-        class="col-md-4"
-        [radios]="[
+                ]" name="recepcionAcciones" [group]="form">
+            </radiobutton>
+        </div>
+        <div class="col-sm-3">
+            <span>Entrevistas(s) (Anexo 10) </span>
+            <radiobutton class="col-md-4"
+                [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
                     {label:'N/A',value:'NA'}
-                ]"
-        name="entrevistasAcciones"
-        [group]="form">
-      </radiobutton>
+                ]" name="entrevistasAcciones" [group]="form">
+            </radiobutton>
+        </div>
     </div>
-  </div>
-  <div class="row space"></div>
-  <div class="row justify-content-start">
-    <div class="col-md-12">
-      <h2>VI. Preservación del lugar de la inverción</h2>
+    <div class="row space"></div>
+    <div class="row justify-content-start">
+        <div class="col-md-12">
+            <h2>VI. Preservación del lugar de la inverción</h2>
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-3">
-      <date label="Fecha de conocimiento" name="fechaPreservacion" [group]="form" placeholder="dd/mm/aaaa"></date>
+    <div class="row">
+        <div class="col-md-3">
+            <date label="Fecha de conocimiento" name="fechaPreservacion" [group]="form" placeholder="dd/mm/aaaa"></date>
+        </div>
+        <div class="col-md-3">
+            <text label="Hora de conocimiento" name="horaPreservacion" [group]="form" placeholder="hh:mm"></text>
+        </div>
     </div>
-    <div class="col-md-3">
-      <text label="Hora de conocimiento" name="horaPreservacion" [group]="form" placeholder="hh:mm"></text>
+    <div class="row justify-content-start">
+        <div class="col-md-12">
+            <p>Primer respondiente que realiza el acordonamiento del lugar de la intervención (Llenar sólo en caso de no ser el mismo que llena este formato)</p>
+        </div>
     </div>
-  </div>
-  <div class="row justify-content-start">
-    <div class="col-md-12">
-      <p>Primer respondiente que realiza el acordonamiento del lugar de la intervención (Llenar sólo en caso de no ser
-        el mismo que llena este formato)</p>
-    </div>
-  </div>
-  <div class="row justify-content-start">
-    <div class="col-sm-3">
-      <span>Acordonamiento</span>
-      <radiobutton
-        class="col-md-6"
-        [radios]="[
+    <div class="row justify-content-start">
+        <div class="col-sm-3">
+            <span>Acordonamiento</span>
+            <radiobutton class="col-md-6"
+                [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
-                ]"
-        name="acordonamiento"
-        [group]="form"
-        [functionChange]="showAcordonamiento.bind(this)">
-      </radiobutton>
+                ]" name="acordonamiento" [group]="form"
+                [functionChange]="showAcordonamiento.bind(this)">
+            </radiobutton>
+        </div>
+        <div class="col-md-2">
+            <text label="CUIP" name="cuipAcordonamiento" *ngIf="cAcordonamiento" [group]="form"></text>
+        </div>
+        <span *ngIf="cAcordonamiento">o</span>
+        <div class="col-md-2">
+            <text label="Apellido paterno" name="paternoAcordonamiento" *ngIf="cAcordonamiento" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Apellido materno" name="maternoAcordonamiento" *ngIf="cAcordonamiento" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Nombre(s)" name="nombreAcordonamiento" *ngIf="cAcordonamiento" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Adcripción" name="adcripcionAcordonamiento" *ngIf="cAcordonamiento" [group]="form"></text>
+        </div>
     </div>
-    <div class="col-md-2">
-      <text label="CUIP" name="cuipAcordonamiento" *ngIf="cAcordonamiento" [group]="form"></text>
+    <div class="row justify-content-start">
+        <div class="col-md-12">
+            <p>Primer respondiente que realiza el acordonamiento del lugar de la intervención (Llenar sólo en caso de no ser el mismo que llena este formato)</p>
+        </div>
     </div>
-    <span *ngIf="cAcordonamiento">o</span>
-    <div class="col-md-2">
-      <text label="Apellido paterno" name="paternoAcordonamiento" *ngIf="cAcordonamiento" [group]="form"></text>
-    </div>
-    <div class="col-md-2">
-      <text label="Apellido materno" name="maternoAcordonamiento" *ngIf="cAcordonamiento" [group]="form"></text>
-    </div>
-    <div class="col-md-2">
-      <text label="Nombre(s)" name="nombreAcordonamiento" *ngIf="cAcordonamiento" [group]="form"></text>
-    </div>
-    <div class="col-md-2">
-      <text label="Adcripción" name="adcripcionAcordonamiento" *ngIf="cAcordonamiento" [group]="form"></text>
-    </div>
-  </div>
-  <div class="row justify-content-start">
-    <div class="col-md-12">
-      <p>Primer respondiente que realiza el acordonamiento del lugar de la intervención (Llenar sólo en caso de no ser
-        el mismo que llena este formato)</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-3">
-      <span>Resguardo</span>
-      <radiobutton
-        class="col-md-6"
-        [radios]="[
+    <div class="row">
+        <div class="col-sm-3">
+            <span>Resguardo</span>
+            <radiobutton class="col-md-6"
+                [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
-                ]"
-        name="resguardo"
-        [group]="form"
-        [functionChange]="showResguardo2.bind(this)">
-      </radiobutton>
+                ]" name="resguardo" [group]="form"
+                [functionChange]="showResguardo2.bind(this)">
+            </radiobutton>
+        </div>
+        <div class="col-md-2">
+            <text label="CUIP" name="cuipResguardo" *ngIf="cResguardo2" [group]="form"></text>
+        </div>
+        <span *ngIf="cResguardo2">o</span>
+        <div class="col-md-2">
+            <text label="Apellido paterno" name="paternoResguardo" *ngIf="cResguardo2" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Apellido materno" name="maternoResguardo" *ngIf="cResguardo2" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Nombre(s)" name="nombreResguardo" *ngIf="cResguardo2" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Adcripción" name="adcripcionResguardo" *ngIf="cResguardo2" [group]="form"></text>
+        </div>
     </div>
-    <div class="col-md-2">
-      <text label="CUIP" name="cuipResguardo" *ngIf="cResguardo2" [group]="form"></text>
+    <div class="row justify-content-start">
+        <div class="col-md-12">
+            <h2>VII. Solicitud de certificado(s) médico(s)</h2>
+        </div>
     </div>
-    <span *ngIf="cResguardo2">o</span>
-    <div class="col-md-2">
-      <text label="Apellido paterno" name="paternoResguardo" *ngIf="cResguardo2" [group]="form"></text>
+    <div class="row">
+        <div class="col-md-2">
+            <date label="Fecha de conocimiento" name="fechaCertificado" [group]="form" placeholder="dd/mm/aaaa"></date>
+        </div>
+        <div class="col-md-2">
+            <text label="Hora de conocimiento" name="horaCertificado" [group]="form" placeholder="hh:mm"></text>
+        </div>
+        <div class="col-md-6">
+            <text label="Médico de la agencia del ministerio público en la que se realiza la puesta a disposición" name="medico" [group]="form" placeholder="hh:mm"></text>
+        </div>
     </div>
-    <div class="col-md-2">
-      <text label="Apellido materno" name="maternoResguardo" *ngIf="cResguardo2" [group]="form"></text>
-    </div>
-    <div class="col-md-2">
-      <text label="Nombre(s)" name="nombreResguardo" *ngIf="cResguardo2" [group]="form"></text>
-    </div>
-    <div class="col-md-2">
-      <text label="Adcripción" name="adcripcionResguardo" *ngIf="cResguardo2" [group]="form"></text>
-    </div>
-  </div>
-
-  <div class="row justify-content-start">
-    <div class="col-md-12">
-      <h2>VII. Solicitud de certificado(s) médico(s)</h2>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-2">
-      <date label="Fecha de conocimiento" name="fechaCertificado" [group]="form" placeholder="dd/mm/aaaa"></date>
-    </div>
-    <div class="col-md-2">
-      <text label="Hora de conocimiento" name="horaCertificado" [group]="form" placeholder="hh:mm"></text>
-    </div>
-    <div class="col-md-6">
-      <text label="Médico de la agencia del ministerio público en la que se realiza la puesta a disposición"
-            name="medico" [group]="form" placeholder="hh:mm"></text>
-    </div>
-  </div>
-  <div class="row justify-content-start">
-    <div class="col-sm-3">
-      <span>Médico de otra agencia del ministerio público</span>
-      <radiobutton
-        class="col-md-6"
-        [radios]="[
+    <div class="row justify-content-start">
+        <div class="col-sm-3">
+            <span>Médico de otra agencia del ministerio público</span>
+            <radiobutton class="col-md-6"
+                [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
-                ]"
-        name="medicoAgencia"
-        [group]="form"
-        [functionChange]="showMedicoOtraAgencia.bind(this)">
-      </radiobutton>
+                ]" name="medicoAgencia" [group]="form"
+                [functionChange]="showMedicoOtraAgencia.bind(this)">
+            </radiobutton>
+        </div>
+        <div class="col-md-2">
+            <text label="Nombre de la agencia" name="nombreAgencia" *ngIf="cMedicoOtraAgencia" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Municipio" name="municipioAgencia" *ngIf="cMedicoOtraAgencia" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Calle" name="calleAgencia" *ngIf="cMedicoOtraAgencia" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Número" name="numAgencia" *ngIf="cMedicoOtraAgencia" [group]="form"></text>
+        </div>
     </div>
-    <div class="col-md-2">
-      <text label="Nombre de la agencia" name="nombreAgencia" *ngIf="cMedicoOtraAgencia" [group]="form"></text>
-    </div>
-    <div class="col-md-2">
-      <text label="Municipio" name="municipioAgencia" *ngIf="cMedicoOtraAgencia" [group]="form"></text>
-    </div>
-    <div class="col-md-2">
-      <text label="Calle" name="calleAgencia" *ngIf="cMedicoOtraAgencia" [group]="form"></text>
-    </div>
-    <div class="col-md-2">
-      <text label="Número" name="numAgencia" *ngIf="cMedicoOtraAgencia" [group]="form"></text>
-    </div>
-  </div>
-  <div class="row justify-content-start">
-    <div class="col-sm-3">
-      <span>Médico particular</span>
-      <radiobutton
-        class="col-md-6"
-        [radios]="[
+    <div class="row justify-content-start">
+        <div class="col-sm-3">
+            <span>Médico particular</span>
+            <radiobutton class="col-md-6"
+                [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'}
-                ]"
-        name="medicoParticular"
-        [group]="form"
-        [functionChange]="showMedicoParticular.bind(this)">
-      </radiobutton>
+                ]" name="medicoParticular" [group]="form"
+                [functionChange]="showMedicoParticular.bind(this)">
+            </radiobutton>
+        </div>
+        <div class="col-md-2">
+            <text label="Municipio" name="municipioParticular" *ngIf="cMedicoParticular" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Calle" name="calleParticular" *ngIf="cMedicoParticular" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Número" name="numParticular" *ngIf="cMedicoParticular" [group]="form"></text>
+        </div>
     </div>
-    <div class="col-md-2">
-      <text label="Municipio" name="municipioParticular" *ngIf="cMedicoParticular" [group]="form"></text>
+    <div class="row justify-content-start">
+        <div class="col-md-12">
+            <p>Primer respondiente que realiza la solicitud (Llenar sólo en caso de no ser el mismo que llena este formato)</p>
+        </div>
     </div>
-    <div class="col-md-2">
-      <text label="Calle" name="calleParticular" *ngIf="cMedicoParticular" [group]="form"></text>
+    <div class="row">
+        <div class="col-md-2">
+            <text label="CUIP" name="cuipParticular" [group]="form"></text>
+        </div>
+        o
+        <div class="col-md-2">
+            <text label="Apellido paterno" name="paternoParticular" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Apellido materno" name="maternoParticular" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Nombre(s)" name="nombreParticular" [group]="form"></text>
+        </div>
+        <div class="col-md-2">
+            <text label="Adcripción" name="adscripcionParticular" [group]="form"></text>
+        </div>
     </div>
-    <div class="col-md-2">
-      <text label="Número" name="numParticular" *ngIf="cMedicoParticular" [group]="form"></text>
-    </div>
-  </div>
-  <div class="row justify-content-start">
-    <div class="col-md-12">
-      <p>Primer respondiente que realiza la solicitud (Llenar sólo en caso de no ser el mismo que llena este
-        formato)</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-2">
-      <text label="CUIP" name="cuipParticular" [group]="form"></text>
-    </div>
-    o
-    <div class="col-md-2">
-      <text label="Apellido paterno" name="paternoParticular" [group]="form"></text>
-    </div>
-    <div class="col-md-2">
-      <text label="Apellido materno" name="maternoParticular" [group]="form"></text>
-    </div>
-    <div class="col-md-2">
-      <text label="Nombre(s)" name="nombreParticular" [group]="form"></text>
-    </div>
-    <div class="col-md-2">
-      <text label="Adcripción" name="adscripcionParticular" [group]="form"></text>
-    </div>
-  </div>
 </div>
