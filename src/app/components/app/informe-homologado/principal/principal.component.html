@@ -20,8 +20,6 @@
       <text label="Entidad, Municipio" name="municipio" [group]="form"></text>
     </div>
   </div>
-  <br>
-  <br>
   <div class="row justify-content-md-center">
     <div class="col-12 col col-lg-5">
       <text label="Clave Única de Identificación Policial (CUIP)" name="cuip" [group]="form" id=""></text>
@@ -126,8 +124,6 @@
       <text label="Localidad" name="localidadArribo" [group]="form"></text>
     </div>
   </div>
-  <br>
-  <br>
   <div class="row">
     <div class="col-md-2">
       <text label="Calle" name="calleArribo" [group]="form"></text>
@@ -145,9 +141,6 @@
       <text label="Tramo carretero (Si aplica)" name="tramoCarreteroArribo" [group]="form"></text>
     </div>
   </div>
-  <br>
-  <br>
-
   <div class="row">
     <div class="col-md-3">
       <select2 placeholder="Tipo" name="tipoArribo" [group]="form" [options]="
@@ -321,17 +314,11 @@
   </div>
   
   <div class="row space"></div>
-  
-
-
   <div class="row">
     <div class="col-md-12">
       <h2> V. Acciones realizadas</h2>
     </div>
   </div>
-
-  <div class="row space"></div>
-  
  
   <div class="row justify-content-start">
     <div class="col-sm-3">
@@ -384,10 +371,10 @@
       </select2>
     </div>
     
-    <div class="col-sm-3">
-      <span >Preservanción del lugar de intervención llenar sección 6</span>
+    <div class="col-sm-4">
+      <span >Preservación del lugar de intervención llenar sección 6</span>
       <radiobutton
-        class="col-md-4"
+        class="col-md-3"
         name="preservacionAcciones"
         [group]="form"
         [radios]="[
@@ -400,10 +387,10 @@
   </div>
 
   <div class="row justify-content-start">
-    <div class="col-sm-3 ">
-      <span>Informar sobre derechos a favor(anexo 1)</span>
+    <div class="col-sm-4 ">
+      <span>Informar sobre derechos a favor (anexo 1)</span>
       <radiobutton
-        class="col-md-6"
+        class="col-md-4"
         [radios]="[
                     {label:'Detenido',value:'Sí'},
                     {label:'N/A',value:'No'}
@@ -412,11 +399,10 @@
         [group]="form">
       </radiobutton>
     </div>
-    <div class="col-md-1"> </div>
-    <div class="col-sm-3">
+    <div class="col-sm-4">
       <span>Detenciones llenar (Anexo 2)</span>
       <radiobutton
-        class="col-md-4"
+        class="col-md-3"
         [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
@@ -426,11 +412,10 @@
         [group]="form">
       </radiobutton>
     </div>
-    <div class="col-md-1"> </div>
-    <div class="col-sm-3">
+    <div class="col-sm-4">
       <span>Uso de fuerza (Anexo 3)</span>
       <radiobutton
-        class="col-md-4"
+        class="col-md-3"
         [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
@@ -441,14 +426,11 @@
       </radiobutton>
     </div>
   </div>
-  
-
-
-<div class="row justify-content-start">
-      <div class="col-sm-3">
+  <div class="row justify-content-start">
+    <div class="col-sm-4">
       <span>Puesto a disposición de los detenidos (Anexo 4)</span>
       <radiobutton
-        class="col-md-4"
+        class="col-md-3"
         [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
@@ -459,12 +441,10 @@
       </radiobutton>
     </div>
     
-    <div class="col-md-1"> </div>
-    
-    <div class="col-sm-3">
+    <div class="col-sm-4">
       <span>Inventario de pertenencias del detenido (Anexo 5)</span>
       <radiobutton
-        class="col-md-6"
+        class="col-md-4"
         [radios]="[
                     {label:'Detenido',value:'Sí'},
                     {label:'N/A',value:'No'}
@@ -473,11 +453,10 @@
         [group]="form">
       </radiobutton>
     </div>
-     <div class="col-md-1"> </div>  
-     <div class="col-sm-3">
+    <div class="col-sm-4">
       <span>Traslado / Canalización</span>
       <radiobutton
-        class="col-md-4"
+        class="col-md-3"
         [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
@@ -488,9 +467,9 @@
         [functionChange]="showTraslado.bind(this)">
       </radiobutton>
     </div>
-</div>
-<div class="row justify-content-start">
-<div class="col-md-2">
+  </div>
+  <div class="row justify-content-start">
+    <div class="col-md-2">
       <select2 placeholder="A:" name="trasladoAccionesA"
                *ngIf="cTraslado"
                [group]="form" [options]="
@@ -537,10 +516,10 @@
                 ]">
       </select2>
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-4">
       <span>Informar sobre hechos a favor (Anexo 1)</span>
       <radiobutton
-        class="col-md-4"
+        class="col-md-3"
         [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
@@ -550,11 +529,10 @@
         [group]="form">
       </radiobutton>
     </div>
-    <div class="col-md-1"> </div>  
-       <div class="col-sm-3">
+    <div class="col-sm-4">
       <span>Recolección y resguardo de objetos y/o bienes (Anexo 9)</span>
       <radiobutton
-        class="col-md-4"
+        class="col-md-3"
         [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
@@ -569,10 +547,10 @@
 
   <div class="row justify-content-start">
  
-    <div class="col-sm-3">
+    <div class="col-sm-4">
       <span>Entrega recepción de lugar de la intervención (Anexo 10)</span>
       <radiobutton
-        class="col-md-4"
+        class="col-md-3"
         [radios]="[
                     {label:'Sí',value:'Sí'},
                     {label:'No',value:'No'},
@@ -582,7 +560,6 @@
         [group]="form">
       </radiobutton>
     </div>
-    <div class="col-md-1"> </div> 
     <div class="col-sm-3">
       <span>Entrevistas(s) (Anexo 10) </span>
       <radiobutton
