@@ -749,7 +749,7 @@ public setDataIPH(_data) {
     this.data ['xPaternoPrimerFuerza']        = _data.paternoPrimerFuerza
     this.data ['xMaternoPrimerFuerza']        = _data.maternoPrimerFuerza
     this.data ['xNombrePrimerFuerza']         = _data.nombrePrimerFuerza
-    this.data ['xFechaCanalizacion']          = fechaCanalizacion  
+    this.data ['xFechaCanalizacion']          = fechaCanalizacion
     this.data ['xHoraCanalizacion']           = _data.horaCanalizacion
 
     //Anexo5
@@ -776,6 +776,13 @@ public setDataIPH(_data) {
     this.data ['xCalleAgenciaTraslado']        = _data.calleAgenciaTraslado
     this.data ['xNumExtAgenciaTraslado']       = _data.numExtAgenciaTraslado
     this.data ['xCpAgenciaTraslado']           = _data.cpAgenciaTraslado
+    
+    this.data ['xCalidadTraslado']             = _data.calidadTraslado
+    this.data['xPaternoTraslado']              = _data.paternoTraslado
+    this.data['xMaternoTraslado']              = _data.maternoTraslado
+    this.data['xNombresTraslado']              = _data.nombresTraslado
+    this.data['xEdadTraslado']                 = _data.edadTraslado
+
     this.data ['xPaternoEntregaTraslado']      = _data.paternoEntregaTraslado
     this.data ['xMaternoEntregaTraslado']      = _data.maternoEntregaTraslado
     this.data ['xNombreEntregaTraslado']       = _data.nombreEntregaTraslado
