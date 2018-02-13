@@ -1,0 +1,62 @@
+<breadcrumb [rutas]="breadcrumb"></breadcrumb>
+<caso-nic *ngIf="id != null" [id]="id"></caso-nic>
+<div class="row space justify-content-between">
+    <div class="col-sm-auto">
+        <h2>Noticia de Hechos</h2>
+    </div>
+    <div class="col-sm-auto">
+        <button class="float-right" *ngIf="id == null"  mat-raised-button routerLink="/" color="accent">Regresar</button>
+        <button class="float-right"  *ngIf="id != null" mat-raised-button routerLink="{{returnRoute}}" color="accent">Regresar</button>
+    </div>
+</div>
+<div class="mdl-tabs vertical-mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+    <div class="row">
+        <div class="col-md-3 col-sm-2">
+            <div class="mdl-tabs__tab-bar">
+                <a href="#tab1-panel" class="mdl-tabs__tab is-active" [routerLink]="['datos-generales']">
+                    <mat-icon class="d-inline">class</mat-icon>
+                    <label class="d-xs-none d-sm-none d-md-inline">Datos generales</label>
+                </a>
+                <div [class]="hasId() ? '' : 'hidden' ">
+                    <a href="#tab2-panel" class="mdl-tabs__tab disabled" [routerLink]="['personas']" *ngIf="isTitular">
+                        <mat-icon>assignment_ind</mat-icon>
+                        <label class="d-xs-none d-sm-none d-md-inline">Personas</label>
+                    </a>
+                    <a href="#tab3-panel" class="mdl-tabs__tab" [routerLink]="['delitos']" *ngIf="isTitular">
+                        <mat-icon>gavel</mat-icon>
+                        <label class="d-xs-none d-sm-none d-md-inline">Delitos</label>
+                    </a>
+                    <a href="#tab4-panel" class="mdl-tabs__tab" [routerLink]="['lugares']" *ngIf="isTitular">
+                        <mat-icon>room</mat-icon>
+                        <label class="d-xs-none d-sm-none d-md-inline">Lugares</label>
+                    </a>
+                    <a href="#tab5-panel" class="mdl-tabs__tab" [routerLink]="['armas']" *ngIf="isTitular">
+                        <mat-icon svgIcon="arma" class="arma-icon"></mat-icon>
+                        <label class="d-xs-none d-sm-none d-md-inline">Armas</label>
+                    </a>
+                    <a href="#tab6-panel" class="mdl-tabs__tab" [routerLink]="['vehiculos']" *ngIf="isTitular">
+                        <mat-icon>directions_car</mat-icon>
+                        <label class="d-xs-none d-sm-none d-md-inline">Vehículos</label>
+                    </a>
+                    <a href="#tab7-panel" class="mdl-tabs__tab" [routerLink]="['relaciones']" *ngIf="isTitular">
+                        <mat-icon>compare_arrows</mat-icon>
+                        <label class="d-xs-none d-sm-none d-md-inline">Relaciones</label>
+                    </a>
+                    <a href="#tab8-panel" class="mdl-tabs__tab" [routerLink]="['titulares']">
+                        <mat-icon>description</mat-icon>
+                        <label class="d-xs-none d-sm-none d-md-inline">Titulares</label>
+                    </a>
+                    <a href="#tab9-panel" class="mdl-tabs__tab" [routerLink]="['documentos']" *ngIf="isTitular">
+                        <mat-icon>insert_drive_file</mat-icon>
+                        <label class="d-xs-none d-sm-none d-md-inline">Documentos</label>
+                    </a>
+                </div>
+            </div>
+        </div>
+       <div class="col-md-9 col-sm-10">
+            <div class="mdl-tabs__panel is-active" id="tab1-panel">
+                 <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

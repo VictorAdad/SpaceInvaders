@@ -1,0 +1,8 @@
+<h1 mat-dialog-title style="text-align: center">Advertencia</h1>
+<div id="content" mat-dialog-content style="text-align: center">
+    <p>{{ title }}</p>
+</div>
+<div id="button" mat-dialog-actions style="text-align: right">
+    <button mat-button (click)="onNoClick()" tabindex="-1">Cancelar</button>
+    <button id="buttonRed" mat-button [disabled]="block" (click)="actionClick()" tabindex="2">Continuar</button>
+</div>

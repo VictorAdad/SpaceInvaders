@@ -1,0 +1,24 @@
+<valida-offline></valida-offline>
+<breadcrumb [rutas]="breadcrumb"></breadcrumb>
+<caso-nic [id]="casoId"></caso-nic>
+<div class="row space">
+	<div class="col-md-6">
+		<h2>Archivo temporal</h2>
+	</div>
+	<div class="col-md-6">
+		<button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/archivo-temporal" color="accent">Regresar</button>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<mat-tab-group>
+			<mat-tab label="Determinación"><determinacion-archivo-temporal (modelUpdate)="modelUpdate($event)"></determinacion-archivo-temporal></mat-tab>
+			<mat-tab label="Documentos" *ngIf="archivoId!=null"><documento-archivo-temporal [id]="archivoId" [object]="model"></documento-archivo-temporal></mat-tab>
+		</mat-tab-group>
+	</div>
+</div>
+
+
+
+
+

@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-md-6">
+        <h3>Relaciones</h3>
+    </div>
+    <div class="col-md-6">
+        <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/relaciones/create" color="accent">Agregar relación</button>
+    </div>
+</div>
+
+<mat-paginator #paginator
+    [length]="pag"
+    [pageIndex]="0"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="changePage($event)">
+  </mat-paginator>
+<mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="Tipo">
+        <mat-header-cell *matHeaderCellDef> Tipo de relación </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.tipo}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="Elementos">
+        <mat-header-cell *matHeaderCellDef> Elementos relacionados </mat-header-cell>
+        <mat-cell style="width: 50%" *matCellDef="let element">
+            <span *ngIf="element.tipo == 'Asesor jurídico de la víctima'"><strong>Asesor jurídico:</strong> {{element.personaCasoRelacionada | personaNombre}} </span>  <br *ngIf="element.tipo == 'Asesor jurídico de la víctima'">          
+            <span *ngIf="element.tipo == 'Representante de la víctima'"><strong>Representante:</strong> {{element.personaCasoRelacionada | personaNombre}} </span> <br *ngIf="element.tipo == 'Representante de la víctima'">
+            <span *ngIf="element.tipo == 'Defensor del imputado'"><strong>Defensor:</strong> {{element.personaCasoRelacionada | personaNombre}} </span> <br *ngIf="element.tipo == 'Defensor del imputado'">
+            <span *ngIf="element.tipo == 'Defensor del imputado'"> <strong>Imputado:</strong> {{element.personaCaso | personaNombre}} </span> <br *ngIf="element.tipo == 'Defensor del imputado'">
+            <span *ngIf="element.tipo != 'Defensor del imputado'"> <strong>Víctima:</strong> {{element.personaCaso | personaNombre}} </span>   <br *ngIf="element.tipo != 'Defensor del imputado'">
+            <span *ngIf="element.tipo == 'Imputado víctima delito'"> <strong>Imputado:</strong> {{element.personaCasoRelacionada | personaNombre}} </span> <br *ngIf="element.tipo == 'Imputado víctima delito'">         
+            <span *ngIf="element.tipo == 'Imputado víctima delito'">
+                <strong>Lugar:</strong> 
+                {{element.lugarTipoRelacionPersona["0"]?.lugar?.calle }} , 
+                <span *ngIf="element.lugarTipoRelacionPersona && element.lugarTipoRelacionPersona['0'] &&  element.lugarTipoRelacionPersona['0'].lugar && element.lugarTipoRelacionPersona['0'].lugar.pais && element.lugarTipoRelacionPersona['0'].lugar.pais.id == IdMexico">
+                    {{element?.lugarTipoRelacionPersona["0"]?.lugar?.colonia?.nombre }}
+                </span>
+                <span *ngIf="element.lugarTipoRelacionPersona && element.lugarTipoRelacionPersona['0'] &&  element.lugarTipoRelacionPersona['0'].lugar && element.lugarTipoRelacionPersona['0'].lugar.pais && element.lugarTipoRelacionPersona['0'].lugar.pais.id != IdMexico">
+                    {{element?.lugarTipoRelacionPersona["0"]?.lugar?.coloniaOtro }}
+                </span>
+            </span> 
+            <br *ngIf="element.tipo == 'Imputado víctima delito'">
+            <div *ngIf="element.tipo == 'Imputado víctima delito'" style="text-overflow: ellipsis; white-space: pre; overflow: hidden !important;"><strong>Delito:</strong> {{element.detalleDelito.delitoCaso?element.detalleDelito.delitoCaso.delito.nombre:''}}</div>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" routerLink="/caso/{{casoId}}/relaciones/{{row.id}}"></mat-row>
+</mat-table>

@@ -1,0 +1,24 @@
+<div class="form-group">
+	<mat-form-field class="full-width" [formGroup]="group" *ngIf="name!=''">
+		<input
+			matInput
+			[matDatepicker]="picker"
+			formControlName="{{name}}"
+      name="{{name}}"
+      [disabled]="disabled"
+			(ngModelChange)="update($event)"
+			placeholder="{{label}}">
+		<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+		<mat-datepicker touchUi="true" #picker></mat-datepicker>
+	</mat-form-field>
+	<mat-form-field class="full-width" [formGroup]="group" *ngIf="name==''" >
+		<input
+      matInput
+      [disabled]="disabled"
+			[matDatepicker]="picker"
+			(ngModelChange)="update($event)"
+			placeholder="{{label}}">
+		<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+		<mat-datepicker touchUi="true" #picker></mat-datepicker>
+	</mat-form-field>
+</div>

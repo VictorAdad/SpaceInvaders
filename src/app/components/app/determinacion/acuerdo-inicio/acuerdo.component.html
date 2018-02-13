@@ -1,0 +1,27 @@
+<div class="row space">
+    <div class="col-md-12">
+        <caso-herencia [casoId]="casoId" [people]="personas"  (personasChange)="personasChanged($event)"  [precarga]="precarga" [heredarFunction]="heredarDatos.bind(this)" [form]="form" (heredarSintesisChange)="heredarSintesisChange($event)"></caso-herencia>
+    </div>
+</div>
+<div class="row space">
+    <div class="col-md-12">
+        <form>
+            <h4>Aceptación de remisión a Justicia Restaurativa (JR)</h4>
+            <text-area label="Nombre de la persona que acepta asistir a Justicia Restaurativa" name="nombrePersonaAcepta" [group]="form" [focus]="true"></text-area>
+            <h4>Acuerdo de inicio</h4>
+            <select2 [options]="options.presentoLlamada" placeholder="Presentó o recibió llamada" [group]="form.controls.presentoLlamada" name="id" ></select2>
+            <text-area label="Manifestó" name="manifesto"  [group]="form"></text-area>
+            <text-area label="Síntesis de los hechos" name="sintesisHechos" [group]="form"></text-area>
+            <text-area label="Observaciones/incidencias" name="observaciones" [group]="form"></text-area>
+            <div class="row space"></div>
+            <div class="row justify-content-end">
+                <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
+                    <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid" *ngIf="!hasAcuerdoInicio">Guardar</button>
+                </div>
+                <div class="col-sm-auto">
+                    <button class="float-right" mat-button routerLink="/caso/{{casoId}}/detalle">Cancelar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

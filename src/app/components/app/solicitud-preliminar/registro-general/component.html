@@ -1,0 +1,45 @@
+<valida-offline></valida-offline>
+<breadcrumb [rutas]="breadcrumb"></breadcrumb>
+<caso-nic [id]="casoId"></caso-nic>
+<div class="row space">
+    <div class="col-md-6">
+        <h2>Solicitudes de registro general</h2>
+    </div>
+    <div class="col-md-6">
+        <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
+    </div>
+</div>
+<div class="row space justify-content-end">
+    <div class="col-md-auto">
+        <search (search)="filterPage($event)"></search>
+      </div>
+    <div class="col-md-auto">
+        <button mat-raised-button color="accent" routerLink="/caso/{{casoId}}/registro-general/create">Agregar solicitud</button>
+    </div>
+</div>
+<mat-paginator #paginator
+    [length]="pag"
+    [pageIndex]="0"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page) = "changePage($event)">
+  </mat-paginator>
+<mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="fundamento">
+        <mat-header-cell *matHeaderCellDef> Nombre de la persona que atiende la llamada telefónica</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.atencionLlamada}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="plazo">
+        <mat-header-cell *matHeaderCellDef> Número telefónico </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.noTelefonico}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="tipo">
+        <mat-header-cell *matHeaderCellDef> Tipo de solicitud </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.tipo}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/registro-general/{{row.id}}/edit"></mat-row>
+</mat-table>

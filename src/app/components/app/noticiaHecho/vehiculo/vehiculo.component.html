@@ -1,0 +1,45 @@
+<div class="row space">
+    <div class="col-md-6">
+        <h3>Vehículos</h3>
+    </div>
+    <div class="col-md-6">
+        <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/vehiculos/create" color="accent">Agregar vehículo</button>
+    </div>
+</div>
+<mat-paginator #paginator 
+[length]="pag" 
+[pageIndex]="0" 
+[pageSize]="10" 
+[pageSizeOptions]="[5, 10, 25, 100]"
+(page)="changePage($event)">  
+</mat-paginator>
+<mat-table #table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="tipo">
+        <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element?.marcaSubmarca?.tipoVehiculo}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="marca">
+        <mat-header-cell *matHeaderCellDef> Marca </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element?.marcaSubmarca?.marca}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="color">
+        <mat-header-cell *matHeaderCellDef> Color </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element?.motivoRegistroColorClase?.color}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="modelo">
+        <mat-header-cell *matHeaderCellDef> Modelo </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.modelo}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="placa">
+        <mat-header-cell *matHeaderCellDef> Placa </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.placas}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" routerLink="/caso/{{casoId}}/vehiculos/{{row.id}}"></mat-row>
+</mat-table>

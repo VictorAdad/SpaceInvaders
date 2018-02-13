@@ -1,0 +1,122 @@
+<valida-offline></valida-offline>
+<div class="row space">
+    <div class="col-md-12">
+      <caso-herencia [casoId]="casoId" [people]="personas" [form]="form" [precarga]="precarga"></caso-herencia>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form>
+            <div class="row">
+                <div class="col">
+                  <select2 *ngIf="id != null"
+                      [focus]="false"
+                      [options]="
+                      [
+                          {label:'Acuerdo general',value:'Acuerdo general'},
+                          {label:'Registro general', value:'Registro general'},
+                          {label:'Registro de llamada para permitir al imputado comunicarse con su defensor',value:'Registro de llamada'}
+                      ]"
+                      placeholder="Tipo de solicitud"
+                      (valueChange)="tipoChange($event)"
+                      [group]="form"
+                      name="tipo">
+                  </select2>
+
+                  <select2
+                    *ngIf="id == null"
+                      [focus]="true"
+                      [options]="
+                      [
+                          {label:'Acuerdo general',value:'Acuerdo general'},
+                          {label:'Registro general', value:'Registro general'},
+                          {label:'Registro de llamada para permitir al imputado comunicarse con su defensor',value:'Registro de llamada'}
+                      ]"
+                      placeholder="Tipo de solicitud"
+                      (valueChange)="tipoChange($event)"
+                      [group]="form"
+                      name="tipo">
+                  </select2>
+                </div>
+            </div>
+            <div *ngIf="tipo === 'Acuerdo general'">
+                <h4>Fundamento legal</h4>
+                <div class="row">
+                    <div class="col">
+                        <text-area label="Fundamento legal" name="fundamentoLegal" [group]="form"></text-area>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <text-area label="Contenido del acuerdo" name="contenidoAcuerdo"  [group]="form"></text-area>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <text-area label="Con la finalidad de" name="finalidad"  [group]="form"></text-area>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <text-area label="Plazo en el que debe ser complementado" name="plazo" [group]="form"></text-area>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <text-area label="Apercibimientos" name="apercibimiento" [group]="form"></text-area>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <text-area label="Señalar que se solicita" name="senialar" [group]="form"></text-area>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <text-area label="Observaciones/Incidencias" name="observaciones" [group]="form"></text-area>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="tipo=='Registro general'">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Constancia general</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <text-area label="Contenido de la constancia" name="contenidoConstancia" [group]="form"></text-area>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="tipo=='Registro de llamada'">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Constancia de llamada para permitir al imputado comunicarse con su defensor</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <int label="Especificar número teléfonico" name="noTelefonico" [min]="10" [max]="10"  [group]="form"></int>
+                    </div>
+                    <div class="col">
+                        <text label="Nombre de la persona que atiende la llamada telefónica" name="atencionLlamada" [max]="100" [group]="form"></text>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <text-area label="Observaciones/Incidencias" name="observaciones" [group]="form"></text-area>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
+                    <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
+                </div>
+                <div class="col-sm-auto">
+                    <button class="float-right" mat-button routerLink="/caso/{{casoId}}/registro-general">Cancelar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

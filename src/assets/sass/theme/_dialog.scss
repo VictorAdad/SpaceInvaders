@@ -1,0 +1,43 @@
+@each $breakpoint in map-keys($grid-breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    .content-dialog#{$infix} {
+		width: map-get($grid-breakpoints, $breakpoint) - 235;
+	}
+
+}
+
+@include media-breakpoint-between(sm, md,$grid-breakpoints) {
+	.content-dialog-lg{
+    width: 400px;
+	}
+
+}
+
+.file_chooser{
+  z-index: 99 !important;
+ }
+ .file_chooser_backdrop{
+  z-index: 99!important;
+
+ }
+
+.cdk-overlay-container{
+  z-index: 99 !important;
+}
+.file_chooser .mat-dialog-container{
+    width: 540px !important;
+ }
+ .file_chooser .mat-dialog-container tbody{
+    display: block;
+    max-height: 300px !important;
+    overflow-y: auto !important;
+    width: 100%;
+  }
+.file_chooser tr,.file_chooser td, .file_chooser th {
+   width: 100%;
+ }
+.file_chooser .mat-dialog-container thead{
+     display: block;
+     width: 100%;
+ }

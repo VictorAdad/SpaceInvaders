@@ -1,0 +1,71 @@
+<mat-expansion-panel [expanded]="panelOpenState" (opened)="changeState()">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <strong>Datos de herencia</strong>
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="container-fluid">
+        <div class="row space">
+            <div class="col">
+                <strong class="float-right">
+                    <checkbox label="Heredar datos" [group]="form" name="heredar" (valueChange)="setHeredarDatos($event)"></checkbox>
+                </strong>
+            </div>
+         </div>
+        <div class="row">
+            <div class="col-md-4">
+                <select2 placeholder="Persona" [disabled]="!heredar" [options]="personasTipo" [afterClean]="true" [group]="" name=""  (valueChange)="addPersona($event)"></select2>
+            </div>
+            <div class="col-md-4">
+                <select2 placeholder="Lugar" [disabled]="!heredar" [options]="lugares" [group]="form.controls.lugar" name="id"  (valueChange)="lugarChanged($event)"></select2>
+            </div>
+            <div class="col-md-4">
+                <select2 placeholder="Delito" [disabled]="!heredar"  [options]="delitos" [group]="form.controls.delito" name="id"  (valueChange)="delitoChanged($event)"></select2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <mat-list *ngIf="personas != null">
+                    <mat-list-item *ngFor="let personaCaso of personas">
+                        <div *ngIf="personaCaso.persona.nombre !=null || personaCaso.persona.paterno!=null || personaCaso.persona.materno!=null">
+                            <small [ngClass]="{ 'text-muted': !heredar}">{{personaCaso | personaNombre }} - {{personaCaso.tipoInterviniente.tipo}}</small> 
+                            <button mat-icon-button [disabled]="!heredar" (click)="removePersona($event, personaCaso.id)"><mat-icon style="vertical-align: middle">close</mat-icon></button>
+                        </div>
+                        <div *ngIf="personaCaso.persona.nombre ==null &&  personaCaso.persona.paterno==null && personaCaso.persona.materno ==null && personaCaso.tipoInterviniente.tipo == 'Imputado desconocido'">
+                            <small [ngClass]="{ 'text-muted': !heredar}">Quién Resulte Responsable - {{personaCaso.tipoInterviniente.tipo}}</small> 
+                            <button mat-icon-button [disabled]="!heredar" (click)="removePersona($event, personaCaso.id)"><mat-icon style="vertical-align: middle">close</mat-icon></button>
+                        </div>
+                        <div *ngIf="personaCaso.persona.nombre ==null &&  personaCaso.persona.paterno==null && personaCaso.persona.materno ==null && !(personaCaso.tipoInterviniente.tipo == 'Imputado desconocido')">
+                            <small [ngClass]="{ 'text-muted': !heredar}">Identidad Desconocida - {{personaCaso.tipoInterviniente.tipo}}</small> 
+                            <button mat-icon-button [disabled]="!heredar" (click)="removePersona($event, personaCaso.id)"><mat-icon style="vertical-align: middle">close</mat-icon></button>
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+            <div class="col-md-4">
+                <select2 placeholder="Vehiculo" [disabled]="!heredar" [options]="vehiculos" [group]="form.controls.vehiculo" name="id"  (valueChange)="vehiculoChanged($event)"></select2>
+            </div>
+            <div class="col-md-4">
+                <select2 placeholder="Arma" [disabled]="!heredar"  [options]="armas" [group]="form.controls.arma" name="id" (valueChange)="armaChanged($event)"></select2>
+            </div>
+        </div>
+        <div class="row space">
+            <div class="col">
+              <strong class="float-right" *ngIf="heredar">
+                <checkbox label="Heredar síntesis del caso" [disabled]="!heredar" [group]="form" name="heredarSintesisHechos" (valueChange)="setHeredarSintesis($event)"></checkbox>
+              </strong>
+          </div>
+        </div>
+        <div class="row  space">
+            <div class="col-lg-12 col-md-12 col-sm-12 small">
+               Es necesario seleccionar "Heredar datos" para desplegar en el formato la información seleccionada, de lo contrario el sistema presentará toda la información de Datos Generales con base en la correspondencia de la información presentada en el formato.
+            </div>
+       </div>
+       <div class="row space"></div>
+      <div class="row justify-content-end space">
+          <div class="col-sm-auto" >
+              <button mat-raised-button color="accent" (click)="heredarDatos()" [disabled]="!heredar" >Heredar</button>
+          </div>
+      </div>
+    </div>
+</mat-expansion-panel>

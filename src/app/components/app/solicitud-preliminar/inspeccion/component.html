@@ -1,0 +1,41 @@
+<valida-offline></valida-offline>
+<breadcrumb [rutas]="breadcrumb"></breadcrumb>
+<caso-nic [id]="casoId"></caso-nic>
+<div class="row space">
+    <div class="col-md-6">
+        <h2>Solicitudes de inspección</h2>
+    </div>
+    <div class="col-md-6">
+        <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/detalle" color="accent">Regresar</button>
+    </div>
+</div>
+<div class="row space justify-content-end">
+    <div class="col-md-auto">
+        <search (search)="filterPage($event)"></search>
+      </div>
+    <div class="col-md-auto">
+        <button mat-raised-button *ngIf="haveCaso" color="accent" routerLink="/caso/{{casoId}}/inspeccion/create">Agregar solicitud</button>
+        <button mat-raised-button *ngIf="!haveCaso" color="accent" routerLink="create">Agregar solicitud</button>
+    </div>
+</div>
+<mat-paginator #paginator
+    [length]="pag"
+    [pageIndex]="0"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="changePage($event)">
+</mat-paginator>
+<mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="fecha">
+        <mat-header-cell *matHeaderCellDef> Fecha</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.fechaHoraInspeccion | date: 'dd/MM/yyyy'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="adscripcion">
+        <mat-header-cell *matHeaderCellDef> Adscripción</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.adscripcion}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columns;" routerLink="/caso/{{casoId}}/inspeccion/{{row.id}}/edit"></mat-row>
+</mat-table>

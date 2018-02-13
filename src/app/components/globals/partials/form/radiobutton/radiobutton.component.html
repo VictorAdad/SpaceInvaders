@@ -1,0 +1,21 @@
+
+<div  *ngIf="name==''" >
+	<mat-radio-group [(ngModel)]="value" (ngModelChange)="update($event)">
+
+	<div class="row">
+	<div *ngFor="let radio of radios" class="content-radio {{class}} {{radio.value}}">
+		<mat-radio-button   value="{{radio.value}}">{{radio.label}}</mat-radio-button>
+	</div>
+	  </div>
+	</mat-radio-group>
+</div>
+<div [formGroup]="group"  *ngIf="name!=''" [ngClass]="{'ROJO' : requerido}">
+	<mat-radio-group [(ngModel)]="value" (ngModelChange)="update($event)" formControlName="{{name}}" required="true">
+
+	<div class="row" #contentRadios>
+	<div *ngFor="let radio of radios" class="content-radio {{class}} {{radio.value}}">
+		<mat-radio-button   value="{{radio.value}}">{{radio.label}}</mat-radio-button>
+	</div>
+	  </div>
+	</mat-radio-group>
+</div>

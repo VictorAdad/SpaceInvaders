@@ -1,0 +1,32 @@
+<div class="row space">
+    <div class="col-md-12">
+      <caso-herencia [casoId]="casoId" [people]="personas" [form]="form" [precarga]="precarga"></caso-herencia>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+    <h3>Oficio de solicitud de Policía de investigación </h3>
+    </div>
+    <div class="col-md-12">
+        <form>
+            <text *ngIf="id == null"  label="Número de oficio" name="noOficio" [group]="form" [focus]="true"></text>
+            <text *ngIf=" id != null" label="Número de oficio" name="noOficio" [group]="form" ></text>
+            <text-area label="Nombre del coordinador de la policía de investigación" name="nombreComisario" [group]="form"></text-area>
+            <text-area label="Actuaciones de investigación solicitadas" name="actuacionesSolicitadas" [group]="form"></text-area>
+            <div class="row space"></div>
+            <div class="row justify-content-end">
+                <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
+                    <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || masDe3Dias==true" *ngIf="id == null">Guardar</button>
+                </div>
+                <div class="col-sm-auto">
+                    <button class="float-right" mat-button routerLink="/caso/{{casoId}}/policia">Cancelar</button>
+                </div>
+            </div>
+            <div class="row justify-content-end space">
+                <div class="col-sm-auto" *ngIf="!onLine.onLine && masDe3Dias==true">
+                    Más de tres dias sin conexión, favor de conectarse a internet
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

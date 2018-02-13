@@ -1,0 +1,292 @@
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <mat-icon>sentiment_neutral</mat-icon> Media filiación
+        </mat-panel-title>
+        <mat-panel-description>
+
+        </mat-panel-description>
+              </mat-expansion-panel-header>
+              Complexión
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.complexionPielSangre.tipoComplexion" placeholder="Tipo" [group]="globals.formMediaFilicion.controls.complexionPielSangre" name="tipoComplexion"></select2>
+                </div>
+              </div>
+              Piel
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.complexionPielSangre.colorPiel" placeholder="Color" [group]="globals.formMediaFilicion.controls.complexionPielSangre" name="colorPiel"></select2>
+                </div>
+              </div>
+              Cara
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.caraNariz.formaCara" placeholder="Forma" [group]="globals.formMediaFilicion.controls.caraNariz" name="formaCara"></select2>
+                </div>
+              </div>
+              Cabello
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.cabello.cantidad" placeholder="Cantidad" [group]="globals.formMediaFilicion.controls.cabello" name="cantidad"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.cabello.color" placeholder="Color" [group]="globals.formMediaFilicion.controls.cabello" name="color"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.cabello.forma" placeholder="Forma" [group]="globals.formMediaFilicion.controls.cabello" name="forma"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.cabello.calvicie" placeholder="Calvicie" [group]="globals.formMediaFilicion.controls.cabello" name="calvicie"></select2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.cabello.implantacion" placeholder="Implantación" [group]="globals.formMediaFilicion.controls.cabello" name="implantacion"></select2>
+                </div>
+              </div>
+              Frente
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.frenteMenton.alturaFrente" placeholder="Altura" [group]="globals.formMediaFilicion.controls.frenteMenton" name="alturaFrente"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.frenteMenton.inclinacionFrente" placeholder="Inclinación" [group]="globals.formMediaFilicion.controls.frenteMenton" name="inclinacionFrente"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.frenteMenton.anchoFrente" placeholder="Ancho" [group]="globals.formMediaFilicion.controls.frenteMenton" name="anchoFrente"></select2>
+                </div>
+              </div>
+              Cejas
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.cejaBoca.direccionCeja" placeholder="Dirección" [group]="globals.formMediaFilicion.controls.cejaBoca" name="direccionCeja" ></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.cejaBoca.implantacionCeja" placeholder="Implantación" [group]="globals.formMediaFilicion.controls.cejaBoca" name="implantacionCeja" ></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.cejaBoca.formaCeja" placeholder="Forma" [group]="globals.formMediaFilicion.controls.cejaBoca" name="formaCeja" ></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.cejaBoca.tamanioCeja" placeholder="Tamaño" [group]="globals.formMediaFilicion.controls.cejaBoca" name="tamanioCeja" ></select2>
+                </div>
+              </div>
+              Ojos
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.labioOjo.colorOjo" placeholder="Color" [group]="globals.formMediaFilicion.controls.labioOjo" name="colorOjo"  ></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.labioOjo.formaOjo" placeholder="Forma" [group]="globals.formMediaFilicion.controls.labioOjo" name="formaOjo"  ></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.labioOjo.tamanioOjo" placeholder="Tamaño" [group]="globals.formMediaFilicion.controls.labioOjo" name="tamanioOjo"  ></select2>
+                </div>
+              </div>
+              Nariz
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.caraNariz.raizNariz" placeholder="Raíz(prof)" [group]="globals.formMediaFilicion.controls.caraNariz" name="raizNariz" ></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.caraNariz.dorsoNariz" placeholder="Dorso" [group]="globals.formMediaFilicion.controls.caraNariz" name="dorsoNariz" ></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.caraNariz.anchoNariz" placeholder="Ancho" [group]="globals.formMediaFilicion.controls.caraNariz" name="anchoNariz" ></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.caraNariz.baseNariz" placeholder="Base" [group]="globals.formMediaFilicion.controls.caraNariz" name="baseNariz" ></select2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.caraNariz.alturaNariz" placeholder="Altura" [group]="globals.formMediaFilicion.controls.caraNariz" name="alturaNariz" ></select2>
+                </div>
+              </div>
+              Boca
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.cejaBoca.tamanioBoca" placeholder="Tamaño" [group]="globals.formMediaFilicion.controls.cejaBoca" name="tamanioBoca" ></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.cejaBoca.comisurasBoca" placeholder="Comisuras" [group]="globals.formMediaFilicion.controls.cejaBoca" name="comisurasBoca" ></select2>
+                </div>
+              </div>
+              Labios
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.labioOjo.espesorLabio" placeholder="Espesor" [group]="globals.formMediaFilicion.controls.labioOjo" name="espesorLabio" ></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.labioOjo.alturaNasoLabialLabio" placeholder="Altura de naso labial" [group]="globals.formMediaFilicion.controls.labioOjo" name="alturaNasoLabialLabio" ></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.labioOjo.prominenciaLabio" placeholder="Prominencia" [group]="globals.formMediaFilicion.controls.labioOjo" name="prominenciaLabio" ></select2>
+                </div>
+              </div>
+              Mentón
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.frenteMenton.tipoMenton" placeholder="Tipo" [group]="globals.formMediaFilicion.controls.frenteMenton" name="tipoMenton" ></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.frenteMenton.formaMenton" placeholder="Forma" [group]="globals.formMediaFilicion.controls.frenteMenton" name="formaMenton" ></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.frenteMenton.inclinacionMenton" placeholder="Inclinación" [group]="globals.formMediaFilicion.controls.frenteMenton" name="inclinacionMenton" ></select2>
+                </div>
+              </div>
+              Oreja derecha
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.oreja.forma" placeholder="Forma" [group]="globals.formMediaFilicion.controls.orejaDerecha" name="forma"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.oreja.helixOriginal" placeholder="Hélix original" [group]="globals.formMediaFilicion.controls.orejaDerecha" name="helixOriginal"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.oreja.helixSuperior" placeholder="Hélix superior" [group]="globals.formMediaFilicion.controls.orejaDerecha" name="helixSuperior"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.oreja.helixPosterior" placeholder="Hélix posterior" [group]="globals.formMediaFilicion.controls.orejaDerecha" name="helixPosterior"></select2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.oreja.helixAdherencia" placeholder="Hélix adherencia" [group]="globals.formMediaFilicion.controls.orejaDerecha" name="helixAdherencia"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.oreja.lobuloContorno" placeholder="Lóbulo contorno" [group]="globals.formMediaFilicion.controls.orejaDerecha" name="lobuloContorno"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.oreja.lobuloAdherencia" placeholder="Lóbulo adherencia" [group]="globals.formMediaFilicion.controls.orejaDerecha" name="lobuloAdherencia"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.oreja.lobuloParticularidad" placeholder="Lóbulo particularidad" [group]="globals.formMediaFilicion.controls.orejaDerecha" name="lobuloParticularidad"></select2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.oreja.lobuloDimension" placeholder="Lóbulo dimensión" [group]="globals.formMediaFilicion.controls.orejaDerecha" name="lobuloDimension"></select2>
+                </div>
+              </div>
+
+              Oreja izquierda
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.oreja.forma" placeholder="Forma" [group]="globals.formMediaFilicion.controls.orejaIzquierda" name="forma"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.oreja.helixOriginal" placeholder="Hélix original" [group]="globals.formMediaFilicion.controls.orejaIzquierda" name="helixOriginal"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.oreja.helixSuperior" placeholder="Hélix superior" [group]="globals.formMediaFilicion.controls.orejaIzquierda" name="helixSuperior"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.oreja.helixPosterior" placeholder="Hélix posterior" [group]="globals.formMediaFilicion.controls.orejaIzquierda" name="helixPosterior"></select2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.oreja.helixAdherencia" placeholder="Hélix adherencia" [group]="globals.formMediaFilicion.controls.orejaIzquierda" name="helixAdherencia"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.oreja.lobuloContorno" placeholder="Lóbulo contorno" [group]="globals.formMediaFilicion.controls.orejaIzquierda" name="lobuloContorno"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.oreja.lobuloAdherencia" placeholder="Lóbulo adherencia" [group]="globals.formMediaFilicion.controls.orejaIzquierda" name="lobuloAdherencia"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.oreja.lobuloParticularidad" placeholder="Lóbulo particularidad" [group]="globals.formMediaFilicion.controls.orejaIzquierda" name="lobuloParticularidad"></select2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.oreja.lobuloDimension" placeholder="Lóbulo dimensión" [group]="globals.formMediaFilicion.controls.orejaIzquierda" name="lobuloDimension"></select2>
+                </div>
+              </div>
+              Sangre
+              <div class="row">
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.complexionPielSangre.tipoSangre" placeholder="Tipo"  [group]="globals.formMediaFilicion.controls.complexionPielSangre" name="tipoSangre"></select2>
+                </div>
+                <div class="col-md-2">
+                  <select2 [options]="personaServ.complexionPielSangre.factorRHSangre" placeholder="Factor RH" [group]="globals.formMediaFilicion.controls.complexionPielSangre" name="factorRHSangre"></select2>
+                </div>
+              </div>
+              Talla
+              <div class="row">
+                <div class="col-md-2">
+                  <text label="Estatura" [max]="20"  name="estatura" [group]="globals.form.controls.mediaFiliacion"></text>
+                </div>
+                <div class="col-md-2">
+                  <text label="Peso" [max]="20" name="peso" [group]="globals.form.controls.mediaFiliacion"></text>
+                </div>
+              </div>
+              Señas Particulares
+              <div class="row">
+                <div class="col-md-2">
+                    <checkbox label="Usa anteojos"
+                        name="usaAnteojos" 
+                        [group]="globals.form.controls.mediaFiliacion">    
+                    </checkbox>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                    <text-area label="Cicatrices"
+                        name="cicatrices" 
+                        [group]="globals.form.controls.mediaFiliacion">        
+                    </text-area>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <text-area label="Tatuajes"
+                    name="tatuajes" 
+                        [group]="globals.form.controls.mediaFiliacion">       
+                  </text-area>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <text-area label="Lunares"
+                    name="lunares" 
+                        [group]="globals.form.controls.mediaFiliacion">        
+                  </text-area>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <text-area label="Disminuciones físicas"
+                    name="disminucionesFisicas" 
+                        [group]="globals.form.controls.mediaFiliacion">        
+                  </text-area>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <text-area label="Prótesis"
+                    name="protesis" 
+                        [group]="globals.form.controls.mediaFiliacion">        
+                  </text-area>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <text-area label="Otras"
+                    name="otras" 
+                        [group]="globals.form.controls.mediaFiliacion">        
+                  </text-area>
+                </div>
+              </div>
+              <div [formGroup]="globals.form.controls.mediaFiliacion" >
+                  <input name="id" formControlName="id" hidden>
+              </div>
+
+              
+
+</mat-expansion-panel>

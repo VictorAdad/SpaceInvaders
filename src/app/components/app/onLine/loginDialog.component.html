@@ -1,0 +1,15 @@
+<form (keydown)="submitForm($event)">
+    <div class="space">
+        <text label="Usuario" name="user" [group]="form" [focus]="true"></text>
+        <password label="Contraseña" name="pass" [group]="form"></password>
+    </div>
+</form>
+<div class="space">
+    <span *ngIf="invalid" class="text-danger">
+        <mat-icon style="vertical-align: middle !important;">error</mat-icon> Usuario o contraseña invalidos
+    </span>
+</div>
+
+<div id="button" mat-dialog-actions style="text-align: right">
+  <button id="buttonRed" mat-button  (click)="login(form.valid,form.value)" tabindex="2">ACEPTAR</button>
+</div>

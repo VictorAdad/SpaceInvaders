@@ -1,0 +1,101 @@
+<breadcrumb [rutas]="breadcrumb"></breadcrumb>
+<div class="row space">    
+    <div class="col-md-12 text-right">
+        <!-- <small>NIC:CAI/AIN/00/UAI/268/00126/17/08 - NUC: CAI/AIN/00/UAI/268/00126/17/08</small> -->
+    </div>
+</div>
+<div class="row">
+	<div class="col-md-6 space">
+		<h2>Registrar arma</h2>
+	</div>
+	<div class="col-md-6 space">
+		<button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/noticia-hecho/armas" color="accent">Regresar</button>
+	</div>
+	<div class="col-md-12">
+		<form [formGroup]="form">
+			<div class="row">
+				<div class="col-sm-6 col-md-4 col-lg-3">
+					<select2 placeholder= "Clase de Arma"
+						[focus]="true"
+						name="clase"
+						hintStart="Campo obligatorio"
+						[(options)]="armaServ.claseArma.claseArma"
+						(valueChange)="claseChange($event)"
+						[group]="form"
+						>
+				    </select2> 
+				</div>
+				<div  *ngIf="isArmaFuego || isArmaBlanca" class="col-sm-6 col-md-4 col-lg-3">
+					<select2 placeholder= "Tipo de Arma"
+						name="tipo"
+						hintStart="Campo obligatorio"
+						[(options)]="armaServ.claseArma.tipo"
+						(valueChange)="tipoChange($event)"
+						[group]="form"
+						>
+					</select2> 
+				</div>
+			</div>
+			<div class="row" *ngIf="isArmaFuego" >
+			 	<div class="col-sm-6 col-md-4 col-lg-3">
+			 		<select2 placeholder= "Subtipo de Arma"
+			 			name="subtipo"
+		 				[(options)]="armaServ.claseArma.subtipo"
+		 				(valueChange)="armaServ.claseArma.find($event, 'subtipo')"
+						 [group]="form"
+						 >
+		 			</select2> 
+				</div>
+				 <div class="col-sm-6 col-md-4 col-lg-3">
+				 	<select2 placeholder= "Calibre" 
+				 		name="calibre"
+				 		[(options)]="armaServ.calibreMecanismo.calibre"
+				 		(valueChange)="armaServ.calibreMecanismo.find($event, 'calibre')"
+						 [group]="form"
+						 >	
+				    </select2> 
+				</div>
+				<div class="col-sm-6 col-md-4 col-lg-3">
+					<select2 placeholder= "Mecanismo de acción"
+						name="mecanismo"
+						[(options)]="armaServ.calibreMecanismo.mecanismo"
+						(valueChange)="armaServ.calibreMecanismo.find($event, 'mecanismo')"
+						[group]="form"
+						>	
+				    </select2> 
+				</div>
+				<div class="col-sm-6 col-md-4 col-lg-3">
+					<text label="Serie" name="serie" [max]="20" [group]="form"></text>  
+				</div>
+				<div class="col-sm-6 col-md-4 col-lg-3">
+					<text label="Matrícula" name="matricula" [max]="40" [group]="form"	></text>  
+				</div>
+			</div>
+
+			<div class="row space">
+				<div class="col-sm-12 col-md-12 col-lg-12">
+				<text-area label="Notas" name="notas" [group]="form"></text-area>  
+				</div>
+			</div>
+			<input name="id" formControlName="id" [formGroup]="form" hidden>
+			<div class="row justify-content-end">
+				<div class="col-sm-auto" (mouseenter)="validateForm(form)">
+					<button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving] || masDe3Dias==true" *ngIf="id != null">Guardar</button>    
+                    <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || [saving] || masDe3Dias==true" *ngIf="id == null">Guardar</button>
+				</div>
+				<div class="col-sm-auto">
+					<button class="float-right" mat-button routerLink="/caso/{{casoId}}/noticia-hecho/armas">Cancelar</button>	
+				</div>				
+			</div>
+			<div class="row justify-content-end space">
+				<div class="col-sm-auto" *ngIf="!onLine.onLine && masDe3Dias==true">
+					Más de tres dias sin conexión, favor de conectarse a internet
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+
+

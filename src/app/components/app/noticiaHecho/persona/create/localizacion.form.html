@@ -1,0 +1,253 @@
+<div [formGroup]="form">
+    <div >
+        <div>
+            <div class="row" >
+                <div class="col-md-3">
+                    <select2 [options]="options.paises"
+                        placeholder="País"
+                        name="id"
+                        [group]="form.controls.pais"
+                        (valueChange)="changePais($event)">
+                    </select2>
+                </div>
+                <div class="col-md-3" *ngIf="isMexico">
+                    <select2 [options]="options.estados"
+                        placeholder="Estado"
+                        name="id"
+                        [group]="form.controls.estado"
+                        (valueChange)="changeEstado($event)">
+                    </select2>
+                </div>
+                <div class="col-md-3" *ngIf="isMexico">
+                    <select2 [options]="options.municipios"
+                        placeholder="Municipio/Delegación"
+                        name="id"
+                        [group]="form.controls.municipio"
+                        (valueChange)="changeMunicipio($event)">
+                    </select2>
+                </div>
+                <div class="col-md-3" *ngIf="isMexico">
+                    <select2 [options]="options.colonias"
+                        placeholder="Colonia/Asentamiento"
+                        name="idCp"
+                        [onOpenFunction]="buscaColonias.bind(this)"
+                        [group]="form.controls.colonia"
+                        (valueChange)="changeColonia($event)">
+                    </select2>
+                </div>
+                <div class="col-md-3" *ngIf="isMexico">
+                    <select2 [options]="options.localidad"
+                        placeholder="Localidad"
+                        [onOpenFunction]="buscaLocalidades.bind(this)"
+                        name="id"
+                        [group]="form.controls.localidad">
+                    </select2>
+                </div>
+                <div class="col-md-3" *ngIf="!isMexico">
+                    <text label="Estado"
+                        name="estadoOtro"
+                        [group]="form"
+                        [max]="40">
+                    </text>
+                </div>
+
+                <div class="col-md-3" *ngIf="!isMexico">
+                    <text label="Municipio/Delegación"
+                        name="municipioOtro"
+                        [group]="form"
+                        [max]="40">
+                    </text>
+                </div>
+                <div class="col-md-3" *ngIf="!isMexico">
+                    <text label="Colonia/Asentamiento"
+                        name="coloniaOtro"
+                        [group]="form"
+                        [max]="40">
+                    </text>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-3" *ngIf="!isMexico">
+                    <text label="Localidad"
+                        name="localidadOtro"
+                        [max]="40"
+                        [group]="form">
+                    </text>
+                </div>
+                <div class="col-md-3">
+                    <text label="Calle" name="calle" [group]="form"></text>
+                </div>
+                <div class="col-md-3">
+                    <text label="No. exterior" name="noExterior" [max]="10" [group]="form"></text>
+                </div>
+                <div class="col-md-3">
+                    <text label="No. interior" name="noInterior" [max]="10" [group]="form"></text>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <text label="CP"
+                        name="cp"
+                        [max]="5"
+                        [group]="form">
+
+                    </text>
+                </div>
+                <div class="col-md-3">
+                    <select2 placeholder="Tipo de domicilio"
+                        [options]="options.tipoDomicilio"
+                        name="id"
+                        [group]="form.controls.tipoDomicilio">
+                    </select2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <text-area label="Referencias"
+                        name="referencias"
+                        [group]="form">
+                    </text-area>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <int label="Tel. particular"
+                        name="telParticular"
+                        [max]="10"
+                        [min]="10"
+                        [group]="form">
+
+                    </int>
+                </div>
+                <div class="col-md-3">
+                    <int label="Tel. del trabajo"
+                        name="telTrabajo"
+                        [max]="10"
+                        [min]="10"
+                        [group]="form">
+
+                    </int>
+                </div>
+                <div class="col-md-3">
+                    <int label="Extensión"
+                        name="extension"
+                        [max]="5"
+                        [group]="form">
+
+                    </int>
+                </div>
+                <div class="col-md-3">
+                    <int label="Tel. móvil"
+                        name="telMovil"
+                        [max]="10"
+                        [min]="10"
+                        [group]="form">
+
+                    </int>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <int label="Fax"
+                        name="fax"
+                        [max]="10"
+                        [min]="10"
+                        [group]="form">
+
+                    </int>
+                </div>
+                <div class="col-md-3">
+                    <text label="Otro medio de contacto"
+                        name="otroMedioContacto"
+                        [max]="15"
+                        [group]="form">
+
+                    </text>
+                </div>
+                <div class="col-md-3">
+                    <email label="Correo"
+                        name="correo"
+                        [max]="40"
+                        [group]="form">
+                    </email>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-auto">
+                    <label class="Naranja">Tipo de residencia</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <radiobutton class="col-md-auto" [radios]="[
+                        {label:'Residencia habitual',value:'Residencia habitual'},
+                        {label:'Domicilio procesal',value:'Domicilio procesal'}]"
+
+                        (valueChange)="changeTipoResida($event)"
+
+                        [(value)]="radioTipoResidencia"
+
+                        >
+
+                    </radiobutton>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" >
+    <div class="col-md-12">
+        <button mat-raised-button color="accent" (click)="addLocalizacion(form.value)" [disabled]="!form.valid">{{mensajeBoton}}</button>
+        <button *ngIf="mensajeBoton=='Editar'" mat-button  (click)="cancelar()">Cancelar</button>
+    </div>
+</div>
+<div class="row space"></div>
+<div class="row justify-content-center align-items-center" *ngIf="loadListLocalidades" style="height: 200px;">
+        <div class="col-auto">
+            <mat-spinner></mat-spinner>
+        </div>
+    </div>
+<mat-table #table [dataSource]="dataSource" class="latabla" *ngIf="!loadListLocalidades">
+
+    <ng-container matColumnDef="direccion">
+        <mat-header-cell *matHeaderCellDef> Domicilios guardados  </mat-header-cell>
+        <mat-cell *matCellDef="let dir">
+            <p>
+                <b>Dirección: </b> 
+            <span *ngIf="dir.pais.id==idMexico">
+                {{dir.tipoDomicilio?(dir.tipoDomicilio.nombre?dir.tipoDomicilio.nombre+":":""):""}}
+                {{dir.calle}}  {{dir.noExterior?"#"+dir.noExterior:""}} {{dir.noInterior?"int. "+dir.noInterior:""}} 
+                {{dir.localidad?(dir.localidad.nombre?""+dir.localidad.nombre+",":""):""}} 
+                {{dir.colonia?(dir.colonia.nombre?""+dir.colonia.nombre+",":""):""}} 
+                {{dir.municipio?(dir.municipio.nombre?+dir.municipio.nombre+",":""):""}} 
+                {{dir.estado?(dir.estado.nombre?+dir.estado.nombre+",":""):""}} 
+                {{dir.pais?(dir.pais.nombre?dir.pais.nombre:""):""}} 
+            </span>
+            <span *ngIf="dir.pais.id!=idMexico">
+                    {{dir.tipoDomicilio?(dir.tipoDomicilio.nombre?dir.tipoDomicilio.nombre+":":""):""}}
+                    {{dir.calle}}  {{dir.noExterior?"#"+dir.noExterior:""}} {{dir.noInterior?"int. "+dir.noInterior:""}} 
+                    {{dir.localidadOtro?dir.localidadOtro+",":""}} 
+                    {{dir.coloniaOtro?dir.coloniaOtro+",":""}} 
+                    {{dir.municipioOtro?dir.municipioOtro+",":""}} 
+                    {{dir.estadoOtro?dir.estadoOtro+",":""}} 
+                    {{dir.pais?(dir.pais.nombre?dir.pais.nombre:""):""}} 
+                </span>
+            </p>
+            <p><b>Telefonos:</b> {{ dir?.telParticular }} {{ dir?.telMovil }} {{ dir?.telTrabajo }}</p>
+            <p><b>Correo eléctronico:</b> {{ dir?.correo }}</p>
+            <p><b>Referencias:</b> {{ dir?.referencias }}</p>
+        </mat-cell>
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let dir"> 
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"(click)="editar(row,i)"></mat-row>
+</mat-table>
