@@ -346,7 +346,7 @@
                 ]">
             </select2>
         </div>
-        <div class="col-sm-4">
+        <div class="col-md-4">
             <span >Preservación del lugar de intervención llenar sección 6</span>
             <radiobutton class="col-md-3" name="preservacionAcciones" [group]="form"
                 [radios]="[
@@ -358,7 +358,7 @@
         </div>
     </div>
     <div class="row justify-content-start">
-        <div class="col-sm-4 ">
+        <div class="col-md-4">
             <span>Informar sobre derechos a favor (anexo 1)</span>
             <radiobutton class="col-md-4"
                 [radios]="[
@@ -367,7 +367,7 @@
                 ]" name="informarAcciones" [group]="form">
             </radiobutton>
         </div>
-        <div class="col-sm-4">
+        <div class="col-md-4">
             <span>Detenciones llenar (Anexo 2)</span>
             <radiobutton class="col-md-3"
                 [radios]="[
@@ -377,7 +377,7 @@
                 ]" name="detencionAcciones" [group]="form">
             </radiobutton>
         </div>
-        <div class="col-sm-4">
+        <div class="col-md-4">
             <span>Uso de fuerza (Anexo 3)</span>
             <radiobutton class="col-md-3"
                 [radios]="[
@@ -389,7 +389,7 @@
         </div>
     </div>
     <div class="row justify-content-start">
-        <div class="col-sm-4">
+        <div class="col-md-4">
             <span>Puesto a disposición de los detenidos (Anexo 4)</span>
             <radiobutton class="col-md-3"
                 [radios]="[
@@ -399,7 +399,7 @@
                 ]" name="puestoAcciones" [group]="form">
             </radiobutton>
         </div>
-        <div class="col-sm-4">
+        <div class="col-md-4">
             <span>Inventario de pertenencias del detenido (Anexo 5)</span>
             <radiobutton class="col-md-4"
                 [radios]="[
@@ -408,7 +408,7 @@
                 ]" name="inventarioAcciones" [group]="form">
             </radiobutton>
         </div>
-        <div class="col-sm-4">
+        <div class="col-md-4">
             <span>Traslado / Canalización</span>
             <radiobutton class="col-md-3"
                 [radios]="[
@@ -439,7 +439,7 @@
         </div>
     </div>
     <div class="row justify-content-start">
-        <div class="col-sm-3">
+        <div class="col-md-3">
             <span>Inspecciones (Anexo 8)</span>
             <radiobutton class="col-md-4"
                 [radios]="[
@@ -458,7 +458,7 @@
                 ]">
             </select2>
         </div>
-        <div class="col-sm-4">
+        <div class="col-md-4">
             <span>Informar sobre hechos a favor (Anexo 1)</span>
             <radiobutton class="col-md-3"
                 [radios]="[
@@ -468,7 +468,7 @@
                 ]" name="echosFavorAcciones" [group]="form">
             </radiobutton>
         </div>
-        <div class="col-sm-4">
+        <div class="col-md-4">
             <span>Recolección y resguardo de objetos y/o bienes (Anexo 9)</span>
             <radiobutton class="col-md-3"
                 [radios]="[
@@ -480,7 +480,7 @@
         </div>
     </div>
     <div class="row justify-content-start">
-        <div class="col-sm-4">
+        <div class="col-md-4">
             <span>Entrega recepción de lugar de la intervención (Anexo 10)</span>
             <radiobutton class="col-md-3"
                 [radios]="[
@@ -490,7 +490,7 @@
                 ]" name="recepcionAcciones" [group]="form">
             </radiobutton>
         </div>
-        <div class="col-sm-3">
+        <div class="col-md-3">
             <span>Entrevistas(s) (Anexo 10) </span>
             <radiobutton class="col-md-4"
                 [radios]="[
@@ -531,10 +531,12 @@
                 [functionChange]="showAcordonamiento.bind(this)">
             </radiobutton>
         </div>
+    </div>
+    <div class="row justify-content-center">
         <div class="col-md-2">
             <text label="CUIP" name="cuipAcordonamiento" *ngIf="cAcordonamiento" [group]="form"></text>
         </div>
-        <span *ngIf="cAcordonamiento">o</span>
+        <span style="text-align: center" *ngIf="cAcordonamiento">o</span>
         <div class="col-md-2">
             <text label="Apellido paterno" name="paternoAcordonamiento" *ngIf="cAcordonamiento" [group]="form"></text>
         </div>
@@ -564,6 +566,8 @@
                 [functionChange]="showResguardo2.bind(this)">
             </radiobutton>
         </div>
+    </div>
+    <div class="row justify-content-center">
         <div class="col-md-2">
             <text label="CUIP" name="cuipResguardo" *ngIf="cResguardo2" [group]="form"></text>
         </div>
@@ -598,7 +602,7 @@
         </div>
     </div>
     <div class="row justify-content-start">
-        <div class="col-sm-3">
+        <div class="col-md-3">
             <span>Médico de otra agencia del ministerio público</span>
             <radiobutton class="col-md-6"
                 [radios]="[
@@ -622,7 +626,7 @@
         </div>
     </div>
     <div class="row justify-content-start">
-        <div class="col-sm-3">
+        <div class="col-md-3">
             <span>Médico particular</span>
             <radiobutton class="col-md-6"
                 [radios]="[
@@ -647,7 +651,7 @@
             <p>Primer respondiente que realiza la solicitud (Llenar sólo en caso de no ser el mismo que llena este formato)</p>
         </div>
     </div>
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-md-2">
             <text label="CUIP" name="cuipParticular" [group]="form"></text>
         </div>
