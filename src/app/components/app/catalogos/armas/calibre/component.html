@@ -1,0 +1,30 @@
+<breadcrumb></breadcrumb>
+<div class="row space">
+    <div class="col-md-6">
+        <h2>Calibre de Armas</h2>
+    </div>
+    <div class="col-md-6">
+        <button class="float-right" mat-raised-button routerLink="/catalogo-armas" color="accent">Regresar</button>
+    </div>
+</div>
+<hr>
+<div class="row space"></div>
+<div class="row">
+    <div class="col">
+        <button class="float-right" mat-raised-button routerLink="/calibre-arma/create" color="accent">Agregar calibre</button>
+    </div>
+</div>
+<mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="calibre">
+        <mat-header-cell *matHeaderCellDef> Calibre </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.calibre}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="modificacion">
+        <mat-header-cell *matHeaderCellDef> Última modificación </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.modificacion}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columns;" (click)="setClickedRow(row)" [class.active]="row.id == selectedRow"></mat-row>
+</mat-table>

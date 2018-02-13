@@ -1,0 +1,52 @@
+<div class="">
+    <div class="row justify-content-end">
+        <div class="col-md-2">
+            <select2 [afterClean]="true" placeholder="Formatos" (valueChange)="changeFormat($event, object.id, {idEntrevista:object.id})" [options]="[{label:'ENTREVISTA',value:'F1_008'}]" ></select2>
+        </div>
+        <div class="col-md-auto">
+            <button mat-raised-button color="accent" (click)="openDocDialog({idEntrevista:object.id})">Adjuntar</button>
+        </div>
+        <div class="col-md-auto">
+            <button mat-raised-button color="accent">Compartir</button>
+        </div>
+    </div>
+</div>
+<mat-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>
+<mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef> Nombre</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nameEcm}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fechaCreacion">
+        <mat-header-cell *matHeaderCellDef> Fecha de creación </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.created| date:'dd/MM/yyyy'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <div *ngIf="!element['blob']">
+                <button 
+                    mat-raised-button
+                    color="accent"
+                    [disabled]="documentos[element.id] ? !documentos[element.id]['validate'] : false"
+                    (click)="downloadFile(element, element.contentType)">
+                    {{ documentos[element.id] ? !documentos[element.id]['validate'] ? 'Generando PDF...': 'Desacargar' : 'Descargar' }}
+                </button>
+            </div>
+            <div *ngIf="element['blob']">
+                <button 
+                    mat-raised-button
+                    color="accent"
+                    [disabled]="documentos[element.id] ? !documentos[element.id]['validate'] : false"
+                    (click)="download(this,element)">Descargar
+                </button>
+            </div>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" ></mat-row>
+  </mat-table>

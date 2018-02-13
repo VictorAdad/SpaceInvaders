@@ -1,0 +1,48 @@
+<div *ngIf="name==''" >
+	<mat-form-field class="full-width">
+		<mat-select
+			#select
+			placeholder="{{placeholder}}"
+			[(ngModel)]="value" (ngModelChange)="update($event)"
+      (onOpen)="setCursor()"
+      [disabled]="disabled"
+			class="full-width" >
+			<div class="md-custom-search">
+				<input type="text" name="search" placeholder="Buscar" #searchInput>
+				<mat-icon  class="suffix">search</mat-icon>
+			</div>
+		  <mat-option *ngFor="let option of options" [value]="option.value">
+		    {{ option.label }}
+		  </mat-option>
+		</mat-select>
+		<mat-hint align="start" *ngIf="hintStart">{{hintStart}} </mat-hint>
+		<mat-hint align="end" *ngIf="hintEnd">{{hintEnd}}</mat-hint>
+	</mat-form-field>
+</div>
+
+<div [formGroup]="group"  *ngIf="name!=''">
+	<mat-form-field  class="full-width">
+		<mat-select
+			#select
+			placeholder="{{placeholder}}"
+			[(ngModel)]="value"
+			(ngModelChange)="update($event)"
+			(onOpen)="setCursor()"
+			class="full-width"
+      formControlName="{{name}}"
+      [disabled]="disabled"
+			(onClose)="closeSelect()">
+			<div class="md-custom-search">
+				<input type="text" name="search" placeholder="Buscar" autocomplete="off" #searchInput>
+				<mat-icon  class="suffix">search</mat-icon>
+			</div>
+			<mat-option (click)="cleanSelect()">(Limpiar selección)</mat-option>
+			<mat-option *ngFor="let option of filteredOptions" [value]="option.value">
+				{{ option.label }}
+			</mat-option>
+		</mat-select>
+		<mat-hint align="start" *ngIf="hintStart">{{hintStart}} </mat-hint>
+		<mat-hint align="end" *ngIf="hintEnd">{{hintEnd}}</mat-hint>
+	</mat-form-field>
+</div>
+

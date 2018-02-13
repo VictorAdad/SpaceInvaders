@@ -1,0 +1,24 @@
+<valida-offline></valida-offline>
+<breadcrumb [rutas]="breadcrumb"></breadcrumb>
+<caso-nic [id]="casoId"></caso-nic>
+<div class="row space">
+	<div class="col-md-6">
+		<h2>Solicitudes y acuerdos generales</h2>
+	</div>
+	<div class="col-md-6">
+		<button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/acuerdo-general" color="accent">Regresar</button>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<mat-tab-group>
+			<mat-tab label="Solicitud"><solicitud-acuerdo-general (modelUpdate)="modelUpdate($event)"></solicitud-acuerdo-general></mat-tab>
+			<mat-tab label="Documentos" *ngIf="solicitudId!=null"><documento-acuerdo-general [tipo]="tipo" [id]="solicitudId" [object]="model"></documento-acuerdo-general></mat-tab>
+		</mat-tab-group>
+	</div>
+</div>
+
+
+
+
+

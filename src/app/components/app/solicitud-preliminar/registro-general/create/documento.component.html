@@ -1,0 +1,74 @@
+<valida-offline></valida-offline>
+<div class="row space justify-content-end">
+	<div class="col-md-2">
+		<select2
+    placeholder= "Formatos"
+    *ngIf="object.tipo === 'Registro general'"
+    [afterClean]="true"
+    (valueChange)="changeFormat($event, object.id)" 
+    [options]="[
+        {label:'REGISTRO GENERAL',value:'F1_017'}
+    ]"></select2>
+    <select2
+    placeholder= "Formatos"
+    *ngIf="object.tipo === 'Registro de llamada'"
+    [afterClean]="true"
+    (valueChange)="changeFormat($event, object.id)" 
+    [options]="[
+        {label:'REGISTRO PARA PERMITIR AL IMPUTADO COMUNICARSE CON SU DEFENSOR O FAMILIAR',value:'F2_063'}
+    ]"></select2>
+    <select2
+    placeholder= "Formatos"
+    *ngIf="object.tipo === 'Acuerdo general'"
+    [afterClean]="true"
+    (valueChange)="changeFormat($event, object.id)" 
+    [options]="[
+        {'label':'ACUERDO GENERAL','value':'F1_006'},
+        {'label':'ACUERDO GENERAL SIN APERCIBIMIENTO','value':'F1_019'}
+    ]"></select2>
+    <select2
+    placeholder= "Formatos"
+    *ngIf="object.tipo === 'Registro de derivación'"
+    [afterClean]="true"
+    (valueChange)="changeFormat($event, object.id)" 
+    [options]="[
+        {'label':'Registro de derivación a Justicia Restaurativa (JR)','value':'F2_117'}
+    ]"></select2>
+	</div>
+	<div class="col-md-auto">
+		<button mat-raised-button color="accent" (click)="openDocDialog()">Adjuntar</button>
+	</div>
+	<div class="col-md-auto">
+		<button mat-raised-button color="accent" >Compartir</button>
+	</div>
+</div>
+<mat-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator>
+  <mat-table #table [dataSource]="dataSource">
+      <ng-container matColumnDef="nombre">
+          <mat-header-cell *matHeaderCellDef> Nombre</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.nameEcm}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="fechaCreacion">
+          <mat-header-cell *matHeaderCellDef> Fecha de creación </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.created| date:'MM/dd/yyyy'}} </mat-cell>
+      </ng-container>
+
+       <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <button 
+                mat-raised-button
+                color="accent"
+                [disabled]="documentos[element.id] ? !documentos[element.id]['validate'] : false"
+                (click)="downloadFile(element, element.contentType)">
+                {{ documentos[element.id] ? !documentos[element.id]['validate'] ? 'Generando PDF...': 'Desacargar' : 'Descargar' }}
+            </button>
+        </mat-cell>
+    </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+

@@ -1,0 +1,196 @@
+<div class="row space">
+    <div class="col-md-12">
+		<caso-herencia
+			(personasChange)="personasChanged($event)"
+			(heredarChange)="heredarChanged($event)"
+			[casoId]="casoId"
+			[people]="personas"
+			[heredarFunction]="heredarDatos.bind(this)"
+			[form]="form"
+			(heredarSintesisChange)="heredarSistesisChange($event);"
+			[precarga]="precarga"
+			[precargaChange]="precargaChange"></caso-herencia>
+    </div>
+</div>
+<!-- Fromulario para usuario 1-->
+
+<form [formGroup]="form">
+	<div id="f1" *ngIf="authen.user.hasRoles(authen.roles.callCenter)">
+	    <div class="row">
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    	<text  *ngIf="!heredar" label="Calidad del usuario" name="calidadPersona" [max]="140" [group]="form" [focus]="true"></text>
+		    	<text *ngIf="heredar" label="Calidad del usuario" name="calidadPersonaHeredar" [max]="1000" [group]="form" [focus]="true"></text>
+        </div>
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    	<int label="Número telefónico del que se está llamando" name="noTelefonico" [min]='10' [max]="10" [group]="form"></int>
+		    </div>
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    	<select2 [options]="optionsServ.tipoLinea"
+					placeholder="Tipo de línea teléfonica"
+					name="id"
+					[group]="form.controls.tipoLinea">
+			    </select2>
+		    </div>
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    	<text label="Lugar de donde se llama" name="lugarLlamada" [max]="140" [group]="form"></text>
+		    </div>
+	    </div>
+	    <div class="row">
+
+		    <div class="col-md-12 col-sm-12 col-lg-12">
+		    	<text-area label="Hechos narrados que se denuncian" name="hechosNarrados" [group]="form"></text-area>
+		    </div>
+		    <div class="col-md-12 col-sm-12 col-lg-12">
+		    	<text-area label="En base a los hechos se le comunica al usuario" name="comunicado" [group]="form"></text-area>
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="col-md-4 col-sm-12 col-lg-4">
+		    	<time label="Hora de conclusión de la llamada" name="horaConclusionLlamada" [(value)]="model.horaConlcusionLlamada" [group]="form"></time>
+		    </div>
+		    <div class="col-md-4 col-sm-12 col-lg-4">
+		    	<text label="Duración de la llamada" name="duracionLlamada" [max]="15" [group]="form"></text>
+		    </div>
+		    <div class="col-md-4 col-sm-12 col-lg-4">
+		    	<text label="Nombre del servidor público que registra" name="quienRegistro" [max]="100" [group]="form"></text>
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="col-md-12 col-sm-12 col-lg-12">
+		    	<text-area label="Observaciones/Incidencias" name="observaciones" [group]="form"></text-area>
+		    </div>
+		</div>
+	</div>
+
+	<div id="f2" *ngIf="!authen.user.hasRoles(authen.roles.callCenter)">
+		<div class="row space">
+        <div class="col">
+         <h2>Constancia de lectura de derechos a la víctima u ofendido</h2></div>
+       </div>
+
+      <div class="row">
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    	<text label="Número de folio" name="noFolioConstancia" [max]="50" [group]="form"></text>
+		    </div>
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+				<select2 [options]="[{value: false,label: 'No'}, {value: true,label: 'Si'}]"
+				placeholder="¿Habla español?"
+				[(value)]="model.hablaEspanol"
+				name="hablaEspaniol"
+				[group]="form">
+			    </select2>
+		    </div>
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    	<text label="En caso negativo, especificar idioma o lengua" name="lenguaIdioma" [max]="35" [group]="form"></text>
+		    </div>
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    	<text label="Nombre del intérprete" name="nombreInterprete" [max]="100" [group]="form"></text>
+		    </div>
+	    </div>
+	    <div class="row">
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+				<select2 [options]="[{value: false,label: 'No'}, {value: true,label: 'Si'}]"
+				placeholder="¿Comprendió la víctima u ofendido sus derechos?"
+				[(value)]="model.comprendioDerechos"
+				name="compredioDerechos"
+				[group]="form">
+			    </select2>
+			</div>
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+				<select2 [options]="[{value: false, label: 'No'}, {value: true, label: 'Si'}]"
+				placeholder="¿Se proporcionó copia de derechos?"
+				name="proporcionoCopia"
+				[group]="form">
+			    </select2>
+			</div>
+		</div>
+		<div class="row space">
+        <div class="col">
+          <h2>Registro presencial</h2>
+        </div>
+      </div>
+		<div class="row">
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+            <text  *ngIf="!heredar" label="Calidad de la persona" name="calidadPersona" [max]="150" [group]="form"></text>
+            <text *ngIf="heredar" label="Calidad de la persona" name="calidadPersonaHeredar" [max]="1000" [group]="form"></text>
+  		    </div>
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+            <text *ngIf="heredar" label="Tipo de persona" name="tipoPersonaHeredar" [max]="1000" [group]="form"></text>
+            <select2 *ngIf="!heredar" [options]="optionsServ.tipoPersona"
+            placeholder="Tipo de persona"
+            name="id"
+            [group]="form.controls.tipoPersona">
+            </select2>
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="col-md-12 col-sm-12 col-lg-12">
+				<text-area *ngIf="!heredar" label="Lugar en donde sucedieron los hechos" name="lugarHechos" [group]="form"></text-area>
+				<text-area *ngIf="heredar" label="Lugar en donde sucedieron los hechos" name="lugarHechosHeredar" [group]="form"></text-area>
+		    </div>
+		    <div class="col-md-12 col-sm-12 col-lg-12">
+		    	<text-area label="Hechos narrados (hechos denunciados)" name="hechosNarrados" [group]="form"></text-area>
+		    </div>
+		    <div class="col-md-12 col-sm-12 col-lg-12">
+		    	<text-area label="Conclusión en base a los hechos denunciados" name="conclusion" [group]="form"></text-area>
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="col-md-4 col-sm-12 col-lg-4">
+		    	<select2 [options]="[{value: false,label: 'No'}, {value: true,label: 'Si'}]"
+				placeholder="¿Se canaliza a otra área o institución?"
+				[(value)]="model.canalizacion"
+				name="canalizacion"
+				[group]="form">
+			    </select2>
+		    </div>
+		    <div class="col-md-4 col-sm-12 col-lg-4">
+		    	<text label="En su caso, ¿institución a la que se canaliza?" name="institucion" [max]="150" [group]="form"></text>
+		    </div>
+		    <div class="col-md-4 col-sm-12 col-lg-4">
+            	<date-picker label="Fecha en la que se canaliza" name="fechaCanalizacion" [group]="form"></date-picker>
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="col-md-12 col-sm-12 col-lg-12">
+		    	<text-area label="Motivo del por qué se canaliza a esa institución" name="motivoCanalizacion" [group]="form"></text-area>
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    	<time label="Hora en la que se canaliza" name="horaCanalizacion" [group]="form"></time>
+		    </div>
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    	<text label="Si lo sabe, nombre de quien causó el hecho" name="nombreCausante" [max]="100" [group]="form"></text>
+		    </div>
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    	<text label="Si lo sabe, domicilio de quien causó el hecho" name="domicilioCausante" [max]="150" [group]="form"></text>
+		    </div>
+		    <div class="col-md-3 col-sm-12 col-lg-3">
+		    	<text label="Nombre de persona que llevó a cabo el registro" name="quienRegistro" [max]="100" [group]="form"></text>
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="col-md-12 col-sm-12 col-lg-12">
+		    	<text-area label="Observaciones/Incidencias" name="observaciones" [group]="form"></text-area>
+		    </div>
+		</div>
+	</div>
+
+	<div class="row space"></div>
+    <div class="row justify-content-end">
+        <div class="col-sm-auto" (mouseenter)="validateForm(form)">
+            <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || masDe3Dias==true" *ngIf="!hasPredenuncia">Guardar</button>
+        </div>
+        <div class="col-sm-auto">
+            <button class="float-right" mat-button routerLink="/caso/{{casoId}}/detalle">Cancelar</button>
+        </div>
+	</div>
+	<div class="row justify-content-end space">
+		<div class="col-sm-auto" *ngIf="!onLine.onLine && masDe3Dias==true">
+			Más de tres dias sin conexión, favor de conectarse a internet
+		</div>
+	</div>
+</form>
+<div class="row space"></div>
+<div class="row space"></div>

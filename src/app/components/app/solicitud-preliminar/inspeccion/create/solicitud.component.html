@@ -1,0 +1,30 @@
+<valida-offline></valida-offline>
+<div class="row">
+    <div class="col-md-12">
+        <form>
+            <div class="row space">
+                <div class="col-md-12">
+                  <caso-herencia [casoId]="casoId" [people]="personas" [form]="form" [precarga]="precarga"></caso-herencia>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <text-area label="Adscripción" name="adscripcion" [group]="form"  [focus]="true"></text-area>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <text-area label="Descripción" name="descripcion" [group]="form"></text-area>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
+                    <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
+                </div>
+                <div class="col-sm-auto">
+                    <button class="float-right" mat-button routerLink="/caso/{{casoId}}/inspeccion">Cancelar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

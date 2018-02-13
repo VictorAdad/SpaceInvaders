@@ -1,0 +1,106 @@
+<breadcrumb [rutas]="breadcrumb"></breadcrumb>
+<div class="row space">    
+    <div class="col-md-12 text-right">
+        <!-- <small>NIC:CAI/AIN/00/UAI/268/00126/17/08 - NUC: CAI/AIN/00/UAI/268/00126/17/08</small> -->
+    </div>
+</div>
+<div class="content-body">
+    <div class="row space">
+        <div class="col-sm-8">
+            <h3>Detalle de Persona</h3>
+        </div>
+        <div class="col-sm-4">
+            <button class="float-right" mat-raised-button routerLink="/caso/{{casoId}}/noticia-hecho/personas" color="accent">Regresar</button>
+        </div>
+    </div>
+    <form [formGroup]="form">
+    <div>
+        <div class="row">
+          <div class="col-md-8">
+            <h4>Datos generales</h4>
+          </div>
+
+        </div>
+        <div class="row justify-content-md-center align-items-center" >
+          <div class="col">
+            <div class="row" >
+            <div class="col-md-10">
+              <label class="Naranja">*Tipo de persona </label>
+            </div>
+            </div>
+            <div class="row">
+              <div class="col-md-10">
+            <radiobutton
+                class="col-md-3"
+                [focus]="true" 
+                [(value)]="globals.tipoPersona" 
+                [radios]="[
+                    {label:'Física',value:'Física'},
+                    {label:'Moral',value:'Moral'}
+                ]" 
+                name="tipoPersona" 
+                [group]="globals.form" 
+                [functionChange]="activaRazonSocial.bind(this)">    
+            </radiobutton>
+            </div></div>
+          </div>
+
+        </div>
+        <div class="row justify-content-md-center align-items-center">
+          <div class="col">
+              <div class="row">
+              <div class="col-md-10">
+                <label class="Naranja">*Tipo de Interviniente</label>
+                </div>
+              </div>
+              <div class="row">
+              <div class="col-md-10">
+              <radiobutton class="col-md-3"
+              #tipoInterviniente
+              [radios]="options.tipoInterviniente.sort(compare)"
+              name="id"
+              requerido=true 
+              [group]="( ( ( (form.controls.personaCaso)['controls'])[0])['controls'])['tipoInterviniente']"
+              (valueChange)="changeTipoInterviniente($event)"></radiobutton>
+              </div>
+              </div>
+            </div>
+        </div>
+        <!-- Datos de identidad-->
+        <div class="row  justify-content-md-center align-items-center" *ngIf="muestraDatos();">
+            <identidad [globals]="globals" style="width: 95%"></identidad>
+        </div>
+        <!-- Datos de identificacion -->
+        <div class="row  justify-content-md-center align-items-center" *ngIf="muestraDatos();">
+          <identificacion [globals]="globals"  [options]="options" style="width: 95%" [otrosNombres]="globals.otrosNombres" [alias]="globals.alias" [nombres]="globals.indexNombres"></identificacion>
+        </div>
+        <!-- Datos de localizacion -->
+        <div class="row  justify-content-md-center align-items-center" *ngIf="muestraDatos();" >
+          <localizacion [globals]="globals" style="width: 95%" [localizaciones]="globals.localizaciones"></localizacion>
+        </div>
+
+        <!-- Media de filiación -->
+        <div class="row  justify-content-md-center align-items-center space" *ngIf="this.globals.isImputadoAny">
+            <media-filacion [globals]="globals"  [options]="options" style="width: 95%"></media-filacion>
+        </div>
+        <div class="row space">
+
+        </div>
+          <input name="id" formControlName="id" [formGroup]="globals.form" hidden>
+        <div class="row justify-content-end space">
+            <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)" matTooltipPosition="above">
+                <button mat-raised-button color="accent" _saving [saveFn]="edit.bind(this, form.valid, form.value)" [disabled]="!form.valid || masDe3Dias==true" [preSave]="preSave.bind(this)" *ngIf="id != null">Guardar</button> 
+                <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid || masDe3Dias==true" [preSave]="preSave.bind(this)" *ngIf="id == null">Guardar</button>
+            </div>
+            <div class="col-sm-auto">
+                <button class="float-right" mat-button routerLink="/caso/{{casoId}}/noticia-hecho/personas">Cancelar</button> 
+            </div>
+        </div>
+        <div class="row justify-content-end space">
+            <div class="col-sm-auto" *ngIf="!onLine.onLine && masDe3Dias==true">
+                Más de tres dias sin conexión, favor de conectarse a internet
+            </div>
+        </div>
+    </div>
+  </form>
+</div>

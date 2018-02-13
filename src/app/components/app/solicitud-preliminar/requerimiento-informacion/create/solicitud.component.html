@@ -1,0 +1,65 @@
+<valida-offline></valida-offline>
+<div class="row space">
+    <div class="col-md-12">
+      <caso-herencia [casoId]="casoId" [people]="personas" [form]="form" [precarga]="precarga"></caso-herencia>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <form>
+            <div class="row">
+                <div class="col-md-4">
+                    <text label="No. de oficio" name="noOficio" [group]="form" [focus]="true"></text>
+                </div>
+                <div class="col-md-4">
+                    <!-- <date label="Fecha de requerimiento" name="fechaReq" [group]="form"></date> -->
+                    <date-picker label="Fecha de requerimiento" name="fechaReq" [group]="form"></date-picker>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <text-area label="Nombre de la autoridad requerida" name="autoridadReq" [group]="form"></text-area>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <text-area label="Cargo, turno y adscripción" name="cargoTurnoAdscripcion" [group]="form"></text-area>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <text-area label="Domicilio de la autoridad requerida" name="domicilioAutoridad" [group]="form"></text-area>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <text-area label="Información requerida" name="infoRequerida" [group]="form"></text-area>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <text-area label="Plazo máximo en días para emitir la información" name="plazoDias" [group]="form"></text-area>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <text-area label="Apercibimiento en caso de incumplimiento" name="apercibimiento" [group]="form"></text-area>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <text-area label="Observaciones/Incidencias" name="observaciones" [group]="form"></text-area>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <div class="col-sm-auto" [matTooltip]="validateMsg(form)" (mouseenter)="validateForm(form)">
+                    <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.valid, form.value)" [disabled]="!form.valid" *ngIf="id == null">Guardar</button>
+                </div>
+                <div class="col-sm-auto">
+                    <button class="float-right" mat-button routerLink="/caso/{{casoId}}/requerimiento-informacion">Cancelar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

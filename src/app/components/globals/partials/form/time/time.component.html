@@ -1,0 +1,18 @@
+<div class="form-group">
+	<mat-form-field [formGroup]="group" class="full-width">
+			<mat-icon matPrefix *ngIf="prefixIcon">{{ prefixIcon }}</mat-icon>
+			<span *ngIf="prefix" matPrefix>{{ prefix }}&nbsp;</span>
+			<input
+				#input 
+				matInput 
+				placeholder="{{label}}" 
+				[(ngModel)]="value" 
+				(ngModelChange)="update($event)" 
+				name="{{name}}"
+				type="text"
+				formControlName="{{name}}"  >
+			<mat-icon matSuffix *ngIf="sufix">{{ sufix }}</mat-icon>
+			<mat-hint align="start" *ngIf="hintStart">{{hintStart}} </mat-hint>
+		    <mat-hint align="end" *ngIf="hintEnd">{{hintEnd}}</mat-hint>
+	</mat-form-field> 
+</div>

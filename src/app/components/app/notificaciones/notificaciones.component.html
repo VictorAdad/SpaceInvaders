@@ -1,0 +1,25 @@
+<breadcrumb [rutas]="[]"></breadcrumb>
+<div class="row space">
+    <div class="col-md-6">
+        <h2>Notificaciones</h2>
+    </div>
+    <div class="col-md-6">
+        <button class="float-right" mat-raised-button routerLink="/" color="accent">Regresar</button>
+    </div>
+</div>
+<mat-paginator #paginator
+    [length]="pag"
+    [pageIndex]="0"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="changePage($event)">
+</mat-paginator>
+<mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="contenido">
+        <mat-header-cell *matHeaderCellDef> Notificación</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.contenido }} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+</mat-table>
