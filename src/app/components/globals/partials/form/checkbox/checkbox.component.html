@@ -1,7 +1,0 @@
-<div [formGroup]="group" *ngIf="name !=''">	
-	<mat-checkbox class="example-margin" [(ngModel)]="value" formControlName="{{name}}"  
-	name="{{name}}" (change)="changeCheck($event);">{{label}}</mat-checkbox>
-</div>
-<div *ngIf="name==''">	
-	<mat-checkbox class="example-margin" [disabled]="disabled" [(ngModel)]="value" (change)="changeCheck($event);">{{label}}</mat-checkbox>
-</div>
