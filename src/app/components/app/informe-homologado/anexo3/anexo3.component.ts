@@ -18,6 +18,7 @@ export class Anexo3Component extends InformeBaseComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   public breadcrumb = [];
+  public divTraslado = false;
 
   constructor(private route: ActivatedRoute,
               private http: HttpService) {
@@ -26,11 +27,16 @@ export class Anexo3Component extends InformeBaseComponent {
 
   ngOnInit() {
     var rows = {};
-    rows['usodelafuerza'] = "Yahir Ruiz"
-    rows['primerresponsable'] = "Ricardo Crespo"
-    rows['nivel'] = "Control de Contacto"
+    rows['usodelafuerza'] = 'Yahir Ruiz';
+    rows['primerresponsable'] = 'Ricardo Crespo';
+    rows['nivel'] = 'Control de Contacto';
 
 
     this.dataSource = new TableService(this.paginator, [rows]);
+  }
+
+  showTraslado(value) {
+    console.log("value" + value);
+    (value == 'true') ? this.divTraslado = true : this.divTraslado = false;
   }
 }

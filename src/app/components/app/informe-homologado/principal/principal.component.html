@@ -28,8 +28,8 @@
             <button mat-raised-button color="accent">Agregar</button>
         </div>
     </div>
-    <div class="row justify-content-center">
-        <div class="col-md-11">
+    <div class="row justify-content-start">
+        <div class="col-md-12">
             <mat-table #table [dataSource]="dataSource">
                 <ng-container matColumnDef="cuip" >
                     <mat-header-cell *matHeaderCellDef style="text-align:center">CUIP</mat-header-cell>
@@ -185,8 +185,8 @@
             <button mat-raised-button color="accent">Agregar</button>
         </div>
     </div>
-    <div class="row justify-content-end">
-        <div class="col-md-9">
+    <div class="row justify-content-start">
+        <div class="col-md-12">
             <mat-table [dataSource]="dataSource2">
                 <ng-container matColumnDef="riesgoPara">
                     <mat-header-cell *matHeaderCellDef>Riesgo para</mat-header-cell>
@@ -229,8 +229,8 @@
             <button mat-raised-button color="accent">Agregar</button>
         </div>
     </div>
-    <div class="row justify-content-end">
-        <div class="col-md-9">
+    <div class="row justify-content-start">
+        <div class="col-md-12">
             <mat-table [dataSource]="dataSource3">
                 <ng-container matColumnDef="apoyo">
                     <mat-header-cell *matHeaderCellDef>Apoyo de</mat-header-cell>
@@ -274,8 +274,8 @@
         </div>
     </div>
     <div class="row space"></div>
-    <div class="row justify-content-center">
-        <div class="col-md-9">
+    <div class="row justify-content-start">
+        <div class="col-md-12">
             <mat-table [dataSource]="dataSource4">
                 <ng-container matColumnDef="evento">
                     <mat-header-cell *matHeaderCellDef style="text-align:center">Apoyo de</mat-header-cell>
@@ -460,7 +460,7 @@
         </div>
         <div class="col-md-4">
             <span>Informar sobre los hechos a su favor (Anexo 6)</span>
-            <radiobutton class="col-md-3"
+            <radiobutton class="col-md-4"
                 [radios]="[
                      {label:'Víctima(s)',value:'victimas'},
                     {label:'N/A',value:'NA'}
@@ -532,10 +532,10 @@
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="col-md-2">
+        <div class="col-md-3">
             <text label="CUIP" name="cuipAcordonamiento" *ngIf="cAcordonamiento" [group]="form"></text>
         </div>
-        <span style="text-align: center" *ngIf="cAcordonamiento">o</span>
+        <span *ngIf="cAcordonamiento">o</span>
         <div class="col-md-2">
             <text label="Apellido paterno" name="paternoAcordonamiento" *ngIf="cAcordonamiento" [group]="form"></text>
         </div>
@@ -567,7 +567,7 @@
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="col-md-2">
+        <div class="col-md-3">
             <text label="CUIP" name="cuipResguardo" *ngIf="cResguardo2" [group]="form"></text>
         </div>
         <span *ngIf="cResguardo2">o</span>

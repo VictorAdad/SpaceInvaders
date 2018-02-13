@@ -16,6 +16,7 @@ export class Anexo8Component extends InformeBaseComponent {
   public breadcrumb = [];
   columns = ['nombre', 'objeto', 'accion'];
   dataSource: TableService | null;
+  public divEncontroObjetos = false;
   public divTipoArma = false;
   public divDinero = false;
   public divPersona = false;
@@ -31,7 +32,8 @@ export class Anexo8Component extends InformeBaseComponent {
   public divCaracteristicasObjeto = false;
   public divDocumentosObjeto = false;
   public divOtroObjeto = false;
-  public divTransporteEncontrados = false;
+  public divMedioTransporte = false;
+  public divTransportesEncontrados = false;
   public divArmasEncontrados = false;
   public divEncontrados = false;
   public divCargadoresEncontrados = false;
@@ -57,6 +59,10 @@ export class Anexo8Component extends InformeBaseComponent {
     rows['nombre'] = 'Yair Ruiz';
     rows['objeto'] = 'Arma de fuego';
     this.dataSource = new TableService(this.paginator, [rows]);
+  }
+
+  showEncontroObjetos(value) {
+    (value == 'true') ? this.divEncontroObjetos = true : this.divEncontroObjetos = false;
   }
 
   showTipoArma(value) {
@@ -119,8 +125,12 @@ export class Anexo8Component extends InformeBaseComponent {
     (value == 'true') ? this.divOtroObjeto = true : this.divOtroObjeto = false;
   }
 
-  showTransporteEcontrados(value) {
-    (value == 'true') ? this.divTransporteEncontrados = true : this.divTransporteEncontrados = false;
+  showMedioTransporte(value) {
+    (value == 'true') ? this.divMedioTransporte = true : this.divMedioTransporte = false;
+  }
+
+  showTransportesEncontrados(value) {
+    (value == 'true') ? this.divTransportesEncontrados = true : this.divTransportesEncontrados = false;
   }
 
   showArmasEncontrados(value) {

@@ -54,18 +54,21 @@
             </select2>
         </div>
         <div class="col-md-3">
-            <select2 placeholder="¿Encontró objetos relacionados con la comisión del delito?:" id=""
-                [options]="[
+            <span>¿Encontró objetos relacionados con la comisión del delito?:</span>
+            <radiobutton
+                class="col-md-6"
+                [radios]="[
                     {label:'Sí',value:'true'},
                     {label:'No',value:'false'}
-                ]" name="objetosIntervencion" [group]="form">
-            </select2>
+                ]" name="objetosIntervencion" [group]="form"
+                [functionChange]="showEncontroObjetos.bind(this)">
+            </radiobutton>
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="divEncontroObjetos">
         <p><strong>Tipo de objetos encontrados</strong></p>
     </div>
-    <div class="row justify-content-start">
+    <div class="row justify-content-start" *ngIf="divEncontroObjetos">
         <div class="col-sm-2">
             <span>Armas</span>
             <radiobutton
@@ -115,9 +118,8 @@
         <div class="col-md-2">
             <text label="Cantidad" name="tipoObjetosEncontradosDineroCantidad" [group]="form" *ngIf="divDinero"></text>
         </div>
-        
     </div>
-    <div class="row justify-content-start">
+    <div class="row justify-content-start" *ngIf="divEncontroObjetos">
         <div class="col-sm-2">
             <span>Persona</span>
             <radiobutton
@@ -161,7 +163,7 @@
             <text label="Cantidad" name="tipoObjetosEncontradosRestosHumanosCantidad" [group]="form" *ngIf="divRestosHumanos"></text>
         </div>
     </div>
-    <div class="row justify-content-start">
+    <div class="row justify-content-start" *ngIf="divEncontroObjetos">
         <div class="col-sm-2">
             <span>Documentos</span>
             <radiobutton
@@ -253,122 +255,122 @@
                 </radiobutton>
             </div>
         </div>
-    <div class="row cont" *ngIf="divObjeto">
-        <p>Objetos encontrados</p>
-    </div>
-    <div class="row justify-content-start" *ngIf="divObjeto">
-        <div class="col-md-2">
-            <span>Armas</span>
-            <radiobutton
-                class="col-md-6"
-                [radios]="[
-                    {label:'Sí',value:'true'},
-                    {label:'No',value:'false'}
-                ]" name="objetosEncontradosArmas" [group]="form"
-                [functionChange]="showArmaObjeto.bind(this)">
-            </radiobutton>
+        <div class="row cont" *ngIf="divObjeto">
+            <p>Objetos encontrados</p>
         </div>
+        <div class="row justify-content-start" *ngIf="divObjeto">
+            <div class="col-md-2">
+                <span>Armas</span>
+                <radiobutton
+                    class="col-md-6"
+                    [radios]="[
+                        {label:'Sí',value:'true'},
+                        {label:'No',value:'false'}
+                    ]" name="objetosEncontradosArmas" [group]="form"
+                    [functionChange]="showArmaObjeto.bind(this)">
+                </radiobutton>
+            </div>
 
-         <div class="col-md-1">
-            <select2 placeholder="Tipo:" id=""
-                *ngIf="divArmaObjeto"
-                [options]="[
-                    {label:'Corta',value:'corta'},
-                    {label:'Arma larga',value:'larga'}
-                ]" name="objetosEncontradosArmasTipo" [group]="form">
-            </select2>
+            <div class="col-md-1">
+                <select2 placeholder="Tipo:" id=""
+                    *ngIf="divArmaObjeto"
+                    [options]="[
+                        {label:'Corta',value:'corta'},
+                        {label:'Arma larga',value:'larga'}
+                    ]" name="objetosEncontradosArmasTipo" [group]="form">
+                </select2>
+            </div>
+            <div class="col-md-1">
+                <text label="Cantidad" name="objetosEncontradosArmasCantidad" [group]="form" *ngIf="divArmaObjeto"></text>
+            </div>
+            <div class="col-md-2">
+                <span>Dinero</span>
+                <radiobutton
+                    class="col-md-6"
+                    [radios]="[ 
+                        {label:'Sí',value:'true'},
+                        {label:'No',value:'false'}
+                    ]" name="objetosEncontradosDinero" [group]="form"
+                    [functionChange]="showDineroObjeto.bind(this)">
+                </radiobutton>
+            </div>
+            <div class="col-md-2">
+                <select2 placeholder="Moneda:" id=""
+                    *ngIf="divDineroObjeto"
+                    [options]="[
+                        {label:'Corta',value:'corta'},
+                        {label:'Arma larga',value:'larga'}
+                    ]" name="objetosEncontradosDineroMoneda" [group]="form">
+                </select2>
+            </div>
+            <div class="col-md-2">
+                <text label="Otra" name="objetosEncontradosDineroOtra" [group]="form" *ngIf="divDineroObjeto"></text>
+            </div>
+            <div class="col-md-2">
+                <text label="Cantidad" name="objetosEncontradosDineroCantidad" [group]="form" *ngIf="divDineroObjeto"></text>
+            </div>
         </div>
-        <div class="col-md-1">
-            <text label="Cantidad" name="objetosEncontradosArmasCantidad" [group]="form" *ngIf="divArmaObjeto"></text>
+        <div class="row justify-content-start" *ngIf="divObjeto">
+            <div class="col-md-2">
+                <span>Con caracteristicas de los narcóticos</span>
+                <radiobutton
+                    class="col-md-6"
+                    [radios]="[
+                        {label:'Sí',value:'true'},
+                        {label:'No',value:'false'}
+                    ]" name="objetosEncontradosCaracteristicasNarcoticos" [group]="form"
+                    [functionChange]="showCaracteristicasObjeto.bind(this)">
+                </radiobutton>
+            </div>
+            <div class="col-md-1">
+                <select2 placeholder="Tipo:" id=""
+                    *ngIf="divCaracteristicasObjeto"
+                    [options]="[
+                        {label:'Corta',value:'corta'},
+                        {label:'Arma larga',value:'larga'}
+                    ]" name="objetosEncontradosCaracteristicasNarcoticosTipo" [group]="form">
+                </select2>
+            </div>
+            <div class="col-md-1">
+                <text label="Cantidad" name="objetosEncontradosCaracteristicasNarcoticosCantidad" [group]="form" *ngIf="divCaracteristicasObjeto"></text>
+            </div>
+            <div class="col-md-2">
+                <span>Documentos</span>
+                <radiobutton
+                    class="col-md-6"
+                    [radios]="[
+                        {label:'Sí',value:'true'},
+                        {label:'No',value:'false'}
+                    ]" name="objetosEncontradosDocumentos" [group]="form"
+                    [functionChange]="showDocumentosObjeto.bind(this)">
+                </radiobutton>
+            </div>
+            <div class="col-md-2">
+                <text label="Cantidad" name="objetosEncontradosDocumentosCantidad" [group]="form" *ngIf="divDocumentosObjeto"></text>
+            </div>
+            <div class="col-md-2">
+                <span>Otro Objeto</span>
+                <radiobutton
+                    class="col-md-6"
+                    [radios]="[
+                        {label:'Sí',value:'true'},
+                        {label:'No',value:'false'}
+                    ]" name="objetosEncontradosDocumentos" [group]="form"
+                    [functionChange]="showOtroObjeto.bind(this)">
+                </radiobutton>
+            </div>
+            <div class="col-md-2">
+                <text label="Cantidad" name="objetosEncontradosOtroObjetoCantidad" [group]="form" *ngIf="divOtroObjeto"></text>
+            </div>
         </div>
-        <div class="col-md-2">
-            <span>Dinero</span>
-            <radiobutton
-                class="col-md-6"
-                [radios]="[ 
-                    {label:'Sí',value:'true'},
-                    {label:'No',value:'false'}
-                ]" name="objetosEncontradosDinero" [group]="form"
-                [functionChange]="showDineroObjeto.bind(this)">
-            </radiobutton>
-        </div>
-        <div class="col-md-2">
-            <select2 placeholder="Moneda:" id=""
-                *ngIf="divDineroObjeto"
-                [options]="[
-                    {label:'Corta',value:'corta'},
-                    {label:'Arma larga',value:'larga'}
-                ]" name="objetosEncontradosDineroMoneda" [group]="form">
-            </select2>
-        </div>
-        <div class="col-md-2">
-            <text label="Otra" name="objetosEncontradosDineroOtra" [group]="form" *ngIf="divDineroObjeto"></text>
-        </div>
-        <div class="col-md-2">
-            <text label="Cantidad" name="objetosEncontradosDineroCantidad" [group]="form" *ngIf="divDineroObjeto"></text>
-        </div>
-    </div>
-    <div class="row justify-content-start" *ngIf="divObjeto">
-        <div class="col-md-2">
-            <span>Con caracteristicas de los narcóticos</span>
-            <radiobutton
-                class="col-md-6"
-                [radios]="[
-                    {label:'Sí',value:'true'},
-                    {label:'No',value:'false'}
-                ]" name="objetosEncontradosCaracteristicasNarcoticos" [group]="form"
-                [functionChange]="showCaracteristicasObjeto.bind(this)">
-            </radiobutton>
-        </div>
-        <div class="col-md-1">
-            <select2 placeholder="Tipo:" id=""
-                *ngIf="divCaracteristicasObjeto"
-                [options]="[
-                    {label:'Corta',value:'corta'},
-                    {label:'Arma larga',value:'larga'}
-                ]" name="objetosEncontradosCaracteristicasNarcoticosTipo" [group]="form">
-            </select2>
-        </div>
-        <div class="col-md-1">
-            <text label="Cantidad" name="objetosEncontradosCaracteristicasNarcoticosCantidad" [group]="form" *ngIf="divCaracteristicasObjeto"></text>
-        </div>
-        <div class="col-md-2">
-            <span>Documentos</span>
-            <radiobutton
-                class="col-md-6"
-                [radios]="[
-                    {label:'Sí',value:'true'},
-                    {label:'No',value:'false'}
-                ]" name="objetosEncontradosDocumentos" [group]="form"
-                [functionChange]="showDocumentosObjeto.bind(this)">
-            </radiobutton>
-        </div>
-        <div class="col-md-2">
-            <text label="Cantidad" name="objetosEncontradosDocumentosCantidad" [group]="form" *ngIf="divDocumentosObjeto"></text>
-        </div>
-        <div class="col-md-2">
-            <span>Otro Objeto</span>
-            <radiobutton
-                class="col-md-6"
-                [radios]="[
-                    {label:'Sí',value:'true'},
-                    {label:'No',value:'false'}
-                ]" name="objetosEncontradosDocumentos" [group]="form"
-                [functionChange]="showOtroObjeto.bind(this)">
-            </radiobutton>
-        </div>
-        <div class="col-md-2">
-            <text label="Cantidad" name="objetosEncontradosOtroObjetoCantidad" [group]="form" *ngIf="divOtroObjeto"></text>
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-md-auto">
-            <button class="" mat-raised-button color="accent">Agregar</button>
-        </div>
-    </div>
-    <div class="row space"></div>
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-auto">
+                <button class="" mat-raised-button color="accent">Agregar</button>
+            </div>
+        </div>
+        <div class="row space"></div>
+        <div class="row justify-content-center">
+            <div class="col-md-12">
                 <mat-table #table [dataSource]="dataSource">
                     <ng-container matColumnDef="nombre">
                         <mat-header-cell *matHeaderCellDef style="text-align:center">Detenido</mat-header-cell>
@@ -393,301 +395,304 @@
     </div>
     <div class="row space"></div>
     <div class="row">
-        <p><strong>¿Realizó inspección(es) de medio de transporte?</strong></p>
+        <p><strong>Medios de Transporte</strong></p>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <span>Con características de los narcóticos</span>
+            <span>¿Realizó inspección(es) de medio de transporte?</span>
             <radiobutton
                 class="col-md-4"
                 [radios]="[
                     {label:'Sí',value:'true'},
                     {label:'No',value:'false'}
-                ]" name="inspeccionMedioTransporte" [group]="form">
+                ]" name="inspeccionMedioTransporte" [group]="form"
+                [functionChange]="showMedioTransporte.bind(this)">
             </radiobutton>
         </div>
     </div>
-    <div class="row">
-        <p>Objetos encontrados</p>
-    </div>
-    <div class="row">
-        <div class="col-md-2">
-            <select2 placeholder="Tipo:" id=""
-                [options]="[
-                    {label:'Terrestre',value:'corta'},
-                    {label:'Aereo',value:'larga'}
-                ]" name="objetosEncontradosMedioTransporteTipo" [group]="form">
-            </select2>
+    <div *ngIf="divMedioTransporte">
+        <div class="row">
+            <p>Objetos encontrados</p>
         </div>
-        <div class="col-md-2">
-            <text label="Marca" name="objetosEncontradosMedioTransporteMarca" [group]="form"></text>
+        <div class="row">
+            <div class="col-md-2">
+                <select2 placeholder="Tipo:" id=""
+                    [options]="[
+                        {label:'Terrestre',value:'corta'},
+                        {label:'Aereo',value:'larga'}
+                    ]" name="objetosEncontradosMedioTransporteTipo" [group]="form">
+                </select2>
+            </div>
+            <div class="col-md-2">
+                <text label="Marca" name="objetosEncontradosMedioTransporteMarca" [group]="form"></text>
+            </div>
+            <div class="col-md-2">
+                <text label="Submarca" name="objetosEncontradosMedioTransporteSubmarca" [group]="form"></text>
+            </div>
+            <div class="col-md-2">
+                <text label="Modelo" name="objetosEncontradosMedioTransporteModelo" [group]="form"></text>
+            </div>
+            <div class="col-md-2">
+                <text label="Placa" name="objetosEncontradosMedioTransportePlaca" [group]="form"></text>
+            </div>
         </div>
-        <div class="col-md-2">
-            <text label="Submarca" name="objetosEncontradosMedioTransporteSubmarca" [group]="form"></text>
-        </div>
-        <div class="col-md-2">
-            <text label="Modelo" name="objetosEncontradosMedioTransporteModelo" [group]="form"></text>
-        </div>
-        <div class="col-md-2">
-            <text label="Placa" name="objetosEncontradosMedioTransportePlaca" [group]="form"></text>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-2">
-            <text label="Número de permiso" name="objetosEncontradosMedioTransporteNumeroPermiso" [group]="form"></text>
+        <div class="row">
+            <div class="col-md-2">
+                <text label="Número de permiso" name="objetosEncontradosMedioTransporteNumeroPermiso" [group]="form"></text>
+            </div>
+            <div class="col-md-2">
+                <text label="Serie" name="objetosEncontradosMedioTransporteNumeroSerie" [group]="form"></text>
+            </div>
+            <div class="col-md-2">
+                <text label="Número de motor" name="objetosEncontradosMedioTransporteNumeroMotor" [group]="form"></text>
+            </div>
+            <div class="col-md-2">
+                <text label="Color" name="objetosEncontradosMedioTransporteNumeroColor" [group]="form"></text>
+            </div>
+            <div class="col-md-2">
+                <select2 placeholder="Procedencia:" id=""
+                    [options]="[
+                        {label:'Terrestre',value:'corta'},
+                        {label:'Aereo',value:'larga'}
+                    ]" name="objetosEncontradosMedioTransporteProcedencia" [group]="form">
+                </select2>
+            </div>
         </div>
-        <div class="col-md-2">
-            <text label="Serie" name="objetosEncontradosMedioTransporteNumeroSerie" [group]="form"></text>
+        <div class="row">
+            <div class="col-md-2">
+                <text label="Apellido paterno" name="inspeccionesMedioTransportePaterno" [group]="form"></text>
+            </div>
+            <div class="col-md-2">
+                <text label="Apellido materno" name="inspeccionesMedioTransporteMaterno" [group]="form"></text>
+            </div>
+            <div class="col-md-2">
+                <text label="Nombre(s)" name="inspeccionesMedioTransporteNombres" [group]="form"></text>
+            </div>
+            <div class="col-md-4">
+                <span>¿Le encontro algún objeto relacionado con la comisión del delito?(Anexo 4)</span>
+                <radiobutton
+                    class="col-md-4"
+                    [radios]="[
+                        {label:'Sí',value:'true'},
+                        {label:'No',value:'false'}
+                    ]" name="objetosEncontradosMedioTransporteObjetoRelacionado" [group]="form"
+                    [functionChange]="showTransportesEncontrados.bind(this)">
+                </radiobutton>
+            </div>
         </div>
-        <div class="col-md-2">
-            <text label="Número de motor" name="objetosEncontradosMedioTransporteNumeroMotor" [group]="form"></text>
+        <div class="row justify-content-start" *ngIf="divTransportesEncontrados">
+            <div class="col-md-2">
+                <span>Armas</span>
+                <radiobutton
+                    class="col-md-6"
+                    [radios]="[
+                        {label:'Sí',value:'true'},
+                        {label:'No',value:'false'}
+                    ]" name="armasObjetosEncontrados" [group]="form"
+                    [functionChange]="showArmasEncontrados.bind(this)">
+                </radiobutton>
+            </div>
+            <div class="col-md-2">
+                <text label="Cantidad" name="armasCantidadObjetosEncontrados" [group]="form" *ngIf="divArmasEncontrados"></text>
+            </div>
+            <div class="col-md-2">
+                <span>Cargadores</span>
+                <radiobutton
+                    class="col-md-6"
+                    [radios]="[
+                        {label:'Sí',value:'true'},
+                        {label:'No',value:'false'}
+                    ]" name="cargadoresObjetosEncontrados" [group]="form"
+                    [functionChange]="showCargadoresEncontrados.bind(this)">
+                </radiobutton>
+            </div>
+            <div class="col-md-2">
+                <text label="Cantidad" name="cargadoresCantidadObjetosEncontrados" [group]="form" *ngIf="divCargadoresEncontrados"></text>
+            </div>
+            <div class="col-md-2">
+                <span>Cartuchos</span>
+                <radiobutton
+                    class="col-md-6"
+                    [radios]="[
+                        {label:'Sí',value:'true'},
+                        {label:'No',value:'false'}
+                    ]" name="cartuchosObjetosEncontrados" [group]="form"
+                    [functionChange]="showCartuchosEncontrados.bind(this)">
+                </radiobutton>
+            </div>
+            <div class="col-md-2">
+                <text label="Cantidad" name="cartuchosCantidadObjetosEncontrados" [group]="form" *ngIf="divCartuchosEncontrados"></text>
+            </div>
         </div>
-        <div class="col-md-2">
-            <text label="Color" name="objetosEncontradosMedioTransporteNumeroColor" [group]="form"></text>
+        <div class="row justify-content-start" *ngIf="divTransportesEncontrados">
+            <div class="col-md-2">
+                <span>Casquillos</span>
+                <radiobutton
+                    class="col-md-6"
+                    [radios]="[
+                        {label:'Sí',value:'true'},
+                        {label:'No',value:'false'}
+                    ]" name="casquillosObjetosEncontrados" [group]="form"
+                    [functionChange]="showCasquillosEncontrados.bind(this)">
+                </radiobutton>
+            </div>
+            <div class="col-md-2">
+                <text label="Cantidad" name="casquillosCantidadObjetosEncontrados" [group]="form" *ngIf="divCasquillosEncontrados"></text>
+            </div>
+            <div class="col-md-2">
+                <span>Dinero</span>
+                <radiobutton
+                    class="col-md-6"
+                    [radios]="[
+                        {label:'Sí',value:'true'},
+                        {label:'No',value:'false'}
+                    ]" name="dineroObjetosEncontrados" [group]="form"
+                    [functionChange]="showDineroEncontrado.bind(this)">
+                </radiobutton>
+            </div>
+            <div class="col-md-2">
+                <select2 placeholder="Moneda:" id=""
+                    *ngIf="divDineroEncontrado"
+                    [options]="[
+                        {label:'Terrestre',value:'corta'},
+                        {label:'Aereo',value:'larga'}
+                    ]" name="dineroMonedaObjetosEncontrados" [group]="form">
+                </select2>
+            </div>
+            <div class="col-md-2">
+                <text label="Otra" name="dineroOtraObjetosEncontrados" [group]="form" *ngIf="divDineroEncontrado"></text>
+            </div>
+            <div class="col-md-2">
+                <text label="Cantidad" name="dineroCantidadObjetosEncontrados" [group]="form" *ngIf="divDineroEncontrado"></text>
+            </div>
         </div>
-        <div class="col-md-2">
-            <select2 placeholder="Procedencia:" id=""
-                [options]="[
-                    {label:'Terrestre',value:'corta'},
-                    {label:'Aereo',value:'larga'}
-                ]" name="objetosEncontradosMedioTransporteProcedencia" [group]="form">
-            </select2>
+        <div class="row justify-content-start" *ngIf="divTransportesEncontrados">
+            <div class="col-md-2">
+                <span>Con caracteristicas de los narcóticos</span>
+                <radiobutton
+                    class="col-md-6"
+                    [radios]="[
+                        {label:'Sí',value:'true'},
+                        {label:'No',value:'false'}
+                    ]" name="caracteristicasNarcoticosObjetosEncontrados" [group]="form"
+                    [functionChange]="showNarcoticosEncontrados.bind(this)">
+                </radiobutton>
+            </div>
+            <div class="col-md-1">
+                <select2 placeholder="Del tipo:" id=""
+                    *ngIf="divNarcoticosEncontrados"
+                    [options]="[
+                        {label:'Terrestre',value:'corta'},
+                        {label:'Aereo',value:'larga'}
+                    ]" name="caracteristicasNarcoticosTipoObjetosEncontrados" [group]="form">
+                </select2>
+            </div>
+            <div class="col-md-1">
+                <text label="Cantidad" name="caracteristicasNarcoticosCantidadObjetosEncontrados" [group]="form" *ngIf="divNarcoticosEncontrados"></text>
+            </div>
+            <div class="col-md-2">
+                <span>Documentos</span>
+                <radiobutton
+                    class="col-md-6"
+                    [radios]="[
+                        {label:'Sí',value:'true'},
+                        {label:'No',value:'false'}
+                    ]" name="documentosTipoObjetosEncontrados" [group]="form"
+                    [functionChange]="showDocumentosEncontrados.bind(this)">
+                </radiobutton>
+            </div>
+            <div class="col-md-2">
+                <text label="Cantidad" name="documentosCantidadTipoObjetosEncontrados" [group]="form" *ngIf="divDocumentosEncontrados"></text>
+            </div>
+            <div class="col-md-2">
+                <span>Personas</span>
+                <radiobutton
+                    class="col-md-6"
+                    [radios]="[
+                        {label:'Sí',value:'true'},
+                        {label:'No',value:'false'}
+                    ]" name="personasTipoObjetosEncontrados" [group]="form"
+                    [functionChange]="showPersonasEncontrados.bind(this)">
+                </radiobutton>
+            </div>
+            <div class="col-md-2">
+                <text label="Cantidad" name="personasCantidadTipoObjetosEncontrados" [group]="form" *ngIf="divPersonasEncontrados"></text>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-2">
-            <text label="Apellido paterno" name="inspeccionesMedioTransportePaterno" [group]="form"></text>
-        </div>
-        <div class="col-md-2">
-            <text label="Apellido materno" name="inspeccionesMedioTransporteMaterno" [group]="form"></text>
-        </div>
-        <div class="col-md-2">
-            <text label="Nombre(s)" name="inspeccionesMedioTransporteNombres" [group]="form"></text>
-        </div>
-        <div class="col-md-4">
-            <span>¿Le encontro algún objeto relacionado con la comisión del delito?(Anexo 4)</span>
-            <radiobutton
-                class="col-md-4"
-                [radios]="[
-                    {label:'Sí',value:'true'},
-                    {label:'No',value:'false'}
-                ]" name="objetosEncontradosMedioTransporteObjetoRelacionado" [group]="form"
-                [functionChange]="showTransporteEcontrados.bind(this)">
-            </radiobutton>
-        </div>
-    </div>
-    <div class="row justify-content-start" *ngIf="divTransporteEncontrados">
-        <div class="col-md-2">
-            <span>Armas</span>
-            <radiobutton
-                class="col-md-6"
-                [radios]="[
-                    {label:'Sí',value:'true'},
-                    {label:'No',value:'false'}
-                ]" name="armasObjetosEncontrados" [group]="form"
-                [functionChange]="showArmasEncontrados.bind(this)">
-            </radiobutton>
-        </div>
-        <div class="col-md-2">
-            <text label="Cantidad" name="armasCantidadObjetosEncontrados" [group]="form" *ngIf="divArmasEncontrados"></text>
-        </div>
-        <div class="col-md-2">
-            <span>Cargadores</span>
-            <radiobutton
-                class="col-md-6"
-                [radios]="[
-                    {label:'Sí',value:'true'},
-                    {label:'No',value:'false'}
-                ]" name="cargadoresObjetosEncontrados" [group]="form"
-                [functionChange]="showCargadoresEncontrados.bind(this)">
-            </radiobutton>
-        </div>
-        <div class="col-md-2">
-            <text label="Cantidad" name="cargadoresCantidadObjetosEncontrados" [group]="form" *ngIf="divCargadoresEncontrados"></text>
-        </div>
-        <div class="col-md-2">
-            <span>Cartuchos</span>
-            <radiobutton
-                class="col-md-6"
-                [radios]="[
-                    {label:'Sí',value:'true'},
-                    {label:'No',value:'false'}
-                ]" name="cartuchosObjetosEncontrados" [group]="form"
-                [functionChange]="showCartuchosEncontrados.bind(this)">
-            </radiobutton>
-        </div>
-        <div class="col-md-2">
-            <text label="Cantidad" name="cartuchosCantidadObjetosEncontrados" [group]="form" *ngIf="divCartuchosEncontrados"></text>
-        </div>
-    </div>
-    <div class="row justify-content-start" *ngIf="divTransporteEncontrados">
-        <div class="col-md-2">
-            <span>Casquillos</span>
-            <radiobutton
-                class="col-md-6"
-                [radios]="[
-                    {label:'Sí',value:'true'},
-                    {label:'No',value:'false'}
-                ]" name="casquillosObjetosEncontrados" [group]="form"
-                [functionChange]="showCasquillosEncontrados.bind(this)">
-            </radiobutton>
-        </div>
-        <div class="col-md-2">
-            <text label="Cantidad" name="casquillosCantidadObjetosEncontrados" [group]="form" *ngIf="divCasquillosEncontrados"></text>
-        </div>
-        <div class="col-md-2">
-            <span>Dinero</span>
-            <radiobutton
-                class="col-md-6"
-                [radios]="[
-                    {label:'Sí',value:'true'},
-                    {label:'No',value:'false'}
-                ]" name="dineroObjetosEncontrados" [group]="form"
-                [functionChange]="showDineroEncontrado.bind(this)">
-            </radiobutton>
-        </div>
-        <div class="col-md-2">
-            <select2 placeholder="Moneda:" id=""
-                *ngIf="divDineroEncontrado"
-                [options]="[
-                    {label:'Terrestre',value:'corta'},
-                    {label:'Aereo',value:'larga'}
-                ]" name="dineroMonedaObjetosEncontrados" [group]="form">
-            </select2>
-        </div>
-        <div class="col-md-2">
-            <text label="Otra" name="dineroOtraObjetosEncontrados" [group]="form" *ngIf="divDineroEncontrado"></text>
-        </div>
-        <div class="col-md-2">
-            <text label="Cantidad" name="dineroCantidadObjetosEncontrados" [group]="form" *ngIf="divDineroEncontrado"></text>
-        </div>
-    </div>
-    <div class="row justify-content-start" *ngIf="divTransporteEncontrados">
-        <div class="col-md-2">
-            <span>Con caracteristicas de los narcóticos</span>
-            <radiobutton
-                class="col-md-6"
-                [radios]="[
-                    {label:'Sí',value:'true'},
-                    {label:'No',value:'false'}
-                ]" name="caracteristicasNarcoticosObjetosEncontrados" [group]="form"
-                [functionChange]="showNarcoticosEncontrados.bind(this)">
-            </radiobutton>
-        </div>
-        <div class="col-md-1">
-            <select2 placeholder="Del tipo:" id=""
-                *ngIf="divNarcoticosEncontrados"
-                [options]="[
-                    {label:'Terrestre',value:'corta'},
-                    {label:'Aereo',value:'larga'}
-                ]" name="caracteristicasNarcoticosTipoObjetosEncontrados" [group]="form">
-            </select2>
-        </div>
-        <div class="col-md-1">
-            <text label="Cantidad" name="caracteristicasNarcoticosCantidadObjetosEncontrados" [group]="form" *ngIf="divNarcoticosEncontrados"></text>
-        </div>
-        <div class="col-md-2">
-            <span>Documentos</span>
-            <radiobutton
-                class="col-md-6"
-                [radios]="[
-                    {label:'Sí',value:'true'},
-                    {label:'No',value:'false'}
-                ]" name="documentosTipoObjetosEncontrados" [group]="form"
-                [functionChange]="showDocumentosEncontrados.bind(this)">
-            </radiobutton>
-        </div>
-        <div class="col-md-2">
-            <text label="Cantidad" name="documentosCantidadTipoObjetosEncontrados" [group]="form" *ngIf="divDocumentosEncontrados"></text>
-        </div>
-        <div class="col-md-2">
-            <span>Personas</span>
-            <radiobutton
-                class="col-md-6"
-                [radios]="[
-                    {label:'Sí',value:'true'},
-                    {label:'No',value:'false'}
-                ]" name="personasTipoObjetosEncontrados" [group]="form"
-                [functionChange]="showPersonasEncontrados.bind(this)">
-            </radiobutton>
-        </div>
-        <div class="col-md-2">
-            <text label="Cantidad" name="personasCantidadTipoObjetosEncontrados" [group]="form" *ngIf="divPersonasEncontrados"></text>
-        </div>
-    </div>
 
-    <div class="row justify-content-start" *ngIf="divTransporteEncontrados">
-        <div class="col-md-2">
-            <span>Cadáver</span>
-            <radiobutton
-                class="col-md-6"
-                [radios]="[
-                    {label:'Sí',value:'true'},
-                    {label:'No',value:'false'}
-                ]" name="cadaverTipoObjetosEncontrados" [group]="form"
-                [functionChange]="showCadaverEncontrado.bind(this)">
-            </radiobutton>
+        <div class="row justify-content-start" *ngIf="divTransportesEncontrados">
+            <div class="col-md-2">
+                <span>Cadáver</span>
+                <radiobutton
+                    class="col-md-6"
+                    [radios]="[
+                        {label:'Sí',value:'true'},
+                        {label:'No',value:'false'}
+                    ]" name="cadaverTipoObjetosEncontrados" [group]="form"
+                    [functionChange]="showCadaverEncontrado.bind(this)">
+                </radiobutton>
+            </div>
+            <div class="col-md-2">
+                <text label="Cantidad" name="cadaverCantidadTipoObjetosEncontrados" [group]="form" *ngIf="divCadaverEncontrado"></text>
+            </div>
+            <div class="col-md-2">
+                <span>Restos humanos</span>
+                <radiobutton
+                    class="col-md-6"
+                    [radios]="[
+                        {label:'Sí',value:'true'},
+                        {label:'No',value:'false'}
+                    ]" name="restosHumanosTipoObjetosEncontrados" [group]="form"
+                    [functionChange]="showRestosEncontrados.bind(this)">
+                </radiobutton>
+            </div>
+            <div class="col-md-2">
+                <text label="Cantidad" name="restosHumanosCantidadTipoObjetosEncontrados" [group]="form" *ngIf="divRestosEncontrados"></text>
+            </div>
+            <div class="col-md-2">
+                <span>Otro objeto / sustancia</span>
+                <radiobutton
+                    class="col-md-6"
+                    [radios]="[
+                        {label:'Sí',value:'true'},
+                        {label:'No',value:'false'}
+                    ]" name="otroObjetoTipoObjetosEncontrados" [group]="form"
+                    [functionChange]="showSustanciaEncontrado.bind(this)">
+                </radiobutton>
+            </div>
+            <div class="col-md-2">
+                <text label="Cantidad" name="otroObjetoCantidadTipoObjetosEncontrados" [group]="form" *ngIf="divSustanciaEncontrado"></text>
+            </div>
         </div>
-        <div class="col-md-2">
-            <text label="Cantidad" name="cadaverCantidadTipoObjetosEncontrados" [group]="form" *ngIf="divCadaverEncontrado"></text>
+        <div class="row justify-content-center">
+            <div class="col-md-auto">
+                <button class="" mat-raised-button color="accent">Agregar</button>
+            </div>
         </div>
-        <div class="col-md-2">
-            <span>Restos humanos</span>
-            <radiobutton
-                class="col-md-6"
-                [radios]="[
-                    {label:'Sí',value:'true'},
-                    {label:'No',value:'false'}
-                ]" name="restosHumanosTipoObjetosEncontrados" [group]="form"
-                [functionChange]="showRestosEncontrados.bind(this)">
-            </radiobutton>
-        </div>
-        <div class="col-md-2">
-            <text label="Cantidad" name="restosHumanosCantidadTipoObjetosEncontrados" [group]="form" *ngIf="divRestosEncontrados"></text>
-        </div>
-        <div class="col-md-2">
-            <span>Otro objeto / sustancia</span>
-            <radiobutton
-                class="col-md-6"
-                [radios]="[
-                    {label:'Sí',value:'true'},
-                    {label:'No',value:'false'}
-                ]" name="otroObjetoTipoObjetosEncontrados" [group]="form"
-                [functionChange]="showSustanciaEncontrado.bind(this)">
-            </radiobutton>
-        </div>
-        <div class="col-md-2">
-            <text label="Cantidad" name="otroObjetoCantidadTipoObjetosEncontrados" [group]="form" *ngIf="divSustanciaEncontrado"></text>
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-md-auto">
-            <button class="" mat-raised-button color="accent">Agregar</button>
-        </div>
-    </div>
-    <div class="row space"></div>
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <mat-table #table [dataSource]="dataSource">
-                <ng-container matColumnDef="nombre">
-                    <mat-header-cell *matHeaderCellDef style="text-align:center">Nombre</mat-header-cell>
-                    <mat-cell *matCellDef="let element" style="text-align:center"> {{element.nombre}}</mat-cell>
-                </ng-container>
+        <div class="row space"></div>
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <mat-table #table [dataSource]="dataSource">
+                    <ng-container matColumnDef="nombre">
+                        <mat-header-cell *matHeaderCellDef style="text-align:center">Nombre</mat-header-cell>
+                        <mat-cell *matCellDef="let element" style="text-align:center"> {{element.nombre}}</mat-cell>
+                    </ng-container>
 
-                <ng-container matColumnDef="objeto">
-                    <mat-header-cell *matHeaderCellDef style="text-align:center">Tipo</mat-header-cell>
-                    <mat-cell *matCellDef="let element" style="text-align:center"> {{element.objeto}}</mat-cell>
-                </ng-container>
+                    <ng-container matColumnDef="objeto">
+                        <mat-header-cell *matHeaderCellDef style="text-align:center">Tipo</mat-header-cell>
+                        <mat-cell *matCellDef="let element" style="text-align:center"> {{element.objeto}}</mat-cell>
+                    </ng-container>
 
-                <ng-container matColumnDef="accion">
-                    <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
-                    <mat-cell *matCellDef="let element" style="text-align:center"><span><mat-icon class="button-menu mat-icon material-icons" role="img"aria-hidden="true" style="text-align:center">delete</mat-icon></span></mat-cell>
-                </ng-container>
+                    <ng-container matColumnDef="accion">
+                        <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
+                        <mat-cell *matCellDef="let element" style="text-align:center"><span><mat-icon class="button-menu mat-icon material-icons" role="img"aria-hidden="true" style="text-align:center">delete</mat-icon></span></mat-cell>
+                    </ng-container>
 
-                <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
-            </mat-table>
+                    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+                </mat-table>
+            </div>
         </div>
     </div>
     <div class="row space"></div>

@@ -29,7 +29,7 @@
         </div>
     </div>
     <br>
-    <div class="row justify-content-center">
+    <div class="row justify-content-start">
         <div class="col-md-auto">
             <span class="float-rigth">
                 <strong>Seleccione un detenido o ingrese el nombre de la persona a la que se le aplicó el uso de la fuerza</strong>
@@ -37,25 +37,25 @@
         </div>
     </div>
     <div class="row space"></div>
-    <div class="row justify-content-center ">
-        <div class="col-md-2">
+    <div class="row justify-content-start ">
+        <div class="col-md-3">
             <select2 placeholder="Detenido" id=""
                [options]="[
                     {label:'Yahir Ruiz',value:'Yahir Ruiz'}
                 ]" name="detenidoFuerza" [group]="form">
             </select2>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <text label="Apellido paterno" name="paternoFuerza" [group]="form"></text>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <text label="Apellido materno" name="maternoFuerza" [group]="form"></text>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <text label="Nombre(s)" name="nombreFuerza" [group]="form"></text>
         </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-start">
         <div class="col-md-auto">
             <span>
                 <strong>Seleccione un primer responsable o ingrese el nombre de la persona a la que se le aplicó el uso de la fuerza</strong>
@@ -63,21 +63,21 @@
         </div>
     </div>
     <div class="row space"></div>
-    <div class="row justify-content-center">
-        <div class="col-md-2">
+    <div class="row justify-content-start">
+        <div class="col-md-3">
             <select2 placeholder="Primer responsable" id=""
                 [options]="[
                     {label:'Ricardo Crespo',value:'Ricardo Crespo'}
                 ]" name="primerResponsableFuerza" [group]="form">
             </select2>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <text label="Apellido paterno" name="paternoPrimerFuerza" [group]="form"></text>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <text label="Apellido materno" name="maternoPrimerFuerza" [group]="form"></text>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <text label="Nombre(s)" name="nombrePrimerFuerza" [group]="form"></text>
         </div>
     </div>
@@ -90,7 +90,7 @@
     </div>
     <br>
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <mat-table #table [dataSource]="dataSource">
                 <ng-container matColumnDef="usodelafuerza">
                     <mat-header-cell *matHeaderCellDef style="text-align:center">Uso de la fuerza</mat-header-cell>
@@ -120,21 +120,22 @@
     <br>
     <div class="row space"></div>
     <br>
-    <div class="row justify-content-start">
+    <div class="row justify-content-center">
         <div class="col-md-auto">
             <span>Se realizó traslado y canalización</span>
             <radiobutton
                 class="col-md-4"
                 [radios]="[
-                    {label:'Sí',value:'Sí'},
-                    {label:'No',value:'No'}
-                ]" name="trasladoCanalizacion" [group]="form">
+                    {label:'Sí',value:'true'},
+                    {label:'No',value:'false'}
+                ]" name="trasladoCanalizacion" [group]="form"
+                [functionChange]="showTraslado.bind(this)">
             </radiobutton>
         </div>
-        <div class="col-md-auto">
+        <div class="col-md-auto" *ngIf="divTraslado">
             <date label="Fecha de conocimiento" name="fechaCanalizacion" [group]="form" placeholder="dd/mm/aaaa"></date>
         </div>
-        <div class="col-md-auto">
+        <div class="col-md-auto" *ngIf="divTraslado">
             <text label="Hora de conocimiento" name="horaCanalizacion" [group]="form" placeholder="hh:mm"></text>
         </div>
     </div>
