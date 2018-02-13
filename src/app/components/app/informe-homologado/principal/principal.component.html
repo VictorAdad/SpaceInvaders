@@ -278,15 +278,15 @@
         <div class="col-md-12">
             <mat-table [dataSource]="dataSource4">
                 <ng-container matColumnDef="evento">
-                    <mat-header-cell *matHeaderCellDef style="text-align:center">Apoyo de</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Evento</mat-header-cell>
                     <mat-cell *matCellDef="let element4" style="text-align:center"> {{element4.evento}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="fecha">
-                    <mat-header-cell *matHeaderCellDef style="text-align:center">Número económico</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Fecha</mat-header-cell>
                     <mat-cell *matCellDef="let element4" style="text-align:center"> {{element4.fecha}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="hora">
-                    <mat-header-cell *matHeaderCellDef style="text-align:center">Número económico</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Hora</mat-header-cell>
                     <mat-cell *matCellDef="let element4" style="text-align:center"> {{element4.hora}}</mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="columns4"></mat-header-row>
@@ -297,7 +297,7 @@
     <div class="row space"></div>
     <div class="row">
         <div class="col-md-12">
-            <h2>Narración de los hechos por el primer responsable</h2>
+            <h2>IV. Narración de los hechos por el primer responsable</h2>
         </div>
         <div class="col-md-12">
             <text label="Narración" name="narracionHechosResponsable" [group]="form"></text>
