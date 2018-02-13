@@ -1,0 +1,89 @@
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue.
+// $app-primary: mat-palette($mat-indigo);
+// $app-accent:  mat-palette($mat-pink, A200, A100, A400);
+
+// // The warn palette is optional (defaults to red).
+// $app-warn:    mat-palette($mat-red, 900);
+
+// // Create the theme object (a Sass map containing all of the palettes).
+// $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+
+// // Include theme styles for core and each component used in your app.
+// // Alternatively, you can import and @include the theme mixins for each component
+// // that you are using.
+// @include angular-material-theme($app-theme);
+
+$app-primary: mat-palette($mat-red, 900);
+$app-accent:  mat-palette($mat-blue-grey, 700);
+$app-warn:    mat-palette($mat-red);
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);	
+@include angular-material-theme($app-theme);
+
+body {
+	font-family: Roboto, Roboto Bold, 'Helvetica Neue', sans-serif;
+
+	* {
+    	-webkit-font-smoothing: antialiased;
+    	-moz-osx-font-smoothing: grayscale;
+  	}
+
+}
+
+button:focus{
+	outline: none !important;
+}
+
+strong,
+.font-weight-bold{
+	-webkit-font-smoothing: auto !important;
+}
+
+.mat-tab-body-content{
+	padding: 20px;
+}
+
+.mat-expansion-panel {
+    box-sizing: inherit !important;
+
+    .mat-expansion-panel-body{
+    	overflow: initial;
+    }
+}
+.expansion-identidad{
+    .mat-expansion-panel-content{
+        overflow: -webkit-paged-x;
+    }
+}
+
+.mat-checkbox-input{
+    display: none
+}
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+    background-color: white !important;
+    background-image: none;
+    color: rgb(0, 0, 0);
+}
+
+@import "bootstrap/functions";
+@import "bootstrap/variables";
+@import "bootstrap/mixins/breakpoints";
+@import "theme/tabs";
+@import "theme/verticalTabs";
+@import "theme/notify";
+@import "theme/alerts";
+@import "theme/dialog";
+@import "theme/table";
+@import "theme/Synchronize";
+@import "theme/breadcrumb";
+@import "datepicker/datepicker.component";
