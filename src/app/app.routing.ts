@@ -87,7 +87,8 @@ import { PaginadorHomologado} from '@components-app/informe-homologado/component
 import { InformeHomologadoCreate} from '@components-app/informe-homologado/create/create.component';
 
 const routes: Routes = [
-    { path : '', redirectTo: 'home', pathMatch: 'full'},
+    // { path : '', redirectTo: 'home', pathMatch: 'full'},
+    { path: '', redirectTo: 'caso/123/informe-homologado', pathMatch: 'full'},
     { path : '', component: HomeComponent, data : { breadcrumb : 'Noticia de hechos'}},
     { path : 'enlinea', component: HomeComponent, data : { breadcrumb : 'Noticia de hechos'}},
     { path : 'sinconexion', component: HomeComponent, data : { breadcrumb : 'Noticia de hechos'}},

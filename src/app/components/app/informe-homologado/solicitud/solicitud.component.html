@@ -1,0 +1,69 @@
+<div class="row">
+    <div class="col-md-12">
+        <form>
+            <mat-tab-group>
+                <mat-tab label="IPH">
+                    <ng-template mat-tab-label>IPH</ng-template>
+                    <principal [form]="form"></principal>
+                </mat-tab>
+                <mat-tab label="Anexo 1">
+                    <ng-template mat-tab-label>Anexo 1</ng-template>
+                    <anexo1 [form]="form"></anexo1>
+                </mat-tab>
+                <mat-tab label="Anexo 2">
+                    <ng-template mat-tab-label>Anexo 2</ng-template>
+                    <anexo2 [form]="form"></anexo2>
+                </mat-tab>
+                <mat-tab label="Anexo 3">
+                    <ng-template mat-tab-label>Anexo 3</ng-template>
+                    <anexo3 [form]="form"></anexo3>
+                </mat-tab>
+                <mat-tab label="Anexo 4">
+                    <ng-template mat-tab-label>Anexo 4</ng-template>
+                    <anexo4 [form]="form"></anexo4>
+                </mat-tab>
+                <mat-tab label="Anexo 5">
+                    <ng-template mat-tab-label>Anexo 5</ng-template>
+                    <anexo5 [form]="form"></anexo5>
+                </mat-tab>
+                <mat-tab label="Anexo 6">
+                    <ng-template mat-tab-label>Anexo 6</ng-template>
+                    <anexo6 [form]="form"></anexo6>
+                </mat-tab>
+                <mat-tab label="Anexo 7">
+                    <ng-template mat-tab-label>Anexo 7</ng-template>
+                    <anexo7 [form]="form"></anexo7>
+                </mat-tab>
+                <mat-tab label="Anexo 8">
+                    <ng-template mat-tab-label>Anexo 8</ng-template>
+                    <anexo8 [form]="form"></anexo8>
+                </mat-tab>
+                <mat-tab label="Anexo 9">
+                    <ng-template mat-tab-label>Anexo 9</ng-template>
+                    <anexo9 [form]="form"></anexo9>
+                </mat-tab>
+                <mat-tab label="Anexo 10">
+                    <ng-template mat-tab-label>Anexo 10</ng-template>
+                    <anexo10 [form]="form"></anexo10>
+                </mat-tab>
+                <mat-tab label="Anexo 11">
+                    <ng-template mat-tab-label>Anexo 11</ng-template>
+                    <anexo11 [form]="form"></anexo11>
+                </mat-tab>
+            </mat-tab-group>
+            <div>
+                <div class="row justify-content-end">
+                    <div class="col-sm-auto">
+                        <button mat-raised-button color="accent" _saving [saveFn]="save.bind(this, form.value)">Guardar</button>
+                    </div>
+                    <div class="col-sm-auto">
+                        <button class="" mat-raised-button routerLink="/caso/1313/informe-homologado" color="">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row space"></div>
+            <div class="row space"></div>
+            <div class="row space"></div>
+        </form>
+    </div>
+</div>

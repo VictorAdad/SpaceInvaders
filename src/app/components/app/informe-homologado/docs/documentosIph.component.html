@@ -1,0 +1,40 @@
+<div>
+    <div class="space"></div>
+    <div class="space"></div>
+    <div class="row justify-content-end">
+        <div class="col-md-4">
+            <label for="">Formatos </label>
+                <select2 placeholder="Informe Policial Homologado" id="" [options]="[
+                    {label:'Informe Policial Homologado',value:'Informe Policial Homologado'},
+                    {label:'Informe Policial Homologado',value:'Informe Policial Homologado'}
+                ]" name="">
+                </select2>
+        </div>
+        <div class="col-md-3">
+            <button mat-raised-button color="accent">Adjuntar</button>
+        </div>
+    </div>
+    
+    <div class="col-md-12">
+        <mat-table #table [dataSource]="dataSource">
+            <ng-container matColumnDef="nombre">
+                <mat-header-cell *matHeaderCellDef style="text-align:center">Nombre</mat-header-cell>
+                <mat-cell *matCellDef="let element" style="text-align:center"> {{element.nombre}}</mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef="fecha">
+                <mat-header-cell *matHeaderCellDef style="text-align:center">Fecha</mat-header-cell>
+                <mat-cell *matCellDef="let element" style="text-align:center"> {{element.fecha}}</mat-cell>
+            </ng-container>
+    
+            <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+        </mat-table>
+    </div>
+</div>
+<div class="space"></div>
+<div class="space"></div>
+<div class="row justify-content-end">
+    <button mat-raised-button color="accent">Guardar</button>
+    <button>Cancelar</button>
+</div>
