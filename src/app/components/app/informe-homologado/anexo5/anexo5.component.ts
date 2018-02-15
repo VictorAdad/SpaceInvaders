@@ -7,31 +7,93 @@ import {HttpService} from '@services/http.service';
 import {InformeBaseComponent} from '@components-app/informe-homologado/informe-base.component';
 
 @Component({
-  selector: 'anexo5',
-  templateUrl: './anexo5.component.html'
+    selector: 'anexo5',
+    templateUrl: './anexo5.component.html',
+    styleUrls: ['./anexo5.component.css'],
 })
 
 export class Anexo5Component extends InformeBaseComponent {
 
-  public breadcrumb = [];
-  columns = ['detenido', 'descripcion', 'cantidad', 'accion'];
-  dataSource: TableService | null;
+    public breadcrumb = [];
+    columns = ['detenido', 'descripcion', 'cantidad', 'accion'];
+    dataSource: TableService | null;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private route: ActivatedRoute,
-              private http: HttpService) {
-    super();
-  }
+    constructor(
+        private route: ActivatedRoute,
+        private http: HttpService) 
+    {
+        super();
+    }
 
-  ngOnInit() {
-    var rows = {};
-    rows['detenido'] = "Yair Ruiz"
-    rows['descripcion'] = "Control de contacto"
-    rows['cantidad'] = "4"
+    ngOnInit() {
+        var arr = [];
 
-    this.dataSource = new TableService(this.paginator, [rows]);
-  }
+        var row = {'detenido': 'Pedro Morales', 'descripcion': 'Descripcion 1', 'cantidad': '99'};
+        arr.push(row);
+        var row = {'detenido': 'Juan Perez', 'descripcion': 'Descripcion 2', 'cantidad': '87'};
+        arr.push(row);
+        var row = {'detenido': 'Oscar Jimenez', 'descripcion': 'Descripcion 3', 'cantidad': '345'};
+        arr.push(row);
+        var row = {'detenido': 'Pedro Morales', 'descripcion': 'Descripcion 1', 'cantidad': '99'};
+        arr.push(row);
+        var row = {'detenido': 'Juan Perez', 'descripcion': 'Descripcion 2', 'cantidad': '87'};
+        arr.push(row);
+        var row = {'detenido': 'Oscar Jimenez', 'descripcion': 'Descripcion 3', 'cantidad': '345'};
+        arr.push(row);
+        var row = {'detenido': 'Pedro Morales', 'descripcion': 'Descripcion 1', 'cantidad': '99'};
+        arr.push(row);
+        var row = {'detenido': 'Juan Perez', 'descripcion': 'Descripcion 2', 'cantidad': '87'};
+        arr.push(row);
+        var row = {'detenido': 'Oscar Jimenez', 'descripcion': 'Descripcion 3', 'cantidad': '345'};
+        arr.push(row);
+        var row = {'detenido': 'Pedro Morales', 'descripcion': 'Descripcion 1', 'cantidad': '99'};
+        arr.push(row);
+        var row = {'detenido': 'Juan Perez', 'descripcion': 'Descripcion 2', 'cantidad': '87'};
+        arr.push(row);
+        var row = {'detenido': 'Oscar Jimenez', 'descripcion': 'Descripcion 3', 'cantidad': '345'};
+        arr.push(row);
+        var row = {'detenido': 'Pedro Morales', 'descripcion': 'Descripcion 1', 'cantidad': '99'};
+        arr.push(row);
+        var row = {'detenido': 'Juan Perez', 'descripcion': 'Descripcion 2', 'cantidad': '87'};
+        arr.push(row);
+        var row = {'detenido': 'Pedro Morales', 'descripcion': 'Descripcion 1', 'cantidad': '99'};
+        arr.push(row);
+        var row = {'detenido': 'Juan Perez', 'descripcion': 'Descripcion 2', 'cantidad': '87'};
+        arr.push(row);
+        var row = {'detenido': 'Oscar Jimenez', 'descripcion': 'Descripcion 3', 'cantidad': '345'};
+        arr.push(row);
+        var row = {'detenido': 'Pedro Morales', 'descripcion': 'Descripcion 1', 'cantidad': '99'};
+        arr.push(row);
+        var row = {'detenido': 'Juan Perez', 'descripcion': 'Descripcion 2', 'cantidad': '87'};
+        arr.push(row);
+        var row = {'detenido': 'Pedro Morales', 'descripcion': 'Descripcion 1', 'cantidad': '99'};
+        arr.push(row);
+        var row = {'detenido': 'Juan Perez', 'descripcion': 'Descripcion 2', 'cantidad': '87'};
+        arr.push(row);
+        var row = {'detenido': 'Oscar Jimenez', 'descripcion': 'Descripcion 3', 'cantidad': '345'};
+        arr.push(row);
+        var row = {'detenido': 'Pedro Morales', 'descripcion': 'Descripcion 1', 'cantidad': '99'};
+        arr.push(row);
+        var row = {'detenido': 'Juan Perez', 'descripcion': 'Descripcion 2', 'cantidad': '87'};
+        arr.push(row);
+        var row = {'detenido': 'Pedro Morales', 'descripcion': 'Descripcion 1', 'cantidad': '99'};
+        arr.push(row);
+        var row = {'detenido': 'Juan Perez', 'descripcion': 'Descripcion 2', 'cantidad': '87'};
+        arr.push(row);
+        var row = {'detenido': 'Oscar Jimenez', 'descripcion': 'Descripcion 3', 'cantidad': '345'};
+        arr.push(row);
+        var row = {'detenido': 'Pedro Morales', 'descripcion': 'Descripcion 1', 'cantidad': '99'};
+        arr.push(row);
+        var row = {'detenido': 'Juan Perez', 'descripcion': 'Descripcion 2', 'cantidad': '87'};
+        arr.push(row);
+        var row = {'detenido': 'Pedro Morales', 'descripcion': 'Descripcion 1', 'cantidad': '99'};
+        arr.push(row);
+          
 
+        console.log(arr);
+        this.dataSource = new TableService(this.paginator, arr);
 
+    }
 }
