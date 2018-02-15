@@ -25,11 +25,18 @@
             <text label="Clave Única de Identificación Policial (CUIP)" name="cuip" [group]="form" id=""></text>
         </div>
         <div class="col col-lg-2">
-            <button mat-raised-button color="accent">Agregar</button>
+            <button mat-raised-button color="accent" (click)="savePI(form.value, 'PI')">Agregar</button>
         </div>
     </div>
     <div class="row justify-content-start">
         <div class="col-md-12">
+            <!-- <mat-paginator #paginator
+               [length]="pag"
+               [pageIndex]="0"
+               [pageSize]="10"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               (page)="changePage($event)">
+            </mat-paginator> -->
             <mat-table #table [dataSource]="dataSource">
                 <ng-container matColumnDef="cuip" >
                     <mat-header-cell *matHeaderCellDef style="text-align:center">CUIP</mat-header-cell>
@@ -51,12 +58,12 @@
                     <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
                     <mat-cell *matCellDef="let element" style="text-align:center">
                         <span>
-                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center">delete</mat-icon>
+                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center" (click)="delete()">delete</mat-icon>
                         </span>
                     </mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+                <mat-row *matRowDef="let row; columns: columns;" ></mat-row>
             </mat-table>
         </div>
     </div>
