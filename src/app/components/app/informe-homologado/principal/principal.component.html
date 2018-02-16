@@ -58,7 +58,7 @@
                     <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
                     <mat-cell *matCellDef="let element" style="text-align:center">
                         <span>
-                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center" (click)="delete()">delete</mat-icon>
+                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center" (click)="deleteDate(element.cuip)">delete</mat-icon>
                         </span>
                     </mat-cell>
                 </ng-container>

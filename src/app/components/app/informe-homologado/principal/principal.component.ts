@@ -98,6 +98,7 @@ export class PrincipalInformeHomologadoCreate extends InformeBaseComponent {
         return hasId;
     }
 
+
     savePI(form, tabla: String) {
         console.log('@savePI');
         return new Promise((resolve, reject) => {
@@ -131,6 +132,19 @@ export class PrincipalInformeHomologadoCreate extends InformeBaseComponent {
         });
     }
 
+    deleteDate(cuip){
+      console.log(cuip);
+      const formPI = [];
+      var ls = JSON.parse(localStorage.getItem('Principal_PI'));
+      for (let i = 0; i < ls.length; i++) {
+          if (ls[i].cuip != cuip) {
+              formPI.push(ls[i]);
+          }
+      }
+      localStorage.removeItem('Principal_PI');
+      localStorage.setItem('Principal_PI', JSON.stringify(formPI));
+      this.dataSource = new TableService(this.paginator, formPI);
+    }
     fillPITable() {
       const arrayPI = JSON.parse(localStorage.getItem('Principal_PI'));
       this.dataSource = new TableService(this.paginator, arrayPI);
