@@ -54,7 +54,7 @@
             <button class="" mat-raised-button color="accent">Agregar</button>
         </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" *ngIf="divTable">
         <div class="col-md-12">
             <mat-table #table [dataSource]="dataSource">
                 <ng-container matColumnDef="detenido">
@@ -73,8 +73,7 @@
                     <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
                     <mat-cell *matCellDef="let element" style="text-align:center">
                         <span>
-                            <mat-icon class="button-menu mat-icon material-icons" role="img"
-                                                              aria-hidden="true" style="text-align:center">delete</mat-icon>
+                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center">delete</mat-icon>
                         </span>
                     </mat-cell>
                 </ng-container>

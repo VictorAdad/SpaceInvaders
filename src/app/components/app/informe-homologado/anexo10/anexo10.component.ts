@@ -13,7 +13,7 @@ export class Anexo10Component extends InformeBaseComponent {
   public breadcrumb = [];
 
   constructor(private route: ActivatedRoute,
-              private http: HttpService) {
+    private http: HttpService) {
     super();
   }
 
