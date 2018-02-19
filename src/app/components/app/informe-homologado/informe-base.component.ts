@@ -50,6 +50,24 @@ export class InformeBaseComponent implements OnInit {
                 localStorage.removeItem('Table_A');
                 localStorage.setItem('Table_A' + form.numeroReferencia, tpr);
             }
+            if (localStorage.getItem('Table_Anexo11_') != null) {
+                console.log('Hay tablas anexo11 guardadas sin Id...');
+                const tpr = localStorage.getItem('Table_Anexo11_');
+                localStorage.removeItem('Table_Anexo11_');
+                localStorage.setItem('Table_Anexo11_' + form.numeroReferencia, tpr);
+            }
+            if (localStorage.getItem('Table_Anexo9_') != null) {
+                console.log('Hay tablas anexo11 guardadas sin Id...');
+                const tpr = localStorage.getItem('Table_Anexo9_');
+                localStorage.removeItem('Table_Anexo9_');
+                localStorage.setItem('Table_Anexo9_' + form.numeroReferencia, tpr);
+            }
+            if (localStorage.getItem('Table_Anexo7_') != null) {
+                console.log('Hay tablas anexo11 guardadas sin Id...');
+                const tpr = localStorage.getItem('Table_Anexo7_');
+                localStorage.removeItem('Table_Anexo7_');
+                localStorage.setItem('Table_Anexo7_' + form.numeroReferencia, tpr);
+            }
 
         });
 

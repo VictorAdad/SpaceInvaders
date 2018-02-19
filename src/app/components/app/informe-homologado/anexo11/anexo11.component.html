@@ -120,7 +120,7 @@
     </div>
     <div class="row align-items-center">
         <div class="col-md-3">
-            <button mat-raised-button color="accent">Agregar</button>
+            <button mat-raised-button color="accent" (click)="saveTable(form.value)">Agregar</button>
         </div>
     </div>
     <div class="row justify-content-center">
@@ -136,18 +136,18 @@
                 </ng-container>
                 <ng-container matColumnDef="fechaHora">
                     <mat-header-cell *matHeaderCellDef style="text-align:center">Fecha y hora</mat-header-cell>
-                    <mat-cell *matCellDef="let element" style="text-align:center"> {{element.fechaHora}}</mat-cell>
+                    <mat-cell *matCellDef="let element" style="text-align:center"> {{element.fechaHora | date: 'dd/MM/yy'}} {{element.hora}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="accion">
                     <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
                     <mat-cell *matCellDef="let element">
                         <span>
-                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center">delete</mat-icon>
+                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center" (click)="deleteRow(element.indx)">delete</mat-icon>
                         </span>
                     </mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+                <mat-row *matRowDef="let row; columns: columns;" ></mat-row>
             </mat-table>
         </div>
     </div>

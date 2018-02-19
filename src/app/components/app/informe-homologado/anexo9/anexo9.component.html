@@ -22,7 +22,7 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-sm-auto">
-            <button class="" mat-raised-button color="accent">Agregar</button>
+            <button class="" mat-raised-button color="accent" (click)="saveTable(form.value)">Agregar</button>
         </div>
     </div>
     <br>
@@ -46,7 +46,7 @@
                     <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
                     <mat-cell *matCellDef="let element" style="text-align:center">
                         <span>
-                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center">delete</mat-icon>
+                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center" (click)="deleteRow(element.indx)">delete</mat-icon>
                         </span>
                     </mat-cell>
                 </ng-container>
