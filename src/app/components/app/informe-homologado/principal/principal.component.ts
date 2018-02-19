@@ -11,7 +11,8 @@ import { Logger } from '../../../../services/logger.service';
 @Component({
     // tslint:disable-next-line:component-selector
     selector: 'principal',
-    templateUrl: './principal.component.html'
+    templateUrl: './principal.component.html',
+    styleUrls: ['./principal.component.css'],
 })
 
 // tslint:disable-next-line:component-class-suffix

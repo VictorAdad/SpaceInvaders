@@ -51,10 +51,10 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-md-auto">
-            <button class="" mat-raised-button color="accent">Agregar</button>
+            <button class="" mat-raised-button color="accent" (click)="saveTable(form.value)">Agregar</button>
         </div>
     </div>
-    <div class="row justify-content-center" *ngIf="divTable">
+    <div class="row justify-content-center">
         <div class="col-md-12">
             <mat-table #table [dataSource]="dataSource">
                 <ng-container matColumnDef="detenido">
@@ -73,12 +73,12 @@
                     <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
                     <mat-cell *matCellDef="let element" style="text-align:center">
                         <span>
-                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center">delete</mat-icon>
+                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center" (click)="deleteRow(element.indx)">delete</mat-icon>
                         </span>
                     </mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+                <mat-row *matRowDef="let row; columns: columns;"></mat-row>
             </mat-table>
         </div>
     </div>
