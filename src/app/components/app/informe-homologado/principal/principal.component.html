@@ -25,7 +25,7 @@
             <text label="Clave Única de Identificación Policial (CUIP)" name="cuip" [group]="form" id=""></text>
         </div>
         <div class="col col-lg-2">
-            <button mat-raised-button color="accent" (click)="savePI(form.value, 'PI')">Agregar</button>
+            <button mat-raised-button color="accent" (click)="saveTable(form.value, 'PR')">Agregar</button>
         </div>
     </div>
     <div class="row justify-content-start">
@@ -58,7 +58,7 @@
                     <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
                     <mat-cell *matCellDef="let element" style="text-align:center">
                         <span>
-                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center" (click)="deleteDate(element.cuip)">delete</mat-icon>
+                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center" (click)="deleteRow(element.indx, 'PR')">delete</mat-icon>
                         </span>
                     </mat-cell>
                 </ng-container>
@@ -189,7 +189,7 @@
             <text label="Especifique" name="especifiqueRiesgo" [group]="form"></text>
         </div>
         <div class="col-md-3">
-            <button mat-raised-button color="accent">Agregar</button>
+            <button mat-raised-button color="accent" (click)="saveTable(form.value, 'Riesgos')">Agregar</button>
         </div>
     </div>
     <div class="row justify-content-start">
@@ -207,12 +207,12 @@
                     <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
                     <mat-cell *matCellDef="let element2">
                         <span>
-                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon>
+                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" (click)="deleteRow(element2.indx, 'Riesgos')">delete</mat-icon>
                         </span>
                     </mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="columns2"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: columns2;" routerLink=""></mat-row>
+                <mat-row *matRowDef="let row; columns: columns2;"></mat-row>
             </mat-table>
         </div>
     </div>
@@ -222,7 +222,7 @@
             <select2 placeholder="Solicitó apoyo de:" name="apoyo" [group]="form"
                 [options]="[
                     {label:'Bomberos',value:'Bomberos'},
-                    {label:'Cruz Roja',value:'Roja'}
+                    {label:'Cruz Roja',value:'Cruz Roja'}
                 ]">
             </select2>
         </div>
@@ -233,7 +233,7 @@
             <text label="Especifique" name="especifiqueApoyo" [group]="form"></text>
         </div>
         <div class="col-md-3">
-            <button mat-raised-button color="accent">Agregar</button>
+            <button mat-raised-button color="accent" (click)="saveTable(form.value, 'Apoyo')">Agregar</button>
         </div>
     </div>
     <div class="row justify-content-start">
@@ -251,12 +251,12 @@
                     <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
                     <mat-cell *matCellDef="let element3">
                         <span>
-                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon>
+                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" (click)="deleteRow(element3.indx, 'Apoyo')">delete</mat-icon>
                         </span>
                     </mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="columns3"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: columns3;" routerLink=""></mat-row>
+                <mat-row *matRowDef="let row; columns: columns3;" ></mat-row>
             </mat-table>
         </div>
     </div>

@@ -30,7 +30,7 @@ export class InformeHomologadoCreate extends InformeBaseComponent {
   }
 
   public fillForm() {
-    var informeId;
+    let informeId;
     this.activatedRoute.params.subscribe((params: Params) => {
       informeId = params['informeId'];
     });
@@ -46,7 +46,7 @@ export class InformeHomologadoCreate extends InformeBaseComponent {
           this.form.patchValue(_data);
         });
       });
-      InformeBaseComponent.idInforme = informeId;
+      // InformeBaseComponent.idInforme = informeId;
     }
   }
 }
