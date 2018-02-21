@@ -125,6 +125,7 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-md-12">
+            <div class="principal-component">
             <mat-table [dataSource]="dataSource">
                 <ng-container matColumnDef="entrevistado">
                     <mat-header-cell *matHeaderCellDef style="text-align:center"> Entrevistado</mat-header-cell>
@@ -149,6 +150,7 @@
                 <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: columns;" ></mat-row>
             </mat-table>
+            </div>
         </div>
     </div>
     <div class="row space"></div>

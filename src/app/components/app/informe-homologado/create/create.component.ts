@@ -8,7 +8,8 @@ import {InformeBaseComponent} from './../../informe-homologado/informe-base.comp
 
 @Component({
   selector: 'informe-homologado-create',
-  templateUrl: './create.component.html'
+  templateUrl: './create.component.html',
+  styleUrls: ['./../principal/principal.component.css'],
 })
 
 export class InformeHomologadoCreate extends InformeBaseComponent {

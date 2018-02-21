@@ -8,7 +8,8 @@ import {InformeBaseComponent} from '@components-app/informe-homologado/informe-b
 
 @Component({
   selector: 'anexo11',
-  templateUrl: './anexo11.component.html'
+  templateUrl: './anexo11.component.html',
+  styleUrls: ['./../principal/principal.component.css'],
 })
 
 export class Anexo11Component extends InformeBaseComponent implements OnInit {

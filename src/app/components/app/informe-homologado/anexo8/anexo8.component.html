@@ -371,7 +371,8 @@
         <div class="row space"></div>
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <mat-table #table [dataSource]="dataSource">
+                    <div class="principal-component">
+                    <mat-table #table [dataSource]="dataSource">
                     <ng-container matColumnDef="nombre">
                         <mat-header-cell *matHeaderCellDef style="text-align:center">Nombre</mat-header-cell>
                         <mat-cell *matCellDef="let element" style="text-align:center"> {{element.nombre}}</mat-cell>
@@ -391,6 +392,7 @@
                     <mat-header-row *matHeaderRowDef="columns1"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: columns1;"></mat-row>
                 </mat-table>
+                </div>
             </div>
         </div>
     </div>
@@ -683,6 +685,7 @@
         <div class="row space"></div>
         <div class="row justify-content-center">
             <div class="col-md-12">
+                <div class="principal-component">
                 <mat-table #table [dataSource]="dataSource2">
                     <ng-container matColumnDef="nombre">
                         <mat-header-cell *matHeaderCellDef style="text-align:center">Nombre</mat-header-cell>
@@ -704,7 +707,8 @@
 
                     <mat-header-row *matHeaderRowDef="columns2"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: columns2;"></mat-row>
-                </mat-table>
+                </mat-table>  
+                </div>    
             </div>
         </div>
     </div>

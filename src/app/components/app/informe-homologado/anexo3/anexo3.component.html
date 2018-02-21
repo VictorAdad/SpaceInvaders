@@ -91,6 +91,7 @@
     <br>
     <div class="row justify-content-center">
         <div class="col-md-12">
+            <div class="principal-component">
             <mat-table #table [dataSource]="dataSource">
                 <ng-container matColumnDef="usodelafuerza">
                     <mat-header-cell *matHeaderCellDef style="text-align:center">Uso de la fuerza</mat-header-cell>
@@ -115,6 +116,7 @@
                 <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: columns;" ></mat-row>
             </mat-table>
+            </div>
         </div>
     </div>
     <br>

@@ -9,7 +9,8 @@ import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'anexo8',
-  templateUrl: './anexo8.component.html'
+  templateUrl: './anexo8.component.html',
+  styleUrls: ['./../principal/principal.component.css'],
 })
 
 export class Anexo8Component extends InformeBaseComponent implements OnInit{

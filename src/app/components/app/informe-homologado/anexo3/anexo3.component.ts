@@ -10,7 +10,7 @@ import { FormGroup } from '@angular/forms';
 @Component({
   selector: 'anexo3',
   templateUrl: './anexo3.component.html',
-  styleUrls: ['./anexo3.component.css']
+  styleUrls: ['./../principal/principal.component.css']
 })
 
 export class Anexo3Component extends InformeBaseComponent {

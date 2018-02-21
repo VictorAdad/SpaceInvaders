@@ -29,6 +29,7 @@
     <div class="row space"></div>
     <div class="row">
         <div class="col-md-12">
+                <div class="principal-component">
             <mat-table #table [dataSource]="dataSource">
                 <ng-container matColumnDef="tipo">
                     <mat-header-cell *matHeaderCellDef style="text-align:center">Tipo</mat-header-cell>
@@ -51,8 +52,9 @@
                     </mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+                <mat-row *matRowDef="let row; columns: columns;"></mat-row>
             </mat-table>
+            </div>
         </div>
     </div>
     <div class="row space"></div>
