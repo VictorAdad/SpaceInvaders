@@ -28,6 +28,8 @@
             <button mat-raised-button color="accent" (click)="saveTable(form.value, 'PR')">Agregar</button>
         </div>
     </div>
+    <div class="row space"></div>
+    <div class="principal-component mat-elevation-z8">
     <div class="row justify-content-start">
         <div class="col-md-12">
             <!-- <mat-paginator #paginator
@@ -65,6 +67,7 @@
                 <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: columns;" ></mat-row>
             </mat-table>
+         </div>
         </div>
     </div>
     <br>
@@ -192,22 +195,24 @@
             <button mat-raised-button color="accent" (click)="saveTable(form.value, 'Riesgos')">Agregar</button>
         </div>
     </div>
+    <div class="row space"></div>
+    <div class="principal-component mat-elevation-z8">
     <div class="row justify-content-start">
         <div class="col-md-12">
             <mat-table [dataSource]="dataSource2">
                 <ng-container matColumnDef="riesgoPara">
-                    <mat-header-cell *matHeaderCellDef>Riesgo para</mat-header-cell>
-                    <mat-cell *matCellDef="let element2"> {{element2.riesgoPara}}</mat-cell>
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Riesgo para</mat-header-cell>
+                    <mat-cell *matCellDef="let element2" style="text-align:center"> {{element2.riesgoPara}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="tipo">
-                    <mat-header-cell *matHeaderCellDef>Tipo</mat-header-cell>
-                    <mat-cell *matCellDef="let element2"> {{element2.tipo}}</mat-cell>
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Tipo</mat-header-cell>
+                    <mat-cell *matCellDef="let element2" style="text-align:center"> {{element2.tipo}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="accion">
-                    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-                    <mat-cell *matCellDef="let element2">
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
+                    <mat-cell *matCellDef="let element2" style="text-align:center">
                         <span>
-                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" (click)="deleteRow(element2.indx, 'Riesgos')">delete</mat-icon>
+                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center" (click)="deleteRow(element2.indx, 'Riesgos')">delete</mat-icon>
                         </span>
                     </mat-cell>
                 </ng-container>
@@ -215,6 +220,7 @@
                 <mat-row *matRowDef="let row; columns: columns2;"></mat-row>
             </mat-table>
         </div>
+    </div>
     </div>
     <br>
     <div class="row justify-content-center">
@@ -233,23 +239,25 @@
             <text label="Especifique" name="especifiqueApoyo" [group]="form"></text>
         </div>
         <div class="col-md-3">
-            <button mat-raised-button color="accent" (click)="saveTable(form.value, 'Apoyo')">Agregar</button>
+            <button mat-raised-button color="accent" style="text-align:center" (click)="saveTable(form.value, 'Apoyo')">Agregar</button>
         </div>
     </div>
+    <div class="row space"></div>
+    <div class="principal-component mat-elevation-z8">
     <div class="row justify-content-start">
         <div class="col-md-12">
             <mat-table [dataSource]="dataSource3">
                 <ng-container matColumnDef="apoyo">
-                    <mat-header-cell *matHeaderCellDef>Apoyo de</mat-header-cell>
-                    <mat-cell *matCellDef="let element3"> {{element3.apoyo}}</mat-cell>
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Apoyo de</mat-header-cell>
+                    <mat-cell *matCellDef="let element3" style="text-align:center"> {{element3.apoyo}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="nEconomico">
-                    <mat-header-cell *matHeaderCellDef>Número económico</mat-header-cell>
-                    <mat-cell *matCellDef="let element3"> {{element3.nEconomico}}</mat-cell>
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Número económico</mat-header-cell>
+                    <mat-cell *matCellDef="let element3" style="text-align:center"> {{element3.nEconomico}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="accion">
-                    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-                    <mat-cell *matCellDef="let element3">
+                    <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
+                    <mat-cell *matCellDef="let element3" style="text-align:center">
                         <span>
                             <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" (click)="deleteRow(element3.indx, 'Apoyo')">delete</mat-icon>
                         </span>
@@ -259,6 +267,7 @@
                 <mat-row *matRowDef="let row; columns: columns3;" ></mat-row>
             </mat-table>
         </div>
+    </div>
     </div>
     <div class="row space"></div>
     <div class="row">
@@ -281,6 +290,7 @@
         </div>
     </div>
     <div class="row space"></div>
+    <div class="principal-component mat-elevation-z8">
     <div class="row justify-content-start">
         <div class="col-md-12">
             <mat-table [dataSource]="dataSource4">
@@ -297,9 +307,10 @@
                     <mat-cell *matCellDef="let element4" style="text-align:center"> {{element4.hora}}</mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="columns4"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: columns4;" routerLink=""></mat-row>
+                <mat-row *matRowDef="let row; columns: columns4;"></mat-row>
             </mat-table>
         </div>
+    </div>
     </div>
     <div class="row space"></div>
     <div class="row">

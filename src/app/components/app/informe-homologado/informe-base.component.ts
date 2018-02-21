@@ -50,24 +50,6 @@ export class InformeBaseComponent implements OnInit {
                 localStorage.removeItem('Table_A');
                 localStorage.setItem('Table_A' + form.numeroReferencia, tpr);
             }
-            if (localStorage.getItem('Table_Anexo11_') != null) {
-                console.log('Hay tablas anexo11 guardadas sin Id...');
-                const tpr = localStorage.getItem('Table_Anexo11_');
-                localStorage.removeItem('Table_Anexo11_');
-                localStorage.setItem('Table_Anexo11_' + form.numeroReferencia, tpr);
-            }
-            if (localStorage.getItem('Table_Anexo9_') != null) {
-                console.log('Hay tablas anexo9 guardadas sin Id...');
-                const tpr = localStorage.getItem('Table_Anexo9_');
-                localStorage.removeItem('Table_Anexo9_');
-                localStorage.setItem('Table_Anexo9_' + form.numeroReferencia, tpr);
-            }
-            if (localStorage.getItem('Table_Anexo7_') != null) {
-                console.log('Hay tablas anexo7 guardadas sin Id...');
-                const tpr = localStorage.getItem('Table_Anexo7_');
-                localStorage.removeItem('Table_Anexo7_');
-                localStorage.setItem('Table_Anexo7_' + form.numeroReferencia, tpr);
-            }
             if (localStorage.getItem('Table_Anexo1_') != null) {
                 console.log('Hay tablas anexo1 guardadas sin Id...');
                 const tpr = localStorage.getItem('Table_Anexo1_');
@@ -80,6 +62,58 @@ export class InformeBaseComponent implements OnInit {
                 localStorage.removeItem('Table_Anexo2_');
                 localStorage.setItem('Table_Anexo2_' + form.numeroReferencia, tpr);
             }
+            if (localStorage.getItem('Table_Anexo3_') != null) {
+                console.log('Hay tablas anexo3 guardadas sin Id...');
+                const tpr = localStorage.getItem('Table_Anexo3_');
+                localStorage.removeItem('Table_Anexo3_');
+                localStorage.setItem('Table_Anexo3_' + form.numeroReferencia, tpr);
+            }
+            if (localStorage.getItem('Table_Anexo5_') != null) {
+                console.log('Hay tablas anexo3 guardadas sin Id...');
+                const tpr = localStorage.getItem('Table_Anexo5_');
+                localStorage.removeItem('Table_Anexo5_');
+                localStorage.setItem('Table_Anexo5_' + form.numeroReferencia, tpr);
+            }
+            if (localStorage.getItem('Table_Anexo6_') != null) {
+                console.log('Hay tablas anexo6 guardadas sin Id...');
+                const tpr = localStorage.getItem('Table_Anexo6_');
+                localStorage.removeItem('Table_Anexo6_');
+                localStorage.setItem('Table_Anexo6_' + form.numeroReferencia, tpr);
+            }
+            if (localStorage.getItem('Table_Anexo7_') != null) {
+                console.log('Hay tablas anexo7 guardadas sin Id...');
+                const tpr = localStorage.getItem('Table_Anexo7_');
+                localStorage.removeItem('Table_Anexo7_');
+                localStorage.setItem('Table_Anexo7_' + form.numeroReferencia, tpr);
+            }
+            if (localStorage.getItem('Table_Anexo8.1_') != null) {
+                console.log('Hay tablas anexo8 guardadas sin Id...');
+                const tpr = localStorage.getItem('Table_Anexo8.1_');
+                localStorage.removeItem('Table_Anexo8.1_');
+                localStorage.setItem('Table_Anexo8.1_' + form.numeroReferencia, tpr);
+            }
+            if (localStorage.getItem('Table_Anexo8.2_') != null) {
+                console.log('Hay tablas anexo8 guardadas sin Id...');
+                const tpr = localStorage.getItem('Table_Anexo8.2_');
+                localStorage.removeItem('Table_Anexo8.2_');
+                localStorage.setItem('Table_Anexo8.2_' + form.numeroReferencia, tpr);
+            }
+            if (localStorage.getItem('Table_Anexo9_') != null) {
+                console.log('Hay tablas anexo9 guardadas sin Id...');
+                const tpr = localStorage.getItem('Table_Anexo9_');
+                localStorage.removeItem('Table_Anexo9_');
+                localStorage.setItem('Table_Anexo9_' + form.numeroReferencia, tpr);
+            }
+            if (localStorage.getItem('Table_Anexo11_') != null) {
+                console.log('Hay tablas anexo11 guardadas sin Id...');
+                const tpr = localStorage.getItem('Table_Anexo11_');
+                localStorage.removeItem('Table_Anexo11_');
+                localStorage.setItem('Table_Anexo11_' + form.numeroReferencia, tpr);
+            }
+            
+            
+            
+            
 
         });
 

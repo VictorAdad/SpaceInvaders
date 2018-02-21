@@ -839,6 +839,7 @@ public setDataIPH(_data) {
     this.data ['xInspeccionesMedioTransportePaterno'] = _data.inspeccionesMedioTransportePaterno
     this.data ['xInspeccionesMedioTransporteMaterno'] = _data.inspeccionesMedioTransporteMaterno
     this.data ['xInspeccionesMedioTransporteNombres'] = _data.inspeccionesMedioTransporteNombres
+    this.data ['xArmasObjetosEncontradosArmaTipo'] = _data.armasObjetosEncontradosArmaTipo
     this.data ['xArmasCantidadObjetosEncontrados']    = _data.armasCantidadObjetosEncontrados
     this.data ['xCargadoresCantidadObjetosEncontrado'] = _data.cargadoresCantidadObjetosEncontrado
     this.data ['xCartuchosCantidadObjetosEncontrados'] = _data.cartuchosCantidadObjetosEncontrados

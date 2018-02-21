@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Params } from '@angular/router';
 import {BasePaginationComponent} from '@components-app/base/pagination/component';
 import {TableService} from '@utils/table/table.service';
 import {MatPaginator} from '@angular/material';
-import {ActivatedRoute, Params } from '@angular/router';
 import {HttpService} from '@services/http.service';
 import {InformeBaseComponent} from '@components-app/informe-homologado/informe-base.component';
 import { FormGroup } from '@angular/forms';
@@ -15,25 +15,23 @@ import { FormGroup } from '@angular/forms';
 
 export class Anexo1Component extends InformeBaseComponent {
 
-  public breadcrumb = [];
-  columns = ['detenido', 'comprendio', 'primer','accion'];
-  dataSource: TableService | null;
-  form: FormGroup;
-  formId: number;
-
-  
+    public breadcrumb = [];
+    columns = ['detenido', 'comprendio', 'primer','accion'];
+    dataSource: TableService | null;
+    form: FormGroup;
+    formId: number;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private route: ActivatedRoute,
-    private http: HttpService) {
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpService) 
+  {
+    
     super();
   }
-
   ngOnInit() {
     this.fillTable();
-      
-    
   }
   public hasId(): boolean {
         let hasId = false;
@@ -45,6 +43,7 @@ export class Anexo1Component extends InformeBaseComponent {
 
         return hasId;
     }
+
         saveTable(form) {
         console.log('@saveTable');
         console.log('@this. formID ' + this.formId);

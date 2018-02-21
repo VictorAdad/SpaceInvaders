@@ -365,7 +365,7 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-md-auto">
-                <button class="" mat-raised-button color="accent">Agregar</button>
+                <button class="" mat-raised-button color="accent" (click)="saveTable(form.value, 'Table_Anexo8.1_')">Agregar</button>
             </div>
         </div>
         <div class="row space"></div>
@@ -373,22 +373,23 @@
             <div class="col-md-12">
                 <mat-table #table [dataSource]="dataSource">
                     <ng-container matColumnDef="nombre">
-                        <mat-header-cell *matHeaderCellDef style="text-align:center">Detenido</mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef style="text-align:center">Nombre</mat-header-cell>
                         <mat-cell *matCellDef="let element" style="text-align:center"> {{element.nombre}}</mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="objeto">
-                        <mat-header-cell *matHeaderCellDef style="text-align:center">Comprendio sus derechos</mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef style="text-align:center">Objetos Encontrados</mat-header-cell>
                         <mat-cell *matCellDef="let element" style="text-align:center"> {{element.objeto}}</mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="accion">
                         <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
-                        <mat-cell *matCellDef="let element" style="text-align:center"><span><mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center">delete</mat-icon></span></mat-cell>
+                        <mat-cell *matCellDef="let element" style="text-align:center"><span>
+                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center" (click)="deleteRow(element.indx, 'Table_Anexo8.1_')">delete</mat-icon></span></mat-cell>
                     </ng-container>
 
-                    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-                    <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+                    <mat-header-row *matHeaderRowDef="columns1"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: columns1;"></mat-row>
                 </mat-table>
             </div>
         </div>
@@ -418,8 +419,8 @@
             <div class="col-md-2">
                 <select2 placeholder="Tipo:" id=""
                     [options]="[
-                        {label:'Terrestre',value:'corta'},
-                        {label:'Aereo',value:'larga'}
+                        {label:'Terrestre',value:'Terrestre'},
+                        {label:'Aereo',value:'Aereo'}
                     ]" name="objetosEncontradosMedioTransporteTipo" [group]="form">
                 </select2>
             </div>
@@ -493,9 +494,18 @@
                     [functionChange]="showArmasEncontrados.bind(this)">
                 </radiobutton>
             </div>
-            <div class="col-md-2">
+        <div class="col-md-1">
+            <select2 placeholder="Tipo:" id=""
+                *ngIf="divArmasEncontrados"
+                [options]="[
+                    {label:'Corta',value:'corta'},
+                    {label:'Arma larga',value:'larga'}
+                ]" name="armasObjetosEncontradosArmaTipo" [group]="form">
+            </select2>
+       </div>
+        <div class="col-md-1">
                 <text label="Cantidad" name="armasCantidadObjetosEncontrados" [group]="form" *ngIf="divArmasEncontrados"></text>
-            </div>
+        </div>
             <div class="col-md-2">
                 <span>Cargadores</span>
                 <radiobutton
@@ -667,30 +677,33 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-md-auto">
-                <button class="" mat-raised-button color="accent">Agregar</button>
+                <button class="" mat-raised-button color="accent" (click)="saveTable(form.value, 'Table_Anexo8.2_')">Agregar</button>
             </div>
         </div>
         <div class="row space"></div>
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <mat-table #table [dataSource]="dataSource">
+                <mat-table #table [dataSource]="dataSource2">
                     <ng-container matColumnDef="nombre">
                         <mat-header-cell *matHeaderCellDef style="text-align:center">Nombre</mat-header-cell>
-                        <mat-cell *matCellDef="let element" style="text-align:center"> {{element.nombre}}</mat-cell>
+                        <mat-cell *matCellDef="let element2" style="text-align:center"> {{element2.nombre}}</mat-cell>
                     </ng-container>
-
-                    <ng-container matColumnDef="objeto">
+                    <ng-container matColumnDef="tipo">
                         <mat-header-cell *matHeaderCellDef style="text-align:center">Tipo</mat-header-cell>
-                        <mat-cell *matCellDef="let element" style="text-align:center"> {{element.objeto}}</mat-cell>
+                        <mat-cell *matCellDef="let element2" style="text-align:center"> {{element2.tipo}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="objeto">
+                        <mat-header-cell *matHeaderCellDef style="text-align:center">Objetos Encontrados</mat-header-cell>
+                        <mat-cell *matCellDef="let element2" style="text-align:center"> {{element2.objeto}}</mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="accion">
                         <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
-                        <mat-cell *matCellDef="let element" style="text-align:center"><span><mat-icon class="button-menu mat-icon material-icons" role="img"aria-hidden="true" style="text-align:center">delete</mat-icon></span></mat-cell>
+                        <mat-cell *matCellDef="let element2" style="text-align:center"><span><mat-icon class="button-menu mat-icon material-icons" role="img"aria-hidden="true" style="text-align:center" (click)="deleteRow(element2.indx, 'Table_Anexo8.2_')">delete</mat-icon></span></mat-cell>
                     </ng-container>
 
-                    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-                    <mat-row *matRowDef="let row; columns: columns;" routerLink=""></mat-row>
+                    <mat-header-row *matHeaderRowDef="columns2"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: columns2;"></mat-row>
                 </mat-table>
             </div>
         </div>

@@ -54,16 +54,18 @@
             <button class="" mat-raised-button color="accent" (click)="saveTable(form.value)">Agregar</button>
         </div>
     </div>
+    <div class="row space"></div>
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <mat-table #table [dataSource]="dataSource">
-                <ng-container matColumnDef="detenido">
-                    <mat-header-cell *matHeaderCellDef style="text-align:center">Detenido</mat-header-cell>
-                    <mat-cell *matCellDef="let element" style="text-align:center"> {{element.detenido}}</mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="comprendio">
-                    <mat-header-cell *matHeaderCellDef style="text-align:center">Comprendió sus derechos</mat-header-cell>
-                    <mat-cell *matCellDef="let element" style="text-align:center"> {{element.comprendio}}</mat-cell>
+            <div class="anexo1-component mat-elevation-z8">
+                <mat-table #table [dataSource]="dataSource">
+                    <ng-container matColumnDef="detenido">
+                        <mat-header-cell *matHeaderCellDef style="text-align:center">Detenido</mat-header-cell>
+                        <mat-cell *matCellDef="let element" style="text-align:center"> {{element.detenido}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="comprendio">
+                        <mat-header-cell *matHeaderCellDef style="text-align:center">Comprendió sus derechos</mat-header-cell>
+                        <mat-cell *matCellDef="let element" style="text-align:center"> {{element.comprendio}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="primer">
                     <mat-header-cell *matHeaderCellDef style="text-align:center">Primer responsable</mat-header-cell>
@@ -71,15 +73,16 @@
                 </ng-container>
                 <ng-container matColumnDef="accion">
                     <mat-header-cell *matHeaderCellDef style="text-align:center">Acciones</mat-header-cell>
-                    <mat-cell *matCellDef="let element" style="text-align:center">
-                        <span>
-                            <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center" (click)="deleteRow(element.indx)">delete</mat-icon>
-                        </span>
+                        <mat-cell *matCellDef="let element" style="text-align:center">
+                            <span>
+                                <mat-icon class="button-menu mat-icon material-icons" role="img" aria-hidden="true" style="text-align:center" (click)="deleteRow(element.indx)">delete</mat-icon>
+                            </span>
                     </mat-cell>
                 </ng-container>
-                <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: columns;"></mat-row>
-            </mat-table>
+                    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+                </mat-table>
+            </div>
         </div>
     </div>
     <div class="row space"></div>

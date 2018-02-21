@@ -259,6 +259,7 @@ export class Form {
       inspeccionesMedioTransporteNombres: [''],
       objetosEncontradosMedioTransporteObjetoRelacionado: [''],
       armasObjetosEncontrados: [''],
+      armasObjetosEncontradosArmaTipo: [''],
       cargadoresObjetosEncontrados: [''],
       cartuchosObjetosEncontrados: [''],
       armasCantidadObjetosEncontrados: [''],
