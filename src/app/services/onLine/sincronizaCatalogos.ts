@@ -1,4 +1,4 @@
-import {CatalogosACargar} from "@services/onLine/CatalogosACargar";
+import {CatalogosACargar} from "@services/onLine/catalogosACargar";
 import { CIndexedDB } from '@services/indexedDB';
 import { HttpService} from '@services/http.service';
 import { DialogSincrinizarService} from "@services/onLine/dialogSincronizar.service";

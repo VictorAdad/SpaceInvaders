@@ -46,6 +46,7 @@ export class PrincipalInformeHomologadoCreate extends InformeBaseComponent imple
     dataSource: TableService | null;
     dataSource2: TableService | null;
     dataSource3: TableService | null;
+    dataSource4: TableService | null;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
