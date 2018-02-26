@@ -3,7 +3,7 @@
 # Script de distribución para app SIGI escrita en Angular 4 (https://angular.io/)
 # Este script corre uno de los scripts declarados en package.json (deploy-test o deploy-prod) dependiendo el ambiente que se desee compilar,
 # creando la distribución correspondiente. A continuación empaqueta la distribución y la sube al servidor declarado en la variable $DEST
-# Opcionalmente se sube directamente al directorio que corresponda según el ambiente (sigi|sigi-test).
+# Opcionalmente se sube directamente al directorio que corresponda según el ambiente (sigi|sigi-test)
 #
 # Si se desean agregar más ambientes será necesario realizar los siguientes pasos:
 # 1. Crear un nuevo archivo de ambiente en sigi/src/environments llamado "environment.{ambiente}.ts"
