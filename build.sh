@@ -14,7 +14,7 @@
 #
 # v0.1 - 24/10/2017
 # v0.2 - 29/11/2017
-# v0.3 - 05/02/2018 - Se añaden las variables para los ambientes productivos de la Fiscalía
+# v0.3 - 05/02/2018 - Se añaden las variables para los ambientes productivos de la Fiscalía.
 
 # Run script to create the production build
 if [ $# -eq 0 ]; then
