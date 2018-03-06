@@ -10,11 +10,11 @@
 # 2. Declarar en dicho archivo el host del backend que utilizara la app y el propio host desde donde se consumirá el front (ver ejemplos "environment.test.ts" y "environment.prod.ts")
 # 3. Declarar el nuevo archivo de ambiente en .angular-cli.json, dentro del valor "environments" (ver ejemplos anteriores)
 # 4. Declarar un nuevo script en package.json que corresponda al ambiente nuevo que se desea compilar, personalizando el archivo de ambiente que utilizará y la ruta base (esta se debe configurar en el apache que servirá la app)
-# 5. Modificar los condicionales de este script de acuerdo al nuevo parámetro deseado para compilar el nuevo ambiente.
+# 5. Modificar los condicionales de este script de acuerdo al nuevo parámetro deseado para compilar el nuevo ambiente
 #
 # v0.1 - 24/10/2017
 # v0.2 - 29/11/2017
-# v0.3 - 05/02/2018 - Se añaden las variables para los ambientes productivos de la Fiscalía.
+# v0.3 - 05/02/2018 - Se añaden las variables para los ambientes productivos de la Fiscalía
 
 # Run script to create the production build
 if [ $# -eq 0 ]; then
